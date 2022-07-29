@@ -2,8 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using UnityEngine.Analytics;
 
 public static class LinqExtension 
 {
@@ -23,9 +21,9 @@ public static class LinqExtension
 	
 	public static void AutoAdd<T, V>(this IDictionary<T, V> dictionary, T key, V value) 
     {
-		if (dictionary.ContainsKey(key)) 
+        if (dictionary.ContainsKey(key)) 
 			dictionary[key] = value;
-		else 
+        else 
 			dictionary.Add(key, value);
 	}
 
@@ -183,15 +181,43 @@ public static class LinqExtension
         {
 			if (i >= baseList.Count) 
             {
-				for (var j = i; j < targetList.Count; j++) 
-					clearAction?.Invoke(targetList[j]);
+                for (var j = i; j < targetList.Count; j++) 
+                    clearAction?.Invoke(targetList[j]);
                 
                 return;
 			}
-			
-			dataAction?.Invoke(baseList[i], targetList[i]);
-		}
+
+            dataAction?.Invoke(baseList[i], targetList[i]);
+        }
 	}
+
+    public static void SyncForEach<T, V>(this List<T> baseList, List<V> targetList, Func<int, T, V, bool> checkAction, Action<T, V> dataAction, Action<V> clearAction = null) 
+    {
+        if (baseList.Count <= 0) 
+            return;
+        
+        var targetIndex = 0;
+        while (targetIndex < targetList.Count) 
+        {
+            var baseIndex = 0;
+            do 
+            {
+                if (checkAction?.Invoke(targetIndex, baseList[baseIndex], targetList[targetIndex]) ?? false) 
+                {
+                    dataAction?.Invoke(baseList[baseIndex], targetList[targetIndex]);
+                    break;
+                }
+                baseIndex++;
+            } 
+            while (baseIndex < baseList.Count);
+
+            if (baseIndex >= baseList.Count) {
+                clearAction?.Invoke(targetList[targetIndex]);
+            }
+            
+            targetIndex++;
+        }
+    }
 
     public static void ISyncForEach<V>(this IList baseList, List<V> targetList, Action<object, V> dataAction, Action<V> clearAction = null)
     {

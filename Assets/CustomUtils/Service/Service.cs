@@ -16,7 +16,7 @@ public interface IService {
 public static class Service {
 
     private static List<Type> _cachedServiceTypeList = new();
-    private static ReactiveDictionary<Type, IService> _serviceDic = new ();
+    private static Dictionary<Type, IService> _serviceDic = new ();
     
     private static readonly Type _attributeType = typeof(ServiceAttribute);
     private static readonly Type _interfaceType = typeof(IService);
@@ -34,7 +34,7 @@ public static class Service {
     public static bool StartService(Type type) => StartService(GetService(type));
     public static bool StartService<TService>() where TService : class, IService, new() => StartService(GetService<TService>());
     
-    public static bool StartService(E_SERVICE_TYPE serviceType) {
+    public static bool StartService(Enum serviceType) {
         var targetTypeList = GetTypeList(serviceType);
         targetTypeList.ForEach(x => StartService(x));
         return targetTypeList.Count > 0;
@@ -42,7 +42,10 @@ public static class Service {
 
     private static bool StartService(IService service) {
         try {
-            if (service == null) return false;
+            if (service == null) {
+                return false;
+            }
+            
             service.Start();
             Logger.TraceLog($"Service Start || {service.GetType().Name}", Color.cyan);
             return true;
@@ -56,7 +59,7 @@ public static class Service {
     public static bool StopService(Type type) => StopService(GetService(type));
     public static bool StopService<TService>() where TService : class, IService, new() => StopService(GetService<TService>());
     
-    public static bool StopService(E_SERVICE_TYPE serviceType) {
+    public static bool StopService(Enum serviceType) {
         var targetTypeList = GetTypeList(serviceType);
         targetTypeList.ForEach(x => StopService(x));
         return targetTypeList.Count > 0;
@@ -64,7 +67,10 @@ public static class Service {
     
     public static bool StopService(IService service) {
         try {
-            if (service == null) return false;
+            if (service == null) {
+                return false;
+            }
+            
             service.Stop();
             Logger.TraceLog($"Service Stop || {service.GetType().Name}", Color.magenta);
             return true;
@@ -102,7 +108,7 @@ public static class Service {
     
     public static bool RemoveService<TService>() where TService : class, IService => RemoveService(typeof(TService));
 
-    public static bool RemoveService(E_SERVICE_TYPE type) {
+    public static bool RemoveService(Enum type) {
         var typeList = GetTypeList(type);
         return typeList.All(RemoveService);
     }
@@ -115,29 +121,31 @@ public static class Service {
             return true;
         }
         
-        //Logger.TraceLog($"Remove Service Missing || {type.Name}", Color.red);
         return false;
     }
     
-    public static List<IService> GetServiceList(E_SERVICE_TYPE type) => _serviceDic.Values.Where(x => x.GetType().GetCustomAttribute<ServiceAttribute>()?.serviceTypes.Contains(type) ?? false).ToList();
-    public static List<Type> GetTypeList(E_SERVICE_TYPE serviceType) => _cachedServiceTypeList.FindAll(x => x.GetCustomAttribute<ServiceAttribute>()?.serviceTypes.Contains(serviceType) ?? false);
+    public static List<IService> GetServiceList(Enum serviceType) => _serviceDic.Values.Where(x => x.GetType().GetCustomAttribute<ServiceAttribute>()?.serviceTypes.Contains(serviceType) ?? false).ToList();
+    public static List<Type> GetTypeList(Enum serviceType) => _cachedServiceTypeList.FindAll(x => x.GetCustomAttribute<ServiceAttribute>()?.serviceTypes.Contains(serviceType) ?? false);
 }
 
+/// <summary>
+/// Sample Enum
+/// </summary>
 public enum E_SERVICE_TYPE {
-    NONE,                 // 일반적으로 서비스 쵱초 Get 을 통해 서비스 시작
-    GAME_SCENE_START,     // GameScene 시작과 동시에 서비스
-    START_SCENE_START,    // StartScene 시작과 동시에 서비스 
+    NONE,                 // 일반적으로 서비스 최초 Get 을 통해 서비스 시작
 }
 
+[AttributeUsage(AttributeTargets.Class)]
 public sealed class ServiceAttribute : Attribute {
-
-    public E_SERVICE_TYPE[] serviceTypes;
+    
+    public readonly object[] serviceTypes;
 
     public ServiceAttribute() {
-        serviceTypes = new[] { E_SERVICE_TYPE.NONE };
+        serviceTypes = new object[] {};
     }
     
-    public ServiceAttribute(params E_SERVICE_TYPE[] serviceType) {
-        this.serviceTypes = serviceType;
+    /// <param name="serviceTypes">enum type</param>
+    public ServiceAttribute(params object[] serviceTypes) {
+        this.serviceTypes = serviceTypes;
     }
 }

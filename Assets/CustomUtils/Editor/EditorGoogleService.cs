@@ -80,7 +80,6 @@ public class EditorGoogleService : EditorWindow {
 		}
 	}
 
-	// TODO. To Module
 	private DriveService ConnectDriveService() {
 		CreateCredential();
 		if (_cacheCredential == null) {
@@ -96,7 +95,6 @@ public class EditorGoogleService : EditorWindow {
 		return service;
 	}
 
-	// TODO. To Module
 	private SheetsService ConnectSheetService() {
 		CreateCredential();
 		if (_cacheCredential == null) {
@@ -112,7 +110,6 @@ public class EditorGoogleService : EditorWindow {
 		return service;
 	}
 	
-	// TODO. To Module
 	private void CreateCredential() {
 		if (_cacheCredential != null && _cacheCredential.Token.IsExpired(SystemClock.Default) == false) {
 			Logger.TraceLog("Token is Not Expired", Color.green);
@@ -136,14 +133,12 @@ public class EditorGoogleService : EditorWindow {
 		}
 	}
 
-	// TODO. To Module
 	private CancellationToken CreateCancellationToken() {
 		var cancellationTokenSource = new CancellationTokenSource();
 		cancellationTokenSource.CancelAfter(TimeSpan.FromSeconds(CREDENTIAL_REQUEST_TIME_OUT));
 		return cancellationTokenSource.Token;
 	}
 
-	// TODO. To Module
 	private FileList GetSpreadSheetFileList(DriveService service) {
 		var request = service.Files.List();
 		request.Q = string.IsNullOrEmpty(_debugDriveQuery) ? L10_DRIVE_QUERY : _debugDriveQuery;
@@ -164,6 +159,5 @@ public class EditorGoogleService : EditorWindow {
 		return fileList;
 	}
 
-	// TODO. To Module
 	private List<File> GetSheetList(DriveService service) => GetSpreadSheetFileList(service)?.Files.Where(x => x.Owners.FirstOrDefault()?.EmailAddress.Contains(_eMail) ?? false).ToList();
 }

@@ -10,15 +10,6 @@ public interface IUILayoutRecursive {
 	void SelectInfo(object info);
 }
 
-public interface IUILayoutItem {
-	void Init();
-	void SetData(object data);
-    void SetActive(bool isActive);
-	void SetSelect(bool isSelect);
-	bool IsMatchingInfo(object info);
-	bool TryGetRecursiveUI(out IUILayoutRecursive ui);
-    GameObject GetGameObject();
-}
 /// <summary>
 /// Layout에 들어가는 Item을 컨트롤하는 컴포넌트
 /// </summary>
@@ -157,9 +148,7 @@ public class UILayoutControlHelper : MonoBehaviour, IUILayoutRecursive {
 	}
 
 	private UILayoutItem CreateFunc() {
-		// TODO. Temp. fix
 		var item = ResourceManager.inst.Get<UILayoutItem>(_prefabName);
-		//
 		item.Init();
 		return item;
 	}
@@ -192,7 +181,7 @@ public class UILayoutControlHelper : MonoBehaviour, IUILayoutRecursive {
     }
 }
 
-public abstract class UILayoutItem : MonoBehaviour, IUILayoutItem {
+public abstract class UILayoutItem : MonoBehaviour {
     
 	public abstract void Init();
 	public abstract void SetData(object data);

@@ -4,23 +4,16 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
+using System.Xml.Schema;
 using Newtonsoft.Json.Linq;
 using UnityEditor;
 using UnityEngine;
 
 public class EditorBuild : EditorWindow {
-
-    private string _buildPath;
-
-    private static Enum _buildTypeDefault;
-    private static Enum _buildType;
-    private static Dictionary<Enum, DefineSymbolValueAttribute> _defineSymbolDic = new Dictionary<Enum, DefineSymbolValueAttribute>();
     
-    private BuilderAttribute _builderAttribute;
-
     #region [Common]
     private string _applicationIdentifier;
-    private string _bundleVersion; 
+    private string _bundleVersion;
     private string _defineSymbols;
     private StackTraceLogType _stackTraceLogType;
     
@@ -43,19 +36,29 @@ public class EditorBuild : EditorWindow {
     private ProvisioningProfileType _iOSManualProvisioningProfileType;
     private string _iOSManualProvisioningProfileID;
     #endregion
-
-    private static EditorBuild _window;
-    public static EditorBuild window => _window == null ? _window = GetWindow<EditorBuild>("Build") : _window;
+    
+    private BuilderAttribute _builderAttribute;
     private Vector2 _scrollPos;
-
+    
+    private string _buildPath;
     private string _unityPath;
     private string UNITY_PATH => string.IsNullOrEmpty(_unityPath) ? _unityPath = Application.dataPath.Replace("/Assets", string.Empty) : _unityPath;
-        
+    
+    
+    private static Enum _buildTypeDefault;
+    private static Enum _buildType;
+    private static Dictionary<Enum, DefineSymbolValueAttribute> _defineSymbolDic = new Dictionary<Enum, DefineSymbolValueAttribute>();
+    
+    private static EditorBuild _window;
+    public static EditorBuild window => _window == null ? _window = GetWindow<EditorBuild>("Build") : _window;
+
     private static readonly GUIStyle DIVIDE_STYLE = new();
     private static readonly GUIStyle PATH_STYLE = new();
     private static readonly GUIStyle BOLD_STYLE = new();
     
     private static readonly GUILayoutOption DEFAULT_LAYOUT = GUILayout.Width(300f);
+    
+    private static readonly Regex newLineRegex = new Regex(@"(\n)");
 
     [MenuItem("Build/Open Build Setting")]
     private static void OpenWindow() {
@@ -69,8 +72,12 @@ public class EditorBuild : EditorWindow {
         BOLD_STYLE.normal.textColor = Color.gray;
         BOLD_STYLE.fontStyle = FontStyle.Bold;
 
-        _buildTypeDefault = (Enum) ReflectionManager.GetAttributeEnums<BuildTypeAttribute>().First()?.GetEnumValues().GetValue(0); 
-        _buildType ??= _buildTypeDefault;
+        if (ReflectionManager.GetAttributeEnums<BuildTypeAttribute>().TryFirst(out var type)) {
+            _buildType = _buildTypeDefault = (Enum) type.GetEnumValues()?.GetValue(0);
+        } else {
+            ShowErrorDialogue("Missing Attribute !!!", $"{nameof(BuildTypeAttribute)} is Missing.\nPlease Implement Enum and Add {nameof(BuildTypeAttribute)}", "OK");
+            return;
+        }
 
         _defineSymbolDic.Clear();
         var defineSymbolType = ReflectionManager.GetAttributeEnums<DefineSymbolAttribute>().FirstOrDefault();
@@ -81,6 +88,8 @@ public class EditorBuild : EditorWindow {
                     _defineSymbolDic.Add(enumType, defineSymbolType.GetField(value.ToString()).GetCustomAttribute<DefineSymbolValueAttribute>());
                 }
             }
+        } else {
+            Logger.Warning($"{nameof(DefineSymbolAttribute)} is Missing.");  
         }
         
         window.position = new Rect(800f, 200f, 600f, 800f);
@@ -93,7 +102,7 @@ public class EditorBuild : EditorWindow {
             _buildPath = string.Empty;
         }
         
-        if (GUILayout.Button("Select Build Path", GUILayout.Width(150f), GUILayout.Height(20f))) {
+        if (GUILayout.Button("Select Build Path", GUILayout.Width(150f), GUILayout.Height(20f)) && IsDefaultBuildType() == false) {
             var beforePath = _buildPath;
             _buildPath = EditorUtility.OpenFolderPanel("Build Path", _buildPath, _buildPath);
             if (string.IsNullOrEmpty(_buildPath)) {
@@ -104,25 +113,24 @@ public class EditorBuild : EditorWindow {
                 _buildPath = $"{UNITY_PATH}/Build";
             }
             
-            var regex = new Regex(@$"\/{_buildType}");
-            if (regex.IsMatch(_buildPath) == false) {
-                _buildPath += $"/{_buildType}";
-            }
+            FixBuildPath();
         }
         
         EditorGUILayout.LabelField("Path : ", _buildPath, PATH_STYLE);
         EditorGUILayout.Space();
         
         // Build Type Select
-        var selectBuildType = EditorGUILayout.EnumPopup("Ex Build Type :", _buildType ?? _buildTypeDefault);
-        if (_buildType.Equals(selectBuildType) == false) {
+        var selectBuildType = EditorGUILayout.EnumPopup("Build Type :", _buildType ?? _buildTypeDefault);
+        if (_buildType?.Equals(selectBuildType) == false) {
             _buildType = selectBuildType;
+            FixBuildPath();
             
+            // Common
             _applicationIdentifier = PlayerSettings.applicationIdentifier;
             _bundleVersion = PlayerSettings.bundleVersion;
             _defineSymbols = string.Empty;
 
-            /// Android
+            // Android
             _bundleVersionCode = PlayerSettings.Android.bundleVersionCode;
             _useAPKExpansionFiles = PlayerSettings.Android.useAPKExpansionFiles;
             _buildAppBundle = EditorUserBuildSettings.buildAppBundle;
@@ -130,7 +138,7 @@ public class EditorBuild : EditorWindow {
             _androidCreateSymbolsZip = EditorUserBuildSettings.androidCreateSymbolsZip;
             _exportAsGoogleAndroidProject = EditorUserBuildSettings.exportAsGoogleAndroidProject;
 
-            /// iOS
+            // iOS
             _buildNumber = PlayerSettings.iOS.buildNumber;
             _appleDeveloperTeamID = PlayerSettings.iOS.appleDeveloperTeamID;
             _iOSManualProvisioningProfileType = PlayerSettings.iOS.iOSManualProvisioningProfileType;
@@ -201,8 +209,18 @@ public class EditorBuild : EditorWindow {
             var key = defineList[i];
             var attribute = _defineSymbolDic[key];
             if (attribute != null) {
-                EditorGUILayout.Space();
-                EditorGUILayout.LabelField(attribute.divideText, DEFAULT_LAYOUT);
+                var match = newLineRegex.Split(attribute.divideText);
+                if (match.Length > 0) {
+                    match.ForEach(x => {
+                        if (newLineRegex.IsMatch(x)) {
+                            EditorGUILayout.Space();
+                        } else {
+                            if (string.IsNullOrEmpty(x) == false) {
+                                EditorGUILayout.LabelField(x, DEFAULT_LAYOUT);
+                            }
+                        }
+                    });
+                }
             }
             
             using (new EditorGUILayout.HorizontalScope()) {
@@ -211,15 +229,14 @@ public class EditorBuild : EditorWindow {
             }
             
             switch (selected[i]) {
-                case true when _defineSymbols.Contains(defineList[i].ToString()) == false: {
+                case true when _defineSymbols.Contains(defineList[i].ToString()) == false:
                     if (_defineSymbols.Length > 0) {
                         _defineSymbols += ";";
                     }
 
                     _defineSymbols += defineList[i];
                     break;
-                }
-                case false when _defineSymbols.Contains(defineList[i].ToString()): {
+                case false when _defineSymbols.Contains(defineList[i].ToString()):
                     _defineSymbols = _defineSymbols.Replace(";" + defineList[i], "");
                     _defineSymbols = _defineSymbols.Replace(defineList[i].ToString(), "");
                     _defineSymbols = _defineSymbols.Replace(";;", ";");
@@ -227,12 +244,10 @@ public class EditorBuild : EditorWindow {
                         _defineSymbols = _defineSymbols.Remove(0, 1);
                     }
                     break;
-                }
             }
         }
         
-        EditorGUILayout.Space();
-        EditorGUILayout.Space();
+        DrawSpace(3);
 
         using(new EditorGUILayout.HorizontalScope()) {
             EditorGUILayout.TextField("DefineSymbols", BOLD_STYLE, GUILayout.Width(150));
@@ -333,11 +348,10 @@ public class EditorBuild : EditorWindow {
         }
         
         if (Directory.Exists(_buildPath) == false) {
-            if (EditorUtility.DisplayDialog("Folder Not Exists", $"Create Folder ?\nContinue Build Progress\n\n{_buildPath}", "YES", "NO")) {
+            if (ShowDialogue("Folder Not Exists", $"Create Folder ?\nContinue Build Progress\n\n{_buildPath}", "YES", "NO")) {
                 Directory.CreateDirectory(_buildPath);
                 buildOptions.locationPathName = _buildPath;
                 Build(buildOptions);
-                return;
             }
             return;
         }
@@ -355,22 +369,50 @@ public class EditorBuild : EditorWindow {
     }
 
     private bool TryGetBuilderAttribute(out BuilderAttribute attribute) {
-        attribute = null;
-        
+        attribute = GetBuilderAttribute();
+        return attribute != null;
+    }
+
+    private BuilderAttribute GetBuilderAttribute() {
         var attributeList = ReflectionManager.GetSubClassTypes<Builder>()?.Where(x => x.GetCustomAttribute<BuilderAttribute>()?.buildType.Equals(_buildType) ?? false).ToList();
-        if (attributeList == null || attributeList.Count <= 0) {
-            return false;
+        if (attributeList is not { Count: > 0 }) {
+            return null;
         }
         
         if (attributeList.Count > 1) {
             Debug.LogError($"{nameof(attributeList)} count over. {nameof(BuilderAttribute.buildType)} must not be duplicated. || {attributeList.Count}");
             attributeList.ForEach(x => Debug.LogError($"Duplicate {nameof(Builder)} || {x.FullName}"));
-            return false;
+            return null;
         }
 
-        attribute = attributeList.First().GetCustomAttribute<BuilderAttribute>();
-        return true;
+        return attributeList.First().GetCustomAttribute<BuilderAttribute>();
     }
 
+    private void FixBuildPath() {
+        if (string.IsNullOrEmpty(_buildPath) || IsDefaultBuildType()) {
+            _buildPath = string.Empty;
+            return;
+        }
+
+        var regex = new Regex(@$"\/{_buildType}");
+        if (regex.IsMatch(_buildPath) == false) {
+            var directory = _buildPath.Split('/').LastOrDefault();
+            if (string.IsNullOrEmpty(directory) == false && Enum.IsDefined(_buildTypeDefault.GetType(), directory)) {
+                _buildPath = _buildPath.Replace($"/{directory}", string.Empty);
+            }
+            
+            _buildPath += $"/{_buildType}";
+        }
+    }
+    
+    // TODO. to Module
+    private static bool ShowErrorDialogue(string title, string message, string ok = "", string cancel = "") {
+        Logger.TraceError(message);
+        return ShowDialogue(title, message, ok, cancel);
+    }
+    
+    // TODO. to Module
+    private static bool ShowDialogue(string title, string message, string ok = "", string cancel = "") => EditorUtility.DisplayDialog(title, message, ok, cancel);
+    
     private bool IsDefaultBuildType(Enum buildType = null) => _buildTypeDefault.Equals(buildType ?? _buildType);
 }

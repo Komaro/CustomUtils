@@ -11,7 +11,7 @@ public class BuildManager : IPreprocessBuildWithReport, IPostprocessBuildWithRep
 
     private static Builder _builder;
     
-    public int callbackOrder { get; }
+    public int callbackOrder => 1000;
 
     public static Builder CreateBuilder(Enum buildType) {
         var builderType = ReflectionManager.GetSubClassTypes<Builder>()?.Where(x => x.GetCustomAttribute<BuilderAttribute>()?.buildType.Equals(buildType) ?? false).FirstOrDefault();
@@ -38,7 +38,6 @@ public class BuildManager : IPreprocessBuildWithReport, IPostprocessBuildWithRep
             _builder.PreProcess();
         } catch (Exception ex) {
             Debug.LogError(ex.Message);
-        } finally {
             _builder = null;
         }
     }
@@ -54,6 +53,33 @@ public class BuildManager : IPreprocessBuildWithReport, IPostprocessBuildWithRep
             Debug.LogError(ex.Message);
         } finally {
             _builder = null;
+        }
+    }
+
+    // TODO. to Module
+    public static void BuildOnCLI() {
+        try {
+            Debug.Log($"=============== Start {nameof(BuildOnCLI)} ===============");
+            BuildSettings.SetBuildSettingsOnCLI();
+            if (BuildSettings.Instance.TryGetValue<string>("buildType", out var typeText)) {
+                var enumType = ReflectionManager.GetAttributeEnums<BuildTypeAttribute>().First()?.GetEnumValues()?.GetValue(0)?.GetType();
+                if (Enum.TryParse(enumType, typeText, out var typeObject) && typeObject is Enum buildType) {
+                    _builder = CreateBuilder(buildType);
+                    
+                    var buildOptions = new BuildPlayerOptions {
+                        scenes = EditorBuildSettings.scenes.Where(x => x.enabled).Select(x => x.path).ToArray()
+                    };
+                    
+                    if (BuildSettings.Instance.TryGetValue<string>("buildPath", out var buildPath) == false) {
+                        buildPath = $"Build/{buildType}";
+                    } 
+                    
+                    buildOptions.locationPathName = buildPath;
+                    _builder.StartBuild(buildOptions);
+                }
+            }
+        } catch (Exception ex) {
+            Debug.LogError(ex);
         }
     }
 }
@@ -139,7 +165,7 @@ public abstract class Builder {
     #endregion
 
     #region [Android]
-    
+
     protected void SetVersionCode(int code) {
         PlayerSettings.Android.bundleVersionCode = code;
         Debug.Log($"{BuildCount} - {nameof(PlayerSettings.Android.bundleVersionCode)} || {PlayerSettings.Android.bundleVersionCode}");
@@ -246,7 +272,15 @@ public class BuilderAttribute : Attribute {
 }
 
 [AttributeUsage(AttributeTargets.Enum)]
-public class BuildTypeAttribute : Attribute { }
+public class BuildTypeAttribute : Attribute {
+
+    public static Enum Get() {
+        var attri = ReflectionManager.GetAttributeEnums<BuildTypeAttribute>().FirstOrDefault();
+        var values = attri?.GetEnumValues();
+        var value = values?.GetValue(0);
+        return (Enum)ReflectionManager.GetAttributeEnums<BuildTypeAttribute>().First()?.GetEnumValues()?.GetValue(0);
+    }
+}
 
 [AttributeUsage(AttributeTargets.Enum)]
 public class DefineSymbolAttribute : Attribute { }

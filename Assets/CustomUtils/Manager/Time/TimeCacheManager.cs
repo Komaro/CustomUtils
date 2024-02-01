@@ -13,7 +13,6 @@ public class TimeCacheManager : Singleton<TimeCacheManager> {
 
     public void Clear() => _requestTimeTable.Clear();
     public void Clear(TimeCacheType type) => _requestTimeTable.Remove(type);
-    //public void Clear(TimeCacheType fromType, TimeCacheType toType) => AcEnum.GetValues<TimeCacheType>().FindAll(x => x >= fromType && x <= toType).ForEach(Clear);
 
     public void SetRequestTimeNow(TimeCacheType type) => SetRequestTime(type, DateTime.Now);
     public void SetRequestTime(TimeCacheType type, DateTime time) {

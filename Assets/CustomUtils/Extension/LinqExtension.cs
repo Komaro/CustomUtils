@@ -77,10 +77,11 @@ public static class LinqExtension {
     #region [Dictionary]
 
     public static void AutoAdd<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key, TValue value) {
-        if (dictionary.ContainsKey(key))
+        if (dictionary.ContainsKey(key)) {
             dictionary[key] = value;
-        else
+        } else {
             dictionary.Add(key, value);
+        }
     }
 
     public static void AutoAdd<TKey, TValue>(this Dictionary<TKey, List<TValue>> dictionary, TKey key, TValue value) {
@@ -100,10 +101,11 @@ public static class LinqExtension {
     }
 
     public static void AutoAdd<TKey, TIKey, TValue>(this Dictionary<TKey, Dictionary<TIKey, TValue>> dictionary, TKey outKey, TIKey innerKey, TValue value) {
-        if (dictionary.ContainsKey(outKey))
+        if (dictionary.ContainsKey(outKey)) {
             dictionary[outKey].AutoAdd(innerKey, value);
-        else
+        } else {
             dictionary.Add(outKey, new Dictionary<TIKey, TValue> { { innerKey, value } });
+        }
     }
 
     public static void AutoAdd<TKey, TValue>(this Dictionary<TKey, Queue<TValue>> dictionary, TKey key) {
@@ -139,24 +141,27 @@ public static class LinqExtension {
     }
 
     public static void AutoCountingAdd<TKey, TValue>(this Dictionary<TKey, Dictionary<int, TValue>> dictionary, TKey key, TValue value) {
-        if (dictionary.ContainsKey(key))
+        if (dictionary.ContainsKey(key)) {
             dictionary[key].Add(dictionary[key].Count + 1, value);
-        else
+        } else {
             dictionary.Add(key, new Dictionary<int, TValue> { { 1, value } });
+        }
     }
 
     public static void AutoIncreaseAdd<TKey>(this IDictionary<TKey, int> dictionary, TKey key) {
-        if (dictionary.ContainsKey(key))
+        if (dictionary.ContainsKey(key)) {
             dictionary[key] += 1;
-        else
+        } else {
             dictionary.Add(key, 1);
+        }
     }
 
     public static void AutoAccumulateAdd<TKey>(this IDictionary<TKey, int> dictionary, TKey key, int value) {
-        if (dictionary.ContainsKey(key))
+        if (dictionary.ContainsKey(key)) {
             dictionary[key] += value;
-        else
+        } else {
             dictionary.Add(key, value);
+        }
     }
 
     public static void AutoAccumulateAdd<TKey>(this IDictionary<TKey, long> dictionary, TKey key, long value) {
@@ -167,17 +172,19 @@ public static class LinqExtension {
     }
 
     public static void AutoAccumulateAdd<TKey>(this IDictionary<TKey, double> dictionary, TKey key, double value) {
-        if (dictionary.ContainsKey(key))
+        if (dictionary.ContainsKey(key)) {
             dictionary[key] += value;
-        else
+        } else {
             dictionary.Add(key, value);
+        }
     }
 
     public static void AutoAccumulateAdd<TKey, TIKey>(this IDictionary<TKey, IDictionary<TIKey, int>> dictionary, TKey outKey, TIKey innerKey, int value) {
-        if (dictionary.ContainsKey(outKey))
+        if (dictionary.ContainsKey(outKey)) {
             dictionary[outKey].AutoAccumulateAdd(innerKey, value);
-        else
+        } else {
             dictionary.Add(outKey, new Dictionary<TIKey, int> { { innerKey, value } });
+        }
     }
 
     public static void AutoRemove<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key) {

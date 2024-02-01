@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 public static class ReflectionManager 
 {
     private static IEnumerable<Type> _cachedAllTypes;
-    private static IEnumerable<Type> CachedAllTypes() => _cachedAllTypes ?? AppDomain.CurrentDomain.GetAssemblies().Where(assembly => assembly.IsDynamic == false).SelectMany(assembly => assembly.GetExportedTypes());
+    private static IEnumerable<Type> CachedAllTypes() => _cachedAllTypes ??= AppDomain.CurrentDomain.GetAssemblies().Where(assembly => assembly.IsDynamic == false).SelectMany(assembly => assembly.GetExportedTypes());
     
     
     private static IEnumerable<Type> _cachedClasses;
-    private static IEnumerable<Type> CacheClassTypes() => CachedAllTypes().Where(type => type.IsClass && type.IsAbstract == false);
     public static IEnumerable<Type> GetTypes() => _cachedClasses ??= CacheClassTypes();
+    private static IEnumerable<Type> CacheClassTypes() => CachedAllTypes().Where(type => type.IsClass && type.IsAbstract == false);
 
     #region [Class]
     
@@ -45,9 +46,51 @@ public static class ReflectionManager
     #region [Enum]
     
     private static IEnumerable<Type> _cachedEnums;
-    private static IEnumerable<Type> CacheEnumType() => AppDomain.CurrentDomain.GetAssemblies().Where(assembly => assembly.IsDynamic).SelectMany(assembly => assembly.GetExportedTypes()).Where(type => type.IsEnum);
-    public static IEnumerable<Type> GetEnums() => _cachedEnums ?? CachedAllTypes().Where(type => type.IsEnum);
-    public static IEnumerable<Type> GetAttributeEnums<T>() where T : Attribute => GetEnums().Where(type => type.IsDefined(typeof(T), false));
+    public static IEnumerable<Type> GetEnumTypes() => _cachedEnums ??= CachedAllTypes().Where(type => type.IsEnum);
+    public static IEnumerable<Type> GetAttributeEnumTypes<T>() where T : Attribute => GetEnumTypes().Where(type => type.IsDefined(typeof(T), false));
+
+    public static bool TryGetAttributeEnumTypes<T>(out IEnumerable<Type> type) where T : Attribute {
+        type = GetAttributeEnumTypes<T>();
+        return type?.Any() ?? false;
+    }
+
+    public static IEnumerable<(T attribute, Type enumType)> GetAttributeEnumInfos<T>() where T : Attribute {
+        return GetEnumTypes().Where(type => type.IsDefined(typeof(T), false)).Select(type => (type.GetCustomAttribute<T>(false), type));
+    }
+
+    public static bool TryGetAttributeEnumInfos<T>(out IEnumerable<(T attribute, Type enumType)> infos) where T : Attribute {
+        infos = GetAttributeEnumInfos<T>();
+        return infos != null && infos.Any();
+    }
+
+    #endregion
+
+    #region [Extension]
+
+    public static bool TryGetCustomAttributeList(this MemberInfo info, out List<Attribute> attributeList) {
+        attributeList = info.GetCustomAttributes().ToList();
+        return attributeList is { Count: > 0};
+    }
+
+    public static bool TryGetCustomAttribute<T>(this Type type, out T attribute) where T : Attribute {
+        attribute = type.GetCustomAttribute<T>();
+        return attribute != null;
+    }
     
+    public static bool TryGetCustomAttribute<T>(this MemberInfo info, out T attribute) where T : Attribute {
+        attribute = info.GetCustomAttribute<T>();
+        return attribute != null;
+    }
+
+    public static bool TryGetCustomAttributeList<T>(this Type type, out List<T> attributeList) where T : Attribute {
+        attributeList = type.GetCustomAttributes<T>().ToList();
+        return attributeList is { Count: > 0 };
+    }
+
+    public static bool TryGetCustomAttributeList<T>(this MemberInfo info, out List<T> attributeList) where T : Attribute {
+        attributeList = info.GetCustomAttributes<T>().ToList();
+        return attributeList is { Count: > 0 };
+    }
+
     #endregion
 }

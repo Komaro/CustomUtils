@@ -31,7 +31,10 @@ public class BuildSettings {
         outValue = GetValue<T>(key);
         return outValue != null;
     }
-    
+
+    public bool IsTrue(string key) => TryGetValue<bool>(key, out var isTrue) && isTrue;
+    public bool IsContains(string key) => json.ContainsKey(key);
+
     public void SetBuildSettings(string path) {
         if (File.Exists(path) == false) {
             throw new FileNotFoundException($"{nameof(FileNotFoundException)} || {path}");
@@ -75,11 +78,9 @@ public class BuildSettings {
     /// </summary>
     public static void SetBuildSettingsOnCLI() {
         var json = new JObject();
-        var commands = Environment.GetCommandLineArgs();
-        commands.ForEach(x => {
+        Environment.GetCommandLineArgs().ForEach(x => {
             var tokens = x.Split(':');
             if (tokens.Length < 2 || string.IsNullOrEmpty(tokens[0]) || tokens[0].Length < 2) {
-                Debug.LogError($"Invalid Tokens || {string.Join(':', tokens)}");
                 return;
             }
             

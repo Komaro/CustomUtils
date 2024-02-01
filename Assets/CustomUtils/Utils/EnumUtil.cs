@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
 
-public static class EnumExtension
-{
+public static class EnumUtil {
+    
     public static bool IsDefined<T>(this T type) => Enum.IsDefined(typeof(T), type);
     public static bool IsDefined<T>(this string type) => Enum.IsDefined(typeof(T), type);
 
@@ -38,8 +38,7 @@ public static class EnumExtension
         return false;
     }
 
-    public static T Convert<T>(this string type)
-    {
+    public static T Convert<T>(this string type) {
         try {
             return (T)Enum.Parse(typeof(T), type);
         } catch (Exception ex) {
@@ -123,6 +122,21 @@ public static class EnumExtension
         }
         
         return false;
+    }
+    
+    public static List<T> GetValues<T>(bool isIgnoreDefault = false) {
+        var list = new List<T>();
+        if (typeof(T).IsEnum) {
+            foreach (T item in Enum.GetValues(typeof(T))) {
+                list.Add(item);
+            }
+
+            if (isIgnoreDefault) {
+                list.RemoveAt(0);
+            }
+        }
+
+        return list;
     }
 
     public static bool IsDefault<T>(T type) => type.Equals(default(T));

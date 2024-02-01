@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using UnityEngine;
 
 public abstract class Command {
 
@@ -12,8 +14,19 @@ public abstract class Command {
     
     private const string IDENTIFIER_LITERAL = "@";
     private const string ASSIGN_LITERAL = ":";
+
+    #region Common Parameter
+
+    [CommandParameter("delay", true)] 
+    public float delay { get => GetDynamicParameter(0.0f); set => SetDynamicParameter(value); }
     
-    public abstract Task ExecuteAsync ();
+    [CommandParameter("visible", true)]
+    public bool isVisible { get => GetDynamicParameter(true); set => SetDynamicParameter(value); }
+
+    #endregion
+    
+    public abstract Task ExecuteAsync();
+    public virtual Task UndoAsync() => Task.CompletedTask;
 
     static Command() {
         if (_commandTypeCacheDic == null) {
@@ -22,12 +35,15 @@ public abstract class Command {
         }
     }
     
-    public static Command Create(string commandLine) => Create(GetCommand(commandLine), ParseCommandParameters(commandLine));
-    
-    protected static Command Create (string commandName, Dictionary<string, string> parameterDic) {
+    public static Command Create(string commandLine) {
+        commandLine = Regex.Replace(commandLine.Trim(), @"\s+", @" ");
+        return Create(GetCommand(commandLine), ParseCommandParameters(commandLine));
+    }
+
+    protected static Command Create(string commandName, Dictionary<string, string> parameterDic) {
         var commandType = FindCommandType(commandName);
         if (commandType is null) {
-            Logger.TraceError($"{commandName} is Invalid Type, Checking {nameof(CommandAliasAttribute)}");
+            Logger.TraceError($"'{commandName}' is Invalid Type, Checking {nameof(CommandAliasAttribute)}.{nameof(CommandAliasAttribute.Alias)}");
             return null;
         }
 
@@ -36,14 +52,14 @@ public abstract class Command {
         foreach (var fieldInfo in fieldInfos) {
             var paramAttribute = fieldInfo.GetCustomAttributes(typeof(CommandParameterAttribute), false).FirstOrDefault() as CommandParameterAttribute;
             if (paramAttribute == null) {
-                Logger.TraceError($"{nameof(paramAttribute)} is Null");
+                Logger.TraceError($"'{nameof(paramAttribute)}' is Null. '{nameof(Command)}' must have '{nameof(CommandParameterAttribute)}'.");
                 return null;
             }
 
             var paramName = string.IsNullOrEmpty(paramAttribute.Alias) == false && parameterDic.ContainsKey(paramAttribute.Alias) ? paramAttribute.Alias : fieldInfo.Name;
             if (parameterDic.ContainsKey(paramName) == false) {
                 if (paramAttribute.Optional == false) {
-                    Logger.TraceLog($"'{commandType.Name}' is Miising '{paramName}' parameter");
+                    Logger.TraceLog($"'{paramName}' is Missing parameter in '{commandName}'. If the parameter should be ignored, add an optional bool value to '{nameof(CommandParameterAttribute)}'.", Color.red);
                 }
                 
                 continue;
@@ -55,11 +71,11 @@ public abstract class Command {
         return command;
     }
     
-    private static void BindDynamicParameter (Command command, string paramName, string paramValueString, Type paramType) => command.SetDynamicParameter(() => ParseParameterValue(paramValueString, paramType), paramName);
+    private static void BindDynamicParameter(Command command, string paramName, string paramValueString, Type paramType) => command.SetDynamicParameter(() => ParseParameterValue(paramValueString, paramType), paramName);
     
-    private static Type FindCommandType (string typeName) {
+    private static Type FindCommandType(string typeName) {
         if (string.IsNullOrEmpty(typeName)) {
-            Logger.TraceError($"{nameof(typeName)} is Null or Empty");
+            Logger.TraceError($"'{nameof(typeName)}' is Null or Empty");
             return null;
         }
 
@@ -79,7 +95,7 @@ public abstract class Command {
             var paramValue = paramPair.GetAfterFirst(ASSIGN_LITERAL);
             
             if (string.IsNullOrEmpty(paramName) || string.IsNullOrEmpty(paramValue)) {
-                Logger.TraceError($"{nameof(paramName)} or {nameof(paramValue)} is Null or Empty || {paramName ?? string.Empty} || {paramValue ?? string.Empty}");
+                Logger.TraceError($"{nameof(paramName)} or {nameof(paramValue)} is Null or Empty || {scriptLineText} || {paramName ?? string.Empty} || {paramValue ?? string.Empty}");
                 return commandParamDic;
             }
             
@@ -108,12 +124,12 @@ public abstract class Command {
                 return Enum.Parse(paramType, paramValue);
             }
 
-            paramValue = paramValue.ToUpper();
+            paramValue = paramValue.ToUpper(Constants.Culture.DEFAULT_CULTURE_INFO);
             if (Enum.IsDefined(paramType, paramValue)) {
                 return Enum.Parse(paramType, paramValue);
             }
 
-            paramValue = paramValue.GetForceTitleCase();
+            paramValue = StringUtil.GetForceTitleCase(paramValue);
             if (Enum.IsDefined(paramType, paramValue)) {
                 return Enum.Parse(paramType, paramValue);
             }
@@ -126,19 +142,20 @@ public abstract class Command {
             return Activator.CreateInstance(
                 typeof(Named<>).MakeGenericType(valueType),
                 paramValue.Contains(".") ? paramValue.GetBefore(".") : paramValue, 
-                ParseParameterValue(paramValue.GetAfterFirst("."), 
-                valueType));
+                ParseParameterValue(paramValue.GetAfterFirst("."), valueType));
         }
 
         if (paramType.IsArray) {
             var strValues = paramValue.Split(',');
-            for (int i = 0; i < strValues.Length; i++) {
-                if (string.IsNullOrEmpty(strValues[i])) strValues[i] = null;
+            for (var i = 0; i < strValues.Length; i++) {
+                if (string.IsNullOrEmpty(strValues[i])) {
+                    strValues[i] = null;
+                }
             } 
             
             var objValues = strValues.Select(s => ParseParameterValue(s, paramType.GetElementType())).ToArray();
             var array = Array.CreateInstance(paramType.GetElementType(), objValues.Length);
-            for (int i = 0; i < objValues.Length; i++) {
+            for (var i = 0; i < objValues.Length; i++) {
                 array.SetValue(objValues[i], i);
             }
             
@@ -148,14 +165,14 @@ public abstract class Command {
         // Simple value.
         try {
             return Convert.ChangeType(paramValue, paramType, System.Globalization.CultureInfo.InvariantCulture);
-        } catch (Exception e) {
+        } catch {
             return paramType.IsValueType ? Activator.CreateInstance(paramType) : null;
         }
     }
 
     protected TParameter GetDynamicParameter<TParameter>(TParameter defaultValue, [CallerMemberName] string parameterName = null) {
         if (string.IsNullOrWhiteSpace(parameterName)) {
-            Logger.TraceError($"{parameterName} is Invalid parameter Name.");
+            Logger.TraceError($"'{parameterName}' is Invalid parameter Name.");
             return defaultValue;
         }
         
@@ -171,7 +188,7 @@ public abstract class Command {
 
     protected void SetDynamicParameter(Func<object> parameterValue, [CallerMemberName] string parameterName = null) => dynamicParameters.AutoAdd(parameterName, parameterValue);
 
-    [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = false)]
+    [AttributeUsage(AttributeTargets.Class, Inherited = false)]
     protected sealed class CommandAliasAttribute : Attribute {
         
         public string Alias { get; }
@@ -181,7 +198,7 @@ public abstract class Command {
         }
     }
 
-    [AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = false)]
+    [AttributeUsage(AttributeTargets.Property)]
     protected sealed class CommandParameterAttribute : Attribute {
         
         public string Alias { get; }

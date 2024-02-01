@@ -7,16 +7,18 @@ using UnityEngine;
 
 public interface IService {
     
+    bool IsServing() => false;
     void Init() { }
     void Start();
     void Stop();
+    void Refresh() { }
     void Remove() { }
 }
 
 public static class Service {
 
     private static List<Type> _cachedServiceTypeList = new();
-    private static Dictionary<Type, IService> _serviceDic = new ();
+    private static ReactiveDictionary<Type, IService> _serviceDic = new ();
     
     private static readonly Type _attributeType = typeof(ServiceAttribute);
     private static readonly Type _interfaceType = typeof(IService);
@@ -30,11 +32,11 @@ public static class Service {
             _isInitialized = true;
         }
     }
-
-    public static bool StartService(Type type) => StartService(GetService(type));
-    public static bool StartService<TService>() where TService : class, IService, new() => StartService(GetService<TService>());
     
-    public static bool StartService(Enum serviceType) {
+    public static bool StartService(Type type) => StartService(_serviceDic.TryGetValue(type, out var service) ? service : CreateService(type));
+    public static bool StartService<TService>() where TService : class, IService, new() => StartService(_serviceDic.TryGetValue(typeof(TService), out var service) ? service : CreateService<TService>());
+
+    public static bool StartService(E_SERVICE_TYPE serviceType) {
         var targetTypeList = GetTypeList(serviceType);
         targetTypeList.ForEach(x => StartService(x));
         return targetTypeList.Count > 0;
@@ -45,9 +47,11 @@ public static class Service {
             if (service == null) {
                 return false;
             }
-            
-            service.Start();
-            Logger.TraceLog($"Service Start || {service.GetType().Name}", Color.cyan);
+
+            if (service.IsServing() == false) {
+                service.Start();
+                Logger.TraceLog($"Service Start || {service.GetType().Name}", Color.cyan);
+            }
             return true;
         } catch (Exception e) {
             Logger.TraceError(e);
@@ -56,10 +60,10 @@ public static class Service {
         }
     }
 
-    public static bool StopService(Type type) => StopService(GetService(type));
-    public static bool StopService<TService>() where TService : class, IService, new() => StopService(GetService<TService>());
-    
-    public static bool StopService(Enum serviceType) {
+    public static bool StopService(Type type) => StopService(_serviceDic.TryGetValue(type, out var service) ? service : CreateService(type));
+    public static bool StopService<TService>() where TService : class, IService, new() => StopService(_serviceDic.TryGetValue(typeof(TService), out var service) ? service : CreateService<TService>());
+
+    public static bool StopService(E_SERVICE_TYPE serviceType) {
         var targetTypeList = GetTypeList(serviceType);
         targetTypeList.ForEach(x => StopService(x));
         return targetTypeList.Count > 0;
@@ -80,35 +84,93 @@ public static class Service {
             return false;
         }
     }
+
+    public static bool RestartService(Type type) => RestartService(_serviceDic.TryGetValue(type, out var service) ? service : CreateService(type));
+    public static bool RestartService<TService>() where TService : class, IService, new() => RestartService(_serviceDic.TryGetValue(typeof(TService), out var service) ? service : CreateService<TService>());
+
+    public static bool RestartService(E_SERVICE_TYPE serviceType) {
+        var targetTypeList = GetTypeList(serviceType);
+        targetTypeList.ForEach(x => RestartService(x));
+        return targetTypeList.Count > 0;
+    }
+    
+    public static bool RestartService(IService service) {
+        try {
+            if (service == null) {
+                return false;
+            }
+            
+            service.Stop();
+            service.Start();
+            Logger.TraceLog($"Service Restart || {service.GetType().Name}", Color.green);
+            return true;
+        } catch (Exception e) {
+            Logger.TraceError(e);
+            Logger.TraceError($"Service Restart Failed || {service?.GetType().Name}");
+            return false;
+        }
+    }
+
+    public static bool RefreshService(Type type) => _serviceDic.TryGetValue(type, out var service) && RefreshService(service);
+    public static bool RefreshService<TService>() where TService : class, IService, new() => _serviceDic.TryGetValue(typeof(TService), out var service) && RefreshService(service);
+
+    public static bool RefreshService(E_SERVICE_TYPE serviceType) {
+        var targetTypeList = GetTypeList(serviceType);
+        targetTypeList.ForEach(x => RefreshService(x));
+        return targetTypeList.Count > 0;
+    }
+
+    public static bool RefreshService(IService service) {
+        try {
+            if (service == null) {
+                return false;
+            }
+            
+            service.Refresh();
+            Logger.TraceLog($"Service Refresh || {service.GetType().Name}", Color.yellow);
+            return true;
+        } catch (Exception e) {
+            Logger.TraceError(e);
+            Logger.TraceError($"Service Refresh Failed || {service?.GetType().Name}");
+            return false;
+        }
+    }
+
+    public static bool TryGetService<TService>(out TService service) where TService : class, IService, new() {
+        service = GetService<TService>();
+        return service != null;
+    }
+    
+    public static TService GetService<TService>() where TService : class, IService, new() => GetService(typeof(TService)) as TService;
     
     public static IService GetService(Type type) {
-        if (_interfaceType.IsAssignableFrom(type) && _serviceDic.TryGetValue(type, out var iService) == false) {
-            if (Activator.CreateInstance(type) is IService service) {
-                service.Init();
-                _serviceDic.Add(type, service);
-            } else {
-                Logger.TraceError($"{nameof(IService)} is Missing || GetType = {type.Name}");
-                return null;
-            }
+        if (_interfaceType.IsAssignableFrom(type) == false) {
+            Logger.TraceError($"{type.FullName} is Not Assignable from {_interfaceType.FullName}");
+            return null;
+        }
+
+        if (_serviceDic.ContainsKey(type) == false) {
+            StartService(CreateService(type));
         }
 
         return _serviceDic[type];
     }
     
-    public static TService GetService<TService>() where TService : class, IService, new() {
-        var type = typeof(TService);
-        if (_serviceDic.TryGetValue(type, out var iService) == false) {
-            var service = new TService();
-            service.Init();
+    private static IService CreateService(Type type) {
+        if (Activator.CreateInstance(type) is IService service) {
             _serviceDic.Add(type, service);
+            service.Init();
+            return service;
         }
         
-        return _serviceDic[type] as TService;
+        return null;
     }
-    
+
+    private static IService CreateService<TService>() where TService : class, IService, new() => CreateService(typeof(TService));
+
     public static bool RemoveService<TService>() where TService : class, IService => RemoveService(typeof(TService));
 
-    public static bool RemoveService(Enum type) {
+    public static bool RemoveService(E_SERVICE_TYPE type) {
         var typeList = GetTypeList(type);
         return typeList.All(RemoveService);
     }
@@ -124,28 +186,27 @@ public static class Service {
         return false;
     }
     
-    public static List<IService> GetServiceList(Enum serviceType) => _serviceDic.Values.Where(x => x.GetType().GetCustomAttribute<ServiceAttribute>()?.serviceTypes.Contains(serviceType) ?? false).ToList();
-    public static List<Type> GetTypeList(Enum serviceType) => _cachedServiceTypeList.FindAll(x => x.GetCustomAttribute<ServiceAttribute>()?.serviceTypes.Contains(serviceType) ?? false);
+    public static List<IService> GetServiceList(E_SERVICE_TYPE type) => _serviceDic.Values.Where(x => x.GetType().GetCustomAttribute<ServiceAttribute>()?.serviceTypes.Contains(type) ?? false).ToList();
+    public static List<Type> GetTypeList(E_SERVICE_TYPE serviceType) => _cachedServiceTypeList.FindAll(x => x.GetCustomAttribute<ServiceAttribute>()?.serviceTypes.Contains(serviceType) ?? false);
 }
 
-/// <summary>
-/// Sample Enum
-/// </summary>
 public enum E_SERVICE_TYPE {
-    NONE,                 // 일반적으로 서비스 최초 Get 을 통해 서비스 시작
+    NONE,                         // 일반적으로 서비스 최초 Get 을 통해 서비스 시작
+    GAME_SCENE_DURING,            // GameScene 동안 서비스
+    GAME_SCENE_DURING_AFTER_INIT, // GameScene PlayManager 초기화 이후 GAME_SCENE_DURING 과 동일하게 서비스
+    GAME_SCENE_FOCUS_DURING,      // 게임에 포커스가 있는 동안 서비스
 }
 
 [AttributeUsage(AttributeTargets.Class)]
 public sealed class ServiceAttribute : Attribute {
-    
-    public readonly object[] serviceTypes;
+
+    public E_SERVICE_TYPE[] serviceTypes;
 
     public ServiceAttribute() {
-        serviceTypes = new object[] {};
+        serviceTypes = new[] { E_SERVICE_TYPE.NONE };
     }
     
-    /// <param name="serviceTypes">enum type</param>
-    public ServiceAttribute(params object[] serviceTypes) {
-        this.serviceTypes = serviceTypes;
+    public ServiceAttribute(params E_SERVICE_TYPE[] serviceType) {
+        this.serviceTypes = serviceType;
     }
 }

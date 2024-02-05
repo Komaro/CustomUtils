@@ -4,7 +4,7 @@ using System.Linq;
 
 public class UIAttribute : Attribute {
     public readonly string prefabs;
-    public readonly UIAnchorType anchorType;
+    public readonly AnchorPresets anchorType;
     public readonly UIGroupType[] groups;
 
     public UIAttribute(string prefabs) {
@@ -13,7 +13,7 @@ public class UIAttribute : Attribute {
         this.groups = new UIGroupType[] { };
     }
 
-    public UIAttribute(string prefabs, UIAnchorType anchorType) {
+    public UIAttribute(string prefabs, AnchorPresets anchorType) {
         this.prefabs = prefabs;
         this.anchorType = anchorType;
         this.groups = new UIGroupType[] { };
@@ -26,13 +26,13 @@ public class UIAttribute : Attribute {
     }
     
 	
-    public UIAttribute(string prefabs, UIAnchorType anchorType, params UIGroupType[] groups) {
+    public UIAttribute(string prefabs, AnchorPresets anchorType, params UIGroupType[] groups) {
         this.prefabs = prefabs;
         this.anchorType = anchorType;
         this.groups = groups.Length <= 0 ? new UIGroupType[] { } : groups;
     }
 
-    public void Deconstruct(out string prefabs, out UIAnchorType anchorType, out List<UIGroupType> groups) {
+    public void Deconstruct(out string prefabs, out AnchorPresets anchorType, out List<UIGroupType> groups) {
         prefabs = this.prefabs;
         anchorType = this.anchorType;
         groups = this.groups.ToList();

@@ -200,6 +200,7 @@ public class EditorBuild : EditorWindow {
                 Debug.LogError($"{nameof(_builderAttribute)} is Null. Create {_buildType} {nameof(Builder)} and {nameof(_builderAttribute)}");
                 EditorGUILayout.EndScrollView();
                 EditorGUILayout.EndVertical();
+                EditorGUILayout.LabelField($"최소 하나 이상의 {nameof(Builder)}를 상속받고 {nameof(BuilderAttribute)}를 가진 {nameof(Builder)} Class를 생성하여야 합니다.");
                 return;
             }
         }

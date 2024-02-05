@@ -250,7 +250,5 @@ public class ControlSoundAttribute : Attribute {
     
     public readonly List<Enum> controlList;
 
-    public ControlSoundAttribute(params object[] controlTypes) {
-        controlList = controlTypes.ConvertTo(x => x as Enum);
-    }
+    public ControlSoundAttribute(params object[] controlTypes) => controlList = controlTypes.ConvertTo(x => x as Enum);
 }

@@ -14,7 +14,7 @@ public class SoundTrack : ScriptableObject {
     
     private static List<IDisposable> _disposableList = new(); 
     
-    public void PreviewPlay(AudioSource audioSource) {
+    public virtual void PreviewPlay(AudioSource audioSource) {
         if (audioSource == null) {
             Logger.TraceError($"{nameof(audioSource)} is Null");
             return;
@@ -24,7 +24,12 @@ public class SoundTrack : ScriptableObject {
     }
 
     // 런타임에 아래 코드 사용 시 싱크 문제가 발생할 수 있음.
-    protected void PlayPreviewSoundEvent(AudioSource audioSource) {
+    protected virtual void PlayPreviewSoundEvent(AudioSource audioSource) {
+        if (Application.isEditor == false || Application.isPlaying) {
+            Logger.TraceError("Do not use this method outside of the editor or during runtime.");
+            return;
+        }
+        
         if (audioSource.isPlaying) {
             PreviewStop();
         }
@@ -57,17 +62,17 @@ public class SoundTrack : ScriptableObject {
         }
     }
 
-    protected void StopPreviewSoundEvent() => _disposableList.SafeClear(x => x.Dispose());
+    protected virtual void StopPreviewSoundEvent() => _disposableList.SafeClear(x => x.Dispose());
 
-    public void PreviewStop() {
+    public virtual void PreviewStop() {
         Logger.TraceLog($"Stop || {name}", Color.red);
         _disposableList.ForEach(x => x.Dispose());
         _disposableList.Clear();
     }
     
-    public void UnloadAudioClip() => eventList?.ForEach(x => x.Unload());
+    public virtual void UnloadAudioClip() => eventList?.ForEach(x => x.Unload());
 
-    public bool IsValid(out E_SOUND_TRACK_ERROR error) {
+    public virtual bool IsValid(out E_SOUND_TRACK_ERROR error) {
         try {
             if (eventList == null) {
                 error = E_SOUND_TRACK_ERROR.EVENT_LIST_NULL;
@@ -104,7 +109,7 @@ public class SoundTrack : ScriptableObject {
         return true;
     }
     
-    public bool IsValid() => eventList is { Length: > 0 } && eventList.Any(x => x != null && x.IsValidClip() && x.clip.loadState != AudioDataLoadState.Failed);
+    public virtual bool IsValid() => eventList is { Length: > 0 } && eventList.Any(x => x != null && x.IsValidClip() && x.clip.loadState != AudioDataLoadState.Failed);
 }
 
 public enum E_TRACK_TYPE {

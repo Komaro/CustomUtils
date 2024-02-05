@@ -8,11 +8,12 @@ public interface IResourceProvider {
     void Init();
     Dictionary<string, Object> Load();
     Object Get(string name);
+    string GetPath(string name);
 }
 
-public class LocalResourceProvider : IResourceProvider {
+public class AssetBundleProvider : IResourceProvider {
     
-    private Dictionary<string, string> _resourcePathDic = new Dictionary<string, string>();
+    private Dictionary<string, string> _resourcePathDic = new();
     
     private const string RESOURCE_PATH = "Assets/AssetBundles";
     private const string META_SUFFIX = ".meta";
@@ -47,7 +48,12 @@ public class LocalResourceProvider : IResourceProvider {
             }
             
             if (VALID_TYPE.Exists(x => file.Contains(x))) {
-                _resourcePathDic.Add(Path.GetFileNameWithoutExtension(file), file.Replace("\\", "/"));
+                var name = Path.GetFileNameWithoutExtension(file);
+                if (_resourcePathDic.ContainsKey(name)) {
+                    Logger.TraceError($"{name} Duplicated");
+                } else {
+                    _resourcePathDic.Add(name, file.Replace("\\", "/"));
+                }
             }
         }
     }
@@ -69,6 +75,15 @@ public class LocalResourceProvider : IResourceProvider {
         if (_resourcePathDic.TryGetValue(name, out var path)) {
             return AssetDatabase.LoadAssetAtPath(path, typeof(Object));
         }
+        
         return null;
+    }
+
+    public string GetPath(string name) {
+        if (_resourcePathDic.TryGetValue(name, out var path)) {
+            return path;
+        }
+
+        return string.Empty;
     }
 }

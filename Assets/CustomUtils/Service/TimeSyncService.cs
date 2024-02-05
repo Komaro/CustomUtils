@@ -4,14 +4,20 @@ using System.Net;
 using System.Net.Sockets;
 using UnityEngine;
 
-public class TimeSyncManager : Singleton<TimeSyncManager> {
+public class TimeSyncService : IService {
 
     private const string NTP_SERVER_URL = "pool.ntp.org";
     private const int NTP_SERVER_PROT = 123;
     private const int RECEIVE_TIME_OUT = 3000;
-
-    private DateTime _utcSyncTime;
     
+    private DateTime _utcSyncTime;
+
+    public void Start() => Sync();
+    public void Stop() {
+
+        
+    }
+
     public void Sync() {
         var ntpData = new byte[48];
         ntpData[0] = 0x1B;
@@ -23,7 +29,6 @@ public class TimeSyncManager : Singleton<TimeSyncManager> {
         }
         
         var ipEndPoint = new IPEndPoint(addresses[0], NTP_SERVER_PROT);
-
         try {
             using var socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
             socket.Connect(ipEndPoint);
@@ -42,14 +47,20 @@ public class TimeSyncManager : Singleton<TimeSyncManager> {
         _utcSyncTime = (new DateTime(1900, 1, 1)).AddMilliseconds((long)(intPart * 1000 + fractPart * 1000 / 0x100000000L));
         Logger.TraceLog($"Time Sync || {_utcSyncTime}");
     }
-
+    
     public DateTime GetUTCTime() => _utcSyncTime == DateTime.MinValue ? DateTime.UtcNow : _utcSyncTime;
+    
+    public DateTime GetUTCTommorowStartTime() {
+        var tomorrow = GetUTCTime().AddDays(1);
+        return new DateTime(tomorrow.Year, tomorrow.Month, tomorrow.Day, 0, 0, 0, DateTimeKind.Utc);
+    }
+    
     public DateTime GetKtcTime() => GetUTCTime().AddHours(9);
 
     public IEnumerator TimeSyncCoroutine(float delay) {
         while (true) {
             yield return new WaitForSeconds(delay);
-            Sync();    
+            Sync();
         }
     }
 }

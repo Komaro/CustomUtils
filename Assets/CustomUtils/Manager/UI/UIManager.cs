@@ -5,29 +5,25 @@ using System.Reflection;
 using UnityEngine;
 
 public class UIManager : Singleton<UIManager> {
+
+	private GameObject _root;
+	private Dictionary<Type, UIBase> _cachedUIDic = new();
 	
-    private Dictionary<UIAnchorType, GameObject> _rootDic = new Dictionary<UIAnchorType, GameObject>();
-	private Dictionary<Type, UIBase> _cachedUIDic = new Dictionary<Type, UIBase>();
+	protected Dictionary<Type, List<UIOptionAttribute>> _optionDic = new();
+	protected Dictionary<Enum, IUIOptionExecute> _optionExecuteDic = new();
 
 	public void Init() {
 		/*
 		
 		*/
 	}
-
-	public void Clear() {
-		_rootDic.Clear();
-	}
-
-	public void SetAnchor(UIAnchorType type, GameObject go) {
-		if (_rootDic.ContainsKey(type)) {
-			_rootDic[type] = go;
-		} else {
-			_rootDic.Add(type, go);	
-		}
-	}
-
+	
 	public T GetUI<T>() where T : UIBase {
+		if (_root == null) {
+			Logger.TraceError($"${nameof(_root)} is Null");
+			return null;
+		}
+		
 		if (_cachedUIDic.TryGetValue(typeof(T), out var ui) && ui != null) {
 			return ui as T;
 		}
@@ -43,12 +39,7 @@ public class UIManager : Singleton<UIManager> {
 			Logger.TraceError($"{nameof(prefab)} is Null or Empty");
 			return null;
 		}
-
-		if (_rootDic.TryGetValue(anchor, out var root) == false) {
-			Logger.TraceError($"Invalid Anchor Type || {anchor}");
-			return null;
-		}
-
+		
 		var go = ResourceManager.inst.Get(prefab);
 		if (go == null) {
 			Logger.TraceError($"Missing Prefabs || {prefab}");
@@ -56,7 +47,7 @@ public class UIManager : Singleton<UIManager> {
 		}
 		
 		go.SetActive(false);
-		go.transform.SetParent(root.transform, false);
+		go.transform.SetParent(_root.transform, false);
 		
 		ui = go.GetComponent<T>();
 		if (ui == null) {
@@ -119,6 +110,20 @@ public class UIManager : Singleton<UIManager> {
 		}
 		
 		return ui?.IsActive() ?? false;
+	}
+
+	protected IUIOptionExecute GetOptionExecute(Enum type) {
+		if (_optionExecuteDic.TryGetValue(type, out var execute) == false) {
+			var executeType = ReflectionManager.GetInterfaceTypes<IUIOptionExecute>().First(x => x.TryGetCustomAttribute<UIOptionExecuteAttribute>(out var attribute) && attribute.type.Equals(type));
+			if (executeType != null) {
+				if (Activator.CreateInstance(executeType) is IUIOptionExecute newExecute) {
+					execute = newExecute;
+					_optionExecuteDic.Add(type, newExecute);
+				}
+			}
+		}
+
+		return execute;
 	}
 
 	public bool IsActiveUI<T>() where T : UIBase => _cachedUIDic.TryGetValue(typeof(T), out var ui) && ui.IsActive();
@@ -192,18 +197,6 @@ public static class UIComponentExtension {
 		component = transform.FindComponent<T>(objectName);
 		return component != null;
 	}
-}
-
-public enum UIAnchorType {
-	CENTER,
-	LEFT,
-	RIGHT,
-	TOP,
-	TOP_LEFT,
-	TOP_RIGHT,
-	BOTTOM,
-	BOTTOM_LEFT,
-	BOTTOM_RIGHT,
 }
 
 public enum UIGroupType {

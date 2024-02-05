@@ -1,10 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 public class ResourceManager : Singleton<ResourceManager> {
 
     private IResourceProvider _provider;
-    private Dictionary<string, Object> _cacheResource = new Dictionary<string, Object>();
+    private Dictionary<string, Object> _cacheResource;
     
     public void Init(IResourceProvider provider) {
         _provider = provider;
@@ -13,21 +16,17 @@ public class ResourceManager : Singleton<ResourceManager> {
 
     public void LoadResource() => _provider?.Load();
 
-    public Object GetObject(string name) {
-        if (_cacheResource.TryGetValue(name, out var ob)) {
-            return ob as GameObject;
-        }
-
-        ob = _provider.Get(name);
-        if (ob == null) {
-            Logger.TraceError($"{nameof(ob)} is Null. Missing Resource || {name}");
-            return default;
-        }
-
-        return ob;
+    public bool TryGet(string name, out GameObject go) {
+        go = Get(name);
+        return go != null;
     }
     
     public GameObject Get(string name) => GetObject(name) as GameObject;
+
+    public bool TryGet<T>(string name, out T ob) where T : Object {
+        ob = Get<T>(name);
+        return ob != null;
+    }
     
     public T Get<T>(string name) where T : Object {
         var ob = GetObject(name);
@@ -38,7 +37,29 @@ public class ResourceManager : Singleton<ResourceManager> {
         return null;
     }
     
+    public Object GetObject(string name) {
+        if (_cacheResource.TryGetValue(name, out var ob)) {
+            return ob;
+        }
+
+        ob = _provider.Get(name);
+        if (ob == null) {
+            Logger.TraceError($"{nameof(ob)} is Null. Missing Resource || {name}");
+            return default;
+        }
+
+        return ob;
+    }
+
+    public bool TryGetPath(string name, out string path) {
+        path = GetPath(name);
+        return string.IsNullOrEmpty(path) == false;
+    }
+    
+    public string GetPath(string name) => _provider.GetPath(name);
+    
     public T Instantiate<T>(string name, GameObject parent, bool isAddComponent = false) where T : Component => Instantiate<T>(name, parent.transform, isAddComponent);
+    
     public T Instantiate<T>(string name, Transform parent, bool isAddComponent = false) where T : Component {
         var instant = Instantiate(name, parent);
         if (instant == null) {
@@ -51,14 +72,14 @@ public class ResourceManager : Singleton<ResourceManager> {
 
         if (isAddComponent) {
             return instant.AddComponent<T>();
-        } else {
-            Logger.TraceError($"Component Missing || {nameof(T)} || {name}");               
         }
 
+        Logger.TraceError($"Component Missing || {nameof(T)} || {name}");
         return null;
     }
 
     public GameObject Instantiate(string name, GameObject parent) => Instantiate(name, parent.transform);
+    
     public GameObject Instantiate(string name, Transform parent) {
         var ob = Get(name);
         if (ob == default) {

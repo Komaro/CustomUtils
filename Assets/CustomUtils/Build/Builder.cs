@@ -522,6 +522,8 @@ public abstract class Builder {
     #endregion
 }
 
+//******** Sample Enum Attribute ********//
+/*
 [BuildType]
 public enum BUILD_TYPE {
     NONE,
@@ -538,19 +540,15 @@ public enum COMMON_BUILD_OPTION_TYPE {
 [BuildOption(BuildTargetGroup.iOS)]
 public enum IOS_BUILD_OPTION_TYPE {
     [EnumValue("\n\n=== iOS Build Option ===")]
-    Debug_In_House,
+    DEBUG_IOS,
 }
 
 [DefineSymbol]
 public enum BUILD_DEFINE_SYMBOL_TYPE {
     [EnumValue("\n\n=== DEBUG ===")]
-    _DEBUG_LOG_
+    DEBUG_LOG
 }
-
-[ReimportExtension]
-public enum REIMPORT_EXTENSION_TYPE {
-    SPRITEATLASV2,
-}
+*/
 
 [AttributeUsage(AttributeTargets.Class)]
 public class BuilderAttribute : Attribute {
@@ -589,9 +587,6 @@ public class BuildOptionAttribute : Attribute {
 
 [AttributeUsage(AttributeTargets.Enum)]
 public class DefineSymbolAttribute : Attribute { }
-
-[AttributeUsage(AttributeTargets.Enum)]
-public class ReimportExtensionAttribute : Attribute { }
 
 [AttributeUsage(AttributeTargets.Field)]
 public class EnumValueAttribute : Attribute {

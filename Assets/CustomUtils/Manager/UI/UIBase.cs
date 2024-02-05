@@ -24,7 +24,4 @@ public abstract class UIBase : MonoBehaviour, IUIBase {
     public virtual void SetActive(bool isActive) => gameObject.SetActive(isActive);
     public virtual bool IsActive() => gameObject.activeInHierarchy;
     public virtual bool OnBack() => false;
-    protected virtual void SetAnchor(GameObject go, int left, int bottom, int right, int top) {
-        // TODO. Not Implemented
-    }
 }

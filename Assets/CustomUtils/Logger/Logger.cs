@@ -1,17 +1,13 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
 
 public static class Logger {
-
+    
     // Log
-    public static void Log(string text) {
-#if DEBUG_LOG
-        Debug.Log(text);
-#endif
-    }
-
+    public static void Log(string text) => Debug.Log(text);
     public static void Log(string text, Color color) => Log($"<color=#{ColorUtility.ToHtmlStringRGB(color)}>{text}</color>");
     public static void Log(string format, params object[] args) => Log(string.Format(format, args));
     public static void Log(string format, Color color, params object[] args) => Log($"<color=#{ColorUtility.ToHtmlStringRGB(color)}>{format}</color>", args);
@@ -19,12 +15,7 @@ public static class Logger {
     public static void Log(object obj, Color color) => Log(obj?.ToString() ?? string.Empty, color);
 
     // Warning
-    public static void Warning(string text) {
-#if DEBUG_LOG
-        Debug.LogWarning(text);
-#endif
-    }
-
+    public static void Warning(string text) => Debug.LogWarning(text);
     public static void Warning(string text, Color color) => Warning($"<color=#{ColorUtility.ToHtmlStringRGB(color)}>{text}</color>");
     public static void Warning(string format, params object[] args) => Warning(string.Format(format, args));
     public static void Warning(string format, Color color, params object[] args) => Warning($"<color=#{ColorUtility.ToHtmlStringRGB(color)}>{format}</color>", args);
@@ -43,55 +34,64 @@ public static class Logger {
     // TraceLog
     public static void TraceLog(string text) {
         var caller = GetCaller();
-        Log($"[{caller.GetMethod().ReflectedType?.Name}.{caller.GetMethod().Name}] {text}");
+        Log($"[{caller?.GetMethod()?.ReflectedType?.Name}.{caller?.GetMethod()?.Name}] {text}");
     }
 
     public static void TraceLog(string text, Color color) {
         var caller = GetCaller();
-        Log($"[{caller.GetMethod().ReflectedType?.Name}.{caller.GetMethod().Name}] {text}", color);
+        Log($"[{caller?.GetMethod()?.ReflectedType?.Name ?? string.Empty}.{caller?.GetMethod()?.Name ?? string.Empty}] {text}", color);
     }
 
     public static void TraceLog(string format, params object[] args) {
         var caller = GetCaller();
-        Log($"[{caller.GetMethod().ReflectedType?.Name}.{caller.GetMethod().Name}] {string.Format(format, args)}");
+        Log($"[{caller?.GetMethod()?.ReflectedType?.Name ?? string.Empty}.{caller?.GetMethod()?.Name ?? string.Empty}] {string.Format(format, args)}");
     }
 
     public static void TraceLog(string format, Color color, params object[] args) {
         var caller = GetCaller();
-        Log($"[{caller.GetMethod().ReflectedType?.Name}.{caller.GetMethod().Name}] {string.Format(format, args)}", color);
+        Log($"[{caller?.GetMethod()?.ReflectedType?.Name ?? string.Empty}.{caller?.GetMethod()?.Name ?? string.Empty}] {string.Format(format, args)}", color);
     }
 
     public static void TraceLog(object obj) {
         var caller = GetCaller();
-        Log($"[{caller.GetMethod().ReflectedType?.Name}.{caller.GetMethod().Name}] {obj?.ToString() ?? string.Empty}");
+        Log($"[{caller?.GetMethod()?.ReflectedType?.Name ?? string.Empty}.{caller?.GetMethod()?.Name ?? string.Empty}] {obj?.ToString() ?? string.Empty}");
     }
 
     public static void TraceLog(object obj, Color color) => TraceLog(obj?.ToString() ?? string.Empty, color);
 
 
+    // TraceWarning
+    public static void TraceWarning(string text) {
+        var caller = GetCaller();
+        Warning($"[{caller?.GetMethod()?.ReflectedType?.Name}.{caller?.GetMethod()?.Name}] {text}");
+    }
+
+
     // TraceError
     public static void TraceError(string text) {
         var caller = GetCaller();
-        Error($"[{caller.GetMethod().ReflectedType?.Name}.{caller.GetMethod().Name}] {text}");
+        Error($"[{caller?.GetMethod().ReflectedType?.Name}.{caller?.GetMethod().Name}] {text}");
     }
 
     public static void TraceError(string text, Color color) {
         var caller = GetCaller();
-        Error($"[{caller.GetMethod().ReflectedType?.Name}.{caller.GetMethod().Name}] {text}", color);
+        Error($"[{caller?.GetMethod().ReflectedType?.Name}.{caller?.GetMethod().Name}] {text}", color);
     }
 
     public static void TraceError(string format, params object[] args) {
         var caller = GetCaller();
-        Error($"[{caller.GetMethod().ReflectedType?.Name}.{caller.GetMethod().Name}] {string.Format(format, args)}");
+        Error($"[{caller?.GetMethod().ReflectedType?.Name}.{caller?.GetMethod().Name}] {string.Format(format, args)}");
     }
 
     public static void TraceError(string format, Color color, params object[] args) {
         var caller = GetCaller();
-        Error($"[{caller.GetMethod().ReflectedType?.Name}.{caller.GetMethod().Name}] {string.Format(format, args)}", color);
+        Error($"[{caller?.GetMethod().ReflectedType?.Name}.{caller?.GetMethod().Name}] {string.Format(format, args)}", color);
     }
 
     public static void TraceError(object obj) => TraceError(obj?.ToString() ?? string.Empty);
     public static void TraceError(object obj, Color color) => TraceError(obj?.ToString() ?? string.Empty, color);
+
+    public static void SimpleTraceError(string text, [CallerFilePath] string caller = null) => Error($"[{caller}] {text}");
 
     private static StackFrame GetCaller() => new StackTrace().GetFrame(2);
 

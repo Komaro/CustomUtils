@@ -4,7 +4,7 @@ using UniRx;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-//[Service(E_SERVICE_TYPE.GAME_SCENE_DURING_AFTER_INIT)]
+//[Service(SERVICE_TYPE.GAME_SCENE_DURING_AFTER_INIT)]
 public class Sample_GraphicQualityService : IService {
 
     private ReactiveProperty<SAMPLE_GRAPHIC_QUALITY_TYPE> _graphicQualityType = new ();

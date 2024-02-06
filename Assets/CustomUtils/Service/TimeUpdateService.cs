@@ -3,7 +3,7 @@ using UnityEngine;
 using System.Linq;
 using UniRx;
 
-[ServiceAttribute(E_SERVICE_TYPE.NONE)]
+[ServiceAttribute(SERVICE_TYPE.NONE)]
 public class TimeUpdateService : IService {
 
     private IObservable<long> _updateStream;

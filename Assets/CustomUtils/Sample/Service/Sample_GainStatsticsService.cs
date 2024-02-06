@@ -4,7 +4,7 @@ using System.Linq;
 using UniRx;
 using UnityEngine;
 
-// [Service(E_SERVICE_TYPE.GAME_SCENE_DURING_AFTER_INIT)]
+// [Service(SERVICE_TYPE.GAME_SCENE_DURING_AFTER_INIT)]
 public class Sample_GainStatsticsService : IService {
 
     private float _recordingTick;

@@ -36,7 +36,7 @@ public static class Service {
     public static bool StartService(Type type) => StartService(_serviceDic.TryGetValue(type, out var service) ? service : CreateService(type));
     public static bool StartService<TService>() where TService : class, IService, new() => StartService(_serviceDic.TryGetValue(typeof(TService), out var service) ? service : CreateService<TService>());
 
-    public static bool StartService(E_SERVICE_TYPE serviceType) {
+    public static bool StartService(SERVICE_TYPE serviceType) {
         var targetTypeList = GetTypeList(serviceType);
         targetTypeList.ForEach(x => StartService(x));
         return targetTypeList.Count > 0;
@@ -63,7 +63,7 @@ public static class Service {
     public static bool StopService(Type type) => StopService(_serviceDic.TryGetValue(type, out var service) ? service : CreateService(type));
     public static bool StopService<TService>() where TService : class, IService, new() => StopService(_serviceDic.TryGetValue(typeof(TService), out var service) ? service : CreateService<TService>());
 
-    public static bool StopService(E_SERVICE_TYPE serviceType) {
+    public static bool StopService(SERVICE_TYPE serviceType) {
         var targetTypeList = GetTypeList(serviceType);
         targetTypeList.ForEach(x => StopService(x));
         return targetTypeList.Count > 0;
@@ -88,7 +88,7 @@ public static class Service {
     public static bool RestartService(Type type) => RestartService(_serviceDic.TryGetValue(type, out var service) ? service : CreateService(type));
     public static bool RestartService<TService>() where TService : class, IService, new() => RestartService(_serviceDic.TryGetValue(typeof(TService), out var service) ? service : CreateService<TService>());
 
-    public static bool RestartService(E_SERVICE_TYPE serviceType) {
+    public static bool RestartService(SERVICE_TYPE serviceType) {
         var targetTypeList = GetTypeList(serviceType);
         targetTypeList.ForEach(x => RestartService(x));
         return targetTypeList.Count > 0;
@@ -114,7 +114,7 @@ public static class Service {
     public static bool RefreshService(Type type) => _serviceDic.TryGetValue(type, out var service) && RefreshService(service);
     public static bool RefreshService<TService>() where TService : class, IService, new() => _serviceDic.TryGetValue(typeof(TService), out var service) && RefreshService(service);
 
-    public static bool RefreshService(E_SERVICE_TYPE serviceType) {
+    public static bool RefreshService(SERVICE_TYPE serviceType) {
         var targetTypeList = GetTypeList(serviceType);
         targetTypeList.ForEach(x => RefreshService(x));
         return targetTypeList.Count > 0;
@@ -170,7 +170,7 @@ public static class Service {
 
     public static bool RemoveService<TService>() where TService : class, IService => RemoveService(typeof(TService));
 
-    public static bool RemoveService(E_SERVICE_TYPE type) {
+    public static bool RemoveService(SERVICE_TYPE type) {
         var typeList = GetTypeList(type);
         return typeList.All(RemoveService);
     }
@@ -186,27 +186,27 @@ public static class Service {
         return false;
     }
     
-    public static List<IService> GetServiceList(E_SERVICE_TYPE type) => _serviceDic.Values.Where(x => x.GetType().GetCustomAttribute<ServiceAttribute>()?.serviceTypes.Contains(type) ?? false).ToList();
-    public static List<Type> GetTypeList(E_SERVICE_TYPE serviceType) => _cachedServiceTypeList.FindAll(x => x.GetCustomAttribute<ServiceAttribute>()?.serviceTypes.Contains(serviceType) ?? false);
+    public static List<IService> GetServiceList(SERVICE_TYPE type) => _serviceDic.Values.Where(x => x.GetType().GetCustomAttribute<ServiceAttribute>()?.serviceTypes.Contains(type) ?? false).ToList();
+    public static List<Type> GetTypeList(SERVICE_TYPE serviceType) => _cachedServiceTypeList.FindAll(x => x.GetCustomAttribute<ServiceAttribute>()?.serviceTypes.Contains(serviceType) ?? false);
 }
 
-public enum E_SERVICE_TYPE {
-    NONE,                         // 일반적으로 서비스 최초 Get 을 통해 서비스 시작
-    GAME_SCENE_DURING,            // GameScene 동안 서비스
-    GAME_SCENE_DURING_AFTER_INIT, // GameScene PlayManager 초기화 이후 GAME_SCENE_DURING 과 동일하게 서비스
-    GAME_SCENE_FOCUS_DURING,      // 게임에 포커스가 있는 동안 서비스
+public enum SERVICE_TYPE {
+    NONE,
+    GAME_SCENE_DURING,           
+    GAME_SCENE_DURING_AFTER_INIT,
+    GAME_SCENE_FOCUS_DURING, 
 }
 
 [AttributeUsage(AttributeTargets.Class)]
 public sealed class ServiceAttribute : Attribute {
 
-    public E_SERVICE_TYPE[] serviceTypes;
+    public SERVICE_TYPE[] serviceTypes;
 
     public ServiceAttribute() {
-        serviceTypes = new[] { E_SERVICE_TYPE.NONE };
+        serviceTypes = new[] { SERVICE_TYPE.NONE };
     }
     
-    public ServiceAttribute(params E_SERVICE_TYPE[] serviceType) {
+    public ServiceAttribute(params SERVICE_TYPE[] serviceType) {
         this.serviceTypes = serviceType;
     }
 }

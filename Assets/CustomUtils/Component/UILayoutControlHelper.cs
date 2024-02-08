@@ -5,18 +5,18 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-public interface IUILayoutRecursive {
-    void SelectItem(UILayoutItem item);
+public interface ILayoutRecursive {
+    void SelectItem(LayoutItem item);
     void SelectInfo(object info);
 }
 
-public interface IUILayoutItem {
+public interface ILayoutItem {
     void Init();
     void SetData(object data);
     void SetActive(bool isActive);
     void SetSelect(bool isSelect);
     bool IsMatchingInfo(object info);
-    bool TryGetRecursiveUI(out IUILayoutRecursive ui);
+    bool TryGetRecursiveUI(out ILayoutRecursive ui);
     GameObject GetGameObject();
 }
 
@@ -25,12 +25,12 @@ public interface IUILayoutItem {
 /// </summary>
 [RequireComponent(typeof(LayoutGroup))]
 [DisallowMultipleComponent]
-public class UILayoutControlHelper : MonoBehaviour, IUILayoutRecursive {
+public class LayoutControlHelper : MonoBehaviour, ILayoutRecursive {
 
     private LayoutGroup _layoutGroup;
     public LayoutGroup p_layoutGroup { get { return _layoutGroup; } }
 
-    private List<UILayoutItem> _itemList = new();
+    private List<LayoutItem> _itemList = new();
     private IList _infoList;
     
     private string _prefabName;
@@ -42,7 +42,7 @@ public class UILayoutControlHelper : MonoBehaviour, IUILayoutRecursive {
     private RectTransform _layoutRect;
     public RectTransform p_layoutRect => _layoutRect ??= gameObject.GetComponent<RectTransform>();
 
-    private Action<UILayoutItem> _onSelectCallback;
+    private Action<LayoutItem> _onSelectCallback;
     
     private bool _isInitialized = false;
 
@@ -86,10 +86,10 @@ public class UILayoutControlHelper : MonoBehaviour, IUILayoutRecursive {
         onChangeCount?.Invoke(isChangeCount);
     }
 
-    public UILayoutItem InsertItemFirst(object info, bool isClean = false) => InsertItem(0, info, isClean);
-    public UILayoutItem InsertItemLast(object info, bool isClean = false) => InsertItem(GetInfoCount(), info, isClean);
+    public LayoutItem InsertItemFirst(object info, bool isClean = false) => InsertItem(0, info, isClean);
+    public LayoutItem InsertItemLast(object info, bool isClean = false) => InsertItem(GetInfoCount(), info, isClean);
 
-    public UILayoutItem InsertItem(int index, object info, bool isClean = false) {
+    public LayoutItem InsertItem(int index, object info, bool isClean = false) {
         _infoList ??= new List<object>();
 
         index = Math.Clamp(index, 0, GetInfoCount());
@@ -117,9 +117,9 @@ public class UILayoutControlHelper : MonoBehaviour, IUILayoutRecursive {
         return _itemList[index];
     }
 
-    public TItem InsertItemFirst<TItem>(object info, bool isClean = false) where TItem : UILayoutItem => InsertItem<TItem>(0, info, isClean);
-    public TItem InsertItemLast<TItem>(object info, bool isClean = false) where TItem : UILayoutItem => InsertItem<TItem>(_infoList?.Count ?? 0, info, isClean);
-    public TItem InsertItem<TItem>(int index, object info, bool isClean = false) where TItem : UILayoutItem => InsertItem(index, info, isClean) as TItem;
+    public TItem InsertItemFirst<TItem>(object info, bool isClean = false) where TItem : LayoutItem => InsertItem<TItem>(0, info, isClean);
+    public TItem InsertItemLast<TItem>(object info, bool isClean = false) where TItem : LayoutItem => InsertItem<TItem>(_infoList?.Count ?? 0, info, isClean);
+    public TItem InsertItem<TItem>(int index, object info, bool isClean = false) where TItem : LayoutItem => InsertItem(index, info, isClean) as TItem;
 
     public void RemoveItemFirst(bool isItemSort = false) => RemoveItem(0, isItemSort);
     public void RemoveItemLast(bool isItemSort = false) => RemoveItem(_infoList?.Count - 1 ?? 0, isItemSort);
@@ -232,7 +232,7 @@ public class UILayoutControlHelper : MonoBehaviour, IUILayoutRecursive {
         });
     }
 
-    public void BatchActionItem<TItem>(Action<TItem> batchAction) where TItem : UILayoutItem{
+    public void BatchActionItem<TItem>(Action<TItem> batchAction) where TItem : LayoutItem{
         if (_itemList is not { Count: > 0 }) {
             return;
         }
@@ -275,7 +275,7 @@ public class UILayoutControlHelper : MonoBehaviour, IUILayoutRecursive {
     }
 
     private void Sort<TInfo>(IReadOnlyList<KeyValuePair<int, TInfo>> sortInfoList) {
-        var newList = new List<UILayoutItem>();
+        var newList = new List<LayoutItem>();
         if (sortInfoList.Count <= _itemList.Count) {
             for (var i = 0; i < _itemList.Count; i++) {
                 if (i >= sortInfoList.Count) {
@@ -296,9 +296,9 @@ public class UILayoutControlHelper : MonoBehaviour, IUILayoutRecursive {
         }
     }
 
-    public void SetOnSelect(Action<UILayoutItem> onSelect) => _onSelectCallback = onSelect;
+    public void SetOnSelect(Action<LayoutItem> onSelect) => _onSelectCallback = onSelect;
 
-    public UILayoutItem SelectFirst() {
+    public LayoutItem SelectFirst() {
         var item = _itemList.First();
         if (item != null) {
             SelectItem(item);
@@ -307,7 +307,7 @@ public class UILayoutControlHelper : MonoBehaviour, IUILayoutRecursive {
         return item;
     }
 
-    public void SelectItem(UILayoutItem item) {
+    public void SelectItem(LayoutItem item) {
         if (_itemList is not { Count: > 0 }) {
             Logger.TraceError($"{nameof(_itemList)} is Null or Count Zero");
             return;
@@ -347,12 +347,12 @@ public class UILayoutControlHelper : MonoBehaviour, IUILayoutRecursive {
         });
     }
 
-    private UILayoutItem CreateFunc() {
+    private LayoutItem CreateFunc() {
         try {
             var instance = Instantiate(_itemPrefab, gameObject.transform, false);
-            if (instance != null && instance.TryGetComponent<UILayoutItem>(out var item)) {
-                // instance.name = $"{nameof(UILayoutItem)}_{_itemList?.Count ?? 0}";
-                item?.Init(this);
+            if (instance != null && instance.TryGetComponent<LayoutItem>(out var item)) {
+                // instance.name = $"{nameof(LayoutItem)}_{_itemList?.Count ?? 0}";
+                item.Init(this);
                 return item;
             }
         } catch (Exception e) {
@@ -362,7 +362,7 @@ public class UILayoutControlHelper : MonoBehaviour, IUILayoutRecursive {
         return null;
     }
 
-    private void DataAction(object info, UILayoutItem item) {
+    private void DataAction(object info, LayoutItem item) {
         try {
             if (item != null) {
                 item?.SetActive(true);
@@ -373,7 +373,7 @@ public class UILayoutControlHelper : MonoBehaviour, IUILayoutRecursive {
         }
     }
 
-    private void ClearAction(UILayoutItem item) {
+    private void ClearAction(LayoutItem item) {
         try {
             item?.SetActive(false);
         } catch (Exception e) {
@@ -381,7 +381,7 @@ public class UILayoutControlHelper : MonoBehaviour, IUILayoutRecursive {
         }
     }
 
-    public UILayoutControlHelper ItemForEach(Action<UILayoutItem> action) {
+    public LayoutControlHelper ItemForEach(Action<LayoutItem> action) {
         _itemList.ForEach(action);
         return this;
     }
@@ -405,17 +405,17 @@ public class UILayoutControlHelper : MonoBehaviour, IUILayoutRecursive {
         return default;
     }
 
-    public bool TryGetItem<TItem>(int index, out TItem item) where TItem : UILayoutItem {
+    public bool TryGetItem<TItem>(int index, out TItem item) where TItem : LayoutItem {
         item = GetItem<TItem>(index);
         return item != null;
     }
 
-    public bool TryGetItem<TItem>(object info, out TItem item) where TItem : UILayoutItem {
+    public bool TryGetItem<TItem>(object info, out TItem item) where TItem : LayoutItem {
         item = GetItem<TItem>(info);
         return item != null;
     }
 
-    public TItem GetItem<TItem>(int index) where TItem : UILayoutItem {
+    public TItem GetItem<TItem>(int index) where TItem : LayoutItem {
         if (_itemList is not { Count: > 0 }) {
             return default;
         }
@@ -423,7 +423,7 @@ public class UILayoutControlHelper : MonoBehaviour, IUILayoutRecursive {
         return _itemList[GetCollectionIndex(index)] as TItem;
     }
 
-    public TItem GetItem<TItem>(object info) where TItem : UILayoutItem {
+    public TItem GetItem<TItem>(object info) where TItem : LayoutItem {
         if (_itemList is not { Count: > 0 }) {
             return default;
         }
@@ -460,12 +460,12 @@ public class UILayoutControlHelper : MonoBehaviour, IUILayoutRecursive {
         return -1;
     }
 
-    public bool TryGetItemAndIndex<TItem>(object info, out (int index, TItem item) data) where TItem : UILayoutItem {
+    public bool TryGetItemAndIndex<TItem>(object info, out (int index, TItem item) data) where TItem : LayoutItem {
         data = GetItemAndIndex<TItem>(info);
         return data.index > -1 && data.item != default;
     }
 
-    public (int index, TItem item) GetItemAndIndex<TItem>(object info) where TItem : UILayoutItem {
+    public (int index, TItem item) GetItemAndIndex<TItem>(object info) where TItem : LayoutItem {
         if (_infoList == null) {
             return (-1, default);
         }
@@ -518,8 +518,8 @@ public class UILayoutControlHelper : MonoBehaviour, IUILayoutRecursive {
     public int GetInfoCount() => _infoList?.Count ?? 0;
     public int GetLastIndex() => Math.Max(0, GetInfoCount() - 1);
     
-    public List<TItem> GetItemList<TItem>() where TItem : UILayoutItem => _itemList as List<TItem> ?? _itemList.Cast<TItem>().ToList();
-    public List<UILayoutItem> GetItemList() => _itemList;
+    public List<TItem> GetItemList<TItem>() where TItem : LayoutItem => _itemList as List<TItem> ?? _itemList.Cast<TItem>().ToList();
+    public List<LayoutItem> GetItemList() => _itemList;
     
     public bool TryGetCastInfoList<TInfo>(out List<TInfo> castList) {
         castList = GetCastInfoList<TInfo>();
@@ -552,11 +552,11 @@ public class UILayoutControlHelper : MonoBehaviour, IUILayoutRecursive {
     public bool IsInitialized() => _isInitialized && p_layoutRect.sizeDelta != Vector2.zero;
 }
 
-public abstract class UILayoutItem : MonoBehaviour, IUILayoutItem {
+public abstract class LayoutItem : MonoBehaviour, ILayoutItem {
 
-    protected UILayoutControlHelper layoutHelper;
+    protected LayoutControlHelper layoutHelper;
 
-    public void Init(UILayoutControlHelper layoutHelper) {
+    public void Init(LayoutControlHelper layoutHelper) {
         this.layoutHelper = layoutHelper;
         Init();
     }
@@ -567,7 +567,7 @@ public abstract class UILayoutItem : MonoBehaviour, IUILayoutItem {
     public virtual void SetSelect(bool isSelect) { }
     public virtual bool IsMatchingInfo(object info) => false;
 
-    public virtual bool TryGetRecursiveUI(out IUILayoutRecursive ui) {
+    public virtual bool TryGetRecursiveUI(out ILayoutRecursive ui) {
         ui = null;
         return false;
     }
@@ -581,5 +581,5 @@ public abstract class UILayoutItem : MonoBehaviour, IUILayoutItem {
     /// </summary>
     /// <param name="item"></param>
     /// <returns></returns>
-    public int ActiveCompareTo(UILayoutItem item) => -IsActive().CompareTo(item.IsActive());
+    public int ActiveCompareTo(LayoutItem item) => -IsActive().CompareTo(item.IsActive());
 }

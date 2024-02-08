@@ -28,7 +28,7 @@ public static class Service {
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterAssembliesLoaded)]
     private static void Initialize() {
         if (_isInitialized == false) {
-            _cachedServiceTypeList = ReflectionManager.GetInterfaceTypes<IService>().ToList();
+            _cachedServiceTypeList = ReflectionManager.GetInterfaceTypes<IService>().Where(x => x.Name.StartsWith("Sample_") == false).ToList();
             _isInitialized = true;
         }
     }
@@ -192,6 +192,9 @@ public static class Service {
 
 public enum DEFAULT_SERVICE_TYPE {
     NONE,
+    PLAY_DURING,
+    PLAY_FOCUS_DURING,
+    PLAY_DURING_AFTER_INIT,
 }
 
 [AttributeUsage(AttributeTargets.Class)]

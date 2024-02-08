@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-//[Service(SERVICE_TYPE.GAME_SCENE_DURING)]
+[Service(DEFAULT_SERVICE_TYPE.PLAY_DURING)]
 public class Sample_EventScheduleService : IService {
 
     private TimeSyncService _timeSyncService;

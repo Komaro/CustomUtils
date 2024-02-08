@@ -36,7 +36,7 @@ public static class Service {
     public static bool StartService(Type type) => StartService(_serviceDic.TryGetValue(type, out var service) ? service : CreateService(type));
     public static bool StartService<TService>() where TService : class, IService, new() => StartService(_serviceDic.TryGetValue(typeof(TService), out var service) ? service : CreateService<TService>());
 
-    public static bool StartService(SERVICE_TYPE serviceType) {
+    public static bool StartService(Enum serviceType) {
         var targetTypeList = GetTypeList(serviceType);
         targetTypeList.ForEach(x => StartService(x));
         return targetTypeList.Count > 0;
@@ -63,7 +63,7 @@ public static class Service {
     public static bool StopService(Type type) => StopService(_serviceDic.TryGetValue(type, out var service) ? service : CreateService(type));
     public static bool StopService<TService>() where TService : class, IService, new() => StopService(_serviceDic.TryGetValue(typeof(TService), out var service) ? service : CreateService<TService>());
 
-    public static bool StopService(SERVICE_TYPE serviceType) {
+    public static bool StopService(Enum serviceType) {
         var targetTypeList = GetTypeList(serviceType);
         targetTypeList.ForEach(x => StopService(x));
         return targetTypeList.Count > 0;
@@ -88,7 +88,7 @@ public static class Service {
     public static bool RestartService(Type type) => RestartService(_serviceDic.TryGetValue(type, out var service) ? service : CreateService(type));
     public static bool RestartService<TService>() where TService : class, IService, new() => RestartService(_serviceDic.TryGetValue(typeof(TService), out var service) ? service : CreateService<TService>());
 
-    public static bool RestartService(SERVICE_TYPE serviceType) {
+    public static bool RestartService(Enum serviceType) {
         var targetTypeList = GetTypeList(serviceType);
         targetTypeList.ForEach(x => RestartService(x));
         return targetTypeList.Count > 0;
@@ -114,7 +114,7 @@ public static class Service {
     public static bool RefreshService(Type type) => _serviceDic.TryGetValue(type, out var service) && RefreshService(service);
     public static bool RefreshService<TService>() where TService : class, IService, new() => _serviceDic.TryGetValue(typeof(TService), out var service) && RefreshService(service);
 
-    public static bool RefreshService(SERVICE_TYPE serviceType) {
+    public static bool RefreshService(Enum serviceType) {
         var targetTypeList = GetTypeList(serviceType);
         targetTypeList.ForEach(x => RefreshService(x));
         return targetTypeList.Count > 0;
@@ -170,8 +170,8 @@ public static class Service {
 
     public static bool RemoveService<TService>() where TService : class, IService => RemoveService(typeof(TService));
 
-    public static bool RemoveService(SERVICE_TYPE type) {
-        var typeList = GetTypeList(type);
+    public static bool RemoveService(Enum serviceType) {
+        var typeList = GetTypeList(serviceType);
         return typeList.All(RemoveService);
     }
     
@@ -186,27 +186,19 @@ public static class Service {
         return false;
     }
     
-    public static List<IService> GetServiceList(SERVICE_TYPE type) => _serviceDic.Values.Where(x => x.GetType().GetCustomAttribute<ServiceAttribute>()?.serviceTypes.Contains(type) ?? false).ToList();
-    public static List<Type> GetTypeList(SERVICE_TYPE serviceType) => _cachedServiceTypeList.FindAll(x => x.GetCustomAttribute<ServiceAttribute>()?.serviceTypes.Contains(serviceType) ?? false);
+    public static List<IService> GetServiceList(Enum serviceType) => _serviceDic.Values.Where(x => x.GetType().GetCustomAttribute<ServiceAttribute>()?.serviceTypeList.Contains(serviceType) ?? false).ToList();
+    public static List<Type> GetTypeList(Enum serviceType) => _cachedServiceTypeList.FindAll(x => x.GetCustomAttribute<ServiceAttribute>()?.serviceTypeList.Contains(serviceType) ?? false);
 }
 
-public enum SERVICE_TYPE {
+public enum DEFAULT_SERVICE_TYPE {
     NONE,
-    GAME_SCENE_DURING,           
-    GAME_SCENE_DURING_AFTER_INIT,
-    GAME_SCENE_FOCUS_DURING, 
 }
 
 [AttributeUsage(AttributeTargets.Class)]
 public sealed class ServiceAttribute : Attribute {
 
-    public SERVICE_TYPE[] serviceTypes;
+    public List<Enum> serviceTypeList = new();
 
-    public ServiceAttribute() {
-        serviceTypes = new[] { SERVICE_TYPE.NONE };
-    }
-    
-    public ServiceAttribute(params SERVICE_TYPE[] serviceType) {
-        this.serviceTypes = serviceType;
-    }
+    public ServiceAttribute() => serviceTypeList.Add(DEFAULT_SERVICE_TYPE.NONE);
+    public ServiceAttribute(params object[] serviceTypes) => serviceTypeList = serviceTypes.ConvertTo(x => x as Enum);
 }

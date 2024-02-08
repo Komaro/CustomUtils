@@ -13,10 +13,7 @@ public class TimeSyncService : IService {
     private DateTime _utcSyncTime;
 
     public void Start() => Sync();
-    public void Stop() {
-
-        
-    }
+    public void Stop() { }
 
     public void Sync() {
         var ntpData = new byte[48];

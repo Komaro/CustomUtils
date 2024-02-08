@@ -78,7 +78,7 @@ public class EditorBuild : EditorWindow {
     
     private static readonly GUILayoutOption DEFAULT_LAYOUT = GUILayout.Width(300f);
     
-    private static readonly Regex newLineRegex = new Regex(@"(\n)");
+    private static readonly Regex NEW_LINE_REGEX = new Regex(@"(\n)");
 
     [MenuItem("Build/Open Build Setting %F1")]
     private static void OpenWindow() {
@@ -352,10 +352,10 @@ public class EditorBuild : EditorWindow {
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private void DrawTextField(string text) {
-        var match = newLineRegex.Split(text);
+        var match = NEW_LINE_REGEX.Split(text);
         if (match.Length > 0) {
             match.ForEach(x => {
-                if (newLineRegex.IsMatch(x)) {
+                if (NEW_LINE_REGEX.IsMatch(x)) {
                     EditorGUILayout.Space();
                 } else {
                     if (string.IsNullOrEmpty(x) == false) {

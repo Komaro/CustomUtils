@@ -522,34 +522,6 @@ public abstract class Builder {
     #endregion
 }
 
-//******** Sample Enum Attribute ********//
-/*
-[BuildType]
-public enum BUILD_TYPE {
-    NONE,
-    ANDROID,
-    IOS
-}
-
-[BuildOption(BuildTargetGroup.Unknown)]
-public enum COMMON_BUILD_OPTION_TYPE {
-    [EnumValue("\n\n=== Common Build Option ===")]
-    IL2Cpp,
-}
-
-[BuildOption(BuildTargetGroup.iOS)]
-public enum IOS_BUILD_OPTION_TYPE {
-    [EnumValue("\n\n=== iOS Build Option ===")]
-    DEBUG_IOS,
-}
-
-[DefineSymbol]
-public enum BUILD_DEFINE_SYMBOL_TYPE {
-    [EnumValue("\n\n=== DEBUG ===")]
-    DEBUG_LOG
-}
-*/
-
 [AttributeUsage(AttributeTargets.Class)]
 public class BuilderAttribute : Attribute {
     
@@ -603,3 +575,37 @@ public enum VALID_EXECUTE_EXTENSION {
     BAT,
     SH,
 }
+
+//******** Sample Enum Attribute Example ********//
+/*
+[BuildType]
+public enum BUILD_TYPE {
+    NONE,
+    ANDROID,
+    IOS
+}
+
+[BuildOption(BuildTargetGroup.Unknown)]
+public enum COMMON_BUILD_OPTION_TYPE {
+    [EnumValue("\n\n=== Common Build Option ===")]
+    IL2Cpp,
+}
+
+[BuildOption(BuildTargetGroup.Android)]
+public enum ANDROID_BUILD_OPTION_TYPE {
+    [EnumValue("\n\n=== Android Build Option ===")]
+    DEBUG_ANDROID,
+}
+
+[BuildOption(BuildTargetGroup.iOS)]
+public enum IOS_BUILD_OPTION_TYPE {
+    [EnumValue("\n\n=== iOS Build Option ===")]
+    DEBUG_IOS,
+}
+
+[DefineSymbol]
+public enum BUILD_DEFINE_SYMBOL_TYPE {
+    [EnumValue("\n\n=== DEBUG ===")]
+    DEBUG_LOG
+}
+*/

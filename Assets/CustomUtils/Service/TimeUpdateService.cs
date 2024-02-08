@@ -3,7 +3,7 @@ using UnityEngine;
 using System.Linq;
 using UniRx;
 
-[ServiceAttribute(SERVICE_TYPE.NONE)]
+[ServiceAttribute(DEFAULT_SERVICE_TYPE.NONE)]
 public class TimeUpdateService : IService {
 
     private IObservable<long> _updateStream;
@@ -11,14 +11,7 @@ public class TimeUpdateService : IService {
     
     public delegate void UpdateHandler(float tick);
     private event UpdateHandler OnUpdateHandler;
-    public event UpdateHandler OnUpdate {
-        add {
-            if (OnUpdateHandler == null || OnUpdateHandler.GetInvocationList().Contains(value) == false) 
-                OnUpdateHandler += value;
-        }
-
-        remove => OnUpdateHandler -= value;
-    }
+    public SafeDelegate<UpdateHandler> OnUpdate;
 
     public void Init() {
         _updateStream = Observable.EveryEndOfFrame();
@@ -35,11 +28,5 @@ public class TimeUpdateService : IService {
         _updateDisposable = null;
     }
 
-    public void Remove() {
-        if (OnUpdateHandler != null) {
-            foreach (var bindEvent in OnUpdateHandler.GetInvocationList()) {
-                OnUpdate -= (UpdateHandler)bindEvent;
-            }
-        }
-    }
+    public void Remove() => OnUpdate.Clear();
 }

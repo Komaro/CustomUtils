@@ -11,7 +11,7 @@ public class Sample_EventScheduleService : IService {
     
     // Convertible to UniRx
     private GameObject _rootObject;
-    private CoroutineObjet _coroutineObject;
+    private Sample_CoroutineObjet _coroutineObject;
     //
 
     private bool _isServing;
@@ -55,7 +55,7 @@ public class Sample_EventScheduleService : IService {
         }
 
         _rootObject = new GameObject { hideFlags = HideFlags.HideAndDontSave };
-        _coroutineObject = _rootObject.AddComponent<CoroutineObjet>();
+        _coroutineObject = _rootObject.AddComponent<Sample_CoroutineObjet>();
         
         // Input Sample EventInfo
         if (Service.TryGetService(out _timeSyncService)) {
@@ -213,6 +213,24 @@ public class Sample_EventScheduleService : IService {
 
     #endregion
     
+    public class Sample_Event {
+        
+        public int ID;
+    }
+    
+    public class Sample_EventInfo {
+        
+        public int id;
+        public DateTime shopEndDate;
+
+        public Sample_EventInfo(int id, DateTime shopEndDate) {
+            this.id = id;
+            this.shopEndDate = shopEndDate;
+        }
+        
+        public bool IsValidEvent() => shopEndDate > Service.GetService<TimeSyncService>().GetUTCTime();
+    }
+
     public class Sample_EventScheduler {
 
         private Sample_EventInfo _info;
@@ -304,7 +322,7 @@ public class Sample_EventScheduleService : IService {
         #endregion
     }
     
-    protected class CoroutineObjet : MonoBehaviour {
+    protected class Sample_CoroutineObjet : MonoBehaviour {
         
         public delegate void UpdateTimeHandler(float tick);
         public SafeDelegate<UpdateTimeHandler> OnUpdateTime;
@@ -353,23 +371,5 @@ public class Sample_EventScheduleService : IService {
         public void SetRemainTick(float tick) => _remainTick = tick;
 
         #endregion
-    }
-
-    public class Sample_EventInfo {
-        
-        public int id;
-        public DateTime shopEndDate;
-
-        public Sample_EventInfo(int id, DateTime shopEndDate) {
-            this.id = id;
-            this.shopEndDate = shopEndDate;
-        }
-        
-        public bool IsValidEvent() => shopEndDate > Service.GetService<TimeSyncService>().GetUTCTime();
-    }
-
-    public class Sample_Event {
-        
-        public int ID;
     }
 }

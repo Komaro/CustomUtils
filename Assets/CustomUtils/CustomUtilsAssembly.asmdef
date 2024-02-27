@@ -1,0 +1,16 @@
+{
+    "name": "CustomUtilsAssembly",
+    "rootNamespace": "",
+    "references": [
+        "GUID:328261099ebca7b4082e0613f9ec3397"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

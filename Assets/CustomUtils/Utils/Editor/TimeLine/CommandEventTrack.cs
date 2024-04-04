@@ -9,7 +9,7 @@ using UnityEngine.Timeline;
 [DisplayName("Command/CommandTrack")]
 public class CommandEventTrack : TrackAsset {
 
-    public SoundEventMixerBehaviour Template = new();
+    public CommandEventMixerBehaviour Template = new();
 
     public override Playable CreateTrackMixer(PlayableGraph graph, GameObject go, int inputCount) {
         foreach (var clip in GetClips()) {
@@ -18,12 +18,12 @@ public class CommandEventTrack : TrackAsset {
             }
         }
         
-        return ScriptPlayable<SoundEventMixerBehaviour>.Create(graph, Template, inputCount);
+        return ScriptPlayable<CommandEventMixerBehaviour>.Create(graph, Template, inputCount);
     }
 }
 
 [Serializable]
-public class SoundEventMixerBehaviour : PlayableBehaviour {
+public class CommandEventMixerBehaviour : PlayableBehaviour {
 
     public override void ProcessFrame(Playable playable, FrameData info, object playerData) {
         var inputCount = playable.GetInputCount();

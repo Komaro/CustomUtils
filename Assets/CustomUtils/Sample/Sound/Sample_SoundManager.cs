@@ -13,12 +13,12 @@ public sealed class Sample_SoundManager : Singleton<Sample_SoundManager> {
     private SoundCoreBase _core;
     private Sample_SoundBgm _bgm;
 
-    private List<Sample_SoundBase> _soundList = new();
+    private List<SoundBase> _soundList = new();
 
     private IDisposable _muteDisposable;
 
     public void AsyncInit(Action callback = null) {
-        _core = SoundCoreBase.Create<SoundCoreBase>(OnChangeAudioConfiguration);
+        _core = SoundCoreBase.Create<Sample_SoundCore>(OnChangeAudioConfiguration);
         if (_core != null) {
             Logger.TraceLog($"{nameof(SoundCoreBase)} Activate", Color.cyan);
         }
@@ -35,11 +35,11 @@ public sealed class Sample_SoundManager : Singleton<Sample_SoundManager> {
     private IEnumerator InitSound() {
         _soundList.Clear();
         if (_core != null) {
-            var fieldInfoDic = GetType().GetFields(BindingFlags.Instance | BindingFlags.NonPublic).Where(x => x.FieldType.BaseType == typeof(Sample_SoundBase)).ToDictionary(x => x.FieldType, x => x);
-            foreach (var soundType in ReflectionManager.GetSubClassTypes<Sample_SoundBase>()) {
+            var fieldInfoDic = GetType().GetFields(BindingFlags.Instance | BindingFlags.NonPublic).Where(x => x.FieldType.BaseType == typeof(SoundBase)).ToDictionary(x => x.FieldType, x => x);
+            foreach (var soundType in ReflectionManager.GetSubClassTypes<SoundBase>()) {
                 if (fieldInfoDic.TryGetValue(soundType, out var fieldInfo) && fieldInfo.GetValue(this) == null) {
                     var sound = Activator.CreateInstance(soundType, (object)_core);
-                    if (sound is Sample_SoundBase Sample_SoundBase) {
+                    if (sound is SoundBase Sample_SoundBase) {
                         fieldInfo.SetValue(this, Sample_SoundBase);
                         _soundList.Add(Sample_SoundBase);
                     }
@@ -160,12 +160,12 @@ public sealed class Sample_SoundManager : Singleton<Sample_SoundManager> {
         GetMatchSoundExList(types)?.ForEach(x => x.SetMute(isMute));
     }
 
-    private bool TryGetMatchSoundExList(out List<Sample_SoundBase> soundList, params Enum[] enums) {
+    private bool TryGetMatchSoundExList(out List<SoundBase> soundList, params Enum[] enums) {
         soundList = GetMatchSoundExList(enums);
         return soundList is { Count: > 0 };
     }
 
-    private List<Sample_SoundBase> GetMatchSoundExList(params Enum[] enums) => _soundList.FindAll(x => enums.Any(x.IsContainsControlType));
+    private List<SoundBase> GetMatchSoundExList(params Enum[] enums) => _soundList.FindAll(x => enums.Any(x.IsContainsControlType));
 
     public bool TryGetAudioMixerGroup(Enum type, out AudioMixerGroup mixerGroup) {
         mixerGroup = null;

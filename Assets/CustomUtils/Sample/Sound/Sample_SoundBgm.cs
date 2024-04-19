@@ -7,7 +7,7 @@ using UnityEngine.Audio;
 
 [MasterSound(SAMPLE_MASTER_SOUND_TYPE.TYPE_1, SAMPLE_BGM_CONTROL_TYPE.TYPE_1)]
 [ControlSound(SAMPLE_MASTER_SOUND_TYPE.TYPE_1, SAMPLE_BGM_CONTROL_TYPE.TYPE_1)]
-public class Sample_SoundBgm : Sample_SoundBase {
+public class Sample_SoundBgm : SoundBase {
 
     private SAMPLE_BGM_TYPE _currentBgmType;
     private string _currentBgmOption;
@@ -63,7 +63,9 @@ public class Sample_SoundBgm : Sample_SoundBase {
             }
         }
     }
-    
+
+    public override void SubmitSoundOrder(SoundOrder order) { }
+
     public void PlayOneShot(SoundTrack track) => PlayBgm(track);
 
     public void PlayBgm(SAMPLE_BGM_TYPE type, int option) {

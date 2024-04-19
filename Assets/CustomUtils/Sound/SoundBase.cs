@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.Audio;
 
-public abstract class Sample_SoundBase {
+public abstract class SoundBase {
 
     protected SoundCoreBase soundCore;
     protected HashSet<Enum> soundControlSet = new();
@@ -19,15 +19,15 @@ public abstract class Sample_SoundBase {
 
     private Dictionary<Enum, GameObject> _audioSourceRootDic = new();
 
-    protected Enum masterEnum;
-    protected Enum representControlEnum;
+    public Enum masterEnum;
+    public Enum representControlEnum;
     protected bool isMute;
 
     protected readonly char PATH_SEPARATOR = '/';
     protected readonly char NAME_SEPARATOR = '_';
     protected readonly char EXTENSION_SEPARATOR = '.';
 
-    public Sample_SoundBase(SoundCoreBase soundCore) {
+    public SoundBase(SoundCoreBase soundCore) {
         this.soundCore = soundCore;
 
         var type = GetType();
@@ -100,6 +100,8 @@ public abstract class Sample_SoundBase {
             audioSource.PlayOneShot(clip);
         }
     }
+
+    public abstract void SubmitSoundOrder(SoundOrder order);
 
     public bool TryGetAudioMixerGroup(Enum type, out AudioMixerGroup mixerGroup) {
         mixerGroup = GetAudioMixerGroup(type);
@@ -263,4 +265,15 @@ public abstract class Sample_SoundBase {
     }
 
     public bool IsContainsControlType(Enum type) => soundControlSet.Contains(type);
+}
+
+public abstract record SoundOrder {
+    
+    public Enum masterType;
+    public Enum representControlEnum;
+    
+    public SoundOrder(Enum masterType, Enum representControlEnum) {
+        this.masterType = masterType;
+        this.representControlEnum = representControlEnum;
+    }
 }

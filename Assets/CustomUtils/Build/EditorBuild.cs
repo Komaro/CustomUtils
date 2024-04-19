@@ -28,7 +28,6 @@ public class EditorBuild : EditorWindow {
     private bool _deepProfilingSupport;
     private bool _scriptDebugging;
     
-    
     #endregion
 
     #region [Android]
@@ -70,12 +69,12 @@ public class EditorBuild : EditorWindow {
 
     private static EditorBuild _window;
     public static EditorBuild window => _window == null ? _window = GetWindow<EditorBuild>("Build") : _window;
-
-    private static readonly Enum DEFAULT_BUILD_TYPE = (Enum) ReflectionManager.GetAttributeEnumTypes<BuildTypeAttribute>().First()?.GetEnumValues().GetValue(0);
+    
+    private static readonly Enum DEFAULT_BUILD_TYPE = (Enum) ReflectionManager.GetAttributeEnumTypes<BuildTypeAttribute>().FirstOrDefault()?.GetEnumValues().GetValue(0);
     private static readonly GUIStyle DIVIDE_STYLE = new();
     private static readonly GUIStyle PATH_STYLE = new();
     private static readonly GUIStyle BOLD_STYLE = new();
-    
+
     private static readonly GUILayoutOption DEFAULT_LAYOUT = GUILayout.Width(300f);
     
     private static readonly Regex NEW_LINE_REGEX = new Regex(@"(\n)");
@@ -92,7 +91,7 @@ public class EditorBuild : EditorWindow {
         BOLD_STYLE.normal.textColor = Color.gray;
         BOLD_STYLE.fontStyle = FontStyle.Bold;
 
-        _buildType = DEFAULT_BUILD_TYPE; 
+        _buildType = DEFAULT_BUILD_TYPE;
 
         _buildOptionDic.Clear();
         var enumTypes = ReflectionManager.GetAttributeEnumTypes<BuildOptionAttribute>();
@@ -106,7 +105,7 @@ public class EditorBuild : EditorWindow {
                 }
             }
         }
-        
+
         _defineSymbolDic.Clear();
         var enumType = ReflectionManager.GetAttributeEnumTypes<DefineSymbolAttribute>().FirstOrDefault();
         if (enumType != null) {
@@ -123,6 +122,13 @@ public class EditorBuild : EditorWindow {
     }
     
     private void OnGUI() {
+        _buildType ??= DEFAULT_BUILD_TYPE;
+        if (_buildType == default) {
+            Logger.TraceWarning($"{_buildType} is Null");
+            EditorGUILayout.HelpBox($"{nameof(BuildTypeAttribute)} 의 구현이 없습니다. {nameof(BuildTypeAttribute)} 어트리뷰트를 가지는 enum 타입을 하나 이상 구현하여야 합니다.", MessageType.Error);
+            return;
+        }
+        
         EditorGUILayout.LabelField("==================== Build Setting ====================", DIVIDE_STYLE);
         if (GUILayout.Button("Clear Build Path", GUILayout.Width(150f), GUILayout.Height(20f))) {
             _buildPath = string.Empty;
@@ -147,7 +153,6 @@ public class EditorBuild : EditorWindow {
         
         // Build Type Select
         try {
-            _buildType ??= DEFAULT_BUILD_TYPE;
             if (_selectBuildType == null || _selectBuildType.Equals(DEFAULT_BUILD_TYPE)) {
                 _selectBuildType = EditorGUILayout.EnumPopup("Build Type :", _buildType);
             } else {
@@ -200,7 +205,7 @@ public class EditorBuild : EditorWindow {
                 Debug.LogError($"{nameof(_builderAttribute)} is Null. Create {_buildType} {nameof(Builder)} and {nameof(_builderAttribute)}");
                 EditorGUILayout.EndScrollView();
                 EditorGUILayout.EndVertical();
-                EditorGUILayout.LabelField($"최소 하나 이상의 {nameof(Builder)}를 상속받고 {nameof(BuilderAttribute)}를 가진 {nameof(Builder)} Class를 생성하여야 합니다.");
+                EditorGUILayout.HelpBox($"최소 하나 이상의 {nameof(Builder)}를 상속받고 {nameof(BuilderAttribute)}를 가진 {nameof(Builder)} Class를 생성하여야 합니다.", MessageType.Warning);
                 return;
             }
         }

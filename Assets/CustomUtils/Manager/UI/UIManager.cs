@@ -40,7 +40,7 @@ public class UIManager : Singleton<UIManager> {
 			return null;
 		}
 		
-		var go = ResourceManager.inst.Get(prefab);
+		var go = Service.GetService<ResourceService>().Get(prefab);
 		if (go == null) {
 			Logger.TraceError($"Missing Prefabs || {prefab}");
 			return null;

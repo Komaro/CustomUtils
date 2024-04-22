@@ -1,20 +1,41 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-public class ResourceManager : Singleton<ResourceManager> {
+public interface IResourceProvider {
+    void Init();
+    void Load();
+    Object Get(string name);
+    string GetPath(string name);
+}
+
+[Service(DEFAULT_SERVICE_TYPE.RESOURCE_LOAD)]
+public class ResourceService : IService {
 
     private IResourceProvider _provider;
-    private Dictionary<string, Object> _cacheResource;
-    
-    public void Init(IResourceProvider provider) {
-        _provider = provider;
+    private Dictionary<string, Object> _cacheResource = new();
+
+    public void Init() {
+        // TODO. Create Auto Provider Selector
+        _provider = new ResourcesProvider();
         _provider.Init();
     }
 
-    public void LoadResource() => _provider?.Load();
+    public void Start() {
+        _provider.Load();
+    }
+
+    public void Stop() {
+        
+    }
+
+    public void Refresh() {
+        
+    }
+
+    public void Remove() {
+        // Unload All Asset
+    }
 
     public bool TryGet(string name, out GameObject go) {
         go = Get(name);
@@ -47,7 +68,8 @@ public class ResourceManager : Singleton<ResourceManager> {
             Logger.TraceError($"{nameof(ob)} is Null. Missing Resource || {name}");
             return default;
         }
-
+        
+        _cacheResource.AutoAdd(name, ob);
         return ob;
     }
 
@@ -81,12 +103,12 @@ public class ResourceManager : Singleton<ResourceManager> {
     public GameObject Instantiate(string name, GameObject parent) => Instantiate(name, parent.transform);
     
     public GameObject Instantiate(string name, Transform parent) {
-        var ob = Get(name);
-        if (ob == default) {
+        var go = Get(name);
+        if (go == null) {
             return null;
         }
 
-        var instant = Object.Instantiate(ob, parent);
+        var instant = Object.Instantiate(go, parent);
         if (instant == null) {
             Logger.TraceError($"{nameof(instant)} is Null");
             return null;

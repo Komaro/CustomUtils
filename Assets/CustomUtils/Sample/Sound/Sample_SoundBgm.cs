@@ -105,7 +105,7 @@ public class Sample_SoundBgm : SoundBase {
                         trackName = randomTrackName;
                     }
                     
-                    if (ResourceManager.instance.TryGet(trackName, out track)) {
+                    if (Service.GetService<ResourceService>().TryGet(trackName, out track)) {
                         _bgmTrackDic.AutoAdd(type, option, track);
                     } else {
                         Logger.TraceLog($"{nameof(trackDic)} is Empty. Check Sound Track Resource || {type} || {option}", Color.red);

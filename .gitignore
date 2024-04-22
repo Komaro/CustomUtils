@@ -58,3 +58,6 @@ sysinfo.txt
 # Crashlytics generated file
 crashlytics-build.properties
 
+# Test Folder
+/Assets/Test/*
+/Assets/Test.meta

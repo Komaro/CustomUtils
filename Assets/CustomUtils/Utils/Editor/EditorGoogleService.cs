@@ -27,11 +27,12 @@ public class EditorGoogleService : EditorWindow {
     };
     
     private const string USER = "user";
-	private const string L10_DRIVE_QUERY = "name contains 'Blacksurvival_' and mimeType = 'application/vnd.google-apps.spreadsheet'";
+	private const string L10_DRIVE_QUERY = "name contains 'Some_Name_Prefix' and mimeType = 'application/vnd.google-apps.spreadsheet'";
 	private const string TEST_L10_DRIVE_QUERY = "not name contains '\\^' and not name contains '@' and not name contains '*' and not name contains '#' and name contains 'Some Text' and mimeType = 'application/vnd.google-apps.spreadsheet'";
 	private const string DRIVE_FIELDS = "files(id, name, owners)";
 	private const string GOOGLE_FOLDER_MIME_TYPE = "mimeType = 'application/vnd.google-apps.folder'";
 
+	// TODO. Fix Select Target Folder
 	private const string GOOGLE = "Google";
 	private const string CREDENTIAL_JSON = "credentials.json";
 
@@ -45,29 +46,25 @@ public class EditorGoogleService : EditorWindow {
 		window.Show();
 	}
 
-	private string GetGooglePath(string fileName = "") => string.IsNullOrEmpty(fileName) ? $"{Application.dataPath}/{GOOGLE}" : $"{Application.dataPath}/{GOOGLE}/{fileName}";
-
-	private void OnEnable() {
-		_cacheCredential = null;
-	}
-
-	private void OnDisable() {
-		_cacheCredential = null;
-	}
+	private void OnEnable() => _cacheCredential = null;
+	private void OnDisable() => _cacheCredential = null;
 
 	private void OnGUI() {
 		_isDebug = GUILayout.Toggle(_isDebug, "Debug");
 		if (_isDebug) {
 			GUILayout.Label(" === Debug (Test) === ");
-			GUILayout.Label("Drive Query");
 			
-			// TODO. Fix UI
+			GUILayout.Label("Drive Query");
 			_debugDriveQuery = GUILayout.TextArea(_debugDriveQuery);
+
+			GUILayout.Label("E-Mail");
 			_eMail = GUILayout.TextArea(_eMail);
 			
 			GUILayout.Label(" ============= ");
 			GUILayout.Space(10);
 		}
+		
+		// TODO. Create Progress
 		
 		GUILayout.Space(30);
 	}
@@ -117,16 +114,16 @@ public class EditorGoogleService : EditorWindow {
 		}
 		
 		try {
-			using (var stream = new FileStream(GetGooglePath(CREDENTIAL_JSON), FileMode.Open, FileAccess.Read)) {
-				var tokenPath = GetGooglePath();
-				var cancellationToken = CreateCancellationToken();
-				_cacheCredential = GoogleWebAuthorizationBroker.AuthorizeAsync(
-					GoogleClientSecrets.FromStream(stream).Secrets,
-					API_SCOPES,
-					USER,
-					cancellationToken,
-					new FileDataStore(tokenPath, true)).Result;
-			}
+			SystemUtil.CreateDirectory(GetGooglePath());
+			using var stream = new FileStream(GetGooglePath(CREDENTIAL_JSON), FileMode.Open, FileAccess.Read);
+			var tokenPath = GetGooglePath();
+			var cancellationToken = CreateCancellationToken();
+			_cacheCredential = GoogleWebAuthorizationBroker.AuthorizeAsync(
+				GoogleClientSecrets.FromStream(stream).Secrets,
+				API_SCOPES,
+				USER,
+				cancellationToken,
+				new FileDataStore(tokenPath, true)).Result;
 		} catch (Exception ex) {
 			EditorUtility.DisplayDialog("GoogleService", "Time Out", "OK");
 			Logger.TraceError(ex.Message);
@@ -160,4 +157,5 @@ public class EditorGoogleService : EditorWindow {
 	}
 
 	private List<File> GetSheetList(DriveService service) => GetSpreadSheetFileList(service)?.Files.Where(x => x.Owners.FirstOrDefault()?.EmailAddress.Contains(_eMail) ?? false).ToList();
+	private string GetGooglePath(string fileName = "") => string.IsNullOrEmpty(fileName) ? $"{Application.dataPath}/{GOOGLE}" : $"{Application.dataPath}/{GOOGLE}/{fileName}";
 }

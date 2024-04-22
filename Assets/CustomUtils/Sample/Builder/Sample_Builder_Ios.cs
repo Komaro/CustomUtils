@@ -5,7 +5,6 @@ using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.RegularExpressions;
-using Unity.Mathematics;
 using UnityEditor;
 using Debug = UnityEngine.Debug;
 #if  UNITY_IOS
@@ -99,16 +98,10 @@ public class Sample_Builder_Ios : Builder {
         SetHideHomeButton(true);
         
         // Delete Old Export Project
-        if (Directory.Exists(buildOptions.locationPathName)) {
-            Directory.Delete(buildOptions.locationPathName, true);
-        }
+        SystemUtil.DeleteDirectory(buildOptions.locationPathName);
         
         // Delete Invalid Folder
-        _removeDirectoryList.ForEach(x => {
-            if (Directory.Exists(x)) {
-                Directory.Delete(x, true);
-            }
-        });
+        _removeDirectoryList.ForEach(SystemUtil.DeleteDirectory);
 #endif
     }
 
@@ -119,7 +112,7 @@ public class Sample_Builder_Ios : Builder {
 
             try {
                 FixPodfile();
-                ExecuteScript($"{BuildExecutePath}/{INSTALL_POD_SHELL}", BuildExecutePath, $"{BuildPath}");
+                SystemUtil.ExecuteScript($"{BuildExecutePath}/{INSTALL_POD_SHELL}", BuildExecutePath, $"{BuildPath}");
             } catch (Exception e) {
                 Debug.LogError(e);
                 throw;

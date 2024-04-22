@@ -55,7 +55,7 @@ public class LayoutControlHelper : MonoBehaviour, ILayoutRecursive {
 
     public void SetItemPrefab(string prefab) {
         _prefabName = prefab;
-        SetItemPrefab(ResourceManager.inst.Get(prefab));
+        SetItemPrefab(Service.GetService<ResourceService>().Get(prefab));
     }
 
     public void Clear() {

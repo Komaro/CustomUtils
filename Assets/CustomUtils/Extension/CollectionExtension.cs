@@ -5,7 +5,7 @@ using System.Linq;
 using UnityEngine;
 using Random = System.Random;
 
-public static class LinqExtension {
+public static class CollectionExtension {
 
     #region [Common]
 

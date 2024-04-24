@@ -71,8 +71,6 @@ public class ScenarioService : IService {
 
     public bool IsServing() => _isServing;
 
-    public void Init() { }
-
     public void Start() {
         _actorList.Clear();
         _isServing = true;

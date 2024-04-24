@@ -10,7 +10,7 @@ using UnityEditor;
 using UnityEditor.Callbacks;
 using UnityEngine;
 
-public class EditorBuild : EditorWindow {
+public class EditorBuildService : EditorWindow {
     
     #region [Common]
     private string _applicationIdentifier;
@@ -67,8 +67,8 @@ public class EditorBuild : EditorWindow {
     private static Dictionary<BuildTargetGroup, Dictionary<Enum, EnumValueAttribute>> _buildOptionDic = new ();
     private static Dictionary<Enum, EnumValueAttribute> _defineSymbolDic = new Dictionary<Enum, EnumValueAttribute>();
 
-    private static EditorBuild _window;
-    public static EditorBuild window => _window == null ? _window = GetWindow<EditorBuild>("Build") : _window;
+    private static EditorWindow _window;
+    private static EditorWindow Window => _window == null ? _window = GetWindow<EditorBuildService>("Build") : _window;
     
     private static readonly Enum DEFAULT_BUILD_TYPE = (Enum) ReflectionManager.GetAttributeEnumTypes<BuildTypeAttribute>().FirstOrDefault()?.GetEnumValues().GetValue(0);
     private static readonly GUIStyle DIVIDE_STYLE = new();
@@ -79,53 +79,57 @@ public class EditorBuild : EditorWindow {
     
     private static readonly Regex NEW_LINE_REGEX = new Regex(@"(\n)");
 
-    [MenuItem("Build/Open Build Setting %F1")]
+    [MenuItem("Service/Build/Build Setting %F1")]
     private static void OpenWindow() {
-        DIVIDE_STYLE.alignment = TextAnchor.MiddleCenter;
-        DIVIDE_STYLE.normal.textColor = Color.cyan;
+        Window.Show();
+        CacheRefresh();
+        Window.Focus();
+    }
+    
+    [DidReloadScripts(99999)]
+    private static void CacheRefresh() {
+        if (HasOpenInstances<EditorBuildService>()) {
+            DIVIDE_STYLE.alignment = TextAnchor.MiddleCenter;
+            DIVIDE_STYLE.normal.textColor = Color.cyan;
         
-        PATH_STYLE.normal.textColor = Color.white;
-        PATH_STYLE.fontStyle = FontStyle.Bold;
-        PATH_STYLE.fontSize = 12;
+            PATH_STYLE.normal.textColor = Color.white;
+            PATH_STYLE.fontStyle = FontStyle.Bold;
+            PATH_STYLE.fontSize = 12;
         
-        BOLD_STYLE.normal.textColor = Color.gray;
-        BOLD_STYLE.fontStyle = FontStyle.Bold;
+            BOLD_STYLE.normal.textColor = Color.gray;
+            BOLD_STYLE.fontStyle = FontStyle.Bold;
 
-        _buildType = DEFAULT_BUILD_TYPE;
+            _buildType = DEFAULT_BUILD_TYPE;
 
-        _buildOptionDic.Clear();
-        var enumTypes = ReflectionManager.GetAttributeEnumTypes<BuildOptionAttribute>();
-        if (enumTypes != null) {
-            foreach (var type in enumTypes) {
-                var enumAttribute = type.GetCustomAttribute<BuildOptionAttribute>();
-                foreach (var value in Enum.GetValues(type)) {
-                    if (value is Enum optionType) {
-                        _buildOptionDic.AutoAdd(enumAttribute.buildTargetGroup, optionType, type.GetField(value.ToString()).GetCustomAttribute<EnumValueAttribute>());
+            _buildOptionDic.Clear();
+            var enumTypes = ReflectionManager.GetAttributeEnumTypes<BuildOptionAttribute>();
+            if (enumTypes != null) {
+                foreach (var type in enumTypes) {
+                    var enumAttribute = type.GetCustomAttribute<BuildOptionAttribute>();
+                    foreach (var value in Enum.GetValues(type)) {
+                        if (value is Enum optionType) {
+                            _buildOptionDic.AutoAdd(enumAttribute.buildTargetGroup, optionType, type.GetField(value.ToString()).GetCustomAttribute<EnumValueAttribute>());
+                        }
+                    }
+                }
+            }
+
+            _defineSymbolDic.Clear();
+            var enumType = ReflectionManager.GetAttributeEnumTypes<DefineSymbolAttribute>().FirstOrDefault();
+            if (enumType != null) {
+                foreach (var value in Enum.GetValues(enumType)) {
+                    if (value is Enum type) {
+                        _defineSymbolDic.Add(type, enumType.GetField(value.ToString()).GetCustomAttribute<EnumValueAttribute>());
                     }
                 }
             }
         }
-
-        _defineSymbolDic.Clear();
-        var enumType = ReflectionManager.GetAttributeEnumTypes<DefineSymbolAttribute>().FirstOrDefault();
-        if (enumType != null) {
-            foreach (var value in Enum.GetValues(enumType)) {
-                if (value is Enum type) {
-                    _defineSymbolDic.Add(type, enumType.GetField(value.ToString()).GetCustomAttribute<EnumValueAttribute>());
-                }
-            }
-        }
-        
-        // window.position = new Rect(800f, 200f, 600f, 800f);
-        window.Show();
-        window.Focus();
     }
-    
+
     private void OnGUI() {
         _buildType ??= DEFAULT_BUILD_TYPE;
         if (_buildType == default) {
-            Logger.TraceWarning($"{_buildType} is Null");
-            EditorGUILayout.HelpBox($"{nameof(BuildTypeAttribute)} 의 구현이 없습니다. {nameof(BuildTypeAttribute)} 어트리뷰트를 가지는 enum 타입을 하나 이상 구현하여야 합니다.", MessageType.Error);
+            EditorGUILayout.HelpBox($"{nameof(BuildTypeAttribute)} 의 구현이 없습니다. {nameof(BuildTypeAttribute)} 어트리뷰트를 가지는 enum 타입을 하나 구현 혹은 지정하여야 합니다.", MessageType.Error);
             return;
         }
         

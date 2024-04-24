@@ -53,4 +53,5 @@ public static class StringExtension {
     public static string GetForceTitleCase(this string strText) => GetTitleCase(strText.ToLower());
     public static string GetTitleCase<T>(this T type) where T : Enum => _textInfo?.ToTitleCase(type.ToString());
     public static bool EqualsFast(this string content, string comparedString) => content.Equals(comparedString, StringComparison.Ordinal);
+
 }

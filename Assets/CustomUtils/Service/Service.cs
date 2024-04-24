@@ -32,7 +32,7 @@ public static class Service {
             _isInitialized = true;
         }
     }
-    
+
     public static bool StartService(Type type) => StartService(_serviceDic.TryGetValue(type, out var service) ? service : CreateService(type));
     public static bool StartService<TService>() where TService : class, IService, new() => StartService(_serviceDic.TryGetValue(typeof(TService), out var service) ? service : CreateService<TService>());
 
@@ -51,7 +51,10 @@ public static class Service {
             if (service.IsServing() == false) {
                 service.Start();
                 Logger.TraceLog($"Service Start || {service.GetType().Name}", Color.cyan);
+            } else {
+                Logger.TraceLog($"{service.GetType().Name} is Already Serving", Color.yellow);    
             }
+            
             return true;
         } catch (Exception e) {
             Logger.TraceError(e);

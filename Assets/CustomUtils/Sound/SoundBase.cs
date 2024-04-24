@@ -238,7 +238,7 @@ public abstract class SoundBase {
         }
     }
 
-    public virtual void LoadSystemVolume() { }
+    public virtual void LoadSystemVolume() => SetVolume(1f);
     public virtual float GetVolume() => soundCore.GetVolume(masterEnum);
     public virtual void SetVolume(float volume) => soundCore.SetVolume(masterEnum, volume);
     
@@ -270,10 +270,10 @@ public abstract class SoundBase {
 public abstract record SoundOrder {
     
     public Enum masterType;
-    public Enum representControlEnum;
+    public Enum representControlType;
     
-    public SoundOrder(Enum masterType, Enum representControlEnum) {
+    public SoundOrder(Enum masterType, Enum representControlType) {
         this.masterType = masterType;
-        this.representControlEnum = representControlEnum;
+        this.representControlType = representControlType;
     }
 }

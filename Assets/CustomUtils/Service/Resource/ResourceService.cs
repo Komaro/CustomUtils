@@ -1,12 +1,21 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
 public interface IResourceProvider {
+    static bool Valid() {
+        Logger.TraceWarning("Not Implement this Method.");
+        return false;
+    }
+
     void Init();
     void Load();
     Object Get(string name);
     string GetPath(string name);
+    bool IsLoaded();
 }
 
 [Service(DEFAULT_SERVICE_TYPE.RESOURCE_LOAD)]
@@ -15,14 +24,35 @@ public class ResourceService : IService {
     private IResourceProvider _provider;
     private Dictionary<string, Object> _cacheResource = new();
 
+    private bool _isServing;
+    
+    public bool IsServing() => _isServing;
+
     public void Init() {
-        // TODO. Create Auto Provider Selector
-        _provider = new ResourcesProvider();
+        foreach (var type in ReflectionManager.GetInterfaceTypes<IResourceProvider>().OrderBy(x => x.GetCustomAttribute<ResourceProviderOrderAttribute>()?.order ?? 99)) {
+            if (type.GetMethod(nameof(IResourceProvider.Valid))?.Invoke(null, null) is true) {
+                _provider = Activator.CreateInstance<ResourcesProvider>();
+                Logger.TraceLog($"Activate {type.Name}", Color.cyan);
+                break;
+            }
+        }
+
+        if (_provider == null) {
+            Logger.TraceError($"{nameof(_provider)} is Null. Check {nameof(IResourceProvider)}.{nameof(IResourceProvider.Valid)} Method Implementation");
+            Logger.TraceLog($"Create {nameof(NullResourceProvider)}", Color.red);
+            _provider = new NullResourceProvider();
+            return;
+        }
+        
         _provider.Init();
     }
 
     public void Start() {
-        _provider.Load();
+        if (_provider.IsLoaded() == false) {
+            _provider.Load();
+        }
+        
+        _isServing = true;
     }
 
     public void Stop() {
@@ -117,4 +147,12 @@ public class ResourceService : IService {
         instant.name = name;
         return instant;
     }
+}
+
+[AttributeUsage(AttributeTargets.Class)]
+public class ResourceProviderOrderAttribute : Attribute {
+
+    public int order;
+
+    public ResourceProviderOrderAttribute(int order = 0) => this.order = order;
 }

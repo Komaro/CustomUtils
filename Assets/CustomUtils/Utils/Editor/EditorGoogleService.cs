@@ -41,7 +41,7 @@ public class EditorGoogleService : EditorWindow {
 	private UserCredential _cacheCredential;
 	
 	[MenuItem("Service/GoogleService")]
-	public static void Start() {
+	public static void OpenWindow() {
 		var window = GetWindow<EditorGoogleService>("GoogleService");
 		window.Show();
 	}

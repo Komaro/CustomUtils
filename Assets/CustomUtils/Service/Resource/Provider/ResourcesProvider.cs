@@ -1,19 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
-using UnityEditor;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-[ResourceProviderOrder(5)]
+[ResourceProvider(105)]
+[ResourceSubProvider(999)]
 public class ResourcesProvider : IResourceProvider {
     
     private readonly Dictionary<string, string> _resourcePathDic = new();
 
     private bool _isLoaded = false;
     
-    public static bool Valid() => Resources.Load(Constants.Resource.RESOURCE_LIST_JSON) != null;
+    public bool Valid() => Resources.Load(Constants.Resource.RESOURCE_LIST_JSON) != null;
 
     public void Init() { }
 
@@ -26,10 +24,13 @@ public class ResourcesProvider : IResourceProvider {
                 if (pair.Value != null) {
                     _resourcePathDic.AutoAdd(pair.Key, pair.Value.ToString());
                 }
-            }    
+            }
         }
-    }
 
+        _isLoaded = true;
+    }
+    
+    public void Unload(Dictionary<string, Object> cacheResource) => cacheResource.SafeClear(Resources.UnloadAsset);
     public Object Get(string name) => _resourcePathDic.TryGetValue(name.ToUpper(), out var path) ? Resources.Load(path) : null;
     public string GetPath(string name) => _resourcePathDic.TryGetValue(name.ToUpper(), out var path) ? path : string.Empty;
     public bool IsLoaded() => _isLoaded;

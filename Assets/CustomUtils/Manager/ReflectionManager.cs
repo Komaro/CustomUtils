@@ -67,6 +67,9 @@ public static class ReflectionManager
 
     #region [Extension]
 
+    public static bool ContainsCustomAttribute<T>(this MemberInfo info) where T : Attribute => info.GetCustomAttributes<T>().Any();
+    public static bool ContainsCustomAttribute<T>(this Type type) where T : Attribute => type.GetCustomAttributes<T>().Any();
+
     public static bool TryGetCustomAttributeList(this MemberInfo info, out List<Attribute> attributeList) {
         attributeList = info.GetCustomAttributes().ToList();
         return attributeList is { Count: > 0};

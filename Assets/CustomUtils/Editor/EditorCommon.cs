@@ -12,12 +12,18 @@ public static class EditorCommon {
     private static string _unityProjectPath;
     public static string UNITY_PROJECT_PATH => string.IsNullOrEmpty(_unityProjectPath) ? _unityProjectPath = Application.dataPath.Replace("/Assets", string.Empty) : _unityProjectPath;
     
-    public static void ShowCheckDialogue(string title, string message, string okText, string cancelText, Action ok = null, Action cancel = null) {
+    public static void ShowCheckDialogue(string title, string message, string okText = "확인", string cancelText = "취소", Action ok = null, Action cancel = null) {
         if (EditorUtility.DisplayDialog(title, message, okText, cancelText)) {
             ok?.Invoke();
         } else {
             cancel?.Invoke();
         }
+    }
+
+    public static void DrawSeparator() {
+        GUILayout.Space(10);
+        EditorGUI.DrawRect(EditorGUILayout.GetControlRect(false, 2), Color.gray);
+        GUILayout.Space(10);
     }
 
     [MenuItem("GameObject/Tool/Copy Path", false, 99)]
@@ -38,10 +44,8 @@ public static class EditorCommon {
     }
 
     [MenuItem("GameObject/Tool/Copy Path", true, 99)]
-    public static bool CopyPathValidation() {
-        return Selection.gameObjects.Length == 1;
-    }
-    
+    public static bool CopyPathValidation() => Selection.gameObjects.Length == 1;
+
     public static List<string> SearchFilePath(string directoryPath, string fileName) {
         if (Directory.Exists(directoryPath)) {
             var directoryInfo = new DirectoryInfo(directoryPath);
@@ -118,7 +122,7 @@ public static class EditorCommon {
             }
 
             var text = File.ReadAllText(path);
-            if (string.IsNullOrEmpty(text)) {
+            if (string.IsNullOrEmpty(text) == false) {
                 var json = JsonConvert.DeserializeObject<T>(text);
                 return json;
             }
@@ -128,6 +132,37 @@ public static class EditorCommon {
         }
         
         return default;
+    }
+    
+    public static void SaveJson(string path, JObject json) {
+        try {
+            if (json == null) {
+                throw new NullReferenceException($"{nameof(json)} is Null");
+            }
+
+            SaveJson(path, json.ToString());
+        } catch (Exception e) {
+            Debug.LogError(e);
+            throw;
+        }
+    }
+
+    public static void SaveJson(string path, object ob) {
+        try {
+            if (ob == null) {
+                throw new NullReferenceException($"{nameof(ob)} is Null");
+            }
+
+            var json = JsonConvert.SerializeObject(ob);
+            if (string.IsNullOrEmpty(json)) {
+                throw new JsonException("Serialization failed. An empty result was returned.");
+            }
+            
+            SaveJson(path, json);
+        } catch (Exception e) {
+            Debug.LogError(e);
+            throw;
+        }
     }
 
     public static void SaveJson(string path, string json) {
@@ -148,19 +183,6 @@ public static class EditorCommon {
             }
             
             File.WriteAllText(path, json);
-        } catch (Exception e) {
-            Debug.LogError(e);
-            throw;
-        }
-    }
-    
-    public static void SaveJson(string path, JObject json) {
-        try {
-            if (json == null) {
-                throw new NullReferenceException($"{nameof(json)} is Null");
-            }
-
-            SaveJson(path, json.ToString());
         } catch (Exception e) {
             Debug.LogError(e);
             throw;

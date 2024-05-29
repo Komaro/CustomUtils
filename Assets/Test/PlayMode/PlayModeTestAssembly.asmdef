@@ -2,8 +2,8 @@
     "name": "PlayModeTestAssembly",
     "rootNamespace": "",
     "references": [
-        "GUID:ea27ae67f135c614bad369d138ede907",
         "GUID:560b04d1a97f54a4e82edc0cbbb69285",
+        "GUID:ea27ae67f135c614bad369d138ede907",
         "GUID:27619889b8ba8c24980f49ee34dbb44a",
         "GUID:0acc523941302664db1f4e527237feb3"
     ],

@@ -380,6 +380,10 @@ public class BuildOptionAttribute : Attribute {
     
     public BuildTargetGroup buildTargetGroup;
 
+    public BuildOptionAttribute() {
+        this.buildTargetGroup = BuildTargetGroup.Unknown;
+    }
+    
     public BuildOptionAttribute(BuildTargetGroup buildTargetGroup) {
         this.buildTargetGroup = buildTargetGroup;
     }

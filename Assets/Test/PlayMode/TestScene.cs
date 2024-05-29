@@ -10,6 +10,4 @@ public class TestScene : MonoBehaviour {
     public void Start() {
         
     }
-    
-    
 }

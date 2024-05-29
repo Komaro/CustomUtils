@@ -1,10 +1,10 @@
 {
-  "RESOURCELIST": "ResourceList",
   "AUDIOMIXER": "Sound/AudioMixer",
   "SAMPLEFREESFX": "Sound/RowSound/SampleFreeSFX",
   "TESTPREFAB_3": "TestFolder/TestPrefab_3",
   "TESTPREFAB_2": "TestPrefab_2",
   "TESTPREFAB": "TestPrefab",
   "TESTPREFAB_1": "TestPrefab_1",
-  "FREESAMPLESFX": "Sound/SFX/FreeSampleSFX"
+  "FREESAMPLESFX": "Sound/SFX/FreeSampleSFX",
+  "RESOURCELIST": "ResourceList"
 }

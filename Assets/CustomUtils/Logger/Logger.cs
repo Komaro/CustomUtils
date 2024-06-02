@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.IO;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
@@ -91,11 +92,10 @@ public static class Logger {
     public static void TraceError(object obj) => TraceError(obj?.ToString() ?? string.Empty);
     public static void TraceError(object obj, Color color) => TraceError(obj?.ToString() ?? string.Empty, color);
 
-    public static void SimpleTraceError(string text, [CallerFilePath] string caller = null) => Error($"[{caller}] {text}");
+    public static void SimpleTraceError(string text, [CallerFilePath] string path = null, [CallerMemberName] string method = null, [CallerLineNumber] int line = 0) => Error($"[{Path.GetFileNameWithoutExtension(path)}.{method}.{line}] {text}");
 
     private static StackFrame GetCaller() => new StackTrace().GetFrame(2);
 
-    // TODO. Need Test
     public static void TraceErrorExpensive(string text) {
         var caller = GetCaller();
         Error(caller?.GetMethod().DeclaringType == null

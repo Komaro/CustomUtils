@@ -46,7 +46,7 @@ public static class ResourceGenerator {
     private static void TestGenerateAssetBundleListJson() => GenerateAssetBundleListJson(string.Empty);
 
     [MenuItem("Service/Test/GenerateAssetBundle")]
-    private static void TestGenerateAssetBundle() => GenerateAssetBundle("C:/Project/Unity/CustomUtils/AssetBundle", BuildAssetBundleOptions.None, BuildTarget.StandaloneWindows64);
+    private static void TestGenerateAssetBundle() => GenerateAssetBundle($"C:/Project/Unity/CustomUtils/AssetBundle/{EditorUserBuildSettings.activeBuildTarget}", BuildAssetBundleOptions.None, EditorUserBuildSettings.activeBuildTarget);
     
     // TODO. AssetBundle 빌드 시 manifest 파일로 대처 가능한지 검토
     public static void GenerateAssetBundleListJson(string generatePath, Action<string, string, float> onProgress = null, Action onEnd = null) {
@@ -72,11 +72,11 @@ public static class ResourceGenerator {
 
             var manifest = BuildPipeline.BuildAssetBundles(generatePath, option, target);
             if (manifest != null) {
-                var manifestPath = Path.Combine(generatePath, ASSET_BUNDLE_MANIFEST);
+                var manifestPath = Path.Combine(generatePath, EditorUserBuildSettings.activeBuildTarget.ToString());
                 if (File.Exists(manifestPath)) {
                     var manifestBytes = File.ReadAllBytes(manifestPath);
                     var aesManifestBytes = EncryptUtils.EncrytAES(manifestBytes);
-                    File.Copy(manifestPath, Path.Combine(generatePath, BACKUP_ASSET_BUNDLE_MANIFEST));
+                    // File.Copy(manifestPath, Path.Combine(generatePath, EditorUserBuildSettings.activeBuildTarget.ToString()));
                     File.WriteAllBytes(manifestPath, aesManifestBytes);
                 }
             }

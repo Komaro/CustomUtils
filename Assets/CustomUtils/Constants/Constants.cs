@@ -15,6 +15,11 @@ public static partial class Constants {
         public const string RESOURCE_LIST_JSON = "ResourceList";
     }
 
+    public static class Network {
+
+        public const string DEFAULT_LOCAL_HOST = "http://localhost:80000/";
+    }
+    
     public static class Editor {
 
         public static readonly string COMMON_CONFIG_FOLDER = $"{Directory.GetParent(Application.dataPath)?.FullName}/Config";

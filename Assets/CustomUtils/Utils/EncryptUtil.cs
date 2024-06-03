@@ -2,11 +2,11 @@
 using System.Security.Cryptography;
 using System.Text;
 
-public static class EncryptUtils {
+public static class EncryptUtil {
 
     #region [AES]
     
-    public static byte[] EncrytAES(byte[] bytes, string key = nameof(EncryptUtils)) {
+    public static byte[] EncrytAES(byte[] bytes, string key = nameof(EncryptUtil)) {
         using (var aes = Aes.Create()) {
             aes.Key = ConvertStringToAESKey(key);
             aes.IV = new byte[16];
@@ -17,7 +17,7 @@ public static class EncryptUtils {
         }
     }
 
-    public static byte[] DecryptAES(byte[] bytes, string key = nameof(EncryptUtils)) {
+    public static byte[] DecryptAES(byte[] bytes, string key = nameof(EncryptUtil)) {
         using (var aes = Aes.Create()) {
             aes.Key = ConvertStringToAESKey(key);
             aes.IV = new byte[16];

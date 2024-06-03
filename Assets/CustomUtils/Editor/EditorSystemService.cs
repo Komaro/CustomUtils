@@ -5,6 +5,13 @@ using UnityEngine;
 
 public class EditorSystemService : EditorWindow {
 
+    
+    [MenuItem("Service/System Service")]
+    public static void OpenWindow() {
+        var window = GetWindow<EditorSystemService>("SystemService");
+        window.Show();
+    }
+
     private void OnGUI() {
         
         // Logger.TraceLog(Application.dataPath);
@@ -38,12 +45,6 @@ public class EditorSystemService : EditorWindow {
             EditorGUILayout.LabelField($"{nameof(Application.temporaryCachePath)} : ", Constants.Editor.WHITE_BOLD_STYLE);
             DrawLinkButton(Application.temporaryCachePath);
         }
-    }
-
-    [MenuItem("Service/SystemService")]
-    public static void OpenWindow() {
-        var window = GetWindow<EditorSystemService>("SystemService");
-        window.Show();
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]

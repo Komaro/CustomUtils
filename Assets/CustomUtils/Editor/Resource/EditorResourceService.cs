@@ -10,8 +10,8 @@ public class EditorResourceService : EditorWindow {
     private static EditorWindow _window;
     private static EditorWindow Window => _window == null ? _window = GetWindow<EditorResourceService>("Resource Initializer") : _window;
 
-    private Type _selectProviderType;
-    private int _selectProviderTypeIndex;
+    private static int _selectProviderTypeIndex;
+    private static Type _selectProviderType;
 
     private static Type[] _providerTypes = {};
     private static string[] _providerTypeNames = {};
@@ -41,6 +41,10 @@ public class EditorResourceService : EditorWindow {
                     }
                 }
             }
+
+            if (_selectProviderType != null && _providerDrawerDic.TryGetValue(_selectProviderType, out var drawer)) {
+                drawer.CacheRefresh();
+            }
         }
     }
     
@@ -53,6 +57,8 @@ public class EditorResourceService : EditorWindow {
 
             if (_providerDrawerDic.TryGetValue(_selectProviderType, out var drawer)) {
                 drawer.Draw();
+            } else {
+                EditorGUILayout.HelpBox($"유효한 {nameof(EditorResourceProviderDrawer)} 를 찾을 수 없습니다.", MessageType.Warning);
             }
         } else {
             EditorGUILayout.HelpBox($"{nameof(IResourceProvider)}를 상속받은 Provider를 찾을 수 없습니다.", MessageType.Warning);
@@ -61,6 +67,7 @@ public class EditorResourceService : EditorWindow {
 }
 
 public abstract class EditorResourceProviderDrawer {
+    public abstract void CacheRefresh();
     public abstract void Draw();
 }
 

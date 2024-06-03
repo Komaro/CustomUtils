@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Net;
 using UnityEngine;
 
@@ -8,6 +9,7 @@ public abstract class HttpServeModule {
 
     public void AddServer(SimpleHttpWebServer server) => this.server = server;
     public abstract bool Serve(HttpListenerContext context);
+    public virtual void Close() { }
 }
 
 public class AssetBundleServeModule : HttpServeModule {

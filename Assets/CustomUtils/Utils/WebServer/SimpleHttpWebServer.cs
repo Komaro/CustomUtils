@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Net;
 using System.Threading;
@@ -70,7 +69,7 @@ public class SimpleHttpWebServer : IDisposable {
                 getTask.Wait(token);
 
                 if (token.IsCancellationRequested) {
-                    Logger.TraceLog($"", Color.red);
+                    Logger.TraceLog($"Receive Cancellation Request", Color.red);
                     break;
                 }
 
@@ -118,14 +117,14 @@ public class SimpleHttpWebServer : IDisposable {
         }
         
         if (_serveModuleDic.ContainsKey(type)) {
-            Logger.TraceError($"Already {nameof(HttpServeModule)}. {nameof(type)} : {nameof(type.Name)}");
+            Logger.TraceLog($"Already {nameof(HttpServeModule)}. {nameof(type)} : {nameof(type.Name)}", Color.yellow);
             return;
         }
 
         if (Activator.CreateInstance(type) is HttpServeModule module) {
             module.AddServer(this);
             _serveModuleDic.Add(type, module);
-            Logger.TraceLog($"Add {nameof(type.Name)}", Color.cyan);
+            Logger.TraceLog($"Add {type.Name}", Color.cyan);
         }
     }
 
@@ -137,17 +136,29 @@ public class SimpleHttpWebServer : IDisposable {
         
         var type = module.GetType();
         if (_serveModuleDic.ContainsKey(type)) {
-            Logger.TraceError($"Already {nameof(HttpServeModule)}. {nameof(module)} : {nameof(type.Name)}");
+            Logger.TraceLog($"Already {nameof(HttpServeModule)}. {nameof(module)} : {nameof(type.Name)}", Color.yellow);
             return;
         }
         
         module.AddServer(this);
         _serveModuleDic.Add(type, module);
-        Logger.TraceLog($"Add {nameof(type.Name)}", Color.cyan);
+        Logger.TraceLog($"Add {type.Name}", Color.cyan);
     }
 
     public void RemoveServeModule<T>() where T : HttpServeModule => RemoveServeModule(typeof(T));
-    public void RemoveServeModule(Type type) => _serveModuleDic.AutoRemove(type);
+    
+    public void RemoveServeModule(Type type) {
+        if (_serveModuleDic.TryGetValue(type, out var module)) {
+            module.Close();
+            _serveModuleDic.AutoRemove(type);
+            Logger.TraceLog($"Remove {type.Name}", Color.red);
+        }
+    }
+
+    public void ClearServeModule() {
+        _serveModuleDic.SafeClear(module => module.Close());
+        Logger.TraceLog("Clear Serve Module", Color.red);
+    }
 
     private void ClearThread() {
         while (_activeThreadBag.IsEmpty == false) {

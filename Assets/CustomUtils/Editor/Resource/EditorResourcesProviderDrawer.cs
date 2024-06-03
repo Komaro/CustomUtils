@@ -8,6 +8,8 @@ public class EditorResourcesProviderDrawer : EditorResourceProviderDrawer {
 
     private JObject _resourcesListJson;
 
+    public override void CacheRefresh() { }
+
     public override void Draw() {
         if (_resourcesListJson == null) {
             var resourcesFullPath = $"{Application.dataPath}/{Constants.Resource.RESOURCES_FOLDER}";

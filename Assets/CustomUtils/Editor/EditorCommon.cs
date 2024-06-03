@@ -26,6 +26,39 @@ public static class EditorCommon {
         GUILayout.Space(10);
     }
 
+    public static void DrawLabelTextSet(string label, string text, float labelWidth = 100) {
+        using (new GUILayout.HorizontalScope()) {
+            GUILayout.Label(label, Constants.Editor.FIELD_TITLE_STYLE, GUILayout.Width(labelWidth));
+            GUILayout.TextField(text);
+        }
+    }
+    
+    public static string DrawInputFieldSet(string label, string text, float labelWidth = 100) {
+        using (new GUILayout.HorizontalScope()) {
+            GUILayout.Label(label, Constants.Editor.FIELD_TITLE_STYLE, GUILayout.Width(labelWidth));
+            text = GUILayout.TextField(text);
+        }
+        
+        return text;
+    }
+
+    public static string DrawFolderSelector(string text, string targetDirectory, Action<string> onSelect = null, float width = 120) {
+        using (new GUILayout.HorizontalScope()) {
+            if (GUILayout.Button(text, GUILayout.Width(width))) {
+                var selectDirectory = EditorUtility.OpenFolderPanel("대상 폴더", targetDirectory, string.Empty);
+                if (string.IsNullOrEmpty(selectDirectory) == false) {
+                    targetDirectory = selectDirectory;
+                }
+                
+                onSelect?.Invoke(targetDirectory);
+            }
+            
+            GUILayout.TextField(targetDirectory);
+        }
+        
+        return targetDirectory;
+    }
+
     [MenuItem("GameObject/Tool/Copy Path", false, 99)]
     public static void CopyPath() {
         var go = Selection.activeGameObject;
@@ -102,90 +135,4 @@ public static class EditorCommon {
         }
     }
 
-    public static bool TryLoadJson<T>(string path, out T json) {
-        try {
-            json = LoadJson<T>(path);
-            return json != null;
-        } catch (Exception e) {
-            Debug.LogError(e);
-
-            json = default;
-            return false;
-        }
-    }
-    
-    public static T LoadJson<T>(string path) {
-        try {
-            if (File.Exists(path) == false) {
-                Debug.LogError($"Invalid Path || {path}");
-                throw new FileNotFoundException();
-            }
-
-            var text = File.ReadAllText(path);
-            if (string.IsNullOrEmpty(text) == false) {
-                var json = JsonConvert.DeserializeObject<T>(text);
-                return json;
-            }
-        }  catch (Exception e) {
-            Debug.LogError(e);
-            throw;
-        }
-        
-        return default;
-    }
-    
-    public static void SaveJson(string path, JObject json) {
-        try {
-            if (json == null) {
-                throw new NullReferenceException($"{nameof(json)} is Null");
-            }
-
-            SaveJson(path, json.ToString());
-        } catch (Exception e) {
-            Debug.LogError(e);
-            throw;
-        }
-    }
-
-    public static void SaveJson(string path, object ob) {
-        try {
-            if (ob == null) {
-                throw new NullReferenceException($"{nameof(ob)} is Null");
-            }
-
-            var json = JsonConvert.SerializeObject(ob);
-            if (string.IsNullOrEmpty(json)) {
-                throw new JsonException("Serialization failed. An empty result was returned.");
-            }
-            
-            SaveJson(path, json);
-        } catch (Exception e) {
-            Debug.LogError(e);
-            throw;
-        }
-    }
-
-    public static void SaveJson(string path, string json) {
-        try {
-            if (string.IsNullOrEmpty(path) || string.IsNullOrEmpty(json)) {
-                Debug.LogError($"{nameof(path)} or {nameof(json)} is Null or Empty");
-                return;
-            }
-            
-            var parentPath = Directory.GetParent(path)?.FullName;
-            if (string.IsNullOrEmpty(parentPath)) {
-                Debug.LogError($"{nameof(parentPath)} is Null or Empty");
-                return;
-            }
-            
-            if (Directory.Exists(parentPath) == false) {
-                Directory.CreateDirectory(parentPath);
-            }
-            
-            File.WriteAllText(path, json);
-        } catch (Exception e) {
-            Debug.LogError(e);
-            throw;
-        }
-    }
 }

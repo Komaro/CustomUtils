@@ -75,7 +75,7 @@ public static class ResourceGenerator {
                 var manifestPath = Path.Combine(generatePath, EditorUserBuildSettings.activeBuildTarget.ToString());
                 if (File.Exists(manifestPath)) {
                     var manifestBytes = File.ReadAllBytes(manifestPath);
-                    var aesManifestBytes = EncryptUtils.EncrytAES(manifestBytes);
+                    var aesManifestBytes = EncryptUtil.EncrytAES(manifestBytes);
                     // File.Copy(manifestPath, Path.Combine(generatePath, EditorUserBuildSettings.activeBuildTarget.ToString()));
                     File.WriteAllBytes(manifestPath, aesManifestBytes);
                 }

@@ -17,7 +17,7 @@ public static partial class Constants {
 
     public static class Network {
 
-        public const string DEFAULT_LOCAL_HOST = "http://localhost:80000/";
+        public const string DEFAULT_LOCAL_HOST = "http://localhost:8000/";
     }
     
     public static class Editor {

@@ -19,7 +19,7 @@ public static class ResourceGenerator {
             foreach (var path in pathList) {
                 progress += tick;
                 var nameKey = Path.GetFileNameWithoutExtension(path).ToUpper();
-                onProgress?.Invoke($"Generate {Constants.Resource.RESOURCE_LIST_JSON}.json", nameKey, progress);
+                onProgress?.Invoke($"Generate {Constants.Resource.RESOURCE_LIST}.json", nameKey, progress);
                 if (jObject.ContainsKey(nameKey)) {
                     Logger.TraceError($"Duplicate Resource {nameof(nameKey)}\nPath|| {path}\nPath || {jObject[nameKey]}");
                     continue;
@@ -28,8 +28,12 @@ public static class ResourceGenerator {
                 jObject.AutoAdd(nameKey, path.Remove(0, RESOURCES_START_PATH.Length).Split('.')[0]);
             }
 
-            if (jObject.ContainsKey(Constants.Resource.RESOURCE_LIST_JSON.ToUpper()) == false) {
-                jObject.AutoAdd(Constants.Resource.RESOURCE_LIST_JSON.ToUpper(), Constants.Resource.RESOURCE_LIST_JSON);
+            if (jObject.ContainsKey(Constants.Resource.RESOURCE_LIST.ToUpper()) == false) {
+                jObject.AutoAdd(Constants.Resource.RESOURCE_LIST.ToUpper(), Constants.Resource.RESOURCE_LIST);
+            }
+
+            if (Path.HasExtension(generatePath) == false) {
+                generatePath = $"{generatePath}.json";
             }
             
             File.WriteAllText(generatePath, jObject.ToString());

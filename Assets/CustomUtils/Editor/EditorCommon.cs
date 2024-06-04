@@ -2,8 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+using System.Runtime.CompilerServices;
 using UnityEditor;
 using UnityEngine;
 
@@ -20,20 +19,23 @@ public static class EditorCommon {
         }
     }
 
-    public static void DrawSeparator() {
-        GUILayout.Space(10);
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void DrawSeparator(float topSpace = 10f, float bottomSpace = 10f) {
+        GUILayout.Space(topSpace);
         EditorGUI.DrawRect(EditorGUILayout.GetControlRect(false, 2), Color.gray);
-        GUILayout.Space(10);
+        GUILayout.Space(bottomSpace);
     }
 
-    public static void DrawLabelTextSet(string label, string text, float labelWidth = 100) {
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void DrawLabelTextSet(string label, string text, float labelWidth = 100f) {
         using (new GUILayout.HorizontalScope()) {
             GUILayout.Label(label, Constants.Editor.FIELD_TITLE_STYLE, GUILayout.Width(labelWidth));
             GUILayout.TextField(text);
         }
     }
     
-    public static string DrawInputFieldSet(string label, string text, float labelWidth = 100) {
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static string DrawLabelTextFieldSet(string label, string text, float labelWidth = 100f) {
         using (new GUILayout.HorizontalScope()) {
             GUILayout.Label(label, Constants.Editor.FIELD_TITLE_STYLE, GUILayout.Width(labelWidth));
             text = GUILayout.TextField(text);
@@ -42,7 +44,34 @@ public static class EditorCommon {
         return text;
     }
 
-    public static string DrawFolderSelector(string text, string targetDirectory, Action<string> onSelect = null, float width = 120) {
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static string DrawButtonTextFieldSet(string buttonText, string text, Action<string> onClick = null, float buttonWidth = 150f) {
+        using (new GUILayout.HorizontalScope()) {
+            if (GUILayout.Button(buttonText, GUILayout.Width(buttonWidth))) {
+                onClick?.Invoke(text);
+            }
+
+            text = GUILayout.TextField(text);
+        }
+
+        return text;
+    }
+    
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static string DrawButtonPasswordFieldSet(string buttonText, string password, Action<string> onClick = null, float buttonWidth = 150f) {
+        using (new GUILayout.HorizontalScope()) {
+            if (GUILayout.Button(buttonText, GUILayout.Width(buttonWidth))) {
+                onClick?.Invoke(password);
+            }
+
+            password = GUILayout.PasswordField(password, '*');
+        }
+
+        return password;
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static string DrawFolderSelector(string text, string targetDirectory, Action<string> onSelect = null, float width = 120f) {
         using (new GUILayout.HorizontalScope()) {
             if (GUILayout.Button(text, GUILayout.Width(width))) {
                 var selectDirectory = EditorUtility.OpenFolderPanel("대상 폴더", targetDirectory, string.Empty);
@@ -134,5 +163,4 @@ public static class EditorCommon {
             Debug.LogError(e);
         }
     }
-
 }

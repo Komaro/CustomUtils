@@ -11,13 +11,13 @@ public class ResourcesProvider : IResourceProvider {
 
     private bool _isLoaded = false;
     
-    public bool Valid() => Resources.Load(Constants.Resource.RESOURCE_LIST_JSON) != null;
+    public bool Valid() => Resources.Load(Constants.Resource.RESOURCE_LIST) != null;
 
     public void Init() { }
 
     public void Load() {
         _resourcePathDic.Clear();
-        var textAsset = Resources.Load<TextAsset>(Constants.Resource.RESOURCE_LIST_JSON);
+        var textAsset = Resources.Load<TextAsset>(Constants.Resource.RESOURCE_LIST);
         if (textAsset != null) {
             var jObject = JObject.Parse(textAsset.text);
             foreach (var pair in jObject) {

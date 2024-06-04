@@ -12,7 +12,7 @@ public class SystemUtil {
     
     public static void ExecuteScript(string scriptPath, string workPath, params string[] args) {
         if (string.IsNullOrEmpty(scriptPath)) {
-            Debug.LogError($"{nameof(scriptPath)} is Null or Empty");
+            Logger.TraceError($"{nameof(scriptPath)} is Null or Empty");
             return;
         }
         
@@ -95,34 +95,46 @@ public class SystemUtil {
         
             process.WaitForExit();
         
-            Debug.Log(stdOutBuilder);
+            Logger.TraceLog(stdOutBuilder);
             if (stdErrorBuilder.Length > 0) {
-                Debug.LogWarning(stdErrorBuilder);
+                Logger.TraceWarning(stdErrorBuilder);
             }
-        } catch (Exception e) {
-            Debug.LogError(e);
+        } catch (Exception ex) {
+            Logger.TraceError(ex);
+        }
+    }
+    
+    public static void EnsureDirectoryExists(string path) {
+        try {
+            if (Directory.Exists(path) == false) {
+                Logger.TraceLog($"Create Directory || {path}", Color.green);
+                Directory.CreateDirectory(path);
+            }
+        } catch (Exception ex) {
+            Logger.TraceError(ex);
+            throw;
         }
     }
     
     public static DirectoryInfo CreateDirectory(string path) {
         if (Directory.Exists(path) == false) {
-            Debug.Log($"Create Directory || {path}");
-             return Directory.CreateDirectory(path);
+            Logger.TraceLog($"Create Directory || {path}", Color.green);
+            return Directory.CreateDirectory(path);
         }
         
-        Debug.Log($"Already Directory Path || {path}");
+        Logger.TraceLog($"Already Directory Path || {path}", Color.yellow);
         return null;
     }
     
     public static void DeleteDirectory(string path) {
         if (Directory.Exists(path)) {
-            Debug.Log($"Remove Directory || {path}");
+            Logger.TraceLog($"Remove Directory || {path}", Color.green);
             Directory.Delete(path, true);
             if (path.Contains(Application.dataPath)) {
                 var metaPath = path + ".meta";
                 if (File.Exists(metaPath)) {
                     File.Delete(metaPath);
-                    Debug.Log($"Project Inner Directory. Remove meta file || {path}");
+                    Logger.TraceLog($"Project Inner Directory. Remove meta file || {path}", Color.yellow);
                 }
             }
         }
@@ -130,7 +142,7 @@ public class SystemUtil {
 
     public static void ClearDirectory(string path) {
         if (Directory.Exists(path)) {
-            Debug.Log($"Clear Directory || {path}");
+            Logger.TraceLog($"Clear Directory || {path}", Color.red);
             foreach (var filePath in Directory.GetFiles(path)) {
                 File.Delete(filePath);
             }

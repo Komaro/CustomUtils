@@ -66,6 +66,11 @@ public static class Logger {
         var caller = GetCaller();
         Warning($"[{caller?.GetMethod()?.ReflectedType?.Name}.{caller?.GetMethod()?.Name}] {text}");
     }
+    
+    public static void TraceWarning(object obj) {
+        var caller = GetCaller();
+        Warning($"[{caller?.GetMethod()?.ReflectedType?.Name ?? string.Empty}.{caller?.GetMethod()?.Name ?? string.Empty}] {obj?.ToString() ?? string.Empty}");
+    }
 
 
     // TraceError

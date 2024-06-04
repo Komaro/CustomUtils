@@ -8,18 +8,17 @@ using UnityEngine.Networking;
 
 [EditorResourceProviderDrawer(typeof(AssetBundleProvider))]
 public class EditorAssetBundleProviderDrawer : EditorResourceProviderDrawer {
-
-    private Config _config;
     
+    private CachingService _service;
+    
+    private Config _config;
     private static string _configPath;
 
-
     private static string _buildDirectory;
-
     private static bool _isActiveCaching;
-    private static string _cachingDirectoryName = "AssetBundles";
-    
     private static string _downloadDirectory;
+    private static bool _isActiveEncrypt;
+    private static string _plainEncryptKey;
     
     private static string _url; // Download Test Server URL
     
@@ -30,6 +29,8 @@ public class EditorAssetBundleProviderDrawer : EditorResourceProviderDrawer {
     public EditorAssetBundleProviderDrawer() => CacheRefresh();
 
     public sealed override void CacheRefresh() {
+        _service = Service.GetService<CachingService>();
+        
         if (string.IsNullOrEmpty(_configPath)) {
             _configPath = $"{Constants.Editor.COMMON_CONFIG_FOLDER}/{CONFIG_NAME}";
         }
@@ -38,13 +39,11 @@ public class EditorAssetBundleProviderDrawer : EditorResourceProviderDrawer {
         if (File.Exists(_configPath) && JsonUtil.TryLoadJson(_configPath, out _config)) {
             _buildDirectory = _config.buildDirectory;
             _isActiveCaching = _config.isActiveCaching;
-            _cachingDirectoryName = _config.cachingDirectoryName;
             _downloadDirectory = _config.downloadDirectory;
             _url = _config.downloadUrl;
-        }
-        
-        if (_isActiveCaching) {
-            SetCaching(_cachingDirectoryName);
+            
+            _isActiveEncrypt = _config.isActiveEncrypt;
+            _plainEncryptKey = _isActiveEncrypt && string.IsNullOrEmpty(_config.cipherEncryptKey) == false ? EncryptUtil.DecryptDES(_config.cipherEncryptKey) : string.Empty;
         }
     }
 
@@ -67,47 +66,44 @@ public class EditorAssetBundleProviderDrawer : EditorResourceProviderDrawer {
                 _config?.Save(_configPath);
             }
         });
+        
+        EditorCommon.DrawSeparator();
 
+        _isActiveCaching = GUILayout.Toggle(_isActiveCaching, "Caching 활성화");
         if (_config != null) {
-            _isActiveCaching = GUILayout.Toggle(_isActiveCaching, "Caching 활성화");
-            if (_config.isActiveCaching != _isActiveCaching) {
-                _config.isActiveCaching = _isActiveCaching;
-                _config.Save(_configPath);
-            }
+            _config.isActiveCaching = _isActiveCaching;
+            _config.Save(_configPath);
+        }
 
-            if (_config.isActiveCaching && Caching.ready) {
-                _cachingDirectoryName = EditorCommon.DrawInputFieldSet("Caching 폴더명", _cachingDirectoryName);
-                if (NAME_REGEX.IsMatch(_cachingDirectoryName) == false) {
-                    EditorGUILayout.HelpBox("유효하지 않은 폴더명입니다.", MessageType.Warning);
-                } else {
-                    if (GUILayout.Button("Caching 폴더명 저장") && string.IsNullOrEmpty(_cachingDirectoryName) == false) {
-                        SetCaching(_cachingDirectoryName);
-                        _config.cachingDirectoryName = _cachingDirectoryName;
-                        _config.Save(_configPath);
-                    }
-                }
-                
-                if (Caching.ready) {
-                    EditorCommon.DrawLabelTextSet("활성화된 Caching 폴더", Caching.currentCacheForWriting.path, 150);
-                    if (GUILayout.Button("Caching 클리어")) {
-                        AssetBundle.UnloadAllAssetBundles(false);
-                        Logger.TraceLog(Caching.ClearCache() ? $"Cache Clear Success || {Caching.currentCacheForWriting.path}" : "Cache Clear Failed", Color.yellow);
-                    }
-
-                    if (GUILayout.Button("Caching 폴더")) {
-                        EditorUtility.RevealInFinder(Caching.currentCacheForWriting.path);
-                    }
-                }
-            } else {
-                _downloadDirectory = EditorCommon.DrawFolderSelector("다운로드 폴더 선택", _downloadDirectory, selectDirectory => {
+        if (_isActiveCaching && _service.IsReady()) {
+            EditorCommon.DrawLabelTextSet("현재 활성화된 Caching 폴더", _service.Get().path, 170);
+        } else {
+            _downloadDirectory = EditorCommon.DrawFolderSelector("다운로드 폴더 선택", _downloadDirectory, selectDirectory => {
+                if (_config != null) {
                     _config.downloadDirectory = selectDirectory;
                     _config.Save(_configPath);
-                });
-            }
+                }
+            });
         }
         
-        // TODO. Draw Encrypt Option
+        GUILayout.Space(5);
+        _isActiveEncrypt = GUILayout.Toggle(_isActiveEncrypt, "암호화 활성화");
+        if (_config != null) {
+            _config.isActiveEncrypt = _isActiveEncrypt;
+            _config.Save(_configPath);
+        }
 
+        if (_isActiveEncrypt) {
+            _plainEncryptKey = EditorCommon.DrawButtonPasswordFieldSet("저장", _plainEncryptKey, plainEncryptKey => {
+                if (_config != null) {
+                    _config.cipherEncryptKey = EncryptUtil.EncryptDES(plainEncryptKey);
+                    _config.Save(_configPath);
+                }
+            }, 60f);
+        }
+        
+        // TODO. Build AssetBundle
+        
         // TODO. Draw AssetBundle Build Button
         if (GUILayout.Button("Request Test")) {
             AssetBundle.UnloadAllAssetBundles(true);
@@ -123,17 +119,8 @@ public class EditorAssetBundleProviderDrawer : EditorResourceProviderDrawer {
     }
 
     private void SetCaching(string directoryName) {
-        if (_config != null && Caching.ready) {
-            var cachePath = $"{Application.persistentDataPath}/{directoryName}";
-            var cache = Caching.GetCacheByPath(cachePath);
-            if (cache.valid == false) {
-                // TODO. 캐시 폴더가 없는 경우 생성하는 처리
-
-                // TODO. 인게임 Caching 처리를 위한 CachingService.cs 개발 필요
-                cache = Caching.AddCache(cachePath);
-            }
-                
-            Caching.currentCacheForWriting = cache;
+        if (_config != null && _service.IsReady()) {
+            _service.Set(directoryName);
         }
     }
     
@@ -203,9 +190,11 @@ public class EditorAssetBundleProviderDrawer : EditorResourceProviderDrawer {
         public string buildDirectory = "";
 
         public bool isActiveCaching;
-        public string cachingDirectoryName = "AssetBundles";
         public string downloadDirectory = "";
 
         public string downloadUrl = "";
+        
+        public bool isActiveEncrypt;
+        public string cipherEncryptKey = "";
     }
 }

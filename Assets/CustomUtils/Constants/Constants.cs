@@ -12,7 +12,9 @@ public static partial class Constants {
     public static class Resource {
 
         public const string RESOURCES_FOLDER = "Resources";
-        public const string RESOURCE_LIST_JSON = "ResourceList";
+        public const string RESOURCE_LIST = "ResourceList";
+        
+        public const string RESOURCE_LIST_JSON = "ResourceList.json";
     }
 
     public static class Network {

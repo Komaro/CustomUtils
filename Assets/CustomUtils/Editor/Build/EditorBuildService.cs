@@ -58,7 +58,7 @@ public class EditorBuildService : EditorWindow {
     #endregion
     
     private BuilderAttribute _builderAttribute;
-    private Vector2 _scrollPos;
+    private Vector2 _scrollViewPosition;
     
     private string _buildPath;
 
@@ -68,7 +68,7 @@ public class EditorBuildService : EditorWindow {
     private static Dictionary<Enum, EnumValueAttribute> _defineSymbolDic = new Dictionary<Enum, EnumValueAttribute>();
 
     private static EditorWindow _window;
-    private static EditorWindow Window => _window == null ? _window = GetWindow<EditorBuildService>("Build") : _window;
+    private static EditorWindow Window => _window == null ? _window = GetWindow<EditorBuildService>("Build Service") : _window;
     
     private static readonly Enum DEFAULT_BUILD_TYPE = (Enum) ReflectionManager.GetAttributeEnumTypes<BuildTypeAttribute>().FirstOrDefault()?.GetEnumValues().GetValue(0);
 
@@ -76,7 +76,7 @@ public class EditorBuildService : EditorWindow {
     
     private static readonly Regex NEW_LINE_REGEX = new Regex(@"(\n)");
 
-    [MenuItem("Service/Build/Build Setting %F1")]
+    [MenuItem("Service/Build/Build Service %F1")]
     private static void OpenWindow() {
         Window.Show();
         CacheRefresh();
@@ -116,7 +116,7 @@ public class EditorBuildService : EditorWindow {
     private void OnGUI() {
         _buildType ??= DEFAULT_BUILD_TYPE;
         if (_buildType == default) {
-            EditorGUILayout.HelpBox($"{nameof(BuildTypeAttribute)} 의 구현이 없습니다. {nameof(BuildTypeAttribute)} 어트리뷰트를 가지는 enum 타입을 하나 구현 혹은 지정하여야 합니다.", MessageType.Error);
+            EditorGUILayout.HelpBox($"{nameof(BuildTypeAttribute)} 의 구현을 찾을 수 없습니다. {nameof(BuildTypeAttribute)}를 가지는 enum 타입을 하나 이상 구현 혹은 지정하여야 합니다.", MessageType.Error);
             return;
         }
         
@@ -185,7 +185,7 @@ public class EditorBuildService : EditorWindow {
         }
         
         if (IsDefaultBuildType() == false) {
-            _scrollPos = EditorGUILayout.BeginScrollView(_scrollPos, false, true, GUILayout.ExpandHeight(true));
+            _scrollViewPosition = EditorGUILayout.BeginScrollView(_scrollViewPosition, false, true, GUILayout.ExpandHeight(true));
             EditorGUILayout.BeginVertical();
         } else {
             return;

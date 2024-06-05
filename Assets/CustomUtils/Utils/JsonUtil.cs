@@ -95,6 +95,6 @@ public static class JsonUtil {
 }
 
 public abstract class JsonConfig {
-    
+
     public void Save(string path) => JsonUtil.SaveJson(path, this);
 }

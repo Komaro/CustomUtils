@@ -1,7 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
+using System.Reflection;
 using System.Text.RegularExpressions;
+using Codice.CM.SEIDInfo;
+using UniRx;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -19,11 +24,15 @@ public class EditorAssetBundleProviderDrawer : EditorResourceProviderDrawer {
     private static string _downloadDirectory;
     private static bool _isActiveEncrypt;
     private static string _plainEncryptKey;
+    private Dictionary<BuildAssetBundleOptions, bool> _buildOptionDic = EnumUtil.GetValues<BuildAssetBundleOptions>(true).ToDictionary(x => x, _ => false);
+
+    private Vector2 _buildOptionScrollViewPosition;
     
     private static string _url; // Download Test Server URL
-    
-    private const string CONFIG_NAME = "AssetBundleProviderConfig.json";
 
+    private readonly List<BuildAssetBundleOptions> BUILD_OPTION_LIST = EnumUtil.GetValues<BuildAssetBundleOptions>(true).ToList();
+    private const string CONFIG_NAME = "AssetBundleProviderConfig.json";
+    
     private readonly Regex NAME_REGEX = new(@"^[^\\/:*?""<>|]+$");
 
     public EditorAssetBundleProviderDrawer() => CacheRefresh();
@@ -44,6 +53,8 @@ public class EditorAssetBundleProviderDrawer : EditorResourceProviderDrawer {
             
             _isActiveEncrypt = _config.isActiveEncrypt;
             _plainEncryptKey = _isActiveEncrypt && string.IsNullOrEmpty(_config.cipherEncryptKey) == false ? EncryptUtil.DecryptDES(_config.cipherEncryptKey) : string.Empty;
+
+            _config.buildOptionDic.ForEach(x => _buildOptionDic.AutoAdd(x.Key, x.Value));
         }
     }
 
@@ -68,15 +79,15 @@ public class EditorAssetBundleProviderDrawer : EditorResourceProviderDrawer {
         });
         
         EditorCommon.DrawSeparator();
-
-        _isActiveCaching = GUILayout.Toggle(_isActiveCaching, "Caching 활성화");
-        if (_config != null) {
+        
+        _isActiveCaching = EditorCommon.DrawLabelToggle(_isActiveCaching, "Caching 활성화", 100f);
+        if (_config != null && _config.isActiveCaching != _isActiveCaching) {
             _config.isActiveCaching = _isActiveCaching;
             _config.Save(_configPath);
         }
 
         if (_isActiveCaching && _service.IsReady()) {
-            EditorCommon.DrawLabelTextSet("현재 활성화된 Caching 폴더", _service.Get().path, 170);
+            EditorCommon.DrawLabelTextSet("현재 활성화된 Caching 폴더", _service.Get().path, 170f);
         } else {
             _downloadDirectory = EditorCommon.DrawFolderSelector("다운로드 폴더 선택", _downloadDirectory, selectDirectory => {
                 if (_config != null) {
@@ -87,8 +98,8 @@ public class EditorAssetBundleProviderDrawer : EditorResourceProviderDrawer {
         }
         
         GUILayout.Space(5);
-        _isActiveEncrypt = GUILayout.Toggle(_isActiveEncrypt, "암호화 활성화");
-        if (_config != null) {
+        _isActiveEncrypt = EditorCommon.DrawLabelToggle(_isActiveEncrypt, "암호화 활성화", 100f);
+        if (_config != null && _config.isActiveEncrypt != _isActiveEncrypt) {
             _config.isActiveEncrypt = _isActiveEncrypt;
             _config.Save(_configPath);
         }
@@ -102,9 +113,43 @@ public class EditorAssetBundleProviderDrawer : EditorResourceProviderDrawer {
             }, 60f);
         }
         
-        // TODO. Build AssetBundle
+        EditorCommon.DrawSeparator();
+
         
-        // TODO. Draw AssetBundle Build Button
+        using (new GUILayout.VerticalScope("box")) {
+            GUILayout.Label("AssetBundle 빌드 옵션 선택", Constants.Editor.FIELD_TITLE_STYLE);
+            _buildOptionScrollViewPosition = GUILayout.BeginScrollView(_buildOptionScrollViewPosition, false, false, GUILayout.Height(250f));
+            foreach (var option in BUILD_OPTION_LIST) {
+                _buildOptionDic[option] = EditorCommon.DrawLabelToggle(_buildOptionDic[option], option.ToString());
+                if (_config != null && _config.buildOptionDic.TryGetValue(option, out var active) && _buildOptionDic[option] != active) {
+                    _config.buildOptionDic[option] = _buildOptionDic[option];
+                    _config.Save(_configPath);
+                }
+
+                GUILayout.Space(1);
+            }
+
+            GUILayout.EndScrollView();
+
+            if (GUILayout.Button("AssetBundle 빌드", GUILayout.Height(40))) {
+                // TODO. 빌드 옵션 조합
+                var options = BuildAssetBundleOptions.None;
+                foreach (var (option, active) in _buildOptionDic) {
+                    if (active) {
+                        options |= option;
+                    }
+                }
+                
+                // TODO. 현재 타겟 플랫폼과 빌드 할 타겟 플랫폼을 체크 후 변경할 지 Show Dialogue 처리 추가 
+                // TODO. enum 값들을 가져올 때 Obsolete 체크 후 캐싱 처리 
+                var buildSetting = BuildTarget.NoTarget;
+                
+                // TODO. 최종 에셋번들 빌드 처리
+                // Sample
+                ResourceGenerator.GenerateAssetBundle(_buildDirectory, options, EditorUserBuildSettings.activeBuildTarget);
+            }
+        }
+        
         if (GUILayout.Button("Request Test")) {
             AssetBundle.UnloadAllAssetBundles(true);
             AssetBundleManifestDownload($"{EditorUserBuildSettings.activeBuildTarget}/{EditorUserBuildSettings.activeBuildTarget}", manifest => {
@@ -118,12 +163,7 @@ public class EditorAssetBundleProviderDrawer : EditorResourceProviderDrawer {
         }
     }
 
-    private void SetCaching(string directoryName) {
-        if (_config != null && _service.IsReady()) {
-            _service.Set(directoryName);
-        }
-    }
-    
+    // Sample
     private void BuildAssetBundle() {
         ResourceGenerator.GenerateAssetBundle($"C:/Project/Unity/CustomUtils/AssetBundle/{EditorUserBuildSettings.activeBuildTarget}", BuildAssetBundleOptions.None, EditorUserBuildSettings.activeBuildTarget);
     }
@@ -141,14 +181,13 @@ public class EditorAssetBundleProviderDrawer : EditorResourceProviderDrawer {
                     return;
                 }
 
-                var bytes = request.downloadHandler.data;
-                AssetBundle assetBundle = null;
+                AssetBundle assetBundle;
                 try {
                     try {
-                        assetBundle = AssetBundle.LoadFromMemory(bytes);
-                    } catch (Exception e) {
-                        Logger.TraceError(e);
-                        assetBundle = AssetBundle.LoadFromMemory(EncryptUtil.DecryptAES(bytes));
+                        assetBundle = AssetBundle.LoadFromMemory(request.downloadHandler.data);
+                    } catch (Exception ex) {
+                        Logger.TraceError(ex);
+                        assetBundle = AssetBundle.LoadFromMemory(EncryptUtil.DecryptAES(request.downloadHandler.data));
                     }
                 
                     if (assetBundle != null) {
@@ -177,9 +216,17 @@ public class EditorAssetBundleProviderDrawer : EditorResourceProviderDrawer {
             if (request.result != UnityWebRequest.Result.Success) {
                 Logger.TraceError(request.error);
             } else {
-                var assetBundle = DownloadHandlerAssetBundle.GetContent(request);
-                if (assetBundle != null) {
-                    callback?.Invoke(assetBundle);
+                AssetBundle assetBundle = null;
+                try {
+                    assetBundle = DownloadHandlerAssetBundle.GetContent(request);
+                } catch (Exception ex) {
+                    Logger.TraceLog(ex, Color.red);
+                    var decryptBytes = EncryptUtil.DecryptAES(request.downloadHandler.data);
+                    assetBundle = AssetBundle.LoadFromMemory(decryptBytes);
+                } finally {
+                    if (assetBundle != null) {
+                        callback?.Invoke(assetBundle);
+                    }
                 }
             }
         };
@@ -196,5 +243,7 @@ public class EditorAssetBundleProviderDrawer : EditorResourceProviderDrawer {
         
         public bool isActiveEncrypt;
         public string cipherEncryptKey = "";
+
+        public Dictionary<BuildAssetBundleOptions, bool> buildOptionDic = EnumUtil.GetValues<BuildAssetBundleOptions>(true).ToDictionary(x => x, _ => false);
     }
 }

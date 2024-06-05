@@ -38,10 +38,8 @@ public static class EditorCommon {
     public static string DrawLabelTextFieldSet(string label, string text, float labelWidth = 100f) {
         using (new GUILayout.HorizontalScope()) {
             GUILayout.Label(label, Constants.Editor.FIELD_TITLE_STYLE, GUILayout.Width(labelWidth));
-            text = GUILayout.TextField(text);
+            return GUILayout.TextField(text);
         }
-        
-        return text;
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -51,10 +49,8 @@ public static class EditorCommon {
                 onClick?.Invoke(text);
             }
 
-            text = GUILayout.TextField(text);
+            return GUILayout.TextField(text);
         }
-
-        return text;
     }
     
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -64,10 +60,8 @@ public static class EditorCommon {
                 onClick?.Invoke(password);
             }
 
-            password = GUILayout.PasswordField(password, '*');
+            return GUILayout.PasswordField(password, '*') ?? string.Empty;
         }
-
-        return password;
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -86,6 +80,14 @@ public static class EditorCommon {
         }
         
         return targetDirectory;
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static bool DrawLabelToggle(bool toggle, string label, float labelWidth = 300f) {
+        using (new GUILayout.HorizontalScope()) {
+            EditorGUILayout.LabelField(label, GUILayout.Width(labelWidth));
+            return EditorGUILayout.Toggle(toggle);
+        }
     }
 
     [MenuItem("GameObject/Tool/Copy Path", false, 99)]

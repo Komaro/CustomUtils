@@ -219,7 +219,7 @@ public class EditorHttpWebServerService : EditorWindow {
         public string targetDirectory = "";
         public string url = "http://localhost:8000/";
         public List<ModulePreset> modulePresetList = new();
-
+        
         public void AddPreset(ModulePreset addPreset) {
             foreach (var preset in modulePresetList) {
                 if (preset.IsMatch(addPreset)) {

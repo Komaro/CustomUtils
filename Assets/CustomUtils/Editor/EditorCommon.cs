@@ -6,89 +6,10 @@ using System.Runtime.CompilerServices;
 using UnityEditor;
 using UnityEngine;
 
-public static class EditorCommon {
+public static partial class EditorCommon {
     
     private static string _unityProjectPath;
     public static string UNITY_PROJECT_PATH => string.IsNullOrEmpty(_unityProjectPath) ? _unityProjectPath = Application.dataPath.Replace("/Assets", string.Empty) : _unityProjectPath;
-    
-    public static void ShowCheckDialogue(string title, string message, string okText = "확인", string cancelText = "취소", Action ok = null, Action cancel = null) {
-        if (EditorUtility.DisplayDialog(title, message, okText, cancelText)) {
-            ok?.Invoke();
-        } else {
-            cancel?.Invoke();
-        }
-    }
-
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void DrawSeparator(float topSpace = 10f, float bottomSpace = 10f) {
-        GUILayout.Space(topSpace);
-        EditorGUI.DrawRect(EditorGUILayout.GetControlRect(false, 2), Color.gray);
-        GUILayout.Space(bottomSpace);
-    }
-
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void DrawLabelTextSet(string label, string text, float labelWidth = 100f) {
-        using (new GUILayout.HorizontalScope()) {
-            GUILayout.Label(label, Constants.Editor.FIELD_TITLE_STYLE, GUILayout.Width(labelWidth));
-            GUILayout.TextField(text);
-        }
-    }
-    
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static string DrawLabelTextFieldSet(string label, string text, float labelWidth = 100f) {
-        using (new GUILayout.HorizontalScope()) {
-            GUILayout.Label(label, Constants.Editor.FIELD_TITLE_STYLE, GUILayout.Width(labelWidth));
-            return GUILayout.TextField(text);
-        }
-    }
-
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static string DrawButtonTextFieldSet(string buttonText, string text, Action<string> onClick = null, float buttonWidth = 150f) {
-        using (new GUILayout.HorizontalScope()) {
-            if (GUILayout.Button(buttonText, GUILayout.Width(buttonWidth))) {
-                onClick?.Invoke(text);
-            }
-
-            return GUILayout.TextField(text);
-        }
-    }
-    
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static string DrawButtonPasswordFieldSet(string buttonText, string password, Action<string> onClick = null, float buttonWidth = 150f) {
-        using (new GUILayout.HorizontalScope()) {
-            if (GUILayout.Button(buttonText, GUILayout.Width(buttonWidth))) {
-                onClick?.Invoke(password);
-            }
-
-            return GUILayout.PasswordField(password, '*') ?? string.Empty;
-        }
-    }
-
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static string DrawFolderSelector(string text, string targetDirectory, Action<string> onSelect = null, float width = 120f) {
-        using (new GUILayout.HorizontalScope()) {
-            if (GUILayout.Button(text, GUILayout.Width(width))) {
-                var selectDirectory = EditorUtility.OpenFolderPanel("대상 폴더", targetDirectory, string.Empty);
-                if (string.IsNullOrEmpty(selectDirectory) == false) {
-                    targetDirectory = selectDirectory;
-                }
-                
-                onSelect?.Invoke(targetDirectory);
-            }
-            
-            GUILayout.TextField(targetDirectory);
-        }
-        
-        return targetDirectory;
-    }
-
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static bool DrawLabelToggle(bool toggle, string label, float labelWidth = 300f) {
-        using (new GUILayout.HorizontalScope()) {
-            EditorGUILayout.LabelField(label, GUILayout.Width(labelWidth));
-            return EditorGUILayout.Toggle(toggle);
-        }
-    }
 
     [MenuItem("GameObject/Tool/Copy Path", false, 99)]
     public static void CopyPath() {
@@ -165,4 +86,25 @@ public static class EditorCommon {
             Debug.LogError(e);
         }
     }
+
+    #region [Editor PlayerPrefs]
+    
+    public static bool TryGet(string key, out string value) => PlayerPrefsUtil.TryGet($"EditorString_{key}", out value);
+
+    public static bool GetBool(string key) => PlayerPrefsUtil.TryGet($"EditorBool_{key}", out bool value) && value;
+    public static void GetBool(string key, bool value) => PlayerPrefsUtil.Set($"EditorBool_{key}", value);
+
+    public static int GetInt(string key) => PlayerPrefsUtil.GetInt($"EditorInt_{key}");
+    public static void SetInt(string key, int value) => PlayerPrefsUtil.SetInt($"EditorInt_{key}", value);
+
+    public static string GetString(string key) => PlayerPrefsUtil.GetString($"EditorString_{key}");
+    public static void SetString(string key, string value) => PlayerPrefsUtil.SetString($"EditorString_{key}", value);
+
+    public static float GetFloat(string key) => PlayerPrefs.GetFloat($"EditorFloat_{key}");
+    public static void SetFloat(string key, float value) => PlayerPrefs.SetFloat($"EditorFloat_{key}", value);
+    
+    public static T GetEnum<T>(string key) where T : struct, Enum => PlayerPrefsUtil.TryGet<T>(key, out var value) ? value : default;
+    public static void SetEnum<T>(string key, T value) where T : struct, Enum => PlayerPrefsUtil.Set(key, value);
+    
+    #endregion
 }

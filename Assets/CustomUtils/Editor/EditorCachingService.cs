@@ -32,7 +32,7 @@ public class EditorCachingService : EditorWindow {
 
     private void OnGUI() {
         GUILayout.Space(10);
-        EditorCommon.DrawLabelTextSet("현재 활성화된 Cache", Caching.currentCacheForWriting.path, 180f);
+        EditorCommon.DrawLabelTextField("현재 활성화된 Cache", Caching.currentCacheForWriting.path, 180f);
         EditorCommon.DrawSeparator();
         if (_cacheList.Any()) {
             GUILayout.BeginVertical("box");
@@ -67,7 +67,7 @@ public class EditorCachingService : EditorWindow {
             GUILayout.EndVertical();
         }
 
-        _createDirectoryName = EditorCommon.DrawLabelTextFieldSet("폴더명", _createDirectoryName);
+        _createDirectoryName = EditorCommon.DrawLabelTextField("폴더명", _createDirectoryName);
         if (GUILayout.Button("Caching 추가", GUILayout.Height(50)) && string.IsNullOrEmpty(_createDirectoryName) == false) {
             _service.Add(_createDirectoryName);
             CacheRefresh();

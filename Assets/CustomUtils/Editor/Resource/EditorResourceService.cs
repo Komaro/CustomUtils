@@ -8,7 +8,7 @@ using UnityEditor.Callbacks;
 public class EditorResourceService : EditorWindow {
 
     private static EditorWindow _window;
-    private static EditorWindow Window => _window == null ? _window = GetWindow<EditorResourceService>("Resource Initializer") : _window;
+    private static EditorWindow Window => _window == null ? _window = GetWindow<EditorResourceService>("Resource Service") : _window;
 
     private static int _selectProviderTypeIndex;
     private static Type _selectProviderType;
@@ -17,7 +17,9 @@ public class EditorResourceService : EditorWindow {
     private static string[] _providerTypeNames = {};
     private static Dictionary<Type, EditorResourceProviderDrawer> _providerDrawerDic = new();
 
-    [MenuItem("Service/Resource/Resource Provider Initializer")]
+    private static readonly string SELECT_PROVIDER_SAVE_KEY = $"{nameof(EditorResourceService)}";
+
+    [MenuItem("Service/Resource/Resource Service")]
     public static void OpenWindow() {
         Window.Show();
         CacheRefresh();
@@ -33,15 +35,19 @@ public class EditorResourceService : EditorWindow {
                 _providerTypeNames = providerTypeList.Select(x => x.Name).ToArray();
             }
             
-            _providerDrawerDic.Clear();
             foreach (var type in ReflectionManager.GetSubClassTypes<EditorResourceProviderDrawer>()) {
                 if (type.TryGetCustomAttribute<EditorResourceProviderDrawerAttribute>(out var attribute)) {
-                    if (_providerDrawerDic.ContainsKey(type) == false || _providerDrawerDic[type] == null) {
+                    if (_providerDrawerDic.ContainsKey(attribute.providerType) == false || _providerDrawerDic[attribute.providerType] == null) {
                         _providerDrawerDic.Add(attribute.providerType, Activator.CreateInstance(type) as EditorResourceProviderDrawer);
                     }
                 }
             }
-
+            
+            if (EditorCommon.TryGet(SELECT_PROVIDER_SAVE_KEY, out var saveProviderName) && _providerTypeNames.TryFindIndex(saveProviderName, out var index)) {
+                _selectProviderTypeIndex = index;
+                _selectProviderType = _providerTypes[_selectProviderTypeIndex];
+            }
+            
             if (_selectProviderType != null && _providerDrawerDic.TryGetValue(_selectProviderType, out var drawer)) {
                 drawer.CacheRefresh();
             }
@@ -53,6 +59,10 @@ public class EditorResourceService : EditorWindow {
             _selectProviderTypeIndex = EditorGUILayout.Popup(_selectProviderTypeIndex, _providerTypeNames);
             if (_selectProviderTypeIndex < _providerTypes.Length && _providerTypes[_selectProviderTypeIndex] != _selectProviderType) {
                 _selectProviderType = _providerTypes[_selectProviderTypeIndex];
+                EditorCommon.SetString(SELECT_PROVIDER_SAVE_KEY, _selectProviderType.ToString());
+                if (_providerDrawerDic.TryGetValue(_selectProviderType, out var closeDrawer)) {
+                    closeDrawer.Close();
+                }
             }
 
             if (_providerDrawerDic.TryGetValue(_selectProviderType, out var drawer)) {
@@ -64,9 +74,17 @@ public class EditorResourceService : EditorWindow {
             EditorGUILayout.HelpBox($"{nameof(IResourceProvider)}를 상속받은 Provider를 찾을 수 없습니다.", MessageType.Warning);
         }
     }
+
+    private void OnDestroy() {
+        if (_selectProviderType != null && _providerDrawerDic.TryGetValue(_selectProviderType, out var drawer)) {
+            drawer.Close();
+        }
+    }
 }
 
 public abstract class EditorResourceProviderDrawer {
+    
+    public virtual void Close() { }
     public abstract void CacheRefresh();
     public abstract void Draw();
 }

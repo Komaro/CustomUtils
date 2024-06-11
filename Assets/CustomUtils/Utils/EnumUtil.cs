@@ -1,10 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 
 public static class EnumUtil {
     
-    public static bool IsDefined<T>(this T type) => Enum.IsDefined(typeof(T), type);
-    public static bool IsDefined<T>(this string type) => Enum.IsDefined(typeof(T), type);
+    private static bool IsDefined<T>(T type) => Enum.IsDefined(typeof(T), type);
+    private static bool IsDefined<T>(string type) => Enum.IsDefined(typeof(T), type);
 
     public static bool IsDefinedAllCase<T>(this string type) {
         if (IsDefined<T>(type)) {
@@ -124,10 +125,15 @@ public static class EnumUtil {
         return false;
     }
     
-    public static List<T> GetValues<T>(bool isIgnoreDefault = false) {
+    public static List<T> GetValues<T>(bool isIgnoreDefault = false, bool isIgnoreObsolete = false) {
+        var type = typeof(T);
         var list = new List<T>();
-        if (typeof(T).IsEnum) {
+        if (type.IsEnum) {
             foreach (T item in Enum.GetValues(typeof(T))) {
+                if (isIgnoreObsolete && type.TryGetField(Enum.GetName(type, item), out var info) && info.IsDefined<ObsoleteAttribute>()) {
+                    continue;
+                }
+                
                 list.Add(item);
             }
 

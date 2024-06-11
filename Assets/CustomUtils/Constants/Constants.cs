@@ -4,6 +4,12 @@ using UnityEngine;
 
 public static partial class Constants {
 
+    public static class Extension {
+
+        public const string JSON = ".json";
+        public const string MANIFEST = ".manifest";
+    }
+
     public static class Culture {
         
         public static readonly CultureInfo DEFAULT_CULTURE_INFO = new CultureInfo("en-US");
@@ -32,6 +38,7 @@ public static partial class Constants {
         public static readonly GUIStyle BOLD_STYLE = new();
         public static readonly GUIStyle WHITE_BOLD_STYLE = new();
         public static readonly GUIStyle FIELD_TITLE_STYLE = new();
+        public static readonly GUIStyle AREA_TITLE_STYLE = new();
         
         public static readonly GUILayoutOption DEFAULT_LAYOUT = GUILayout.Width(300f);
 
@@ -54,6 +61,12 @@ public static partial class Constants {
             FIELD_TITLE_STYLE.normal.textColor = Color.white;
             FIELD_TITLE_STYLE.fontStyle = FontStyle.Bold;
             FIELD_TITLE_STYLE.padding = new RectOffset(2, 2, 2, 2);
+            
+            AREA_TITLE_STYLE.alignment = TextAnchor.UpperLeft;
+            AREA_TITLE_STYLE.normal.textColor = Color.white;
+            AREA_TITLE_STYLE.fontStyle = FontStyle.Bold;
+            AREA_TITLE_STYLE.fontSize = 12;
+            AREA_TITLE_STYLE.padding = new RectOffset(5, 5, 0, 5);
         }
     }
 }

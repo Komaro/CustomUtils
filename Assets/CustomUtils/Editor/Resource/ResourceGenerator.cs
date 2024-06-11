@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using Newtonsoft.Json.Linq;
 using UnityEditor;
+using UnityEngine;
 
 public static class ResourceGenerator {
 
@@ -46,47 +47,36 @@ public static class ResourceGenerator {
         }
     }
 
-    [MenuItem("Service/Test/GenerateAssetBundleListJson")]
-    private static void TestGenerateAssetBundleListJson() => GenerateAssetBundleListJson(string.Empty);
-
     [MenuItem("Service/Test/GenerateAssetBundle")]
     private static void TestGenerateAssetBundle() => GenerateAssetBundle($"C:/Project/Unity/CustomUtils/AssetBundle/{EditorUserBuildSettings.activeBuildTarget}", BuildAssetBundleOptions.None, EditorUserBuildSettings.activeBuildTarget);
-    
-    // TODO. AssetBundle 빌드 시 manifest 파일로 대처 가능한지 검토
-    public static void GenerateAssetBundleListJson(string generatePath, Action<string, string, float> onProgress = null, Action onEnd = null) {
-        try {
-            var jObject = new JObject();
-            foreach (var bundleName in AssetDatabase.GetAllAssetBundleNames().Where(Path.HasExtension)) {
-                Logger.TraceError(bundleName);
-                foreach (var assetName in AssetDatabase.GetAssetPathsFromAssetBundle(bundleName)) {
-                    Logger.TraceError(assetName);
-                }
-            }
-        } catch (Exception e) {
-            Logger.TraceError(e);
-            throw;
-        }
+
+    public static bool TryGenerateAssetBundle(string generatePath, BuildAssetBundleOptions options, BuildTarget target, out AssetBundleManifest manifest) {
+        manifest = GenerateAssetBundle(generatePath, options, target);
+        return manifest != null;
     }
     
-    public static void GenerateAssetBundle(string generatePath, BuildAssetBundleOptions option, BuildTarget target) {
+    public static AssetBundleManifest GenerateAssetBundle(string generatePath, BuildAssetBundleOptions options, BuildTarget target) {
         try {
             if (Directory.Exists(generatePath) == false) {
                 Directory.CreateDirectory(generatePath);
             }
 
-            var manifest = BuildPipeline.BuildAssetBundles(generatePath, option, target);
+            var manifest = BuildPipeline.BuildAssetBundles(generatePath, options, target);
             if (manifest != null) {
                 var manifestPath = Path.Combine(generatePath, EditorUserBuildSettings.activeBuildTarget.ToString());
                 if (File.Exists(manifestPath)) {
                     var manifestBytes = File.ReadAllBytes(manifestPath);
-                    var aesManifestBytes = EncryptUtil.EncrytAES(manifestBytes);
+                    var aesManifestBytes = EncryptUtil.EncryptAESBytes(manifestBytes);
                     // File.Copy(manifestPath, Path.Combine(generatePath, EditorUserBuildSettings.activeBuildTarget.ToString()));
                     File.WriteAllBytes(manifestPath, aesManifestBytes);
                 }
+                
+                return manifest;
             }
         } catch (Exception e) {
             Logger.TraceError(e);
-            throw;
         }
+        
+        return null;
     }
 }

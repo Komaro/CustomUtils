@@ -54,7 +54,7 @@ public class EditorHttpWebServerService : EditorWindow {
         if (_config == null) {
             EditorGUILayout.HelpBox($"{CONFIG_NAME} 파일이 존재하지 않습니다. 선택한 서버 설정이 저장되지 않으며 일부 기능을 사용할 수 없습니다.", MessageType.Warning);
             if (GUILayout.Button("Config 파일 생성")) {
-                EditorCommon.ShowCheckDialogue("Config 파일 생성", $"Config 파일을 생성합니다.\n경로는 아래와 같습니다.\n{_configPath}", ok: () => {
+                EditorCommon.OpenCheckDialogue("Config 파일 생성", $"Config 파일을 생성합니다.\n경로는 아래와 같습니다.\n{_configPath}", ok: () => {
                     _config = new Config();
                     _config.Save(_configPath);
                 });
@@ -206,13 +206,15 @@ public class EditorHttpWebServerService : EditorWindow {
     private void StartHttpWebServer() {
         _httpServer ??= new SimpleHttpWebServer(_url);
         if (_httpServer.IsRunning()) {
-            EditorCommon.ShowCheckDialogue("경고", "현재 임시 웹 서버가 동작중입니다.\n확인 시 종료 후 서버를 재시작합니다.", ok: () => {
+            EditorCommon.OpenCheckDialogue("경고", "현재 임시 웹 서버가 동작중입니다.\n확인 시 종료 후 서버를 재시작합니다.", ok: () => {
                 _httpServer.Restart();
             });
         } else {
             _httpServer.Start(_targetDirectory);
         }
     }
+    
+    private class NullConfig : Config { }
     
     private class Config : JsonConfig {
         
@@ -235,15 +237,15 @@ public class EditorHttpWebServerService : EditorWindow {
                 modulePresetList.RemoveAt(index);
             }
         }
+
+        public override bool IsNull() => this is NullConfig;
     }
 
     private class ModulePreset {
         
         public List<string> moduleNameList = new();
         
-        public ModulePreset(List<string> moduleNameList) {
-            this.moduleNameList = moduleNameList;
-        }
+        public ModulePreset(List<string> moduleNameList) => this.moduleNameList = moduleNameList;
 
         public bool IsMatch(ModulePreset preset) {
             var aSortList = moduleNameList.OrderBy(x => x).ToList();

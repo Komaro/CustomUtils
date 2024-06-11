@@ -152,7 +152,21 @@ public class SystemUtil {
             }
         }
     }
-    
+
+    public static bool TryReadAllBytes(string path, out byte[] bytes) {
+        try {
+            if (File.Exists(path)) {
+                bytes = File.ReadAllBytes(path);
+                return bytes is { Length: > 0 };
+            }
+        } catch (Exception ex) {
+            Logger.TraceError(ex);
+        }
+
+        bytes = Array.Empty<byte>();
+        return false;
+    }
+
     public static void CopyAllFiles(string sourceFolder, string targetFolder, params string[] suffixes) {
         if (Directory.Exists(sourceFolder) && Directory.Exists(targetFolder)) {
             Debug.Log($"Copy Files || {sourceFolder} => {targetFolder}\n{nameof(suffixes)} || {suffixes.ToStringCollection(", ")}");

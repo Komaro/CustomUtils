@@ -67,8 +67,13 @@ public static class ReflectionManager
 
     #region [Extension]
 
-    public static bool ContainsCustomAttribute<T>(this MemberInfo info) where T : Attribute => info.GetCustomAttributes<T>().Any();
-    public static bool ContainsCustomAttribute<T>(this Type type) where T : Attribute => type.GetCustomAttributes<T>().Any();
+    public static bool TryGetField(this Type type, string name, out FieldInfo info) {
+        info = type.GetField(name);
+        return info != null;
+    }
+
+    public static bool IsDefined<T>(this MemberInfo info) where T : Attribute => info.IsDefined(typeof(T));
+    public static bool IsDefined<T>(this Type type) where T : Attribute => type.IsDefined(typeof(T));
 
     public static bool TryGetCustomAttributeList(this MemberInfo info, out List<Attribute> attributeList) {
         attributeList = info.GetCustomAttributes().ToList();

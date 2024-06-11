@@ -1,5 +1,6 @@
 using System;
 using System.Globalization;
+using System.Text;
 using System.Text.RegularExpressions;
 
 public static class StringExtension {
@@ -53,5 +54,20 @@ public static class StringExtension {
     public static string GetForceTitleCase(this string strText) => GetTitleCase(strText.ToLower());
     public static string GetTitleCase<T>(this T type) where T : Enum => _textInfo?.ToTitleCase(type.ToString());
     public static bool EqualsFast(this string content, string comparedString) => content.Equals(comparedString, StringComparison.Ordinal);
+    
+    public static byte[] GetBytes(this string content, ENCODING_FORMAT format = ENCODING_FORMAT.UTF_8) => format switch {
+        ENCODING_FORMAT.UTF_32 => Encoding.UTF32.GetBytes(content),
+        ENCODING_FORMAT.UNICODE => Encoding.Unicode.GetBytes(content),
+        ENCODING_FORMAT.ASCII => Encoding.ASCII.GetBytes(content),
+        _ => Encoding.UTF8.GetBytes(content)
+    };
 
+    public static byte[] GetRawBytes(this string content) => Convert.FromBase64String(content);
+}
+
+public enum ENCODING_FORMAT {
+    UTF_8,
+    UTF_32,
+    UNICODE,
+    ASCII,
 }

@@ -137,10 +137,10 @@ public abstract class Command {
             return default(Enum);
         }
         
-        if (paramType.IsGenericType && paramType.GetGenericTypeDefinition() == typeof(Named<>)) {
+        if (paramType.IsGenericType && paramType.GetGenericTypeDefinition() == typeof(NameValuePair<>)) {
             var valueType = paramType.GetGenericArguments()[0];
             return Activator.CreateInstance(
-                typeof(Named<>).MakeGenericType(valueType),
+                typeof(NameValuePair<>).MakeGenericType(valueType),
                 paramValue.Contains(".") ? paramValue.GetBefore(".") : paramValue, 
                 ParseParameterValue(paramValue.GetAfterFirst("."), valueType));
         }
@@ -210,12 +210,12 @@ public abstract class Command {
         }
     }
     
-    protected class Named<TValue> {
+    protected class NameValuePair<TValue> {
         
         public string name;
         public TValue value;
 
-        public Named(string name, TValue value) {
+        public NameValuePair(string name, TValue value) {
             this.name = name;
             this.value = value;
         }

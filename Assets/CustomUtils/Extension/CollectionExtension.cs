@@ -210,7 +210,7 @@ public static class CollectionExtension {
 
     public static bool TryFindAllValueList<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, out List<TValue> list, Func<TValue, bool> match) {
         list = dictionary.FindAllValueList(match);
-        return list != null && list.Count > 0;
+        return list is { Count: > 0 };
     }
 
     public static List<TValue> FindAllValueList<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, Func<TValue, bool> match) => dictionary.Where(x => match?.Invoke(x.Value) ?? false).Select(x => x.Value).ToList();
@@ -345,7 +345,6 @@ public static class CollectionExtension {
 
     public static void ISync<TBase, TWork>(this List<TBase> baseList, IList workList, Func<TWork> createFunc, Action<TWork> removeAction) {
         var count = baseList.Count - workList.Count;
-
         while (count++ < 0) {
             if (workList[0] is TWork item)
                 removeAction?.Invoke(item);
@@ -513,15 +512,33 @@ public static class CollectionExtension {
         return list;
     }
 
+    public static bool TryFindIndex<T>(this T[] array, T value, out int index) {
+        if (array != null) {
+            for (var i = 0; i < array.Length; i++) {
+                if (value?.Equals(array[i]) ?? false) {
+                    index = i;
+                    return true;
+                }
+            }
+        }
+        
+        index = -1;
+        return false;
+    }
+
     public static bool TryGetRandom<T>(this T[] array, out T value) {
         value = array.GetRandom();
         return value != null;
     }
     
     public static T GetRandom<T>(this T[] array) {
-        if (array is { Length: > 0 }) {
-            var randomIndex = UnityEngine.Random.Range(0, array.Length);
-            return array[randomIndex];
+        try {
+            if (array is { Length: > 0 }) {
+                var randomIndex = UnityEngine.Random.Range(0, array.Length);
+                return array[randomIndex];
+            }
+        } catch (Exception ex) {
+            Logger.TraceError(ex);
         }
         
         return default;

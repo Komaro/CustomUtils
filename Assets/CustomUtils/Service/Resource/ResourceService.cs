@@ -34,13 +34,13 @@ public class ResourceService : IService {
             _isActiveSubProvider = ReflectionManager.GetAttribute<ResourceSubProviderAttribute>().Any();
             if (_isActiveSubProvider) {
                 Logger.TraceLog($"SubProvider is activated. Find {nameof(ResourceSubProviderAttribute)}...", Color.yellow);
-                _subProvider = Init(providerTypeList.Where(x => x.ContainsCustomAttribute<ResourceSubProviderAttribute>()).OrderBy(x => x.GetCustomAttribute<ResourceSubProviderAttribute>().order));
+                _subProvider = Init(providerTypeList.Where(x => x.IsDefined<ResourceSubProviderAttribute>()).OrderBy(x => x.GetCustomAttribute<ResourceSubProviderAttribute>().order));
                 if (_subProvider == null) {
                     Logger.TraceError($"{nameof(_subProvider)} is Null. Check {nameof(ResourceSubProviderAttribute)} Implementation");
                 }
             }
             
-            _provider = Init(providerTypeList.Where(x => x.ContainsCustomAttribute<ResourceProviderAttribute>()).OrderBy(x => x.GetCustomAttribute<ResourceProviderAttribute>().order));
+            _provider = Init(providerTypeList.Where(x => x.IsDefined<ResourceProviderAttribute>()).OrderBy(x => x.GetCustomAttribute<ResourceProviderAttribute>().order));
         } catch (Exception ex) {
             Logger.TraceError(ex);
             if (_provider == null || _provider.IsLoaded() == false) {

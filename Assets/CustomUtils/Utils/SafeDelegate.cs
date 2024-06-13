@@ -4,7 +4,7 @@ using System.Linq;
 public struct SafeDelegate<T> where T : Delegate {
         
     public T handler;
-
+    
     public static SafeDelegate<T> operator +(SafeDelegate<T> safeDelegate, T addEvent) {
         if (safeDelegate.handler == null || safeDelegate.handler.GetInvocationList().Contains(addEvent) == false) {
             safeDelegate.handler = Delegate.Combine(safeDelegate.handler, addEvent) as T;

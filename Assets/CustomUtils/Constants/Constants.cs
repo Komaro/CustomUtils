@@ -66,7 +66,7 @@ public static partial class Constants {
             AREA_TITLE_STYLE.normal.textColor = Color.white;
             AREA_TITLE_STYLE.fontStyle = FontStyle.Bold;
             AREA_TITLE_STYLE.fontSize = 12;
-            AREA_TITLE_STYLE.padding = new RectOffset(5, 5, 0, 5);
+            AREA_TITLE_STYLE.padding = new RectOffset(5, 5, 5, 5);
         }
     }
 }

@@ -119,4 +119,22 @@ public static partial class EditorCommon {
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void SetGUITooltip(string tooltip, bool condition) => GUI.tooltip = condition && Event.current.type == EventType.Repaint ? tooltip : string.Empty;
+    
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static int DrawTopToolbar(int index, Action<int> onChange = null, params string[] texts) {
+        using (new EditorGUILayout.HorizontalScope()) {
+            GUILayout.FlexibleSpace();
+            var selectIndex = GUILayout.Toolbar(index, texts, "LargeButton", GUI.ToolbarButtonSize.FitToContents);
+            GUILayout.FlexibleSpace();
+            
+            if (selectIndex != index) {
+                onChange?.Invoke(selectIndex);
+            }
+            
+            return selectIndex;
+        }
+    }
+    
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void DrawTopToolbar(ref int index, Action<int> onChange = null, params string[] texts) => index = DrawTopToolbar(index, onChange, texts);
 }

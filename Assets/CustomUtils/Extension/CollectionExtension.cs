@@ -193,6 +193,13 @@ public static class CollectionExtension {
         }
     }
 
+    public static void SafeRemove<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key, Action<TValue> releaseAction) {
+        if (dictionary.TryGetValue(key, out var value)) {
+            releaseAction?.Invoke(value);
+            dictionary.Remove(key);
+        }
+    }
+
     public static bool TryGetValue<TKey, TIKey, TValue>(this IDictionary<TKey, Dictionary<TIKey, TValue>> dictionary, TKey outKey, TIKey innerKey, out TValue outValue) {
         outValue = default;
         return dictionary.TryGetValue(outKey, out var innerDic) && innerDic.TryGetValue(innerKey, out outValue);

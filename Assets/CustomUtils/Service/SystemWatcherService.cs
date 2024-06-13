@@ -1,18 +1,18 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
-// TODO. 재설계 필요
 public class SystemWatcherService : IService {
 
-    private Dictionary<string, FileSystemWatcher> _fileWatcherDic = new();
+    private Dictionary<SystemWatcherServiceOrder, FileSystemWatcher> _fileSystemWatcherDic = new(new SystemWatcherServiceOrder());
 
     private bool _isServing;
     
     public bool IsServing() => _isServing;
 
     public void Start() {
-        foreach (var watcher in _fileWatcherDic.Values) {
+        foreach (var watcher in _fileSystemWatcherDic.Values) {
             watcher.EnableRaisingEvents = true;
         }
 
@@ -20,69 +20,62 @@ public class SystemWatcherService : IService {
     }
 
     public void Stop() {
-        foreach (var watcher in _fileWatcherDic.Values) {
+        foreach (var watcher in _fileSystemWatcherDic.Values) {
             watcher.EnableRaisingEvents = false;
         }
         
         _isServing = false;
     }
 
-    public void Remove() => _fileWatcherDic.SafeClear(x => x.Dispose());
+    public void Remove() => _fileSystemWatcherDic.SafeClear(watcher => watcher.Dispose());
 
-    public void AddWatcher(SystemWatcherServiceOrder order) {
+    public SystemWatcherServiceOrder StartWatcher(SystemWatcherServiceOrder order) {
         if (order == null || order.Invalid()) {
             Logger.TraceError($"{nameof(order)} is Null or Invalid");
-            return;
+            return order;
         }
 
-        if (_fileWatcherDic.TryGetValue(order.CreatePath(), out var watcher) == false) {
-            watcher = _fileWatcherDic.GetOrAddValue(order.CreatePath());
-            watcher.BeginInit();
+        if (_fileSystemWatcherDic.TryGetValue(order, out var watcher) && watcher.EnableRaisingEvents) {
+            _fileSystemWatcherDic.SafeRemove(order, x => {
+                x.EnableRaisingEvents = false;
+                x.Dispose();
+            });
+        }
+
+        watcher = _fileSystemWatcherDic.GetOrAddValue(order);
+        watcher.BeginInit();
             
-            watcher.Path = order.path;
-            watcher.Filter = order.filter;
-            watcher.NotifyFilter = order.filters;
-            AddHandler(watcher, order.handler);
+        watcher.Path = order.path;
+        watcher.Filter = order.filter;
+        watcher.NotifyFilter = order.filters;
+
+        AddHandler(watcher, order.handler);
+        AddHandler(watcher, order.errorHandler);
+        AddHandler(watcher, order.renamedHandler);
             
-            watcher.EndInit();
-            watcher.EnableRaisingEvents = true;
-        } else {
-            Logger.TraceLog($"Already {nameof(SystemWatcherServiceOrder)} || {order.path}", Color.yellow);
-            watcher.EnableRaisingEvents = true;
-        }
+        watcher.EndInit();
+        watcher.EnableRaisingEvents = true;
+
+        return order;
     }
 
-    public void StartWatcher(string path) {
-        if (_fileWatcherDic.TryGetValue(path, out var watcher)) {
-            watcher.EnableRaisingEvents = true;
-        }
-    }
-
-    public void StopWatcher(SystemWatcherServiceOrder order) {
-        if (order.Invalid() == false) {
-            StopWatcher(order.CreatePath());
-        }
-    }
-    
-    public void StopWatcher(string path) {
-        if (_fileWatcherDic.TryGetValue(path, out var watcher)) {
+    public SystemWatcherServiceOrder StopWatcher(SystemWatcherServiceOrder order) {
+        if (order?.Invalid() == false && _fileSystemWatcherDic.TryGetValue(order, out var watcher)) {
             watcher.EnableRaisingEvents = false;
         }
-    }
-
-    public void RemoveWatcher(SystemWatcherServiceOrder order) {
-        if (order.Invalid() == false) {
-            RemoveWatcher(order.CreatePath());
-        }
-    }
-
-    public void RemoveWatcher(string path) {
-        if (_fileWatcherDic.TryGetValue(path, out var watcher)) {
-            watcher.Dispose();
-            _fileWatcherDic.Remove(path);
-        }
+        
+        return order;
     }
     
+    public void RemoveWatcher(SystemWatcherServiceOrder order) {
+        if (order?.Invalid() == false) {
+            _fileSystemWatcherDic.SafeRemove(order, watcher => {
+                watcher.EnableRaisingEvents = false;
+                watcher.Dispose();
+            });
+        }
+    }
+
     private void AddHandler(FileSystemWatcher watcher, FileSystemEventHandler handler) {
         watcher.Changed -= handler;
         watcher.Changed += handler;
@@ -93,14 +86,36 @@ public class SystemWatcherService : IService {
         watcher.Deleted -= handler;
         watcher.Deleted += handler;
     }
+
+    private void AddHandler(FileSystemWatcher watcher, ErrorEventHandler handler) {
+        watcher.Error -= handler;
+        watcher.Error += handler;
+    }
+
+    private void AddHandler(FileSystemWatcher watcher, RenamedEventHandler handler) {
+        watcher.Renamed -= handler;
+        watcher.Renamed += handler;
+    }
 }
 
-public record SystemWatcherServiceOrder {
+public record SystemWatcherServiceOrder : IEqualityComparer<SystemWatcherServiceOrder> {
     
     public string path;
     public string filter;
-    public NotifyFilters filters;
+    public NotifyFilters filters = NotifyFilters.LastWrite | NotifyFilters.FileName;
+    
     public FileSystemEventHandler handler;
+    public ErrorEventHandler errorHandler;
+    public RenamedEventHandler renamedHandler;
+
+    public SystemWatcherServiceOrder() { }
+
+    public SystemWatcherServiceOrder(string path, FileSystemEventHandler handler) {
+        this.path = path;
+        this.handler = handler;
+    }
+    
+    public SystemWatcherServiceOrder(string path, string filter, FileSystemEventHandler handler) : this(path, handler) => this.filter = filter;
 
     public bool Invalid() {
         if (string.IsNullOrEmpty(path)) {
@@ -110,5 +125,13 @@ public record SystemWatcherServiceOrder {
         return false;
     }
 
-    public virtual string CreatePath() => $"{path}_{filter}";
+    public bool Equals(SystemWatcherServiceOrder xOrder, SystemWatcherServiceOrder yOrder) {
+        if (xOrder == null || yOrder == null) {
+            return false;
+        }
+    
+        return xOrder.Equals(yOrder);
+    }
+    
+    public int GetHashCode(SystemWatcherServiceOrder order) => HashCode.Combine(order.path, order.filter);
 }

@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Text.RegularExpressions;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.Networking;
 
 [EditorResourceProviderDrawer(typeof(AssetBundleProvider))]
-public class EditorAssetBundleProviderDrawer : EditorResourceProviderDrawer {
+public class EditorAssetBundleProviderDrawer : EditorResourceDrawer {
     
     private CachingService _service;
     
@@ -20,55 +17,43 @@ public class EditorAssetBundleProviderDrawer : EditorResourceProviderDrawer {
     private BuildTarget _selectBuildTarget = EditorUserBuildSettings.activeBuildTarget;
     
     private static string _plainEncryptKey;
-    private static string _downloadDirectory; 
-    private static string _url; // Download Test Server URL
     
     private Vector2 _windowScrollViewPosition;
     private Vector2 _selectAssetBundleScrollViewPosition;
     private Vector2 _buildOptionScrollViewPosition;
 
-    private readonly List<BuildAssetBundleOptions> BUILD_OPTION_LIST;
+    private List<string> _allAssetBundleList = new();
+    private SystemWatcherServiceOrder _watcherOrder;
     
     private const string CONFIG_NAME = "AssetBundleProviderConfig.json";
-    
+    private readonly List<BuildAssetBundleOptions> BUILD_OPTION_LIST;
     private readonly Regex NAME_REGEX = new(@"^[^\\/:*?""<>|]+$");
+    private readonly GUIContent REFRESH_ICON = new(string.Empty, EditorGUIUtility.IconContent("d_Refresh").image);
     
     public EditorAssetBundleProviderDrawer() {
+        _watcherOrder = new SystemWatcherServiceOrder(Constants.Editor.COMMON_CONFIG_FOLDER, CONFIG_NAME, OnSystemWatcherEventHandler);
         BUILD_OPTION_LIST = EnumUtil.GetValues<BuildAssetBundleOptions>(true, true).ToList();
-        CacheRefresh();
-        
-        // TODO. 중복 방지 및 간소화 처리 필요
-        // Service.GetService<SystemWatcherService>().AddWatcher(new SystemWatcherServiceOrder {
-        //     path = Constants.Editor.COMMON_CONFIG_FOLDER, filter = CONFIG_NAME, filters = NotifyFilters.LastWrite | NotifyFilters.FileName,
-        //     handler = (_, args) => {
-        //         switch (args.ChangeType) {
-        //             case WatcherChangeTypes.Created:
-        //                 if (_config.IsNull()) {
-        //                     _config = _config.Clone<Config>();
-        //                 }
-        //                 break;
-        //             case WatcherChangeTypes.Deleted:
-        //                 if (_config.IsNull() == false) {
-        //                     _config = _config.Clone<NullConfig>();
-        //                 }
-        //                 break;
-        //         }
-        //     }
-        // });
     }
-
+    
     public override void Close() {
         if (_config != null && _config.IsNull()) {
             _config.StopAutoSave();
             _config.Save(_configPath);
         }
         
-        // Service.GetService<SystemWatcherService>().StopWatcher(Constants.Editor.COMMON_CONFIG_FOLDER);
+        Service.GetService<SystemWatcherService>().StopWatcher(_watcherOrder);
+    }
+    
+    public override void Destroy() {
+        if (_watcherOrder != null) {
+            Service.GetService<SystemWatcherService>().RemoveWatcher(_watcherOrder);
+        }
     }
 
     public sealed override void CacheRefresh() {
-        _service = Service.GetService<CachingService>();
-        // Service.GetService<SystemWatcherService>().StartWatcher(Constants.Editor.COMMON_CONFIG_FOLDER);
+        Service.GetService<SystemWatcherService>().StartWatcher(_watcherOrder);
+        
+        _service ??= Service.GetService<CachingService>();
         
         if (string.IsNullOrEmpty(_configPath)) {
             _configPath = $"{Constants.Editor.COMMON_CONFIG_FOLDER}/{CONFIG_NAME}";
@@ -76,15 +61,15 @@ public class EditorAssetBundleProviderDrawer : EditorResourceProviderDrawer {
         
         if (File.Exists(_configPath) && JsonUtil.TryLoadJson(_configPath, out _config)) {
             _plainEncryptKey = string.IsNullOrEmpty(_config.cipherEncryptKey) == false ? EncryptUtil.DecryptDES(_config.cipherEncryptKey) : string.Empty;
-            _downloadDirectory = _config.downloadDirectory;
-            _url = _config.downloadUrl;
-            
             _config.StartAutoSave(_configPath);
         } else {
             if (_config == null || _config.IsNull() == false) {
                 _config = new NullConfig();
             }
         }
+        
+        RefreshAssetBundleList();
+        BUILD_OPTION_LIST.ForEach(option => _config.buildOptionDic.TryAdd(option, false));
     }
 
     public override void Draw() {
@@ -117,8 +102,6 @@ public class EditorAssetBundleProviderDrawer : EditorResourceProviderDrawer {
             
             if (_config.isActiveCaching && _service.IsReady()) {
                 EditorCommon.DrawLabelTextField("현재 활성화된 Caching 폴더", _service.Get().path, 170f);
-            } else {
-                _config.downloadDirectory = EditorCommon.DrawFolderSelector("다운로드 폴더 선택", _config.downloadDirectory);
             }
             
             EditorCommon.DrawSeparator();
@@ -141,23 +124,33 @@ public class EditorAssetBundleProviderDrawer : EditorResourceProviderDrawer {
                     }
                 }
                 
-                // TODO. 에셋번들 개별 선택 처리 수정
-                if (_config.isAssetBundleSelectableEncrypted) {
-                    EditorCommon.DrawSeparator();
-                    var assetBundleList = AssetDatabase.GetAllAssetBundleNames().Where(Path.HasExtension);
-                    foreach (var name in assetBundleList) {
-                        if (_config.selectAssetBundleDic.ContainsKey(name)) {
-                            _config.selectAssetBundleDic[name] = EditorCommon.DrawLabelToggle(_config.selectAssetBundleDic[name], name);
-                        } else {
-                            _config.selectAssetBundleDic.AutoAdd(name, false);
-                        }
-                            
-                        GUILayout.Space(1f);
-                    }
-                }
-
                 if (IsActiveAssetBundleEncrypt()) {
                     EditorGUILayout.HelpBox("AssetBundle 암호화 옵션은 하나만 선택이 가능합니다. 다른 옵션을 활성화 하기 위해선 현재 활성화 되어 있는 옵션을 비활성화 해야 합니다.", MessageType.Info);
+                }
+            }
+            
+            if (_config.isAssetBundleSelectableEncrypted) {
+                EditorCommon.DrawSeparator();
+                using (new GUILayout.VerticalScope("box")) {
+                    using (new GUILayout.HorizontalScope()) {
+                        GUILayout.Label("AssetBundle 선택적 암호화", Constants.Editor.AREA_TITLE_STYLE, GUILayout.ExpandWidth(false));
+                        if (GUILayout.Button(REFRESH_ICON, GUILayout.Width(22f), GUILayout.Height(22f))) {
+                            RefreshAssetBundleList();
+                        }
+                    }
+                    
+                    GUILayout.Space(5f);
+                    
+                    _selectAssetBundleScrollViewPosition = GUILayout.BeginScrollView(_selectAssetBundleScrollViewPosition, false, false, GUILayout.MinHeight(100f));
+                    for (var i = 0; i < _allAssetBundleList.Count; i += 2) {
+                        using (new GUILayout.HorizontalScope()) {
+                            for (var j = 0; j < 2 && i + j < _allAssetBundleList.Count; j++) {
+                                _config.selectAssetBundleDic[_allAssetBundleList[i + j]] = EditorCommon.DrawLabelToggle(_config.selectAssetBundleDic[_allAssetBundleList[i + j]], _allAssetBundleList[i + j], 150f);
+                            }
+                        }
+                        GUILayout.Space(1f);
+                    }
+                    GUILayout.EndScrollView();
                 }
             }
 
@@ -189,7 +182,7 @@ public class EditorAssetBundleProviderDrawer : EditorResourceProviderDrawer {
             using (new GUILayout.VerticalScope("box")) {
                 GUILayout.Label("빌드", Constants.Editor.AREA_TITLE_STYLE);
                 using (new GUILayout.HorizontalScope()) {
-                    _config.isClearAssetBundleManifest = EditorCommon.DrawLabelToggle(_config.isClearAssetBundleManifest, "Manifest Clear", "빌드 완료 후 .manifest 확장자 파일 제거", 220f);
+                    _config.isClearAssetBundleManifest = EditorCommon.DrawLabelToggle(_config.isClearAssetBundleManifest, "Clear .manifest", "빌드 완료 후 .manifest 확장자 파일 제거", 220f);
                 }
             }
             
@@ -233,26 +226,32 @@ public class EditorAssetBundleProviderDrawer : EditorResourceProviderDrawer {
                 
             }
             
-
-            if (GUILayout.Button("Request Test")) {
-                AssetBundle.UnloadAllAssetBundles(true);
-                AssetBundleManifestDownload($"{EditorUserBuildSettings.activeBuildTarget}/{EditorUserBuildSettings.activeBuildTarget}", manifest => {
-                    foreach (var assetBundleName in manifest.GetAllAssetBundles()) {
-                        var assetBundlePath = $"{EditorUserBuildSettings.activeBuildTarget}/{assetBundleName}";
-                        AssetBundleDownload(assetBundlePath, manifest.GetAssetBundleHash(assetBundleName), assetBundle => {
-                            // Logger.TraceError($"{assetBundle.name} || {manifest.GetAssetBundleHash(assetBundle.name)}");
-                        });
-                    }
-                });
-            }
-            
             EditorGUILayout.EndScrollView();
         } else {
             EditorGUILayout.HelpBox($"{nameof(_config)} 파일을 찾을 수 없거나 생성할 수 없습니다.", MessageType.Error);
         }
     }
 
-    // Sample
+    private void RefreshAssetBundleList() {
+        _allAssetBundleList = AssetDatabase.GetAllAssetBundleNames().Where(Path.HasExtension).Distinct().ToList();
+        _allAssetBundleList.ForEach(name => _config.selectAssetBundleDic.TryAdd(name, false));
+    }
+    
+    private void OnSystemWatcherEventHandler(object ob, FileSystemEventArgs args) {
+        switch (args.ChangeType) {
+            case WatcherChangeTypes.Created:
+                if (_config.IsNull()) {
+                    _config = _config.Clone<Config>();
+                }
+                break;
+            case WatcherChangeTypes.Deleted:
+                if (_config.IsNull() == false) {
+                    _config = _config.Clone<NullConfig>();
+                }
+                break;
+        }
+    }
+    
     private AssetBundleManifest BuildAssetBundle(BuildAssetBundleOptions options) {
         var buildPath = $"{_config.buildDirectory}/{EditorUserBuildSettings.activeBuildTarget}";
         if (ResourceGenerator.TryGenerateAssetBundle(buildPath, options, EditorUserBuildSettings.activeBuildTarget, out var manifest)) {
@@ -263,21 +262,10 @@ public class EditorAssetBundleProviderDrawer : EditorResourceProviderDrawer {
                 }}
             }
 
-            // TODO. 중복 처리 존재. 메소드 추출 필요
             if (_config.isAssetBundleEncrypted) {
-                foreach (var name in manifest.GetAllAssetBundles()) {
-                    var assetBundlePath = Path.Combine(buildPath, name);
-                    if (SystemUtil.TryReadAllBytes(assetBundlePath, out var plainBytes) && EncryptUtil.TryEncryptAESBytes(out var cipherBytes, plainBytes, _plainEncryptKey)) {
-                        File.WriteAllBytes(assetBundlePath, cipherBytes);
-                    }
-                }
+                manifest.GetAllAssetBundles().ForEach(name => EncryptAssetBundle(buildPath, name));
             } else if (_config.isAssetBundleSelectableEncrypted) {
-                foreach (var name in _config.selectAssetBundleDic.Where(pair => pair.Value).Select(pair => pair.Key)) {
-                    var assetBundlePath = Path.Combine(buildPath, name);
-                    if (SystemUtil.TryReadAllBytes(assetBundlePath, out var plainBytes) && EncryptUtil.TryEncryptAESBytes(out var cipherBytes, plainBytes, _plainEncryptKey)) {
-                        File.WriteAllBytes(assetBundlePath, cipherBytes);
-                    }
-                }
+                _config.selectAssetBundleDic.Where(pair => pair.Value).Select(pair => pair.Key).ForEach(name => EncryptAssetBundle(buildPath, name));
             }
 
             if (_config.isClearAssetBundleManifest) {
@@ -293,68 +281,17 @@ public class EditorAssetBundleProviderDrawer : EditorResourceProviderDrawer {
         return null;
     }
 
-    // Caching 안됨
-    private void AssetBundleManifestDownload(string name, Action<AssetBundleManifest> callback = null) {
-        var request = UnityWebRequest.Get(Path.Combine(_url, name));
-        Logger.TraceLog($"Request || {request.url}", Color.cyan);
-        request.SendWebRequest().completed += _ => {
-            if (request.result != UnityWebRequest.Result.Success) {
-                Logger.TraceErrorExpensive(request.error);
+    private void EncryptAssetBundle(string buildPath, string name) {
+        var assetBundlePath = Path.Combine(buildPath, name);
+        if (SystemUtil.TryReadAllBytes(assetBundlePath, out var plainBytes)) {
+            if (EncryptUtil.TryEncryptAESBytes(out var cipherBytes, plainBytes, _plainEncryptKey)) {
+                File.WriteAllBytes(assetBundlePath, cipherBytes);
             } else {
-                if (request.responseCode != (long) HttpStatusCode.OK) {
-                    Logger.TraceError($"Already ResponseCode || {request.responseCode}");
-                    return;
-                }
-
-                AssetBundle assetBundle;
-                try {
-                    try {
-                        assetBundle = AssetBundle.LoadFromMemory(request.downloadHandler.data);
-                    } catch (Exception ex) {
-                        Logger.TraceError(ex);
-                        assetBundle = AssetBundle.LoadFromMemory(EncryptUtil.DecryptAESBytes(request.downloadHandler.data));
-                    }
-                
-                    if (assetBundle != null) {
-                        foreach (var assetBundleName in assetBundle.GetAllAssetNames()) {
-                            if (assetBundleName.Contains("manifest")) {
-                                var manifest = assetBundle.LoadAsset<AssetBundleManifest>(assetBundleName);
-                                if (manifest != null) {
-                                    callback?.Invoke(manifest);
-                                }
-                                break;
-                            }
-                        }
-                    }
-                } catch (Exception ex) {
-                    Logger.TraceError($"{nameof(assetBundle)} is Null. Resource download was successful, but memory load failed. It appears to be either an incorrect format or a decryption failure. The issue might be related to the encryption key.\n\n{ex}");
-                }
+                Logger.TraceError($"{nameof(EncryptUtil.TryEncryptAESBytes)} Failed.\n{assetBundlePath}");
             }
-        };
-    }
-    
-    // Caching 됨
-    private void AssetBundleDownload(string name, Hash128 hash, Action<AssetBundle> callback = null) {
-        var request = UnityWebRequestAssetBundle.GetAssetBundle(Path.Combine(_url, name), hash);
-        Logger.TraceLog($"Request || {request.url}", Color.cyan);
-        request.SendWebRequest().completed += operation => {
-            if (request.result != UnityWebRequest.Result.Success) {
-                Logger.TraceError(request.error);
-            } else {
-                AssetBundle assetBundle = null;
-                try {
-                    assetBundle = DownloadHandlerAssetBundle.GetContent(request);
-                } catch (Exception ex) {
-                    Logger.TraceLog(ex, Color.red);
-                    var decryptBytes = EncryptUtil.DecryptAESBytes(request.downloadHandler.data);
-                    assetBundle = AssetBundle.LoadFromMemory(decryptBytes);
-                } finally {
-                    if (assetBundle != null) {
-                        callback?.Invoke(assetBundle);
-                    }
-                }
-            }
-        };
+        } else {
+            Logger.TraceError($"{nameof(SystemUtil.TryReadAllBytes)} Failed.\n{assetBundlePath}");
+        }
     }
 
     private bool IsActiveEncrypt() => _config != null && (_config.isAssetBundleManifestEncrypted || _config.isAssetBundleEncrypted || _config.isAssetBundleSelectableEncrypted);
@@ -371,12 +308,9 @@ public class EditorAssetBundleProviderDrawer : EditorResourceProviderDrawer {
         public bool isAssetBundleManifestEncrypted;
         public bool isAssetBundleEncrypted;
         public bool isAssetBundleSelectableEncrypted;
-        public Dictionary<string, bool> selectAssetBundleDic = new();
+        public readonly Dictionary<string, bool> selectAssetBundleDic = new();
         public string cipherEncryptKey = "";
         
-        public string downloadDirectory = "";
-        public string downloadUrl = "";
-
         public readonly Dictionary<BuildAssetBundleOptions, bool> buildOptionDic = EnumUtil.GetValues<BuildAssetBundleOptions>(true).ToDictionary(x => x, _ => false);
 
         public override bool IsNull() => this is NullConfig;

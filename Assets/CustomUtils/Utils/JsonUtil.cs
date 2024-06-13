@@ -101,23 +101,28 @@ public static class JsonUtil {
 
 public abstract class JsonConfig {
 
-    public void Save(string path) => JsonUtil.SaveJson(path, this);
-    public virtual bool IsNull() => false;
+    public virtual void Save(string path) => JsonUtil.SaveJson(path, this);
+    public abstract bool IsNull();
 
     public bool TryClone<T>(out T config) where T : JsonConfig, new() {
         config = Clone<T>();
         return config != null;
     }
     
-    public T Clone<T>() where T : JsonConfig, new() {
+    public virtual T Clone<T>() where T : JsonConfig, new() {
         var type = typeof(T);
         if (type.IsAbstract == false) {
-            var cloneConfig = Activator.CreateInstance<T>();
-            foreach (var info in type.GetFields(BindingFlags.Instance | BindingFlags.Public)) {
-                info.SetValue(cloneConfig, info.GetValue(this));
+            try {
+                var cloneConfig = Activator.CreateInstance<T>();
+                foreach (var info in type.GetFields(BindingFlags.Instance | BindingFlags.Public)) {
+                    info.SetValue(cloneConfig, info.GetValue(this));
+                }
+                
+                return cloneConfig;
+            } catch (Exception ex) {
+                Logger.TraceError(ex);
+                throw;
             }
-
-            return cloneConfig;
         }
 
         return null;
@@ -126,8 +131,17 @@ public abstract class JsonConfig {
 
 public abstract class JsonAutoConfig : JsonConfig, IDisposable {
     
-    [JsonIgnore]
-    protected List<IDisposable> disposableList = new();
+    [JsonIgnore] protected List<IDisposable> disposableList = new();
+    [JsonIgnore] protected IConnectableObservable<long> intervalObservable;
+    [JsonIgnore] protected IDisposable intervalDisposable;
+
+    [JsonIgnore] private readonly ArrayComparer ARRAY_COMPARER = new();
+    [JsonIgnore] private readonly CollectionComparer COLLECTION_COMPARER = new();
+    
+    protected JsonAutoConfig() {
+        intervalObservable = Observable.Interval(TimeSpan.FromSeconds(5f)).Publish(); 
+        intervalDisposable = intervalObservable.Connect();
+    }
 
     public virtual void StartAutoSave(string path) {
         if (IsAutoSaving()) {
@@ -136,23 +150,25 @@ public abstract class JsonAutoConfig : JsonConfig, IDisposable {
         
         foreach (var info in GetType().GetFields(BindingFlags.Public | BindingFlags.Instance)) {
             if (info.FieldType.IsArray) {
-                disposableList.Add(Observable.Interval(TimeSpan.FromSeconds(5f))
-                    .Select(_ => info.GetValue(this) as Array).DistinctUntilChanged(new ArrayComparer()).Skip(1)
+                disposableList.Add(intervalObservable.Select(_ => info.GetValue(this) as Array).DistinctUntilChanged(ARRAY_COMPARER).Skip(1)
                     .Subscribe(_ => Save(path)));
             } else if (info.FieldType.IsGenericCollectionType()) {
-                disposableList.Add(Observable.Interval(TimeSpan.FromSeconds(5f))
-                    .Select(_ => info.GetValue(this) is ICollection collection ? collection.CloneEnumerator() : null).DistinctUntilChanged(new CollectionComparer()).Skip(1)
+                disposableList.Add(intervalObservable.Select(_ => info.GetValue(this) is ICollection collection ? collection.CloneEnumerator() : null)
+                    .DistinctUntilChanged(COLLECTION_COMPARER).Skip(1)
                     .Subscribe(_ => Save(path)));
             } else {
-                disposableList.Add(Observable.Interval(TimeSpan.FromSeconds(5f))
-                    .DistinctUntilChanged(_ => info.GetValue(this)).Skip(1)
-                    .Subscribe(_ => Save(path)));
+                disposableList.Add(intervalObservable.DistinctUntilChanged(_ => info.GetValue(this)).Skip(1).Subscribe(_ => Save(path)));
             }
         }
     }
 
     public virtual void StopAutoSave() => disposableList.SafeClear(x => x.Dispose());
-    public virtual void Dispose() => StopAutoSave();
+    
+    public virtual void Dispose() {
+        StopAutoSave();
+        intervalDisposable.Dispose();
+    }
+
     public virtual bool IsAutoSaving() => disposableList.Any();
 
     private class ArrayComparer : IEqualityComparer<Array> {

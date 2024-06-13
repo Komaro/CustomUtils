@@ -89,6 +89,7 @@ public static partial class EditorCommon {
 
     #region [Editor PlayerPrefs]
     
+    public static bool TryGet(string key, out int value) => PlayerPrefsUtil.TryGet($"EditorInt_{key}", out value);
     public static bool TryGet(string key, out string value) => PlayerPrefsUtil.TryGet($"EditorString_{key}", out value);
 
     public static bool GetBool(string key) => PlayerPrefsUtil.TryGet($"EditorBool_{key}", out bool value) && value;

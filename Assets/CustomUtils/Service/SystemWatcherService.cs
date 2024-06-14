@@ -129,8 +129,8 @@ public record SystemWatcherServiceOrder : IEqualityComparer<SystemWatcherService
         if (xOrder == null || yOrder == null) {
             return false;
         }
-    
-        return xOrder.Equals(yOrder);
+
+        return xOrder.path.EqualsFast(yOrder.path) && xOrder.filter.EqualsFast(yOrder.filter);
     }
     
     public int GetHashCode(SystemWatcherServiceOrder order) => HashCode.Combine(order.path, order.filter);

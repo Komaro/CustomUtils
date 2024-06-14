@@ -11,8 +11,6 @@ public class EditorAssetBundleProviderDrawer : EditorResourceDrawer {
     private CachingService _service;
     
     private Config _config;
-    private static string _configPath;
-
     private bool _isShowEncryptKey = false;
     private BuildTarget _selectBuildTarget = EditorUserBuildSettings.activeBuildTarget;
     
@@ -26,6 +24,7 @@ public class EditorAssetBundleProviderDrawer : EditorResourceDrawer {
     private SystemWatcherServiceOrder _watcherOrder;
     
     private const string CONFIG_NAME = "AssetBundleProviderConfig.json";
+    private readonly string CONFIG_PATH = $"{Constants.Editor.COMMON_CONFIG_FOLDER}/{CONFIG_NAME}";
     private readonly List<BuildAssetBundleOptions> BUILD_OPTION_LIST;
     private readonly Regex NAME_REGEX = new(@"^[^\\/:*?""<>|]+$");
     private readonly GUIContent REFRESH_ICON = new(string.Empty, EditorGUIUtility.IconContent("d_Refresh").image);
@@ -38,7 +37,7 @@ public class EditorAssetBundleProviderDrawer : EditorResourceDrawer {
     public override void Close() {
         if (_config != null && _config.IsNull()) {
             _config.StopAutoSave();
-            _config.Save(_configPath);
+            _config.Save(CONFIG_PATH);
         }
         
         Service.GetService<SystemWatcherService>().StopWatcher(_watcherOrder);
@@ -54,14 +53,9 @@ public class EditorAssetBundleProviderDrawer : EditorResourceDrawer {
         Service.GetService<SystemWatcherService>().StartWatcher(_watcherOrder);
         
         _service ??= Service.GetService<CachingService>();
-        
-        if (string.IsNullOrEmpty(_configPath)) {
-            _configPath = $"{Constants.Editor.COMMON_CONFIG_FOLDER}/{CONFIG_NAME}";
-        }
-        
-        if (File.Exists(_configPath) && JsonUtil.TryLoadJson(_configPath, out _config)) {
+        if (File.Exists(CONFIG_PATH) && JsonUtil.TryLoadJson(CONFIG_PATH, out _config)) {
             _plainEncryptKey = string.IsNullOrEmpty(_config.cipherEncryptKey) == false ? EncryptUtil.DecryptDES(_config.cipherEncryptKey) : string.Empty;
-            _config.StartAutoSave(_configPath);
+            _config.StartAutoSave(CONFIG_PATH);
         } else {
             if (_config == null || _config.IsNull() == false) {
                 _config = new NullConfig();
@@ -76,10 +70,10 @@ public class EditorAssetBundleProviderDrawer : EditorResourceDrawer {
         if (_config?.IsNull() ?? true) {
             EditorGUILayout.HelpBox($"{CONFIG_NAME} 파일이 존재하지 않습니다. 선택한 AssetBundle 설정이 저장되지 않으며 일부 기능을 사용할 수 없습니다.", MessageType.Warning);
             if (GUILayout.Button($"{nameof(Config)} 파일 생성")) {
-                EditorCommon.OpenCheckDialogue($"{nameof(Config)} 파일 생성", $"{nameof(Config)} 파일을 생성합니다.\n경로는 아래와 같습니다.\n{_configPath}", ok: () => {
+                EditorCommon.OpenCheckDialogue($"{nameof(Config)} 파일 생성", $"{nameof(Config)} 파일을 생성합니다.\n경로는 아래와 같습니다.\n{CONFIG_PATH}", ok: () => {
                     if ((_config = _config.Clone<Config>()) != null) {
-                        _config.Save(_configPath);
-                        _config.StartAutoSave(_configPath);
+                        _config.Save(CONFIG_PATH);
+                        _config.StartAutoSave(CONFIG_PATH);
                     }
                 });
             }

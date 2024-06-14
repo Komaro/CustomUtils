@@ -5,45 +5,19 @@ using UnityEngine;
 
 public class EditorSystemService : EditorWindow {
 
-    
     [MenuItem("Service/System Service")]
-    public static void OpenWindow() {
+    private static void OpenWindow() {
         var window = GetWindow<EditorSystemService>("SystemService");
         window.Show();
     }
 
     private void OnGUI() {
-        
-        // Logger.TraceLog(Application.dataPath);
-        // Logger.TraceLog(Application.persistentDataPath);
-        // Logger.TraceLog(Application.consoleLogPath);
-        // Logger.TraceLog(Application.streamingAssetsPath);
-        // Logger.TraceLog(Application.temporaryCachePath);
-        
-        using (new EditorGUILayout.HorizontalScope()) {
-            EditorGUILayout.LabelField($"{nameof(Application.dataPath)} : ", Constants.Editor.WHITE_BOLD_STYLE);
-            DrawLinkButton(Application.dataPath);
-        }
-
-        using (new EditorGUILayout.HorizontalScope()) {
-            EditorGUILayout.LabelField($"{nameof(Application.persistentDataPath)} : ", Constants.Editor.WHITE_BOLD_STYLE);
-            DrawLinkButton(Application.persistentDataPath);
-        }
-        
-        
-        using (new EditorGUILayout.HorizontalScope()) {
-            EditorGUILayout.LabelField($"{nameof(Application.consoleLogPath)} : ", Constants.Editor.WHITE_BOLD_STYLE);
-            DrawLinkButton(Application.consoleLogPath);
-        }
-        
-        using (new EditorGUILayout.HorizontalScope()) {
-            EditorGUILayout.LabelField($"{nameof(Application.streamingAssetsPath)} : ", Constants.Editor.WHITE_BOLD_STYLE);
-            DrawLinkButton(Application.streamingAssetsPath);
-        }
-        
-        using (new EditorGUILayout.HorizontalScope()) {
-            EditorGUILayout.LabelField($"{nameof(Application.temporaryCachePath)} : ", Constants.Editor.WHITE_BOLD_STYLE);
-            DrawLinkButton(Application.temporaryCachePath);
+        using (new GUILayout.VerticalScope(GUILayout.ExpandHeight(false))) {
+            EditorCommon.DrawLabelLinkButton($"{nameof(Application.dataPath)} : ", Application.dataPath, EditorUtility.RevealInFinder);
+            EditorCommon.DrawLabelLinkButton($"{nameof(Application.persistentDataPath)} : ", Application.persistentDataPath, EditorUtility.RevealInFinder);
+            EditorCommon.DrawLabelLinkButton($"{nameof(Application.consoleLogPath)} : ", Application.consoleLogPath, EditorUtility.RevealInFinder);
+            EditorCommon.DrawLabelLinkButton($"{nameof(Application.streamingAssetsPath)} : ", Application.streamingAssetsPath, EditorUtility.RevealInFinder);
+            EditorCommon.DrawLabelLinkButton($"{nameof(Application.temporaryCachePath)} : ", Application.temporaryCachePath, EditorUtility.RevealInFinder);
         }
     }
 

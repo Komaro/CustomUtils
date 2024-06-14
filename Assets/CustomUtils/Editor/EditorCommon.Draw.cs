@@ -40,6 +40,23 @@ public static partial class EditorCommon {
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void DrawLabelLinkButton(string label, string buttonText, Action<string> onClick = null) {
+        using (new EditorGUILayout.HorizontalScope()) {
+            GUILayout.Label(label, Constants.Editor.WHITE_BOLD_STYLE, GUILayout.ExpandWidth(false));
+            if (EditorGUILayout.LinkButton(buttonText, GUILayout.ExpandWidth(false))) {
+                onClick?.Invoke(buttonText);
+            }
+        }
+    }
+
+    public static void DrawLabelSelectableLabel(string label, string selectableLabel, float labelWidth = 50f) {
+        using (new EditorGUILayout.HorizontalScope()) {
+            GUILayout.Label(label, Constants.Editor.WHITE_BOLD_STYLE, GUILayout.Width(labelWidth));
+            EditorGUILayout.SelectableLabel(selectableLabel, GUILayout.Height(22f), GUILayout.ExpandWidth(true));
+        }
+    }
+    
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static string DrawButtonPasswordField(string buttonText, string password, Action<string> onClick = null, float buttonWidth = 150f) {
         using (new GUILayout.HorizontalScope()) {
             if (GUILayout.Button(buttonText, GUILayout.Width(buttonWidth))) {
@@ -50,9 +67,6 @@ public static partial class EditorCommon {
         }
     }
 
-    /// <summary>
-    /// Show Plain TextField Toggle
-    /// </summary>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static (string, bool) DrawButtonPasswordField(string buttonText, string password, bool isShow, Action<string> onClick = null, float buttonWidth = 150f) {
         using (new GUILayout.HorizontalScope()) {

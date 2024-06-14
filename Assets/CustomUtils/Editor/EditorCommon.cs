@@ -89,23 +89,31 @@ public static partial class EditorCommon {
 
     #region [Editor PlayerPrefs]
     
+    public static bool TryGet(string key, out string value) => PlayerPrefsUtil.TryGet($"EditorString_{key}", out value); 
+    public static bool TryGet(string key, out bool value) => PlayerPrefsUtil.TryGet($"EditorBool_{key}", out value);
     public static bool TryGet(string key, out int value) => PlayerPrefsUtil.TryGet($"EditorInt_{key}", out value);
-    public static bool TryGet(string key, out string value) => PlayerPrefsUtil.TryGet($"EditorString_{key}", out value);
+    public static bool GetEnum<T>(string key, out T value) where T : struct, Enum => PlayerPrefsUtil.TryGet<T>($"EditorEnum_{key}", out value);
 
-    public static bool GetBool(string key) => PlayerPrefsUtil.TryGet($"EditorBool_{key}", out bool value) && value;
-    public static void GetBool(string key, bool value) => PlayerPrefsUtil.Set($"EditorBool_{key}", value);
+    public static void Set(string key, string value) => PlayerPrefsUtil.SetString($"EditorString_{key}", value);
+    public static void Set(string key, bool value) => PlayerPrefsUtil.Set($"EditorBool_{key}", value);
+    public static void Set(string key, int value) => PlayerPrefsUtil.SetInt($"EditorInt_{key}", value);
+    public static void Set(string key, float value) => PlayerPrefs.SetFloat($"EditorFloat_{key}", value);
+    public static void Set<T>(string key, T value) where T : struct, Enum => PlayerPrefsUtil.Set($"EditorEnum_{key}", value);
 
-    public static int GetInt(string key) => PlayerPrefsUtil.GetInt($"EditorInt_{key}");
-    public static void SetInt(string key, int value) => PlayerPrefsUtil.SetInt($"EditorInt_{key}", value);
-
-    public static string GetString(string key) => PlayerPrefsUtil.GetString($"EditorString_{key}");
-    public static void SetString(string key, string value) => PlayerPrefsUtil.SetString($"EditorString_{key}", value);
-
-    public static float GetFloat(string key) => PlayerPrefs.GetFloat($"EditorFloat_{key}");
-    public static void SetFloat(string key, float value) => PlayerPrefs.SetFloat($"EditorFloat_{key}", value);
-    
-    public static T GetEnum<T>(string key) where T : struct, Enum => PlayerPrefsUtil.TryGet<T>(key, out var value) ? value : default;
-    public static void SetEnum<T>(string key, T value) where T : struct, Enum => PlayerPrefsUtil.Set(key, value);
-    
     #endregion
+
+    #region [Editor SessionState]
+
+    public static bool TryGetSession(string key, out string value) => SessionStateUtil.TryGet($"EditorSessionString_{key}", out value);
+    public static bool TryGetSession(string key, out bool value) => SessionStateUtil.TryGet($"EditorSessionBool_{key}", out value);
+    public static bool TryGetSession(string key, out int value) => SessionStateUtil.TryGet($"EditorSessionInt_{key}", out value);
+    public static bool TryGetSession(string key, out float value) => SessionStateUtil.TryGet($"EditorSessionFloat_{key}", out value);
+
+    public static void SetSession(string key, string value) => SessionStateUtil.Set($"EditorSessionString_{key}", value);
+    public static void SetSession(string key, bool value) => SessionStateUtil.Set($"EditorSessionBool_{key}", value);
+    public static void SetSession(string key, int value) => SessionStateUtil.Set($"EditorSessionInt_{key}", value);
+    public static void SetSession(string key, float value) => SessionStateUtil.Set($"EditorSessionFloat_{key}", value);
+
+    #endregion
+
 }

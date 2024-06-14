@@ -4,15 +4,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading;
+using System.Threading.Tasks;
+using PlasticPipe.Server;
 using UnityEngine;
 
 
 public class SimpleHttpWebServer : IDisposable {
     
     private HttpListener _listener = new();
-    private CancellationTokenSource _listenerCancelToken = new();
-    private ConcurrentBag<Thread> _activeThreadBag = new();
-
+    private Task _listenerTask;
+    private CancellationTokenSource _listenerCancelToken;
     private Dictionary<Type, HttpServeModule> _serveModuleDic = new();
 
     private string _targetDirectory;
@@ -33,12 +34,13 @@ public class SimpleHttpWebServer : IDisposable {
         }
         
         _listener.Start();
-        if (_activeThreadBag.IsEmpty == false) {
-            _activeThreadBag.Clear();
+        try {
+            _listenerCancelToken = new CancellationTokenSource();
+            _ = Task.Run(() => Run(_listenerCancelToken.Token), _listenerCancelToken.Token);
+            Logger.TraceLog($"{nameof(SimpleHttpWebServer)} {nameof(Start)} || {_listener.Prefixes.ToStringCollection(", ")}", Color.green);
+        } catch (Exception ex) {
+            Logger.TraceError(ex);
         }
-
-        ThreadPool.QueueUserWorkItem(_ => Run(_listenerCancelToken.Token));
-        Logger.TraceLog($"{nameof(SimpleHttpWebServer)} {nameof(Start)} || {_listener.Prefixes.ToStringCollection(", ")}", Color.green);
     }
 
     public void Restart() {
@@ -47,8 +49,11 @@ public class SimpleHttpWebServer : IDisposable {
     }
 
     public void Stop() {
-        ClearThread();
-        _listenerCancelToken.Cancel();
+        if (_listenerCancelToken.IsCancellationRequested == false) {
+            _listenerCancelToken.Cancel(); 
+            _listenerCancelToken.Dispose();
+        }
+
         _listener.Stop();
         Logger.TraceLog($"{nameof(SimpleHttpWebServer)} {nameof(Stop)}", Color.yellow);
     }
@@ -62,35 +67,49 @@ public class SimpleHttpWebServer : IDisposable {
         Logger.TraceLog($"{nameof(SimpleHttpWebServer)} {nameof(Close)}", Color.red);
     }
 
-    private void Run(CancellationToken token) {
-        while (_listener.IsListening && token.IsCancellationRequested == false) {
-            try {
-                var getTask = _listener.GetContextAsync();
-                getTask.Wait(token);
+    private async void Run(CancellationToken token) {
+        try {
+            while (_listener.IsListening && token.IsCancellationRequested == false) {
+                try {
+                    var task = _listener.GetContextAsync();
+                    task.Wait(token);
+                    if (token.IsCancellationRequested) {
+                        Logger.TraceLog($"Receive Cancellation Request", Color.red);
+                        break;
+                    }
 
-                if (token.IsCancellationRequested) {
-                    Logger.TraceLog($"Receive Cancellation Request", Color.red);
+                    var content = await task;
+                    _ = Task.Run(() => Serve(content, token), token);
+                } catch (OperationCanceledException) {
+                    Logger.TraceLog(nameof(OperationCanceledException), Color.red);
+                    break;
+                } catch (HttpListenerException ex) {
+                    Logger.TraceError(ex);
+                    break;
+                } catch (InvalidOperationException ex) {
+                    Logger.TraceError(ex);
                     break;
                 }
-
-                var thread = new Thread(() => Serve(getTask.Result));
-                thread.Start();
-                _activeThreadBag.Add(thread);
-            } catch (OperationCanceledException ex) {
-            } catch (HttpListenerException ex) {
-                Logger.TraceError(ex);
-            } catch (InvalidOperationException ex) {
-                Logger.TraceError(ex);
-            } catch (Exception ex) {
-                Logger.TraceError(ex);
+            }
+        } catch (Exception ex) {
+            Logger.TraceError(ex);
+        } finally {
+            if (_listener.IsListening) {
+                _listener.Stop();
+                _listener.Close();
+                Logger.TraceLog($"{nameof(SimpleHttpWebServer)} {nameof(Exception)} {nameof(Close)}", Color.red);
             }
         }
     }
 
-    private void Serve(HttpListenerContext context) {
+    private void Serve(HttpListenerContext context, CancellationToken token) {
         try {
             if (_serveModuleDic.Any() == false) {
                 throw new NoServeModuleException();
+            }
+
+            if (token.IsCancellationRequested) {
+                throw new OperationCanceledException();
             }
 
             if (context.Request != null) {
@@ -120,7 +139,7 @@ public class SimpleHttpWebServer : IDisposable {
             Logger.TraceLog($"Already {nameof(HttpServeModule)}. {nameof(type)} : {nameof(type.Name)}", Color.yellow);
             return;
         }
-
+        
         if (Activator.CreateInstance(type) is HttpServeModule module) {
             module.AddServer(this);
             _serveModuleDic.Add(type, module);
@@ -160,33 +179,19 @@ public class SimpleHttpWebServer : IDisposable {
         Logger.TraceLog("Clear Serve Module", Color.red);
     }
 
-    private void ClearThread() {
-        while (_activeThreadBag.IsEmpty == false) {
-            if (_activeThreadBag.TryTake(out var result) && result is { IsAlive: true }) {
-                result.Join(10000);
-            }
-        }
-        
-        Logger.TraceLog($"{nameof(SimpleHttpWebServer)} Thread Clear.", Color.yellow);
-    }
-
     public void Dispose() {
         if (IsRunning()) {
             Close();
         }
-
-        if (_activeThreadBag != null && _activeThreadBag.IsEmpty != false) {
-            ClearThread();
-        }
     }
 
-    public string GetURL() => _listener.Prefixes.First();
+    ~SimpleHttpWebServer() => Dispose();
+
+    public string GetURL() => _listener?.Prefixes.FirstOrDefault() ?? string.Empty;
     public string GetTargetDirectory() => _targetDirectory;
-    public int GetRunningThreadCount() => _activeThreadBag.Count(x => x.IsAlive);
     public List<Type> GetServeModuleTypeList() => _serveModuleDic.Keys.ToList();
     public bool IsRunning() => _listener?.IsListening ?? false;
     public bool IsContainsServeModule(Type type) => _serveModuleDic.ContainsKey(type);
-    
     
     private class NoServeModuleException : SystemException {
     

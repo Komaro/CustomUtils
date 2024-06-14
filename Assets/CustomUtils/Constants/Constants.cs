@@ -54,8 +54,11 @@ public static partial class Constants {
             BOLD_STYLE.normal.textColor = Color.gray;
             BOLD_STYLE.fontStyle = FontStyle.Bold;
             
+            WHITE_BOLD_STYLE.alignment = TextAnchor.MiddleCenter;
             WHITE_BOLD_STYLE.normal.textColor = Color.white;
             WHITE_BOLD_STYLE.fontStyle = FontStyle.Bold;
+            WHITE_BOLD_STYLE.fontSize = 12;
+            WHITE_BOLD_STYLE.padding = new RectOffset(5, 5, 5, 5);
 
             FIELD_TITLE_STYLE.alignment = TextAnchor.MiddleCenter;
             FIELD_TITLE_STYLE.normal.textColor = Color.white;

@@ -52,7 +52,7 @@ public static class StringExtension {
     public static bool WrappedIn(this string content, string match, StringComparison comp = StringComparison.Ordinal) => content.StartsWith(match, comp) && content.EndsWith(match, comp);
     public static string GetTitleCase(this string strText) => _textInfo?.ToTitleCase(strText);
     public static string GetForceTitleCase(this string strText) => GetTitleCase(strText.ToLower());
-    public static string GetTitleCase<T>(this T type) where T : Enum => _textInfo?.ToTitleCase(type.ToString());
+    public static string GetTitleCase<T>(this T type) where T : struct, Enum => _textInfo?.ToTitleCase(type.ToString());
     public static bool EqualsFast(this string content, string comparedString) => content.Equals(comparedString, StringComparison.Ordinal);
     
     public static byte[] GetBytes(this string content, ENCODING_FORMAT format = ENCODING_FORMAT.UTF_8) => format switch {

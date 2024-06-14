@@ -6,7 +6,7 @@ using UnityEditor;
 using UnityEditor.Callbacks;
 using UnityEngine;
 
-public class EditorResourceService : EditorWindow {
+public class EditorResourceService : EditorService {
 
     private static EditorWindow _window;
     private static EditorWindow Window => _window == null ? _window = GetWindow<EditorResourceService>("Resource Service") : _window;
@@ -17,22 +17,32 @@ public class EditorResourceService : EditorWindow {
     private static Type[] _providerTypes = { };
     private static string[] _providerTypeNames = { };
     
+    // TODO. 메뉴가 변경되는 경우 처리가 부실. 메뉴간 변경에서도 각 drawer의 CacheRefresh()가 동작하도록 수정
+    private static int _selectMenuIndex;
+    private static EDITOR_TYPE _selectMenuType;
+    
     private static Dictionary<Type, EditorResourceDrawer> _providerDrawerDic = new();
     private static Dictionary<Type, EditorResourceDrawer> _testerDrawerDic = new();
     
-    private static int _selectMenuIndex;
     private static readonly string[] EDITOR_MENUS = EnumUtil.GetValues<EDITOR_TYPE>().Select(x => x.ToString()).ToArray();
-    
     private static readonly string SELECT_MENU_SAVE_KEY = $"{nameof(EditorResourceService)}_Menu";
     private static readonly string SELECT_DRAWER_SAVE_KEY = $"{nameof(EditorResourceService)}_Drawer";
 
+    protected override void OnEditorOpenInitialize() => CacheRefresh();
+
+    private void OnDestroy() {
+        if (_selectDrawerType != null && _providerDrawerDic.TryGetValue(_selectDrawerType, out var drawer)) {
+            drawer.Destroy();
+        }
+    }
+    
     [MenuItem("Service/Resource/Resource Service")]
-    public static void OpenWindow() {
+    private static void OpenWindow() {
         Window.Show();
         CacheRefresh();
         Window.Focus();
     }
-
+    
     [DidReloadScripts(99999)]
     private static void CacheRefresh() {
         if (HasOpenInstances<EditorResourceService>()) {
@@ -63,7 +73,7 @@ public class EditorResourceService : EditorWindow {
     }
     
     private void OnGUI() {
-        EditorCommon.DrawTopToolbar(ref _selectMenuIndex, index => EditorCommon.SetInt(SELECT_MENU_SAVE_KEY, index), EDITOR_MENUS);
+        EditorCommon.DrawTopToolbar(ref _selectMenuIndex, index => EditorCommon.Set(SELECT_MENU_SAVE_KEY, index), EDITOR_MENUS);
         
         GUILayout.Space(10f);
 
@@ -71,16 +81,15 @@ public class EditorResourceService : EditorWindow {
             EditorGUILayout.HelpBox($"{nameof(IResourceProvider)}를 상속받은 구현이 존재하지 않습니다.", MessageType.Error);
             return;
         }
-
         if (TrySelectDrawerDic(_selectMenuIndex, out var drawerDic)) {
             _selectDrawerTypeIndex = EditorGUILayout.Popup(_selectDrawerTypeIndex, _providerTypeNames);
             if (_selectDrawerTypeIndex < _providerTypes.Length && _providerTypes[_selectDrawerTypeIndex] != _selectDrawerType) {
-                if (drawerDic.TryGetValue(_selectDrawerType, out var closeDrawer)) {
+                if (_selectDrawerType != null && drawerDic.TryGetValue(_selectDrawerType, out var closeDrawer)) {
                     closeDrawer.Close();
                 }
                 
                 _selectDrawerType = _providerTypes[_selectDrawerTypeIndex];
-                EditorCommon.SetString(SELECT_DRAWER_SAVE_KEY, _selectDrawerType.ToString());
+                EditorCommon.Set(SELECT_DRAWER_SAVE_KEY, _selectDrawerType.ToString());
                 
                 if (drawerDic.TryGetValue(_selectDrawerType, out var openDrawer)) {
                     openDrawer.CacheRefresh();
@@ -96,13 +105,7 @@ public class EditorResourceService : EditorWindow {
             EditorGUILayout.HelpBox($"{nameof(EDITOR_TYPE)}에 맞는 Drawer를 찾는데 실패하였습니다.", MessageType.Error);
         }
     }
-
-    private void OnDestroy() {
-        if (_selectDrawerType != null && _providerDrawerDic.TryGetValue(_selectDrawerType, out var drawer)) {
-            drawer.Destroy();
-        }
-    }
-
+    
     private static bool TrySelectDrawerDic(Attribute attribute, out Dictionary<Type, EditorResourceDrawer> drawerDic) {
         drawerDic = SelectDrawerDic(attribute);
         return drawerDic != null;
@@ -122,7 +125,7 @@ public class EditorResourceService : EditorWindow {
     private static Dictionary<Type, EditorResourceDrawer> SelectDrawerDic(int index) => EnumUtil.ConvertInt<EDITOR_TYPE>(_selectMenuIndex) switch {
         EDITOR_TYPE.Provider => _providerDrawerDic,
         EDITOR_TYPE.Test => _testerDrawerDic,
-        _ => null
+        _ => _providerDrawerDic
     };
 
     private enum EDITOR_TYPE {
@@ -136,7 +139,18 @@ public class EditorResourceProviderDrawerAttribute : Attribute {
     
     public Type providerType;
 
-    public EditorResourceProviderDrawerAttribute(Type providerType) => this.providerType = providerType;
+    public EditorResourceProviderDrawerAttribute(Type providerType) {
+        if (typeof(IResourceProvider).IsAssignableFrom(providerType)) {
+            this.providerType = providerType;
+        } else {
+            Logger.TraceError($"{providerType.Name} is Invalid {nameof(providerType)}. {nameof(providerType)} must inherit from {nameof(IResourceProvider)}.");
+        }
+    }
+}
+
+public class EditorResourceViewerDrawerAttribute : EditorResourceProviderDrawerAttribute {
+    
+    public EditorResourceViewerDrawerAttribute(Type providerType) : base(providerType) { }
 }
 
 [AttributeUsage(AttributeTargets.Class)]

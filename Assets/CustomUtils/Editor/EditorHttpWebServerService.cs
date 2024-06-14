@@ -7,13 +7,13 @@ using UnityEditor;
 using UnityEditor.Callbacks;
 using UnityEngine;
 
-public class EditorHttpWebServerService : EditorWindow {
+public class EditorHttpWebServerService : EditorService {
     
     private static EditorWindow _window;
-    private static EditorWindow Window => _window == null ? _window = GetWindow<EditorHttpWebServerService>("TempWebServer") : _window;
+    private static EditorWindow Window => _window == null ? _window = GetWindow<EditorHttpWebServerService>("HttpWebServer Service") : _window;
 
     private SimpleHttpWebServer _httpServer;
-
+    
     private static string _targetDirectory;
     private static string _url;
 
@@ -27,6 +27,12 @@ public class EditorHttpWebServerService : EditorWindow {
     
     private const string CONFIG_NAME = "HttpWebServerServiceConfig.json";
     private readonly Regex URL_REGEX = new(@"^(http|https|ftp)://[^\s/$.?#].[^\s]*$");
+
+    public EditorHttpWebServerService() {
+        AssemblyReloadEvents.beforeAssemblyReload += () => _httpServer?.Dispose();
+    }
+    
+    protected override void OnEditorOpenInitialize() => CacheRefresh();
 
     [MenuItem("Service/Temp Web Server/Http Web Server Service")]
     public static void OpenWindow() {
@@ -151,13 +157,12 @@ public class EditorHttpWebServerService : EditorWindow {
             
             GUILayout.Space(10);
             
-            using (new GUILayout.VerticalScope("box")) {
+            using (new GUILayout.VerticalScope("box", GUILayout.ExpandHeight(false))) {
                 GUILayout.Label("=== Web Server Run Info ===", Constants.Editor.DIVIDE_STYLE);
                 GUILayout.Label(_httpServer == null ? "미생성" : _httpServer.IsRunning() ? "가동중" : "정지", Constants.Editor.FIELD_TITLE_STYLE);
                 if (_httpServer != null) {
-                    GUILayout.Label($"대상 폴더 : {_httpServer.GetTargetDirectory()}");
-                    GUILayout.Label($"URL : {_httpServer.GetURL()}");
-                    GUILayout.Label($"가동 중인 쓰레드 : {_httpServer.GetRunningThreadCount()}");
+                    EditorCommon.DrawLabelLinkButton("대상 폴더 : ", _httpServer.GetTargetDirectory(), EditorUtility.RevealInFinder);
+                    EditorCommon.DrawLabelSelectableLabel("URL : ", _httpServer.GetURL());
                     
                     GUILayout.Space(10);
                     
@@ -181,25 +186,29 @@ public class EditorHttpWebServerService : EditorWindow {
                 }
             }
             
-            if (_httpServer != null) {
-                GUILayout.Space(15);
-                _serveModuleScrollPosition = EditorGUILayout.BeginScrollView(_serveModuleScrollPosition, false, false, GUILayout.MaxHeight(150));
-                using (new GUILayout.VerticalScope()) {
-                    GUILayout.Label($"{nameof(HttpServeModule)} 추가", Constants.Editor.DIVIDE_STYLE);
-                    foreach (var type in _serveModuleList) {
+            GUILayout.Space(15);
+            _serveModuleScrollPosition = EditorGUILayout.BeginScrollView(_serveModuleScrollPosition, false, false, GUILayout.MaxHeight(150));
+            using (new GUILayout.VerticalScope()) {
+                GUILayout.Label($"{nameof(HttpServeModule)} 추가", Constants.Editor.DIVIDE_STYLE);
+                foreach (var type in _serveModuleList) {
+                    if (_httpServer == null) {
+                        GUILayout.Button(type.Name);
+                    } else {
                         var alreadyModule = _httpServer.IsContainsServeModule(type);
                         if (GUILayout.Button($"{type.Name} {(alreadyModule ? "제거" : "추가")}")) {
-                            if (alreadyModule) {
-                                _httpServer.RemoveServeModule(type);
-                            } else {
-                                _httpServer.AddServeModule(type);
+                            if (_httpServer != null) {
+                                if (alreadyModule) {
+                                    _httpServer.RemoveServeModule(type);
+                                } else {
+                                    _httpServer.AddServeModule(type);
+                                }
                             }
                         }
                     }
                 }
-                
-                EditorGUILayout.EndScrollView();
             }
+            
+            EditorGUILayout.EndScrollView();
         }
     }
 

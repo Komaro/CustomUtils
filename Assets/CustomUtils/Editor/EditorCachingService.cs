@@ -4,7 +4,7 @@ using UnityEditor;
 using UnityEditor.Callbacks;
 using UnityEngine;
 
-public class EditorCachingService : EditorWindow {
+public class EditorCachingService : EditorService {
     
     private static EditorWindow _window;
     private static EditorWindow Window => _window == null ? _window = GetWindow<EditorCachingService>("CachingService") : _window;
@@ -15,9 +15,11 @@ public class EditorCachingService : EditorWindow {
     private string _createDirectoryName;
     
     private Vector2 _cachingScrollViewPosition;
+
+    protected override void OnEditorOpenInitialize() => CacheRefresh();
     
     [MenuItem("Service/Caching Service")]
-    public static void OpenWindow() {
+    private static void OpenWindow() {
         Window.Show();
         CacheRefresh();
         Window.Focus();

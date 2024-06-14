@@ -5,34 +5,49 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.Networking;
 
-[EditorResourceTesterDrawer(typeof(EditorAssetBundleTesterDrawer))]
+[EditorResourceTesterDrawer(typeof(AssetBundleProvider))]
 public class EditorAssetBundleTesterDrawer : EditorResourceDrawer {
+
+    private Config _config;
+    private string _configPath;
     
-    private static string _downloadDirectory; 
-    private static string _url;
+    private string _downloadDirectory; 
+    private string _url;
+    private string _encryptKey;
+
+    private const string CONFIG_NAME = "AssetBundleTesterConfig.json";
+    private readonly string CONFIG_PATH = $"{Constants.Editor.COMMON_CONFIG_FOLDER}/{CONFIG_NAME}";
 
     public override void CacheRefresh() {
 
+        
+        
     }
 
     public override void Draw() {
-        if (GUILayout.Button("Request Test")) {
+        _downloadDirectory = EditorCommon.DrawFolderSelector("다운로드 폴더 선택", _downloadDirectory);
+        _url = EditorCommon.DrawLabelTextField("URL", _url);
+        
+        // TODO. 암호화 키 입력
+        _encryptKey = EditorCommon.DrawLabelTextField("암호화 키", _encryptKey);
+        
+        // TODO. 캐싱 기능 온오프 처리
+        
+        // TODO. 매니페스트 다운로드를 통한 전체 에셋번들 처리 확인
+        
+        if (GUILayout.Button("AssetBundle Download Test")) {
             AssetBundle.UnloadAllAssetBundles(true);
             AssetBundleManifestDownload($"{EditorUserBuildSettings.activeBuildTarget}/{EditorUserBuildSettings.activeBuildTarget}", manifest => {
                 foreach (var assetBundleName in manifest.GetAllAssetBundles()) {
                     var assetBundlePath = $"{EditorUserBuildSettings.activeBuildTarget}/{assetBundleName}";
                     AssetBundleDownload(assetBundlePath, manifest.GetAssetBundleHash(assetBundleName), assetBundle => {
-                        // Logger.TraceError($"{assetBundle.name} || {manifest.GetAssetBundleHash(assetBundle.name)}");
+                        Logger.TraceError($"{assetBundle.name} || {manifest.GetAssetBundleHash(assetBundle.name)}");
                     });
                 }
             });
         }
-        
-        var temp = EditorCommon.DrawFolderSelector("다운로드 폴더 선택", string.Empty);
     }
     
-    
-    // Caching 안됨
     private void AssetBundleManifestDownload(string name, Action<AssetBundleManifest> callback = null) {
         var request = UnityWebRequest.Get(Path.Combine(_url, name));
         Logger.TraceLog($"Request || {request.url}", Color.cyan);
@@ -45,15 +60,12 @@ public class EditorAssetBundleTesterDrawer : EditorResourceDrawer {
                     return;
                 }
 
-                AssetBundle assetBundle;
                 try {
-                    try {
-                        assetBundle = AssetBundle.LoadFromMemory(request.downloadHandler.data);
-                    } catch (Exception ex) {
-                        Logger.TraceError(ex);
+                    var assetBundle = AssetBundle.LoadFromMemory(request.downloadHandler.data);
+                    if (assetBundle == null) {
                         assetBundle = AssetBundle.LoadFromMemory(EncryptUtil.DecryptAESBytes(request.downloadHandler.data));
                     }
-                
+
                     if (assetBundle != null) {
                         foreach (var assetBundleName in assetBundle.GetAllAssetNames()) {
                             if (assetBundleName.Contains("manifest")) {
@@ -66,7 +78,7 @@ public class EditorAssetBundleTesterDrawer : EditorResourceDrawer {
                         }
                     }
                 } catch (Exception ex) {
-                    Logger.TraceError($"{nameof(assetBundle)} is Null. Resource download was successful, but memory load failed. It appears to be either an incorrect format or a decryption failure. The issue might be related to the encryption key.\n\n{ex}");
+                    Logger.TraceError($"{nameof(AssetBundle)} Resource download was successful, but memory load failed. It appears to be either an incorrect format or a decryption failure. The issue might be related to the encryption key.\n\n{ex}");
                 }
             }
         };
@@ -80,19 +92,30 @@ public class EditorAssetBundleTesterDrawer : EditorResourceDrawer {
             if (request.result != UnityWebRequest.Result.Success) {
                 Logger.TraceError(request.error);
             } else {
-                AssetBundle assetBundle = null;
                 try {
-                    assetBundle = DownloadHandlerAssetBundle.GetContent(request);
-                } catch (Exception ex) {
-                    Logger.TraceLog(ex, Color.red);
-                    var decryptBytes = EncryptUtil.DecryptAESBytes(request.downloadHandler.data);
-                    assetBundle = AssetBundle.LoadFromMemory(decryptBytes);
-                } finally {
+                    var assetBundle = DownloadHandlerAssetBundle.GetContent(request);
+                    if (assetBundle == null) {
+                        assetBundle = AssetBundle.LoadFromMemory(EncryptUtil.DecryptAESBytes(request.downloadHandler.data));
+                    }
+                    
                     if (assetBundle != null) {
                         callback?.Invoke(assetBundle);
                     }
+                } catch (Exception ex) {
+                    Logger.TraceLog(ex, Color.red);
                 }
             }
         };
+    }
+
+    private class NullConfig : Config { }
+    
+    private class Config : JsonAutoConfig {
+
+        public string downloadDirectory; 
+        public string url;
+        public string encryptKey;
+        
+        public override bool IsNull() => this is NullConfig;
     }
 }

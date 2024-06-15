@@ -21,6 +21,8 @@ public class EditorHttpWebServerService : EditorService {
     private static Config _config;
 
     private static List<Type> _serveModuleList = new();
+    
+    private Vector2 _windowScrollViewPosition;
     private Vector2 _serveModulePresetScrollPosition;
     private Vector2 _runningServeModuleScrollPosition;
     private Vector2 _serveModuleScrollPosition;
@@ -69,6 +71,7 @@ public class EditorHttpWebServerService : EditorService {
             EditorCommon.DrawSeparator();
         }
 
+        _windowScrollViewPosition = EditorGUILayout.BeginScrollView(_windowScrollViewPosition, false, false);
         using (new GUILayout.HorizontalScope()) {
             if (GUILayout.Button("CDN 폴더 선택", GUILayout.Width(100))) {
                 var selectDirectory = EditorUtility.OpenFolderPanel("대상 폴더", _targetDirectory, string.Empty);
@@ -124,7 +127,7 @@ public class EditorHttpWebServerService : EditorService {
                     GUILayout.Label("=== 서버 모듈 프리셋 ===", Constants.Editor.DIVIDE_STYLE);
 
                     ModulePreset removePreset = null;
-                    _serveModulePresetScrollPosition = EditorGUILayout.BeginScrollView(_serveModulePresetScrollPosition, false, false, GUILayout.MaxHeight(150));
+                    _serveModulePresetScrollPosition = EditorGUILayout.BeginScrollView(_serveModulePresetScrollPosition, false, false, GUILayout.MinHeight(50f), GUILayout.MaxHeight(150f));
                     foreach (var modulePreset in _config.modulePresetList) {
                         using (new GUILayout.HorizontalScope()) {
                             var moduleTextContent = new GUIContent(modulePreset.moduleNameList.ToStringCollection("\n"));
@@ -167,7 +170,7 @@ public class EditorHttpWebServerService : EditorService {
                     GUILayout.Space(10);
                     
                     GUILayout.Label("가동 중인 모듈", Constants.Editor.DIVIDE_STYLE);
-                    _runningServeModuleScrollPosition = EditorGUILayout.BeginScrollView(_runningServeModuleScrollPosition, false, false, GUILayout.MaxHeight(100));
+                    _runningServeModuleScrollPosition = EditorGUILayout.BeginScrollView(_runningServeModuleScrollPosition, false, false, GUILayout.MinHeight(50f), GUILayout.MaxHeight(100f));
                     foreach (var type in _httpServer.GetServeModuleTypeList()) {
                         GUILayout.Label(type.Name, Constants.Editor.FIELD_TITLE_STYLE);
                     }
@@ -187,7 +190,7 @@ public class EditorHttpWebServerService : EditorService {
             }
             
             GUILayout.Space(15);
-            _serveModuleScrollPosition = EditorGUILayout.BeginScrollView(_serveModuleScrollPosition, false, false, GUILayout.MaxHeight(150));
+            _serveModuleScrollPosition = EditorGUILayout.BeginScrollView(_serveModuleScrollPosition, false, false, GUILayout.MinHeight(50f), GUILayout.MaxHeight(150f));
             using (new GUILayout.VerticalScope()) {
                 GUILayout.Label($"{nameof(HttpServeModule)} 추가", Constants.Editor.DIVIDE_STYLE);
                 foreach (var type in _serveModuleList) {
@@ -210,6 +213,8 @@ public class EditorHttpWebServerService : EditorService {
             
             EditorGUILayout.EndScrollView();
         }
+        
+        EditorGUILayout.EndScrollView();
     }
 
     private void StartHttpWebServer() {

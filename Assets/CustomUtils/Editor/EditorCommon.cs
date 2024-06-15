@@ -92,7 +92,8 @@ public static partial class EditorCommon {
     public static bool TryGet(string key, out string value) => PlayerPrefsUtil.TryGet($"EditorString_{key}", out value); 
     public static bool TryGet(string key, out bool value) => PlayerPrefsUtil.TryGet($"EditorBool_{key}", out value);
     public static bool TryGet(string key, out int value) => PlayerPrefsUtil.TryGet($"EditorInt_{key}", out value);
-    public static bool GetEnum<T>(string key, out T value) where T : struct, Enum => PlayerPrefsUtil.TryGet<T>($"EditorEnum_{key}", out value);
+    public static bool TryGet(string key, out float value) => PlayerPrefsUtil.TryGet($"EditorFloat_{key}", out value);
+    public static bool TryGet<T>(string key, out T value) where T : struct, Enum => PlayerPrefsUtil.TryGet<T>($"EditorEnum_{key}", out value);
 
     public static void Set(string key, string value) => PlayerPrefsUtil.SetString($"EditorString_{key}", value);
     public static void Set(string key, bool value) => PlayerPrefsUtil.Set($"EditorBool_{key}", value);

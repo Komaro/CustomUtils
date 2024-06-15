@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using UnityEditor;
@@ -17,21 +18,20 @@ public class EditorResourceService : EditorService {
     private static Type[] _providerTypes = { };
     private static string[] _providerTypeNames = { };
     
-    // TODO. 메뉴가 변경되는 경우 처리가 부실. 메뉴간 변경에서도 각 drawer의 CacheRefresh()가 동작하도록 수정
     private static int _selectMenuIndex;
-    private static EDITOR_TYPE _selectMenuType;
+    private static RESOURCE_SERVICE_MENU_TYPE _selectMenuType;
     
-    private static Dictionary<Type, EditorResourceDrawer> _providerDrawerDic = new();
-    private static Dictionary<Type, EditorResourceDrawer> _testerDrawerDic = new();
-    
-    private static readonly string[] EDITOR_MENUS = EnumUtil.GetValues<EDITOR_TYPE>().Select(x => x.ToString()).ToArray();
+    private static Dictionary<(RESOURCE_SERVICE_MENU_TYPE, Type), EditorResourceDrawer> _drawerDic = new();
+
+    private static readonly string[] EDITOR_MENUS = EnumUtil.GetValues<RESOURCE_SERVICE_MENU_TYPE>().Select(x => x.ToString()).ToArray();
     private static readonly string SELECT_MENU_SAVE_KEY = $"{nameof(EditorResourceService)}_Menu";
     private static readonly string SELECT_DRAWER_SAVE_KEY = $"{nameof(EditorResourceService)}_Drawer";
 
     protected override void OnEditorOpenInitialize() => CacheRefresh();
 
     private void OnDestroy() {
-        if (_selectDrawerType != null && _providerDrawerDic.TryGetValue(_selectDrawerType, out var drawer)) {
+        if (_selectDrawerType != null && _drawerDic.TryGetValue((_selectMenuType, _selectDrawerType), out var drawer)) {
+            drawer.Close();
             drawer.Destroy();
         }
     }
@@ -53,22 +53,25 @@ public class EditorResourceService : EditorService {
             }
             
             foreach (var type in ReflectionManager.GetSubClassTypes<EditorResourceDrawer>()) {
-                if (type.TryGetCustomAttribute<EditorResourceProviderDrawerAttribute>(out var attribute) && TrySelectDrawerDic(attribute, out var drawerDic)) {
-                    if (drawerDic.TryGetValue(attribute.providerType, out var drawer) == false || drawer == null) {
-                        drawerDic.Add(attribute.providerType, Activator.CreateInstance(type) as EditorResourceDrawer);
+                if (type.TryGetCustomAttribute<EditorResourceDrawerAttribute>(out var attribute)) {
+                    var key = (attribute.menuType, attribute.providerType);
+                    if (_drawerDic.TryGetValue(key, out var drawer) == false || drawer == null) {
+                        _drawerDic.Add(key, Activator.CreateInstance(type) as EditorResourceDrawer);
                     }
                 }
             }
 
-            _selectMenuIndex = EditorCommon.TryGet(SELECT_MENU_SAVE_KEY, out int index) && index < EDITOR_MENUS.Length ? index : 0;
-            if (EditorCommon.TryGet(SELECT_DRAWER_SAVE_KEY, out string saveProviderName) && _providerTypeNames.TryFindIndex(saveProviderName, out index)) {
+            if (EditorCommon.TryGet(SELECT_MENU_SAVE_KEY, out RESOURCE_SERVICE_MENU_TYPE menuType)) {
+                _selectMenuIndex = (int) menuType;
+                _selectMenuType = menuType;
+            }
+            
+            if (EditorCommon.TryGet(SELECT_DRAWER_SAVE_KEY, out string saveProviderName) && _providerTypeNames.TryFindIndex(saveProviderName, out var index)) {
                 _selectDrawerTypeIndex = index;
                 _selectDrawerType = _providerTypes[_selectDrawerTypeIndex];
             }
-            
-            if (_selectDrawerType != null && TrySelectDrawerDic(_selectMenuIndex, out var selectDrawerDic) && selectDrawerDic.TryGetValue(_selectDrawerType, out var selectDrawer)) {
-                selectDrawer.CacheRefresh();
-            }
+
+            DrawerCacheRefresh();
         }
     }
     
@@ -81,82 +84,61 @@ public class EditorResourceService : EditorService {
             EditorGUILayout.HelpBox($"{nameof(IResourceProvider)}를 상속받은 구현이 존재하지 않습니다.", MessageType.Error);
             return;
         }
-        if (TrySelectDrawerDic(_selectMenuIndex, out var drawerDic)) {
-            _selectDrawerTypeIndex = EditorGUILayout.Popup(_selectDrawerTypeIndex, _providerTypeNames);
-            if (_selectDrawerTypeIndex < _providerTypes.Length && _providerTypes[_selectDrawerTypeIndex] != _selectDrawerType) {
-                if (_selectDrawerType != null && drawerDic.TryGetValue(_selectDrawerType, out var closeDrawer)) {
-                    closeDrawer.Close();
-                }
-                
-                _selectDrawerType = _providerTypes[_selectDrawerTypeIndex];
-                EditorCommon.Set(SELECT_DRAWER_SAVE_KEY, _selectDrawerType.ToString());
-                
-                if (drawerDic.TryGetValue(_selectDrawerType, out var openDrawer)) {
-                    openDrawer.CacheRefresh();
-                }
-            }
+        
+        _selectDrawerTypeIndex = EditorGUILayout.Popup(_selectDrawerTypeIndex, _providerTypeNames);
+        if (_selectMenuIndex != (int)_selectMenuType && _selectMenuIndex < EDITOR_MENUS.Length) {
+            DrawerClose();
+            _selectMenuType = EnumUtil.ConvertInt<RESOURCE_SERVICE_MENU_TYPE>(_selectMenuIndex);
+            EditorCommon.Set(SELECT_MENU_SAVE_KEY, _selectMenuType);
+            DrawerCacheRefresh();
+        } else if (_selectDrawerType != _providerTypes[_selectDrawerTypeIndex] && _selectDrawerTypeIndex < _providerTypes.Length) {
+            DrawerClose();
+            _selectDrawerType = _providerTypes[_selectDrawerTypeIndex];
+            EditorCommon.Set(SELECT_DRAWER_SAVE_KEY, _selectDrawerType.Name);
+            DrawerCacheRefresh();
+        }
 
-            if (drawerDic.TryGetValue(_selectDrawerType, out var drawer)) {
-                drawer.Draw();
-            } else {
-                EditorGUILayout.HelpBox($"유효한 {nameof(EditorResourceDrawer)} 를 찾을 수 없습니다.", MessageType.Warning);
-            }
+        if (_drawerDic.TryGetValue((_selectMenuType, _selectDrawerType), out var drawer)) {
+            drawer.Draw();
         } else {
-            EditorGUILayout.HelpBox($"{nameof(EDITOR_TYPE)}에 맞는 Drawer를 찾는데 실패하였습니다.", MessageType.Error);
+            EditorGUILayout.HelpBox($"유효한 {nameof(EditorResourceDrawer)} 를 찾을 수 없습니다.", MessageType.Warning);
         }
     }
-    
-    private static bool TrySelectDrawerDic(Attribute attribute, out Dictionary<Type, EditorResourceDrawer> drawerDic) {
-        drawerDic = SelectDrawerDic(attribute);
-        return drawerDic != null;
+
+    private static void DrawerCacheRefresh() {
+        if (_drawerDic.TryGetValue((_selectMenuType, _selectDrawerType), out var drawer)) {
+            drawer.CacheRefresh();
+        }
     }
 
-    private static Dictionary<Type, EditorResourceDrawer> SelectDrawerDic(Attribute attribute) => attribute switch {
-        EditorResourceTesterDrawerAttribute => _testerDrawerDic,
-        EditorResourceProviderDrawerAttribute => _providerDrawerDic,
-        _ => null
-    };
-
-    private static bool TrySelectDrawerDic(int index, out Dictionary<Type, EditorResourceDrawer> drawerDic) {
-        drawerDic = SelectDrawerDic(index);
-        return drawerDic != null;
-    }
-    
-    private static Dictionary<Type, EditorResourceDrawer> SelectDrawerDic(int index) => EnumUtil.ConvertInt<EDITOR_TYPE>(_selectMenuIndex) switch {
-        EDITOR_TYPE.Provider => _providerDrawerDic,
-        EDITOR_TYPE.Test => _testerDrawerDic,
-        _ => _providerDrawerDic
-    };
-
-    private enum EDITOR_TYPE {
-        Provider,
-        Test,
+    private static void DrawerClose() {
+        if (_drawerDic.TryGetValue((_selectMenuType, _selectDrawerType), out var drawer)) {
+            drawer.Close();
+        }
     }
 }
 
-[AttributeUsage(AttributeTargets.Class)]
-public class EditorResourceProviderDrawerAttribute : Attribute {
-    
-    public Type providerType;
+public enum RESOURCE_SERVICE_MENU_TYPE {
+    Provider,
+    Test,
+}
 
-    public EditorResourceProviderDrawerAttribute(Type providerType) {
+[AttributeUsage(AttributeTargets.Class)]
+public class EditorResourceDrawerAttribute : Attribute {
+    
+    public readonly RESOURCE_SERVICE_MENU_TYPE menuType;
+    public readonly Type providerType;
+
+    public EditorResourceDrawerAttribute(RESOURCE_SERVICE_MENU_TYPE menuType, Type providerType) {
         if (typeof(IResourceProvider).IsAssignableFrom(providerType)) {
             this.providerType = providerType;
         } else {
             Logger.TraceError($"{providerType.Name} is Invalid {nameof(providerType)}. {nameof(providerType)} must inherit from {nameof(IResourceProvider)}.");
+            this.providerType = typeof(NullResourceProvider);
         }
+        
+        this.menuType = menuType;
     }
-}
-
-public class EditorResourceViewerDrawerAttribute : EditorResourceProviderDrawerAttribute {
-    
-    public EditorResourceViewerDrawerAttribute(Type providerType) : base(providerType) { }
-}
-
-[AttributeUsage(AttributeTargets.Class)]
-public class EditorResourceTesterDrawerAttribute : EditorResourceProviderDrawerAttribute {
-    
-    public EditorResourceTesterDrawerAttribute(Type providerType) : base(providerType) { }
 }
 
 public abstract class EditorResourceDrawer {
@@ -165,4 +147,71 @@ public abstract class EditorResourceDrawer {
     public virtual void Destroy() { }
     public abstract void CacheRefresh();
     public abstract void Draw();
+}
+
+public abstract class EditorResourceDrawerAutoConfig<TConfig, TNullConfig> : EditorResourceDrawer
+    where TConfig : JsonAutoConfig, new() where TNullConfig : TConfig, new() {
+
+    protected TConfig config;
+    protected SystemWatcherServiceOrder watcherOrder;
+    
+    protected abstract string CONFIG_NAME { get; }
+    protected abstract string CONFIG_PATH { get; }
+
+    public EditorResourceDrawerAutoConfig() => watcherOrder = CreateWatcherOrder();
+
+    public override void Close() {
+        if (config?.IsNull() == false) {
+            config.StopAutoSave();
+            config.Save(CONFIG_PATH);
+        }
+        
+        Service.GetService<SystemWatcherService>().StopWatcher(watcherOrder);
+    }
+
+    public override void Destroy() {
+        if (watcherOrder != null) {
+            Service.GetService<SystemWatcherService>().RemoveWatcher(watcherOrder);
+        }
+    }
+
+    public override void Draw() {
+        if (config?.IsNull() ?? true) {
+            EditorGUILayout.HelpBox($"{CONFIG_NAME} 파일이 존재하지 않습니다. 선택한 설정이 저장되지 않으며 일부 기능을 사용할 수 없습니다.", MessageType.Warning);
+            if (GUILayout.Button($"{CONFIG_NAME} 파일 생성")) {
+                EditorCommon.OpenCheckDialogue($"{CONFIG_NAME} 파일 생성", $"{CONFIG_NAME} 파일을 생성합니다.\n경로는 아래와 같습니다.\n{CONFIG_PATH}", ok: () => {
+                    if ((config = config.Clone<TConfig>()) != null) {
+                        config.Save(CONFIG_PATH);
+                        config.StartAutoSave(CONFIG_PATH);
+                    }
+                });
+            }
+
+            EditorCommon.DrawSeparator();
+        } else {
+            GUILayout.Space(10f);
+        }
+    }
+
+    protected SystemWatcherServiceOrder CreateWatcherOrder() => new(Constants.Editor.COMMON_CONFIG_FOLDER, CONFIG_NAME, OnSystemWatcherEventHandler);
+    
+    protected virtual void OnSystemWatcherEventHandler(object ob, FileSystemEventArgs args) {
+        if (config == null) {
+            Logger.TraceError($"{nameof(config)} is Null.");
+            return;
+        }
+        
+        switch (args.ChangeType) {
+            case WatcherChangeTypes.Created:
+                if (config.IsNull()) {
+                    config = config.Clone<TConfig>();
+                }
+                break;
+            case WatcherChangeTypes.Deleted:
+                if (config.IsNull() == false) {
+                    config = config.Clone<TNullConfig>();
+                }
+                break;
+        }
+    }
 }

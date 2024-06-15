@@ -47,10 +47,25 @@ public static class SessionStateUtil {
         return false;
     }
 
+    public static bool TryGet<T>(string key, out T value, T defaultValue = default) where T : struct, Enum {
+        try {
+            if (TryGet(key, out string rawValue) && Enum.TryParse<T>(rawValue, out value)) {
+                return true;
+            }
+        } catch (Exception ex) {
+            Logger.TraceError(ex);
+        } finally {
+            value = defaultValue;
+        }
+
+        return false;
+    }
+
     public static void Set(string key, string value) => SetString(key, value);
     public static void Set(string key, bool value) => SetBool(key, value);
     public static void Set(string key, int value) => SetInt(key, value);
     public static void Set(string key, float value) => SetFloat(key, value);
+    public static void Set<T>(string key, T value) where T : struct, Enum => SetString(key, value.ToString());
 
     public static string GetString(string key, string defaultValue = "") {
         try {

@@ -138,7 +138,7 @@ public static class EncryptUtil {
     public static byte[] EncryptAESBytes(string plainText, string key = nameof(EncryptUtil)) => EncryptAESBytes(plainText.GetBytes(), key);
     
     public static bool TryDecryptAESBytes(out byte[] plainBytes, string cipherText, string key = nameof(EncryptUtil)) {
-        plainBytes = EncryptAESBytes(cipherText.GetRawBytes(), key);
+        plainBytes = DecryptAESBytes(cipherText.GetRawBytes(), key);
         return plainBytes is { Length: > 0 };
     }
 

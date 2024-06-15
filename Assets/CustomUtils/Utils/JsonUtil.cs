@@ -10,14 +10,26 @@ using UniRx;
 using UnityEngine;
 
 public static class JsonUtil {
+
+    public static bool TryLoadJsonIgnoreLog<T>(string path, out T json) {
+        try {
+            if (File.Exists(path)) {
+                json = LoadJson<T>(path);
+                return json != null;
+            }
+        } catch (Exception ex) {
+            Logger.TraceError(ex);
+        }
+
+        json = default;
+        return false;
+    }
     
     public static bool TryLoadJson<T>(string path, out T json) {
         try {
             json = LoadJson<T>(path);
             return json != null;
-        } catch (Exception e) {
-            Debug.LogError(e);
-
+        } catch (Exception) {
             json = default;
             return false;
         }
@@ -26,7 +38,7 @@ public static class JsonUtil {
     public static T LoadJson<T>(string path) {
         try {
             if (File.Exists(path) == false) {
-                Debug.LogError($"Invalid Path || {path}");
+                Logger.TraceLog($"Invalid Path || {path}", Color.yellow);
                 throw new FileNotFoundException();
             }
 
@@ -35,8 +47,8 @@ public static class JsonUtil {
                 var json = JsonConvert.DeserializeObject<T>(text);
                 return json;
             }
-        }  catch (Exception e) {
-            Debug.LogError(e);
+        }  catch (Exception ex) {
+            Logger.TraceLog(ex, Color.red);
             throw;
         }
         
@@ -110,10 +122,31 @@ public abstract class JsonConfig {
     }
     
     public virtual T Clone<T>() where T : JsonConfig, new() {
-        var type = typeof(T);
+        if (Clone(typeof(T)) is T cloneConfig) {
+            return cloneConfig;
+        }
+
+        return null;
+    }
+
+    public virtual bool TryClone(Type type, out object config) {
+        config = Clone(type);
+        return config != null;
+    }
+    
+    public virtual object Clone(Type type) {
+        if (type == null) {
+            Logger.TraceError($"{nameof(type)} is Null");
+            return null;
+        } 
+        
         if (type.IsAbstract == false) {
             try {
-                var cloneConfig = Activator.CreateInstance<T>();
+                var cloneConfig = Activator.CreateInstance(type);
+                if (cloneConfig is JsonAutoConfig == false) {
+                    return null;
+                }
+                
                 foreach (var info in type.GetFields(BindingFlags.Instance | BindingFlags.Public)) {
                     info.SetValue(cloneConfig, info.GetValue(this));
                 }
@@ -127,6 +160,7 @@ public abstract class JsonConfig {
 
         return null;
     }
+
 }
 
 public abstract class JsonAutoConfig : JsonConfig, IDisposable {

@@ -19,7 +19,7 @@ public class EditorCachingService : EditorService {
     protected override void OnEditorOpenInitialize() => CacheRefresh();
     
     [MenuItem("Service/Caching Service")]
-    private static void OpenWindow() {
+    public static void OpenWindow() {
         Window.Show();
         CacheRefresh();
         Window.Focus();

@@ -63,14 +63,6 @@ public static class ResourceGenerator {
 
             var manifest = BuildPipeline.BuildAssetBundles(generatePath, options, target);
             if (manifest != null) {
-                var manifestPath = Path.Combine(generatePath, EditorUserBuildSettings.activeBuildTarget.ToString());
-                if (File.Exists(manifestPath)) {
-                    var manifestBytes = File.ReadAllBytes(manifestPath);
-                    var aesManifestBytes = EncryptUtil.EncryptAESBytes(manifestBytes);
-                    // File.Copy(manifestPath, Path.Combine(generatePath, EditorUserBuildSettings.activeBuildTarget.ToString()));
-                    File.WriteAllBytes(manifestPath, aesManifestBytes);
-                }
-                
                 return manifest;
             }
         } catch (Exception e) {

@@ -282,6 +282,14 @@ public static class CollectionExtension {
 
     #region [List]
 
+    public static void LimitedAdd<T>(this List<T> list, T item, int maxCount) {
+        if (list.Count >= maxCount) {
+            list.RemoveAt(0);
+        }
+        
+        list.Add(item);
+    }
+
     public static void AutoAdd<T>(this List<T> list, Predicate<T> match, T item) {
         if (list.TryFindIndex(match, out var index)) {
             list[index] = item;

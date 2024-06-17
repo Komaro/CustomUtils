@@ -6,13 +6,13 @@ using UniRx;
 using UnityEngine;
 
 public interface IService {
-    
-    bool IsServing() => false;
-    void Init() { }
-    void Start();
-    void Stop();
-    void Refresh() { }
-    void Remove() { }
+
+    protected internal bool IsServing() => false;
+    protected internal void Init() { }
+    protected internal void Start();
+    protected internal void Stop();
+    protected internal void Refresh() { }
+    protected internal void Remove() { }
 }
 
 public static class Service {
@@ -28,7 +28,11 @@ public static class Service {
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterAssembliesLoaded)]
     private static void Initialize() {
         if (_isInitialized == false) {
-            _cachedServiceTypeList = ReflectionManager.GetInterfaceTypes<IService>().Where(x => x.Name.StartsWith("Sample_") == false).ToList();
+            _cachedServiceTypeList = AppDomain.CurrentDomain.GetAssemblies()
+                .Where(assembly => assembly.IsDynamic == false)
+                .SelectMany(assembly => assembly.GetExportedTypes())
+                .Where(type => type.IsClass && type.IsAbstract == false && _interfaceType.IsAssignableFrom(type) && type.Name.StartsWith("Sample_") == false).ToList();
+            
             _isInitialized = true;
         }
     }
@@ -139,6 +143,17 @@ public static class Service {
         }
     }
 
+    public static bool TryGetServiceWithStart<TService>(out TService service) where TService : class, IService, new() {
+        if (TryGetService(out service)) {
+            if (service.IsServing() == false) {
+                service.Start();
+            }
+            return true;
+        }
+
+        return false;
+    }
+
     public static bool TryGetService<TService>(out TService service) where TService : class, IService, new() {
         service = GetService<TService>();
         return service != null;
@@ -207,5 +222,12 @@ public sealed class ServiceAttribute : Attribute {
     public List<Enum> serviceTypeList = new();
 
     public ServiceAttribute() => serviceTypeList.Add(DEFAULT_SERVICE_TYPE.NONE);
-    public ServiceAttribute(params object[] serviceTypes) => serviceTypeList = serviceTypes.ConvertTo(x => x as Enum);
+    
+    public ServiceAttribute(params object[] serviceTypes) {
+        foreach (var type in serviceTypes) {
+            if (type is Enum enumType) {
+                serviceTypeList.Add(enumType);
+            }
+        }
+    }
 }

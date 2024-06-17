@@ -2,14 +2,14 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-public class TaskService : IService {
+public class TaskCancellationService : IService {
 
     private CancellationTokenSource _instantTokenSource;
     private CancellationToken _instantToken;
 
-    public void Start() { }
+    void IService.Start() { }
 
-    public void Stop() {
+    void IService.Stop() {
         if (_instantTokenSource?.IsCancellationRequested ?? false) {
             _instantTokenSource.Cancel();
             _instantTokenSource.Dispose();

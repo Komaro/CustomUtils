@@ -23,29 +23,29 @@ public class Sample_DamageStatisticsService : IService {
 
     public delegate void ReplaceCountHandler(int id, double value);
     public SafeDelegate<AddSkillHandler> OnReplaceCount;
-    
-    public bool IsServing() => _isServing;
 
-    public void Init() {
+    bool IService.IsServing() => _isServing;
+
+    void IService.Init() {
         _addSkillStream = _damageDic.ObserveAdd();
         _damageReplaceStream = _damageDic.ObserveReplace();
     }
 
-    public void Start() {
+    void IService.Start() {
         _disposableList.Add(_addSkillStream.Subscribe(addEvent => OnAddSkill.handler?.Invoke(addEvent.Key, addEvent.Value)));
         _disposableList.Add(_damageReplaceStream.Subscribe(replaceEvent => OnReplaceCount.handler?.Invoke(replaceEvent.Key, replaceEvent.NewValue - replaceEvent.OldValue)));
         
         _isServing = true;
     }
-    
-    public void Stop() {
+
+    void IService.Stop() {
         _disposableList.ForEach(x => x.Dispose());
         _disposableList.Clear();
         
         _isServing = false;
     }
 
-    public void Remove() {
+    void IService.Remove() {
         OnAddSkill.Clear();
         OnReplaceCount.Clear();
         

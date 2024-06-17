@@ -114,7 +114,6 @@ public static class JsonUtil {
 public abstract class JsonConfig {
 
     public virtual void Save(string path) => JsonUtil.SaveJson(path, this);
-    public abstract bool IsNull();
 
     public bool TryClone<T>(out T config) where T : JsonConfig, new() {
         config = Clone<T>();
@@ -129,7 +128,7 @@ public abstract class JsonConfig {
         return null;
     }
 
-    public virtual bool TryClone(Type type, out object config) {
+    public bool TryClone(Type type, out object config) {
         config = Clone(type);
         return config != null;
     }
@@ -160,7 +159,8 @@ public abstract class JsonConfig {
 
         return null;
     }
-
+    
+    public abstract bool IsNull();
 }
 
 public abstract class JsonAutoConfig : JsonConfig, IDisposable {
@@ -168,13 +168,21 @@ public abstract class JsonAutoConfig : JsonConfig, IDisposable {
     [JsonIgnore] protected List<IDisposable> disposableList = new();
     [JsonIgnore] protected IConnectableObservable<long> intervalObservable;
     [JsonIgnore] protected IDisposable intervalDisposable;
+    [JsonIgnore] protected bool saveFlag;
 
     [JsonIgnore] private readonly ArrayComparer ARRAY_COMPARER = new();
     [JsonIgnore] private readonly CollectionComparer COLLECTION_COMPARER = new();
     
-    protected JsonAutoConfig() {
-        intervalObservable = Observable.Interval(TimeSpan.FromSeconds(5f)).Publish(); 
-        intervalDisposable = intervalObservable.Connect();
+    protected JsonAutoConfig() => intervalObservable = Observable.Interval(TimeSpan.FromSeconds(5f)).Publish();
+    
+    public override T Clone<T>() {
+        Dispose();
+        return base.Clone<T>();
+    }
+
+    public override object Clone(Type type) {
+        Dispose();
+        return base.Clone(type);
     }
 
     public virtual void StartAutoSave(string path) {
@@ -182,26 +190,38 @@ public abstract class JsonAutoConfig : JsonConfig, IDisposable {
             StopAutoSave();
         }
         
+        intervalDisposable = intervalObservable.Connect();
         foreach (var info in GetType().GetFields(BindingFlags.Public | BindingFlags.Instance)) {
             if (info.FieldType.IsArray) {
-                disposableList.Add(intervalObservable.Select(_ => info.GetValue(this) as Array).DistinctUntilChanged(ARRAY_COMPARER).Skip(1)
-                    .Subscribe(_ => Save(path)));
+                disposableList.Add(intervalObservable.Select(_ => info.GetValue(this) as Array)
+                    .DistinctUntilChanged(ARRAY_COMPARER)
+                    .Subscribe(_ => saveFlag = true));
             } else if (info.FieldType.IsGenericCollectionType()) {
                 disposableList.Add(intervalObservable.Select(_ => info.GetValue(this) is ICollection collection ? collection.CloneEnumerator() : null)
-                    .DistinctUntilChanged(COLLECTION_COMPARER).Skip(1)
-                    .Subscribe(_ => Save(path)));
+                    .DistinctUntilChanged(COLLECTION_COMPARER)
+                    .Subscribe(_ => saveFlag = true));
             } else {
-                disposableList.Add(intervalObservable.DistinctUntilChanged(_ => info.GetValue(this)).Skip(1).Subscribe(_ => Save(path)));
+                disposableList.Add(intervalObservable.DistinctUntilChanged(_ => info.GetValue(this)).Subscribe(_ => saveFlag = true));
             }
         }
+        
+        disposableList.Add(Observable.Interval(TimeSpan.FromSeconds(5f)).Subscribe(_ => {
+            if (saveFlag) {
+                saveFlag = false;
+                Save(path);
+            }
+        }));
+
     }
 
-    public virtual void StopAutoSave() => disposableList.SafeClear(x => x.Dispose());
+    public virtual void StopAutoSave() => disposableList?.SafeClear(x => x.Dispose());
     
     public virtual void Dispose() {
         StopAutoSave();
-        intervalDisposable.Dispose();
+        intervalDisposable?.Dispose();
     }
+
+    ~JsonAutoConfig() => Dispose();
 
     public virtual bool IsAutoSaving() => disposableList.Any();
 

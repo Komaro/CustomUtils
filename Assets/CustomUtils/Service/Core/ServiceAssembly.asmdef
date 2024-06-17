@@ -1,11 +1,8 @@
 {
-    "name": "CustomUtilsAssembly",
+    "name": "ServiceAssembly",
     "rootNamespace": "",
     "references": [
         "GUID:560b04d1a97f54a4e82edc0cbbb69285",
-        "GUID:f06555f75b070af458a003d92f9efb00",
-        "GUID:02f771204943f4a40949438e873e3eff",
-        "GUID:0f665d077b1d4593830c5598782726bf",
         "GUID:8fa8068595d544a429313e9894334859"
     ],
     "includePlatforms": [],

@@ -1,5 +1,5 @@
 ﻿public class CSVService : IService {
 
-    public void Start() { }
-    public void Stop() { }
+    void IService.Start() { }
+    void IService.Stop() { }
 }

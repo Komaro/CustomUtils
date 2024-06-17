@@ -13,10 +13,10 @@ public class Sample_PowerSaveService : IService {
 
     private bool _isServing;
 
-    public bool IsServing() => _isServing;
-    public void Init() => _serviceStream = Observable.FromMicroCoroutine<float>(TouchCoroutine).Where(_ => Application.isPlaying);
+    bool IService.IsServing() => _isServing;
+    void IService.Init() => _serviceStream = Observable.FromMicroCoroutine<float>(TouchCoroutine).Where(_ => Application.isPlaying);
 
-    public void Start() {
+    void IService.Start() {
         _waitTime = 300f;   // Input Local Save Value
         if (_waitTime <= 0) {
             return;
@@ -33,8 +33,8 @@ public class Sample_PowerSaveService : IService {
 
         _isServing = true;
     }
-    
-    public void Stop() {
+
+    void IService.Stop() {
         _serviceDisposable?.Dispose();
         _isServing = false;
     }

@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using UnityEditor;
 using UnityEngine;
 
@@ -31,6 +30,8 @@ public static partial class EditorCommon {
     [MenuItem("GameObject/Tool/Copy Path", true, 99)]
     public static bool CopyPathValidation() => Selection.gameObjects.Length == 1;
 
+    #region [IO]
+    
     public static List<string> SearchFilePath(string directoryPath, string fileName) {
         if (Directory.Exists(directoryPath)) {
             var directoryInfo = new DirectoryInfo(directoryPath);
@@ -87,6 +88,8 @@ public static partial class EditorCommon {
         }
     }
 
+    #endregion
+    
     #region [Editor PlayerPrefs]
     
     public static bool TryGet(string key, out string value) => PlayerPrefsUtil.TryGet($"EditorString_{key}", out value); 
@@ -116,5 +119,4 @@ public static partial class EditorCommon {
     public static void SetSession(string key, float value) => SessionStateUtil.Set($"EditorSessionFloat_{key}", value);
 
     #endregion
-
 }

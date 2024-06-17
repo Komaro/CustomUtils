@@ -8,10 +8,10 @@ public class SystemWatcherService : IService {
     private Dictionary<SystemWatcherServiceOrder, FileSystemWatcher> _fileSystemWatcherDic = new(new SystemWatcherServiceOrder());
 
     private bool _isServing;
-    
-    public bool IsServing() => _isServing;
 
-    public void Start() {
+    bool IService.IsServing() => _isServing;
+
+    void IService.Start() {
         foreach (var watcher in _fileSystemWatcherDic.Values) {
             watcher.EnableRaisingEvents = true;
         }
@@ -19,7 +19,7 @@ public class SystemWatcherService : IService {
         _isServing = true;
     }
 
-    public void Stop() {
+    void IService.Stop() {
         foreach (var watcher in _fileSystemWatcherDic.Values) {
             watcher.EnableRaisingEvents = false;
         }
@@ -27,7 +27,7 @@ public class SystemWatcherService : IService {
         _isServing = false;
     }
 
-    public void Remove() => _fileSystemWatcherDic.SafeClear(watcher => watcher.Dispose());
+    void IService.Remove() => _fileSystemWatcherDic.SafeClear(watcher => watcher.Dispose());
 
     public SystemWatcherServiceOrder StartWatcher(SystemWatcherServiceOrder order) {
         if (order == null || order.Invalid()) {

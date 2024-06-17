@@ -13,20 +13,18 @@ public class TimeUpdateService : IService {
     private event UpdateHandler OnUpdateHandler;
     public SafeDelegate<UpdateHandler> OnUpdate;
 
-    public void Init() {
-        _updateStream = Observable.EveryEndOfFrame();
-    }
+    void IService.Init() => _updateStream = Observable.EveryEndOfFrame();
 
-    public void Start() {
+    void IService.Start() {
         _updateDisposable = _updateStream.Subscribe(_ => {
             OnUpdateHandler?.Invoke(Time.deltaTime);
         });
     }
 
-    public void Stop() {
+    void IService.Stop() {
         _updateDisposable.Dispose();
         _updateDisposable = null;
     }
 
-    public void Remove() => OnUpdate.Clear();
+    void IService.Remove() => OnUpdate.Clear();
 }

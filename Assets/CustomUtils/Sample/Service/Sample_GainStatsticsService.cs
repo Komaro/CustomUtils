@@ -29,15 +29,15 @@ public class Sample_GainStatsticsService : IService {
     public delegate void UpdateTickHandler(float tick);
     public SafeDelegate<UpdateTickHandler> OnUpdateTick;
 
-    public bool IsServing() => _isServing;
+    bool IService.IsServing() => _isServing;
 
-    public void Init() {
+    void IService.Init() {
         _addGainStream = _gainHistoryDic.ObserveAdd();
         _replaceGainStream = _gainHistoryDic.ObserveReplace();
         _resetGainStream = _gainHistoryDic.ObserveReset();
     }
 
-    public void Start() {
+    void IService.Start() {
         _disposableList.Add(_addGainStream.Subscribe(addEvent => OnUpdateGain.handler?.Invoke(addEvent.Key.type, addEvent.Key.id, addEvent.Value)));
         _disposableList.Add(_replaceGainStream.Subscribe(replaceEvent => OnUpdateGain.handler?.Invoke(replaceEvent.Key.type, replaceEvent.Key.id, replaceEvent.NewValue)));
         _disposableList.Add(_resetGainStream.Subscribe(_ => OnResetGain.handler?.Invoke()));
@@ -62,7 +62,7 @@ public class Sample_GainStatsticsService : IService {
         _isServing = true;
     }
 
-    public void Stop() {
+    void IService.Stop() {
         if (_disposableList != null) {
             _disposableList.ForEach(x => x.Dispose());
             _disposableList.Clear();

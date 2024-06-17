@@ -10,6 +10,7 @@ public interface IResourceProvider {
     bool Valid();
     void Init();
     void Load();
+    void AsyncLoad();
     void Unload(Dictionary<string, Object> cacheResource);
     Object Get(string name);
     string GetPath(string name);
@@ -25,10 +26,10 @@ public class ResourceService : IService {
 
     private bool _isServing;
     private bool _isActiveSubProvider;
-    
-    public bool IsServing() => _isServing;
 
-    public void Init() {
+    bool IService.IsServing() => _isServing;
+
+    void IService.Init() {
         try {
             var providerTypeList = ReflectionManager.GetInterfaceTypes<IResourceProvider>().ToList();
             _isActiveSubProvider = ReflectionManager.GetAttribute<ResourceSubProviderAttribute>().Any();
@@ -67,7 +68,7 @@ public class ResourceService : IService {
         return nullProvider;
     }
 
-    public void Start() {
+    void IService.Start() {
         if (_isActiveSubProvider && _subProvider.IsLoaded() == false) {
             _subProvider.Load();
         }
@@ -79,13 +80,9 @@ public class ResourceService : IService {
         _isServing = true;
     }
 
-    public void Stop() { }
+    void IService.Stop() { }
 
-    public void Refresh() {
-        
-    }
-
-    public void Remove() {
+    void IService.Remove() {
         if (_isActiveSubProvider) {
             _subProvider.Unload(_cacheResourceDic);
         }

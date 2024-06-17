@@ -1,9 +1,9 @@
 ﻿public class ObjectPoolService : IService {
 
-    public void Start() {
+    void IService.Start() {
     }
 
-    public void Stop() {
+    void IService.Stop() {
         
     }
 }

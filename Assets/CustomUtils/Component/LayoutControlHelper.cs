@@ -365,8 +365,8 @@ public class LayoutControlHelper : MonoBehaviour, ILayoutRecursive {
     private void DataAction(object info, LayoutItem item) {
         try {
             if (item != null) {
-                item?.SetActive(true);
-                item?.SetData(info);
+                item.SetActive(true);
+                item.SetData(info);
             }
         } catch (Exception e) {
             Logger.TraceError(e);
@@ -375,7 +375,7 @@ public class LayoutControlHelper : MonoBehaviour, ILayoutRecursive {
 
     private void ClearAction(LayoutItem item) {
         try {
-            item?.SetActive(false);
+            item.SetActive(false);
         } catch (Exception e) {
             Logger.TraceError(e);
         }

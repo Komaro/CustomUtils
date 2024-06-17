@@ -15,8 +15,8 @@ public class Sample_GraphicQualityService : IService {
     private List<IDisposable> _disposableList = new();
 
     private Dictionary<SAMPLE_GRAPHIC_QUALITY_TYPE, int> _qualityDic = new();
-    
-    public void Init() {
+
+    void IService.Init() {
         // Input Local Save Value
         SetGraphicQualityType(SAMPLE_GRAPHIC_QUALITY_TYPE.HIGH); 
         SetMaxFrameType(SAMPLE_MAX_FRAME_TYPE.FRAME_60);
@@ -30,7 +30,7 @@ public class Sample_GraphicQualityService : IService {
         });
     }
 
-    public void Start() {
+    void IService.Start() {
         SwitchGraphicQuality(_graphicQualityType.Value);
         _disposableList.Add(_graphicQualityType.Subscribe(SwitchGraphicQuality));
         
@@ -41,7 +41,7 @@ public class Sample_GraphicQualityService : IService {
         _disposableList.Add(_renderInterval.Subscribe(SwitchRenderInterval));
     }
 
-    public void Stop() {
+    void IService.Stop() {
         OnDemandRendering.renderFrameInterval = 1;
         _disposableList.ForEach(x => x.Dispose());
         _disposableList.Clear();

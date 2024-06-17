@@ -46,7 +46,7 @@ public class EditorHttpWebServerService : EditorService {
     [DidReloadScripts(99999)]
     private static void CacheRefresh() {
         if (string.IsNullOrEmpty(_configPath)) {
-            _configPath = $"{Constants.Editor.COMMON_CONFIG_FOLDER}/{CONFIG_NAME}";
+            _configPath = $"{Constants.Path.COMMON_CONFIG_FOLDER}/{CONFIG_NAME}";
         }
 
         _config = null;
@@ -89,7 +89,7 @@ public class EditorHttpWebServerService : EditorService {
         }
 
         using (new GUILayout.HorizontalScope()) {
-            GUILayout.Label("URL", Constants.Editor.FIELD_TITLE_STYLE, GUILayout.Width(100));
+            GUILayout.Label("URL", Constants.Editor.TITLE_STYLE, GUILayout.Width(100));
             _url = GUILayout.TextField(_url);
         }
         
@@ -162,7 +162,7 @@ public class EditorHttpWebServerService : EditorService {
             
             using (new GUILayout.VerticalScope("box", GUILayout.ExpandHeight(false))) {
                 GUILayout.Label("=== Web Server Run Info ===", Constants.Editor.DIVIDE_STYLE);
-                GUILayout.Label(_httpServer == null ? "미생성" : _httpServer.IsRunning() ? "가동중" : "정지", Constants.Editor.FIELD_TITLE_STYLE);
+                GUILayout.Label(_httpServer == null ? "미생성" : _httpServer.IsRunning() ? "가동중" : "정지", Constants.Editor.TITLE_STYLE);
                 if (_httpServer != null) {
                     EditorCommon.DrawLabelLinkButton("대상 폴더 : ", _httpServer.GetTargetDirectory(), EditorUtility.RevealInFinder);
                     EditorCommon.DrawLabelSelectableLabel("URL : ", _httpServer.GetURL());
@@ -172,7 +172,7 @@ public class EditorHttpWebServerService : EditorService {
                     GUILayout.Label("가동 중인 모듈", Constants.Editor.DIVIDE_STYLE);
                     _runningServeModuleScrollPosition = EditorGUILayout.BeginScrollView(_runningServeModuleScrollPosition, false, false, GUILayout.MinHeight(50f), GUILayout.MaxHeight(100f));
                     foreach (var type in _httpServer.GetServeModuleTypeList()) {
-                        GUILayout.Label(type.Name, Constants.Editor.FIELD_TITLE_STYLE);
+                        GUILayout.Label(type.Name, Constants.Editor.TITLE_STYLE);
                     }
                     EditorGUILayout.EndScrollView();
 

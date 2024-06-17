@@ -60,11 +60,8 @@ public static class ResourceGenerator {
             if (Directory.Exists(generatePath) == false) {
                 Directory.CreateDirectory(generatePath);
             }
-
-            var manifest = BuildPipeline.BuildAssetBundles(generatePath, options, target);
-            if (manifest != null) {
-                return manifest;
-            }
+            
+            return BuildPipeline.BuildAssetBundles(generatePath, options, target);
         } catch (Exception e) {
             Logger.TraceError(e);
         }

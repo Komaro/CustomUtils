@@ -2,13 +2,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 
 public static class CommonExtension {
 
-    private static StringBuilder _stringBuilder = new();
+    private static readonly StringBuilder _stringBuilder = new();
 
-    public static string ToStringAllFields(this object ob) {
+    public static string ToStringAllFields(this object ob, BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.Public) {
         if (_stringBuilder == null) {
             return string.Empty;
         }
@@ -16,9 +17,16 @@ public static class CommonExtension {
         var type = ob.GetType();
         _stringBuilder.Clear();
         _stringBuilder.AppendLine(type.Name);
-        
-        foreach (var info in type.GetFields().Select(x => (x.Name, x.GetValue(ob)))) {
-            _stringBuilder.AppendLine($"{info.Item1} || {info.Item2}");
+        foreach (var info in type.GetFields(bindingFlags)) {
+            var (name, field) = (info.Name, info.GetValue(ob));
+            var fieldType = field.GetType();
+            if (fieldType.IsArray && field is Array array) {
+                _stringBuilder.AppendLine($"{name} || {array.Cast<object>()?.ToStringCollection(", ")}");
+            } else if (fieldType.IsGenericCollectionType() && field is ICollection collection) {
+                _stringBuilder.AppendLine($"{name} || {collection.Cast<object>().ToStringCollection(", ")}");
+            } else {
+                _stringBuilder.AppendLine($"{name} || {field}");
+            }
         }
 
         return _stringBuilder.ToString();

@@ -19,7 +19,7 @@ public class EditorAssetBundleTesterDrawer : EditorResourceDrawerAutoConfig<Asse
     private Vector2 _manifestScrollViewPosition;
 
     protected override string CONFIG_NAME => $"{nameof(AssetBundleTesterConfig)}.json";
-    protected override string CONFIG_PATH => $"{Constants.Editor.COMMON_CONFIG_FOLDER}/{CONFIG_NAME}";
+    protected override string CONFIG_PATH => $"{Constants.Path.COMMON_CONFIG_FOLDER}/{CONFIG_NAME}";
 
     public override void Destroy() {
         _bindAssetBundleManifest = null;

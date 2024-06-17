@@ -29,7 +29,11 @@ public class ResourcesProvider : IResourceProvider {
 
         _isLoaded = true;
     }
-    
+
+    public void AsyncLoad() {
+        throw new System.NotImplementedException();
+    }
+
     public void Unload(Dictionary<string, Object> cacheResource) => cacheResource.SafeClear(Resources.UnloadAsset);
     public Object Get(string name) => _resourcePathDic.TryGetValue(name.ToUpper(), out var path) ? Resources.Load(path) : null;
     public string GetPath(string name) => _resourcePathDic.TryGetValue(name.ToUpper(), out var path) ? path : string.Empty;

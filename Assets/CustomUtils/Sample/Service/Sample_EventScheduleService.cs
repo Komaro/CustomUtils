@@ -43,10 +43,10 @@ public class Sample_EventScheduleService : IService {
     private List<Sample_EventScheduler> _eventSchedulerList = new();
 
     private List<Sample_EventInfo> _sampleEventInfoList = new();
-    
-    public bool IsServing() => _isServing;
 
-    public void Init() {
+    bool IService.IsServing() => _isServing;
+
+    void IService.Init() {
         if (_rootObject != null) {
             if (_coroutineObject != null)
                 _coroutineObject.Stop();
@@ -66,7 +66,9 @@ public class Sample_EventScheduleService : IService {
         }
     }
 
-    public void Start() {
+    void IService.Start() => Start();
+
+    private void Start() {
         foreach (var info in _sampleEventInfoList) {
             if (info == null)
                 continue;
@@ -82,7 +84,7 @@ public class Sample_EventScheduleService : IService {
         _isServing = true;
     }
 
-    public void Stop() {                
+    void IService.Stop() {                
         _coroutineObject?.Stop();
         _eventSchedulerList.SafeClear(x => x.Stop());
         
@@ -94,7 +96,7 @@ public class Sample_EventScheduleService : IService {
         _isServing = false;
     }
 
-    public void Refresh() {
+    void IService.Refresh() {
         foreach (var info in _sampleEventInfoList) {
             if (_eventSchedulerList.TryFind(x => x.IsMatch(info), out var scheduler)) {
                 scheduler.Refresh(info);
@@ -195,12 +197,12 @@ public class Sample_EventScheduleService : IService {
     }
     
     public void ResetEventEndTime() {
-        foreach (var pair in _cacheResetEndTimeDic)
-            if (_eventSchedulerList.TryFind(x => x.IsMatch(pair.Key), out var scheduler))
-                if (pair.Value != DateTime.MinValue) {
-                    scheduler.GetInfo().shopEndDate = pair.Value;
-                    scheduler.Refresh();
-                }
+        foreach (var pair in _cacheResetEndTimeDic) {
+            if (_eventSchedulerList.TryFind(x => x.IsMatch(pair.Key), out var scheduler) && pair.Value != DateTime.MinValue) {
+                scheduler.GetInfo().shopEndDate = pair.Value;
+                scheduler.Refresh();
+            }
+        }
 
         _cacheResetEndTimeDic.Clear();
         Start();

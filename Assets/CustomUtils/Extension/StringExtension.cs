@@ -1,10 +1,11 @@
 using System;
 using System.Globalization;
 using System.Text;
-using System.Text.RegularExpressions;
+using UnityEngine;
 
 public static class StringExtension {
-    
+
+    private static readonly StringBuilder _builder = new();
     private static readonly TextInfo _textInfo = new CultureInfo("en-US", false).TextInfo;
 
     public static bool TryGetBetween(this string content, string startMatch, string endMatch, out string betweenText, StringComparison comp = StringComparison.Ordinal) {
@@ -50,9 +51,8 @@ public static class StringExtension {
     }
 
     public static bool WrappedIn(this string content, string match, StringComparison comp = StringComparison.Ordinal) => content.StartsWith(match, comp) && content.EndsWith(match, comp);
-    public static string GetTitleCase(this string strText) => _textInfo?.ToTitleCase(strText);
-    public static string GetForceTitleCase(this string strText) => GetTitleCase(strText.ToLower());
-    public static string GetTitleCase<T>(this T type) where T : struct, Enum => _textInfo?.ToTitleCase(type.ToString());
+    public static string GetTitleCase(this string content) => _textInfo?.ToTitleCase(content);
+    public static string GetForceTitleCase(this string content) => GetTitleCase(content.ToLower());
     public static bool EqualsFast(this string content, string comparedString) => content.Equals(comparedString, StringComparison.Ordinal);
     
     public static byte[] GetBytes(this string content, ENCODING_FORMAT format = ENCODING_FORMAT.UTF_8) => format switch {
@@ -63,6 +63,14 @@ public static class StringExtension {
     };
 
     public static byte[] GetRawBytes(this string content) => Convert.FromBase64String(content);
+
+    public static string GetColorString(this string content, Color color) {
+        if (string.IsNullOrEmpty(content) == false) {
+            return $"<color=#{color.GetColorCode()}>{content}</color>";
+        }
+        
+        return content;
+    }
 }
 
 public enum ENCODING_FORMAT {

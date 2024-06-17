@@ -316,8 +316,8 @@ public class EditorBuildService : EditorWindow {
         DrawSpace(3);
 
         using(new EditorGUILayout.HorizontalScope()) {
-            EditorGUILayout.TextField("DefineSymbols", Constants.Editor.BOLD_STYLE, GUILayout.Width(150));
-            EditorGUILayout.TextField(_defineSymbols, Constants.Editor.BOLD_STYLE);
+            EditorGUILayout.TextField("DefineSymbols", Constants.Editor.BOLD_LABEL, GUILayout.Width(150));
+            EditorGUILayout.TextField(_defineSymbols, Constants.Editor.BOLD_LABEL);
         }
 	}
     

@@ -150,7 +150,8 @@ public abstract class EditorResourceDrawer {
 }
 
 public abstract class EditorResourceDrawerAutoConfig<TConfig, TNullConfig> : EditorResourceDrawer
-    where TConfig : JsonAutoConfig, new() where TNullConfig : TConfig, new() {
+    where TConfig : JsonAutoConfig, new() 
+    where TNullConfig : TConfig, new() {
 
     protected TConfig config;
     protected SystemWatcherServiceOrder watcherOrder;
@@ -158,7 +159,7 @@ public abstract class EditorResourceDrawerAutoConfig<TConfig, TNullConfig> : Edi
     protected abstract string CONFIG_NAME { get; }
     protected abstract string CONFIG_PATH { get; }
 
-    public EditorResourceDrawerAutoConfig() => watcherOrder = CreateWatcherOrder();
+    protected EditorResourceDrawerAutoConfig() => watcherOrder = CreateWatcherOrder();
 
     public override void Close() {
         if (config?.IsNull() == false) {
@@ -193,7 +194,7 @@ public abstract class EditorResourceDrawerAutoConfig<TConfig, TNullConfig> : Edi
         }
     }
 
-    protected SystemWatcherServiceOrder CreateWatcherOrder() => new(Constants.Editor.COMMON_CONFIG_FOLDER, CONFIG_NAME, OnSystemWatcherEventHandler);
+    protected SystemWatcherServiceOrder CreateWatcherOrder() => new(Constants.Path.COMMON_CONFIG_FOLDER, CONFIG_NAME, OnSystemWatcherEventHandler);
     
     protected virtual void OnSystemWatcherEventHandler(object ob, FileSystemEventArgs args) {
         if (config == null) {

@@ -5,9 +5,9 @@ public class TimeCacheService : IService {
 
     private readonly Dictionary<Enum, DateTime> _requestTimeTableDic = new();
 
-    public void Init() => _requestTimeTableDic.Clear();
-    public void Start() { }
-    public void Stop() => _requestTimeTableDic.Clear();
+    void IService.Init() => _requestTimeTableDic.Clear();
+    void IService.Start() { }
+    void IService.Stop() => _requestTimeTableDic.Clear();
     
     public DateTime GetRequestTime(Enum type) {
         if (_requestTimeTableDic.ContainsKey(type)) {

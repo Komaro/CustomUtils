@@ -10,8 +10,8 @@ public class StopWatchService : IService {
     private Dictionary<string, double> _countDic = new();
     private Dictionary<string, double> _averageDic = new();
 
-    public void Start() => _watchDic.Clear();
-    public void Stop() => _watchDic.Clear();
+    void IService.Start() => _watchDic.Clear();
+    void IService.Stop() => _watchDic.Clear();
 
     public void StartWatch([CallerMemberName] string caller = null) {
         if (_watchDic.TryGetValue(caller, out var watch)) {

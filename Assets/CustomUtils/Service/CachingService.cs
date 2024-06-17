@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using UniRx;
 using UnityEngine;
 
 public class CachingService : IService {
-
     
-    public void Start() { }
-    public void Stop() { }
+    void IService.Start() { }
+    void IService.Stop() { }
 
     public Cache Add(string directoryName) {
         try {

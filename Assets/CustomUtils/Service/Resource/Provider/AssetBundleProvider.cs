@@ -21,6 +21,15 @@ public class AssetBundleProvider : IResourceProvider {
 
     public void Load() {
         // TODO. 에셋번들 로컬 다운로드 기능 추가 후 작업 시작.
+        // TODO. AssetBundleManifest 획득
+        // TODO. 획득한 AssetBundleManifest를 기반으로 AssetBundle 로드
+        
+        // var request = AssetBundle.LoadFromFileAsync("path");
+        // var manifest = request.assetBundle.LoadAsset<AssetBundleManifest>("name");
+    }
+
+    public void AsyncLoad() {
+        throw new System.NotImplementedException();
     }
 
     public void Unload(Dictionary<string, Object> cacheResource) => _cacheAssetBundleDic.SafeClear(x => x.Unload(true));

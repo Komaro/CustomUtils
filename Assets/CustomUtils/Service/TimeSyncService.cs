@@ -12,8 +12,8 @@ public class TimeSyncService : IService {
     
     private DateTime _utcSyncTime;
 
-    public void Start() => Sync();
-    public void Stop() { }
+    void IService.Start() => Sync();
+    void IService.Stop() { }
 
     public void Sync() {
         var ntpData = new byte[48];

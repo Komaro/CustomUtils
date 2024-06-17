@@ -69,14 +69,14 @@ public class ScenarioService : IService {
     
     private Task _currentTask;
 
-    public bool IsServing() => _isServing;
+    internal bool IsServing() => _isServing;
 
-    public void Start() {
+    void IService.Start() {
         _actorList.Clear();
         _isServing = true;
     }
 
-    public void Stop() { }
+    void IService.Stop() { }
 
     public void InitScenario() {
         _bodyText = string.Empty;

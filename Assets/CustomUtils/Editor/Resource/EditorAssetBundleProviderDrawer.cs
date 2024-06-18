@@ -33,7 +33,7 @@ public class EditorAssetBundleProviderDrawer : EditorResourceDrawerAutoConfig<As
     protected override string CONFIG_NAME => $"{nameof(AssetBundleProviderConfig)}{Constants.Extension.JSON}";
     protected override string CONFIG_PATH => $"{Constants.Path.COMMON_CONFIG_FOLDER}/{CONFIG_NAME}";
 
-    public EditorAssetBundleProviderDrawer() : base() => BUILD_OPTION_LIST = EnumUtil.GetValues<BuildAssetBundleOptions>(true, true).ToList();
+    public EditorAssetBundleProviderDrawer() => BUILD_OPTION_LIST = EnumUtil.GetValues<BuildAssetBundleOptions>(true, true).ToList();
 
     public sealed override void CacheRefresh() {
         Service.GetService<SystemWatcherService>().StartWatcher(watcherOrder);
@@ -88,6 +88,10 @@ public class EditorAssetBundleProviderDrawer : EditorResourceDrawerAutoConfig<As
                 if (IsActiveAssetBundleEncrypt()) {
                     EditorGUILayout.HelpBox("AssetBundle 암호화 옵션은 하나만 선택이 가능합니다. 다른 옵션을 활성화 하기 위해선 현재 활성화 되어 있는 옵션을 비활성화 해야 합니다.", MessageType.Info);
                 }
+
+                if (IsActiveEncrypt()) {
+                    EditorGUILayout.HelpBox("AssetBundle 암호화가 활성화 되었습니다. Manifest CRC 체크가 불가능합니다.", MessageType.Warning);
+                }
             }
             
             if (config.isAssetBundleSelectableEncrypted) {
@@ -100,9 +104,7 @@ public class EditorAssetBundleProviderDrawer : EditorResourceDrawerAutoConfig<As
                 }
                 
                 using (new GUILayout.VerticalScope("box")) {
-                    
                     GUILayout.Space(5f);
-                    
                     _selectAssetBundleScrollViewPosition = GUILayout.BeginScrollView(_selectAssetBundleScrollViewPosition, false, false, GUILayout.MinHeight(100f));
                     for (var i = 0; i < _allAssetBundleList.Count; i += 2) {
                         using (new GUILayout.HorizontalScope()) {
@@ -188,13 +190,15 @@ public class EditorAssetBundleProviderDrawer : EditorResourceDrawerAutoConfig<As
                         }
                     }
                 }
+                
+                GUILayout.Space(5f);
 
                 using (new GUILayout.HorizontalScope()) {
                     GUILayout.Label("메모", Constants.Editor.TITLE_STYLE, GUILayout.Height(100f), GUILayout.Width(50f));
                     _buildInfoMemo = EditorGUILayout.TextArea(_buildInfoMemo, GUILayout.Height(100f), GUILayout.ExpandWidth(true));
                 }
             }
-            
+
             if (config.GetInfoCount() > 0) {
                 using (new GUILayout.VerticalScope("box")) {
                     var info = config[_buildInfoCursor];
@@ -223,7 +227,7 @@ public class EditorAssetBundleProviderDrawer : EditorResourceDrawerAutoConfig<As
 
                     GUILayout.Space(5f);
                     
-                    _buildInfoMemoScrollViewPosition = GUILayout.BeginScrollView(_buildInfoMemoScrollViewPosition, false, false, GUILayout.Height(120f));
+                    _buildInfoMemoScrollViewPosition = GUILayout.BeginScrollView(_buildInfoMemoScrollViewPosition, false, false, GUILayout.Height(250f));
                     EditorGUILayout.TextArea(info.memo, GUILayout.ExpandHeight(true), GUILayout.ExpandWidth(true));
                     GUILayout.EndScrollView();
                 }
@@ -288,6 +292,13 @@ public class EditorAssetBundleProviderDrawer : EditorResourceDrawerAutoConfig<As
                 foreach (var manifestPath in Directory.GetFiles(buildPath).Where(path => Path.GetExtension(path) == Constants.Extension.MANIFEST)) {
                     File.Delete(manifestPath);
                 }
+            }
+            
+            BuildPipeline.GetCRCForAssetBundle(Path.Combine(buildPath, _selectBuildTarget.ToString()), out var crc);
+            Logger.TraceLog($"{_selectBuildTarget} || {crc}");
+            foreach (var name in manifest.GetAllAssetBundles()) {
+                BuildPipeline.GetCRCForAssetBundle(Path.Combine(buildPath, name), out crc);
+                Logger.TraceLog($"{name} || {crc}");
             }
             
             return manifest;

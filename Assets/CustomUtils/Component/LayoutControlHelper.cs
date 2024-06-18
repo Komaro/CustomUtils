@@ -501,7 +501,7 @@ public class LayoutControlHelper : MonoBehaviour, ILayoutRecursive {
                         _ => 0f,
                     };
 
-                    return 1 - Mathf.Lerp(0f, 1f, gridItemSize * (index / gridLayout.constraintCount) / layoutSize);
+                    return 1 - Mathf.Lerp(0f, 1f, gridItemSize * (index / (float)gridLayout.constraintCount) / layoutSize);
                 case HorizontalLayoutGroup horizontalLayout: // Not Test
                     return 1 - Mathf.Lerp(0f, 1f, ((itemSize.x + horizontalLayout.spacing) * index) / (p_layoutRect.sizeDelta.x - collectionOffset));
                 case VerticalLayoutGroup verticalLayout: // Not Test

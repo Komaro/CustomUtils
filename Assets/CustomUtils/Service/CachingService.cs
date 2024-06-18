@@ -38,6 +38,7 @@ public class CachingService : IService {
     }
 
     public void Remove(Cache cache) {
+        AssetBundle.UnloadAllAssetBundles(false);
         if (cache.valid) {
             Logger.TraceLog($"Remove {nameof(Caching)} path || {cache.path}", Color.red);
             Caching.RemoveCache(cache);
@@ -79,6 +80,7 @@ public class CachingService : IService {
     }
 
     public Cache Set(Cache cache) {
+        AssetBundle.UnloadAllAssetBundles(false);
         if (cache.valid) {
             return Caching.currentCacheForWriting = cache;
         }
@@ -87,10 +89,13 @@ public class CachingService : IService {
         return Caching.defaultCache;
     }
     
+    public void ClearAll() => GetAllCacheList().ForEach(cache => Clear(cache));
+
     public bool Clear(string directoryName) => Clear(Get(directoryName));
 
     public bool Clear(Cache cache) {
         if (cache.valid) {
+            AssetBundle.UnloadAllAssetBundles(false);
             Logger.TraceLog($"Clear {nameof(Caching)} path || {cache.path}", Color.red);
             return cache.ClearCache();
         }

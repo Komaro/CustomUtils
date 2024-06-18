@@ -46,11 +46,11 @@ public class EditorCachingService : EditorService {
                         removeCache = cache;
                     }
                     
-                    if (GUILayout.Button("Open", GUILayout.MaxWidth(45), GUILayout.MinWidth(45))) {
+                    if (GUILayout.Button("열기", GUILayout.MaxWidth(45), GUILayout.MinWidth(45))) {
                         EditorUtility.RevealInFinder(cache.path);
                     }
 
-                    if (GUILayout.Button("Clear", GUILayout.MaxWidth(45), GUILayout.MinWidth(45))) {
+                    if (GUILayout.Button("비우기", GUILayout.MaxWidth(45), GUILayout.MinWidth(45))) {
                         _service.Clear(cache);
                     }
                     
@@ -73,6 +73,11 @@ public class EditorCachingService : EditorService {
         if (GUILayout.Button("Caching 추가", GUILayout.Height(50)) && string.IsNullOrEmpty(_createDirectoryName) == false) {
             _service.Add(_createDirectoryName);
             CacheRefresh();
+        }
+        
+        // TODO. Caching 전체 비우기 기능 추가
+        if (GUILayout.Button($"{nameof(Caching)} 전체 비우기")) {
+            _service.ClearAll();
         }
     }
 }

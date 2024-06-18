@@ -1,9 +1,13 @@
 ﻿using System;
+using System.ComponentModel;
 using System.IO;
 using System.Net;
+using System.Net.Http;
+using System.Runtime.Serialization.Formatters.Binary;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Networking;
+using Result = UnityEngine.Networking.UnityWebRequest.Result;
 
 [EditorResourceDrawer(RESOURCE_SERVICE_MENU_TYPE.Test, typeof(AssetBundleProvider))]
 public class EditorAssetBundleTesterDrawer : EditorResourceDrawerAutoConfig<AssetBundleTesterConfig, AssetBundleTesterConfig.NullConfig> {
@@ -13,7 +17,7 @@ public class EditorAssetBundleTesterDrawer : EditorResourceDrawerAutoConfig<Asse
     private bool _isShowEncryptKey;
     private string _plainEncryptKey;
 
-    private static AssetBundleManifest _bindAssetBundleManifest;
+    private static AssetBundleManifestInfo _bindInfo;
     
     private Vector2 _windowScrollViewPosition;
     private Vector2 _manifestScrollViewPosition;
@@ -22,7 +26,6 @@ public class EditorAssetBundleTesterDrawer : EditorResourceDrawerAutoConfig<Asse
     protected override string CONFIG_PATH => $"{Constants.Path.COMMON_CONFIG_FOLDER}/{CONFIG_NAME}";
 
     public override void Destroy() {
-        _bindAssetBundleManifest = null;
         base.Destroy();
     }
 
@@ -47,8 +50,8 @@ public class EditorAssetBundleTesterDrawer : EditorResourceDrawerAutoConfig<Asse
         base.Draw();
         if (config != null) {
             _windowScrollViewPosition = EditorGUILayout.BeginScrollView(_windowScrollViewPosition, false, false);
+            GUILayout.Label("HTTP 서버 다운로드 설정", Constants.Editor.AREA_TITLE_STYLE);
             using (new GUILayout.VerticalScope("box")) {
-                GUILayout.Label("HTTP 서버 다운로드 테스트", Constants.Editor.AREA_TITLE_STYLE);
                 config.downloadDirectory = EditorCommon.DrawFolderSelector("다운로드 폴더 선택", config.downloadDirectory);
                 config.url = EditorCommon.DrawLabelTextField("URL", config.url, 120f);
                 EditorCommon.DrawButtonPasswordField("암호화 키 저장", ref _plainEncryptKey, ref _isShowEncryptKey, plainEncryptKey => config.cipherEncryptKey = EncryptUtil.EncryptDES(plainEncryptKey), 120f);
@@ -66,29 +69,57 @@ public class EditorAssetBundleTesterDrawer : EditorResourceDrawerAutoConfig<Asse
                 if (config.isActiveCaching && _service.IsReady()) {
                     EditorCommon.DrawLabelTextField("현재 활성화된 Caching 폴더", _service.Get().path, 170f);
                 }
+            }
+            
+            EditorCommon.DrawSeparator();
+            
+            GUILayout.Label($"{nameof(AssetBundleManifest)} 다운로드 테스트", Constants.Editor.AREA_TITLE_STYLE);
+            using (new GUILayout.VerticalScope("box")) {
+                // TODO. AssetBundleManifest 선별 처리 UI
+                using (new GUILayout.HorizontalScope()) {
+                    EditorCommon.DrawLabelToggle(ref config.isActiveCustomManifestPath, "임의의 경로 입력 활성화", 150f);
+                    EditorCommon.DrawLabelToggle(ref config.isActiveLocalSave, "로컬 저장 활성화", 150f);
+                }
+                
+                if (config.isActiveCustomManifestPath) {
+                    EditorCommon.DrawLabelTextField("임의 경로", ref config.customManifestPath);
+                } else {
+                    EditorCommon.DrawEnumPopup($"{nameof(BuildTarget)}", ref config.selectBuildTarget);
+                }
+                
+                EditorCommon.DrawLabelTextField("AssetBundleManifest 다운로드 경로", config.GetManifestPath(), 210f);
                 
                 GUILayout.Space(5f);
                 
-            }
-            
-            using (new GUILayout.VerticalScope("box")) {
-                // TODO. AssetBundleManifest 선별 처리 UI
                 if (GUILayout.Button("Manifest 다운로드 테스트")) {
                     AssetBundle.UnloadAllAssetBundles(true);
-                    DownloadAssetBundleManifest($"{EditorUserBuildSettings.activeBuildTarget}/{EditorUserBuildSettings.activeBuildTarget}", manifest => {
-                        // TODO. 변경된 실제 파일 이름과 AssetBundleManifest 와 결합된 형태의 데이터를 바인딩 하도록 수정
-                        _bindAssetBundleManifest = manifest;
+                    DownloadAssetBundleManifest(config.GetManifestPath(), (_, manifest) => {
+                        _bindInfo ??= new AssetBundleManifestInfo();
+                        _bindInfo.manifest = manifest;
+                        _bindInfo.name = Path.GetFileName(config.GetManifestPath());
+                    });
+                }
+
+                if (GUILayout.Button("Manifest CRC 다운로드 테스트")) {
+                    AssetBundle.UnloadAllAssetBundles(true);
+                    DownloadAssetBundleManifest(config.GetManifestPath(), 4209180446, (_, manifest) => {
+                        if (manifest == null) {
+                            DownloadAssetBundleManifest(config.GetManifestPath());
+                        }
                     });
                 }
                 
                 // TODO. 현재 다운로드 된 AssetBundleManifest 의 리스트 출력
                 // TODO. 한 번에 여러 AssetBundleManifest 를 바인딩하고 출력하는 처리 추가
-                if (_bindAssetBundleManifest != null) {
-                    _manifestScrollViewPosition = EditorGUILayout.BeginScrollView(_manifestScrollViewPosition, false, false);
+                if (_bindInfo != null && _bindInfo.IsValid()) {
+                    _manifestScrollViewPosition = EditorGUILayout.BeginScrollView(_manifestScrollViewPosition, false, false, GUILayout.Height(150f));
                     using (new GUILayout.VerticalScope()) {
-                        foreach (var name in _bindAssetBundleManifest.GetAllAssetBundles()) {
+                        foreach (var name in _bindInfo.manifest.GetAllAssetBundles()) {
                             if (GUILayout.Button(name)) {
-                                // TODO. 에셋번들 개별 다운로드
+                                AssetBundle.UnloadAllAssetBundles(true);
+                                DownloadAssetBundle(Path.Combine(config.selectBuildTarget.ToString(), name), _bindInfo.manifest.GetAssetBundleHash(name), callback:(result, _) => {
+                                    Logger.TraceLog($"{name} || {result}", Color.cyan);
+                                });
                             }
                         }
                     }
@@ -101,30 +132,55 @@ public class EditorAssetBundleTesterDrawer : EditorResourceDrawerAutoConfig<Asse
                 // TODO. Toggle을 통한 구현이 가능
                 if (GUILayout.Button("AssetBundle 다운로드 테스트")) {
                     AssetBundle.UnloadAllAssetBundles(true);
-                    DownloadAssetBundleManifest($"{EditorUserBuildSettings.activeBuildTarget}/{EditorUserBuildSettings.activeBuildTarget}", manifest => {
-                        foreach (var assetBundleName in manifest.GetAllAssetBundles()) {
+                    if (_bindInfo != null && _bindInfo.IsValid()) {
+                        foreach (var assetBundleName in _bindInfo.manifest.GetAllAssetBundles()) {
                             var assetBundlePath = $"{EditorUserBuildSettings.activeBuildTarget}/{assetBundleName}";
-                            DownloadAssetBundle(assetBundlePath, manifest.GetAssetBundleHash(assetBundleName), assetBundle => {
-                                Logger.TraceError($"{assetBundle.name} || {manifest.GetAssetBundleHash(assetBundle.name)}");
+                            DownloadAssetBundle(assetBundlePath, _bindInfo.manifest.GetAssetBundleHash(assetBundleName), callback:(_, assetBundle) => {
+                                // Caching.MarkAsUsed(Path.Combine(_service.Get().path, assetBundle.name), _bindInfo.manifest.GetAssetBundleHash(assetBundleName));
                             });
                         }
-                    });
+                    }
                 }
             }
-
             
             EditorGUILayout.EndScrollView();
         } else {
             EditorGUILayout.HelpBox($"{nameof(config)} 파일을 찾을 수 없거나 생성할 수 없습니다.", MessageType.Error);
         }
     }
-    
-    private void DownloadAssetBundleManifest(string name, Action<AssetBundleManifest> callback = null) {
-        var request = UnityWebRequest.Get(Path.Combine(config.url, name));
-        Logger.TraceLog($"Request || {request.url}", Color.cyan);
+
+    private void DownloadAssetBundleManifest(string name, uint crc, Action<Result, AssetBundleManifest> callback = null) {
+        var request = UnityWebRequestAssetBundle.GetAssetBundle(Path.Combine(config.url, name), crc);
         request.SendWebRequest().completed += _ => {
-            if (request.result != UnityWebRequest.Result.Success) {
+            if (request.responseCode != (long) HttpStatusCode.OK) {
+                Logger.TraceError($"Already ResponseCode || {request.responseCode}");
+                return;
+            }
+            
+            if (request.result != Result.Success) {
                 Logger.TraceErrorExpensive(request.error);
+                Logger.TraceError("When the AssetBundleManifest is encrypted, CRC checksum verification cannot be applied.");
+                callback?.Invoke(request.result, null);
+            } else {
+                var assetBundle = DownloadHandlerAssetBundle.GetContent(request);
+                if (assetBundle != null && assetBundle.TryGetManifest(out var manifest)) {
+                    if (config.isActiveLocalSave) {
+                        File.WriteAllBytes(config.GetManifestDownloadPath(), request.downloadHandler.data);
+                    }
+                    
+                    assetBundle.Unload(false);
+                    callback?.Invoke(request.result, manifest);
+                }
+            }
+        };
+    }
+    
+    private void DownloadAssetBundleManifest(string name, Action<Result, AssetBundleManifest> callback = null) {
+        var request = UnityWebRequest.Get(Path.Combine(config.url, name));
+        request.SendWebRequest().completed += _ => {
+            if (request.result != Result.Success) {
+                Logger.TraceErrorExpensive(request.error);
+                callback?.Invoke(request.result, null);
             } else {
                 if (request.responseCode != (long) HttpStatusCode.OK) {
                     Logger.TraceError($"Already ResponseCode || {request.responseCode}");
@@ -132,21 +188,14 @@ public class EditorAssetBundleTesterDrawer : EditorResourceDrawerAutoConfig<Asse
                 }
 
                 try {
-                    var assetBundle = AssetBundle.LoadFromMemory(request.downloadHandler.data);
-                    if (assetBundle == null) {
-                        assetBundle = AssetBundle.LoadFromMemory(EncryptUtil.DecryptAESBytes(request.downloadHandler.data, _plainEncryptKey));
-                    }
-
-                    if (assetBundle != null) {
-                        foreach (var assetBundleName in assetBundle.GetAllAssetNames()) {
-                            if (assetBundleName.Contains("manifest")) {
-                                var manifest = assetBundle.LoadAsset<AssetBundleManifest>(assetBundleName);
-                                if (manifest != null) {
-                                    callback?.Invoke(manifest);
-                                }
-                                break;
-                            }
+                    var assetBundle = AssetBundle.LoadFromMemory(request.downloadHandler.data) ?? AssetBundle.LoadFromMemory(EncryptUtil.DecryptAESBytes(request.downloadHandler.data, _plainEncryptKey));
+                    if (assetBundle != null && assetBundle.TryGetManifest(out var manifest)) {
+                        if (config.isActiveLocalSave) {
+                            File.WriteAllBytes(config.GetManifestDownloadPath(), request.downloadHandler.data);
                         }
+                        
+                        assetBundle.Unload(false);
+                        callback?.Invoke(request.result, manifest);
                     }
                 } catch (Exception ex) {
                     Logger.TraceError($"{nameof(AssetBundle)} Resource download was successful, but memory load failed. It appears to be either an incorrect format or a decryption failure. The issue might be related to the encryption key.\n\n{ex}");
@@ -155,21 +204,19 @@ public class EditorAssetBundleTesterDrawer : EditorResourceDrawerAutoConfig<Asse
         };
     }
     
-    private void DownloadAssetBundle(string name, Hash128 hash, Action<AssetBundle> callback = null) {
-        var request = UnityWebRequestAssetBundle.GetAssetBundle(Path.Combine(config.url, name), hash);
-        Logger.TraceLog($"Request || {request.url}", Color.cyan);
-        request.SendWebRequest().completed += operation => {
-            if (request.result != UnityWebRequest.Result.Success) {
+    // TODO. 에셋번들 로컬 다운로드를 구현하기 위해서는 hash 적용이 어려움, hash 적용 자체가 Caching 처리를 지원함
+
+    private void DownloadAssetBundle(string name, Hash128 hash, uint crc = 0, Action<Result, AssetBundle> callback = null) {
+        var request = UnityWebRequestAssetBundle.GetAssetBundle(Path.Combine(config.url, name), hash, crc);
+        request.SendWebRequest().completed += _ => {
+            if (request.result != Result.Success) {
                 Logger.TraceError(request.error);
+                callback?.Invoke(request.result, null);
             } else {
                 try {
-                    var assetBundle = DownloadHandlerAssetBundle.GetContent(request);
-                    if (assetBundle == null) {
-                        assetBundle = AssetBundle.LoadFromMemory(EncryptUtil.DecryptAESBytes(request.downloadHandler.data, _plainEncryptKey));
-                    }
-                    
+                    var assetBundle = DownloadHandlerAssetBundle.GetContent(request) ?? AssetBundle.LoadFromMemory(EncryptUtil.DecryptAESBytes(request.downloadHandler.data, _plainEncryptKey));
                     if (assetBundle != null) {
-                        callback?.Invoke(assetBundle);
+                        callback?.Invoke(request.result, assetBundle);
                     }
                 } catch (Exception ex) {
                     Logger.TraceLog(ex, Color.red);
@@ -188,5 +235,22 @@ public class AssetBundleTesterConfig : JsonAutoConfig {
     public string url;
     public string cipherEncryptKey;
 
+    public bool isActiveCustomManifestPath;
+    public bool isActiveLocalSave;
+    
+    public string customManifestPath;
+    public BuildTarget selectBuildTarget = EditorUserBuildSettings.activeBuildTarget;
+    
+    public string GetManifestDownloadPath() => $"{downloadDirectory}/{selectBuildTarget}";
+    public string GetManifestPath() => isActiveCustomManifestPath ? customManifestPath : $"{selectBuildTarget}/{selectBuildTarget}";
+    
     public override bool IsNull() => this is NullConfig;
+}
+
+public record AssetBundleManifestInfo {
+    
+    public AssetBundleManifest manifest;
+    public string name;
+    
+    public bool IsValid() => manifest != null;
 }

@@ -27,6 +27,14 @@ public static partial class EditorCommon {
             return GUILayout.TextField(text, Constants.Editor.TEXT_FIELD);
         }
     }
+    
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static string DrawLabelTextField(string label, ref string text, float labelWidth = 100f) {
+        using (new GUILayout.HorizontalScope()) {
+            GUILayout.Label(label, Constants.Editor.TITLE_STYLE, GUILayout.Width(labelWidth));
+            return text = GUILayout.TextField(text, Constants.Editor.TEXT_FIELD);
+        }
+    }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static string DrawButtonTextField(string buttonText, string text, Action<string> onClick = null, float buttonWidth = 150f) {
@@ -129,7 +137,20 @@ public static partial class EditorCommon {
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static T DrawEnumPopup<T>(string label, T selected, params GUILayoutOption[] options) where T : Enum => (T) EditorGUILayout.EnumPopup(label, selected, options);
+    public static T DrawEnumPopup<T>(string label, T selected, params GUILayoutOption[] options) where T : Enum {
+        using (new GUILayout.HorizontalScope()) {
+            GUILayout.Label(label, Constants.Editor.TITLE_STYLE, GUILayout.ExpandWidth(false));
+            return (T) EditorGUILayout.EnumPopup(selected, options);
+        }
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static T DrawEnumPopup<T>(string label, ref T selected, params GUILayoutOption[] options) where T : Enum {
+        using (new GUILayout.HorizontalScope()) {
+            GUILayout.Label(label, Constants.Editor.TITLE_STYLE, GUILayout.ExpandWidth(false));
+            return selected = (T) EditorGUILayout.EnumPopup(selected, options);
+        }
+    }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void SetGUITooltip(string tooltip, bool condition) => GUI.tooltip = condition && Event.current.type == EventType.Repaint ? tooltip : string.Empty;

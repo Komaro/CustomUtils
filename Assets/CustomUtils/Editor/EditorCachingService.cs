@@ -70,13 +70,12 @@ public class EditorCachingService : EditorService {
         }
 
         _createDirectoryName = EditorCommon.DrawLabelTextField("폴더명", _createDirectoryName);
-        if (GUILayout.Button("Caching 추가", GUILayout.Height(50)) && string.IsNullOrEmpty(_createDirectoryName) == false) {
+        if (GUILayout.Button("Caching 추가", GUILayout.Height(50f)) && string.IsNullOrEmpty(_createDirectoryName) == false) {
             _service.Add(_createDirectoryName);
             CacheRefresh();
         }
         
-        // TODO. Caching 전체 비우기 기능 추가
-        if (GUILayout.Button($"{nameof(Caching)} 전체 비우기")) {
+        if (GUILayout.Button($"{nameof(Caching)} 전체 비우기", GUILayout.Height(50f))) {
             _service.ClearAll();
         }
     }

@@ -90,7 +90,7 @@ public class EditorAssetBundleProviderDrawer : EditorResourceDrawerAutoConfig<As
                 }
 
                 if (IsActiveEncrypt()) {
-                    EditorGUILayout.HelpBox("AssetBundle 암호화가 활성화 되었습니다. Manifest CRC 체크가 불가능합니다.", MessageType.Warning);
+                    EditorGUILayout.HelpBox($"AssetBundle 암호화가 활성화 되었습니다. {nameof(Caching)} 기능을 사용할 수 없습니다.", MessageType.Warning);
                 }
             }
             
@@ -297,7 +297,8 @@ public class EditorAssetBundleProviderDrawer : EditorResourceDrawerAutoConfig<As
             BuildPipeline.GetCRCForAssetBundle(Path.Combine(buildPath, _selectBuildTarget.ToString()), out var crc);
             Logger.TraceLog($"{_selectBuildTarget} || {crc}");
             foreach (var name in manifest.GetAllAssetBundles()) {
-                BuildPipeline.GetCRCForAssetBundle(Path.Combine(buildPath, name), out crc);
+                var path = Path.Combine(buildPath, name);
+                BuildPipeline.GetCRCForAssetBundle(path, out crc);
                 Logger.TraceLog($"{name} || {crc}");
             }
             

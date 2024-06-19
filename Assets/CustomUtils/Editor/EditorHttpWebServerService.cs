@@ -132,7 +132,7 @@ public class EditorHttpWebServerService : EditorService {
                         using (new GUILayout.HorizontalScope()) {
                             var moduleTextContent = new GUIContent(modulePreset.moduleNameList.ToStringCollection("\n"));
                             var heightOption = GUILayout.Height(GUI.skin.button.CalcSize(moduleTextContent).y);
-                            if (GUILayout.Button("X", GUILayout.MaxWidth(30), heightOption)) {
+                            if (GUILayout.Button("X", GUILayout.MaxWidth(30f), heightOption)) {
                                 removePreset = modulePreset;
                             }
 

@@ -8,6 +8,8 @@ public static partial class Constants {
 
         public const string JSON = ".json";
         public const string MANIFEST = ".manifest";
+
+        public const string JSON_FILTER = "*.json";
     }
 
     public static class Culture {

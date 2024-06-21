@@ -1,5 +1,6 @@
 using System;
 using System.Globalization;
+using System.IO;
 using System.Text;
 using UnityEngine;
 
@@ -50,10 +51,8 @@ public static class StringExtension {
         return string.Empty;
     }
 
-    public static bool WrappedIn(this string content, string match, StringComparison comp = StringComparison.Ordinal) => content.StartsWith(match, comp) && content.EndsWith(match, comp);
     public static string GetTitleCase(this string content) => _textInfo?.ToTitleCase(content);
     public static string GetForceTitleCase(this string content) => GetTitleCase(content.ToLower());
-    public static bool EqualsFast(this string content, string comparedString) => content.Equals(comparedString, StringComparison.Ordinal);
     
     public static byte[] GetBytes(this string content, ENCODING_FORMAT format = ENCODING_FORMAT.UTF_8) => format switch {
         ENCODING_FORMAT.UTF_32 => Encoding.UTF32.GetBytes(content),
@@ -71,6 +70,21 @@ public static class StringExtension {
         
         return content;
     }
+    
+    public static bool WrappedIn(this string content, string match, StringComparison comp = StringComparison.Ordinal) => content.StartsWith(match, comp) && content.EndsWith(match, comp);
+    public static bool EqualsFast(this string content, string comparedString) => content.Equals(comparedString, StringComparison.Ordinal);
+
+    public static string AutoSwitchExtension(this string content,  string extension) {
+        if (content.ContainsExtension(extension) == false) {
+            return Path.ChangeExtension(content, extension.FixExtension());
+        }
+
+        return content;
+    }
+
+    public static string FixExtension(this string content) => content.IsExtension() == false ? content.Insert(0, ".") : content;
+    public static bool ContainsExtension(this string content, string extension) => Path.HasExtension(content) && Path.GetExtension(content).EqualsFast(extension);
+    public static bool IsExtension(this string content) => content.StartsWith('.');
 }
 
 public enum ENCODING_FORMAT {

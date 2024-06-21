@@ -37,7 +37,6 @@ public static class CollectionExtension {
     public static Vector2 AverageVector<T>(this IEnumerable<T> source, Func<T, Vector2> selector) => source.SumVector(selector) / source.Count();
     public static Vector3 AverageVector<T>(this IEnumerable<T> source, Func<T, Vector3> selector) => source.SumVector(selector) / source.Count();
     
-    
     public static void SafeClear<TValue>(this ICollection<TValue> collection, Action<TValue> releaseAction) {
         try {
             foreach (var value in collection) {
@@ -53,6 +52,25 @@ public static class CollectionExtension {
         }
     }
 
+    public static void SafeClear<TValue>(this ICollection<TValue> collection) where TValue : IDisposable {
+        try {
+            foreach (var value in collection) {
+                value.Dispose();
+            }
+
+            if (collection.GetType().IsArray == false) {
+                collection.Clear();
+            }
+        } catch (Exception ex) {
+            Logger.TraceError(ex);
+            throw;
+        }
+    }
+
+    #endregion
+
+    #region [Dictionary]
+    
     public static void SafeClear<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, Action<TValue> releaseAction) {
         try {
             dictionary.Values.ForEach(x => releaseAction?.Invoke(x));
@@ -61,21 +79,16 @@ public static class CollectionExtension {
             Logger.TraceError(ex);
         }
     }
-
-    public static void SafeClear<TValue>(this Queue<TValue> queue, Action<TValue> releaseAction) {
+    
+    public static void SafeClear<TKey, TValue>(this IDictionary<TKey, TValue> dictionary) where TValue : IDisposable {
         try {
-            while (queue.TryDequeue(out var value)) {
-                releaseAction?.Invoke(value);
-            }
+            dictionary.Values.ForEach(x => x.Dispose());
+            dictionary.Clear();
         } catch (Exception ex) {
             Logger.TraceError(ex);
         }
     }
     
-    #endregion
-
-    #region [Dictionary]
-
     public static void AutoAdd<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key, TValue value) {
         if (dictionary.ContainsKey(key)) {
             dictionary[key] = value;
@@ -192,14 +205,21 @@ public static class CollectionExtension {
             dictionary.Remove(key);
         }
     }
-
+    
     public static void SafeRemove<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key, Action<TValue> releaseAction) {
         if (dictionary.TryGetValue(key, out var value)) {
             releaseAction?.Invoke(value);
             dictionary.Remove(key);
         }
     }
-
+    
+    public static void SafeRemove<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key) where TValue : IDisposable {
+        if (dictionary.TryGetValue(key, out var value)) {
+            value.Dispose();
+            dictionary.Remove(key);
+        }
+    }
+    
     public static bool TryGetValue<TKey, TIKey, TValue>(this IDictionary<TKey, Dictionary<TIKey, TValue>> dictionary, TKey outKey, TIKey innerKey, out TValue outValue) {
         outValue = default;
         return dictionary.TryGetValue(outKey, out var innerDic) && innerDic.TryGetValue(innerKey, out outValue);

@@ -23,34 +23,34 @@ public static partial class EditorCommon {
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static string DrawLabelTextField(string label, string text, float labelWidth = 100f) {
         using (new GUILayout.HorizontalScope()) {
-            GUILayout.Label(label, Constants.Editor.TITLE_STYLE, GUILayout.Width(labelWidth));
-            return GUILayout.TextField(text, Constants.Editor.TEXT_FIELD);
+            EditorGUILayout.LabelField(label, Constants.Editor.TITLE_STYLE, GUILayout.Width(labelWidth));
+            return EditorGUILayout.TextField(text, Constants.Editor.TEXT_FIELD);
         }
     }
     
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static string DrawLabelTextField(string label, ref string text, float labelWidth = 100f) {
         using (new GUILayout.HorizontalScope()) {
-            GUILayout.Label(label, Constants.Editor.TITLE_STYLE, GUILayout.Width(labelWidth));
-            return text = GUILayout.TextField(text, Constants.Editor.TEXT_FIELD);
+            EditorGUILayout.LabelField(label, Constants.Editor.TITLE_STYLE, GUILayout.Width(labelWidth));
+            return text = EditorGUILayout.TextField(text, Constants.Editor.TEXT_FIELD);
         }
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static string DrawButtonTextField(string buttonText, string text, Action<string> onClick = null, float buttonWidth = 150f) {
+    public static string DrawButtonTextField(string buttonText, ref string text, Action onClick = null, float buttonWidth = 150f) {
         using (new GUILayout.HorizontalScope()) {
             if (GUILayout.Button(buttonText, Constants.Editor.BUTTON, GUILayout.Width(buttonWidth))) {
-                onClick?.Invoke(text);
+                onClick?.Invoke();
             }
 
-            return GUILayout.TextField(text, Constants.Editor.TEXT_FIELD);
+            return text = EditorGUILayout.TextField(text, Constants.Editor.TEXT_FIELD);
         }
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void DrawLabelLinkButton(string label, string buttonText, Action<string> onClick = null) {
         using (new EditorGUILayout.HorizontalScope()) {
-            GUILayout.Label(label, Constants.Editor.BOLD_LABEL, GUILayout.ExpandWidth(false));
+            EditorGUILayout.LabelField(label, Constants.Editor.BOLD_LABEL, GUILayout.ExpandWidth(false));
             if (EditorGUILayout.LinkButton(buttonText, GUILayout.ExpandWidth(false))) {
                 onClick?.Invoke(buttonText);
             }
@@ -59,7 +59,7 @@ public static partial class EditorCommon {
 
     public static void DrawLabelSelectableLabel(string label, string selectableLabel, float labelWidth = 50f) {
         using (new EditorGUILayout.HorizontalScope()) {
-            GUILayout.Label(label, Constants.Editor.BOLD_LABEL, GUILayout.Width(labelWidth));
+            EditorGUILayout.LabelField(label, Constants.Editor.BOLD_LABEL, GUILayout.Width(labelWidth));
             EditorGUILayout.SelectableLabel(selectableLabel, Constants.Editor.LABEL, GUILayout.Height(22f), GUILayout.ExpandWidth(true));
         }
     }
@@ -70,7 +70,7 @@ public static partial class EditorCommon {
             if (GUILayout.Button(buttonText, Constants.Editor.BUTTON, GUILayout.Width(buttonWidth))) {
                 onClick?.Invoke(password);
             }
-
+            
             return GUILayout.PasswordField(password, '*') ?? string.Empty;
         }
     }
@@ -83,7 +83,7 @@ public static partial class EditorCommon {
             }
 
             return EditorGUILayout.Toggle(isShow, GUILayout.MaxWidth(15f))
-                ? (GUILayout.TextField(password) ?? string.Empty, true)
+                ? (EditorGUILayout.TextField(password) ?? string.Empty, true)
                 : (GUILayout.PasswordField(password, '*') ?? string.Empty, false);
         }
     }
@@ -96,23 +96,36 @@ public static partial class EditorCommon {
             }
 
             isShow = EditorGUILayout.Toggle(isShow, GUILayout.MaxWidth(15f));
-            password = isShow ? GUILayout.TextField(password) ?? string.Empty : GUILayout.PasswordField(password, '*') ?? string.Empty;
+            password = isShow ? EditorGUILayout.TextField(password) ?? string.Empty : GUILayout.PasswordField(password, '*') ?? string.Empty;
         }
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static string DrawFolderSelector(string text, string targetDirectory, Action<string> onSelect = null, float width = 120f) {
+    public static void DrawFolderSelector(string buttonText, ref string targetDirectory, Action onSelect = null, float width = 120f) {
         using (new GUILayout.HorizontalScope()) {
-            if (GUILayout.Button(text, Constants.Editor.BUTTON, GUILayout.Width(width))) {
+            if (GUILayout.Button(buttonText, Constants.Editor.BUTTON, GUILayout.Width(width))) {
                 var selectDirectory = EditorUtility.OpenFolderPanel("대상 폴더", targetDirectory, string.Empty);
                 if (string.IsNullOrEmpty(selectDirectory) == false) {
                     targetDirectory = selectDirectory;
+                    onSelect?.Invoke();
                 }
-
-                onSelect?.Invoke(targetDirectory);
             }
 
-            return GUILayout.TextField(targetDirectory, Constants.Editor.TEXT_FIELD);
+            EditorGUILayout.TextField(targetDirectory, Constants.Editor.TEXT_FIELD);
+        }
+    }
+
+    public static void DrawFileSelector(string buttonText, ref string targetPath, string extension = "", Action<string> onSelect = null, float buttonWidth = 120f) {
+        using (new GUILayout.HorizontalScope()) {
+            if (GUILayout.Button(buttonText, Constants.Editor.BUTTON, GUILayout.Width(buttonWidth))) {
+                var selectPath = EditorUtility.OpenFilePanel("대상 경로", targetPath, extension);
+                if (string.IsNullOrEmpty(selectPath) == false) {
+                    targetPath = selectPath;
+                    onSelect?.Invoke(targetPath);
+                }
+            }
+
+            EditorGUILayout.TextField(targetPath, Constants.Editor.TEXT_FIELD);
         }
     }
 
@@ -137,17 +150,32 @@ public static partial class EditorCommon {
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void DrawLabelToggle(ref bool toggle, string label, Action onChange, params GUILayoutOption[] options) => DrawLabelToggle(ref toggle, new GUIContent(label, string.Empty), onChange, options);
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void DrawLabelToggle(ref bool toggle, GUIContent labelContent, Action onChange, params GUILayoutOption[] options) {
+        using (new GUILayout.HorizontalScope()) {
+            EditorGUI.BeginChangeCheck();
+            EditorGUILayout.LabelField(labelContent, Constants.Editor.LABEL, options);
+            toggle = EditorGUILayout.Toggle(toggle, Constants.Editor.TOGGLE);
+            if (EditorGUI.EndChangeCheck()) {
+                onChange?.Invoke();
+            }
+        }
+    }
+    
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static T DrawEnumPopup<T>(string label, T selected, params GUILayoutOption[] options) where T : Enum {
         using (new GUILayout.HorizontalScope()) {
-            GUILayout.Label(label, Constants.Editor.TITLE_STYLE, GUILayout.ExpandWidth(false));
+            EditorGUILayout.LabelField(label, Constants.Editor.TITLE_STYLE, GUILayout.ExpandWidth(false));
             return (T) EditorGUILayout.EnumPopup(selected, options);
         }
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static T DrawEnumPopup<T>(string label, ref T selected, params GUILayoutOption[] options) where T : Enum {
+    public static T DrawEnumPopup<T>(string label, ref T selected, float labelWidth = 120f, params GUILayoutOption[] options) where T : Enum {
         using (new GUILayout.HorizontalScope()) {
-            GUILayout.Label(label, Constants.Editor.TITLE_STYLE, GUILayout.ExpandWidth(false));
+            EditorGUILayout.LabelField(label, Constants.Editor.TITLE_STYLE, GUILayout.Width(labelWidth));
             return selected = (T) EditorGUILayout.EnumPopup(selected, options);
         }
     }
@@ -161,7 +189,6 @@ public static partial class EditorCommon {
             GUILayout.FlexibleSpace();
             var selectIndex = GUILayout.Toolbar(index, texts, "LargeButton", GUI.ToolbarButtonSize.FitToContents);
             GUILayout.FlexibleSpace();
-            
             if (selectIndex != index) {
                 onChange?.Invoke(selectIndex);
             }

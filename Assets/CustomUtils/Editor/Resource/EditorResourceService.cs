@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using UniRx;
 using UnityEditor;
 using UnityEditor.Callbacks;
 using UnityEngine;
@@ -167,12 +169,12 @@ public abstract class EditorResourceDrawerAutoConfig<TConfig, TNullConfig> : Edi
             config.Save(CONFIG_PATH);
         }
         
-        Service.GetService<SystemWatcherService>().StopWatcher(watcherOrder);
+        Service.GetService<SystemWatcherService>().Stop(watcherOrder);
     }
 
     public override void Destroy() {
         if (watcherOrder != null) {
-            Service.GetService<SystemWatcherService>().RemoveWatcher(watcherOrder);
+            Service.GetService<SystemWatcherService>().Remove(watcherOrder);
         }
     }
 

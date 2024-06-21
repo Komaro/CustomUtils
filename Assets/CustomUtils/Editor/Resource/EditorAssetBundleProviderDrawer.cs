@@ -36,7 +36,7 @@ public class EditorAssetBundleProviderDrawer : EditorResourceDrawerAutoConfig<As
     public EditorAssetBundleProviderDrawer() => BUILD_OPTION_LIST = EnumUtil.GetValues<BuildAssetBundleOptions>(true, true).ToList();
 
     public sealed override void CacheRefresh() {
-        Service.GetService<SystemWatcherService>().StartWatcher(watcherOrder);
+        Service.GetService<SystemWatcherService>().Start(watcherOrder);
         
         if (JsonUtil.TryLoadJsonIgnoreLog(CONFIG_PATH, out config)) {
             _plainEncryptKey = string.IsNullOrEmpty(config.cipherEncryptKey) == false ? EncryptUtil.DecryptDES(config.cipherEncryptKey) : string.Empty;
@@ -62,7 +62,7 @@ public class EditorAssetBundleProviderDrawer : EditorResourceDrawerAutoConfig<As
                 if (GUILayout.Button("열기", GUILayout.ExpandWidth(false)) && string.IsNullOrEmpty(config.buildDirectory) == false) {
                     EditorUtility.RevealInFinder(config.buildDirectory);
                 }
-                config.buildDirectory = EditorCommon.DrawFolderSelector("선택", config.buildDirectory, width:40f);
+                EditorCommon.DrawFolderSelector("선택", ref config.buildDirectory, width:40f);
             }
             
             EditorCommon.DrawSeparator();
@@ -146,8 +146,13 @@ public class EditorAssetBundleProviderDrawer : EditorResourceDrawerAutoConfig<As
             GUILayout.Label("빌드", Constants.Editor.AREA_TITLE_STYLE);
             using (new GUILayout.VerticalScope("box")) {
                 using (new GUILayout.HorizontalScope()) {
-                    config.isClearAssetBundleManifest = EditorCommon.DrawLabelToggle(config.isClearAssetBundleManifest, ".manifest 제거", "빌드 완료 후 .manifest 확장자 파일 제거", 180f);
-                    config.isLogBuildSetting = EditorCommon.DrawLabelToggle(config.isLogBuildSetting, "빌드 세팅 기록", $"빌드 완료 후 {nameof(AssetBundleProviderConfig)}를 메모에 기록", 180f);
+                    EditorCommon.DrawLabelToggle(ref config.isClearAssetBundleManifest, ".manifest 제거", "빌드 완료 후 .manifest 확장자 파일 제거", 180f);
+                    EditorCommon.DrawLabelToggle(ref config.isLogBuildSetting, "빌드 세팅 기록", $"빌드 완료 후 {nameof(AssetBundleProviderConfig)}를 메모에 기록", 180f);
+                    EditorCommon.DrawLabelToggle(ref config.isGenerateChecksumInfo, "CRC 정보 생성", $"빌드 완료 후 각 전체 CRC 정보를 기록한 파일 생성", 180f);
+                }
+
+                if (config.isGenerateChecksumInfo) {
+                    EditorCommon.DrawLabelTextField("CRC 파일명", ref config.checksumFileName);
                 }
             }
             
@@ -220,6 +225,7 @@ public class EditorAssetBundleProviderDrawer : EditorResourceDrawerAutoConfig<As
                     GUILayout.Space(5f);
 
                     EditorCommon.DrawLabelTextField("결과", info.buildSuccess ? "성공".GetColorString(Color.green) : "실패".GetColorString(Color.red));
+                    EditorCommon.DrawLabelTextField("타겟", info.buildTarget.ToString());
                     EditorCommon.DrawLabelTextField("경로", info.buildPath);
                     EditorCommon.DrawLabelTextField("시작", info.buildStartTime.ToString(CultureInfo.CurrentCulture));
                     EditorCommon.DrawLabelTextField("종료", info.buildEndTime.ToString(CultureInfo.CurrentCulture));
@@ -256,8 +262,9 @@ public class EditorAssetBundleProviderDrawer : EditorResourceDrawerAutoConfig<As
         }
         
         var manifest = BuildAssetBundle(options);
-        info.buildEndTime = DateTime.Now;
         info.buildSuccess = manifest != null;
+        info.buildTarget = _selectBuildTarget;
+        info.buildEndTime = DateTime.Now;
         info.memo = config.isLogBuildSetting == false ? _buildInfoMemo : $"{_buildInfoMemo}\n\n===================\n\n" +
                                                                          $"{config.ToStringAllFields()}\n\n===================\n\n" +
                                                                          $"{service?.Copy().ToStringCollection("\n")}";
@@ -275,6 +282,23 @@ public class EditorAssetBundleProviderDrawer : EditorResourceDrawerAutoConfig<As
     private AssetBundleManifest BuildAssetBundle(BuildAssetBundleOptions options) {
         var buildPath = CreateConfigBuildPath();
         if (ResourceGenerator.TryGenerateAssetBundle(buildPath, options, _selectBuildTarget, out var manifest)) {
+            if (config.isGenerateChecksumInfo) {
+                var info = new AssetBundleChecksumInfo();
+                info.generateTime = DateTime.Now;
+                if (BuildPipeline.GetCRCForAssetBundle(Path.Combine(buildPath, _selectBuildTarget.ToString()), out var crc)) {
+                    info.crcDic.AutoAdd(_selectBuildTarget.ToString(), crc);
+                }
+                
+                foreach (var name in manifest.GetAllAssetBundles()) {
+                    if (BuildPipeline.GetCRCForAssetBundle(Path.Combine(buildPath, name), out crc)) {
+                        info.crcDic.AutoAdd(name, crc);
+                        info.hashDic.AutoAdd(name, manifest.GetAssetBundleHash(name).ToString());
+                    }
+                }
+                
+                JsonUtil.SaveJson($"{buildPath}/{(string.IsNullOrEmpty(config.checksumFileName) ? nameof(AssetBundleChecksumInfo) : config.checksumFileName)}{Constants.Extension.JSON}", info);
+            }
+            
             if (config.isAssetBundleManifestEncrypted) {
                 var manifestPath = Path.Combine(buildPath, _selectBuildTarget.ToString());
                 if (SystemUtil.TryReadAllBytes(manifestPath, out var plainBytes) && EncryptUtil.TryEncryptAESBytes(out var cipherBytes, plainBytes, _plainEncryptKey)) { {
@@ -288,18 +312,11 @@ public class EditorAssetBundleProviderDrawer : EditorResourceDrawerAutoConfig<As
                 config.selectAssetBundleDic.Where(pair => pair.Value).Select(pair => pair.Key).ForEach(name => EncryptAssetBundle(buildPath, name));
             }
 
+            // The process must be handled only after obtaining CRC information.
             if (config.isClearAssetBundleManifest) {
                 foreach (var manifestPath in Directory.GetFiles(buildPath).Where(path => Path.GetExtension(path) == Constants.Extension.MANIFEST)) {
                     File.Delete(manifestPath);
                 }
-            }
-            
-            BuildPipeline.GetCRCForAssetBundle(Path.Combine(buildPath, _selectBuildTarget.ToString()), out var crc);
-            Logger.TraceLog($"{_selectBuildTarget} || {crc}");
-            foreach (var name in manifest.GetAllAssetBundles()) {
-                var path = Path.Combine(buildPath, name);
-                BuildPipeline.GetCRCForAssetBundle(path, out crc);
-                Logger.TraceLog($"{name} || {crc}");
             }
             
             return manifest;
@@ -333,6 +350,8 @@ public class AssetBundleProviderConfig : JsonAutoConfig {
     public string buildDirectory = "";
     public bool isClearAssetBundleManifest = true;
     public bool isLogBuildSetting = true;
+    public bool isGenerateChecksumInfo = false;
+    public string checksumFileName = nameof(AssetBundleChecksumInfo);
     
     public bool isAssetBundleManifestEncrypted;
     public bool isAssetBundleEncrypted;
@@ -357,12 +376,20 @@ public class AssetBundleProviderConfig : JsonAutoConfig {
 
 public struct AssetBundleBuildInfo {
 
+    public bool buildSuccess;
+    public BuildTarget buildTarget;
     public DateTime buildStartTime;
     public DateTime buildEndTime;
     public string buildPath;
-    public bool buildSuccess;
     public string memo;
 
     public TimeSpan GetBuildTime() => buildEndTime - buildStartTime;
     public override string ToString() => $"{buildStartTime} ==> {buildEndTime} [{buildSuccess.ToString()}]";
+}
+
+public record AssetBundleChecksumInfo {
+
+    public DateTime generateTime;
+    public Dictionary<string, uint> crcDic = new();
+    public Dictionary<string, string> hashDic = new();
 }

@@ -10,8 +10,9 @@ public static partial class Constants {
         public static readonly GUIStyle LABEL = new (GUI.skin.label) { richText = true };
         public static readonly GUIStyle BOLD_LABEL = new (LABEL) { fontStyle = FontStyle.Bold };
         public static readonly GUIStyle TEXT_FIELD = new (GUI.skin.textField) { richText = true };
-        public static readonly GUIStyle BUTTON = new(GUI.skin.button) { richText = true };
-        public static readonly GUIStyle TOGGLE = new GUIStyle(GUI.skin.toggle) { richText = true };
+        public static readonly GUIStyle TEXT_AREA = new (GUI.skin.textArea) { richText = true };
+        public static readonly GUIStyle BUTTON = new (GUI.skin.button) { richText = true };
+        public static readonly GUIStyle TOGGLE = new (GUI.skin.toggle) { richText = true };
     
         public static readonly GUIStyle BLACK_OR_WHITE_LABEL;
         
@@ -26,7 +27,7 @@ public static partial class Constants {
             BLACK_OR_WHITE_LABEL = new GUIStyle(LABEL) {
                 normal = { textColor = EditorGUIUtility.isProSkin ? Color.white : Color.black }
             };
-            
+
             DIVIDE_STYLE = new GUIStyle(LABEL) {
                 alignment = TextAnchor.MiddleCenter,
                 normal = { textColor = Color.cyan },

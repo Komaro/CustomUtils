@@ -187,6 +187,23 @@ public static class EncryptUtil {
 
     #endregion
 
+    public static bool TryDecrypt(out string plainText, string cipherText, ENCRYPT_TYPE type = default, string key = nameof(EncryptUtil)) {
+        plainText = Decrypt(cipherText, type, key);
+        return string.IsNullOrEmpty(plainText) == false;
+    }
+    
+    public static string Decrypt(string cipherText, ENCRYPT_TYPE type = default, string key = nameof(EncryptUtil)) {
+        switch (type) { 
+            case ENCRYPT_TYPE.AES:
+                return DecryptAES(cipherText, key);
+            case ENCRYPT_TYPE.DES:
+                return DecryptDES(cipherText, key);
+        }
+
+        Logger.TraceLog($"{type} is Invalid {nameof(ENCRYPT_TYPE)}");
+        return string.Empty;
+    }
+    
     private static byte[] PerformCryptography(byte[] bytes, ICryptoTransform cryptoTransform) {
         using (var memoryStream = new MemoryStream()) {
             using (var cryptoStream = new CryptoStream(memoryStream, cryptoTransform, CryptoStreamMode.Write)) {
@@ -202,4 +219,11 @@ public static class EncryptUtil {
         Array.Copy(bytes, trimBytes, Math.Min(byteLength, bytes.Length));
         return trimBytes;
     }
+}
+
+public enum ENCRYPT_TYPE {
+    AES,
+    DES,
+    SHA,
+    MD5,
 }

@@ -11,16 +11,12 @@ using UnityEngine;
 [EditorResourceDrawer(RESOURCE_SERVICE_MENU_TYPE.Provider, typeof(AssetBundleProvider))]
 public class EditorAssetBundleProviderDrawer : EditorResourceDrawerAutoConfig<AssetBundleProviderConfig, AssetBundleProviderConfig.NullConfig> {
     
-    private bool _isShowEncryptKey = false;
-    private static string _plainEncryptKey;
-    
-    private BuildTarget _selectBuildTarget = EditorUserBuildSettings.activeBuildTarget;
-    
     private List<string> _allAssetBundleList = new();
-
-    private string _buildInfoMemo;
-    private int _buildInfoCursor;
     
+    private int _buildInfoCursor;
+    private string _buildInfoMemo;
+    private bool _isShowEncryptKey;
+    private string _plainEncryptKey;
     private Vector2 _windowScrollViewPosition;
     private Vector2 _selectAssetBundleScrollViewPosition;
     private Vector2 _buildOptionScrollViewPosition;
@@ -38,7 +34,7 @@ public class EditorAssetBundleProviderDrawer : EditorResourceDrawerAutoConfig<As
     public sealed override void CacheRefresh() {
         Service.GetService<SystemWatcherService>().Start(watcherOrder);
         
-        if (JsonUtil.TryLoadJsonIgnoreLog(CONFIG_PATH, out config)) {
+        if (JsonUtil.TryLoadJson(CONFIG_PATH, out config)) {
             _plainEncryptKey = string.IsNullOrEmpty(config.cipherEncryptKey) == false ? EncryptUtil.DecryptDES(config.cipherEncryptKey) : string.Empty;
             config.StartAutoSave(CONFIG_PATH);
         } else {
@@ -58,39 +54,54 @@ public class EditorAssetBundleProviderDrawer : EditorResourceDrawerAutoConfig<As
             _windowScrollViewPosition = EditorGUILayout.BeginScrollView(_windowScrollViewPosition, false, false);
             
             GUILayout.Label("AssetBundle 빌드 폴더", Constants.Editor.AREA_TITLE_STYLE);
-            using (new GUILayout.HorizontalScope()) {
-                if (GUILayout.Button("열기", GUILayout.ExpandWidth(false)) && string.IsNullOrEmpty(config.buildDirectory) == false) {
-                    EditorUtility.RevealInFinder(config.buildDirectory);
-                }
-                EditorCommon.DrawFolderSelector("선택", ref config.buildDirectory, width:40f);
+            using (new GUILayout.VerticalScope(Constants.Editor.BOX)) {
+                EditorCommon.DrawFolderOpenSelector("빌드 폴더", "선택", ref config.buildDirectory, width:60f);
             }
             
             EditorCommon.DrawSeparator();
             
-            GUILayout.Label("암호화", Constants.Editor.AREA_TITLE_STYLE);
-            using (new GUILayout.HorizontalScope("box")) {
-                config.isAssetBundleManifestEncrypted = EditorCommon.DrawLabelToggle(config.isAssetBundleManifestEncrypted, "AssetBundleManifest 암호화 활성화", 210f);
-            }
-
-            using (new GUILayout.VerticalScope("box")) {
+            GUILayout.Label("보안", Constants.Editor.AREA_TITLE_STYLE);
+            using (new GUILayout.VerticalScope(Constants.Editor.BOX)) {
+                using (new GUILayout.HorizontalScope()) {
+                    EditorCommon.DrawLabelToggle(ref config.isAssetBundleManifestEncrypted, "AssetBundleManifest 암호화 활성화", 210f);
+                    GUILayout.FlexibleSpace();
+                }
+                
                 using (new GUILayout.HorizontalScope()) {
                     using (new EditorGUI.DisabledGroupScope(config.isAssetBundleSelectableEncrypted)) {
-                        config.isAssetBundleEncrypted = EditorCommon.DrawLabelToggle(config.isAssetBundleEncrypted, "AssetBundle 암호화 활성화"
-                            , "AssetBundle 선택적 암호화가 활성화 되어 있습니다. 둘 중 하나만 활성화가 가능합니다.", 210f);
+                        EditorCommon.DrawLabelToggle(ref config.isAssetBundleEncrypted, "AssetBundle 암호화 활성화", "AssetBundle 선택적 암호화가 활성화 되어 있습니다. 둘 중 하나만 활성화가 가능합니다.", 210f);
                     }
                     
                     using (new EditorGUI.DisabledGroupScope(config.isAssetBundleEncrypted)) {
-                        config.isAssetBundleSelectableEncrypted = EditorCommon.DrawLabelToggle(config.isAssetBundleSelectableEncrypted, "AssetBundle 선택적 암호화 활성화"
-                            , "AssetBundle 암호화가 활성화 되어 있습니다. 둘 중 하나만 활성화가 가능합니다.", 210f);
+                        EditorCommon.DrawLabelToggle(ref config.isAssetBundleSelectableEncrypted, "AssetBundle 선택적 암호화 활성화", "AssetBundle 암호화가 활성화 되어 있습니다. 둘 중 하나만 활성화가 가능합니다.", 210f);
                     }
+                    
+                    GUILayout.FlexibleSpace();
+                }
+            }
+            
+            using (new GUILayout.VerticalScope(Constants.Editor.BOX)) {
+                using (new GUILayout.HorizontalScope()) {
+                    EditorCommon.DrawLabelToggle(ref config.isGenerateChecksumInfo, "Checksum 정보 생성", $"빌드 완료 후 각 전체 Checksum 정보를 기록한 파일 생성", 210f);
+                    if (config.isGenerateChecksumInfo) {
+                        EditorCommon.DrawLabelToggle(ref config.isEncryptChecksum, "Checksum 정보 암호화", "빌드 완료 후 생성된 Checksum 파일을 암호화", 210f);
+                    }
+                    
+                    GUILayout.FlexibleSpace();
                 }
                 
-                if (IsActiveAssetBundleEncrypt()) {
+                if (config.isGenerateChecksumInfo) {
+                    EditorCommon.DrawLabelTextField("Checksum 정보 파일명", ref config.checksumFileName, 150f);
+                }
+            }
+
+            using (new GUILayout.VerticalScope(Constants.Editor.BOX)) {
+                if (config.IsActiveAssetBundleEncrypt()) {
                     EditorGUILayout.HelpBox("AssetBundle 암호화 옵션은 하나만 선택이 가능합니다. 다른 옵션을 활성화 하기 위해선 현재 활성화 되어 있는 옵션을 비활성화 해야 합니다.", MessageType.Info);
                 }
 
-                if (IsActiveEncrypt()) {
-                    EditorGUILayout.HelpBox($"AssetBundle 암호화가 활성화 되었습니다. {nameof(Caching)} 기능을 사용할 수 없습니다.", MessageType.Warning);
+                if (config.IsActiveEncrypt()) {
+                    EditorGUILayout.HelpBox($"암호화가 활성화 되었습니다. {nameof(Caching)} 기능을 사용할 수 없습니다.", MessageType.Warning);
                 }
             }
             
@@ -103,7 +114,7 @@ public class EditorAssetBundleProviderDrawer : EditorResourceDrawerAutoConfig<As
                     }
                 }
                 
-                using (new GUILayout.VerticalScope("box")) {
+                using (new GUILayout.VerticalScope(Constants.Editor.BOX)) {
                     GUILayout.Space(5f);
                     _selectAssetBundleScrollViewPosition = GUILayout.BeginScrollView(_selectAssetBundleScrollViewPosition, false, false, GUILayout.MinHeight(100f));
                     for (var i = 0; i < _allAssetBundleList.Count; i += 2) {
@@ -118,20 +129,20 @@ public class EditorAssetBundleProviderDrawer : EditorResourceDrawerAutoConfig<As
                 }
             }
 
-            using (new GUILayout.VerticalScope("box")) {
-                if (IsActiveEncrypt()) {
+            using (new GUILayout.VerticalScope(Constants.Editor.BOX)) {
+                if (config.IsActiveEncrypt()) {
                     if (config.IsNull()) {
                         EditorGUILayout.HelpBox($"{nameof(AssetBundleProviderConfig)} 파일이 존재하지 않기 때문에 저장되지 않습니다.", MessageType.Warning);
                     }
                     
-                    EditorCommon.DrawButtonPasswordField("Encrypt Key 저장", ref _plainEncryptKey, ref _isShowEncryptKey, plainEncryptKey => config.cipherEncryptKey = EncryptUtil.EncryptDES(plainEncryptKey), 110f);
+                    EditorCommon.DrawButtonPasswordField("Encrypt Key 저장", ref _plainEncryptKey, ref _isShowEncryptKey, plainEncryptKey => config.cipherEncryptKey = EncryptUtil.EncryptAES(plainEncryptKey), 110f);
                 }
             }
 
             EditorCommon.DrawSeparator();
 
             GUILayout.Label("AssetBundle 빌드 옵션", Constants.Editor.AREA_TITLE_STYLE);
-            using (new GUILayout.VerticalScope("box")) {
+            using (new GUILayout.VerticalScope(Constants.Editor.BOX)) {
                 _buildOptionScrollViewPosition = GUILayout.BeginScrollView(_buildOptionScrollViewPosition, false, false, GUILayout.Height(200f));
                 foreach (var option in BUILD_OPTION_LIST) {
                     config.buildOptionDic[option] = EditorCommon.DrawLabelToggle(config.buildOptionDic[option], option.ToString());
@@ -144,26 +155,22 @@ public class EditorAssetBundleProviderDrawer : EditorResourceDrawerAutoConfig<As
             EditorCommon.DrawSeparator();
 
             GUILayout.Label("빌드", Constants.Editor.AREA_TITLE_STYLE);
-            using (new GUILayout.VerticalScope("box")) {
+            using (new GUILayout.VerticalScope(Constants.Editor.BOX)) {
                 using (new GUILayout.HorizontalScope()) {
                     EditorCommon.DrawLabelToggle(ref config.isClearAssetBundleManifest, ".manifest 제거", "빌드 완료 후 .manifest 확장자 파일 제거", 180f);
                     EditorCommon.DrawLabelToggle(ref config.isLogBuildSetting, "빌드 세팅 기록", $"빌드 완료 후 {nameof(AssetBundleProviderConfig)}를 메모에 기록", 180f);
-                    EditorCommon.DrawLabelToggle(ref config.isGenerateChecksumInfo, "CRC 정보 생성", $"빌드 완료 후 각 전체 CRC 정보를 기록한 파일 생성", 180f);
-                }
-
-                if (config.isGenerateChecksumInfo) {
-                    EditorCommon.DrawLabelTextField("CRC 파일명", ref config.checksumFileName);
+                    GUILayout.FlexibleSpace();
                 }
             }
             
-            using (new GUILayout.VerticalScope("box")) {
+            using (new GUILayout.VerticalScope(Constants.Editor.BOX)) {
                 using (new GUILayout.HorizontalScope()) {
                     using (new GUILayout.VerticalScope()) {
-                        _selectBuildTarget = EditorCommon.DrawEnumPopup(string.Empty, _selectBuildTarget, GUILayout.Height(20f));
+                        EditorCommon.DrawEnumPopup(string.Empty, ref config.selectBuildTarget, 0, GUILayout.Height(20f));
                         EditorCommon.DrawLabelTextField("현재 빌드 타겟", EditorUserBuildSettings.activeBuildTarget.ToString());
                     }
 
-                    if (IsActiveEncrypt() && string.IsNullOrEmpty(_plainEncryptKey)) {
+                    if (config.IsActiveEncrypt() && string.IsNullOrEmpty(_plainEncryptKey) == false) {
                         EditorGUILayout.HelpBox("암호화 옵션이 활성화 되어 있습니다. 암호화에 필요한 키를 입력하여야 에셋번들 빌드를 진행할 수 있습니다.", MessageType.Error);
                     } else if (string.IsNullOrEmpty(config.buildDirectory)) {
                         EditorGUILayout.HelpBox("빌드 폴더를 선택하여야 에셋번들 빌드를 진행할 수 있습니다.", MessageType.Error);
@@ -176,36 +183,37 @@ public class EditorAssetBundleProviderDrawer : EditorResourceDrawerAutoConfig<As
                                 }
                             }
 
-                            if (_selectBuildTarget != EditorUserBuildSettings.activeBuildTarget) {
+                            if (config.selectBuildTarget != EditorUserBuildSettings.activeBuildTarget) {
                                 EditorCommon.OpenCheckDialogue("경고", "선택된 빌드 플랫폼과 현재 에디터의 빌드 플랫폼이 다릅니다. 전환 후 빌드하시겠습니까?\n" +
-                                                                     $"{EditorUserBuildSettings.selectedBuildTargetGroup} ▷ {_selectBuildTarget.GetTargetGroup()}\n" +
-                                                                     $"{EditorUserBuildSettings.activeBuildTarget} ▷ {_selectBuildTarget}\n\n" +
-                                                                     $"대상 디렉토리 : {CreateConfigBuildPath()}\n\n" +
+                                                                     $"{EditorUserBuildSettings.selectedBuildTargetGroup} ▷ {config.selectBuildTarget.GetTargetGroup()}\n" +
+                                                                     $"{EditorUserBuildSettings.activeBuildTarget} ▷ {config.selectBuildTarget}\n\n" +
+                                                                     $"대상 디렉토리 : {config.GetBuildPath()}\n\n" +
                                                                      $"활성화된 옵션\n{options.ToString()}",
                                     ok: () => {
-                                        EditorUserBuildSettings.SwitchActiveBuildTarget(_selectBuildTarget.GetTargetGroup(), _selectBuildTarget);
+                                        EditorUserBuildSettings.SwitchActiveBuildTarget(config.selectBuildTarget.GetTargetGroup(), config.selectBuildTarget);
                                         BuildAssetBundleWithLogging(options);
                                     });
                             } else {
                                 EditorCommon.OpenCheckDialogue("에셋번들 빌드", $"에셋번들 빌드를 진행합니다.\n" +
                                                                           $"{EditorUserBuildSettings.selectedBuildTargetGroup}\n{EditorUserBuildSettings.activeBuildTarget}\n\n" +
-                                                                          $"대상 디렉토리 : {config.buildDirectory}/{_selectBuildTarget}\n\n" +
+                                                                          $"대상 디렉토리 : {config.buildDirectory}/{config.selectBuildTarget}\n\n" +
                                                                           $"활성화된 옵션\n{options.ToString()}", ok: () => BuildAssetBundleWithLogging(options));
                             }
                         }
                     }
                 }
-                
-                GUILayout.Space(5f);
 
-                using (new GUILayout.HorizontalScope()) {
-                    GUILayout.Label("메모", Constants.Editor.TITLE_STYLE, GUILayout.Height(100f), GUILayout.Width(50f));
-                    _buildInfoMemo = EditorGUILayout.TextArea(_buildInfoMemo, GUILayout.Height(100f), GUILayout.ExpandWidth(true));
+                if (config.isLogBuildSetting) {
+                    GUILayout.Space(5f);
+                    using (new GUILayout.HorizontalScope()) {
+                        GUILayout.Label("메모", Constants.Editor.TITLE_STYLE, GUILayout.Height(100f), GUILayout.Width(50f));
+                        _buildInfoMemo = EditorGUILayout.TextArea(_buildInfoMemo, GUILayout.Height(100f), GUILayout.ExpandWidth(true));
+                    }
                 }
             }
 
             if (config.GetInfoCount() > 0) {
-                using (new GUILayout.VerticalScope("box")) {
+                using (new GUILayout.VerticalScope(Constants.Editor.BOX)) {
                     var info = config[_buildInfoCursor];
                     using (new GUILayout.HorizontalScope()) {
                         EditorGUI.BeginDisabledGroup(_buildInfoCursor <= 0);
@@ -253,7 +261,7 @@ public class EditorAssetBundleProviderDrawer : EditorResourceDrawerAutoConfig<As
     private AssetBundleManifest BuildAssetBundleWithLogging(BuildAssetBundleOptions options) {
         var info = new AssetBundleBuildInfo {
             buildStartTime = DateTime.Now,
-            buildPath = CreateConfigBuildPath()
+            buildPath = config.GetBuildPath()
         };
         
         if (Service.TryGetServiceWithStart<LogCollectorService>(out var service)) {
@@ -263,7 +271,7 @@ public class EditorAssetBundleProviderDrawer : EditorResourceDrawerAutoConfig<As
         
         var manifest = BuildAssetBundle(options);
         info.buildSuccess = manifest != null;
-        info.buildTarget = _selectBuildTarget;
+        info.buildTarget = config.selectBuildTarget;
         info.buildEndTime = DateTime.Now;
         info.memo = config.isLogBuildSetting == false ? _buildInfoMemo : $"{_buildInfoMemo}\n\n===================\n\n" +
                                                                          $"{config.ToStringAllFields()}\n\n===================\n\n" +
@@ -280,27 +288,20 @@ public class EditorAssetBundleProviderDrawer : EditorResourceDrawerAutoConfig<As
     }
 
     private AssetBundleManifest BuildAssetBundle(BuildAssetBundleOptions options) {
-        var buildPath = CreateConfigBuildPath();
-        if (ResourceGenerator.TryGenerateAssetBundle(buildPath, options, _selectBuildTarget, out var manifest)) {
+        var buildPath = config.GetBuildPath();
+        if (ResourceGenerator.TryGenerateAssetBundle(buildPath, options, config.selectBuildTarget, out var manifest)) {
             if (config.isGenerateChecksumInfo) {
-                var info = new AssetBundleChecksumInfo();
-                info.generateTime = DateTime.Now;
-                if (BuildPipeline.GetCRCForAssetBundle(Path.Combine(buildPath, _selectBuildTarget.ToString()), out var crc)) {
-                    info.crcDic.AutoAdd(_selectBuildTarget.ToString(), crc);
+                var checksumInfoPath = $"{buildPath}/{(string.IsNullOrEmpty(config.checksumFileName) ? nameof(AssetBundleChecksumInfo) : config.checksumFileName)}";
+                var info = GenerateChecksumInfo(manifest, buildPath);
+                if (config.isEncryptChecksum) {
+                    JsonUtil.SaveEncryptJson(checksumInfoPath, info, _plainEncryptKey);
+                } else {
+                    JsonUtil.SaveJson(checksumInfoPath, info);
                 }
-                
-                foreach (var name in manifest.GetAllAssetBundles()) {
-                    if (BuildPipeline.GetCRCForAssetBundle(Path.Combine(buildPath, name), out crc)) {
-                        info.crcDic.AutoAdd(name, crc);
-                        info.hashDic.AutoAdd(name, manifest.GetAssetBundleHash(name).ToString());
-                    }
-                }
-                
-                JsonUtil.SaveJson($"{buildPath}/{(string.IsNullOrEmpty(config.checksumFileName) ? nameof(AssetBundleChecksumInfo) : config.checksumFileName)}{Constants.Extension.JSON}", info);
             }
             
             if (config.isAssetBundleManifestEncrypted) {
-                var manifestPath = Path.Combine(buildPath, _selectBuildTarget.ToString());
+                var manifestPath = Path.Combine(buildPath, config.selectBuildTarget.ToString());
                 if (SystemUtil.TryReadAllBytes(manifestPath, out var plainBytes) && EncryptUtil.TryEncryptAESBytes(out var cipherBytes, plainBytes, _plainEncryptKey)) { {
                     File.WriteAllBytes(manifestPath, cipherBytes);
                 }}
@@ -326,6 +327,25 @@ public class EditorAssetBundleProviderDrawer : EditorResourceDrawerAutoConfig<As
         return null;
     }
 
+    private AssetBundleChecksumInfo GenerateChecksumInfo(AssetBundleManifest manifest, string buildPath) {
+        var info = new AssetBundleChecksumInfo {
+            generateTime = DateTime.Now
+        };
+                
+        if (BuildPipeline.GetCRCForAssetBundle(Path.Combine(buildPath, config.selectBuildTarget.ToString()), out var crc)) {
+            info.crcDic.AutoAdd(config.selectBuildTarget.ToString(), crc);
+        }
+                
+        foreach (var name in manifest.GetAllAssetBundles()) {
+            if (BuildPipeline.GetCRCForAssetBundle(Path.Combine(buildPath, name), out crc)) {
+                info.crcDic.AutoAdd(name, crc);
+                info.hashDic.AutoAdd(name, manifest.GetAssetBundleHash(name).ToString());
+            }
+        }
+
+        return info;
+    }
+
     private void EncryptAssetBundle(string buildPath, string name) {
         var assetBundlePath = Path.Combine(buildPath, name);
         if (SystemUtil.TryReadAllBytes(assetBundlePath, out var plainBytes)) {
@@ -338,40 +358,6 @@ public class EditorAssetBundleProviderDrawer : EditorResourceDrawerAutoConfig<As
             Logger.TraceError($"{nameof(SystemUtil.TryReadAllBytes)} Failed.\n{assetBundlePath}");
         }
     }
-
-    private string CreateConfigBuildPath() => $"{config.buildDirectory}/{_selectBuildTarget}";
-    
-    private bool IsActiveEncrypt() => config != null && (config.isAssetBundleManifestEncrypted || config.isAssetBundleEncrypted || config.isAssetBundleSelectableEncrypted);
-    private bool IsActiveAssetBundleEncrypt() => config != null && (config.isAssetBundleEncrypted || config.isAssetBundleSelectableEncrypted);
-}
-
-public class AssetBundleProviderConfig : JsonAutoConfig {
-    
-    public string buildDirectory = "";
-    public bool isClearAssetBundleManifest = true;
-    public bool isLogBuildSetting = true;
-    public bool isGenerateChecksumInfo = false;
-    public string checksumFileName = nameof(AssetBundleChecksumInfo);
-    
-    public bool isAssetBundleManifestEncrypted;
-    public bool isAssetBundleEncrypted;
-    public bool isAssetBundleSelectableEncrypted;
-    public readonly Dictionary<string, bool> selectAssetBundleDic = new();
-    public string cipherEncryptKey = "";
-    
-    public readonly Dictionary<BuildAssetBundleOptions, bool> buildOptionDic = EnumUtil.GetValues<BuildAssetBundleOptions>(true).ToDictionary(x => x, _ => false);
-    
-    [JsonProperty("lastBuildInfoList")]
-    private readonly List<AssetBundleBuildInfo> _lastBuildInfoList = new();
-    
-    private const int MAX_BUILD_LOG = 20;
-
-    public AssetBundleBuildInfo this[int index] => _lastBuildInfoList[index];
-    public void AddBuildInfo(AssetBundleBuildInfo info) => _lastBuildInfoList.LimitedAdd(info, MAX_BUILD_LOG);
-    public int GetInfoCount() => _lastBuildInfoList.Count;
-    
-    public override bool IsNull() => this is NullConfig;
-    public class NullConfig : AssetBundleProviderConfig { }
 }
 
 public struct AssetBundleBuildInfo {
@@ -385,6 +371,44 @@ public struct AssetBundleBuildInfo {
 
     public TimeSpan GetBuildTime() => buildEndTime - buildStartTime;
     public override string ToString() => $"{buildStartTime} ==> {buildEndTime} [{buildSuccess.ToString()}]";
+}
+
+
+public class AssetBundleProviderConfig : JsonAutoConfig {
+
+    public string cipherEncryptKey = "";
+    public string buildDirectory = "";
+    public bool isClearAssetBundleManifest = true;
+    public bool isLogBuildSetting = true;
+    
+    public bool isAssetBundleManifestEncrypted;
+    public bool isAssetBundleEncrypted;
+    public bool isAssetBundleSelectableEncrypted;
+    public readonly Dictionary<string, bool> selectAssetBundleDic = new();
+    
+    public bool isGenerateChecksumInfo;
+    public bool isEncryptChecksum;
+    public string checksumFileName = nameof(AssetBundleChecksumInfo);
+
+    public BuildTarget selectBuildTarget;
+    public readonly Dictionary<BuildAssetBundleOptions, bool> buildOptionDic = EnumUtil.GetValues<BuildAssetBundleOptions>(true).ToDictionary(x => x, _ => false);
+    
+    
+    [JsonProperty("lastBuildInfoList")]
+    private readonly List<AssetBundleBuildInfo> _lastBuildInfoList = new();
+    
+    private const int MAX_BUILD_LOG = 20;
+
+    public AssetBundleBuildInfo this[int index] => _lastBuildInfoList[index];
+    public void AddBuildInfo(AssetBundleBuildInfo info) => _lastBuildInfoList.LimitedAdd(info, MAX_BUILD_LOG);
+    public int GetInfoCount() => _lastBuildInfoList.Count;
+    public string GetBuildPath() => $"{buildDirectory}/{selectBuildTarget}";
+    
+    public bool IsActiveAssetBundleEncrypt() => isAssetBundleEncrypted || isAssetBundleSelectableEncrypted;
+    public bool IsActiveEncrypt() =>isAssetBundleManifestEncrypted || isAssetBundleEncrypted || isAssetBundleSelectableEncrypted || isEncryptChecksum;
+
+    public override bool IsNull() => this is NullConfig;
+    public class NullConfig : AssetBundleProviderConfig { }
 }
 
 public record AssetBundleChecksumInfo {

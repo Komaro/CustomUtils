@@ -13,7 +13,7 @@ public class StopWatchService : IService {
     void IService.Start() => _watchDic.Clear();
     void IService.Stop() => _watchDic.Clear();
 
-    public void StartWatch([CallerMemberName] string caller = null) {
+    public void Start([CallerMemberName] string caller = null) {
         if (_watchDic.TryGetValue(caller, out var watch)) {
             watch.Restart();
         } else {
@@ -23,7 +23,7 @@ public class StopWatchService : IService {
         }
     }
 
-    public void StopWatch([CallerMemberName] string caller = null) {
+    public void Stop([CallerMemberName] string caller = null) {
         if (_watchDic.TryGetValue(caller, out var watch)) {
             watch.Stop();
             Logger.TraceLog($"{caller} => {watch.ElapsedTicks} tick || {watch.ElapsedMilliseconds}  milSec|| {watch.Elapsed}", Color.green);
@@ -32,12 +32,12 @@ public class StopWatchService : IService {
         }
     }
 
-    public void StartWatchAverage([CallerMemberName] string caller = null) {
+    public void StartAverage([CallerMemberName] string caller = null) {
         _countDic.AutoAccumulateAdd(caller, 1);
-        StartWatch(caller);
+        Start(caller);
     }
 
-    public void StopWatchAverage([CallerMemberName] string caller = null) {
+    public void StopAverage([CallerMemberName] string caller = null) {
         if (_watchDic.TryGetValue(caller, out var watch)) {
             watch.Stop();
 

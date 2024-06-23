@@ -26,7 +26,7 @@ public class EditorAssetBundleTesterDrawer : EditorResourceDrawerAutoConfig<Asse
 
     private readonly SystemWatcherServiceOrder _infoAutoTrackingOrder;
 
-    protected override string CONFIG_NAME => $"{nameof(AssetBundleTesterConfig)}.json";
+    protected override string CONFIG_NAME => $"{nameof(AssetBundleTesterConfig)}{Constants.Extension.JSON}";
     protected override string CONFIG_PATH => $"{Constants.Path.COMMON_CONFIG_FOLDER}/{CONFIG_NAME}";
 
     public EditorAssetBundleTesterDrawer() {
@@ -41,7 +41,7 @@ public class EditorAssetBundleTesterDrawer : EditorResourceDrawerAutoConfig<Asse
         Service.GetService<SystemWatcherService>().Start(watcherOrder);
         _service ??= Service.GetService<CachingService>();
         
-        if (JsonUtil.TryLoadJsonIgnoreLog(CONFIG_PATH, out config)) {
+        if (JsonUtil.TryLoadJson(CONFIG_PATH, out config)) {
             _plainEncryptKey = string.IsNullOrEmpty(config.cipherEncryptKey) == false ? EncryptUtil.DecryptDES(config.cipherEncryptKey) : string.Empty;
             config.StartAutoSave(CONFIG_PATH);
         } else {
@@ -52,10 +52,10 @@ public class EditorAssetBundleTesterDrawer : EditorResourceDrawerAutoConfig<Asse
 
         if (config.isActiveChecksum) {
             if (config.isActiveAutoTrackingChecksum && _bindChecksumInfo == null) {
-                (_bindChecksumInfo, config.checksumInfoPath) = SearchLatestChecksumInfo();
+                SearchLatestChecksumInfo();
                 StartChecksumInfoAutoSearch();
             } else if (string.IsNullOrEmpty(config.checksumInfoPath) == false) {
-                JsonUtil.TryLoadJson(config.checksumInfoPath, out _bindChecksumInfo);
+                LoadAssetBundleChecksumInfo(config.checksumInfoPath);
             }
         }
     }
@@ -64,19 +64,26 @@ public class EditorAssetBundleTesterDrawer : EditorResourceDrawerAutoConfig<Asse
         base.Draw();
         if (config != null) {
             _windowScrollViewPosition = EditorGUILayout.BeginScrollView(_windowScrollViewPosition, false, false);
-            GUILayout.Label("HTTP 서버 다운로드 설정", Constants.Editor.AREA_TITLE_STYLE);
+            using (new GUILayout.HorizontalScope()) {
+                GUILayout.Label("HTTP 서버 다운로드 설정", Constants.Editor.AREA_TITLE_STYLE);
+                if (GUILayout.Button(Constants.Editor.SHORT_CUT_ICON, Constants.Editor.FIT_BUTTON, GUILayout.Width(20f), GUILayout.Height(20f))) {
+                    EditorHttpWebServerService.OpenWindow();
+                }
+                GUILayout.FlexibleSpace();
+            }
+            
             using (new GUILayout.VerticalScope("box")) {
                 EditorCommon.DrawEnumPopup($"빌드 타겟", ref config.selectBuildTarget);
                 EditorCommon.DrawLabelTextField("URL", ref config.url, 120f);
-                EditorCommon.DrawFolderSelector("다운로드 폴더 선택", ref config.downloadDirectory);
-                EditorCommon.DrawButtonPasswordField("암호화 키 저장", ref _plainEncryptKey, ref _isShowEncryptKey, plainEncryptKey => config.cipherEncryptKey = EncryptUtil.EncryptDES(plainEncryptKey), 120f);
+                EditorCommon.DrawFolderOpenSelector("다운로드 폴더", "선택", ref config.downloadDirectory);
+                EditorCommon.DrawButtonPasswordField("암호화 키 저장", ref _plainEncryptKey, ref _isShowEncryptKey, plainEncryptKey => config.cipherEncryptKey = EncryptUtil.EncryptAES(plainEncryptKey), 120f);
             }
             
             EditorCommon.DrawSeparator();
 
             using (new GUILayout.HorizontalScope()) {
                 GUILayout.Label("캐싱(Caching)", Constants.Editor.AREA_TITLE_STYLE, GUILayout.ExpandWidth(false));
-                if (config.isActiveCaching && GUILayout.Button("Caching Service 바로가기", GUILayout.ExpandWidth(false))) {
+                if (config.isActiveCaching && GUILayout.Button(Constants.Editor.SHORT_CUT_ICON, Constants.Editor.FIT_BUTTON, GUILayout.Width(20f), GUILayout.Height(20f))) {
                     EditorCachingService.OpenWindow();
                 }
             }
@@ -101,7 +108,6 @@ public class EditorAssetBundleTesterDrawer : EditorResourceDrawerAutoConfig<Asse
                         GUILayout.FlexibleSpace();
                     }
 
-
                     using (new GUILayout.VerticalScope()) {
                         EditorGUI.BeginChangeCheck();
                         using (new GUILayout.HorizontalScope()) {
@@ -113,17 +119,13 @@ public class EditorAssetBundleTesterDrawer : EditorResourceDrawerAutoConfig<Asse
                         }
 
                         if (config.isActiveAutoTrackingChecksum) {
-                            EditorCommon.DrawFolderSelector("폴더 선택", ref config.checksumInfoTrackingDirectory, width:60f);
+                            EditorCommon.DrawFolderOpenSelector("탐색 폴더", "선택", ref config.checksumInfoTrackingDirectory);
                             EditorCommon.DrawLabelTextField("Json 파일 경로", config.checksumInfoPath, 120f);
                         }
                         
                         if (EditorGUI.EndChangeCheck()) {
                             if (config.isActiveAutoTrackingChecksum && Directory.Exists(config.checksumInfoTrackingDirectory)) {
-                                if (TrySearchLatestChecksumInfo(out var result)) {
-                                    _bindChecksumInfo = result.info;
-                                    config.checksumInfoPath = result.path;
-                                }
-                                    
+                                SearchLatestChecksumInfo();
                                 StartChecksumInfoAutoSearch();
                             } else {
                                 StopChecksumInfoAutoSearch();
@@ -178,7 +180,7 @@ public class EditorAssetBundleTesterDrawer : EditorResourceDrawerAutoConfig<Asse
             using (new GUILayout.VerticalScope("box")) {
                 // TODO. AssetBundleManifest 선별 처리 UI
                 using (new GUILayout.HorizontalScope()) {
-                    EditorCommon.DrawLabelToggle(ref config.isActiveCustomManifestPath, "임의의 경로 입력 활성화", 150f);
+                    EditorCommon.DrawLabelToggle(ref config.isActiveCustomManifestPath, "임의 경로 입력 활성화", 150f);
                     EditorCommon.DrawLabelToggle(ref config.isActiveLocalSave, "로컬 저장 활성화", 150f);
                     GUILayout.FlexibleSpace();
                 }
@@ -208,7 +210,7 @@ public class EditorAssetBundleTesterDrawer : EditorResourceDrawerAutoConfig<Asse
                     using (new GUILayout.VerticalScope()) {
                         foreach (var name in _bindManifestInfo.manifest.GetAllAssetBundles()) {
                             if (GUILayout.Button(name)) {
-                                AssetBundle.UnloadAllAssetBundles(true);
+                                AssetBundle.UnloadAllAssetBundles(false);
                                 var assetBundlePath = $"{config.selectBuildTarget}/{name}";
                                 if (config.isActiveCaching) {
                                     DownloadAssetBundle(assetBundlePath, _bindManifestInfo.manifest.GetAssetBundleHash(name));
@@ -252,7 +254,7 @@ public class EditorAssetBundleTesterDrawer : EditorResourceDrawerAutoConfig<Asse
     }
 
     private void DownloadJsonFile<T>(string serverPath, Action<Result, T> callback = null) {
-        var request = JsonDownloadHandler.CreateUnityWebRequest(Path.Combine(config.url, serverPath));
+        var request = JsonDownloadHandler.CreateUnityWebRequest(Path.Combine(config.url, serverPath), _plainEncryptKey);
         request.SendWebRequest().completed += _ => {
             if (request.responseCode != (long) HttpStatusCode.OK) {
                 Logger.TraceErrorExpensive($"Already ResponseCode || {request.responseCode}");
@@ -343,29 +345,22 @@ public class EditorAssetBundleTesterDrawer : EditorResourceDrawerAutoConfig<Asse
     }
 
     private void LoadAssetBundleChecksumInfo(string path) {
-        if (JsonUtil.TryLoadJsonIgnoreLog<AssetBundleChecksumInfo>(path, out var info)) {
+        if (JsonUtil.TryLoadJsonOrDecrypt<AssetBundleChecksumInfo>(out var info, path, _plainEncryptKey)) {
             _bindChecksumInfo = info;
             config.checksumInfoPath = path;
+        } else {
+            Logger.TraceError($"{path} is Invalid {nameof(AssetBundleChecksumInfo)}");
         }
     }
     
-    private bool TrySearchLatestChecksumInfo(out (AssetBundleChecksumInfo info, string path) result) {
-        result = SearchLatestChecksumInfo();
-        return result != (null, string.Empty);
-    }
-
-    private (AssetBundleChecksumInfo info, string path) SearchLatestChecksumInfo() {
+    private void SearchLatestChecksumInfo() {
         if (Directory.Exists(config.checksumInfoTrackingDirectory)) {
             var filePaths = Directory.GetFiles(config.checksumInfoTrackingDirectory, Constants.Extension.JSON_FILTER, config.isActiveAllDirectoriesSearch ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly);
             if (filePaths.Any()) {
                 var path = filePaths.OrderByDescending(File.GetLastWriteTime).First();
-                if (JsonUtil.TryLoadJson<AssetBundleChecksumInfo>(path, out var info)) {
-                    return (info, path);
-                }
+                LoadAssetBundleChecksumInfo(path);
             }
         }
-        
-        return (null, string.Empty);
     }
 
     private void StartChecksumInfoAutoSearch() {
@@ -386,7 +381,7 @@ public class EditorAssetBundleTesterDrawer : EditorResourceDrawerAutoConfig<Asse
         switch (args.ChangeType) {
             case WatcherChangeTypes.Deleted:
                 if (config.checksumInfoPath.EqualsFast(args.FullPath)) {
-                    (_bindChecksumInfo, config.checksumInfoPath) = SearchLatestChecksumInfo();
+                    SearchLatestChecksumInfo();
                 }
                 break;
             default:
@@ -403,7 +398,7 @@ public class EditorAssetBundleTesterDrawer : EditorResourceDrawerAutoConfig<Asse
 }
 
 public class AssetBundleTesterConfig : JsonAutoConfig {
-    
+
     public BuildTarget selectBuildTarget = EditorUserBuildSettings.activeBuildTarget;
     public string downloadDirectory; 
     public string url;

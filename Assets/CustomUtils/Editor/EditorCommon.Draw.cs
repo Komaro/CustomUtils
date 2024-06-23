@@ -4,6 +4,8 @@ using UnityEditor;
 using UnityEngine;
 
 public static partial class EditorCommon {
+
+    private const float TOGGLE_FIT_AREA = 16f;
     
     public static void OpenCheckDialogue(string title, string message, string okText = "확인", string cancelText = "취소", Action ok = null, Action cancel = null) {
         if (EditorUtility.DisplayDialog(title, message, okText, cancelText)) {
@@ -21,7 +23,7 @@ public static partial class EditorCommon {
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static string DrawLabelTextField(string label, string text, float labelWidth = 100f) {
+    public static string DrawLabelTextField(string label, string text, float labelWidth = 120f) {
         using (new GUILayout.HorizontalScope()) {
             EditorGUILayout.LabelField(label, Constants.Editor.TITLE_STYLE, GUILayout.Width(labelWidth));
             return EditorGUILayout.TextField(text, Constants.Editor.TEXT_FIELD);
@@ -29,7 +31,7 @@ public static partial class EditorCommon {
     }
     
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static string DrawLabelTextField(string label, ref string text, float labelWidth = 100f) {
+    public static string DrawLabelTextField(string label, ref string text, float labelWidth = 120f) {
         using (new GUILayout.HorizontalScope()) {
             EditorGUILayout.LabelField(label, Constants.Editor.TITLE_STYLE, GUILayout.Width(labelWidth));
             return text = EditorGUILayout.TextField(text, Constants.Editor.TEXT_FIELD);
@@ -104,7 +106,7 @@ public static partial class EditorCommon {
     public static void DrawFolderSelector(string buttonText, ref string targetDirectory, Action onSelect = null, float width = 120f) {
         using (new GUILayout.HorizontalScope()) {
             if (GUILayout.Button(buttonText, Constants.Editor.BUTTON, GUILayout.Width(width))) {
-                var selectDirectory = EditorUtility.OpenFolderPanel("대상 폴더", targetDirectory, string.Empty);
+                var selectDirectory = EditorUtility.OpenFolderPanel("폴더 선택", targetDirectory, string.Empty);
                 if (string.IsNullOrEmpty(selectDirectory) == false) {
                     targetDirectory = selectDirectory;
                     onSelect?.Invoke();
@@ -112,6 +114,26 @@ public static partial class EditorCommon {
             }
 
             EditorGUILayout.TextField(targetDirectory, Constants.Editor.TEXT_FIELD);
+        }
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void DrawFolderOpenSelector(string label, string buttonText, ref string targetDirectory, Action onSelect = null, float width = 120f) {
+        using (new GUILayout.HorizontalScope()) {
+            EditorGUILayout.LabelField(label, Constants.Editor.TITLE_STYLE, GUILayout.Width(width));
+            if (GUILayout.Button(Constants.Editor.FOLDER_OPEN_ICON, Constants.Editor.FIT_X2_BUTTON, GUILayout.Width(20f), GUILayout.Height(20f))) {
+                EditorUtility.RevealInFinder(targetDirectory);
+            }
+            
+            if (GUILayout.Button(buttonText, Constants.Editor.BUTTON, GUILayout.ExpandWidth(false))) {
+                var selectDirectory = EditorUtility.OpenFolderPanel("폴더 선택", targetDirectory, string.Empty);
+                if (string.IsNullOrEmpty(selectDirectory) == false) {
+                    targetDirectory = selectDirectory;
+                    onSelect?.Invoke();
+                }
+            }
+            
+            EditorGUILayout.TextField(targetDirectory, Constants.Editor.TEXT_FIELD, GUILayout.ExpandWidth(true));
         }
     }
 
@@ -143,9 +165,9 @@ public static partial class EditorCommon {
     
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static bool DrawLabelToggle(bool toggle, GUIContent labelContent, params GUILayoutOption[] options) {
-        using (new GUILayout.HorizontalScope()) {
+        using (new GUILayout.HorizontalScope(Constants.Editor.TOGGLE_HORIZONTAL_SCOPE)) {
             EditorGUILayout.LabelField(labelContent, Constants.Editor.LABEL, options);
-            return EditorGUILayout.Toggle(toggle, Constants.Editor.TOGGLE);
+            return EditorGUILayout.Toggle(toggle, Constants.Editor.TOGGLE, GUILayout.MaxWidth(TOGGLE_FIT_AREA));
         }
     }
 
@@ -154,10 +176,10 @@ public static partial class EditorCommon {
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void DrawLabelToggle(ref bool toggle, GUIContent labelContent, Action onChange, params GUILayoutOption[] options) {
-        using (new GUILayout.HorizontalScope()) {
+        using (new GUILayout.HorizontalScope(Constants.Editor.TOGGLE_HORIZONTAL_SCOPE)) {
             EditorGUI.BeginChangeCheck();
             EditorGUILayout.LabelField(labelContent, Constants.Editor.LABEL, options);
-            toggle = EditorGUILayout.Toggle(toggle, Constants.Editor.TOGGLE);
+            toggle = EditorGUILayout.Toggle(toggle, Constants.Editor.TOGGLE, GUILayout.MaxWidth(TOGGLE_FIT_AREA));
             if (EditorGUI.EndChangeCheck()) {
                 onChange?.Invoke();
             }

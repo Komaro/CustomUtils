@@ -153,6 +153,20 @@ public class SystemUtil {
         }
     }
 
+    public static bool TryReadAllText(string path, out string text) {
+        try {
+            if (File.Exists(path)) {
+                text = File.ReadAllText(path);
+                return true;
+            }
+        } catch (Exception ex) {
+            Logger.TraceError(ex);
+        }
+
+        text = string.Empty;
+        return false;
+    }
+
     public static bool TryReadAllBytes(string path, out byte[] bytes) {
         try {
             if (File.Exists(path)) {

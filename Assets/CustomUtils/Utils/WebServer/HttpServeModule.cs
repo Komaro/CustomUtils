@@ -23,6 +23,7 @@ public class AssetBundleServeModule : HttpServeModule {
             response.ContentLength64 = buffer.Length;
             response.OutputStream.Write(buffer, 0, buffer.Length);
         } else {
+            Logger.TraceLog($"Not Exists {nameof(path)} || {path}", Color.red);
             return false;
         }
         

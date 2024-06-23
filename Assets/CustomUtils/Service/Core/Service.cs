@@ -200,6 +200,7 @@ public static class Service {
 
 public enum DEFAULT_SERVICE_TYPE {
     NONE,
+    INIT_MAIN_THREAD,
     RESOURCE_LOAD,
     PLAY_DURING,
     PLAY_FOCUS_DURING,

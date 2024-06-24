@@ -1,10 +1,19 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEditor;
 using UnityEngine;
 
 public static partial class EditorCommon {
 
+    // Optimize Test
+    private static StopWatchService _service = Service.GetService<StopWatchService>();
+    
+    private static readonly Dictionary<string, GUILayoutOption> _widthCacheDic = new ();
+    private static readonly TextGenerator _textGenerator = new ();
+
+    private const float DEFAULT_LABEL_WIDTH_FACTOR = 1.035f;
+    private const float BUTTON_LABEL_WIDTH_FACTOR = 1.1f;
     private const float TOGGLE_FIT_AREA = 16f;
     
     public static void OpenCheckDialogue(string title, string message, string okText = "확인", string cancelText = "취소", Action ok = null, Action cancel = null) {
@@ -38,28 +47,38 @@ public static partial class EditorCommon {
         }
     }
 
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static string DrawButtonTextField(string buttonText, ref string text, Action onClick = null, float buttonWidth = 150f) {
+    // [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    // public static string DrawButtonTextField(string buttonText, ref string text, Action onClick = null, float buttonWidth = 150f) {
+    //     using (new GUILayout.HorizontalScope()) {
+    //         if (GUILayout.Button(buttonText, Constants.Editor.BUTTON, GUILayout.Width(buttonWidth))) {
+    //             onClick?.Invoke();
+    //         }
+    //
+    //         return text = EditorGUILayout.TextField(text, Constants.Editor.TEXT_FIELD);
+    //     }
+    // }
+
+    public static void DrawButtonTextField(string buttonText, ref string text, Action onClick = null, float buttonWidth = 0f) {
         using (new GUILayout.HorizontalScope()) {
-            if (GUILayout.Button(buttonText, Constants.Editor.BUTTON, GUILayout.Width(buttonWidth))) {
+            if (GUILayout.Button(buttonText, Constants.Editor.BUTTON, buttonWidth == 0f ? GetCachedWidthOption(buttonText, Constants.Editor.LABEL, BUTTON_LABEL_WIDTH_FACTOR) : GUILayout.Width(buttonWidth))) {
                 onClick?.Invoke();
             }
 
-            return text = EditorGUILayout.TextField(text, Constants.Editor.TEXT_FIELD);
+            text = EditorGUILayout.TextField(text, Constants.Editor.TEXT_FIELD);
         }
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void DrawLabelLinkButton(string label, string buttonText, Action<string> onClick = null) {
+    public static void DrawLabelLinkButton(string label, string buttonText, Action<string> onClick = null, float labelWidth = 120f) {
         using (new EditorGUILayout.HorizontalScope()) {
-            EditorGUILayout.LabelField(label, Constants.Editor.BOLD_LABEL, GUILayout.ExpandWidth(false));
-            if (EditorGUILayout.LinkButton(buttonText, GUILayout.ExpandWidth(false))) {
+            EditorGUILayout.LabelField(label, Constants.Editor.BOLD_LABEL, GUILayout.Width(labelWidth));
+            if (EditorGUILayout.LinkButton(buttonText, GetCachedWidthOption(buttonText, EditorStyles.linkLabel, DEFAULT_LABEL_WIDTH_FACTOR))) {
                 onClick?.Invoke(buttonText);
             }
         }
     }
-
-    public static void DrawLabelSelectableLabel(string label, string selectableLabel, float labelWidth = 50f) {
+    
+    public static void DrawLabelSelectableLabel(string label, string selectableLabel, float labelWidth = 120f) {
         using (new EditorGUILayout.HorizontalScope()) {
             EditorGUILayout.LabelField(label, Constants.Editor.BOLD_LABEL, GUILayout.Width(labelWidth));
             EditorGUILayout.SelectableLabel(selectableLabel, Constants.Editor.LABEL, GUILayout.Height(22f), GUILayout.ExpandWidth(true));
@@ -137,6 +156,7 @@ public static partial class EditorCommon {
         }
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void DrawFileSelector(string buttonText, ref string targetPath, string extension = "", Action<string> onSelect = null, float buttonWidth = 120f) {
         using (new GUILayout.HorizontalScope()) {
             if (GUILayout.Button(buttonText, Constants.Editor.BUTTON, GUILayout.Width(buttonWidth))) {
@@ -144,6 +164,26 @@ public static partial class EditorCommon {
                 if (string.IsNullOrEmpty(selectPath) == false) {
                     targetPath = selectPath;
                     onSelect?.Invoke(targetPath);
+                }
+            }
+
+            EditorGUILayout.TextField(targetPath, Constants.Editor.TEXT_FIELD);
+        }
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void DrawFileOpenSelector(ref string targetPath, string label, string buttonText, string extension = "", Action onSelect = null, float width = 0f) {
+        using (new GUILayout.HorizontalScope()) {
+            EditorGUILayout.LabelField(label, Constants.Editor.TITLE_STYLE, width == 0f ? GetCachedWidthOption(label, EditorStyles.boldLabel) : GUILayout.Width(width));
+            if (GUILayout.Button(Constants.Editor.FOLDER_OPEN_ICON, Constants.Editor.FIT_X2_BUTTON, GUILayout.Width(20f), GUILayout.Height(20f))) {
+                EditorUtility.RevealInFinder(targetPath);
+            }
+            
+            if (GUILayout.Button(buttonText, Constants.Editor.BUTTON, GUILayout.ExpandWidth(false))) {
+                var selectPath = EditorUtility.OpenFilePanel("대상 경로", targetPath, extension);
+                if (string.IsNullOrEmpty(selectPath) == false) {
+                    targetPath = selectPath;
+                    onSelect?.Invoke();
                 }
             }
 
@@ -221,4 +261,26 @@ public static partial class EditorCommon {
     
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void DrawTopToolbar(ref int index, Action<int> onChange = null, params string[] texts) => index = DrawTopToolbar(index, onChange, texts);
+    
+    
+    
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private static GUILayoutOption GetCachedWidthOption(string text) {
+        if (_widthCacheDic.TryGetValue(text, out var option) == false) {
+            option = GUILayout.Width(_textGenerator.GetPreferredWidth(text, EditorStyles.label.ToTextGenerationSettings()));
+            _widthCacheDic.Add(text, option);
+        }
+
+        return option;
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private static GUILayoutOption GetCachedWidthOption(string text, GUIStyle style, float factor = DEFAULT_LABEL_WIDTH_FACTOR) {
+        if (_widthCacheDic.TryGetValue(text, out var option) == false) {
+            option = GUILayout.Width(_textGenerator.GetPreferredWidth(text, style) * factor);
+            _widthCacheDic.Add(text, option);
+        }
+
+        return option;
+    }
 }

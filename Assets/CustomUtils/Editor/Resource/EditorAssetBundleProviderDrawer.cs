@@ -135,7 +135,7 @@ public class EditorAssetBundleProviderDrawer : EditorResourceDrawerAutoConfig<As
                         EditorGUILayout.HelpBox($"{nameof(AssetBundleProviderConfig)} 파일이 존재하지 않기 때문에 저장되지 않습니다.", MessageType.Warning);
                     }
                     
-                    EditorCommon.DrawButtonPasswordField("Encrypt Key 저장", ref _plainEncryptKey, ref _isShowEncryptKey, plainEncryptKey => config.cipherEncryptKey = EncryptUtil.EncryptAES(plainEncryptKey), 110f);
+                    EditorCommon.DrawButtonPasswordField("Encrypt Key 저장", ref _plainEncryptKey, ref _isShowEncryptKey, plainEncryptKey => config.cipherEncryptKey = EncryptUtil.EncryptDES(plainEncryptKey), 110f);
                 }
             }
 
@@ -170,8 +170,12 @@ public class EditorAssetBundleProviderDrawer : EditorResourceDrawerAutoConfig<As
                         EditorCommon.DrawLabelTextField("현재 빌드 타겟", EditorUserBuildSettings.activeBuildTarget.ToString());
                     }
 
-                    if (config.IsActiveEncrypt() && string.IsNullOrEmpty(_plainEncryptKey) == false) {
-                        EditorGUILayout.HelpBox("암호화 옵션이 활성화 되어 있습니다. 암호화에 필요한 키를 입력하여야 에셋번들 빌드를 진행할 수 있습니다.", MessageType.Error);
+                    if (config.IsActiveEncrypt()) {
+                        if (string.IsNullOrEmpty(_plainEncryptKey)) {
+                            EditorGUILayout.HelpBox("암호화 옵션이 활성화 되어 있습니다. 암호화에 필요한 키를 입력하여야 에셋번들 빌드를 진행할 수 있습니다.", MessageType.Error);
+                        } else if (config.buildOptionDic.TryGetValue(BuildAssetBundleOptions.ForceRebuildAssetBundle, out var isTrue) && isTrue == false) {
+                            EditorGUILayout.HelpBox($"{BuildAssetBundleOptions.ForceRebuildAssetBundle} 활성화 되어 있지 않습니다. 변경사항이 없는 에셋번들의 경우 중복으로 암호화가 적용될 수 있습니다.", MessageType.Error);
+                        }
                     } else if (string.IsNullOrEmpty(config.buildDirectory)) {
                         EditorGUILayout.HelpBox("빌드 폴더를 선택하여야 에셋번들 빌드를 진행할 수 있습니다.", MessageType.Error);
                     } else {
@@ -405,7 +409,7 @@ public class AssetBundleProviderConfig : JsonAutoConfig {
     public string GetBuildPath() => $"{buildDirectory}/{selectBuildTarget}";
     
     public bool IsActiveAssetBundleEncrypt() => isAssetBundleEncrypted || isAssetBundleSelectableEncrypted;
-    public bool IsActiveEncrypt() =>isAssetBundleManifestEncrypted || isAssetBundleEncrypted || isAssetBundleSelectableEncrypted || isEncryptChecksum;
+    public bool IsActiveEncrypt() => isAssetBundleManifestEncrypted || isAssetBundleEncrypted || isAssetBundleSelectableEncrypted || isEncryptChecksum;
 
     public override bool IsNull() => this is NullConfig;
     public class NullConfig : AssetBundleProviderConfig { }
@@ -416,4 +420,18 @@ public record AssetBundleChecksumInfo {
     public DateTime generateTime;
     public Dictionary<string, uint> crcDic = new();
     public Dictionary<string, string> hashDic = new();
+
+    public bool TryGetChecksum(string assetBundle, out (uint crc, Hash128? hash) info) {
+        info = GetChecksum(assetBundle);
+        return info != (0, null);
+    }
+
+    public (uint crc, Hash128? hash) GetChecksum(string assetBundle) {
+        if (crcDic.TryGetValue(assetBundle, out var crc) && hashDic.TryGetValue(assetBundle, out var hash)) {
+            return (crc, Hash128.Parse(hash));
+        }
+
+        return (0, null);
+    }
+
 }

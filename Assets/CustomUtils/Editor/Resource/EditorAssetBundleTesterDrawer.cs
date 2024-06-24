@@ -76,7 +76,7 @@ public class EditorAssetBundleTesterDrawer : EditorResourceDrawerAutoConfig<Asse
                 EditorCommon.DrawEnumPopup($"빌드 타겟", ref config.selectBuildTarget);
                 EditorCommon.DrawLabelTextField("URL", ref config.url, 120f);
                 EditorCommon.DrawFolderOpenSelector("다운로드 폴더", "선택", ref config.downloadDirectory);
-                EditorCommon.DrawButtonPasswordField("암호화 키 저장", ref _plainEncryptKey, ref _isShowEncryptKey, plainEncryptKey => config.cipherEncryptKey = EncryptUtil.EncryptAES(plainEncryptKey), 120f);
+                EditorCommon.DrawButtonPasswordField("암호화 키 저장", ref _plainEncryptKey, ref _isShowEncryptKey, plainEncryptKey => config.cipherEncryptKey = EncryptUtil.EncryptDES(plainEncryptKey), 120f);
             }
             
             EditorCommon.DrawSeparator();
@@ -133,22 +133,15 @@ public class EditorAssetBundleTesterDrawer : EditorResourceDrawerAutoConfig<Asse
                         }
 
                         if (config.isActiveAutoTrackingChecksum == false) {
-                            EditorCommon.DrawFileSelector("Json 파일 선택", ref config.checksumInfoPath, "json", path => {
-                                if (File.Exists(path)) {
-                                    LoadAssetBundleChecksumInfo(path);
-                                }
+                            EditorCommon.DrawFileOpenSelector(ref config.checksumInfoPath, "로컬 Json 파일", "선택", "json", () => LoadAssetBundleChecksumInfo(config.checksumInfoPath));
+                            EditorCommon.DrawButtonTextField("Checksum Info Json 다운로드", ref config.checksumInfoDownloadPath, () => {
+                                config.checksumInfoDownloadPath = config.checksumInfoDownloadPath.AutoSwitchExtension(Constants.Extension.JSON);
+                                DownloadJsonFile<AssetBundleChecksumInfo>(config.checksumInfoDownloadPath, (result, info) => {
+                                    if (result == Result.Success && info != null) {
+                                        _bindChecksumInfo = info;
+                                    }
+                                });
                             });
-                        
-                            using (new GUILayout.HorizontalScope()) {
-                                EditorCommon.DrawButtonTextField("Checksum Info Json 다운로드", ref config.checksumInfoDownloadPath, () => {
-                                    config.checksumInfoDownloadPath = config.checksumInfoDownloadPath.AutoSwitchExtension(Constants.Extension.JSON);
-                                    DownloadJsonFile<AssetBundleChecksumInfo>(config.checksumInfoDownloadPath, (result, info) => {
-                                        if (result == Result.Success && info != null) {
-                                            _bindChecksumInfo = info;
-                                        }
-                                    });
-                                }, 200f);
-                            }
                         }
                     }
                 }
@@ -180,21 +173,30 @@ public class EditorAssetBundleTesterDrawer : EditorResourceDrawerAutoConfig<Asse
             using (new GUILayout.VerticalScope("box")) {
                 // TODO. AssetBundleManifest 선별 처리 UI
                 using (new GUILayout.HorizontalScope()) {
-                    EditorCommon.DrawLabelToggle(ref config.isActiveCustomManifestPath, "임의 경로 입력 활성화", 150f);
+                    EditorCommon.DrawLabelToggle(ref config.isActiveCustomManifestPath, "임의 서버 경로 입력 활성화", 150f);
                     EditorCommon.DrawLabelToggle(ref config.isActiveLocalSave, "로컬 저장 활성화", 150f);
                     GUILayout.FlexibleSpace();
                 }
                 
                 if (config.isActiveCustomManifestPath) {
-                    EditorCommon.DrawLabelTextField("임의 경로", ref config.customManifestPath);
+                    EditorCommon.DrawLabelTextField("임의 서버 경로", ref config.customManifestPath);
                 }
                 
                 EditorCommon.DrawLabelTextField("AssetBundleManifest 다운로드 경로", config.GetManifestPath(), 210f);
                 
                 GUILayout.Space(5f);
+
+                EditorCommon.DrawFileOpenSelector(ref config.localManifestPath, "로컬 Manifest 파일", "선택", onSelect: () => {
+                    if (SystemUtil.TryReadAllBytes(config.localManifestPath, out var bytes)) {
+                        AssetBundle.UnloadAllAssetBundles(false);
+                        if (AssetBundleUtil.TryLoadFromMemoryOrDecrypt(bytes, _plainEncryptKey, out var assetBundle) && assetBundle.TryFindManifest(out var manifest)) {
+                            _bindManifestInfo = new AssetBundleManifestInfo(manifest, Path.GetFileName(config.localManifestPath));
+                        }
+                    }
+                });
                 
-                if (GUILayout.Button("Manifest 다운로드 테스트")) {
-                    AssetBundle.UnloadAllAssetBundles(true);
+                if (GUILayout.Button("Manifest 다운로드")) {
+                    AssetBundle.UnloadAllAssetBundles(false);
                     DownloadAssetBundleManifest(config.GetManifestPath(), 0, callback:(result, manifest) => {
                         if (result == Result.Success && manifest != null) {
                             _bindManifestInfo = new AssetBundleManifestInfo(manifest, Path.GetFileName(config.GetManifestPath()));
@@ -202,48 +204,72 @@ public class EditorAssetBundleTesterDrawer : EditorResourceDrawerAutoConfig<Asse
                     });
                 }
                 
-                // TODO. 현재 다운로드 된 AssetBundleManifest 의 리스트 출력
-                // TODO. 한 번에 여러 AssetBundleManifest 를 바인딩하고 출력하는 처리 추가
-                if (_bindManifestInfo != null && _bindManifestInfo.IsValid()) {
-                    EditorCommon.DrawSeparator();
-                    _manifestScrollViewPosition = EditorGUILayout.BeginScrollView(_manifestScrollViewPosition, false, false, GUILayout.Height(150f));
-                    using (new GUILayout.VerticalScope()) {
-                        foreach (var name in _bindManifestInfo.manifest.GetAllAssetBundles()) {
-                            if (GUILayout.Button(name)) {
-                                AssetBundle.UnloadAllAssetBundles(false);
-                                var assetBundlePath = $"{config.selectBuildTarget}/{name}";
-                                if (config.isActiveCaching) {
-                                    DownloadAssetBundle(assetBundlePath, _bindManifestInfo.manifest.GetAssetBundleHash(name));
-                                } else {
-                                    DownloadAssetBundle(assetBundlePath);
+                EditorCommon.DrawSeparator();
+
+                using (new GUILayout.VerticalScope(Constants.Editor.BOX)) {
+                    EditorCommon.DrawLabelTextField("연결 상태", _bindManifestInfo?.IsValid() ?? false ? "연결".GetColorString(Color.green) : "미연결".GetColorString(Color.red));
+                    if (_bindManifestInfo?.IsValid() ?? false) {
+                        EditorCommon.DrawLabelTextField("로드 시간", _bindManifestInfo.loadTime.ToString(CultureInfo.CurrentCulture));
+                        
+                        _manifestScrollViewPosition = EditorGUILayout.BeginScrollView(_manifestScrollViewPosition, false, false, GUILayout.Height(150f));
+                        using (new GUILayout.VerticalScope()) {
+                            foreach (var name in _bindManifestInfo.manifest.GetAllAssetBundles()) {
+                                using (new GUILayout.HorizontalScope()) {
+                                    EditorGUILayout.LabelField(name);
+                                    if (GUILayout.Button("다운로드")) {
+                                        AssetBundle.UnloadAllAssetBundles(false);
+                                        var path = $"{config.selectBuildTarget}/{name}";
+                                        if (config.isActiveCaching) {
+                                            DownloadAssetBundle(path, _bindManifestInfo.manifest.GetAssetBundleHash(name), callback:OnAssetBundleDownloadComplete);
+                                        } else {
+                                            DownloadAssetBundle(path, callback:OnAssetBundleDownloadComplete);
+                                        }
+                                    }
+
+                                    if (GUILayout.Button("다운로드(암호화)")) {
+                                        AssetBundle.UnloadAllAssetBundles(false);
+                                        var path = $"{config.selectBuildTarget}/{name}";
+                                        (uint crc, Hash128? hash) info = (0, null);
+                                        _bindChecksumInfo?.TryGetChecksum(name, out info);
+                                        DownloadAssetBundle(path, info.crc, OnAssetBundleDownloadComplete);
+                                    }
                                 }
                             }
                         }
+                        
+                        EditorGUILayout.EndScrollView();
                     }
-                    EditorGUILayout.EndScrollView();
                 }
                 
                 EditorCommon.DrawSeparator();
                 
-                // TODO. 선택된 AssetBundleManifest 대한 전체 혹은 일부 AssetBundle 다운로드로 변경
-                // TODO. Toggle을 통한 구현이 가능
-                if (GUILayout.Button("AssetBundle 다운로드 테스트(비암호화)")) {
-                    AssetBundle.UnloadAllAssetBundles(true);
+                if (GUILayout.Button("Manifest AssetBundle 다운로드 테스트")) {
+                    AssetBundle.UnloadAllAssetBundles(false);
                     if (_bindManifestInfo != null && _bindManifestInfo.IsValid()) {
                         foreach (var assetBundleName in _bindManifestInfo.manifest.GetAllAssetBundles()) {
-                            var path = $"{EditorUserBuildSettings.activeBuildTarget}/{assetBundleName}";
-                            DownloadAssetBundle(path, _bindManifestInfo.manifest.GetAssetBundleHash(assetBundleName), callback:(result, assetBundle) => {
-                                if (result == Result.DataProcessingError) {
-                                    Logger.TraceError("The asset bundle may be encrypted. Please check the asset bundle build options again.");
+                            var path = $"{config.selectBuildTarget}/{assetBundleName}";
+                            if (config.isActiveCaching) {
+                                if (_bindChecksumInfo != null && _bindChecksumInfo.TryGetChecksum(assetBundleName, out var info)) {
+                                    DownloadAssetBundle(path, info.hash, info.crc, OnAssetBundleDownloadComplete);
+                                } else {
+                                    DownloadAssetBundle(path, _bindManifestInfo.manifest.GetAssetBundleHash(assetBundleName), callback:OnAssetBundleDownloadComplete);
                                 }
-                            });
+                            } else {
+                                DownloadAssetBundle(path, callback:OnAssetBundleDownloadComplete);
+                            }
                         }
                     }
                 }
 
-                // TODO. 어떤 식으로 구현할지 검토
-                if (GUILayout.Button("AssetBundle 다운로드 테스트(암호화)")) {
-                    
+                if (GUILayout.Button("Manifest AssetBundle 다운로드 테스트(암호화)")) {
+                    AssetBundle.UnloadAllAssetBundles(false);
+                    if (_bindManifestInfo != null && _bindManifestInfo.IsValid()) {
+                        foreach (var assetBundleName in _bindManifestInfo.manifest.GetAllAssetBundles()) {
+                            (uint crc, Hash128? hash) info = (0, null);
+                            _bindChecksumInfo?.TryGetChecksum(assetBundleName, out info);
+                            DownloadAssetBundle($"{config.selectBuildTarget}/{assetBundleName}", info.crc, OnAssetBundleDownloadComplete);
+                        }
+                    }
                 }
             }
             
@@ -289,7 +315,7 @@ public class EditorAssetBundleTesterDrawer : EditorResourceDrawerAutoConfig<Asse
                 callback?.Invoke(request.result, null);
             } else {
                 try {
-                    if (AssetBundleDownloadHandler.TryGetContent(request, out var assetBundle) && assetBundle.TryGetManifest(out var manifest)) {
+                    if (AssetBundleDownloadHandler.TryGetContent(request, out var assetBundle) && assetBundle.TryFindManifest(out var manifest)) {
                         if (config.isActiveLocalSave) {
                             File.WriteAllBytes(config.GetManifestDownloadPath(), request.downloadHandler.data);
                         }
@@ -395,6 +421,17 @@ public class EditorAssetBundleTesterDrawer : EditorResourceDrawerAutoConfig<Asse
                 break;
         }
     }
+
+    private void OnAssetBundleDownloadComplete(Result result, AssetBundle assetBundle) {
+        switch (result) {
+            case Result.Success:
+                Logger.TraceLog($"{assetBundle.name} Download Success");
+                break;
+            case Result.DataProcessingError:
+                Logger.TraceError("The asset bundle may be encrypted. Please check the asset bundle build options again.");
+                break;
+        }
+    }
 }
 
 public class AssetBundleTesterConfig : JsonAutoConfig {
@@ -416,7 +453,8 @@ public class AssetBundleTesterConfig : JsonAutoConfig {
 
     public bool isActiveCustomManifestPath;
     public bool isActiveLocalSave;
-    
+
+    public string localManifestPath;
     public string customManifestPath;
     
     public string GetManifestDownloadPath() => $"{downloadDirectory}/{selectBuildTarget}";
@@ -430,10 +468,12 @@ public record AssetBundleManifestInfo {
     
     public AssetBundleManifest manifest;
     public string name;
+    public DateTime loadTime;
 
     public AssetBundleManifestInfo(AssetBundleManifest manifest, string name) {
         this.manifest = manifest;
         this.name = name;
+        loadTime = DateTime.Now;
     }
 
     public bool IsValid() => manifest != null;

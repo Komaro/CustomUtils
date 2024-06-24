@@ -164,8 +164,8 @@ public class EditorHttpWebServerService : EditorService {
                 GUILayout.Label("=== Web Server Run Info ===", Constants.Editor.DIVIDE_STYLE);
                 GUILayout.Label(_httpServer == null ? "미생성" : _httpServer.IsRunning() ? "가동중" : "정지", Constants.Editor.TITLE_STYLE);
                 if (_httpServer != null) {
-                    EditorCommon.DrawLabelLinkButton("대상 폴더 : ", _httpServer.GetTargetDirectory(), EditorUtility.RevealInFinder);
-                    EditorCommon.DrawLabelSelectableLabel("URL : ", _httpServer.GetURL());
+                    EditorCommon.DrawLabelLinkButton("대상 폴더 : ", _httpServer.GetTargetDirectory(), EditorUtility.RevealInFinder, 60f);
+                    EditorCommon.DrawLabelSelectableLabel("URL : ", _httpServer.GetURL(), 40f);
                     
                     GUILayout.Space(10);
                     

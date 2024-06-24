@@ -11,14 +11,14 @@ public static class JsonUtil {
         return json != null;
     }
 
-    public static T LoadJsonOrDecrypt<T>(string path, string key, ENCRYPT_TYPE type = default) => LoadJson<T>(path) ?? LoadJson<T>(path, key, type);
+    public static T LoadJsonOrDecrypt<T>(string path, string key, ENCRYPT_TYPE type = default) => LoadJson<T>(path, true) ?? LoadJson<T>(path, key, type);
 
     public static bool TryLoadJson<T>(string path, out T json) {
         json = LoadJson<T>(path);
         return json != null;
     }
 
-    public static T LoadJson<T>(string path) {
+    public static T LoadJson<T>(string path, bool ignoreLog = false) {
         try {
             path = FixJsonExtensionPath(path);
             if (File.Exists(path) == false) {
@@ -26,13 +26,13 @@ public static class JsonUtil {
                 throw new FileNotFoundException();
             }
 
-            var text = File.ReadAllText(path);
-            if (string.IsNullOrEmpty(text) == false) {
-                var json = JsonConvert.DeserializeObject<T>(text);
-                return json;
+            if (SystemUtil.TryReadAllText(path, out var text)) {
+                return JsonConvert.DeserializeObject<T>(text);
             }
         }  catch (Exception ex) {
-            Logger.TraceLog(ex, Color.red);
+            if (ignoreLog == false) {
+                Logger.TraceLog(ex, Color.red);
+            }
         }
         
         return default;
@@ -51,7 +51,7 @@ public static class JsonUtil {
                 throw new FileNotFoundException();
             }
 
-            if (SystemUtil.TryReadAllText(path, out var cipherText) && EncryptUtil.TryDecrypt(out var plainText, cipherText, type, key)) {
+            if (SystemUtil.TryReadAllText(path, out var cipherText) && EncryptUtil.TryDecrypt(out var plainText, cipherText, key, type)) {
                 return JsonConvert.DeserializeObject<T>(plainText);
             }
         } catch (Exception ex) {

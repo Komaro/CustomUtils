@@ -187,12 +187,12 @@ public static class EncryptUtil {
 
     #endregion
 
-    public static bool TryDecrypt(out string plainText, string cipherText, ENCRYPT_TYPE type = default, string key = nameof(EncryptUtil)) {
-        plainText = Decrypt(cipherText, type, key);
+    public static bool TryDecrypt(out string plainText, string cipherText, string key = nameof(EncryptUtil), ENCRYPT_TYPE type = default) {
+        plainText = Decrypt(cipherText, key, type);
         return string.IsNullOrEmpty(plainText) == false;
     }
     
-    public static string Decrypt(string cipherText, ENCRYPT_TYPE type = default, string key = nameof(EncryptUtil)) {
+    public static string Decrypt(string cipherText, string key = nameof(EncryptUtil), ENCRYPT_TYPE type = default) {
         switch (type) { 
             case ENCRYPT_TYPE.AES:
                 return DecryptAES(cipherText, key);
@@ -202,6 +202,23 @@ public static class EncryptUtil {
 
         Logger.TraceLog($"{type} is Invalid {nameof(ENCRYPT_TYPE)}");
         return string.Empty;
+    }
+
+    public static bool TryDecrypt(out byte[] plainBytes, byte[] bytes, string key = nameof(EncryptUtil), ENCRYPT_TYPE type = default) {
+        plainBytes = Decrypt(bytes, key, type);
+        return plainBytes != Array.Empty<byte>();
+    }
+
+    public static byte[] Decrypt(byte[] bytes, string key = nameof(EncryptUtil), ENCRYPT_TYPE type = default) {
+        switch (type) {
+            case ENCRYPT_TYPE.AES:
+                return DecryptAESBytes(bytes, key);
+            case ENCRYPT_TYPE.DES:
+                return DecryptDESBytes(bytes, key);
+        }
+        
+        Logger.TraceLog($"{type} is Invalid {nameof(ENCRYPT_TYPE)}");
+        return Array.Empty<byte>();
     }
     
     private static byte[] PerformCryptography(byte[] bytes, ICryptoTransform cryptoTransform) {

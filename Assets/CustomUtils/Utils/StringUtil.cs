@@ -8,10 +8,8 @@ using System.Text;
 public class StringUtil {
 
     private static readonly TextInfo _textInfo = new CultureInfo("en-US", false).TextInfo;
-
-    static byte[] arr;
-
     private static readonly List<char> _listSpecialCharacters = new() { '~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+', '|', '<', '>', '?', '/', '{', '}', ' ', '.', ',', ';', ':', '。', '、' };
+    private static readonly byte[] arr;
 
     public static bool IsOverSizeANSI(string text, int maxSize) {
         var length = GetTextLength(text);
@@ -103,7 +101,7 @@ public class StringUtil {
 
     public static bool IsNumeric(char ch) {
         if (0x30 <= ch && ch <= 0x39) {
-            Logger.Log("IsNumeric char = {0}", ch);
+            Logger.TraceLog($"IsNumeric char = {ch}");
             return true;
         }
         
@@ -112,7 +110,7 @@ public class StringUtil {
 
     public static bool IsBasicLatin(char ch) {
         if (0x0020 <= ch && ch <= 0x007F) {
-            Logger.Log("IsBasicLatin char = {0}", ch);
+            Logger.TraceLog($"IsBasicLatin char = {ch}");
             return true;
         }
         

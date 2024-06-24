@@ -13,11 +13,11 @@ public class EditorSystemService : EditorWindow {
 
     private void OnGUI() {
         using (new GUILayout.VerticalScope(GUILayout.ExpandHeight(false))) {
-            EditorCommon.DrawLabelLinkButton($"{nameof(Application.dataPath)} : ", Application.dataPath, EditorUtility.RevealInFinder);
-            EditorCommon.DrawLabelLinkButton($"{nameof(Application.persistentDataPath)} : ", Application.persistentDataPath, EditorUtility.RevealInFinder);
-            EditorCommon.DrawLabelLinkButton($"{nameof(Application.consoleLogPath)} : ", Application.consoleLogPath, EditorUtility.RevealInFinder);
-            EditorCommon.DrawLabelLinkButton($"{nameof(Application.streamingAssetsPath)} : ", Application.streamingAssetsPath, EditorUtility.RevealInFinder);
-            EditorCommon.DrawLabelLinkButton($"{nameof(Application.temporaryCachePath)} : ", Application.temporaryCachePath, EditorUtility.RevealInFinder);
+            EditorCommon.DrawLabelLinkButton($"{nameof(Application.dataPath)} : ", Application.dataPath, EditorUtility.RevealInFinder, 150f);
+            EditorCommon.DrawLabelLinkButton($"{nameof(Application.persistentDataPath)} : ", Application.persistentDataPath, EditorUtility.RevealInFinder, 150f);
+            EditorCommon.DrawLabelLinkButton($"{nameof(Application.consoleLogPath)} : ", Application.consoleLogPath, EditorUtility.RevealInFinder, 150f);
+            EditorCommon.DrawLabelLinkButton($"{nameof(Application.streamingAssetsPath)} : ", Application.streamingAssetsPath, EditorUtility.RevealInFinder, 150f);
+            EditorCommon.DrawLabelLinkButton($"{nameof(Application.temporaryCachePath)} : ", Application.temporaryCachePath, EditorUtility.RevealInFinder, 150f);
         }
     }
 

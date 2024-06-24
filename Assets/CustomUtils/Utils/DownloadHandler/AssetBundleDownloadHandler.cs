@@ -29,13 +29,6 @@ public sealed class AssetBundleDownloadHandler : DownloadHandlerScript {
     
     public static AssetBundle GetContent(UnityWebRequest request) {
         var handler = GetCheckedDownloader<AssetBundleDownloadHandler>(request);
-        if (handler != null) {
-            var assetBundle = AssetBundle.LoadFromMemory(handler.data, handler.crc) ?? AssetBundle.LoadFromMemory(EncryptUtil.DecryptAESBytes(handler.data, handler.encryptKey), handler.crc);
-            if (assetBundle != null && assetBundle.TryGetManifest(out var manifest)) {
-                return assetBundle;
-            }
-        }
-
-        return null;
+        return handler != null && AssetBundleUtil.TryLoadFromMemoryOrDecrypt(handler.data, handler.encryptKey, out var assetBundle, handler.crc) ? assetBundle : null;
     }
 }

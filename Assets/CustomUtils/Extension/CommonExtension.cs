@@ -56,8 +56,6 @@ public static class CommonExtension {
 
         return false;
     }
-
-    public static IEnumerator CloneEnumerator(this ICollection collection) => new ArrayList(collection).GetEnumerator();
     
     public static float GetPreferredWidth(this TextGenerator textGenerator, string text, GUIStyle style) => textGenerator.GetPreferredWidth(text, style.ToTextGenerationSettings());
 

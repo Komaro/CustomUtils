@@ -161,7 +161,10 @@ public abstract class EditorResourceDrawerAutoConfig<TConfig, TNullConfig> : Edi
     protected abstract string CONFIG_NAME { get; }
     protected abstract string CONFIG_PATH { get; }
 
-    protected EditorResourceDrawerAutoConfig() => watcherOrder = CreateWatcherOrder();
+    protected EditorResourceDrawerAutoConfig() {
+        config = new TNullConfig();
+        watcherOrder = CreateWatcherOrder();
+    }
 
     public override void Close() {
         if (config?.IsNull() == false) {

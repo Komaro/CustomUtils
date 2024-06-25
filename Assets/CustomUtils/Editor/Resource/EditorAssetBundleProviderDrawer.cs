@@ -6,25 +6,29 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using UnityEditor;
+using UnityEditor.IMGUI.Controls;
 using UnityEngine;
 
 [EditorResourceDrawer(RESOURCE_SERVICE_MENU_TYPE.Provider, typeof(AssetBundleProvider))]
 public class EditorAssetBundleProviderDrawer : EditorResourceDrawerAutoConfig<AssetBundleProviderConfig, AssetBundleProviderConfig.NullConfig> {
-    
-    private List<string> _allAssetBundleList = new();
-    
+
     private int _buildInfoCursor;
     private string _buildInfoMemo;
     private bool _isShowEncryptKey;
     private string _plainEncryptKey;
+    
+    private static AssetBundleTreeView _assetBundleTreeView = new(new TreeViewState());
+    
+    private bool _assetBundleListFold;
+    
     private Vector2 _windowScrollViewPosition;
-    private Vector2 _selectAssetBundleScrollViewPosition;
     private Vector2 _buildOptionScrollViewPosition;
     private Vector2 _buildInfoMemoScrollViewPosition;
     
     private readonly List<BuildAssetBundleOptions> BUILD_OPTION_LIST;
     private readonly Regex NAME_REGEX = new(@"^[^\\/:*?""<>|]+$");
     private readonly GUIContent REFRESH_ICON = new (string.Empty, EditorGUIUtility.IconContent("d_Refresh").image);
+    private readonly GUIContent CLEAR_ICON = new (string.Empty, EditorGUIUtility.IconContent("d_clear@2x").image);
 
     protected override string CONFIG_NAME => $"{nameof(AssetBundleProviderConfig)}{Constants.Extension.JSON}";
     protected override string CONFIG_PATH => $"{Constants.Path.COMMON_CONFIG_FOLDER}/{CONFIG_NAME}";
@@ -43,9 +47,11 @@ public class EditorAssetBundleProviderDrawer : EditorResourceDrawerAutoConfig<As
             }
         }
 
-        RefreshAssetBundleList();
         _buildInfoCursor = config.GetInfoCount() - 1;
         BUILD_OPTION_LIST.ForEach(option => config.buildOptionDic.TryAdd(option, false));
+        
+        _assetBundleTreeView.SetConfig(config);
+        RefreshAssetBundle();
     }
 
     public override void Draw() {
@@ -105,30 +111,15 @@ public class EditorAssetBundleProviderDrawer : EditorResourceDrawerAutoConfig<As
                 }
             }
             
-            if (config.isAssetBundleSelectableEncrypted) {
-                EditorCommon.DrawSeparator();
-                using (new GUILayout.HorizontalScope()) {
-                    GUILayout.Label("AssetBundle 선택적 암호화", Constants.Editor.AREA_TITLE_STYLE, GUILayout.ExpandWidth(false));
-                    if (GUILayout.Button(REFRESH_ICON, GUILayout.Width(22f), GUILayout.Height(22f))) {
-                        RefreshAssetBundleList();
-                    }
-                }
-                
-                using (new GUILayout.VerticalScope(Constants.Editor.BOX)) {
-                    GUILayout.Space(5f);
-                    _selectAssetBundleScrollViewPosition = GUILayout.BeginScrollView(_selectAssetBundleScrollViewPosition, false, false, GUILayout.MinHeight(100f));
-                    for (var i = 0; i < _allAssetBundleList.Count; i += 2) {
-                        using (new GUILayout.HorizontalScope()) {
-                            for (var j = 0; j < 2 && i + j < _allAssetBundleList.Count; j++) {
-                                config.selectAssetBundleDic[_allAssetBundleList[i + j]] = EditorCommon.DrawLabelToggle(config.selectAssetBundleDic[_allAssetBundleList[i + j]], _allAssetBundleList[i + j], 150f);
-                            }
-                        }
-                        GUILayout.Space(1f);
-                    }
-                    GUILayout.EndScrollView();
+            EditorCommon.DrawSeparator();
+            using (new GUILayout.HorizontalScope()) {
+                if (EditorCommon.DrawLabelButton("전체 AssetBundle 리스트", REFRESH_ICON, Constants.Editor.AREA_TITLE_STYLE)) {
+                    RefreshAssetBundle();
                 }
             }
-
+            
+            DrawAssetBundleList();
+            
             using (new GUILayout.VerticalScope(Constants.Editor.BOX)) {
                 if (config.IsActiveEncrypt()) {
                     if (config.IsNull()) {
@@ -161,6 +152,11 @@ public class EditorAssetBundleProviderDrawer : EditorResourceDrawerAutoConfig<As
                     EditorCommon.DrawLabelToggle(ref config.isLogBuildSetting, "빌드 세팅 기록", $"빌드 완료 후 {nameof(AssetBundleProviderConfig)}를 메모에 기록", 180f);
                     GUILayout.FlexibleSpace();
                 }
+
+                using (new GUILayout.HorizontalScope()) {
+                    EditorCommon.DrawLabelToggle(ref config.isSelectableBuild, "선택적 빌드 활성화", "선택적 빌드를 체크한 에셋번들만 빌드", 180f);
+                    GUILayout.FlexibleSpace();
+                }
             }
             
             using (new GUILayout.VerticalScope(Constants.Editor.BOX)) {
@@ -173,37 +169,15 @@ public class EditorAssetBundleProviderDrawer : EditorResourceDrawerAutoConfig<As
                     if (config.IsActiveEncrypt()) {
                         if (string.IsNullOrEmpty(_plainEncryptKey)) {
                             EditorGUILayout.HelpBox("암호화 옵션이 활성화 되어 있습니다. 암호화에 필요한 키를 입력하여야 에셋번들 빌드를 진행할 수 있습니다.", MessageType.Error);
-                        } else if (config.buildOptionDic.TryGetValue(BuildAssetBundleOptions.ForceRebuildAssetBundle, out var isTrue) && isTrue == false) {
+                        } else if (config.buildOptionDic.IsTrue(BuildAssetBundleOptions.ForceRebuildAssetBundle) == false) {
                             EditorGUILayout.HelpBox($"{BuildAssetBundleOptions.ForceRebuildAssetBundle} 활성화 되어 있지 않습니다. 변경사항이 없는 에셋번들의 경우 중복으로 암호화가 적용될 수 있습니다.", MessageType.Error);
+                        } else {
+                            DrawBuildButton();
                         }
                     } else if (string.IsNullOrEmpty(config.buildDirectory)) {
                         EditorGUILayout.HelpBox("빌드 폴더를 선택하여야 에셋번들 빌드를 진행할 수 있습니다.", MessageType.Error);
                     } else {
-                        if (GUILayout.Button("AssetBundle 빌드", GUILayout.Width(200f), GUILayout.Height(40))) {
-                            var options = BuildAssetBundleOptions.None;
-                            foreach (var (option, active) in config.buildOptionDic) {
-                                if (active) {
-                                    options |= option;
-                                }
-                            }
-
-                            if (config.selectBuildTarget != EditorUserBuildSettings.activeBuildTarget) {
-                                EditorCommon.OpenCheckDialogue("경고", "선택된 빌드 플랫폼과 현재 에디터의 빌드 플랫폼이 다릅니다. 전환 후 빌드하시겠습니까?\n" +
-                                                                     $"{EditorUserBuildSettings.selectedBuildTargetGroup} ▷ {config.selectBuildTarget.GetTargetGroup()}\n" +
-                                                                     $"{EditorUserBuildSettings.activeBuildTarget} ▷ {config.selectBuildTarget}\n\n" +
-                                                                     $"대상 디렉토리 : {config.GetBuildPath()}\n\n" +
-                                                                     $"활성화된 옵션\n{options.ToString()}",
-                                    ok: () => {
-                                        EditorUserBuildSettings.SwitchActiveBuildTarget(config.selectBuildTarget.GetTargetGroup(), config.selectBuildTarget);
-                                        BuildAssetBundleWithLogging(options);
-                                    });
-                            } else {
-                                EditorCommon.OpenCheckDialogue("에셋번들 빌드", $"에셋번들 빌드를 진행합니다.\n" +
-                                                                          $"{EditorUserBuildSettings.selectedBuildTargetGroup}\n{EditorUserBuildSettings.activeBuildTarget}\n\n" +
-                                                                          $"대상 디렉토리 : {config.buildDirectory}/{config.selectBuildTarget}\n\n" +
-                                                                          $"활성화된 옵션\n{options.ToString()}", ok: () => BuildAssetBundleWithLogging(options));
-                            }
-                        }
+                        DrawBuildButton();
                     }
                 }
 
@@ -257,9 +231,43 @@ public class EditorAssetBundleProviderDrawer : EditorResourceDrawerAutoConfig<As
         }
     }
 
-    private void RefreshAssetBundleList() {
-        _allAssetBundleList = AssetDatabase.GetAllAssetBundleNames().Where(Path.HasExtension).Distinct().ToList();
-        _allAssetBundleList.ForEach(name => config.selectAssetBundleDic.TryAdd(name, false));
+    private void DrawAssetBundleList() {
+        using (new GUILayout.VerticalScope(Constants.Editor.BOX)) {
+            _assetBundleListFold = EditorGUILayout.BeginFoldoutHeaderGroup(_assetBundleListFold, string.Empty);
+            if (_assetBundleListFold && config.assetBundleInfoDic != null) {
+                _assetBundleTreeView.Draw();
+            }
+                
+            EditorGUILayout.EndFoldoutHeaderGroup();
+        }
+    }
+    
+    private void DrawBuildButton() {
+        if (GUILayout.Button("AssetBundle 빌드", GUILayout.Width(200f), GUILayout.Height(40))) {
+            var options = BuildAssetBundleOptions.None;
+            foreach (var (option, active) in config.buildOptionDic) {
+                if (active) {
+                    options |= option;
+                }
+            }
+
+            if (config.selectBuildTarget != EditorUserBuildSettings.activeBuildTarget) {
+                EditorCommon.OpenCheckDialogue("경고", "선택된 빌드 플랫폼과 현재 에디터의 빌드 플랫폼이 다릅니다. 전환 후 빌드하시겠습니까?\n" +
+                                                     $"{EditorUserBuildSettings.selectedBuildTargetGroup} ▷ {config.selectBuildTarget.GetTargetGroup()}\n" +
+                                                     $"{EditorUserBuildSettings.activeBuildTarget} ▷ {config.selectBuildTarget}\n\n" +
+                                                     $"대상 디렉토리 : {config.GetBuildPath()}\n\n" +
+                                                     $"활성화된 옵션\n{options.ToString()}",
+                    ok: () => {
+                        EditorUserBuildSettings.SwitchActiveBuildTarget(config.selectBuildTarget.GetTargetGroup(), config.selectBuildTarget);
+                        BuildAssetBundleWithLogging(options);
+                    });
+            } else {
+                EditorCommon.OpenCheckDialogue("에셋번들 빌드", $"에셋번들 빌드를 진행합니다.\n" +
+                                                          $"{EditorUserBuildSettings.selectedBuildTargetGroup}\n{EditorUserBuildSettings.activeBuildTarget}\n\n" +
+                                                          $"대상 디렉토리 : {config.buildDirectory}/{config.selectBuildTarget}\n\n" +
+                                                          $"활성화된 옵션\n{options.ToString()}", ok: () => BuildAssetBundleWithLogging(options));
+            }
+        }
     }
     
     private AssetBundleManifest BuildAssetBundleWithLogging(BuildAssetBundleOptions options) {
@@ -293,7 +301,11 @@ public class EditorAssetBundleProviderDrawer : EditorResourceDrawerAutoConfig<As
 
     private AssetBundleManifest BuildAssetBundle(BuildAssetBundleOptions options) {
         var buildPath = config.GetBuildPath();
-        if (ResourceGenerator.TryGenerateAssetBundle(buildPath, options, config.selectBuildTarget, out var manifest)) {
+        var manifest = config.isSelectableBuild
+            ? ResourceGenerator.GenerateAssetBundle(buildPath, options, config.selectBuildTarget, config.assetBundleInfoDic.Values.Where(x => x.isSelect).Select(x => x.name).ToArray()) 
+            : ResourceGenerator.GenerateAssetBundle(buildPath, options, config.selectBuildTarget);
+        
+        if (manifest != null) {
             if (config.isGenerateChecksumInfo) {
                 var checksumInfoPath = $"{buildPath}/{(string.IsNullOrEmpty(config.checksumFileName) ? nameof(AssetBundleChecksumInfo) : config.checksumFileName)}";
                 var info = GenerateChecksumInfo(manifest, buildPath);
@@ -314,7 +326,7 @@ public class EditorAssetBundleProviderDrawer : EditorResourceDrawerAutoConfig<As
             if (config.isAssetBundleEncrypted) {
                 manifest.GetAllAssetBundles().ForEach(name => EncryptAssetBundle(buildPath, name));
             } else if (config.isAssetBundleSelectableEncrypted) {
-                config.selectAssetBundleDic.Where(pair => pair.Value).Select(pair => pair.Key).ForEach(name => EncryptAssetBundle(buildPath, name));
+                config.assetBundleInfoDic.Values.Where(x => x.isEncrypt).Select(x => x.name).ForEach(name => EncryptAssetBundle(buildPath, name));
             }
 
             // The process must be handled only after obtaining CRC information.
@@ -362,6 +374,12 @@ public class EditorAssetBundleProviderDrawer : EditorResourceDrawerAutoConfig<As
             Logger.TraceError($"{nameof(SystemUtil.TryReadAllBytes)} Failed.\n{assetBundlePath}");
         }
     }
+    
+    private void RefreshAssetBundle() {
+        config.RefreshAssetBundle();
+        config.assetBundleInfoDic.Values.ForEach(info => _assetBundleTreeView.Add(info));
+        _assetBundleTreeView.Reload();
+    }
 }
 
 public struct AssetBundleBuildInfo {
@@ -384,12 +402,13 @@ public class AssetBundleProviderConfig : JsonAutoConfig {
     public string buildDirectory = "";
     public bool isClearAssetBundleManifest = true;
     public bool isLogBuildSetting = true;
+    public bool isSelectableBuild = false;
     
     public bool isAssetBundleManifestEncrypted;
     public bool isAssetBundleEncrypted;
     public bool isAssetBundleSelectableEncrypted;
-    public readonly Dictionary<string, bool> selectAssetBundleDic = new();
-    
+    public readonly SortedDictionary<string, AssetBundleSelectableInfo> assetBundleInfoDic = new();
+
     public bool isGenerateChecksumInfo;
     public bool isEncryptChecksum;
     public string checksumFileName = nameof(AssetBundleChecksumInfo);
@@ -405,14 +424,28 @@ public class AssetBundleProviderConfig : JsonAutoConfig {
 
     public AssetBundleBuildInfo this[int index] => _lastBuildInfoList[index];
     public void AddBuildInfo(AssetBundleBuildInfo info) => _lastBuildInfoList.LimitedAdd(info, MAX_BUILD_LOG);
+    public void RefreshAssetBundle() => assetBundleInfoDic.Sync(AssetDatabase.GetAllAssetBundleNames().Where(Path.HasExtension).ToHashSet(), key => new AssetBundleSelectableInfo(key));
+
     public int GetInfoCount() => _lastBuildInfoList.Count;
     public string GetBuildPath() => $"{buildDirectory}/{selectBuildTarget}";
     
     public bool IsActiveAssetBundleEncrypt() => isAssetBundleEncrypted || isAssetBundleSelectableEncrypted;
-    public bool IsActiveEncrypt() => isAssetBundleManifestEncrypted || isAssetBundleEncrypted || isAssetBundleSelectableEncrypted || isEncryptChecksum;
+    public bool IsActiveEncrypt() => isAssetBundleManifestEncrypted || isAssetBundleEncrypted || isAssetBundleSelectableEncrypted;
 
     public override bool IsNull() => this is NullConfig;
     public class NullConfig : AssetBundleProviderConfig { }
+}
+
+public record AssetBundleSelectableInfo {
+    
+    public string name;
+    public bool isSelect;
+    public bool isEncrypt;
+
+    public AssetBundleSelectableInfo(string name) {
+        this.name = name;
+        isEncrypt = false;
+    }
 }
 
 public record AssetBundleChecksumInfo {
@@ -433,5 +466,136 @@ public record AssetBundleChecksumInfo {
 
         return (0, null);
     }
+}
 
+internal class AssetBundleTreeView : TreeView {
+
+    private readonly SearchField searchField = new();
+    private readonly Dictionary<string, TreeViewItem> _itemDic = new();
+
+    private AssetBundleProviderConfig _bindConfig;
+    
+    private static readonly MultiColumnHeader HEADER = new(new MultiColumnHeaderState(new [] {
+        new MultiColumnHeaderState.Column {
+            headerContent = new GUIContent("No"),
+            headerTextAlignment = TextAlignment.Center,
+            allowToggleVisibility = false,
+            minWidth = 35f,
+            maxWidth = 35f,
+            autoResize = true,
+            canSort = true,
+        },
+        new MultiColumnHeaderState.Column {
+            headerContent = new GUIContent("이름"),
+            allowToggleVisibility = false,
+            canSort = true,
+            autoResize = true,
+            minWidth = 150f,
+        },
+        new MultiColumnHeaderState.Column {
+            headerContent = new GUIContent("선택적 암호화"),
+            headerTextAlignment = TextAlignment.Center,
+            allowToggleVisibility = false,
+            autoResize = true,
+            canSort = true,
+            minWidth = 90f,
+            maxWidth = 90f,
+        },
+        new MultiColumnHeaderState.Column {
+            headerContent = new GUIContent("선택적 빌드"),
+            headerTextAlignment = TextAlignment.Center,
+            allowToggleVisibility = false,
+            autoResize = true,
+            canSort = true,
+            minWidth = 90f,
+            maxWidth = 90f,
+        },
+    }));
+    
+    public AssetBundleTreeView(TreeViewState state) : base(state) {
+        multiColumnHeader = HEADER;
+        multiColumnHeader.sortingChanged += OnSortingChanged;
+        multiColumnHeader.ResizeToFit();
+    }
+
+    protected override TreeViewItem BuildRoot() => new() { id = 0, depth = -1, children = _itemDic.ToValueList() };
+    protected override bool DoesItemMatchSearch(TreeViewItem item, string search) => item is AssetBundleTreeViewItem bundleItem && bundleItem.info.name.IndexOf(search, StringComparison.OrdinalIgnoreCase) >= 0;
+
+    public void Draw() {
+        searchString = searchField.OnToolbarGUI(searchString);
+        OnGUI(new Rect(EditorGUILayout.GetControlRect(GUILayout.ExpandWidth(true), GUILayout.ExpandHeight(true), GUILayout.MinHeight(200f), GUILayout.MaxHeight(500f))));
+    }
+    
+    protected override void RowGUI(RowGUIArgs args) {
+        if (args.item is AssetBundleTreeViewItem item) {
+            EditorGUI.LabelField(args.GetCellRect(0), item.id.ToString(), Constants.Editor.CENTER_LABEL);
+            EditorGUI.LabelField(args.GetCellRect(1), item.info.name);
+
+            using (new EditorGUI.DisabledGroupScope(_bindConfig is not { isAssetBundleSelectableEncrypted: not false })) {
+                item.info.isEncrypt = EditorGUI.Toggle(args.GetCellRect(2).GetCenterRect(EditorCommon.TOGGLE_FIT_SIZE), item.info.isEncrypt);
+            }
+
+            using (new EditorGUI.DisabledGroupScope(_bindConfig is not { isSelectableBuild: not false})) {
+                item.info.isSelect = EditorGUI.Toggle(args.GetCellRect(3).GetCenterRect(EditorCommon.TOGGLE_FIT_SIZE), item.info.isSelect);
+            }
+        }
+    }
+
+    public void Add(AssetBundleSelectableInfo info) {
+        if (_itemDic.ContainsKey(info.name) == false) {
+            _itemDic.Add(info.name, new AssetBundleTreeViewItem(_itemDic.Count, info));
+        }
+    }
+
+    private void OnSortingChanged(MultiColumnHeader header) {
+        var rows = GetRows();
+        if (rows.Count <= 1 || header.sortedColumnIndex == -1) {
+            return;
+        }
+            
+        var sortedColumns = header.state.sortedColumns;
+        if (sortedColumns.Length <= 0) {
+            return;
+        }
+            
+        var enumerable = rootItem.children.Cast<AssetBundleTreeViewItem>();
+        var isAscending = multiColumnHeader.IsSortedAscending(sortedColumns.First());
+        switch (EnumUtil.ConvertInt<SORT_TYPE>(sortedColumns.First())) {
+            case SORT_TYPE.NO:
+                enumerable = enumerable.OrderBy(x => x.id, isAscending);
+                break;
+            case SORT_TYPE.NAME:
+                enumerable = enumerable.OrderBy(x => x.info.name, isAscending);
+                break;
+            case SORT_TYPE.SELECTABLE_ENCRYPT:
+                enumerable = enumerable.OrderBy(x => x.info.isEncrypt, isAscending);
+                break;
+        }
+
+        rootItem.children = enumerable.CastList<TreeViewItem>();
+            
+        rows.Clear();
+        rootItem.children.ForEach(x => rows.Add(x));
+            
+        Repaint();
+    }
+
+    public void SetConfig(AssetBundleProviderConfig config) => _bindConfig = config;
+    
+    private sealed class AssetBundleTreeViewItem : TreeViewItem {
+    
+        public AssetBundleSelectableInfo info;
+
+        public AssetBundleTreeViewItem(int id, AssetBundleSelectableInfo info) {
+            this.id = id;
+            this.info = info;
+            depth = 0;
+        }
+    }
+
+    private enum SORT_TYPE {
+        NO,
+        NAME,
+        SELECTABLE_ENCRYPT,
+    }
 }

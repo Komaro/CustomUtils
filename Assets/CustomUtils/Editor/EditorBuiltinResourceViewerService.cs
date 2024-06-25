@@ -39,7 +39,7 @@ public class EditorBuiltinResourceViewerService : EditorWindow {
             new MultiColumnHeaderState.Column {
                 headerContent = new GUIContent("Content"),
                 width = 300f,
-                minWidth = 500f,
+                minWidth = 300f,
                 allowToggleVisibility = false,
                 canSort = true,
             }

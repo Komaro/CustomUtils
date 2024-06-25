@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Newtonsoft.Json.Linq;
@@ -47,9 +48,6 @@ public static class ResourceGenerator {
         }
     }
 
-    [MenuItem("Service/Test/GenerateAssetBundle")]
-    private static void TestGenerateAssetBundle() => GenerateAssetBundle($"C:/Project/Unity/CustomUtils/AssetBundle/{EditorUserBuildSettings.activeBuildTarget}", BuildAssetBundleOptions.None, EditorUserBuildSettings.activeBuildTarget);
-
     public static bool TryGenerateAssetBundle(string generatePath, BuildAssetBundleOptions options, BuildTarget target, out AssetBundleManifest manifest) {
         manifest = GenerateAssetBundle(generatePath, options, target);
         return manifest != null;
@@ -57,15 +55,47 @@ public static class ResourceGenerator {
     
     public static AssetBundleManifest GenerateAssetBundle(string generatePath, BuildAssetBundleOptions options, BuildTarget target) {
         try {
-            if (Directory.Exists(generatePath) == false) {
-                Directory.CreateDirectory(generatePath);
-            }
-            
+            SystemUtil.EnsureDirectoryExists(generatePath);
             return BuildPipeline.BuildAssetBundles(generatePath, options, target);
-        } catch (Exception e) {
-            Logger.TraceError(e);
+        } catch (Exception ex) {
+            Logger.TraceError(ex);
         }
         
+        return null;
+    }
+
+    public static bool TryGenerateAssetBundle(out AssetBundleManifest manifest, string generatePath, BuildAssetBundleOptions options, BuildTarget target, params string[] assetBundles) {
+        manifest = GenerateAssetBundle(generatePath, options, target, assetBundles);
+        return manifest != null;
+    }
+    
+    public static bool TryGenerateAssetBundle(out AssetBundleManifest manifest, string generatePath, BuildAssetBundleOptions options, BuildTarget target, params AssetBundleBuild[] assetBundles) {
+        manifest = GenerateAssetBundle(generatePath, options, target, assetBundles);
+        return manifest != null;
+    }
+    
+    public static AssetBundleManifest GenerateAssetBundle(string generatePath, BuildAssetBundleOptions options, BuildTarget target, params string[] assetBundles) {
+        var buildList = new List<AssetBundleBuild>();
+        foreach (var name in assetBundles) {
+            var info = new AssetBundleBuild {
+                assetBundleName = name,
+                assetNames = AssetDatabase.GetAssetPathsFromAssetBundle(name)
+            };
+
+            buildList.Add(info);
+        }
+
+        return GenerateAssetBundle(generatePath, options, target, buildList.ToArray());
+    }
+
+    public static AssetBundleManifest GenerateAssetBundle(string generatePath, BuildAssetBundleOptions options, BuildTarget target, params AssetBundleBuild[] assetBundles) {
+        try {
+            SystemUtil.EnsureDirectoryExists(generatePath);
+            return BuildPipeline.BuildAssetBundles(generatePath, assetBundles, options, target);
+        } catch (Exception ex) {
+            Logger.TraceError(ex);
+        }
+
         return null;
     }
 }

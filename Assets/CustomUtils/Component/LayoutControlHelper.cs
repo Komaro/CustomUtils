@@ -125,7 +125,7 @@ public class LayoutControlHelper : MonoBehaviour, ILayoutRecursive {
     public void RemoveItemLast(bool isItemSort = false) => RemoveItem(_infoList?.Count - 1 ?? 0, isItemSort);
 
     public void RemoveItem(object info, bool isOnlyActiveSet = false) {
-        if (_itemList.TryFindIndex(x => x.IsMatchingInfo(info), out var index)) {
+        if (_itemList.TryFindIndex(out var index, x => x.IsMatchingInfo(info))) {
             RemoveItem(index, isOnlyActiveSet);
         }
     }
@@ -158,7 +158,7 @@ public class LayoutControlHelper : MonoBehaviour, ILayoutRecursive {
     }
 
     public void UpdateItem(object info, bool isCreate = false) {
-        if (_itemList.TryFindIndex(x => x != null && x.IsActive() && x.IsMatchingInfo(info), out var index)) {
+        if (_itemList.TryFindIndex(out var index, x => x != null && x.IsActive() && x.IsMatchingInfo(info))) {
             index = GetCollectionIndex(index);
             if (index >= 0 && index < _infoList?.Count) {
                 _itemList[index].SetData(info);
@@ -177,7 +177,7 @@ public class LayoutControlHelper : MonoBehaviour, ILayoutRecursive {
         }
         
         index = GetCollectionIndex(index);
-        if (_itemList.TryFind(index, out var item) && index > 0 && index < _infoList.Count) {
+        if (_itemList.TryFind(out var item, index) && index > 0 && index < _infoList.Count) {
             item.SetData(info);
             _infoList[index] = info;
         }
@@ -189,7 +189,7 @@ public class LayoutControlHelper : MonoBehaviour, ILayoutRecursive {
         }
         
         index = GetCollectionIndex(index);
-        if (_itemList.TryFind(index, out var item) && index >= 0 && index < _infoList.Count && _infoList[index] is TInfo info) {
+        if (_itemList.TryFind(out var item, index) && index >= 0 && index < _infoList.Count && _infoList[index] is TInfo info) {
             _infoList[index] = updateFunc.Invoke(info);
             item.SetData(_infoList[index]);
         }
@@ -201,7 +201,7 @@ public class LayoutControlHelper : MonoBehaviour, ILayoutRecursive {
 	    }
         
 	    index = GetCollectionIndex(index);
-	    if (_itemList.TryFind(index, out var item) && index >= 0 && index < _infoList.Count && _infoList[index] is TInfo info) {
+	    if (_itemList.TryFind(out var item, index) && index >= 0 && index < _infoList.Count && _infoList[index] is TInfo info) {
 		    updateAction?.Invoke(info);
 		    item.SetData(info);
 	    }

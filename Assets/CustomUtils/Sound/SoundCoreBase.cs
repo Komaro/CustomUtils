@@ -162,7 +162,7 @@ public abstract class SoundCoreBase : MonoBehaviour {
         return enumList is { Count: > 0 };
     }
 
-    protected virtual List<Enum> GetEnumList<T>() where T : Attribute => ReflectionManager.TryGetAttributeEnumTypes<T>(out var types) ? types.SelectMany(x => Enum.GetValues(x).Cast<Enum>()).ToList() : null;
+    protected virtual List<Enum> GetEnumList<T>() where T : Attribute => ReflectionProvider.TryGetAttributeEnumTypes<T>(out var types) ? types.SelectMany(x => Enum.GetValues(x).Cast<Enum>()).ToList() : null;
 
     public bool TryGetAudioMixerGroupDic(Enum type, out Dictionary<Enum, AudioMixerGroup> groupDic) {
         groupDic = GetAudioMixerGroupDic(type);

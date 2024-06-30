@@ -49,7 +49,7 @@ public class EditorAssetBundleTesterDrawer : EditorResourceDrawerAutoConfig<Asse
                 config = new AssetBundleTesterConfig.NullConfig();
             }
         }
-
+        
         if (config.isActiveChecksum) {
             if (config.isActiveAutoTrackingChecksum && _bindChecksumInfo == null) {
                 SearchLatestChecksumInfo();

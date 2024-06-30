@@ -10,6 +10,9 @@ public class EditorResourcesProviderDrawer : EditorResourceDrawer {
 
     private readonly string RESOURCES_PATH = $"{Application.dataPath}/{Constants.Resource.RESOURCES_FOLDER}";
 
+    protected override string CONFIG_NAME => string.Empty;
+    protected override string CONFIG_PATH => string.Empty;
+    
     public override void CacheRefresh() { }
 
     public override void Draw() {

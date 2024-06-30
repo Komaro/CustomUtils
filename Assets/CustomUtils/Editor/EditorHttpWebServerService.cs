@@ -55,7 +55,7 @@ public class EditorHttpWebServerService : EditorService {
             _url = _config.url;
         }
 
-        _serveModuleList = ReflectionManager.GetSubClassTypes<HttpServeModule>().ToList();
+        _serveModuleList = ReflectionProvider.GetSubClassTypes<HttpServeModule>().ToList();
     }
     
     private void OnGUI() {
@@ -139,7 +139,7 @@ public class EditorHttpWebServerService : EditorService {
                             if (GUILayout.Button(moduleTextContent, heightOption)) {
                                 StartHttpWebServer();
                                 foreach (var moduleName in modulePreset.moduleNameList) {
-                                    if (_serveModuleList.TryFind(x => x.Name == moduleName, out var type)) {
+                                    if (_serveModuleList.TryFind(out var type, x => x.Name == moduleName)) {
                                         _httpServer.AddServeModule(type);
                                     }
                                 }
@@ -247,7 +247,7 @@ public class EditorHttpWebServerService : EditorService {
         }
 
         public void RemovePreset(ModulePreset removePreset) {
-            if (modulePresetList.TryFindIndex(x => x.IsMatch(removePreset), out var index)) {
+            if (modulePresetList.TryFindIndex(out var index, x => x.IsMatch(removePreset))) {
                 modulePresetList.RemoveAt(index);
             }
         }

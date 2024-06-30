@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using UniRx;
 using UnityEditor;
 using UnityEditor.Callbacks;
 using UnityEngine;
@@ -30,6 +28,7 @@ public class EditorResourceService : EditorService {
     private static readonly string SELECT_DRAWER_SAVE_KEY = $"{nameof(EditorResourceService)}_Drawer";
 
     protected override void OnEditorOpenInitialize() => CacheRefresh();
+    protected override void OnExitingPlayMode() => CacheRefresh();
 
     private void OnDestroy() {
         if (_selectDrawerType != null && _drawerDic.TryGetValue((_selectMenuType, _selectDrawerType), out var drawer)) {
@@ -44,21 +43,21 @@ public class EditorResourceService : EditorService {
         CacheRefresh();
         Window.Focus();
     }
-    
+
     [DidReloadScripts(99999)]
     private static void CacheRefresh() {
         if (HasOpenInstances<EditorResourceService>()) {
-            var providerTypeList = ReflectionManager.GetInterfaceTypes<IResourceProvider>()?.OrderBy(x => x.GetCustomAttribute<ResourceProviderAttribute>()?.order ?? 99).ToList();
+            var providerTypeList = ReflectionProvider.GetInterfaceTypes<IResourceProvider>()?.OrderBy(x => x.GetCustomAttribute<ResourceProviderAttribute>()?.order ?? 99).ToList();
             if (providerTypeList?.Any() ?? false) {
                 _providerTypes = providerTypeList.ToArray();
                 _providerTypeNames = providerTypeList.Select(x => x.Name).ToArray();
             }
             
-            foreach (var type in ReflectionManager.GetSubClassTypes<EditorResourceDrawer>()) {
+            foreach (var type in ReflectionProvider.GetSubClassTypes<EditorResourceDrawer>()) {
                 if (type.TryGetCustomAttribute<EditorResourceDrawerAttribute>(out var attribute)) {
                     var key = (attribute.menuType, attribute.providerType);
-                    if (_drawerDic.TryGetValue(key, out var drawer) == false || drawer == null) {
-                        _drawerDic.Add(key, Activator.CreateInstance(type) as EditorResourceDrawer);
+                    if ((_drawerDic.TryGetValue(key, out var drawer) == false || drawer == null) && SystemUtil.TrySafeCreateInstance(type, out drawer)) {
+                        _drawerDic.AutoAdd(key, drawer);
                     }
                 }
             }
@@ -143,7 +142,11 @@ public class EditorResourceDrawerAttribute : Attribute {
     }
 }
 
+[RequiresAttributeImplementation(typeof(EditorResourceDrawerAttribute))]
 public abstract class EditorResourceDrawer {
+    
+    protected abstract string CONFIG_NAME { get; }
+    protected abstract string CONFIG_PATH { get; }
     
     public virtual void Close() { }
     public virtual void Destroy() { }
@@ -157,9 +160,6 @@ public abstract class EditorResourceDrawerAutoConfig<TConfig, TNullConfig> : Edi
 
     protected TConfig config;
     protected SystemWatcherServiceOrder watcherOrder;
-    
-    protected abstract string CONFIG_NAME { get; }
-    protected abstract string CONFIG_PATH { get; }
 
     protected EditorResourceDrawerAutoConfig() {
         config = new TNullConfig();

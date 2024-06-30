@@ -28,7 +28,7 @@ public class UIManager : Singleton<UIManager> {
 			return ui as T;
 		}
 
-		var getType = ReflectionManager.GetSubClassTypes<UIBase>().FirstOrDefault(x => x == typeof(T));
+		var getType = ReflectionProvider.GetSubClassTypes<UIBase>().FirstOrDefault(x => x == typeof(T));
 		if (getType == null) {
 			Logger.TraceError($"{nameof(getType)} is Null");
 			return null;
@@ -114,7 +114,7 @@ public class UIManager : Singleton<UIManager> {
 
 	protected IUIOptionExecute GetOptionExecute(Enum type) {
 		if (_optionExecuteDic.TryGetValue(type, out var execute) == false) {
-			var executeType = ReflectionManager.GetInterfaceTypes<IUIOptionExecute>().First(x => x.TryGetCustomAttribute<UIOptionExecuteAttribute>(out var attribute) && attribute.type.Equals(type));
+			var executeType = ReflectionProvider.GetInterfaceTypes<IUIOptionExecute>().First(x => x.TryGetCustomAttribute<UIOptionExecuteAttribute>(out var attribute) && attribute.type.Equals(type));
 			if (executeType != null) {
 				if (Activator.CreateInstance(executeType) is IUIOptionExecute newExecute) {
 					execute = newExecute;

@@ -2,6 +2,14 @@
 
 public class PlayModeTestRunner {
 
+    
+    [Test]
+    public void TestGraphicService() {
+        if (Service.TryGetService<GraphicService>(out var service)) {
+            
+        }
+    }
+    
     [Test]
     public void TestResourceService() {
         if (Service.TryGetService<ResourceService>(out var service)) {

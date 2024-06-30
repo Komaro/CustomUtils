@@ -95,6 +95,6 @@ public class Sample_DamageStatisticsService : IService {
         return outDic != null;
     }
     
-    public Dictionary<int, double> GetHistory(int stage) => _statisticsHistoryList.TryFind(stage, out var history) ? history.damageDic : default;
+    public Dictionary<int, double> GetHistory(int stage) => _statisticsHistoryList.TryFind(out var history, stage) ? history.damageDic : default;
     public bool IsClear() => _damageDic.Count <= 0;
 }

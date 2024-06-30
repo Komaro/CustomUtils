@@ -16,7 +16,7 @@ public class LocalizeManager : Singleton<LocalizeManager> {
     private ReactiveProperty<ILocalizeProvider> _bindProvider;
 
     public LocalizeManager() {
-        var enumTypes = ReflectionManager.GetAttributeEnumTypes<LanguageAttribute>();
+        var enumTypes = ReflectionProvider.GetAttributeEnumTypes<LanguageAttribute>();
         if (enumTypes != null) {
             foreach (var type in enumTypes) {
                 foreach (var value in Enum.GetValues(type)) {

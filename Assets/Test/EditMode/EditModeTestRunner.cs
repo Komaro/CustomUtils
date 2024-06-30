@@ -2,8 +2,4 @@
 
 public class EditModeTestRunner {
 
-    [Test]
-    public void TestLogic() {
-        
-    }
 }

@@ -70,7 +70,7 @@ public class EditorBuildService : EditorWindow {
     private static EditorWindow _window;
     private static EditorWindow Window => _window == null ? _window = GetWindow<EditorBuildService>("Build Service") : _window;
     
-    private static readonly Enum DEFAULT_BUILD_TYPE = (Enum) ReflectionManager.GetAttributeEnumTypes<BuildTypeAttribute>().FirstOrDefault()?.GetEnumValues().GetValue(0);
+    private static readonly Enum DEFAULT_BUILD_TYPE = (Enum) ReflectionProvider.GetAttributeEnumTypes<BuildTypeAttribute>().FirstOrDefault()?.GetEnumValues().GetValue(0);
 
     // private static readonly GUILayoutOption Constants.Editor.DEFAULT_LAYOUT = GUILayout.Width(300f);
     
@@ -89,7 +89,7 @@ public class EditorBuildService : EditorWindow {
             _buildType = DEFAULT_BUILD_TYPE;
 
             _buildOptionDic.Clear();
-            var enumTypes = ReflectionManager.GetAttributeEnumTypes<BuildOptionAttribute>();
+            var enumTypes = ReflectionProvider.GetAttributeEnumTypes<BuildOptionAttribute>();
             if (enumTypes != null) {
                 foreach (var type in enumTypes) {
                     var enumAttribute = type.GetCustomAttribute<BuildOptionAttribute>();
@@ -102,7 +102,7 @@ public class EditorBuildService : EditorWindow {
             }
 
             _defineSymbolDic.Clear();
-            var enumType = ReflectionManager.GetAttributeEnumTypes<DefineSymbolAttribute>().FirstOrDefault();
+            var enumType = ReflectionProvider.GetAttributeEnumTypes<DefineSymbolAttribute>().FirstOrDefault();
             if (enumType != null) {
                 foreach (var value in Enum.GetValues(enumType)) {
                     if (value is Enum type) {
@@ -508,7 +508,7 @@ public class EditorBuildService : EditorWindow {
     }
 
     private BuilderAttribute GetBuilderAttribute() {
-        var attributeList = ReflectionManager.GetSubClassTypes<Builder>()?.Where(x => x.GetCustomAttribute<BuilderAttribute>()?.buildType.Equals(_buildType) ?? false).ToList();
+        var attributeList = ReflectionProvider.GetSubClassTypes<Builder>()?.Where(x => x.GetCustomAttribute<BuilderAttribute>()?.buildType.Equals(_buildType) ?? false).ToList();
         if (attributeList is not { Count: > 0 }) {
             return null;
         }

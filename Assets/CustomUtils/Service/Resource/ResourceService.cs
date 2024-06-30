@@ -31,8 +31,8 @@ public class ResourceService : IService {
 
     void IService.Init() {
         try {
-            var providerTypeList = ReflectionManager.GetInterfaceTypes<IResourceProvider>().ToList();
-            _isActiveSubProvider = ReflectionManager.GetAttribute<ResourceSubProviderAttribute>().Any();
+            var providerTypeList = ReflectionProvider.GetInterfaceTypes<IResourceProvider>().ToList();
+            _isActiveSubProvider = ReflectionProvider.GetAttributes<ResourceSubProviderAttribute>().Any();
             if (_isActiveSubProvider) {
                 Logger.TraceLog($"SubProvider is activated. Find {nameof(ResourceSubProviderAttribute)}...", Color.yellow);
                 _subProvider = Init(providerTypeList.Where(x => x.IsDefined<ResourceSubProviderAttribute>()).OrderBy(x => x.GetCustomAttribute<ResourceSubProviderAttribute>().order));

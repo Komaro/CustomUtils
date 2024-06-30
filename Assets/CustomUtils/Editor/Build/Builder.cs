@@ -21,7 +21,7 @@ public class BuildManager : IPostprocessBuildWithReport {
     public static string UNITY_PROJECT_PATH => string.IsNullOrEmpty(_unityProjectPath) ? _unityProjectPath = Application.dataPath.Replace("/Assets", string.Empty) : _unityProjectPath;
     
     public static Builder CreateBuilder(Enum buildType) {
-        var builderType = ReflectionManager.GetSubClassTypes<Builder>()?.Where(x => x.GetCustomAttribute<BuilderAttribute>()?.buildType.Equals(buildType) ?? false).FirstOrDefault();
+        var builderType = ReflectionProvider.GetSubClassTypes<Builder>()?.Where(x => x.GetCustomAttribute<BuilderAttribute>()?.buildType.Equals(buildType) ?? false).FirstOrDefault();
         if (builderType != null && Activator.CreateInstance(builderType) is Builder builder) {
             _builder = builder;
             return _builder;
@@ -56,7 +56,7 @@ public class BuildManager : IPostprocessBuildWithReport {
             Debug.Log($"=============== Start {nameof(BuildOnCLI)} ===============");
             BuildSettings.SetBuildSettingsOnCLI();
             if (BuildSettings.Instance.TryGetValue<string>("buildType", out var typeText)) {
-                var enumType = ReflectionManager.GetAttributeEnumTypes<BuildTypeAttribute>().First()?.GetEnumValues()?.GetValue(0)?.GetType();
+                var enumType = ReflectionProvider.GetAttributeEnumTypes<BuildTypeAttribute>().First()?.GetEnumValues()?.GetValue(0)?.GetType();
                 if (Enum.TryParse(enumType, typeText, out var typeObject) && typeObject is Enum buildType) {
                     _builder = CreateBuilder(buildType);
                     

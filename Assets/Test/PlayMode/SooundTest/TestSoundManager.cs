@@ -27,7 +27,7 @@ public class TestSoundManager : Singleton<TestSoundManager> {
 
     private void InitSound() {
         if (core != null) {
-            foreach (var soundType in ReflectionManager.GetSubClassTypes<SoundBase>()) {
+            foreach (var soundType in ReflectionProvider.GetSubClassTypes<SoundBase>()) {
                 var sound = Activator.CreateInstance(soundType, (object) core);
                 if (sound is SoundBase soundBase) {
                     soundList.Add(soundBase);

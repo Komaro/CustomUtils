@@ -36,7 +36,7 @@ public sealed class Sample_SoundManager : Singleton<Sample_SoundManager> {
         _soundList.Clear();
         if (_core != null) {
             var fieldInfoDic = GetType().GetFields(BindingFlags.Instance | BindingFlags.NonPublic).Where(x => x.FieldType.BaseType == typeof(SoundBase)).ToDictionary(x => x.FieldType, x => x);
-            foreach (var soundType in ReflectionManager.GetSubClassTypes<SoundBase>()) {
+            foreach (var soundType in ReflectionProvider.GetSubClassTypes<SoundBase>()) {
                 if (fieldInfoDic.TryGetValue(soundType, out var fieldInfo) && fieldInfo.GetValue(this) == null) {
                     var sound = Activator.CreateInstance(soundType, this);
                     if (sound is SoundBase Sample_SoundBase) {

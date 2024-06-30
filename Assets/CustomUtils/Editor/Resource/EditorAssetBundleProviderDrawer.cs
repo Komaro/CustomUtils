@@ -46,7 +46,7 @@ public class EditorAssetBundleProviderDrawer : EditorResourceDrawerAutoConfig<As
                 config = new AssetBundleProviderConfig.NullConfig();
             }
         }
-
+        
         _buildInfoCursor = config.GetInfoCount() - 1;
         BUILD_OPTION_LIST.ForEach(option => config.buildOptionDic.TryAdd(option, false));
         

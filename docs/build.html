@@ -1,0 +1,70 @@
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html lang="en-US" data-preset="contrast" data-primary-color="#307FFF"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="robots" content="noindex"><meta name="built-on" content="2024-07-02T13:41:27.2755072"><title>Build | CustomUtils</title><script type="application/json" id="virtual-toc-data">[{"id":"required-implementation","level":0,"title":"Required Implementation","anchor":"#required-implementation"}]</script><script type="application/json" id="topic-shortcuts"></script><link href="https://resources.jetbrains.com/writerside/apidoc/6.10.0-b267/app.css" rel="stylesheet"><meta name="msapplication-TileColor" content="#000000"><link rel="apple-touch-icon" sizes="180x180" href="https://jetbrains.com/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="https://jetbrains.com/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="https://jetbrains.com/favicon-16x16.png"><meta name="msapplication-TileImage" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-144x144.png"><meta name="msapplication-square70x70logo" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-70x70.png"><meta name="msapplication-square150x150logo" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-150x150.png"><meta name="msapplication-wide310x150logo" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-310x150.png"><meta name="msapplication-square310x310logo" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-310x310.png"><meta name="image" content=""><!-- Open Graph --><meta property="og:title" content="Build | CustomUtils"><meta property="og:description" content=""><meta property="og:image" content=""><meta property="og:site_name" content="CustomUtils Help"><meta property="og:type" content="website"><meta property="og:locale" content="en_US"><meta property="og:url" content="writerside-documentation/build.html"><!-- End Open Graph --><!-- Twitter Card --><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content=""><meta name="twitter:title" content="Build | CustomUtils"><meta name="twitter:description" content=""><meta name="twitter:creator" content=""><meta name="twitter:image:src" content=""><!-- End Twitter Card --><!-- Schema.org WebPage --><script type="application/ld+json">{
+    "@context": "http://schema.org",
+    "@type": "WebPage",
+    "@id": "writerside-documentation/build.html#webpage",
+    "url": "writerside-documentation/build.html",
+    "name": "Build | CustomUtils",
+    "description": "",
+    "image": "",
+    "inLanguage":"en-US"
+}</script><!-- End Schema.org --><!-- Schema.org WebSite --><script type="application/ld+json">{
+    "@type": "WebSite",
+    "@id": "writerside-documentation/#website",
+    "url": "writerside-documentation/",
+    "name": "CustomUtils Help"
+}</script><!-- End Schema.org --></head><body data-id="Build" data-main-title="Build" data-article-props="{&quot;seeAlsoStyle&quot;:&quot;links&quot;}" data-template="article" data-breadcrumbs="Main.md|CustomUtils"><div class="wrapper"><main class="panel _main"><header class="panel__header"><div class="container"><h3>CustomUtils  Help</h3><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="inactive"><h1 data-toc="Build" id="Build.md">Build</h1><p id="-teo7xo_66"><a href="https://github.com/Komaro/CustomUtils/tree/main" id="-teo7xo_67" data-external="true" rel="noopener noreferrer"><span class="control" id="-teo7xo_68"><span class="emphasis" id="-teo7xo_69">프로젝트 바로가기</span></span></a></p><p id="-teo7xo_70"><a href="https://github.com/Komaro/CustomUtils/tree/main/Assets/CustomUtils/Editor/Build" id="-teo7xo_71" data-external="true" rel="noopener noreferrer"><span class="control" id="-teo7xo_72"><span class="emphasis" id="-teo7xo_73">소스 코드 바로가기</span></span></a></p><ul class="list _bullet" id="-teo7xo_74"><li class="list__item" id="-teo7xo_75"><p>플랫폼 별 범용 빌드 처리</p></li><li class="list__item" id="-teo7xo_76"></li><li class="list__item" id="-teo7xo_77"><p>Roslyn 적용과 라이브러리 개별 빌드 처리</p></li></ul><section class="chapter"><h2 id="required-implementation" data-toc="required-implementation">Required Implementation</h2><p id="-teo7xo_78">Attribute 를 통한 빌드 에디터 구현</p><div class="tabs" id="-teo7xo_79" data-anchors="[-teo7xo_80,-teo7xo_83,-teo7xo_85]"><div class="tabs__content" data-gtm="tab" id="-teo7xo_80" data-title="Required Attribute"><div class="code-block" data-lang="csharp" data-title="C#">
+            [AttributeUsage(AttributeTargets.Class)] 
+            public class BuilderAttribute : Attribute
+        </div><div class="code-block" data-lang="csharp" data-title="C#">
+            [AttributeUsage(AttributeTargets.Enum)] 
+            public class BuildTypeAttribute : Attribute
+        </div></div><div class="tabs__content" data-gtm="tab" id="-teo7xo_83" data-title="BuildTypeAttribute Sample"><div class="code-block" data-lang="csharp" data-title="C#">
+            [BuildType]
+            public enum BUILD_TYPE {
+                NONE,
+                ANDROID,
+                IOS
+            }
+        </div></div><div class="tabs__content" data-gtm="tab" id="-teo7xo_85" data-title="BuilderAttribute Sample"><div class="code-block" data-lang="csharp" data-title="C#">
+            // Builder 를 상속받는 클래스 작성
+            [Builder(BUILD_TYPE.IOS, BuildTarget.iOS, BuildTargetGroup.iOS)]
+            public class Builder_IOS : Builder {
+                protected override void OnPreProcess() { 
+                    // Implement Build PreProcess
+                }
+                protected override void OnPostProcess() { 
+                    // Implement Build ProProcess
+                }
+            }
+        </div></div></div><section class="chapter"><div class="collapse"><div class="collapse__title"><h3 id="optional-implementation" data-toc="optional-implementation">Optional Implementation</h3></div><div class="collapse__content"><div class="tabs" id="-teo7xo_87" data-anchors="[-teo7xo_88,-teo7xo_91,-teo7xo_95]"><div class="tabs__content" data-gtm="tab" id="-teo7xo_88" data-title="Optional Attribute"><div class="code-block" data-lang="csharp" data-title="C#">
+            [AttributeUsage(AttributeTargets.Enum)]
+            public class BuildOptionAttribute : Attribute
+        </div><div class="code-block" data-lang="csharp" data-title="C#">
+            [AttributeUsage(AttributeTargets.Enum)]
+            public class DefineSymbolAttribute : Attribute
+        </div></div><div class="tabs__content" data-gtm="tab" id="-teo7xo_91" data-title="BuildOptionAttribute Sample"><div class="code-block" data-lang="csharp" data-title="C#">
+            [BuildOption]
+            public enum COMMON_BUILD_OPTION_TYPE {
+                IL2Cpp,
+            }
+        </div><div class="code-block" data-lang="csharp" data-title="C#">
+            [BuildOption(BuildTargetGroup.Android)]
+            public enum ANDROID_BUILD_OPTION_TYPE {
+                DEBUG_ANDROID,
+                RELEASE_ANDROID,
+            }
+        </div><div class="code-block" data-lang="csharp" data-title="C#">
+            [BuildOption(BuildTargetGroup.iOS)]
+            public enum IOS_BUILD_OPTION_TYPE {
+                DEBUG_IOS,
+                RELEASE_IOS,
+            }
+        </div></div><div class="tabs__content" data-gtm="tab" id="-teo7xo_95" data-title="DefineSymbolAttribute Sample"><div class="code-block" data-lang="csharp" data-title="C#">
+        [DefineSymbol]
+        public enum BUILD_DEFINE_SYMBOL_TYPE {
+            DEBUG_LOG,
+            DISABLE_ERROR,
+            ACTIVE_DEBUG_MODE,
+        }
+        </div></div></div></div></div></section></section><div class="last-modified">Last modified: 02 July 2024</div><div data-feedback-placeholder="true"></div><div class="navigation-links _bottom"><a href="sound.html" class="navigation-links__prev">Sound</a></div></article><div id="disqus_thread"></div></div></section></main></div><script src="https://resources.jetbrains.com/writerside/apidoc/6.10.0-b267/app.js"></script></body></html>

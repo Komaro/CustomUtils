@@ -70,7 +70,8 @@ public class EditorBuildService : EditorWindow {
     private static EditorWindow _window;
     private static EditorWindow Window => _window == null ? _window = GetWindow<EditorBuildService>("Build Service") : _window;
     
-    private static readonly Enum DEFAULT_BUILD_TYPE = (Enum) ReflectionProvider.GetAttributeEnumTypes<BuildTypeAttribute>().FirstOrDefault()?.GetEnumValues().GetValue(0);
+    // TODO. 기능 제거. 역할과 동작이 명확하지 않음. 예외처리를 위해 추가되었으나 적용하기 까다로움. 제거 후 다른 기능으로 대체 예정
+    private static readonly Enum DEFAULT_BUILD_TYPE = (Enum) ReflectionProvider.GetAttributeEnumTypes<BuildTypeEnumAttribute>().FirstOrDefault()?.GetEnumValues().GetValue(0);
 
     // private static readonly GUILayoutOption Constants.Editor.DEFAULT_LAYOUT = GUILayout.Width(300f);
     
@@ -89,10 +90,10 @@ public class EditorBuildService : EditorWindow {
             _buildType = DEFAULT_BUILD_TYPE;
 
             _buildOptionDic.Clear();
-            var enumTypes = ReflectionProvider.GetAttributeEnumTypes<BuildOptionAttribute>();
+            var enumTypes = ReflectionProvider.GetAttributeEnumTypes<BuildOptionEnumAttribute>();
             if (enumTypes != null) {
                 foreach (var type in enumTypes) {
-                    var enumAttribute = type.GetCustomAttribute<BuildOptionAttribute>();
+                    var enumAttribute = type.GetCustomAttribute<BuildOptionEnumAttribute>();
                     foreach (var value in Enum.GetValues(type)) {
                         if (value is Enum optionType) {
                             _buildOptionDic.AutoAdd(enumAttribute.buildTargetGroup, optionType, type.GetField(value.ToString()).GetCustomAttribute<EnumValueAttribute>());
@@ -102,7 +103,7 @@ public class EditorBuildService : EditorWindow {
             }
 
             _defineSymbolDic.Clear();
-            var enumType = ReflectionProvider.GetAttributeEnumTypes<DefineSymbolAttribute>().FirstOrDefault();
+            var enumType = ReflectionProvider.GetAttributeEnumTypes<DefineSymbolEnumAttribute>().FirstOrDefault();
             if (enumType != null) {
                 foreach (var value in Enum.GetValues(enumType)) {
                     if (value is Enum type) {
@@ -116,7 +117,7 @@ public class EditorBuildService : EditorWindow {
     private void OnGUI() {
         _buildType ??= DEFAULT_BUILD_TYPE;
         if (_buildType == default) {
-            EditorGUILayout.HelpBox($"{nameof(BuildTypeAttribute)} 의 구현을 찾을 수 없습니다. {nameof(BuildTypeAttribute)}를 가지는 enum 타입을 하나 이상 구현 혹은 지정하여야 합니다.", MessageType.Error);
+            EditorGUILayout.HelpBox($"{nameof(BuildTypeEnumAttribute)} 의 구현을 찾을 수 없습니다. {nameof(BuildTypeEnumAttribute)}를 가지는 enum 타입을 하나 이상 구현 혹은 지정하여야 합니다.", MessageType.Error);
             return;
         }
         

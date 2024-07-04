@@ -17,7 +17,6 @@ public class EditModeTestRunner {
         using System;
         using UnityEditor.Callbacks;
 
-        
         public class TestClass : AbstractClass {{
 
             [DidReloadScripts]

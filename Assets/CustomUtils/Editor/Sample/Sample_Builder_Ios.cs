@@ -12,7 +12,7 @@ using UnityEditor.iOS.Xcode;
 using AppleAuth.Editor;
 #endif
 
-// [Builder(SAMPLE_BUILD_TYPE.IOS, BuildTarget.iOS, BuildTargetGroup.iOS)]
+[Builder(SAMPLE_BUILD_TYPE.IOS, BuildTarget.iOS, BuildTargetGroup.iOS)]
 public class Sample_Builder_Ios : Builder {
 
     // Ex) "Assets/Plugins/..."
@@ -230,5 +230,10 @@ public class Sample_Builder_Ios : Builder {
             throw new Exception($"Skip Install Pod Progress || {nameof(podContent)} is Null or Empty");
         }
     }
+}
 
+[BuildTypeEnum]
+public enum SAMPLE_BUILD_TYPE {
+    Default,
+    IOS,
 }

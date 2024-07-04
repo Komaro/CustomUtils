@@ -56,7 +56,7 @@ public class BuildManager : IPostprocessBuildWithReport {
             Debug.Log($"=============== Start {nameof(BuildOnCLI)} ===============");
             BuildSettings.SetBuildSettingsOnCLI();
             if (BuildSettings.Instance.TryGetValue<string>("buildType", out var typeText)) {
-                var enumType = ReflectionProvider.GetAttributeEnumTypes<BuildTypeAttribute>().First()?.GetEnumValues()?.GetValue(0)?.GetType();
+                var enumType = ReflectionProvider.GetAttributeEnumTypes<BuildTypeEnumAttribute>().First()?.GetEnumValues()?.GetValue(0)?.GetType();
                 if (Enum.TryParse(enumType, typeText, out var typeObject) && typeObject is Enum buildType) {
                     _builder = CreateBuilder(buildType);
                     
@@ -348,58 +348,6 @@ public abstract class Builder {
     }
 
     #endregion
-}
-
-[AttributeUsage(AttributeTargets.Class)]
-public class BuilderAttribute : Attribute {
-    
-    public Enum buildType;
-    public BuildTarget buildTarget;
-    public BuildTargetGroup buildTargetGroup;
-    
-    /// <param name="buildType">enum Value</param>
-    /// <param name="buildTarget"></param>
-    /// <param name="buildTargetGroup"></param>
-    public BuilderAttribute(object buildType, BuildTarget buildTarget, BuildTargetGroup buildTargetGroup) {
-        if (buildType is Enum enumType) {
-            this.buildType = enumType;
-        } else {
-            this.buildType = default;
-        }
-        
-        this.buildTarget = buildTarget;
-        this.buildTargetGroup = buildTargetGroup;
-    }
-}
-
-[AttributeUsage(AttributeTargets.Enum)]
-public class BuildTypeAttribute : Attribute { }
-
-[AttributeUsage(AttributeTargets.Enum)]
-public class BuildOptionAttribute : Attribute {
-    
-    public BuildTargetGroup buildTargetGroup;
-
-    public BuildOptionAttribute() {
-        this.buildTargetGroup = BuildTargetGroup.Unknown;
-    }
-    
-    public BuildOptionAttribute(BuildTargetGroup buildTargetGroup) {
-        this.buildTargetGroup = buildTargetGroup;
-    }
-}
-
-[AttributeUsage(AttributeTargets.Enum)]
-public class DefineSymbolAttribute : Attribute { }
-
-[AttributeUsage(AttributeTargets.Field)]
-public class EnumValueAttribute : Attribute {
-    
-    public string divideText;
-
-    public EnumValueAttribute(string divideText = "") {
-        this.divideText = divideText;
-    }
 }
 
 //******** Sample Enum Attribute Example ********//

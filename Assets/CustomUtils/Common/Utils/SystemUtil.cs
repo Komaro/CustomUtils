@@ -123,11 +123,11 @@ public static class SystemUtil {
 
     public static void EnsureDirectoryExists(string path) {
         try {
-            if (Constants.Text.FILE_PATH_REGEX.IsMatch(path)) {
+            if (Constants.Regex.FILE_PATH_REGEX.IsMatch(path)) {
                 path = Directory.GetParent(path)?.FullName ?? path;
             }
 
-            if (Constants.Text.FOLDER_PATH_REGEX.IsMatch(path) && Directory.Exists(path) == false) {
+            if (Constants.Regex.FOLDER_PATH_REGEX.IsMatch(path) && Directory.Exists(path) == false) {
                 Logger.TraceLog($"Create Directory || {path}", Color.green);
                 Directory.CreateDirectory(path);
             }

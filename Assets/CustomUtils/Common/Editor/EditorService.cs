@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using UnityEditor;
+using UnityEditor.Callbacks;
 using UnityEngine;
 
+[RequiresStaticMethodImplementation("CacheRefresh", typeof(DidReloadScripts))]
 public abstract class EditorService : EditorWindow {
 
     protected virtual string SessionKey => $"{GetType().Name}_FirstOpen";

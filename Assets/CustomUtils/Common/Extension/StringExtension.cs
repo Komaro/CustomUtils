@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Text;
+using System.Text.RegularExpressions;
 using UnityEngine;
 
 public static class StringExtension {
@@ -34,9 +35,9 @@ public static class StringExtension {
         return string.Empty;
     }
 
-    public static string GetAfterFirst(this string content, string matchContent, StringComparison comp = StringComparison.Ordinal) {
+    public static string GetAfterFirst(this string content, string matchContent, bool includeMatch = false, StringComparison comp = StringComparison.Ordinal) {
         if (content.Contains(matchContent)) {
-            var startIndex = content.IndexOf(matchContent, comp) + matchContent.Length;
+            var startIndex = content.IndexOf(matchContent, comp) + (includeMatch ? 0 : matchContent.Length);
             return content.Length <= startIndex ? string.Empty : content.Substring(startIndex);
         }
 
@@ -51,6 +52,8 @@ public static class StringExtension {
 
         return string.Empty;
     }
+
+    public static string GetUpperBeforeSpace(this string content) => Constants.Regex.UPPER_UNICODE_REGEX.Replace(content, "$1").Trim();
 
     public static List<string> GetAllCaseList(this string content) {
         var list = new List<string> { content, content.ToUpper(), content.ToLower() };

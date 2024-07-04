@@ -5,6 +5,8 @@ using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.Audio;
 
+[RequiresAttributeImplementation(typeof(MasterSoundAttribute))]
+[RequiresAttributeImplementation(typeof(ControlSoundAttribute))]
 public abstract class SoundBase {
 
     protected SoundCoreBase soundCore;

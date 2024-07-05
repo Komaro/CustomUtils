@@ -1,7 +1,11 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Concurrent;
+using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
+using Unity.Collections;
+using Unity.Jobs;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -42,11 +46,13 @@ public class UnityMainThreadDispatcherService : IService {
                 _threadObject.Enqueue(action);
                 break;
             case THREAD_TYPE.CONTEXT:
-                _context.Post(_ => action.Invoke(), null);
+                Enqueue(action);
                 break;
         }
     }
 
+    public void Enqueue(Action action) => _context.Post(_ => action.Invoke(), null);
+    
     public void Enqueue(IEnumerator enumerator) => _threadObject.Enqueue(enumerator);
 
     public bool IsMainThread() => _mainThreadId == Thread.CurrentThread.ManagedThreadId;
@@ -64,7 +70,6 @@ public class UnityMainThreadDispatcherService : IService {
                 hideFlags = HideFlags.HideAndDontSave
             };
             
-            DontDestroyOnLoad(go);
             return go.AddComponent<MainThreadDispatcherObject>();
         }
 

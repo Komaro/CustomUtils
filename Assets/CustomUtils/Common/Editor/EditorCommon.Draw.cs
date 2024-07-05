@@ -31,6 +31,14 @@ public static partial class EditorCommon {
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void DrawVerticalSeparator(float leftSpace = 5f, float rightSpace = 5f) {
+        EditorGUILayout.Space(leftSpace);
+        var rect = EditorGUILayout.GetControlRect(false, GUILayout.ExpandHeight(true), GUILayout.Width(2f));
+        EditorGUI.DrawRect(rect, Color.gray);
+        EditorGUILayout.Space(rightSpace);
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static bool DrawFitButton(GUIContent content) => GUILayout.Button(content, Constants.Editor.FIT_X2_BUTTON, GUILayout.ExpandWidth(false), GUILayout.ExpandHeight(false));
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]

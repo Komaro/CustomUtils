@@ -26,9 +26,6 @@ public class EditorAssetBundleProviderDrawer : EditorResourceDrawerAutoConfig<As
     private Vector2 _buildInfoMemoScrollViewPosition;
     
     private readonly List<BuildAssetBundleOptions> BUILD_OPTION_LIST;
-    private readonly Regex NAME_REGEX = new(@"^[^\\/:*?""<>|]+$");
-    private readonly GUIContent REFRESH_ICON = new (string.Empty, EditorGUIUtility.IconContent("d_Refresh").image);
-    private readonly GUIContent CLEAR_ICON = new (string.Empty, EditorGUIUtility.IconContent("d_clear@2x").image);
 
     protected override string CONFIG_NAME => $"{nameof(AssetBundleProviderConfig)}{Constants.Extension.JSON}";
     protected override string CONFIG_PATH => $"{Constants.Path.COMMON_CONFIG_FOLDER}/{CONFIG_NAME}";
@@ -113,7 +110,7 @@ public class EditorAssetBundleProviderDrawer : EditorResourceDrawerAutoConfig<As
             
             EditorCommon.DrawSeparator();
             using (new GUILayout.HorizontalScope()) {
-                if (EditorCommon.DrawLabelButton("전체 AssetBundle 리스트", REFRESH_ICON, Constants.Editor.AREA_TITLE_STYLE)) {
+                if (EditorCommon.DrawLabelButton("전체 AssetBundle 리스트", Constants.Editor.REFRESH_ICON, Constants.Editor.AREA_TITLE_STYLE)) {
                     RefreshAssetBundle();
                 }
             }
@@ -468,6 +465,9 @@ public record AssetBundleChecksumInfo {
     }
 }
 
+#region [TreeView]
+
+// TODO. EditorServiceTreeView 상속으로 변경
 internal class AssetBundleTreeView : TreeView {
 
     private readonly SearchField searchField = new();
@@ -571,7 +571,7 @@ internal class AssetBundleTreeView : TreeView {
                 enumerable = enumerable.OrderBy(x => x.info.isEncrypt, isAscending);
                 break;
         }
-
+        
         rootItem.children = enumerable.CastList<TreeViewItem>();
             
         rows.Clear();
@@ -598,4 +598,51 @@ internal class AssetBundleTreeView : TreeView {
         NAME,
         SELECTABLE_ENCRYPT,
     }
+}
+
+#endregion
+
+// TODO. Need Extract
+public abstract class EditorServiceTreeView : TreeView {
+
+    protected readonly SearchField searchField = new();
+
+    protected List<TreeViewItem> itemList = new();
+
+    protected OverridenMethod overridenMethod;
+
+    protected EditorServiceTreeView(MultiColumnHeader header) : base(new TreeViewState()) {
+        overridenMethod = new OverridenMethod(GetType(), nameof(OnSortingChanged), nameof(RowGUI));
+        
+        multiColumnHeader = header;
+        multiColumnHeader.ResizeToFit();
+
+        if (overridenMethod.HasOverriden(nameof(OnSortingChanged))) {
+            multiColumnHeader.sortingChanged += OnSortingChanged;
+        }
+
+        if (overridenMethod.HasOverriden(nameof(RowGUI)) == false) {
+            Logger.TraceLog($"{nameof(RowGUI)} has not been overridden.", Color.red);
+        }
+    }
+
+    protected static MultiColumnHeaderState.Column CreateColumn(string headerContent, float minWidth = 20f, float maxWidth = 1000000f, TextAlignment textAlignment = TextAlignment.Center) => new MultiColumnHeaderState.Column {
+        headerContent = new GUIContent(headerContent),
+        headerTextAlignment = textAlignment,
+        allowToggleVisibility = false,
+        minWidth = minWidth,
+        maxWidth = maxWidth,
+        autoResize = true,
+        canSort = true
+    };
+    
+    protected override TreeViewItem BuildRoot() => new() { id = 0, depth = -1, children = itemList };
+    protected override bool DoesItemMatchSearch(TreeViewItem item, string search) => item.displayName.IndexOf(search, StringComparison.OrdinalIgnoreCase) >= 0;
+    
+    public virtual void Draw() {
+        searchString = searchField.OnToolbarGUI(searchString);
+        OnGUI(new Rect(EditorGUILayout.GetControlRect(GUILayout.ExpandWidth(true), GUILayout.ExpandHeight(true), GUILayout.MinHeight(200f), GUILayout.MaxHeight(500f))));
+    }
+
+    protected virtual void OnSortingChanged(MultiColumnHeader header) { }
 }

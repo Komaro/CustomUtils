@@ -47,16 +47,16 @@ public class EditModeTestRunner {
         }}";
 
         // TODO. 모듈화
-        // var syntaxTree = CSharpSyntaxTree.ParseText(SourceText.From(testSource));
-        // var metaDataReferences = AppDomain.CurrentDomain.GetAssemblies()
-        //     .Where(assembly => assembly.IsDynamic == false && string.IsNullOrEmpty(assembly.Location) == false)
-        //     .Select(assembly => MetadataReference.CreateFromFile(assembly.Location)).Cast<MetadataReference>();
-        // var testCompilation = CSharpCompilation.Create("AnalyzerTestAssembly", new[] { syntaxTree }, metaDataReferences, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
-        // var testTargetAnalyzer = new RequiresStaticMethodImplementationAttributeAnalyzer();
-        // var testAnalyzerCompilation = testCompilation.WithAnalyzers(ImmutableArray.Create<DiagnosticAnalyzer>(testTargetAnalyzer));
-        // var result = testAnalyzerCompilation.GetAnalyzerDiagnosticsAsync().Result;
-        //
-        // Logger.TraceLog(result.ToStringCollection(x => $"[{x.Id}] {x.Location}\n{x.GetMessage()}", "\n"));
-        // Assert.AreEqual(0, result.Length);
+        var syntaxTree = CSharpSyntaxTree.ParseText(SourceText.From(testSource));
+        var metaDataReferences = AppDomain.CurrentDomain.GetAssemblies()
+            .Where(assembly => assembly.IsDynamic == false && string.IsNullOrEmpty(assembly.Location) == false)
+            .Select(assembly => MetadataReference.CreateFromFile(assembly.Location)).Cast<MetadataReference>();
+        var testCompilation = CSharpCompilation.Create("AnalyzerTestAssembly", new[] { syntaxTree }, metaDataReferences, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
+        var testTargetAnalyzer = new RequiresStaticMethodImplementationAttributeAnalyzer();
+        var testAnalyzerCompilation = testCompilation.WithAnalyzers(ImmutableArray.Create<DiagnosticAnalyzer>(testTargetAnalyzer));
+        var result = testAnalyzerCompilation.GetAnalyzerDiagnosticsAsync().Result;
+        
+        Logger.TraceLog(result.ToStringCollection(x => $"[{x.Id}] {x.Location}\n{x.GetMessage()}", "\n"));
+        Assert.AreEqual(0, result.Length);
     }
 }

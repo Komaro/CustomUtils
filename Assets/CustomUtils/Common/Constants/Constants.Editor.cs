@@ -7,19 +7,20 @@ public static partial class Constants {
     
     public static class Editor {
 
-        public static readonly GUIStyle LABEL = new (GUI.skin.label) { richText = true };
-        public static readonly GUIStyle BOLD_LABEL = new (LABEL) { fontStyle = FontStyle.Bold };
+        public static readonly GUIStyle LABEL = new(GUI.skin.label) { richText = true };
+        public static readonly GUIStyle BOLD_LABEL = new(LABEL) { fontStyle = FontStyle.Bold };
         public static readonly GUIStyle CENTER_LABEL = new(LABEL) { alignment = TextAnchor.MiddleCenter };
-        public static readonly GUIStyle TEXT_FIELD = new (GUI.skin.textField) { richText = true };
-        public static readonly GUIStyle TEXT_AREA = new (GUI.skin.textArea) { richText = true };
-        public static readonly GUIStyle BUTTON = new (GUI.skin.button) { richText = true };
-        public static readonly GUIStyle TOGGLE = new (GUI.skin.toggle) { richText = true };
-        public static readonly GUIStyle BOX = new (GUI.skin.box) { richText = true };
-        
-        public static readonly GUIStyle FIT_BUTTON = new (BUTTON) { padding = new RectOffset(0, 0, 0, 0)};
-        public static readonly GUIStyle FIT_X2_BUTTON = new (BUTTON) { padding = new RectOffset(2, 2, 2, 2)};
+        public static readonly GUIStyle TEXT_FIELD = new(GUI.skin.textField) { richText = true };
+        public static readonly GUIStyle TEXT_AREA = new(GUI.skin.textArea) { richText = true };
+        public static readonly GUIStyle CLIPPING_TEXT_AREA = new(TEXT_AREA) { wordWrap = true};
+        public static readonly GUIStyle BUTTON = new(GUI.skin.button) { richText = true };
+        public static readonly GUIStyle TOGGLE = new(GUI.skin.toggle) { richText = true };
+        public static readonly GUIStyle BOX = new(GUI.skin.box) { richText = true };
 
-        public static readonly GUIStyle TOGGLE_HORIZONTAL_SCOPE = new (GUIStyle.none) { margin = new RectOffset(0, 15, 0, 0) };
+        public static readonly GUIStyle FIT_BUTTON = new(BUTTON) { padding = new RectOffset(0, 0, 0, 0) };
+        public static readonly GUIStyle FIT_X2_BUTTON = new(BUTTON) { padding = new RectOffset(2, 2, 2, 2) };
+
+        public static readonly GUIStyle TOGGLE_HORIZONTAL_SCOPE = new(GUIStyle.none) { margin = new RectOffset(0, 15, 0, 0) };
             
         public static readonly GUIStyle BLACK_OR_WHITE_LABEL;
         
@@ -30,6 +31,8 @@ public static partial class Constants {
         
         public static readonly GUIContent SHORT_CUT_ICON = new(string.Empty, EditorGUIUtility.IconContent("d_Shortcut Icon").image, "바로가기");
         public static readonly GUIContent FOLDER_OPEN_ICON = new(string.Empty, EditorGUIUtility.IconContent("d_FolderOpened Icon").image, "바로가기");
+        public static readonly GUIContent REFRESH_ICON = new(string.Empty, EditorGUIUtility.IconContent("d_Refresh").image, "새로고침");
+
         
         public static readonly GUILayoutOption DEFAULT_LAYOUT = GUILayout.Width(300f);
     

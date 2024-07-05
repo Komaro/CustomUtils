@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
+﻿using System.Linq;
 using UnityEditor;
 using UnityEditor.Callbacks;
 using UnityEngine;
@@ -13,7 +10,7 @@ public abstract class EditorService : EditorWindow {
 
     private const string ON_LOAD_SESSION_KEY = "EditorServiceOnLoadSessionKey";
 
-    private readonly OverridenMethod _overridenMethod;
+    private OverridenMethod _overridenMethod;
 
     public EditorService() {
         _overridenMethod = new OverridenMethod(GetType(), nameof(OnEnteredEditMode), nameof(OnExitingEditMode), nameof(OnEnteredPlayMode), nameof(OnExitingPlayMode));
@@ -24,6 +21,7 @@ public abstract class EditorService : EditorWindow {
     
     private void OnDestroy() => EditorApplication.playModeStateChanged -= OnPlayModeStateChanged;
 
+    // TODO. InitializeOnLoad 로 전환 테스트
     [InitializeOnLoadMethod]
     private static void OnEditorLoad() {
         if (EditorCommon.TryGetSession(ON_LOAD_SESSION_KEY, out bool isFirstOpen) == false || isFirstOpen == false) {
@@ -77,23 +75,4 @@ public abstract class EditorService : EditorWindow {
     protected virtual void OnExitingEditMode() { }
     protected virtual void OnEnteredPlayMode() { }
     protected virtual void OnExitingPlayMode() { }
-}
-
-public class OverridenMethod {
-
-    private readonly HashSet<string> _overrideSet = new();
-
-    public OverridenMethod(Type type, params string[] methods) {
-        foreach (var method in methods) {
-            if (type.TryGetMethod(method, out var info, BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public)) {
-                var declaringType = info.GetBaseDefinition().DeclaringType;
-                if (declaringType != info.DeclaringType) {
-                    _overrideSet.Add(method);
-                }
-            }
-        }
-    }
-        
-    public bool HasOverriden(Type type) => _overrideSet.Contains(type.Name);
-    public bool HasOverriden(string type) => _overrideSet.Contains(type);
 }

@@ -13,13 +13,13 @@ public static class AnalyzerGenerator {
 
     private static readonly Regex PLUGINS_FOLDER = new(string.Format(Constants.Regex.FOLDER_CONTAINS_FORMAT, Constants.Folder.PLUGINS));
 
-    [MenuItem("Analyzer/Test Call")]
+    // [MenuItem("Analyzer/Test Call")]
     private static void TestCall() {
         GenerateCustomAnalyzerDll();
     }
 
     public static void GenerateCustomAnalyzerDll(params string[] sourceFiles) {
-        if (sourceFiles.Length <= 0) {
+        if (sourceFiles is not { Length: > 0 }) {
             Logger.TraceLog($"{nameof(sourceFiles)} is empty. Building all Analyzers that inherit from {nameof(DiagnosticAnalyzer)}.", Color.yellow);
             var sourceFileDic = AssemblyProvider.GetUnityAssembly().Values.SelectMany(x => x.sourceFiles).ToDictionaryWithDistinct(Path.GetFileNameWithoutExtension, path => path);
             var implementAnalyzerPathDic = ReflectionProvider.GetSubClassTypes<DiagnosticAnalyzer>().Where(type => PLUGINS_FOLDER.IsMatch(type.Assembly.Location) == false).Select(type => type.Name).ToDictionary(name => name, name => sourceFileDic.TryGetValue(name, out var path) ? path : string.Empty);

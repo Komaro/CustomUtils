@@ -20,7 +20,9 @@
         "nunit.framework.dll",
         "Microsoft.CodeAnalysis.dll",
         "Microsoft.CodeAnalysis.CSharp.dll",
-        "System.Collections.Immutable.dll"
+        "System.Collections.Immutable.dll",
+        "Microsoft.CodeAnalysis.Workspaces.dll",
+        "Microsoft.CodeAnalysis.Workspaces.MSBuild.dll"
     ],
     "autoReferenced": false,
     "defineConstraints": [

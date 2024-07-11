@@ -8,7 +8,7 @@ public class EditorResourcesProviderDrawer : EditorResourceDrawer {
 
     private JObject _resourcesListJson;
 
-    private readonly string RESOURCES_PATH = $"{Application.dataPath}/{Constants.Resource.RESOURCES_FOLDER}";
+    private readonly string RESOURCES_PATH = $"{Application.dataPath}/{Constants.Folder.RESOURCES}";
 
     protected override string CONFIG_NAME => string.Empty;
     protected override string CONFIG_PATH => string.Empty;
@@ -23,7 +23,7 @@ public class EditorResourcesProviderDrawer : EditorResourceDrawer {
                     CreateResourcesFolder();
                 }
             } else {
-                var resourcesListJsonPath = $"Assets/{Constants.Resource.RESOURCES_FOLDER}/{Constants.Resource.RESOURCE_LIST_JSON}";
+                var resourcesListJsonPath = $"Assets/{Constants.Folder.RESOURCES}/{Constants.Resource.RESOURCE_LIST_JSON}";
                 var textAsset = AssetDatabase.LoadAssetAtPath<TextAsset>(resourcesListJsonPath);
                 if (textAsset != null) {
                     _resourcesListJson = JObject.Parse(textAsset.text);

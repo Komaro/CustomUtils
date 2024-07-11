@@ -121,7 +121,7 @@ public class EditorBuildService : EditorWindow {
             return;
         }
         
-        EditorGUILayout.LabelField("==================== Build Setting ====================", Constants.Editor.DIVIDE_STYLE);
+        EditorGUILayout.LabelField("==================== Build Setting ====================", Constants.Draw.DIVIDE_STYLE);
         if (GUILayout.Button("Clear Build Path", GUILayout.Width(150f), GUILayout.Height(20f))) {
             _buildPath = string.Empty;
         }
@@ -140,7 +140,7 @@ public class EditorBuildService : EditorWindow {
             FixBuildPath();
         }
         
-        EditorGUILayout.LabelField("Path : ", _buildPath, Constants.Editor.PATH_STYLE);
+        EditorGUILayout.LabelField("Path : ", _buildPath, Constants.Draw.PATH_STYLE);
         EditorGUILayout.Space();
         
         // Build Type Select
@@ -232,43 +232,43 @@ public class EditorBuildService : EditorWindow {
         _stackTraceLogType = (StackTraceLogType) EditorGUILayout.EnumPopup("StackTraceLogType :", _stackTraceLogType);
 
         using (new EditorGUILayout.HorizontalScope()) {
-            EditorGUILayout.LabelField("Ignore Resources Reimport", Constants.Editor.DEFAULT_LAYOUT);
+            EditorGUILayout.LabelField("Ignore Resources Reimport", Constants.Draw.DEFAULT_LAYOUT);
             _ignoreResourcesReimport = EditorGUILayout.Toggle(_ignoreResourcesReimport);
         }
         
         using (new EditorGUILayout.HorizontalScope()) {
-            EditorGUILayout.LabelField("Clean Burst Debug", Constants.Editor.DEFAULT_LAYOUT);
+            EditorGUILayout.LabelField("Clean Burst Debug", Constants.Draw.DEFAULT_LAYOUT);
             _cleanBurstDebug = EditorGUILayout.Toggle(_cleanBurstDebug);
         }
         
         using (new EditorGUILayout.HorizontalScope()) {
-            EditorGUILayout.LabelField("Clean IL2CPP Sludge", Constants.Editor.DEFAULT_LAYOUT);
+            EditorGUILayout.LabelField("Clean IL2CPP Sludge", Constants.Draw.DEFAULT_LAYOUT);
             _cleanIL2CPPSludge = EditorGUILayout.Toggle(_cleanIL2CPPSludge);
         }
 
         using (new EditorGUILayout.HorizontalScope()) {
-            EditorGUILayout.LabelField("Reveal In Finder", Constants.Editor.DEFAULT_LAYOUT);
+            EditorGUILayout.LabelField("Reveal In Finder", Constants.Draw.DEFAULT_LAYOUT);
             _revealInFinder = EditorGUILayout.Toggle(_revealInFinder);
         }
         
         using (new EditorGUILayout.HorizontalScope()) {
-            EditorGUILayout.LabelField("DevelpmentBuild", Constants.Editor.DEFAULT_LAYOUT);
+            EditorGUILayout.LabelField("DevelpmentBuild", Constants.Draw.DEFAULT_LAYOUT);
             _developmentBuild = EditorGUILayout.Toggle(_developmentBuild);
         }
 
         if (_developmentBuild) {
             using (new EditorGUILayout.HorizontalScope()) {
-                EditorGUILayout.LabelField("Auto Connect Profile", Constants.Editor.DEFAULT_LAYOUT);
+                EditorGUILayout.LabelField("Auto Connect Profile", Constants.Draw.DEFAULT_LAYOUT);
                 _autoConnectProfile = EditorGUILayout.Toggle(_autoConnectProfile);
             }
             
             using (new EditorGUILayout.HorizontalScope()) {
-                EditorGUILayout.LabelField("Deep Profiling Support", Constants.Editor.DEFAULT_LAYOUT);
+                EditorGUILayout.LabelField("Deep Profiling Support", Constants.Draw.DEFAULT_LAYOUT);
                 _deepProfilingSupport = EditorGUILayout.Toggle(_deepProfilingSupport);
             }
             
             using (new EditorGUILayout.HorizontalScope()) {
-                EditorGUILayout.LabelField("Script Debugging", Constants.Editor.DEFAULT_LAYOUT);
+                EditorGUILayout.LabelField("Script Debugging", Constants.Draw.DEFAULT_LAYOUT);
                 _scriptDebugging = EditorGUILayout.Toggle(_scriptDebugging);
             }
         }
@@ -291,7 +291,7 @@ public class EditorBuildService : EditorWindow {
             }
             
             using (new EditorGUILayout.HorizontalScope()) {
-                EditorGUILayout.LabelField(key.ToString(), Constants.Editor.DEFAULT_LAYOUT);
+                EditorGUILayout.LabelField(key.ToString(), Constants.Draw.DEFAULT_LAYOUT);
                 selected[i] = EditorGUILayout.Toggle(selected[i]);
             }
             
@@ -317,8 +317,8 @@ public class EditorBuildService : EditorWindow {
         DrawSpace(3);
 
         using(new EditorGUILayout.HorizontalScope()) {
-            EditorGUILayout.TextField("DefineSymbols", Constants.Editor.BOLD_LABEL, GUILayout.Width(150));
-            EditorGUILayout.TextField(_defineSymbols, Constants.Editor.BOLD_LABEL);
+            EditorGUILayout.TextField("DefineSymbols", Constants.Draw.BOLD_LABEL, GUILayout.Width(150));
+            EditorGUILayout.TextField(_defineSymbols, Constants.Draw.BOLD_LABEL);
         }
 	}
     
@@ -336,7 +336,7 @@ public class EditorBuildService : EditorWindow {
                 }
                 
                 using (new EditorGUILayout.HorizontalScope()) {
-                    EditorGUILayout.LabelField(option.Key.ToString().Replace('_', ' '), Constants.Editor.DEFAULT_LAYOUT);
+                    EditorGUILayout.LabelField(option.Key.ToString().Replace('_', ' '), Constants.Draw.DEFAULT_LAYOUT);
                     if (_optionDic.ContainsKey(option.Key) == false) {
                         _optionDic.Add(option.Key, false);
                     }
@@ -356,7 +356,7 @@ public class EditorBuildService : EditorWindow {
                     EditorGUILayout.Space();
                 } else {
                     if (string.IsNullOrEmpty(x) == false) {
-                        EditorGUILayout.LabelField(x, Constants.Editor.DEFAULT_LAYOUT);
+                        EditorGUILayout.LabelField(x, Constants.Draw.DEFAULT_LAYOUT);
                     }
                 }
             });
@@ -369,27 +369,27 @@ public class EditorBuildService : EditorWindow {
         DrawSpace(3);
 
         using (new EditorGUILayout.HorizontalScope()) {
-            EditorGUILayout.LabelField("Bundle Version Code", Constants.Editor.DEFAULT_LAYOUT);
+            EditorGUILayout.LabelField("Bundle Version Code", Constants.Draw.DEFAULT_LAYOUT);
             _bundleVersionCode = Convert.ToInt32(EditorGUILayout.TextField(_bundleVersionCode.ToString()));
         }
 
         using (new EditorGUILayout.HorizontalScope()) {
-            EditorGUILayout.LabelField("useAPKExpansionFiles", Constants.Editor.DEFAULT_LAYOUT);
+            EditorGUILayout.LabelField("useAPKExpansionFiles", Constants.Draw.DEFAULT_LAYOUT);
             _useAPKExpansionFiles = EditorGUILayout.Toggle(_useAPKExpansionFiles);
         }
         
         using (new EditorGUILayout.HorizontalScope()) {
-            EditorGUILayout.LabelField("buildAppBundle", Constants.Editor.DEFAULT_LAYOUT);
+            EditorGUILayout.LabelField("buildAppBundle", Constants.Draw.DEFAULT_LAYOUT);
             _buildAppBundle = EditorGUILayout.Toggle(_buildAppBundle);
         }
         
         using (new EditorGUILayout.HorizontalScope()) {
-            EditorGUILayout.LabelField("buildApkPerCpuArchitecture", Constants.Editor.DEFAULT_LAYOUT);
+            EditorGUILayout.LabelField("buildApkPerCpuArchitecture", Constants.Draw.DEFAULT_LAYOUT);
             _buildApkPerCpuArchitecture = EditorGUILayout.Toggle(_buildApkPerCpuArchitecture);
         }
         
         using (new EditorGUILayout.HorizontalScope()) {
-            EditorGUILayout.LabelField("exportAsGoogleAndroidProject", Constants.Editor.DEFAULT_LAYOUT);
+            EditorGUILayout.LabelField("exportAsGoogleAndroidProject", Constants.Draw.DEFAULT_LAYOUT);
             _exportAsGoogleAndroidProject = EditorGUILayout.Toggle(_exportAsGoogleAndroidProject);
         }
         

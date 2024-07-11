@@ -1,5 +1,6 @@
 ﻿using System.Globalization;
 using System.IO;
+using System.Linq;
 using UnityEngine;
 using SystemPath = System.IO.Path;
 using SystemRegex = System.Text.RegularExpressions.Regex;
@@ -14,6 +15,8 @@ public static partial class Constants {
         public const string PDB = ".pdb";
 
         public const string JSON_FILTER = "*.json";
+        public const string SOLUTION_FILTER = "*.sln";
+        public const string TEST_CASE_FILTER = "*.tc";
     }
 
     public static class Culture {
@@ -23,7 +26,6 @@ public static partial class Constants {
 
     public static class Resource {
 
-        public const string RESOURCES_FOLDER = "Resources";
         public const string RESOURCE_LIST = "ResourceList";
         
         public const string RESOURCE_LIST_JSON = "ResourceList.json";
@@ -34,20 +36,30 @@ public static partial class Constants {
         public const string DEFAULT_LOCAL_HOST = "http://localhost:8000/";
     }
 
+    public static class File {
+
+        public static readonly string SOLUTION;
+        
+        static File() => SOLUTION = Path.SOLUTION_PATH != default ? SystemPath.GetFileName(Path.SOLUTION_PATH) : string.Empty;
+    }
+
+    public static class Path {
+        public static readonly string PROJECT_PATH = Directory.GetParent(Application.dataPath)?.FullName;
+        public static readonly string SOLUTION_PATH = Directory.GetFiles(PROJECT_PATH, Extension.SOLUTION_FILTER).FirstOrDefault();
+        
+        public static readonly string COMMON_CONFIG_FOLDER = $"{PROJECT_PATH}/{Folder.CONFIG}";
+        public static readonly string PROJECT_TEMP_FOLDER = $"{PROJECT_PATH}/{Folder.TEMP}";
+        public static readonly string PLUGINS_FOLDER = $"{Application.dataPath}/{Folder.PLUGINS}";
+    }
+
     public static class Folder {
 
         public const string CONFIG = "Config";
         public const string TEMP = "Temp";
         public const string SCRIPT_ASSEMBLIES = "ScriptAssemblies";
         public const string PLUGINS = "Plugins";
-    }
-
-    public static class Path {
-        
-        public static readonly string PROJECT_FOLDER = Directory.GetParent(Application.dataPath)?.FullName;
-        public static readonly string COMMON_CONFIG_FOLDER = $"{PROJECT_FOLDER}/{Folder.CONFIG}";
-        public static readonly string PROJECT_TEMP_FOLDER = $"{PROJECT_FOLDER}/{Folder.TEMP}";
-        public static readonly string PLUGINS_FOLDER = $"{Application.dataPath}/{Folder.PLUGINS}";
+        public const string RESOURCES = "Resources";
+        public static readonly string ASSETS = "Assets";
     }
 
     public static class Regex {
@@ -59,16 +71,6 @@ public static partial class Constants {
         public const string FOLDER_CONTAINS_FORMAT = @".*[\\/](?i){0}(?-i)[\\/].*|.*[\\/](?i){0}(?-i).*";
     }
 
-    public static class Analyzer {
-        
-        public const string ANALYZER_PLUGIN_NAME = "CustomUtilsAnalyzer";
-        public const string ROSLYN_ANALYZER_LABEL = "RoslynAnalyzer";
-        
-        public static readonly string ANALYZER_PLUGIN_PATH;
-
-        static Analyzer() => ANALYZER_PLUGIN_PATH = SystemPath.Combine(Path.PLUGINS_FOLDER, $"{ANALYZER_PLUGIN_NAME}{Extension.DLL}");
-    }
-    
     public static class Colors {
         
     }

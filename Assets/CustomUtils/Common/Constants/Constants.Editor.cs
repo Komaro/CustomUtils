@@ -2,10 +2,12 @@
 
 using UnityEditor;
 using UnityEngine;
+using SystemPath = System.IO.Path;
+using SystemRegex = System.Text.RegularExpressions.Regex;
 
 public static partial class Constants {
     
-    public static class Editor {
+    public static class Draw {
 
         public static readonly GUIStyle LABEL = new(GUI.skin.label) { richText = true };
         public static readonly GUIStyle BOLD_LABEL = new(LABEL) { fontStyle = FontStyle.Bold };
@@ -36,7 +38,7 @@ public static partial class Constants {
         
         public static readonly GUILayoutOption DEFAULT_LAYOUT = GUILayout.Width(300f);
     
-        static Editor() {
+        static Draw() {
             BLACK_OR_WHITE_LABEL = new GUIStyle(LABEL) {
                 normal = { textColor = EditorGUIUtility.isProSkin ? Color.white : Color.black }
             };
@@ -64,6 +66,15 @@ public static partial class Constants {
                 fontStyle = FontStyle.Bold
             };
         }
+    }
+    
+    public static class Analyzer {
+        
+        public const string ANALYZER_PLUGIN_NAME = "CustomUtilsAnalyzer";
+        public const string ROSLYN_ANALYZER_LABEL = "RoslynAnalyzer";
+        
+        public static readonly string DEFAULT_ANALYZER_PLUGIN = $"{ANALYZER_PLUGIN_NAME}{Extension.DLL}";
+        public static readonly string ANALYZER_PLUGIN_PATH = SystemPath.Combine(Path.PLUGINS_FOLDER, $"{DEFAULT_ANALYZER_PLUGIN}");
     }
 }
 

@@ -1,0 +1,18 @@
+﻿using UnityEditor.Callbacks;
+
+public class TestClass : TestAbstractClass {
+
+    private static void TestMethod() {
+
+    }
+
+    private static void SampleMethod() {
+
+    }
+}
+
+[RequiresStaticMethodImplementation("TestMethod", typeof(DidReloadScripts))]
+[RequiresStaticMethodImplementation("SampleMethod", typeof(DidReloadScripts))]
+public abstract class TestAbstractClass {
+            
+}

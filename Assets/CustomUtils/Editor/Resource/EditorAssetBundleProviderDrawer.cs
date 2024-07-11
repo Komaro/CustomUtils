@@ -17,7 +17,7 @@ public class EditorAssetBundleProviderDrawer : EditorResourceDrawerAutoConfig<As
     private bool _isShowEncryptKey;
     private string _plainEncryptKey;
     
-    private static AssetBundleTreeView _assetBundleTreeView = new(new TreeViewState());
+    private static AssetBundleTreeView _assetBundleTreeView = new();
     
     private bool _assetBundleListFold;
     
@@ -56,15 +56,15 @@ public class EditorAssetBundleProviderDrawer : EditorResourceDrawerAutoConfig<As
         if (config != null) {
             _windowScrollViewPosition = EditorGUILayout.BeginScrollView(_windowScrollViewPosition, false, false);
             
-            GUILayout.Label("AssetBundle 빌드 폴더", Constants.Editor.AREA_TITLE_STYLE);
-            using (new GUILayout.VerticalScope(Constants.Editor.BOX)) {
+            GUILayout.Label("AssetBundle 빌드 폴더", Constants.Draw.AREA_TITLE_STYLE);
+            using (new GUILayout.VerticalScope(Constants.Draw.BOX)) {
                 EditorCommon.DrawFolderOpenSelector("빌드 폴더", "선택", ref config.buildDirectory, width:60f);
             }
             
             EditorCommon.DrawSeparator();
             
-            GUILayout.Label("보안", Constants.Editor.AREA_TITLE_STYLE);
-            using (new GUILayout.VerticalScope(Constants.Editor.BOX)) {
+            GUILayout.Label("보안", Constants.Draw.AREA_TITLE_STYLE);
+            using (new GUILayout.VerticalScope(Constants.Draw.BOX)) {
                 using (new GUILayout.HorizontalScope()) {
                     EditorCommon.DrawLabelToggle(ref config.isAssetBundleManifestEncrypted, "AssetBundleManifest 암호화 활성화", 210f);
                     GUILayout.FlexibleSpace();
@@ -83,7 +83,7 @@ public class EditorAssetBundleProviderDrawer : EditorResourceDrawerAutoConfig<As
                 }
             }
             
-            using (new GUILayout.VerticalScope(Constants.Editor.BOX)) {
+            using (new GUILayout.VerticalScope(Constants.Draw.BOX)) {
                 using (new GUILayout.HorizontalScope()) {
                     EditorCommon.DrawLabelToggle(ref config.isGenerateChecksumInfo, "Checksum 정보 생성", $"빌드 완료 후 각 전체 Checksum 정보를 기록한 파일 생성", 210f);
                     if (config.isGenerateChecksumInfo) {
@@ -98,7 +98,7 @@ public class EditorAssetBundleProviderDrawer : EditorResourceDrawerAutoConfig<As
                 }
             }
 
-            using (new GUILayout.VerticalScope(Constants.Editor.BOX)) {
+            using (new GUILayout.VerticalScope(Constants.Draw.BOX)) {
                 if (config.IsActiveAssetBundleEncrypt()) {
                     EditorGUILayout.HelpBox("AssetBundle 암호화 옵션은 하나만 선택이 가능합니다. 다른 옵션을 활성화 하기 위해선 현재 활성화 되어 있는 옵션을 비활성화 해야 합니다.", MessageType.Info);
                 }
@@ -110,14 +110,14 @@ public class EditorAssetBundleProviderDrawer : EditorResourceDrawerAutoConfig<As
             
             EditorCommon.DrawSeparator();
             using (new GUILayout.HorizontalScope()) {
-                if (EditorCommon.DrawLabelButton("전체 AssetBundle 리스트", Constants.Editor.REFRESH_ICON, Constants.Editor.AREA_TITLE_STYLE)) {
+                if (EditorCommon.DrawLabelButton("전체 AssetBundle 리스트", Constants.Draw.REFRESH_ICON, Constants.Draw.AREA_TITLE_STYLE)) {
                     RefreshAssetBundle();
                 }
             }
             
             DrawAssetBundleList();
             
-            using (new GUILayout.VerticalScope(Constants.Editor.BOX)) {
+            using (new GUILayout.VerticalScope(Constants.Draw.BOX)) {
                 if (config.IsActiveEncrypt()) {
                     if (config.IsNull()) {
                         EditorGUILayout.HelpBox($"{nameof(AssetBundleProviderConfig)} 파일이 존재하지 않기 때문에 저장되지 않습니다.", MessageType.Warning);
@@ -129,8 +129,8 @@ public class EditorAssetBundleProviderDrawer : EditorResourceDrawerAutoConfig<As
 
             EditorCommon.DrawSeparator();
 
-            GUILayout.Label("AssetBundle 빌드 옵션", Constants.Editor.AREA_TITLE_STYLE);
-            using (new GUILayout.VerticalScope(Constants.Editor.BOX)) {
+            GUILayout.Label("AssetBundle 빌드 옵션", Constants.Draw.AREA_TITLE_STYLE);
+            using (new GUILayout.VerticalScope(Constants.Draw.BOX)) {
                 _buildOptionScrollViewPosition = GUILayout.BeginScrollView(_buildOptionScrollViewPosition, false, false, GUILayout.Height(200f));
                 foreach (var option in BUILD_OPTION_LIST) {
                     config.buildOptionDic[option] = EditorCommon.DrawLabelToggle(config.buildOptionDic[option], option.ToString());
@@ -142,8 +142,8 @@ public class EditorAssetBundleProviderDrawer : EditorResourceDrawerAutoConfig<As
             
             EditorCommon.DrawSeparator();
 
-            GUILayout.Label("빌드", Constants.Editor.AREA_TITLE_STYLE);
-            using (new GUILayout.VerticalScope(Constants.Editor.BOX)) {
+            GUILayout.Label("빌드", Constants.Draw.AREA_TITLE_STYLE);
+            using (new GUILayout.VerticalScope(Constants.Draw.BOX)) {
                 using (new GUILayout.HorizontalScope()) {
                     EditorCommon.DrawLabelToggle(ref config.isClearAssetBundleManifest, ".manifest 제거", "빌드 완료 후 .manifest 확장자 파일 제거", 180f);
                     EditorCommon.DrawLabelToggle(ref config.isLogBuildSetting, "빌드 세팅 기록", $"빌드 완료 후 {nameof(AssetBundleProviderConfig)}를 메모에 기록", 180f);
@@ -156,7 +156,7 @@ public class EditorAssetBundleProviderDrawer : EditorResourceDrawerAutoConfig<As
                 }
             }
             
-            using (new GUILayout.VerticalScope(Constants.Editor.BOX)) {
+            using (new GUILayout.VerticalScope(Constants.Draw.BOX)) {
                 using (new GUILayout.HorizontalScope()) {
                     using (new GUILayout.VerticalScope()) {
                         EditorCommon.DrawEnumPopup(string.Empty, ref config.selectBuildTarget, 0, GUILayout.Height(20f));
@@ -181,14 +181,14 @@ public class EditorAssetBundleProviderDrawer : EditorResourceDrawerAutoConfig<As
                 if (config.isLogBuildSetting) {
                     GUILayout.Space(5f);
                     using (new GUILayout.HorizontalScope()) {
-                        GUILayout.Label("메모", Constants.Editor.TITLE_STYLE, GUILayout.Height(100f), GUILayout.Width(50f));
+                        GUILayout.Label("메모", Constants.Draw.TITLE_STYLE, GUILayout.Height(100f), GUILayout.Width(50f));
                         _buildInfoMemo = EditorGUILayout.TextArea(_buildInfoMemo, GUILayout.Height(100f), GUILayout.ExpandWidth(true));
                     }
                 }
             }
 
             if (config.GetInfoCount() > 0) {
-                using (new GUILayout.VerticalScope(Constants.Editor.BOX)) {
+                using (new GUILayout.VerticalScope(Constants.Draw.BOX)) {
                     var info = config[_buildInfoCursor];
                     using (new GUILayout.HorizontalScope()) {
                         EditorGUI.BeginDisabledGroup(_buildInfoCursor <= 0);
@@ -197,7 +197,7 @@ public class EditorAssetBundleProviderDrawer : EditorResourceDrawerAutoConfig<As
                         }
                         EditorGUI.EndDisabledGroup();
                         
-                        GUILayout.Label($"빌드 기록 [{_buildInfoCursor + 1} / {config.GetInfoCount()}]", Constants.Editor.TITLE_STYLE, GUILayout.ExpandWidth(true), GUILayout.ExpandHeight(true), GUILayout.Width(200f));
+                        GUILayout.Label($"빌드 기록 [{_buildInfoCursor + 1} / {config.GetInfoCount()}]", Constants.Draw.TITLE_STYLE, GUILayout.ExpandWidth(true), GUILayout.ExpandHeight(true), GUILayout.Width(200f));
 
                         EditorGUI.BeginDisabledGroup(config.GetInfoCount() <= 1 || _buildInfoCursor >= config.GetInfoCount() - 1);
                         if (GUILayout.Button(">", GUILayout.Height(30f))) {
@@ -229,7 +229,7 @@ public class EditorAssetBundleProviderDrawer : EditorResourceDrawerAutoConfig<As
     }
 
     private void DrawAssetBundleList() {
-        using (new GUILayout.VerticalScope(Constants.Editor.BOX)) {
+        using (new GUILayout.VerticalScope(Constants.Draw.BOX)) {
             _assetBundleListFold = EditorGUILayout.BeginFoldoutHeaderGroup(_assetBundleListFold, string.Empty);
             if (_assetBundleListFold && config.assetBundleInfoDic != null) {
                 _assetBundleTreeView.Draw();
@@ -445,7 +445,7 @@ public record AssetBundleSelectableInfo {
     }
 }
 
-public record AssetBundleChecksumInfo {
+internal record AssetBundleChecksumInfo {
 
     public DateTime generateTime;
     public Dictionary<string, uint> crcDic = new();
@@ -467,68 +467,26 @@ public record AssetBundleChecksumInfo {
 
 #region [TreeView]
 
-// TODO. EditorServiceTreeView 상속으로 변경
-internal class AssetBundleTreeView : TreeView {
+internal class AssetBundleTreeView : EditorServiceTreeView {
 
-    private readonly SearchField searchField = new();
     private readonly Dictionary<string, TreeViewItem> _itemDic = new();
-
+    
     private AssetBundleProviderConfig _bindConfig;
     
-    private static readonly MultiColumnHeader HEADER = new(new MultiColumnHeaderState(new [] {
-        new MultiColumnHeaderState.Column {
-            headerContent = new GUIContent("No"),
-            headerTextAlignment = TextAlignment.Center,
-            allowToggleVisibility = false,
-            minWidth = 35f,
-            maxWidth = 35f,
-            autoResize = true,
-            canSort = true,
-        },
-        new MultiColumnHeaderState.Column {
-            headerContent = new GUIContent("이름"),
-            allowToggleVisibility = false,
-            canSort = true,
-            autoResize = true,
-            minWidth = 150f,
-        },
-        new MultiColumnHeaderState.Column {
-            headerContent = new GUIContent("선택적 암호화"),
-            headerTextAlignment = TextAlignment.Center,
-            allowToggleVisibility = false,
-            autoResize = true,
-            canSort = true,
-            minWidth = 90f,
-            maxWidth = 90f,
-        },
-        new MultiColumnHeaderState.Column {
-            headerContent = new GUIContent("선택적 빌드"),
-            headerTextAlignment = TextAlignment.Center,
-            allowToggleVisibility = false,
-            autoResize = true,
-            canSort = true,
-            minWidth = 90f,
-            maxWidth = 90f,
-        },
-    }));
-    
-    public AssetBundleTreeView(TreeViewState state) : base(state) {
-        multiColumnHeader = HEADER;
-        multiColumnHeader.sortingChanged += OnSortingChanged;
-        multiColumnHeader.ResizeToFit();
-    }
+    private static readonly MultiColumnHeaderState.Column[] COLUMNS = {
+        CreateColumn("No", 35f, 35f),
+        CreateColumn("이름", 150f, textAlignment:TextAlignment.Left),
+        CreateColumn("선택적 암호화", 90f, 90f),
+        CreateColumn("선택적 빌드", 90f, 90f),
+    };
 
+    public AssetBundleTreeView() : base(new MultiColumnHeader(new MultiColumnHeaderState(COLUMNS))) { }
     protected override TreeViewItem BuildRoot() => new() { id = 0, depth = -1, children = _itemDic.ToValueList() };
     protected override bool DoesItemMatchSearch(TreeViewItem item, string search) => item is AssetBundleTreeViewItem bundleItem && bundleItem.info.name.IndexOf(search, StringComparison.OrdinalIgnoreCase) >= 0;
 
-    public void Draw() {
-        searchString = searchField.OnToolbarGUI(searchString);
-        OnGUI(new Rect(EditorGUILayout.GetControlRect(GUILayout.ExpandWidth(true), GUILayout.ExpandHeight(true), GUILayout.MinHeight(200f), GUILayout.MaxHeight(500f))));
-    }
-    
     protected override void RowGUI(RowGUIArgs args) {
         if (args.item is AssetBundleTreeViewItem item) {
-            EditorGUI.LabelField(args.GetCellRect(0), item.id.ToString(), Constants.Editor.CENTER_LABEL);
+            EditorGUI.LabelField(args.GetCellRect(0), item.id.ToString(), Constants.Draw.CENTER_LABEL);
             EditorGUI.LabelField(args.GetCellRect(1), item.info.name);
 
             using (new EditorGUI.DisabledGroupScope(_bindConfig is not { isAssetBundleSelectableEncrypted: not false })) {
@@ -547,37 +505,19 @@ internal class AssetBundleTreeView : TreeView {
         }
     }
 
-    private void OnSortingChanged(MultiColumnHeader header) {
-        var rows = GetRows();
-        if (rows.Count <= 1 || header.sortedColumnIndex == -1) {
-            return;
+    protected override IEnumerable<TreeViewItem> GetOrderBy(int index, bool isAscending) {
+        if (rootItem.children.TryCast<AssetBundleTreeViewItem>(out var enumerable)) {
+            enumerable = EnumUtil.ConvertInt<SORT_TYPE>(index) switch {
+                SORT_TYPE.NO => enumerable.OrderBy(x => x.id, isAscending),
+                SORT_TYPE.NAME => enumerable.OrderBy(x => x.info.name, isAscending),
+                SORT_TYPE.SELECTABLE_ENCRYPT => enumerable.OrderBy(x => x.info.isEncrypt, isAscending),
+                _ => enumerable
+            };
+
+            return enumerable;
         }
-            
-        var sortedColumns = header.state.sortedColumns;
-        if (sortedColumns.Length <= 0) {
-            return;
-        }
-            
-        var enumerable = rootItem.children.Cast<AssetBundleTreeViewItem>();
-        var isAscending = multiColumnHeader.IsSortedAscending(sortedColumns.First());
-        switch (EnumUtil.ConvertInt<SORT_TYPE>(sortedColumns.First())) {
-            case SORT_TYPE.NO:
-                enumerable = enumerable.OrderBy(x => x.id, isAscending);
-                break;
-            case SORT_TYPE.NAME:
-                enumerable = enumerable.OrderBy(x => x.info.name, isAscending);
-                break;
-            case SORT_TYPE.SELECTABLE_ENCRYPT:
-                enumerable = enumerable.OrderBy(x => x.info.isEncrypt, isAscending);
-                break;
-        }
-        
-        rootItem.children = enumerable.CastList<TreeViewItem>();
-            
-        rows.Clear();
-        rootItem.children.ForEach(x => rows.Add(x));
-            
-        Repaint();
+
+        return Enumerable.Empty<TreeViewItem>();
     }
 
     public void SetConfig(AssetBundleProviderConfig config) => _bindConfig = config;
@@ -601,48 +541,3 @@ internal class AssetBundleTreeView : TreeView {
 }
 
 #endregion
-
-// TODO. Need Extract
-public abstract class EditorServiceTreeView : TreeView {
-
-    protected readonly SearchField searchField = new();
-
-    protected List<TreeViewItem> itemList = new();
-
-    protected OverridenMethod overridenMethod;
-
-    protected EditorServiceTreeView(MultiColumnHeader header) : base(new TreeViewState()) {
-        overridenMethod = new OverridenMethod(GetType(), nameof(OnSortingChanged), nameof(RowGUI));
-        
-        multiColumnHeader = header;
-        multiColumnHeader.ResizeToFit();
-
-        if (overridenMethod.HasOverriden(nameof(OnSortingChanged))) {
-            multiColumnHeader.sortingChanged += OnSortingChanged;
-        }
-
-        if (overridenMethod.HasOverriden(nameof(RowGUI)) == false) {
-            Logger.TraceLog($"{nameof(RowGUI)} has not been overridden.", Color.red);
-        }
-    }
-
-    protected static MultiColumnHeaderState.Column CreateColumn(string headerContent, float minWidth = 20f, float maxWidth = 1000000f, TextAlignment textAlignment = TextAlignment.Center) => new MultiColumnHeaderState.Column {
-        headerContent = new GUIContent(headerContent),
-        headerTextAlignment = textAlignment,
-        allowToggleVisibility = false,
-        minWidth = minWidth,
-        maxWidth = maxWidth,
-        autoResize = true,
-        canSort = true
-    };
-    
-    protected override TreeViewItem BuildRoot() => new() { id = 0, depth = -1, children = itemList };
-    protected override bool DoesItemMatchSearch(TreeViewItem item, string search) => item.displayName.IndexOf(search, StringComparison.OrdinalIgnoreCase) >= 0;
-    
-    public virtual void Draw() {
-        searchString = searchField.OnToolbarGUI(searchString);
-        OnGUI(new Rect(EditorGUILayout.GetControlRect(GUILayout.ExpandWidth(true), GUILayout.ExpandHeight(true), GUILayout.MinHeight(200f), GUILayout.MaxHeight(500f))));
-    }
-
-    protected virtual void OnSortingChanged(MultiColumnHeader header) { }
-}

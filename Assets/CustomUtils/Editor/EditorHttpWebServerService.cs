@@ -89,7 +89,7 @@ public class EditorHttpWebServerService : EditorService {
         }
 
         using (new GUILayout.HorizontalScope()) {
-            GUILayout.Label("URL", Constants.Editor.TITLE_STYLE, GUILayout.Width(100));
+            GUILayout.Label("URL", Constants.Draw.TITLE_STYLE, GUILayout.Width(100));
             _url = GUILayout.TextField(_url);
         }
         
@@ -124,7 +124,7 @@ public class EditorHttpWebServerService : EditorService {
             
             if (_config != null) {
                 using (new GUILayout.VerticalScope("box")) {
-                    GUILayout.Label("=== 서버 모듈 프리셋 ===", Constants.Editor.DIVIDE_STYLE);
+                    GUILayout.Label("=== 서버 모듈 프리셋 ===", Constants.Draw.DIVIDE_STYLE);
 
                     ModulePreset removePreset = null;
                     _serveModulePresetScrollPosition = EditorGUILayout.BeginScrollView(_serveModulePresetScrollPosition, false, false, GUILayout.MinHeight(50f), GUILayout.MaxHeight(150f));
@@ -161,18 +161,18 @@ public class EditorHttpWebServerService : EditorService {
             GUILayout.Space(10);
             
             using (new GUILayout.VerticalScope("box", GUILayout.ExpandHeight(false))) {
-                GUILayout.Label("=== Web Server Run Info ===", Constants.Editor.DIVIDE_STYLE);
-                GUILayout.Label(_httpServer == null ? "미생성" : _httpServer.IsRunning() ? "가동중" : "정지", Constants.Editor.TITLE_STYLE);
+                GUILayout.Label("=== Web Server Run Info ===", Constants.Draw.DIVIDE_STYLE);
+                GUILayout.Label(_httpServer == null ? "미생성" : _httpServer.IsRunning() ? "가동중" : "정지", Constants.Draw.TITLE_STYLE);
                 if (_httpServer != null) {
                     EditorCommon.DrawLabelLinkButton("대상 폴더 : ", _httpServer.GetTargetDirectory(), EditorUtility.RevealInFinder, 60f);
                     EditorCommon.DrawLabelSelectableLabel("URL : ", _httpServer.GetURL(), 40f);
                     
                     GUILayout.Space(10);
                     
-                    GUILayout.Label("가동 중인 모듈", Constants.Editor.DIVIDE_STYLE);
+                    GUILayout.Label("가동 중인 모듈", Constants.Draw.DIVIDE_STYLE);
                     _runningServeModuleScrollPosition = EditorGUILayout.BeginScrollView(_runningServeModuleScrollPosition, false, false, GUILayout.MinHeight(50f), GUILayout.MaxHeight(100f));
                     foreach (var type in _httpServer.GetServeModuleTypeList()) {
-                        GUILayout.Label(type.Name, Constants.Editor.TITLE_STYLE);
+                        GUILayout.Label(type.Name, Constants.Draw.TITLE_STYLE);
                     }
                     EditorGUILayout.EndScrollView();
 
@@ -192,7 +192,7 @@ public class EditorHttpWebServerService : EditorService {
             GUILayout.Space(15);
             _serveModuleScrollPosition = EditorGUILayout.BeginScrollView(_serveModuleScrollPosition, false, false, GUILayout.MinHeight(50f), GUILayout.MaxHeight(150f));
             using (new GUILayout.VerticalScope()) {
-                GUILayout.Label($"{nameof(HttpServeModule)} 추가", Constants.Editor.DIVIDE_STYLE);
+                GUILayout.Label($"{nameof(HttpServeModule)} 추가", Constants.Draw.DIVIDE_STYLE);
                 foreach (var type in _serveModuleList) {
                     if (_httpServer == null) {
                         GUILayout.Button(type.Name);

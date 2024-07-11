@@ -1,0 +1,16 @@
+﻿using System;
+
+[TestRequires]
+public class TestClass : TestAbstractClass {
+    
+}
+
+
+[RequiresAttributeImplementation(typeof(TestRequiresAttribute))]
+public abstract class TestAbstractClass {
+    
+}
+
+public class TestRequiresAttribute: Attribute {
+
+}

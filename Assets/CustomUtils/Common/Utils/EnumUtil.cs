@@ -26,98 +26,98 @@ public static class EnumUtil {
         return false;
     }
 
-    public static bool IsDefinedInt<T>(this int num) where T : struct, Enum => Enum.IsDefined(typeof(T), num);
+    public static bool IsDefinedInt<T>(this int value) where T : struct, Enum => Enum.IsDefined(typeof(T), value);
 
-    public static bool IsDefinedInt<T>(this int num, out T type) where T : struct, Enum {
+    public static bool IsDefinedInt<T>(this int value, out T type) where T : struct, Enum {
         type = default;
-        if (IsDefinedInt<T>(num)) {
-            type = ConvertInt<T>(num);
+        if (IsDefinedInt<T>(value)) {
+            type = ConvertInt<T>(value);
             return true;
         }
 
         return false;
     }
 
-    public static T Convert<T>(string type) where T : struct, Enum {
+    public static T Convert<T>(string value) where T : struct, Enum {
         try {
-            return (T)Enum.Parse(typeof(T), type);
+            return (T)Enum.Parse(typeof(T), value);
         } catch (Exception ex) {
-            Logger.TraceError($"Convert Fail || {type} || {ex}");
+            Logger.TraceError($"Convert Fail || {value} || {ex}");
             return default;
         }
     }
 
-    public static T ConvertAllCase<T>(string type) where T : struct, Enum {
+    public static T ConvertAllCase<T>(string value) where T : struct, Enum {
         try {
-            if (IsDefined<T>(type)) { 
-                return Convert<T>(type);
+            if (IsDefined<T>(value)) { 
+                return Convert<T>(value);
             }
 
-            type = type.ToUpper();
-            if (IsDefined<T>(type)) {
-                return Convert<T>(type);
+            value = value.ToUpper();
+            if (IsDefined<T>(value)) {
+                return Convert<T>(value);
             }
             
-            type = type.GetForceTitleCase();
-            if (IsDefined<T>(type)) {
-                return Convert<T>(type);
+            value = value.GetForceTitleCase();
+            if (IsDefined<T>(value)) {
+                return Convert<T>(value);
             }
             
             return default;
         } catch (Exception ex) {
-            Logger.TraceError($"Convert Fail || {type} || {ex}");
+            Logger.TraceError($"Convert Fail || {value} || {ex}");
             return default;
         }
     }
 
-    public static T ConvertInt<T>(int num) where T : struct, Enum {
+    public static T ConvertInt<T>(int value) where T : struct, Enum {
         try {
-            if (Enum.IsDefined(typeof(T), num)) {
-                return (T)Enum.ToObject(typeof(T), num);
+            if (Enum.IsDefined(typeof(T), value)) {
+                return (T)Enum.ToObject(typeof(T), value);
             }
         } catch (Exception ex) {
-            Logger.TraceError($"Convert Fail || {num} || {ex}");
+            Logger.TraceError($"Convert Fail || {value} || {ex}");
             return default;
         }
         return default;
     }
 
-    public static bool TryGetValue<T>(int num, out T outType) where T : struct, Enum {
+    public static bool TryGetValue<T>(int value, out T outType) where T : struct, Enum {
         outType = default;
-        if (IsDefinedInt<T>(num)) {
-            outType = ConvertInt<T>(num);
+        if (IsDefinedInt<T>(value)) {
+            outType = ConvertInt<T>(value);
             return true;
         }
 
         return false;
     }
 
-    public static bool TryGetValue<T>(string type, out T outType) where T : struct, Enum {
+    public static bool TryGetValue<T>(string value, out T outType) where T : struct, Enum {
         outType = default;
-        if (IsDefined<T>(type)) {
-            outType = Convert<T>(type);
+        if (IsDefined<T>(value)) {
+            outType = Convert<T>(value);
             return true;
         }
 
         return false;
     }
 
-    public static bool TryGetValueAllCase<T>(string type, out T outType) where T : struct, Enum {
+    public static bool TryGetValueAllCase<T>(string value, out T outType) where T : struct, Enum {
         outType = default;
-        if (IsDefined<T>(type)) {
-            outType = Convert<T>(type);
+        if (IsDefined<T>(value)) {
+            outType = Convert<T>(value);
             return true;
         }
         
-        type = type.ToUpper();
-        if (IsDefined<T>(type)) {
-            outType = Convert<T>(type);
+        value = value.ToUpper();
+        if (IsDefined<T>(value)) {
+            outType = Convert<T>(value);
             return true;
         }
 
-        type = type.GetForceTitleCase();
-        if (IsDefined<T>(type)) {
-            outType = Convert<T>(type);
+        value = value.GetForceTitleCase();
+        if (IsDefined<T>(value)) {
+            outType = Convert<T>(value);
             return true;
         }
         

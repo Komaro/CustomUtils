@@ -8,29 +8,29 @@ public abstract class EditorService : EditorWindow {
 
     protected virtual string SessionKey => $"{GetType().Name}_FirstOpen";
 
-    private const string ON_LOAD_SESSION_KEY = "EditorServiceOnLoadSessionKey";
+    private const string EDITOR_FIRST_OPEN_SESSION_KEY = "EditorServiceFirstOpenKey";
 
-    private OverridenMethod _overridenMethod;
+    protected OverridenMethod overridenMethod;
 
-    public EditorService() {
-        _overridenMethod = new OverridenMethod(GetType(), nameof(OnEnteredEditMode), nameof(OnExitingEditMode), nameof(OnEnteredPlayMode), nameof(OnExitingPlayMode));
+    protected EditorService() {
+        overridenMethod = new OverridenMethod(GetType(), nameof(OnEnteredEditMode), nameof(OnExitingEditMode), nameof(OnEnteredPlayMode), nameof(OnExitingPlayMode));
         EditorApplication.playModeStateChanged += OnPlayModeStateChanged;
     }
-    
+
     protected virtual bool CheckSession() => EditorCommon.TryGetSession(SessionKey, out bool isFirstOpen) == false || isFirstOpen == false;
     
     private void OnDestroy() => EditorApplication.playModeStateChanged -= OnPlayModeStateChanged;
 
-    // TODO. InitializeOnLoad 로 전환 테스트
     [InitializeOnLoadMethod]
-    private static void OnEditorLoad() {
-        if (EditorCommon.TryGetSession(ON_LOAD_SESSION_KEY, out bool isFirstOpen) == false || isFirstOpen == false) {
+    private static void InitializeOnLoad() {
+        if (EditorCommon.TryGetSession(EDITOR_FIRST_OPEN_SESSION_KEY, out bool isFirstOpen) == false || isFirstOpen == false) {
             EditorApplication.update += OnEditorFirstOpen;
         }
     }
-
+    
     private static void OnEditorFirstOpen() {
         EditorApplication.update -= OnEditorFirstOpen;
+        EditorCommon.SetSession(EDITOR_FIRST_OPEN_SESSION_KEY, true);
         foreach (var type in ReflectionProvider.GetSubClassTypes<EditorService>()) {
             var objects = Resources.FindObjectsOfTypeAll(type);
             if (objects is { Length: > 0 } && objects.First() is EditorService editorService && editorService.CheckSession()) {
@@ -42,22 +42,22 @@ public abstract class EditorService : EditorWindow {
     private void OnPlayModeStateChanged(PlayModeStateChange state) {
         switch (state) {
             case PlayModeStateChange.EnteredEditMode:
-                if (_overridenMethod.HasOverriden(nameof(OnEnteredEditMode))) {
+                if (overridenMethod.HasOverriden(nameof(OnEnteredEditMode))) {
                     OnEnteredEditMode();
                 }
                 break;
             case PlayModeStateChange.ExitingEditMode:
-                if (_overridenMethod.HasOverriden(nameof(OnExitingEditMode))) {
+                if (overridenMethod.HasOverriden(nameof(OnExitingEditMode))) {
                     OnExitingEditMode();
                 }
                 break;
             case PlayModeStateChange.EnteredPlayMode:
-                if (_overridenMethod.HasOverriden(nameof(OnEnteredEditMode))) {
+                if (overridenMethod.HasOverriden(nameof(OnEnteredEditMode))) {
                     OnEnteredPlayMode();
                 }
                 break;
             case PlayModeStateChange.ExitingPlayMode:
-                if (_overridenMethod.HasOverriden(nameof(OnExitingPlayMode))) {
+                if (overridenMethod.HasOverriden(nameof(OnExitingPlayMode))) {
                     OnExitingPlayMode();
                 }
                 break;

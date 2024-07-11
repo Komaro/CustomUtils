@@ -65,8 +65,8 @@ public class EditorAssetBundleTesterDrawer : EditorResourceDrawerAutoConfig<Asse
         if (config != null) {
             _windowScrollViewPosition = EditorGUILayout.BeginScrollView(_windowScrollViewPosition, false, false);
             using (new GUILayout.HorizontalScope()) {
-                GUILayout.Label("HTTP 서버 다운로드 설정", Constants.Editor.AREA_TITLE_STYLE);
-                if (GUILayout.Button(Constants.Editor.SHORT_CUT_ICON, Constants.Editor.FIT_BUTTON, GUILayout.Width(20f), GUILayout.Height(20f))) {
+                GUILayout.Label("HTTP 서버 다운로드 설정", Constants.Draw.AREA_TITLE_STYLE);
+                if (GUILayout.Button(Constants.Draw.SHORT_CUT_ICON, Constants.Draw.FIT_BUTTON, GUILayout.Width(20f), GUILayout.Height(20f))) {
                     EditorHttpWebServerService.OpenWindow();
                 }
                 GUILayout.FlexibleSpace();
@@ -82,8 +82,8 @@ public class EditorAssetBundleTesterDrawer : EditorResourceDrawerAutoConfig<Asse
             EditorCommon.DrawSeparator();
 
             using (new GUILayout.HorizontalScope()) {
-                GUILayout.Label("캐싱(Caching)", Constants.Editor.AREA_TITLE_STYLE, GUILayout.ExpandWidth(false));
-                if (config.isActiveCaching && GUILayout.Button(Constants.Editor.SHORT_CUT_ICON, Constants.Editor.FIT_BUTTON, GUILayout.Width(20f), GUILayout.Height(20f))) {
+                GUILayout.Label("캐싱(Caching)", Constants.Draw.AREA_TITLE_STYLE, GUILayout.ExpandWidth(false));
+                if (config.isActiveCaching && GUILayout.Button(Constants.Draw.SHORT_CUT_ICON, Constants.Draw.FIT_BUTTON, GUILayout.Width(20f), GUILayout.Height(20f))) {
                     EditorCachingService.OpenWindow();
                 }
             }
@@ -97,7 +97,7 @@ public class EditorAssetBundleTesterDrawer : EditorResourceDrawerAutoConfig<Asse
             
             EditorCommon.DrawSeparator();
 
-            GUILayout.Label("체크썸(Checksum)", Constants.Editor.AREA_TITLE_STYLE);
+            GUILayout.Label("체크썸(Checksum)", Constants.Draw.AREA_TITLE_STYLE);
             using (new GUILayout.VerticalScope("box")) {
                 EditorCommon.DrawLabelToggle(ref config.isActiveChecksum, "Checksum 활성화", 150f);
                 
@@ -169,7 +169,7 @@ public class EditorAssetBundleTesterDrawer : EditorResourceDrawerAutoConfig<Asse
             
             EditorCommon.DrawSeparator();
             
-            GUILayout.Label($"{nameof(AssetBundleManifest)} 다운로드 테스트", Constants.Editor.AREA_TITLE_STYLE);
+            GUILayout.Label($"{nameof(AssetBundleManifest)} 다운로드 테스트", Constants.Draw.AREA_TITLE_STYLE);
             using (new GUILayout.VerticalScope("box")) {
                 // TODO. AssetBundleManifest 선별 처리 UI
                 using (new GUILayout.HorizontalScope()) {
@@ -206,7 +206,7 @@ public class EditorAssetBundleTesterDrawer : EditorResourceDrawerAutoConfig<Asse
                 
                 EditorCommon.DrawSeparator();
 
-                using (new GUILayout.VerticalScope(Constants.Editor.BOX)) {
+                using (new GUILayout.VerticalScope(Constants.Draw.BOX)) {
                     EditorCommon.DrawLabelTextField("연결 상태", _bindManifestInfo?.IsValid() ?? false ? "연결".GetColorString(Color.green) : "미연결".GetColorString(Color.red));
                     if (_bindManifestInfo?.IsValid() ?? false) {
                         EditorCommon.DrawLabelTextField("로드 시간", _bindManifestInfo.loadTime.ToString(CultureInfo.CurrentCulture));

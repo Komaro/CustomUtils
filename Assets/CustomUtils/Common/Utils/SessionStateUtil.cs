@@ -3,6 +3,7 @@ using UnityEditor;
 
 public static class SessionStateUtil {
     
+    
     public static bool TryGet(string key, out string value, string defaultValue = "") {
         try {
             value = GetString(key, defaultValue);

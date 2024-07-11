@@ -5,29 +5,39 @@ using System.Reflection;
 
 public static class ReflectionProvider {
     
-    private static IEnumerable<Type> _cachedTypes;
-    private static IEnumerable<Type> CachedTypes => _cachedTypes ??= AppDomain.CurrentDomain.GetAssemblies().Where(assembly => assembly.IsDynamic == false).SelectMany(assembly => assembly.GetExportedTypes());
+    private static class Cache {
+        
+        private static IEnumerable<Type> _cachedTypes;
+        public static IEnumerable<Type> CachedTypes => _cachedTypes ??= AppDomain.CurrentDomain.GetAssemblies().Where(assembly => assembly.IsDynamic == false).SelectMany(assembly => assembly.GetExportedTypes());
     
-    
-    private static IEnumerable<Type> _cachedClasses;
-    public static IEnumerable<Type> GetTypes() => _cachedClasses ??= CacheClassTypes();
-    private static IEnumerable<Type> CacheClassTypes() => CachedTypes.Where(type => type.IsClass && type.IsAbstract == false);
+        private static IEnumerable<Type> _cachedClasses;
+        public static IEnumerable<Type> CachedClasses => _cachedClasses ??= CachedTypes.Where(type => type.IsClass);
 
+        private static IEnumerable<Type> _cachedEnums;
+        public static IEnumerable<Type> CachedEnums => _cachedEnums ??= Cache.CachedTypes.Where(type => type.IsEnum);
+    }
     
     #region [Class]
-    
+
+    public static IEnumerable<Type> GetCachedTypes() => Cache.CachedTypes;
+
+    /// <summary>
+    /// T 와 동일한 ClassType
+    /// </summary>
+    public static Type GetClassType<T>() where T : class => Cache.CachedClasses.FirstOrDefault(type => typeof(T) == type);
+
     /// <summary>
     /// T 를 SubClass(상속 관계) 로 가지는 ClassType
     /// </summary>
-    public static IEnumerable<Type> GetSubClassTypes<T>() where T : class => GetTypes().Where(type => type.IsSubclassOf(typeof(T)));
+    public static IEnumerable<Type> GetSubClassTypes<T>() where T : class => Cache.CachedClasses.Where(type => type.IsSubclassOf(typeof(T)));
     /// <summary>
     /// T 를 Interface 로 가지는 ClassType
     /// </summary>
-    public static IEnumerable<Type> GetInterfaceTypes<T>() => GetTypes().Where(type => typeof(T).IsAssignableFrom(type));
+    public static IEnumerable<Type> GetInterfaceTypes<T>() => Cache.CachedClasses.Where(type => typeof(T).IsAssignableFrom(type));
     /// <summary>
     /// T 를 Attribute 로 가지는 ClassType
     /// </summary>
-    public static IEnumerable<Type> GetAttributeTypes<T>() where T : Attribute => GetTypes().Where(type => type.IsDefined(typeof(T), false));
+    public static IEnumerable<Type> GetAttributeTypes<T>() where T : Attribute => Cache.CachedClasses.Where(type => type.IsDefined(typeof(T), false));
     
     #endregion
 
@@ -44,10 +54,8 @@ public static class ReflectionProvider {
 
     
     #region [Enum]
-    
-    private static IEnumerable<Type> _cachedEnums;
-    public static IEnumerable<Type> GetEnumTypes() => _cachedEnums ??= CachedTypes.Where(type => type.IsEnum);
-    public static IEnumerable<Type> GetAttributeEnumTypes<T>() where T : Attribute => GetEnumTypes().Where(type => type.IsDefined(typeof(T), false));
+
+    public static IEnumerable<Type> GetAttributeEnumTypes<T>() where T : Attribute => Cache.CachedEnums.Where(type => type.IsDefined(typeof(T), false));
 
     public static bool TryGetAttributeEnumTypes<T>(out IEnumerable<Type> type) where T : Attribute {
         type = GetAttributeEnumTypes<T>();
@@ -55,7 +63,7 @@ public static class ReflectionProvider {
     }
 
     public static IEnumerable<(T attribute, Type enumType)> GetAttributeEnumInfos<T>() where T : Attribute {
-        return GetEnumTypes().Where(type => type.IsDefined(typeof(T), false)).Select(type => (type.GetCustomAttribute<T>(false), type));
+        return Cache.CachedEnums.Where(type => type.IsDefined(typeof(T), false)).Select(type => (type.GetCustomAttribute<T>(false), type));
     }
 
     public static bool TryGetAttributeEnumInfos<T>(out IEnumerable<(T attribute, Type enumType)> infos) where T : Attribute {

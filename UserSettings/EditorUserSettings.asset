@@ -14,6 +14,12 @@ EditorUserSettings:
     RecentlyUsedSceneGuid-2:
       value: 56010d5554025b580c0b5f2144260b44474f407b2f797f622f2c1e66b7b4323a
       flags: 0
+    UIBuilder.DisableMouseWheelZooming:
+      value: 2550581500
+      flags: 0
+    UIBuilder.EditorExtensionModeKey:
+      value: 2550581500
+      flags: 0
     UnityEditor.ShaderGraph.Blackboard:
       value: 18135939215a0a5004000b0e15254b524c030a3f2964643d120d1230e9e93a3fd6e826abbd3c3e302a07a37e0901373ae01e0008f707250d171df81a53a543455f9548954a9b4f499a4e4999954c83bb9994d9d5f0e4f5d1c4d0aee6f5fcc1fef3e2a0efe8f2ad95e4fea7e8f69b9e9c9193e59299979a90f690dcec8ddac8d69b8c9e94c1c5828a81ddeed5f2c0f7f4c0f1f1c7c2f0cef3d1dc85f03ae1fb33283631e3e5e0e7d6e5e039d62121d7956f
       flags: 0

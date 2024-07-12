@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
 using UnityEditor.IMGUI.Controls;
@@ -31,18 +30,9 @@ public abstract class EditorServiceTreeView : TreeView {
         }
     }
 
-    public static MultiColumnHeaderState.Column CreateColumn(string headerContent, float minWidth = 20f, float maxWidth = 1000000f, TextAlignment textAlignment = TextAlignment.Center) => new MultiColumnHeaderState.Column {
-        headerContent = new GUIContent(headerContent),
-        headerTextAlignment = textAlignment,
-        allowToggleVisibility = false,
-        minWidth = minWidth,
-        maxWidth = maxWidth,
-        autoResize = true,
-        canSort = true
-    };
-    
     protected override TreeViewItem BuildRoot() => new() { id = 0, depth = -1, children = itemList };
-    protected override bool DoesItemMatchSearch(TreeViewItem item, string search) => item.displayName.IndexOf(search, StringComparison.OrdinalIgnoreCase) >= 0;
+    
+    public void Clear() => itemList.Clear();
     
     public virtual void Draw() {
         searchString = searchField.OnToolbarGUI(searchString);
@@ -81,4 +71,13 @@ public abstract class EditorServiceTreeView : TreeView {
         }
     }
     
+    public static MultiColumnHeaderState.Column CreateColumn(string headerContent, float minWidth = 20f, float maxWidth = 1000000f, TextAlignment textAlignment = TextAlignment.Center) => new() {
+        headerContent = new GUIContent(headerContent),
+        headerTextAlignment = textAlignment,
+        allowToggleVisibility = false,
+        minWidth = minWidth,
+        maxWidth = maxWidth,
+        autoResize = true,
+        canSort = true
+    };
 }

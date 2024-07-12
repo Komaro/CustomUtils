@@ -4,8 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using UnityEditor;
+using System.Text.RegularExpressions;
 using UnityEngine;
+using UnityEngine.UI;
 using Assembly = UnityEditor.Compilation.Assembly;
 
 public static class CommonExtension {
@@ -57,27 +58,14 @@ public static class CommonExtension {
 
         return false;
     }
-    
-    public static float GetPreferredWidth(this TextGenerator textGenerator, string text, GUIStyle style) => textGenerator.GetPreferredWidth(text, style.ToTextGenerationSettings());
 
-    public static TextGenerationSettings ToTextGenerationSettings(this GUIStyle styles) {
-        var settings = new TextGenerationSettings {
-            font = styles.font ? styles.font : GUI.skin.font,
-            fontSize = styles.fontSize,
-            color = styles.normal.textColor,
-            fontStyle = styles.fontStyle,
-            lineSpacing = styles.lineHeight,
-            textAnchor = styles.alignment,
-            resizeTextForBestFit = styles.wordWrap,
-            horizontalOverflow = styles.clipping == TextClipping.Overflow ? HorizontalWrapMode.Overflow : HorizontalWrapMode.Wrap,
-            verticalOverflow = styles.clipping == TextClipping.Overflow ? VerticalWrapMode.Overflow : VerticalWrapMode.Truncate,
-            updateBounds = false,
-            pivot = new Vector2(0.5f, 0.5f),
-            scaleFactor = 1f,
-            alignByGeometry = false,
-        };
-        return settings;
+    public static bool TryMatch(this Regex regex, string text, out Match match) {
+        match = regex.Match(text);
+        return match.Success;
     }
+    
+    public static float GetPreferredWidth(this TextGenerator textGenerator, string text, TextGenerationSettings settings) => textGenerator.GetPreferredWidth(text, settings);
+    public static float GetPreferredHeight(this TextGenerator textGenerator, string text, TextGenerationSettings settings) => textGenerator.GetPreferredHeight(text, settings);
 
     public static bool IsBuiltin(this Assembly assembly) {
         if (assembly.sourceFiles.Length <= 0) {

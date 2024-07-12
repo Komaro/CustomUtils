@@ -67,8 +67,9 @@ public static partial class Constants {
         public static readonly SystemRegex FOLDER_PATH_REGEX = new(@".*[\\/]$");
         public static readonly SystemRegex FILE_PATH_REGEX = new(@".*\.[^\\/]+$");
         public static readonly SystemRegex UPPER_UNICODE_REGEX = new(@"(\p{Lu}})");
-
+        
         public const string FOLDER_CONTAINS_FORMAT = @".*[\\/](?i){0}(?-i)[\\/].*|.*[\\/](?i){0}(?-i).*";
+        public const string GET_AFTER_REGEX = @"({0}.*)";
     }
 
     public static class Colors {

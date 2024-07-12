@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -9,6 +10,7 @@ using System.Text.RegularExpressions;
 using Microsoft.CodeAnalysis.Diagnostics;
 using UniRx;
 using UnityEditor;
+using UnityEditor.AnimatedValues;
 using UnityEditor.Callbacks;
 using UnityEditor.IMGUI.Controls;
 using UnityEngine;
@@ -18,20 +20,22 @@ public class EditorCustomAnalyzerService : EditorService {
     private static EditorCustomAnalyzerService _window;
     private static EditorCustomAnalyzerService Window => _window == null ? _window = GetWindow<EditorCustomAnalyzerService>("CustomAnalyzerService") : _window;
 
-    private string _dllName;
+    private static string _dllName;
     
     private static AnalyzerImplementTreeView _implementAnalyzerTreeView;
+    
+    private static ActivateAssemblyTreeView _activateAssemblyTreeView;
     private static AnalyzerImplementTreeView _activateAnalyzerTreeView;
     
     private static Dictionary<Type, AnalyzerImplementInfo> _implementInfoDic = new();
-    private static Dictionary<Type, AnalyzerImplementInfo> _activateInfoDic = new();
+    
     private static HashSet<Assembly> _activateAssemblySet = new();
+    private static Dictionary<Type, AnalyzerImplementInfo> _activateInfoDic = new();
 
-    private Vector2 _implementInfoScrollViewPosition;
-    private Vector2 _activateInfoScrollViewPosition;
     private Vector2 _windowScrollViewPosition;
-
-    private bool _activateAssemblySetFold;
+    
+    private AnimBool _activateAssemblyTreeViewFold = new();
+    private Vector2 _activateAssemblyScrollViewPosition;
     
     private static bool _isRefreshing;
     private static float _progress;
@@ -48,11 +52,6 @@ public class EditorCustomAnalyzerService : EditorService {
         Window.Focus();
     }
 
-    [MenuItem("Service/Analyzer/Analyzer View Service Close")]
-    private static void CloseWindow() {
-        Window.Close();
-    }
-
     [DidReloadScripts(99999)]
     private static void CacheRefresh() {
         if (HasOpenInstances<EditorCustomAnalyzerService>()) {
@@ -61,6 +60,10 @@ public class EditorCustomAnalyzerService : EditorService {
     }
 
     private static IEnumerator CacheRefreshCoroutine() {
+        if (string.IsNullOrEmpty(_dllName)) {
+            _dllName = Constants.Analyzer.ANALYZER_PLUGIN_NAME;
+        }
+        
         _isRefreshing = true;
         _progress = 0;
         
@@ -69,11 +72,10 @@ public class EditorCustomAnalyzerService : EditorService {
         var analyzerList = ReflectionProvider.GetSubClassTypes<DiagnosticAnalyzer>().Where(type => type.IsAbstract == false).ToList();
         var progressTick = 1.0f / analyzerList.Count;
         foreach (var type in analyzerList) {
-            var info = AnalyzerImplementInfo.Create(type);
             if (ASSEMBLY_REGEX.IsMatch(type.Assembly.Location)) {
-                _implementInfoDic.AutoAdd(type, info);
-            } else if (PLUGINS_REGEX.IsMatch(type.Assembly.Location)) {
-                _activateInfoDic.AutoAdd(type, info);
+                _implementInfoDic.AutoAdd(type, new AnalyzerImplementInfo(type));
+            } else if (PLUGINS_REGEX.IsMatch(type.Assembly.Location) && AssetDatabaseUtil.ContainsLabel(type.Assembly.Location, Constants.Analyzer.ROSLYN_ANALYZER_LABEL)) {
+                _activateInfoDic.AutoAdd(type, new AnalyzerActivateInfo(type));
             }
 
             _progress += progressTick;
@@ -81,10 +83,10 @@ public class EditorCustomAnalyzerService : EditorService {
         }
 
         _implementAnalyzerTreeView ??= new AnalyzerImplementTreeView();
+        _implementAnalyzerTreeView.ClearReload(_implementInfoDic.Values);
+        
         _activateAnalyzerTreeView ??= new AnalyzerActivateTreeView();
-
-        RefreshTreeView(ref _implementAnalyzerTreeView, _implementInfoDic);
-        RefreshTreeView(ref _activateAnalyzerTreeView, _activateInfoDic);
+        _activateAnalyzerTreeView.ClearReload(_activateInfoDic.Values);
 
         _progress = 1f;
         _isRefreshing = false;
@@ -92,10 +94,16 @@ public class EditorCustomAnalyzerService : EditorService {
         if (_activateInfoDic.Any()) {
             _activateAssemblySet.Clear();
             _activateAssemblySet = _activateInfoDic.Values.Select(info => info.type.Assembly).ToHashSetWithDistinct();
+
+            _activateAssemblyTreeView ??= new ActivateAssemblyTreeView();
+            _activateAssemblyTreeView.ClearReload(_activateAssemblySet);
         }
         
         yield return null;
     }
+    
+    private void OnEnable() => _activateAssemblyTreeViewFold?.valueChanged.AddListener(Repaint);
+    private void OnDisable() => _activateAssemblyTreeViewFold?.valueChanged.RemoveListener(Repaint);
 
     private void OnGUI() {
         if (_isRefreshing) {
@@ -104,29 +112,27 @@ public class EditorCustomAnalyzerService : EditorService {
             return;
         }
         
-        using (new GUILayout.HorizontalScope()) {
-            if (EditorCommon.DrawLabelButton("Custom Analyzer", Constants.Draw.REFRESH_ICON, Constants.Draw.AREA_TITLE_STYLE)) {
-                CacheRefresh();
-            }
-
-            if (GUILayout.Button("일괄 선택")) {
-                _implementInfoDic.Values.ForEach(info => info.isCheck = true);
-                _implementAnalyzerTreeView.Repaint();
-            }
-
-            if (GUILayout.Button("일괄 선택 해제")) {
-                _implementInfoDic.Values.ForEach(info => info.isCheck = false);
-                _implementAnalyzerTreeView.Repaint();
-            }
-            
-            GUILayout.FlexibleSpace();
+        if (EditorCommon.DrawLabelButton("커스텀 분석기(Analyzer)", Constants.Draw.REFRESH_ICON, Constants.Draw.AREA_TITLE_STYLE)) {
+            CacheRefresh();
         }
         
         if (_implementAnalyzerTreeView != null && _activateAnalyzerTreeView != null) {
             _windowScrollViewPosition = EditorGUILayout.BeginScrollView(_windowScrollViewPosition, false, false);
             using (new GUILayout.HorizontalScope(Constants.Draw.BOX)) {
                 using (new GUILayout.VerticalScope()) {
-                    EditorGUILayout.LabelField("현재 구현 된 Analyzer", Constants.Draw.BOLD_LABEL);
+                    using (new EditorGUILayout.HorizontalScope()) {
+                        EditorCommon.DrawFitLabel("현재 구현 된 분석기(Analyzer)", Constants.Draw.AREA_TITLE_STYLE);
+                        if (EditorCommon.DrawFitButton("일괄 선택")) {
+                            _implementInfoDic.Values.ForEach(info => info.isCheck = true);
+                            _implementAnalyzerTreeView.Repaint();
+                        }
+                        
+                        if (EditorCommon.DrawFitButton("일괄 선택 해제")){
+                            _implementInfoDic.Values.ForEach(info => info.isCheck = false);
+                            _implementAnalyzerTreeView.Repaint();
+                        }
+                    }
+                    
                     EditorGUILayout.Space(3f);
                     
                     _implementAnalyzerTreeView.Draw();
@@ -135,105 +141,166 @@ public class EditorCustomAnalyzerService : EditorService {
                 EditorCommon.DrawVerticalSeparator();
                 
                 using (new GUILayout.VerticalScope()) {
-                    // TODO. 표기 개선 필요
+                    _activateAssemblyScrollViewPosition = EditorGUILayout.BeginScrollView(_activateAssemblyScrollViewPosition, false, false, GUILayout.ExpandHeight(true));
                     if (_activateAssemblySet.Any()) {
-                        _activateAssemblySetFold = EditorGUILayout.BeginFoldoutHeaderGroup(_activateAssemblySetFold, string.Empty);
-                        if (_activateAssemblySetFold) {
-                            foreach (var assembly in _activateAssemblySet) {
-                                var time = File.GetLastWriteTime(assembly.Location);
-                                EditorGUILayout.LabelField($"{assembly.GetName().Name} || {time}");
-                            }
+                        _activateAssemblyTreeViewFold.target = EditorGUILayout.BeginFoldoutHeaderGroup(_activateAssemblyTreeViewFold.target, "적용 중인 어셈블리(Assembly) 목록", Constants.Draw.TITLE_FOLD_OUT_HEADER_STYLE);
+                        if (EditorGUILayout.BeginFadeGroup(_activateAssemblyTreeViewFold.faded)) {
+                            _activateAssemblyTreeView.Draw();
+                            EditorCommon.DrawSeparator(1f, 3f);
                         }
+                        
+                        EditorGUILayout.EndFadeGroup();
                         EditorGUILayout.EndFoldoutHeaderGroup();
                     }
-                    
-                    EditorGUILayout.LabelField("현재 dll로 적용 된 Analyzer", Constants.Draw.BOLD_LABEL);
+
+                    EditorGUILayout.LabelField("적용 중인 분석기(Analyzer)", Constants.Draw.AREA_TITLE_STYLE);
                     EditorGUILayout.Space(3f);
                     
                     _activateAnalyzerTreeView.Draw();
+                    
+                    EditorGUILayout.EndScrollView();
                 }
             }
             
             EditorGUILayout.EndScrollView();
 
-            if (_implementInfoDic?.IsEmpty() ?? false) {
-                EditorGUILayout.HelpBox($"구현된 {nameof(DiagnosticAnalyzer)}가 존재하지 않거나 {nameof(OnGUI)} 도중 문제가 발생하였을 수 있습니다.", MessageType.Warning);
-            } else {
-                EditorCommon.DrawLabelTextFieldWithRefresh("DLL 파일 명칭", ref _dllName, () => _dllName = _dllName = Constants.Analyzer.DEFAULT_ANALYZER_PLUGIN);
-                if (string.IsNullOrEmpty(_dllName)) {
-                    EditorGUILayout.HelpBox("빌드할 DLL 파일의 명칭을 지정해야 합니다. 확장자는 생략할 수 있습니다.", MessageType.Error);
+            using (new EditorGUILayout.VerticalScope(Constants.Draw.BOX)) {
+                if (_implementInfoDic?.IsEmpty() ?? false) {
+                    EditorGUILayout.HelpBox($"구현된 {nameof(DiagnosticAnalyzer)}가 존재하지 않거나 {nameof(OnGUI)} 도중 문제가 발생하였을 수 있습니다.", MessageType.Warning);
                 } else {
-                    if (GUILayout.Button("Custom Analyzer DLL 빌드", GUILayout.Height(60f))) {
-                        EditorCommon.OpenCheckDialogue("경고", "Analyzer dll 파일을 빌드합니다.\n" +
-                                                             "환경에 따라 많은 시간이 소요될 수 있습니다.\n" +
-                                                             $"빌드가 완료된 후 {_dllName} 파일은 자동적으로 {Constants.Path.PLUGINS_FOLDER}로 복사됩니다.", ok: () => {
-                            
-                            AnalyzerGenerator.GenerateCustomAnalyzerDll(_dllName, _implementInfoDic.Values.Where(info => info.isCheck).Select(info => info.type));
-                        });
+                    EditorCommon.DrawLabelTextFieldWithRefresh("DLL(Assembly) 파일 명칭", ref _dllName, () => _dllName = _dllName = Constants.Analyzer.ANALYZER_PLUGIN_NAME);
+                    if (string.IsNullOrEmpty(_dllName)) {
+                        EditorGUILayout.HelpBox("빌드할 DLL 파일의 명칭을 지정해야 합니다. 확장자는 생략할 수 있습니다.", MessageType.Error);
+                    } else {
+                        EditorGUILayout.HelpBox("DLL파일의 명칭과 어셈블리의 명칭은 동일하게 적용됩니다. 여러개의 DLL 파일로 나누는 경우 명칭을 다르게 지정하여야 합니다.", MessageType.Info);
+                        if (GUILayout.Button("Custom Analyzer DLL 빌드", GUILayout.Height(30f))) {
+                            EditorCommon.OpenCheckDialogue("경고", "Analyzer dll 파일을 빌드합니다.\n" +
+                                                                 "환경에 따라 많은 시간이 소요될 수 있습니다.\n" +
+                                                                 $"빌드가 완료된 후 {_dllName} 파일은 자동적으로 {Constants.Path.PLUGINS_FOLDER}로 복사됩니다.", ok: () => {
+                                
+                                AnalyzerGenerator.GenerateCustomAnalyzerDll(_dllName, _implementInfoDic.Values.Where(info => info.isCheck).Select(info => info.type));
+                            });
+                        }
                     }
                 }
             }
         }
     }
-    
-    private static void RefreshTreeView(ref AnalyzerImplementTreeView treeView, Dictionary<Type, AnalyzerImplementInfo> dictionary) {
-        treeView.Clear();
-        foreach (var info in dictionary.Values) {
-            treeView.Add(info);
-        }
-        
-        treeView.Reload();
-    }
+}
+
+internal record AnalyzerActivateInfo : AnalyzerImplementInfo {
+
+    public AnalyzerActivateInfo(Type analyzerType) : base(analyzerType) { }
+
+    public override bool IsMatch(string match) => assemblyName.IndexOf(match, StringComparison.OrdinalIgnoreCase) >= 0 || base.IsMatch(match);
 }
 
 internal record AnalyzerImplementInfo {
 
-    public Type type;
-    public string name;
-    public string description;
+    public readonly Type type;
+    public readonly string assemblyName;
+    public readonly string name;
+    public readonly string description;
+    
     public bool isOpen;
     public bool isCheck;
 
-    public static AnalyzerImplementInfo Create(Type analyzerType) {
-        var info = new AnalyzerImplementInfo {
-            type = analyzerType,
-            name = analyzerType.Name,
-            description = analyzerType.TryGetCustomAttribute<DescriptionAttribute>(out var descriptionAttribute) ? descriptionAttribute.Description : string.Empty
-        };
-        
-        return info;
+    public AnalyzerImplementInfo(Type analyzerType) {
+        type = analyzerType;
+        assemblyName = analyzerType.Assembly.GetName().Name;
+        name = analyzerType.Name;
+        description = analyzerType.TryGetCustomAttribute<DescriptionAttribute>(out var descriptionAttribute) ? descriptionAttribute.Description : string.Empty;
     }
+
+    public virtual bool IsMatch(string match) => name.IndexOf(match, StringComparison.OrdinalIgnoreCase) >= 0;
 }
 
 #region [TreeView]
 
+internal class ActivateAssemblyTreeView : EditorServiceTreeView {
+
+    private static readonly MultiColumnHeaderState.Column[] COLUMNS = {
+        CreateColumn("No", 35f, 35f),
+        CreateColumn("명칭", 100f),
+        CreateColumn("생성일", 60f),
+    };
+
+    public ActivateAssemblyTreeView() : base(COLUMNS) { }
+    
+    public override void Draw() => OnGUI(new Rect(EditorGUILayout.GetControlRect(GUILayout.ExpandWidth(true), GUILayout.ExpandHeight(true), GUILayout.MinHeight(50f), GUILayout.MaxHeight(110f))));
+
+    protected override void RowGUI(RowGUIArgs args) {
+        if (args.item is ActivateAssemblyTreeViewItem item) {
+            EditorGUI.LabelField(args.GetCellRect(0), item.id.ToString(), Constants.Draw.CENTER_LABEL);
+            EditorGUI.LabelField(args.GetCellRect(1), item.name, Constants.Draw.CENTER_LABEL);
+            EditorGUI.LabelField(args.GetCellRect(2), item.createDate.ToString(CultureInfo.CurrentCulture), Constants.Draw.CENTER_LABEL);
+        }
+    }
+
+    public void ClearReload(IEnumerable<Assembly> enumerable) {
+        Clear();
+        enumerable.ForEach(Add);
+        Reload();
+    }
+
+    public void Add(Assembly assembly) => itemList.Add(new ActivateAssemblyTreeViewItem(itemList.Count, assembly));
+
+    private sealed class ActivateAssemblyTreeViewItem : TreeViewItem {
+
+        public readonly string name;
+        public readonly DateTime createDate;
+        
+        public ActivateAssemblyTreeViewItem(int id, Assembly assembly) {
+            this.id = id;
+            name = assembly.GetName().Name;
+            createDate = File.GetCreationTime(assembly.Location);
+        }
+    }
+}
+
 internal class AnalyzerActivateTreeView : AnalyzerImplementTreeView {
 
-    protected new static readonly MultiColumnHeaderState.Column[] COLUMNS = {
+    private static readonly MultiColumnHeaderState.Column[] COLUMNS = {
         CreateColumn("No", 35f, 35f),
         CreateColumn("어셈블리",70f),
         CreateColumn("명칭", 350f),
     };
     
     public AnalyzerActivateTreeView() : base(COLUMNS) { }
-
+    
     protected override void RowGUI(RowGUIArgs args) {
         if (args.item is AnalyzerImplementTreeViewItem item) {
             EditorGUI.LabelField(args.GetCellRect(0), item.id.ToString(), Constants.Draw.CENTER_LABEL);
-            EditorGUI.LabelField(args.GetCellRect(1), item.info.type.Assembly.GetName().Name, Constants.Draw.CENTER_LABEL);
+            EditorGUI.LabelField(args.GetCellRect(1), item.info.assemblyName, Constants.Draw.CENTER_LABEL);
             EditorGUI.LabelField(args.GetCellRect(2), item.info.name);
         }
     }
 
-    // TODO. 현재 선택된 데이터의 Assembly 정보다 함께 출력
-    public override void Draw() {
-        base.Draw();
+    protected override IEnumerable<TreeViewItem> GetOrderBy(int index, bool isAscending) {
+        if (rootItem.children.TryCast<AnalyzerImplementTreeViewItem>(out var enumerable)) {
+            enumerable = EnumUtil.ConvertInt<SORT_TYPE>(index) switch {
+                SORT_TYPE.NO => enumerable.OrderBy(x => x.id, isAscending),
+                SORT_TYPE.ASSEMBLY => enumerable.OrderBy(x => x.info.assemblyName, isAscending),
+                SORT_TYPE.NAME => enumerable.OrderBy(x => x.info.name, isAscending),
+                _ => enumerable
+            };
+
+            return enumerable;
+        }
+
+        return Enumerable.Empty<TreeViewItem>();
+    }
+    
+    private enum SORT_TYPE {
+        NO,
+        ASSEMBLY,
+        NAME,
     }
 }
 
 internal class AnalyzerImplementTreeView : EditorServiceTreeView {
 
-    protected static readonly MultiColumnHeaderState.Column[] COLUMNS = {
+    private static readonly MultiColumnHeaderState.Column[] COLUMNS = {
         CreateColumn("No", 35f, 35f),
         CreateColumn("선택", 35f, 35f),
         CreateColumn("명칭", 350f),
@@ -241,6 +308,7 @@ internal class AnalyzerImplementTreeView : EditorServiceTreeView {
     
     public AnalyzerImplementTreeView() : base(COLUMNS) { }
     public AnalyzerImplementTreeView(MultiColumnHeaderState.Column[] columns) : base(columns) { }
+    protected override bool DoesItemMatchSearch(TreeViewItem item, string search) => item is AnalyzerImplementTreeViewItem implementItem && implementItem.info.IsMatch(search);
 
     public override void Draw() {
         searchString = searchField.OnToolbarGUI(searchString);
@@ -248,7 +316,9 @@ internal class AnalyzerImplementTreeView : EditorServiceTreeView {
         EditorCommon.DrawSeparator();
         var index = GetSelection().FirstOrDefault();
         if (index >= 0 && itemList.Count > index && itemList[index] is AnalyzerImplementTreeViewItem item) {
-            EditorGUILayout.TextField(item.info.name, Constants.Draw.BOLD_LABEL);
+            EditorCommon.DrawLabelTextField("어셈블리", item.info.assemblyName, 60f, Constants.Draw.BOLD_TEXT_FIELD);
+            EditorCommon.DrawLabelTextField("명칭", item.info.name, 60f, Constants.Draw.BOLD_TEXT_FIELD);
+            EditorGUILayout.Space(2f);
             EditorGUI.TextArea(EditorGUILayout.GetControlRect(GUILayout.MinHeight(50f), GUILayout.MaxHeight(80f)), item.info.description, Constants.Draw.CLIPPING_TEXT_AREA);
         }
     }
@@ -261,13 +331,19 @@ internal class AnalyzerImplementTreeView : EditorServiceTreeView {
         }
     }
 
-    public void Clear() => itemList.Clear();
-    public void Add(AnalyzerImplementInfo info) => itemList.Add(new AnalyzerImplementTreeViewItem(itemList.Count, info));
+    public void ClearReload(IEnumerable<AnalyzerImplementInfo> enumerable) {
+        Clear();
+        enumerable.ForEach(Add);
+        Reload();
+    }
+
+    public virtual void Add(AnalyzerImplementInfo info) => itemList.Add(new AnalyzerImplementTreeViewItem(itemList.Count, info));
 
     protected override IEnumerable<TreeViewItem> GetOrderBy(int index, bool isAscending) {
         if (rootItem.children.TryCast<AnalyzerImplementTreeViewItem>(out var enumerable)) {
             enumerable = EnumUtil.ConvertInt<SORT_TYPE>(index) switch {
                 SORT_TYPE.NO => enumerable.OrderBy(x => x.id, isAscending),
+                SORT_TYPE.SELECTION => enumerable.OrderBy(x => x.info.isCheck, isAscending),
                 SORT_TYPE.NAME => enumerable.OrderBy(x => x.info.name, isAscending),
                 _ => enumerable
             };
@@ -289,8 +365,9 @@ internal class AnalyzerImplementTreeView : EditorServiceTreeView {
         }
     }
     
-    protected enum SORT_TYPE {
+    private enum SORT_TYPE {
         NO,
+        SELECTION,
         NAME,
     }
 }

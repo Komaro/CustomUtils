@@ -1,10 +1,14 @@
 ﻿using System;
+using System.Linq;
 using System.Reflection;
+using System.Text.RegularExpressions;
 using UnityEditor;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
 public static class AssetDatabaseUtil {
+
+    private static readonly Regex ASSETS_GET_AFTER_REGEX = new(string.Format(Constants.Regex.GET_AFTER_REGEX, @"Assets[\\/]"));
 
     public static bool TryLoad(string path, out DefaultAsset asset) {
         asset = AssetDatabase.LoadAssetAtPath<DefaultAsset>(path) ?? AssetDatabase.LoadAssetAtPath<DefaultAsset>(GetCollectionPath(path));
@@ -49,5 +53,7 @@ public static class AssetDatabaseUtil {
         return false;
     }
 
-    public static string GetCollectionPath(string path) => path.StartsWith("Assets/") ? path : path.GetAfter("Assets/", true);
+    public static string GetCollectionPath(string path) => ASSETS_GET_AFTER_REGEX.TryMatch(path, out var match) ? match.Value : path;
+    
+    public static bool ContainsLabel(string path, string label) => TryGetLabels(path, out var labels) && labels.Contains(label);
 }

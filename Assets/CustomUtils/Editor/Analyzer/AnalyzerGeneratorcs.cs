@@ -40,7 +40,7 @@ public static class AnalyzerGenerator {
     
     private static void GenerateCustomAnalyzerDllOnCompilation(string dllName, params string[] sourceFiles) {
         if (string.IsNullOrEmpty(dllName)) {
-            dllName = Constants.Analyzer.DEFAULT_ANALYZER_PLUGIN;
+            dllName = Constants.Analyzer.ANALYZER_PLUGIN_NAME;
         }
     
         var outputPath = $"{Constants.Path.PROJECT_TEMP_FOLDER}/{dllName.AutoSwitchExtension(Constants.Extension.DLL)}";
@@ -51,7 +51,7 @@ public static class AnalyzerGenerator {
             }
         }
         
-        var compilation = CSharpCompilation.Create(Constants.Analyzer.ANALYZER_PLUGIN_NAME)
+        var compilation = CSharpCompilation.Create(dllName)
             .WithOptions(new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary))
             .AddReferences(AssemblyProvider.GetSystemAssemblySet().Select(assembly => MetadataReference.CreateFromFile(assembly.Location)))
             .AddSyntaxTrees(syntaxTreeList.ToArray());
@@ -70,7 +70,7 @@ public static class AnalyzerGenerator {
     private static void GenerateCustomAnalyzerDllOnAssemblyBuilder(params string[] sourceFiles) {
         if (AssemblyProvider.TryGetUnityAssembly(SystemAssembly.GetExecutingAssembly(), out var assembly)) {
             try {
-                var outputPath = $"{Constants.Path.PROJECT_TEMP_FOLDER}/{Constants.Analyzer.ANALYZER_PLUGIN_NAME}{Constants.Extension.DLL}";
+                var outputPath = $"{Constants.Path.PROJECT_TEMP_FOLDER}/{Constants.Analyzer.ANALYZER_NAME}{Constants.Extension.DLL}";
                 var builder = new AssemblyBuilder(outputPath, sourceFiles) {
                     additionalReferences = assembly.assemblyReferences.Select(x => x.outputPath).ToArray(),
                 };

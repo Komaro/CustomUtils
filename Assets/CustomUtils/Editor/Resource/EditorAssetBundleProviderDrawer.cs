@@ -490,11 +490,13 @@ internal class AssetBundleTreeView : EditorServiceTreeView {
             EditorGUI.LabelField(args.GetCellRect(1), item.info.name);
 
             using (new EditorGUI.DisabledGroupScope(_bindConfig is not { isAssetBundleSelectableEncrypted: not false })) {
-                item.info.isEncrypt = EditorGUI.Toggle(args.GetCellRect(2).GetCenterRect(EditorCommon.TOGGLE_FIT_SIZE), item.info.isEncrypt);
+                EditorCommon.DrawFitToggle(args.GetCellRect(2), ref item.info.isEncrypt);
+                // item.info.isEncrypt = EditorGUI.Toggle(args.GetCellRect(2).GetCenterRect(EditorCommon.TOGGLE_FIT_SIZE), item.info.isEncrypt);
             }
 
             using (new EditorGUI.DisabledGroupScope(_bindConfig is not { isSelectableBuild: not false})) {
-                item.info.isSelect = EditorGUI.Toggle(args.GetCellRect(3).GetCenterRect(EditorCommon.TOGGLE_FIT_SIZE), item.info.isSelect);
+                EditorCommon.DrawFitToggle(args.GetCellRect(3), ref item.info.isSelect);
+                // item.info.isSelect = EditorGUI.Toggle(args.GetCellRect(3).GetCenterRect(EditorCommon.TOGGLE_FIT_SIZE), item.info.isSelect);
             }
         }
     }

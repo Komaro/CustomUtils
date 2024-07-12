@@ -5,16 +5,9 @@ using UnityEditor;
 using UnityEngine;
 
 public static partial class EditorCommon {
-    
-    public const float DEFAULT_LABEL_WIDTH_FACTOR = 1.035f;
-    public const float BUTTON_LABEL_WIDTH_FACTOR = 1.1f;
-    public const float TOGGLE_FIT_AREA = 16f;
-    
-    public static readonly Vector2 TOGGLE_FIT_SIZE = new(16f, 16f);
-    
+        
     private static readonly Dictionary<string, GUILayoutOption> _widthCacheDic = new ();
-    private static readonly TextGenerator _textGenerator = new ();
-    
+
     public static void OpenCheckDialogue(string title, string message, string okText = "확인", string cancelText = "취소", Action ok = null, Action cancel = null) {
         if (EditorUtility.DisplayDialog(title, message, okText, cancelText)) {
             ok?.Invoke();
@@ -38,13 +31,10 @@ public static partial class EditorCommon {
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static bool DrawFitButton(GUIContent buttonContent) => GUILayout.Button(buttonContent, Constants.Draw.FIT_X2_BUTTON, GUILayout.ExpandWidth(false), GUILayout.ExpandHeight(false));
-
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static string DrawLabelTextField(string label, string text, float labelWidth = 120f) {
+    public static string DrawLabelTextField(string label, string text, float labelWidth = 120f, GUIStyle textFieldStyle = null) {
         using (new GUILayout.HorizontalScope()) {
             EditorGUILayout.LabelField(label, Constants.Draw.TITLE_STYLE, GUILayout.Width(labelWidth));
-            return EditorGUILayout.TextField(text, Constants.Draw.TEXT_FIELD);
+            return EditorGUILayout.TextField(text, textFieldStyle ?? Constants.Draw.TEXT_FIELD);
         }
     }
     
@@ -59,7 +49,7 @@ public static partial class EditorCommon {
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static string DrawButtonTextField(string buttonText, ref string text, Action onClick = null, float buttonWidth = 0f) {
         using (new GUILayout.HorizontalScope()) {
-            if (GUILayout.Button(buttonText, Constants.Draw.BUTTON, buttonWidth == 0f ? GetCachedWidthOption(buttonText, Constants.Draw.LABEL, BUTTON_LABEL_WIDTH_FACTOR) : GUILayout.Width(buttonWidth))) {
+            if (GUILayout.Button(buttonText, Constants.Draw.BUTTON, buttonWidth == 0f ? GetCachedFixWidthOption(buttonText, Constants.Draw.LABEL) : GUILayout.Width(buttonWidth))) {
                 onClick?.Invoke();
             }
 
@@ -67,9 +57,10 @@ public static partial class EditorCommon {
         }
     }
     
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static string DrawLabelTextFieldWithRefresh(string label, ref string text, Action onClick = null) {
         using (new GUILayout.HorizontalScope()) {
-            EditorGUILayout.LabelField(label, GetCachedWidthOption(label, Constants.Draw.BOLD_LABEL));
+            EditorGUILayout.LabelField(label, Constants.Draw.TITLE_STYLE, GetCachedFixWidthOption(label, Constants.Draw.TITLE_STYLE));
             if (DrawFitButton(Constants.Draw.REFRESH_ICON)) {
                 GUI.FocusControl(null);
                 onClick?.Invoke();
@@ -82,8 +73,8 @@ public static partial class EditorCommon {
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static bool DrawLabelButton(string label, GUIContent buttonContent, GUIStyle labelStyle = null) {
         using (new EditorGUILayout.HorizontalScope()) {
-            EditorGUILayout.LabelField(label, labelStyle ?? Constants.Draw.BOLD_LABEL, GetCachedWidthOption(label, Constants.Draw.BOLD_LABEL));
-            return GUILayout.Button(buttonContent, Constants.Draw.FIT_X2_BUTTON, GUILayout.ExpandWidth(false));
+            EditorGUILayout.LabelField(label, labelStyle ?? Constants.Draw.BOLD_LABEL, GetCachedFixWidthOption(label, Constants.Draw.BOLD_LABEL));
+            return DrawFitButton(buttonContent);
         }
     }
 
@@ -91,7 +82,7 @@ public static partial class EditorCommon {
     public static void DrawLabelLinkButton(string label, string buttonText, Action<string> onClick = null, float labelWidth = 120f) {
         using (new EditorGUILayout.HorizontalScope()) {
             EditorGUILayout.LabelField(label, Constants.Draw.BOLD_LABEL, GUILayout.Width(labelWidth));
-            if (EditorGUILayout.LinkButton(buttonText, GetCachedWidthOption(buttonText, EditorStyles.linkLabel))) {
+            if (EditorGUILayout.LinkButton(buttonText, GetCachedFixWidthOption(buttonText, EditorStyles.linkLabel))) {
                 onClick?.Invoke(buttonText);
             }
         }
@@ -160,7 +151,7 @@ public static partial class EditorCommon {
     public static void DrawFolderOpenSelector(string label, string buttonText, ref string targetDirectory, Action onSelect = null, float width = 120f) {
         using (new GUILayout.HorizontalScope()) {
             EditorGUILayout.LabelField(label, Constants.Draw.TITLE_STYLE, GUILayout.Width(width));
-            if (GUILayout.Button(Constants.Draw.FOLDER_OPEN_ICON, Constants.Draw.FIT_X2_BUTTON, GUILayout.Width(20f), GUILayout.Height(20f))) {
+            if (DrawFixButton(Constants.Draw.FOLDER_OPEN_ICON)) {
                 EditorUtility.RevealInFinder(targetDirectory);
             }
             
@@ -194,8 +185,8 @@ public static partial class EditorCommon {
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void DrawFileOpenSelector(ref string targetPath, string label, string buttonText, string extension = "", Action onSelect = null, float width = 0f) {
         using (new GUILayout.HorizontalScope()) {
-            EditorGUILayout.LabelField(label, Constants.Draw.TITLE_STYLE, width == 0f ? GetCachedWidthOption(label, EditorStyles.boldLabel) : GUILayout.Width(width));
-            if (GUILayout.Button(Constants.Draw.FOLDER_OPEN_ICON, Constants.Draw.FIT_X2_BUTTON, GUILayout.Width(20f), GUILayout.Height(20f))) {
+            EditorGUILayout.LabelField(label, Constants.Draw.TITLE_STYLE, width == 0f ? GetCachedFixWidthOption(label, EditorStyles.boldLabel) : GUILayout.Width(width));
+            if (DrawFixButton(Constants.Draw.FOLDER_OPEN_ICON)) {
                 EditorUtility.RevealInFinder(targetPath);
             }
             
@@ -210,13 +201,6 @@ public static partial class EditorCommon {
             EditorGUILayout.TextField(targetPath, Constants.Draw.TEXT_FIELD);
         }
     }
-
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static bool DrawFitToggle(Rect position, ref bool isActive) => isActive = EditorGUI.Toggle(position.GetCenterRect(TOGGLE_FIT_SIZE), isActive);
-    
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static bool DrawFitToggle(ref bool toggle) => toggle = EditorGUILayout.Toggle(toggle, Constants.Draw.TOGGLE, GUILayout.MaxWidth(TOGGLE_FIT_AREA));
-
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static bool DrawLabelToggle(bool toggle, string label, float labelWidth = 300f) => DrawLabelToggle(toggle, new GUIContent(label), GUILayout.Width(labelWidth));
@@ -234,7 +218,7 @@ public static partial class EditorCommon {
     public static bool DrawLabelToggle(bool toggle, GUIContent labelContent, params GUILayoutOption[] options) {
         using (new GUILayout.HorizontalScope(Constants.Draw.TOGGLE_HORIZONTAL_SCOPE)) {
             EditorGUILayout.LabelField(labelContent, Constants.Draw.LABEL, options);
-            return EditorGUILayout.Toggle(toggle, Constants.Draw.TOGGLE, GUILayout.MaxWidth(TOGGLE_FIT_AREA));
+            return EditorGUILayout.Toggle(toggle, Constants.Draw.TOGGLE, GetCachedFixWidthOption(Constants.Draw.TOGGLE));
         }
     }
 
@@ -246,7 +230,7 @@ public static partial class EditorCommon {
         using (new GUILayout.HorizontalScope(Constants.Draw.TOGGLE_HORIZONTAL_SCOPE)) {
             EditorGUI.BeginChangeCheck();
             EditorGUILayout.LabelField(labelContent, Constants.Draw.LABEL, options);
-            toggle = EditorGUILayout.Toggle(toggle, Constants.Draw.TOGGLE, GUILayout.MaxWidth(TOGGLE_FIT_AREA));
+            toggle = EditorGUILayout.Toggle(toggle, Constants.Draw.TOGGLE, GetCachedFixWidthOption(Constants.Draw.TOGGLE));
             if (EditorGUI.EndChangeCheck()) {
                 onChange?.Invoke();
             }
@@ -288,24 +272,54 @@ public static partial class EditorCommon {
     
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void DrawTopToolbar(ref int index, Action<int> onChange = null, params string[] texts) => index = DrawTopToolbar(index, onChange, texts);
-    
-    
+
+    #region [Fit]
     
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private static GUILayoutOption GetCachedWidthOption(string text) {
+    public static void DrawFitLabel(string label, GUIStyle style = null) => EditorGUILayout.LabelField(label, style ?? Constants.Draw.LABEL, GetCachedFixWidthOption(label, style ?? Constants.Draw.LABEL));
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static bool DrawFitButton(string buttonText, GUIStyle style = null) => GUILayout.Button(buttonText, style ?? Constants.Draw.BUTTON, GetCachedFixWidthOption(buttonText, style ?? Constants.Draw.BUTTON));
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static bool DrawFitButton(GUIContent buttonContent, GUIStyle style = null) => GUILayout.Button(buttonContent, style ?? Constants.Draw.FIT_X2_BUTTON, GUILayout.ExpandWidth(false), GUILayout.ExpandHeight(false));
+    
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static bool DrawFitToggle(Rect position, ref bool isActive) => isActive = EditorGUI.Toggle(position.GetCenterRect(Constants.Draw.TOGGLE.CalcSize(GUIContent.none)), isActive);
+    
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static bool DrawFitToggle(ref bool toggle) => toggle = EditorGUILayout.Toggle(toggle, Constants.Draw.TOGGLE, GetCachedFixWidthOption(Constants.Draw.TOGGLE));
+    
+    #endregion
+
+    #region [Fix]
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static bool DrawFixButton(GUIContent buttonContent, float width = 20f, float height = 20f, GUIStyle style = null) {
+        return GUILayout.Button(buttonContent, style ?? Constants.Draw.FIT_X2_BUTTON, GUILayout.Width(width), GUILayout.Height(height));
+    }
+    
+    #endregion
+
+    private static GUILayoutOption GetCachedFixWidthOption(string text, GUIStyle style) {
         if (_widthCacheDic.TryGetValue(text, out var option) == false) {
-            option = GUILayout.Width(_textGenerator.GetPreferredWidth(text, EditorStyles.label.ToTextGenerationSettings()));
-            _widthCacheDic.Add(text, option);
+            _widthCacheDic.Add(text, option = GUILayout.Width(style.CalcSize(new GUIContent(text)).x));
+        }
+        
+        return option;
+    }
+    
+    private static GUILayoutOption GetCachedFixWidthOption(Texture texture, GUIStyle style) {
+        if (_widthCacheDic.TryGetValue(texture.name, out var option) == false) {
+            _widthCacheDic.Add(texture.name, option = GUILayout.Width(style.CalcSize(new GUIContent(texture)).x));
         }
 
         return option;
     }
 
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private static GUILayoutOption GetCachedWidthOption(string text, GUIStyle style, float factor = DEFAULT_LABEL_WIDTH_FACTOR) {
-        if (_widthCacheDic.TryGetValue(text, out var option) == false) {
-            option = GUILayout.Width(_textGenerator.GetPreferredWidth(text, style) * factor);
-            _widthCacheDic.Add(text, option);
+    private static GUILayoutOption GetCachedFixWidthOption(GUIStyle style) {
+        if (_widthCacheDic.TryGetValue(style.name, out var option) == false) {
+            _widthCacheDic.Add(style.name, option = GUILayout.Width(style.CalcSize(GUIContent.none).x));
         }
 
         return option;

@@ -19,12 +19,12 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 30
-    width: 1536
-    height: 730.8
+    width: 1521.6
+    height: 716.4
   m_MinSize: {x: 300, y: 200}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: -1
+  controlID: 18
 --- !u!114 &2
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -45,10 +45,10 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 1125.6
-    y: 73.6
-    width: 409.40002
-    height: 709.8
+    x: 806.4
+    y: 80.8
+    width: 721.39996
+    height: 695.4
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
     m_LastAppliedPresetName: Default
@@ -73,12 +73,12 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 1125.6
-    height: 730.8
+    width: 799.2
+    height: 716.4
   m_MinSize: {x: 200, y: 200}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 1
-  controlID: 117
+  controlID: 98
 --- !u!114 &4
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -98,12 +98,12 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 1125.6
-    height: 395.2
+    width: 799.2
+    height: 364.8
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 118
+  controlID: 88
 --- !u!114 &5
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -121,8 +121,8 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 626.4
-    height: 395.2
+    width: 228.8
+    height: 364.8
   m_MinSize: {x: 201, y: 221}
   m_MaxSize: {x: 4001, y: 4021}
   m_ActualView: {fileID: 6}
@@ -151,10 +151,10 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 0
-    y: 73.6
-    width: 625.4
-    height: 374.2
+    x: 7.2000003
+    y: 80.8
+    width: 227.8
+    height: 343.8
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
     m_LastAppliedPresetName: Default
@@ -163,9 +163,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 
+      m_SelectedIDs: b26c0000
       m_LastClickedID: 0
-      m_ExpandedIDs: 24fbffff686400008a640000
+      m_ExpandedIDs: d89cffff729effffda9fffff08a2ffff22a4ffff64a6ffff0ea9ffff28abffff68acffff6cadffff70aeffff52b1ffff6cb3ffffaeb5ffffc8b7ffffe2b9ffff0ebbffff12bcffff3ebdffff56beffffacc0ffff14c2ffff7ec4ffffe8c6ffff3cc9ffff54caffff98ccffffb2ceffff1cd1ffff7cd1ffff72d4ffffeae0ffffbce3ffffb8e4ffffb4e5ffffb0e6ffffc0e7ffff4aeaffff0eecffff0aedffff42eeffffa6efffff26fbffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -204,12 +204,12 @@ MonoBehaviour:
   m_Children: []
   m_Position:
     serializedVersion: 2
-    x: 626.4
+    x: 228.8
     y: 0
-    width: 499.19995
-    height: 395.2
-  m_MinSize: {x: 202, y: 221}
-  m_MaxSize: {x: 4002, y: 4021}
+    width: 570.4
+    height: 364.8
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 8}
   m_Panes:
   - {fileID: 8}
@@ -237,10 +237,10 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 626.4
-    y: 73.6
-    width: 497.19995
-    height: 374.2
+    x: 236
+    y: 80.8
+    width: 568.4
+    height: 343.8
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
     m_LastAppliedPresetName: Default
@@ -327,7 +327,7 @@ MonoBehaviour:
       floating: 0
       collapsed: 0
       displayed: 1
-      snapOffset: {x: -112, y: -191.59998}
+      snapOffset: {x: -112.00006, y: -191.59998}
       snapOffsetDelta: {x: 0, y: 0}
       snapCorner: 3
       id: Orientation
@@ -465,9 +465,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 292.98505, y: 228.3183, z: -25.889198}
+    m_Target: {x: 285.34677, y: 187.15594, z: -23.292019}
     speed: 2
-    m_Value: {x: 292.98505, y: 228.3183, z: -25.889198}
+    m_Value: {x: 285.34677, y: 187.15594, z: -23.292019}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -518,9 +518,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0.9771707, y: -0.013238792, z: 0.20215495, w: 0.06399615}
   m_Size:
-    m_Target: 69.75122
+    m_Target: 154.26859
     speed: 2
-    m_Value: 69.75122
+    m_Value: 154.26859
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -593,13 +593,13 @@ MonoBehaviour:
   m_Position:
     serializedVersion: 2
     x: 0
-    y: 395.2
-    width: 1125.6
-    height: 335.59998
+    y: 364.8
+    width: 799.2
+    height: 351.60004
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 24
+  controlID: 99
 --- !u!114 &11
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -610,24 +610,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 1
   m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: ConsoleWindow
+  m_Name: ProjectBrowser
   m_EditorClassIdentifier: 
   m_Children: []
   m_Position:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 636.8
-    height: 335.59998
-  m_MinSize: {x: 101, y: 121}
-  m_MaxSize: {x: 4001, y: 4021}
-  m_ActualView: {fileID: 13}
+    width: 648
+    height: 351.60004
+  m_MinSize: {x: 231, y: 271}
+  m_MaxSize: {x: 10001, y: 10021}
+  m_ActualView: {fileID: 12}
   m_Panes:
   - {fileID: 12}
   - {fileID: 13}
   - {fileID: 14}
-  m_Selected: 1
-  m_LastSelected: 0
+  m_Selected: 0
+  m_LastSelected: 1
 --- !u!114 &12
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -649,10 +649,10 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 0
-    y: 468.80002
-    width: 635.8
-    height: 314.59998
+    x: 7.2000003
+    y: 445.6
+    width: 647
+    height: 330.60004
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
     m_LastAppliedPresetName: Default
@@ -671,22 +671,22 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/CustomUtils
+    - Assets/CustomUtils/CustomAnalyzer
     m_Globs: []
     m_OriginalText: 
   m_ViewMode: 1
   m_StartGridSize: 16
   m_LastFolders:
-  - Assets/CustomUtils
+  - Assets/CustomUtils/CustomAnalyzer
   m_LastFoldersGridSize: 16
   m_LastProjectPath: C:\Project\Unity\CustomUtils
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 62650000
-    m_LastClickedID: 25954
-    m_ExpandedIDs: 000000003e65000040650000426500004465000046650000486500004a6500004c6500004e65000050650000526500005465000056650000586500005a6500005c6500005e65000060650000626500006465000066650000686500006a65000000ca9a3b
+    scrollPos: {x: 0, y: 61.399963}
+    m_SelectedIDs: 986c0000
+    m_LastClickedID: 27800
+    m_ExpandedIDs: 000000006c6500006e65000070650000726500007465000076650000786500007a6500007c6500007e65000080650000826500008465000086650000886500008a6500008c6500008e650000906500009265000094650000866c00008c6c000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -714,7 +714,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 000000003e65000040650000426500004465000046650000486500004a6500004c6500004e65000050650000526500005465000056650000586500005a6500005c6500005e65000060650000626500006465000066650000686500006a650000
+    m_ExpandedIDs: 000000006c6500006e65000070650000726500007465000076650000786500007a6500007c6500007e65000080650000826500008465000086650000886500008a6500008c6500008e650000906500009265000094650000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -739,9 +739,9 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: 
-    m_LastClickedInstanceID: 0
-    m_HadKeyboardFocusLastEvent: 0
+    m_SelectedInstanceIDs: b26c0000
+    m_LastClickedInstanceID: 27826
+    m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: c6230000ac060000fc56000092f6ffff2a66000002670000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -791,10 +791,10 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 0
-    y: 468.80002
-    width: 635.8
-    height: 314.59998
+    x: 7.2000003
+    y: 445.6
+    width: 647
+    height: 330.60004
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
     m_LastAppliedPresetName: Default
@@ -993,10 +993,10 @@ MonoBehaviour:
   m_Children: []
   m_Position:
     serializedVersion: 2
-    x: 636.8
+    x: 648
     y: 0
-    width: 488.8
-    height: 335.59998
+    width: 151.20001
+    height: 351.60004
   m_MinSize: {x: 200, y: 200}
   m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 16}
@@ -1025,10 +1025,10 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 636.8
-    y: 468.80002
-    width: 486.8
-    height: 314.59998
+    x: 655.2
+    y: 445.6
+    width: 149.20001
+    height: 330.60004
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
     m_LastAppliedPresetName: Default
@@ -1040,7 +1040,7 @@ MonoBehaviour:
   m_ShowGizmos: 0
   m_TargetDisplay: 0
   m_ClearColor: {r: 0, g: 0, b: 0, a: 0}
-  m_TargetSize: {x: 486.8, y: 293.59998}
+  m_TargetSize: {x: 149.20001, y: 309.60004}
   m_TextureFilterMode: 0
   m_TextureHideFlags: 61
   m_RenderIMGUI: 1
@@ -1055,10 +1055,10 @@ MonoBehaviour:
     m_VRangeLocked: 0
     hZoomLockedByDefault: 0
     vZoomLockedByDefault: 0
-    m_HBaseRangeMin: -194.72
-    m_HBaseRangeMax: 194.72
-    m_VBaseRangeMin: -117.439995
-    m_VBaseRangeMax: 117.439995
+    m_HBaseRangeMin: -59.680004
+    m_HBaseRangeMax: 59.680004
+    m_VBaseRangeMin: -123.84002
+    m_VBaseRangeMax: 123.84002
     m_HAllowExceedBaseRangeMin: 1
     m_HAllowExceedBaseRangeMax: 1
     m_VAllowExceedBaseRangeMin: 1
@@ -1076,23 +1076,23 @@ MonoBehaviour:
       serializedVersion: 2
       x: 0
       y: 21
-      width: 486.8
-      height: 293.59998
-    m_Scale: {x: 1.6721257, y: 1.6721264}
-    m_Translation: {x: 267.1065, y: 107.97655}
+      width: 149.20001
+      height: 309.60004
+    m_Scale: {x: 1.391502, y: 1.3915021}
+    m_Translation: {x: 82.048706, y: 151.49452}
     m_MarginLeft: 0
     m_MarginRight: 0
     m_MarginTop: 0
     m_MarginBottom: 0
     m_LastShownAreaInsideMargins:
       serializedVersion: 2
-      x: -159.74069
-      y: -64.574394
-      width: 291.12643
-      height: 175.5848
+      x: -58.96413
+      y: -108.87121
+      width: 107.222275
+      height: 222.4934
     m_MinimalGUI: 1
   m_defaultScale: 1
-  m_LastWindowPixelSize: {x: 608.5, y: 393.24997}
+  m_LastWindowPixelSize: {x: 186.50002, y: 413.25006}
   m_ClearInEditMode: 1
   m_NoCameraWarning: 1
   m_LowResolutionForAspectRatios: 01000000000000000000
@@ -1113,18 +1113,18 @@ MonoBehaviour:
   m_Children: []
   m_Position:
     serializedVersion: 2
-    x: 1125.6
+    x: 799.2
     y: 0
-    width: 410.40002
-    height: 730.8
-  m_MinSize: {x: 100, y: 100}
-  m_MaxSize: {x: 4000, y: 4000}
+    width: 722.39996
+    height: 716.4
+  m_MinSize: {x: 101, y: 121}
+  m_MaxSize: {x: 4001, y: 4021}
   m_ActualView: {fileID: 2}
   m_Panes:
   - {fileID: 18}
-  - {fileID: 19}
   - {fileID: 2}
-  m_Selected: 2
+  - {fileID: 19}
+  m_Selected: 1
   m_LastSelected: 0
 --- !u!114 &18
 MonoBehaviour:
@@ -1147,10 +1147,10 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 1147.2001
-    y: 73.6
-    width: 387.80005
-    height: 709.8
+    x: 806.4
+    y: 80.8
+    width: 721.39996
+    height: 695.4
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
     m_LastAppliedPresetName: Default
@@ -1189,32 +1189,32 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 1147.2001
-    y: 73.6
-    width: 387.80005
-    height: 709.8
+    x: 806.4
+    y: 80.8
+    width: 721.39996
+    height: 695.4
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
     m_LastAppliedPresetName: Default
     m_SaveData: []
     m_OverlaysVisible: 1
   m_Spl:
-    ID: 155
-    splitterInitialOffset: 474.8
+    ID: 647
+    splitterInitialOffset: 305.8
     currentActiveSplitter: -1
     realSizes:
-    - 403.2
-    - 236.79999
+    - 230.4
+    - 394.4
     relativeSizes:
-    - 0.63062495
-    - 0.36937505
+    - 0.36906248
+    - 0.6309375
     minSizes:
     - 32
     - 32
     maxSizes:
     - 0
     - 0
-    lastTotalSize: 640
+    lastTotalSize: 624.8
     splitSize: 6
     xOffset: 0
     m_Version: 1
@@ -1419,12 +1419,129 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1005
       parentUniqueId: PlayModeTestAssembly.dll/[PlayModeTestAssembly][PlayModeTestRunner][suite]
-    m_ResultText: 
-    m_ResultStacktrace: 
+    m_ResultText: 'TestGraphicService (37.056s)
+
+      ---
+
+      Unhandled log message:
+      ''[Error] [GraphicService.IService.Start] UniversalRenderer''. Use UnityEngine.TestTools.LogAssert.Expect
+
+      ---
+
+      Logger:Error
+      (string) (at Assets/CustomUtils/Logger/Logger.cs:27)
+
+      Logger:TraceError
+      (string) (at Assets/CustomUtils/Logger/Logger.cs:79)
+
+      GraphicService:IService.Start
+      () (at Assets/CustomUtils/Service/GraphicService.cs:50)
+
+      Service:StartService
+      (IService) (at Assets/CustomUtils/Service/Core/Service.cs:46)
+
+      Service:GetService
+      (System.Type) (at Assets/CustomUtils/Service/Core/Service.cs:161)
+
+      Service:GetService<GraphicService>
+      () (at Assets/CustomUtils/Service/Core/Service.cs:152)
+
+      Service:TryGetService<GraphicService>
+      (GraphicService&) (at Assets/CustomUtils/Service/Core/Service.cs:148)
+
+      PlayModeTestRunner:TestGraphicService
+      () (at Assets/Test/PlayMode/PlayModeTestRunner.cs:8)
+
+      System.Reflection.MethodBase:Invoke
+      (object,object[])
+
+      NUnit.Framework.Internal.Reflect:InvokeMethod (System.Reflection.MethodInfo,object,object[])
+
+      NUnit.Framework.Internal.MethodWrapper:Invoke
+      (object,object[])
+
+      NUnit.Framework.Internal.Commands.TestMethodCommand:RunNonAsyncTestMethod
+      (NUnit.Framework.Internal.ITestExecutionContext)
+
+      NUnit.Framework.Internal.Commands.TestMethodCommand:RunTestMethod
+      (NUnit.Framework.Internal.ITestExecutionContext)
+
+      NUnit.Framework.Internal.Commands.TestMethodCommand:Execute
+      (NUnit.Framework.Internal.ITestExecutionContext)
+
+      UnityEngine.SetupCoroutine:InvokeMoveNext
+      (System.Collections.IEnumerator,intptr)
+
+      ---
+
+      [GraphicService.IService.Start]
+      [Very Low, 0], [VERY LOW, 0], [very low, 0], [VeryLow, 0], [VERYLOW, 0], [verylow,
+      0], [Very_Low, 0], [VERY_LOW, 0], [very_low, 0], [Low, 1], [LOW, 1], [low,
+      1], [Medium, 2], [MEDIUM, 2], [medium, 2], [High, 3], [HIGH, 3], [high, 3],
+      [Very High, 4], [VERY HIGH, 4], [very high, 4], [VeryHigh, 4], [VERYHIGH, 4],
+      [veryhigh, 4], [Very_High, 4], [VERY_HIGH, 4], [very_high, 4], [Ultra, 5],
+      [ULTRA, 5], [ultra, 5]
+
+      [GraphicService.IService.Start] [VeryLow, 0],
+      [Very_Low, 0], [Low, 1]
+
+      [GraphicService.IService.Start] UniversalRenderPipelineAssetLow
+
+      [GraphicService.IService.Start]
+      UniversalRenderer
+
+      <color=#00FFFF>[Service.StartService] Service Start
+      || GraphicService</color>'
+    m_ResultStacktrace: 'Logger:Error (string) (at Assets/CustomUtils/Logger/Logger.cs:27)
+
+      Logger:TraceError
+      (string) (at Assets/CustomUtils/Logger/Logger.cs:79)
+
+      GraphicService:IService.Start
+      () (at Assets/CustomUtils/Service/GraphicService.cs:50)
+
+      Service:StartService
+      (IService) (at Assets/CustomUtils/Service/Core/Service.cs:46)
+
+      Service:GetService
+      (System.Type) (at Assets/CustomUtils/Service/Core/Service.cs:161)
+
+      Service:GetService<GraphicService>
+      () (at Assets/CustomUtils/Service/Core/Service.cs:152)
+
+      Service:TryGetService<GraphicService>
+      (GraphicService&) (at Assets/CustomUtils/Service/Core/Service.cs:148)
+
+      PlayModeTestRunner:TestGraphicService
+      () (at Assets/Test/PlayMode/PlayModeTestRunner.cs:8)
+
+      System.Reflection.MethodBase:Invoke
+      (object,object[])
+
+      NUnit.Framework.Internal.Reflect:InvokeMethod (System.Reflection.MethodInfo,object,object[])
+
+      NUnit.Framework.Internal.MethodWrapper:Invoke
+      (object,object[])
+
+      NUnit.Framework.Internal.Commands.TestMethodCommand:RunNonAsyncTestMethod
+      (NUnit.Framework.Internal.ITestExecutionContext)
+
+      NUnit.Framework.Internal.Commands.TestMethodCommand:RunTestMethod
+      (NUnit.Framework.Internal.ITestExecutionContext)
+
+      NUnit.Framework.Internal.Commands.TestMethodCommand:Execute
+      (NUnit.Framework.Internal.ITestExecutionContext)
+
+      UnityEngine.SetupCoroutine:InvokeMoveNext
+      (System.Collections.IEnumerator,intptr)
+
+
+
+'
     m_TestListState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 61371cb6
-      m_LastClickedID: -1239664799
+      m_SelectedIDs: 2d6aa65e
+      m_LastClickedID: 1587964461
       m_ExpandedIDs: 2d87f388adb59dfa5bc6d62ec29f393372cb9f48ffffff7f
       m_RenameOverlay:
         m_UserAcceptedRename: 0
@@ -1459,9 +1576,9 @@ MonoBehaviour:
       uniqueId: '[CustomUtils][suite]'
       name: CustomUtils
       fullName: CustomUtils
-      resultStatus: 1
-      duration: 2.883342
-      messages: 
+      resultStatus: 2
+      duration: 0.0241164
+      messages: One or more child tests had errors
       output: 
       stacktrace: 
       notRunnable: 0
@@ -1475,9 +1592,9 @@ MonoBehaviour:
       uniqueId: '[EditrModeTestAssembly][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/EditrModeTestAssembly.dll][suite]'
       name: EditrModeTestAssembly.dll
       fullName: C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/EditrModeTestAssembly.dll
-      resultStatus: 1
-      duration: 2.7800257
-      messages: 
+      resultStatus: 2
+      duration: 0.0158228
+      messages: One or more child tests had errors
       output: 
       stacktrace: 
       notRunnable: 0
@@ -1487,12 +1604,128 @@ MonoBehaviour:
       categories: []
       parentId: 1007
       parentUniqueId: '[CustomUtils][suite]'
+    - id: 1001
+      uniqueId: EditrModeTestAssembly.dll/[EditrModeTestAssembly][AnalyzerTestRunner][suite]
+      name: AnalyzerTestRunner
+      fullName: AnalyzerTestRunner
+      resultStatus: 2
+      duration: 0.0104718
+      messages: One or more child tests had errors
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1009
+      parentUniqueId: '[EditrModeTestAssembly][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/EditrModeTestAssembly.dll][suite]'
+    - id: 1004
+      uniqueId: EditrModeTestAssembly.dll/AnalyzerTestRunner/[EditrModeTestAssembly][AnalyzerTestRunner.AnalyzerTest][suite]
+      name: AnalyzerTest
+      fullName: AnalyzerTestRunner.AnalyzerTest
+      resultStatus: 2
+      duration: 0.0058513
+      messages: One or more child tests had errors
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1001
+      parentUniqueId: EditrModeTestAssembly.dll/[EditrModeTestAssembly][AnalyzerTestRunner][suite]
+    - id: 1002
+      uniqueId: EditrModeTestAssembly.dll/AnalyzerTestRunner/AnalyzerTest/[EditrModeTestAssembly][AnalyzerTestRunner.AnalyzerTest(RequiresStaticMethodImplementationAttributeAnalyzer,"Test/EditMode/AnalyzerTestCaseCode/RequiresStaticMethodTestCase")]
+      name: AnalyzerTest(RequiresStaticMethodImplementationAttributeAnalyzer,"Test/EditMode/AnalyzerTestCaseCode/RequiresStaticMethodTestCase")
+      fullName: AnalyzerTestRunner.AnalyzerTest(RequiresStaticMethodImplementationAttributeAnalyzer,"Test/EditMode/AnalyzerTestCaseCode/RequiresStaticMethodTestCase")
+      resultStatus: 2
+      duration: 0
+      messages: Cancelled by user
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1004
+      parentUniqueId: EditrModeTestAssembly.dll/AnalyzerTestRunner/[EditrModeTestAssembly][AnalyzerTestRunner.AnalyzerTest][suite]
+    - id: 1003
+      uniqueId: EditrModeTestAssembly.dll/AnalyzerTestRunner/AnalyzerTest/[EditrModeTestAssembly][AnalyzerTestRunner.AnalyzerTest(RequiresAttributeImplementationAttributeAnalyzer,"Test/EditMode/AnalyzerTestCaseCode/RequiresAttributeTestCase")]
+      name: AnalyzerTest(RequiresAttributeImplementationAttributeAnalyzer,"Test/EditMode/AnalyzerTestCaseCode/RequiresAttributeTestCase")
+      fullName: AnalyzerTestRunner.AnalyzerTest(RequiresAttributeImplementationAttributeAnalyzer,"Test/EditMode/AnalyzerTestCaseCode/RequiresAttributeTestCase")
+      resultStatus: 2
+      duration: 0.0048428
+      messages: "System.Reflection.TargetInvocationException : Exception has been
+        thrown by the target of an invocation.\r\n  ----> System.TypeInitializationException
+        : The type initializer for 'RequiresAttributeImplementationAttributeAnalyzer'
+        threw an exception.\r\n  ----> System.Resources.MissingManifestResourceException
+        : Could not find any resources appropriate for the specified culture or the
+        neutral culture.  Make sure \"Namespace.AnalzyerLocalizableFormat.resources\"
+        was correctly embedded or linked into assembly \"IgnoreAssembly\" at compile
+        time, or that all the satellite assemblies required are loadable and fully
+        signed."
+      output: 
+      stacktrace: "  at System.Reflection.RuntimeConstructorInfo.InternalInvoke (System.Object
+        obj, System.Object[] parameters, System.Boolean wrapExceptions) [0x0001a]
+        in <88e4733ac7bc4ae1b496735e6b83bbd3>:0 \r\n  at System.RuntimeType.CreateInstanceMono
+        (System.Boolean nonPublic, System.Boolean wrapExceptions) [0x00095] in <88e4733ac7bc4ae1b496735e6b83bbd3>:0
+        \r\n  at System.RuntimeType.CreateInstanceSlow (System.Boolean publicOnly,
+        System.Boolean wrapExceptions, System.Boolean skipCheckThis, System.Boolean
+        fillCache) [0x00009] in <88e4733ac7bc4ae1b496735e6b83bbd3>:0 \r\n  at System.RuntimeType.CreateInstanceDefaultCtor
+        (System.Boolean publicOnly, System.Boolean skipCheckThis, System.Boolean
+        fillCache, System.Boolean wrapExceptions, System.Threading.StackCrawlMark&
+        stackMark) [0x00027] in <88e4733ac7bc4ae1b496735e6b83bbd3>:0 \r\n  at System.Activator.CreateInstance
+        (System.Type type, System.Boolean nonPublic, System.Boolean wrapExceptions)
+        [0x0002c] in <88e4733ac7bc4ae1b496735e6b83bbd3>:0 \r\n  at System.Activator.CreateInstance
+        (System.Type type, System.Boolean nonPublic) [0x00000] in <88e4733ac7bc4ae1b496735e6b83bbd3>:0
+        \r\n  at System.Activator.CreateInstance (System.Type type) [0x00000] in
+        <88e4733ac7bc4ae1b496735e6b83bbd3>:0 \r\n  at AnalyzerTestRunner.AnalyzerTestTask
+        (System.Type type, System.String testCaseCodeFolder) [0x00007] in C:\\Project\\Unity\\CustomUtils\\Assets\\Test\\EditMode\\AnalyzerTestRunner.cs:39
+        \r\n  at AnalyzerTestRunner.AnalyzerTest (System.Type type, System.String
+        testCaseCodeFolder) [0x00038] in C:\\Project\\Unity\\CustomUtils\\Assets\\Test\\EditMode\\AnalyzerTestRunner.cs:22
+        \r\n  at UnityEngine.TestTools.TestRunner.TestTaskWrapper+<Execute>d__2.MoveNext
+        () [0x00074] in C:\\Project\\Unity\\CustomUtils\\Library\\PackageCache\\com.unity.test-framework@1.3.9\\UnityEngine.TestRunner\\TestRunner\\TestTaskWrapper.cs:31
+        \r\n  at UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0004e]
+        in C:\\Project\\Unity\\CustomUtils\\Library\\PackageCache\\com.unity.test-framework@1.3.9\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:44
+        \r\n--TypeInitializationException\r\n  at (wrapper managed-to-native) System.Reflection.RuntimeConstructorInfo.InternalInvoke(System.Reflection.RuntimeConstructorInfo,object,object[],System.Exception&)\r\n 
+        at System.Reflection.RuntimeConstructorInfo.InternalInvoke (System.Object
+        obj, System.Object[] parameters, System.Boolean wrapExceptions) [0x00005]
+        in <88e4733ac7bc4ae1b496735e6b83bbd3>:0 \r\n--MissingManifestResourceException\r\n 
+        at System.Resources.ManifestBasedResourceGroveler.HandleResourceStreamMissing
+        (System.String fileName) [0x000bc] in <88e4733ac7bc4ae1b496735e6b83bbd3>:0
+        \r\n  at System.Resources.ManifestBasedResourceGroveler.GrovelForResourceSet
+        (System.Globalization.CultureInfo culture, System.Collections.Generic.Dictionary`2[TKey,TValue]
+        localResourceSets, System.Boolean tryParents, System.Boolean createIfNotExists,
+        System.Threading.StackCrawlMark& stackMark) [0x000d9] in <88e4733ac7bc4ae1b496735e6b83bbd3>:0
+        \r\n  at System.Resources.ResourceManager.InternalGetResourceSet (System.Globalization.CultureInfo
+        requestedCulture, System.Boolean createIfNotExists, System.Boolean tryParents,
+        System.Threading.StackCrawlMark& stackMark) [0x00099] in <88e4733ac7bc4ae1b496735e6b83bbd3>:0
+        \r\n  at System.Resources.ResourceManager.InternalGetResourceSet (System.Globalization.CultureInfo
+        culture, System.Boolean createIfNotExists, System.Boolean tryParents) [0x00002]
+        in <88e4733ac7bc4ae1b496735e6b83bbd3>:0 \r\n  at System.Resources.ResourceManager.GetString
+        (System.String name, System.Globalization.CultureInfo culture) [0x0005a]
+        in <88e4733ac7bc4ae1b496735e6b83bbd3>:0 \r\n  at RequiresAttributeImplementationAttributeAnalyzer.GetResourceString
+        (System.String key, System.Type type) [0x00028] in C:\\Project\\Unity\\CustomUtils\\Assets\\CustomUtils\\CustomAnalyzer\\RequiresAttributeImplementationAttributeAnalyzer.cs:63
+        \r\n  at RequiresAttributeImplementationAttributeAnalyzer..cctor () [0x00054]
+        in C:\\Project\\Unity\\CustomUtils\\Assets\\CustomUtils\\CustomAnalyzer\\RequiresAttributeImplementationAttributeAnalyzer.cs:24 "
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1004
+      parentUniqueId: EditrModeTestAssembly.dll/AnalyzerTestRunner/[EditrModeTestAssembly][AnalyzerTestRunner.AnalyzerTest][suite]
     - id: 1008
       uniqueId: EditrModeTestAssembly.dll/[EditrModeTestAssembly][EditModeTestRunner][suite]
       name: EditModeTestRunner
       fullName: EditModeTestRunner
       resultStatus: 1
-      duration: 2.7592397
+      duration: 0.0837758
       messages: 
       output: 
       stacktrace: 
@@ -1503,15 +1736,30 @@ MonoBehaviour:
       categories: []
       parentId: 1010
       parentUniqueId: '[EditrModeTestAssembly][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/EditrModeTestAssembly.dll][suite]'
-    - id: 1002
-      uniqueId: EditrModeTestAssembly.dll/EditModeTestRunner/[EditrModeTestAssembly][EditModeTestRunner.RequiresStaticMethodImplementationAttributeAnalyzerTest]
-      name: RequiresStaticMethodImplementationAttributeAnalyzerTest
-      fullName: EditModeTestRunner.RequiresStaticMethodImplementationAttributeAnalyzerTest
-      resultStatus: 1
-      duration: 2.6378658
+    - id: 1008
+      uniqueId: EditrModeTestAssembly.dll/EditModeTestRunner/[EditrModeTestAssembly][EditModeTestRunner.CaseTest][suite]
+      name: CaseTest
+      fullName: EditModeTestRunner.CaseTest
+      resultStatus: 0
+      duration: 0
       messages: 
-      output: "[EditModeTestRunner.RequiresStaticMethodImplementationAttributeAnalyzerTest]
-        \r\n"
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1005
+      parentUniqueId: EditrModeTestAssembly.dll/[EditrModeTestAssembly][EditModeTestRunner][suite]
+    - id: 1006
+      uniqueId: EditrModeTestAssembly.dll/EditModeTestRunner/CaseTest/[EditrModeTestAssembly][EditModeTestRunner.CaseTest(1)]
+      name: CaseTest(1)
+      fullName: EditModeTestRunner.CaseTest(1)
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
       stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
@@ -1519,19 +1767,123 @@ MonoBehaviour:
       isSuite: 0
       categories:
       - Uncategorized
-      parentId: 1001
-      parentUniqueId: EditrModeTestAssembly.dll/[EditrModeTestAssembly][EditModeTestRunner][suite]
-    m_ResultText: 'RequiresStaticMethodImplementationAttributeAnalyzerTest (2.638s)
-
-      ---
-
-      [EditModeTestRunner.RequiresStaticMethodImplementationAttributeAnalyzerTest]'
-    m_ResultStacktrace: 
+      parentId: 1008
+      parentUniqueId: EditrModeTestAssembly.dll/EditModeTestRunner/[EditrModeTestAssembly][EditModeTestRunner.CaseTest][suite]
+    - id: 1007
+      uniqueId: EditrModeTestAssembly.dll/EditModeTestRunner/CaseTest/[EditrModeTestAssembly][EditModeTestRunner.CaseTest(2)]
+      name: CaseTest(2)
+      fullName: EditModeTestRunner.CaseTest(2)
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1008
+      parentUniqueId: EditrModeTestAssembly.dll/EditModeTestRunner/[EditrModeTestAssembly][EditModeTestRunner.CaseTest][suite]
+    m_ResultText: "AnalyzerTest(RequiresAttributeImplementationAttributeAnalyzer,\"Test/EditMode/AnalyzerTestCaseCode/RequiresAttributeTestCase\")
+      (0.005s)\n---\nSystem.Reflection.TargetInvocationException : Exception has
+      been thrown by the target of an invocation.\r\n  ----> System.TypeInitializationException
+      : The type initializer for 'RequiresAttributeImplementationAttributeAnalyzer'
+      threw an exception.\r\n  ----> System.Resources.MissingManifestResourceException
+      : Could not find any resources appropriate for the specified culture or the
+      neutral culture.  Make sure \"Namespace.AnalzyerLocalizableFormat.resources\"
+      was correctly embedded or linked into assembly \"IgnoreAssembly\" at compile
+      time, or that all the satellite assemblies required are loadable and fully
+      signed.\n---\nat System.Reflection.RuntimeConstructorInfo.InternalInvoke (System.Object
+      obj, System.Object[] parameters, System.Boolean wrapExceptions) [0x0001a] in
+      <88e4733ac7bc4ae1b496735e6b83bbd3>:0 \r\n  at System.RuntimeType.CreateInstanceMono
+      (System.Boolean nonPublic, System.Boolean wrapExceptions) [0x00095] in <88e4733ac7bc4ae1b496735e6b83bbd3>:0
+      \r\n  at System.RuntimeType.CreateInstanceSlow (System.Boolean publicOnly,
+      System.Boolean wrapExceptions, System.Boolean skipCheckThis, System.Boolean
+      fillCache) [0x00009] in <88e4733ac7bc4ae1b496735e6b83bbd3>:0 \r\n  at System.RuntimeType.CreateInstanceDefaultCtor
+      (System.Boolean publicOnly, System.Boolean skipCheckThis, System.Boolean fillCache,
+      System.Boolean wrapExceptions, System.Threading.StackCrawlMark& stackMark)
+      [0x00027] in <88e4733ac7bc4ae1b496735e6b83bbd3>:0 \r\n  at System.Activator.CreateInstance
+      (System.Type type, System.Boolean nonPublic, System.Boolean wrapExceptions)
+      [0x0002c] in <88e4733ac7bc4ae1b496735e6b83bbd3>:0 \r\n  at System.Activator.CreateInstance
+      (System.Type type, System.Boolean nonPublic) [0x00000] in <88e4733ac7bc4ae1b496735e6b83bbd3>:0
+      \r\n  at System.Activator.CreateInstance (System.Type type) [0x00000] in <88e4733ac7bc4ae1b496735e6b83bbd3>:0
+      \r\n  at AnalyzerTestRunner.AnalyzerTestTask (System.Type type, System.String
+      testCaseCodeFolder) [0x00007] in C:\\Project\\Unity\\CustomUtils\\Assets\\Test\\EditMode\\AnalyzerTestRunner.cs:39
+      \r\n  at AnalyzerTestRunner.AnalyzerTest (System.Type type, System.String testCaseCodeFolder)
+      [0x00038] in C:\\Project\\Unity\\CustomUtils\\Assets\\Test\\EditMode\\AnalyzerTestRunner.cs:22
+      \r\n  at UnityEngine.TestTools.TestRunner.TestTaskWrapper+<Execute>d__2.MoveNext
+      () [0x00074] in C:\\Project\\Unity\\CustomUtils\\Library\\PackageCache\\com.unity.test-framework@1.3.9\\UnityEngine.TestRunner\\TestRunner\\TestTaskWrapper.cs:31
+      \r\n  at UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0004e]
+      in C:\\Project\\Unity\\CustomUtils\\Library\\PackageCache\\com.unity.test-framework@1.3.9\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:44
+      \r\n--TypeInitializationException\r\n  at (wrapper managed-to-native) System.Reflection.RuntimeConstructorInfo.InternalInvoke(System.Reflection.RuntimeConstructorInfo,object,object[],System.Exception&)\r\n 
+      at System.Reflection.RuntimeConstructorInfo.InternalInvoke (System.Object obj,
+      System.Object[] parameters, System.Boolean wrapExceptions) [0x00005] in <88e4733ac7bc4ae1b496735e6b83bbd3>:0
+      \r\n--MissingManifestResourceException\r\n  at System.Resources.ManifestBasedResourceGroveler.HandleResourceStreamMissing
+      (System.String fileName) [0x000bc] in <88e4733ac7bc4ae1b496735e6b83bbd3>:0
+      \r\n  at System.Resources.ManifestBasedResourceGroveler.GrovelForResourceSet
+      (System.Globalization.CultureInfo culture, System.Collections.Generic.Dictionary`2[TKey,TValue]
+      localResourceSets, System.Boolean tryParents, System.Boolean createIfNotExists,
+      System.Threading.StackCrawlMark& stackMark) [0x000d9] in <88e4733ac7bc4ae1b496735e6b83bbd3>:0
+      \r\n  at System.Resources.ResourceManager.InternalGetResourceSet (System.Globalization.CultureInfo
+      requestedCulture, System.Boolean createIfNotExists, System.Boolean tryParents,
+      System.Threading.StackCrawlMark& stackMark) [0x00099] in <88e4733ac7bc4ae1b496735e6b83bbd3>:0
+      \r\n  at System.Resources.ResourceManager.InternalGetResourceSet (System.Globalization.CultureInfo
+      culture, System.Boolean createIfNotExists, System.Boolean tryParents) [0x00002]
+      in <88e4733ac7bc4ae1b496735e6b83bbd3>:0 \r\n  at System.Resources.ResourceManager.GetString
+      (System.String name, System.Globalization.CultureInfo culture) [0x0005a] in
+      <88e4733ac7bc4ae1b496735e6b83bbd3>:0 \r\n  at RequiresAttributeImplementationAttributeAnalyzer.GetResourceString
+      (System.String key, System.Type type) [0x00028] in C:\\Project\\Unity\\CustomUtils\\Assets\\CustomUtils\\CustomAnalyzer\\RequiresAttributeImplementationAttributeAnalyzer.cs:63
+      \r\n  at RequiresAttributeImplementationAttributeAnalyzer..cctor () [0x00054]
+      in C:\\Project\\Unity\\CustomUtils\\Assets\\CustomUtils\\CustomAnalyzer\\RequiresAttributeImplementationAttributeAnalyzer.cs:24"
+    m_ResultStacktrace: "  at System.Reflection.RuntimeConstructorInfo.InternalInvoke
+      (System.Object obj, System.Object[] parameters, System.Boolean wrapExceptions)
+      [0x0001a] in <88e4733ac7bc4ae1b496735e6b83bbd3>:0 \r\n  at System.RuntimeType.CreateInstanceMono
+      (System.Boolean nonPublic, System.Boolean wrapExceptions) [0x00095] in <88e4733ac7bc4ae1b496735e6b83bbd3>:0
+      \r\n  at System.RuntimeType.CreateInstanceSlow (System.Boolean publicOnly,
+      System.Boolean wrapExceptions, System.Boolean skipCheckThis, System.Boolean
+      fillCache) [0x00009] in <88e4733ac7bc4ae1b496735e6b83bbd3>:0 \r\n  at System.RuntimeType.CreateInstanceDefaultCtor
+      (System.Boolean publicOnly, System.Boolean skipCheckThis, System.Boolean fillCache,
+      System.Boolean wrapExceptions, System.Threading.StackCrawlMark& stackMark)
+      [0x00027] in <88e4733ac7bc4ae1b496735e6b83bbd3>:0 \r\n  at System.Activator.CreateInstance
+      (System.Type type, System.Boolean nonPublic, System.Boolean wrapExceptions)
+      [0x0002c] in <88e4733ac7bc4ae1b496735e6b83bbd3>:0 \r\n  at System.Activator.CreateInstance
+      (System.Type type, System.Boolean nonPublic) [0x00000] in <88e4733ac7bc4ae1b496735e6b83bbd3>:0
+      \r\n  at System.Activator.CreateInstance (System.Type type) [0x00000] in <88e4733ac7bc4ae1b496735e6b83bbd3>:0
+      \r\n  at AnalyzerTestRunner.AnalyzerTestTask (System.Type type, System.String
+      testCaseCodeFolder) [0x00007] in C:\\Project\\Unity\\CustomUtils\\Assets\\Test\\EditMode\\AnalyzerTestRunner.cs:39
+      \r\n  at AnalyzerTestRunner.AnalyzerTest (System.Type type, System.String testCaseCodeFolder)
+      [0x00038] in C:\\Project\\Unity\\CustomUtils\\Assets\\Test\\EditMode\\AnalyzerTestRunner.cs:22
+      \r\n  at UnityEngine.TestTools.TestRunner.TestTaskWrapper+<Execute>d__2.MoveNext
+      () [0x00074] in C:\\Project\\Unity\\CustomUtils\\Library\\PackageCache\\com.unity.test-framework@1.3.9\\UnityEngine.TestRunner\\TestRunner\\TestTaskWrapper.cs:31
+      \r\n  at UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0004e]
+      in C:\\Project\\Unity\\CustomUtils\\Library\\PackageCache\\com.unity.test-framework@1.3.9\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:44
+      \r\n--TypeInitializationException\r\n  at (wrapper managed-to-native) System.Reflection.RuntimeConstructorInfo.InternalInvoke(System.Reflection.RuntimeConstructorInfo,object,object[],System.Exception&)\r\n 
+      at System.Reflection.RuntimeConstructorInfo.InternalInvoke (System.Object obj,
+      System.Object[] parameters, System.Boolean wrapExceptions) [0x00005] in <88e4733ac7bc4ae1b496735e6b83bbd3>:0
+      \r\n--MissingManifestResourceException\r\n  at System.Resources.ManifestBasedResourceGroveler.HandleResourceStreamMissing
+      (System.String fileName) [0x000bc] in <88e4733ac7bc4ae1b496735e6b83bbd3>:0
+      \r\n  at System.Resources.ManifestBasedResourceGroveler.GrovelForResourceSet
+      (System.Globalization.CultureInfo culture, System.Collections.Generic.Dictionary`2[TKey,TValue]
+      localResourceSets, System.Boolean tryParents, System.Boolean createIfNotExists,
+      System.Threading.StackCrawlMark& stackMark) [0x000d9] in <88e4733ac7bc4ae1b496735e6b83bbd3>:0
+      \r\n  at System.Resources.ResourceManager.InternalGetResourceSet (System.Globalization.CultureInfo
+      requestedCulture, System.Boolean createIfNotExists, System.Boolean tryParents,
+      System.Threading.StackCrawlMark& stackMark) [0x00099] in <88e4733ac7bc4ae1b496735e6b83bbd3>:0
+      \r\n  at System.Resources.ResourceManager.InternalGetResourceSet (System.Globalization.CultureInfo
+      culture, System.Boolean createIfNotExists, System.Boolean tryParents) [0x00002]
+      in <88e4733ac7bc4ae1b496735e6b83bbd3>:0 \r\n  at System.Resources.ResourceManager.GetString
+      (System.String name, System.Globalization.CultureInfo culture) [0x0005a] in
+      <88e4733ac7bc4ae1b496735e6b83bbd3>:0 \r\n  at RequiresAttributeImplementationAttributeAnalyzer.GetResourceString
+      (System.String key, System.Type type) [0x00028] in C:\\Project\\Unity\\CustomUtils\\Assets\\CustomUtils\\CustomAnalyzer\\RequiresAttributeImplementationAttributeAnalyzer.cs:63
+      \r\n  at RequiresAttributeImplementationAttributeAnalyzer..cctor () [0x00054]
+      in C:\\Project\\Unity\\CustomUtils\\Assets\\CustomUtils\\CustomAnalyzer\\RequiresAttributeImplementationAttributeAnalyzer.cs:24 "
     m_TestListState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: f38663b8
-      m_LastClickedID: -1201436941
-      m_ExpandedIDs: f6d801c4c29f393322524b3a9dda8a415d4c0954ffffff7f
+      m_SelectedIDs: af93187b
+      m_LastClickedID: 2065208239
+      m_ExpandedIDs: f6d801c437575fccec808f0abdddfc27c29f393322524b3a9dda8a415d4c0954ffffff7f
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 

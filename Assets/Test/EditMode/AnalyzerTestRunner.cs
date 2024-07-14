@@ -11,7 +11,6 @@ using Microsoft.CodeAnalysis.Text;
 using NUnit.Framework;
 using UnityEngine;
 
-
 public class AnalyzerTestRunner {
     
     [TestCase(typeof(RequiresStaticMethodImplementationAttributeAnalyzer), "Test/EditMode/AnalyzerTestCaseCode/RequiresStaticMethodTestCase")]

@@ -10,6 +10,7 @@ using UnityEditor;
 using UnityEditor.Callbacks;
 using UnityEngine;
 
+// TODO. EditorService 로 전환 및 코드 리팩토링 및 Config 처리 추가
 public class EditorBuildService : EditorWindow {
     
     #region [Common]

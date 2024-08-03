@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System.Collections;
+using System.Linq;
+using Unity.EditorCoroutines.Editor;
 using UnityEditor;
 using UnityEditor.Callbacks;
 using UnityEngine;
@@ -8,7 +10,7 @@ public abstract class EditorService : EditorWindow {
 
     protected virtual string SessionKey => $"{GetType().Name}_FirstOpen";
 
-    private const string EDITOR_FIRST_OPEN_SESSION_KEY = "EditorServiceFirstOpenKey";
+    private const string EDITOR_SERVICE_FIRST_OPEN_SESSION_KEY = "EditorServiceFirstOpenKey";
 
     protected OverridenMethod overridenMethod;
 
@@ -23,14 +25,14 @@ public abstract class EditorService : EditorWindow {
 
     [InitializeOnLoadMethod]
     private static void InitializeOnLoad() {
-        if (EditorCommon.TryGetSession(EDITOR_FIRST_OPEN_SESSION_KEY, out bool isFirstOpen) == false || isFirstOpen == false) {
+        if (EditorCommon.TryGetSession(EDITOR_SERVICE_FIRST_OPEN_SESSION_KEY, out bool isFirstOpen) == false || isFirstOpen == false) {
             EditorApplication.update += OnEditorFirstOpen;
         }
     }
     
     private static void OnEditorFirstOpen() {
         EditorApplication.update -= OnEditorFirstOpen;
-        EditorCommon.SetSession(EDITOR_FIRST_OPEN_SESSION_KEY, true);
+        EditorCommon.SetSession(EDITOR_SERVICE_FIRST_OPEN_SESSION_KEY, true);
         foreach (var type in ReflectionProvider.GetSubClassTypes<EditorService>()) {
             var objects = Resources.FindObjectsOfTypeAll(type);
             if (objects is { Length: > 0 } && objects.First() is EditorService editorService && editorService.CheckSession()) {
@@ -75,4 +77,6 @@ public abstract class EditorService : EditorWindow {
     protected virtual void OnExitingEditMode() { }
     protected virtual void OnEnteredPlayMode() { }
     protected virtual void OnExitingPlayMode() { }
+
+    protected EditorCoroutine StartCoroutine(IEnumerator enumerator, object owner = null) => EditorCoroutineUtility.StartCoroutine(enumerator, owner ?? this);
 }

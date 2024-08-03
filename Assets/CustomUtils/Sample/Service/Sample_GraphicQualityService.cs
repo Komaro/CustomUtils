@@ -24,7 +24,7 @@ public class Sample_GraphicQualityService : IService {
         //
         
         QualitySettings.names.IndexForEach((x, index) => {
-            if (EnumUtil.TryGetValueAllCase<SAMPLE_GRAPHIC_QUALITY_TYPE>(x, out var type)) {
+            if (EnumUtil.TryConvertAllCase<SAMPLE_GRAPHIC_QUALITY_TYPE>(x, out var type)) {
                 _qualityDic.AutoAdd(type, index);
             }
         });

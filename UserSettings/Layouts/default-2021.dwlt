@@ -14,16 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_PixelRect:
     serializedVersion: 2
-    x: 7.2000003
-    y: 50.4
-    width: 1521.6
-    height: 766.4
+    x: 0
+    y: 43.2
+    width: 1536
+    height: 780.8
   m_ShowMode: 4
-  m_Title: Console
+  m_Title: Resource Service
   m_RootView: {fileID: 2}
   m_MinSize: {x: 875, y: 350}
   m_MaxSize: {x: 10000, y: 10000}
-  m_Maximized: 0
+  m_Maximized: 1
 --- !u!114 &2
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -44,8 +44,8 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 1521.6
-    height: 766.4
+    width: 1536
+    height: 780.8
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
   m_UseTopView: 1
@@ -69,7 +69,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 1521.6
+    width: 1536
     height: 30
   m_MinSize: {x: 0, y: 0}
   m_MaxSize: {x: 0, y: 0}
@@ -90,8 +90,8 @@ MonoBehaviour:
   m_Position:
     serializedVersion: 2
     x: 0
-    y: 746.4
-    width: 1521.6
+    y: 760.8
+    width: 1536
     height: 20
   m_MinSize: {x: 0, y: 0}
   m_MaxSize: {x: 0, y: 0}
@@ -114,12 +114,12 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 30
-    width: 1521.6
-    height: 716.4
+    width: 1536
+    height: 730.8
   m_MinSize: {x: 300, y: 200}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 102
+  controlID: 81
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -139,12 +139,12 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 1169.6
-    height: 716.4
+    width: 791.2
+    height: 730.8
   m_MinSize: {x: 200, y: 200}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 1
-  controlID: 103
+  controlID: 90
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -164,12 +164,12 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 1169.6
-    height: 364.8
+    width: 791.2
+    height: 381.6
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 104
+  controlID: 49
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -180,22 +180,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 1
   m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: SceneHierarchyWindow
+  m_Name: EditorCachingService
   m_EditorClassIdentifier: 
   m_Children: []
   m_Position:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 250.4
-    height: 364.8
-  m_MinSize: {x: 201, y: 221}
+    width: 403.2
+    height: 381.6
+  m_MinSize: {x: 101, y: 121}
   m_MaxSize: {x: 4001, y: 4021}
-  m_ActualView: {fileID: 15}
+  m_ActualView: {fileID: 14}
   m_Panes:
+  - {fileID: 17}
   - {fileID: 15}
-  m_Selected: 0
-  m_LastSelected: 0
+  - {fileID: 14}
+  m_Selected: 2
+  m_LastSelected: 1
 --- !u!114 &9
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -211,18 +213,18 @@ MonoBehaviour:
   m_Children: []
   m_Position:
     serializedVersion: 2
-    x: 250.4
+    x: 403.2
     y: 0
-    width: 919.19995
-    height: 364.8
+    width: 388
+    height: 381.6
   m_MinSize: {x: 202, y: 221}
   m_MaxSize: {x: 4002, y: 4021}
-  m_ActualView: {fileID: 16}
+  m_ActualView: {fileID: 18}
   m_Panes:
-  - {fileID: 16}
-  - {fileID: 17}
+  - {fileID: 18}
+  - {fileID: 19}
   m_Selected: 0
-  m_LastSelected: 0
+  m_LastSelected: 1
 --- !u!114 &10
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -241,13 +243,13 @@ MonoBehaviour:
   m_Position:
     serializedVersion: 2
     x: 0
-    y: 364.8
-    width: 1169.6
-    height: 351.60004
+    y: 381.6
+    width: 791.2
+    height: 349.19998
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 68
+  controlID: 91
 --- !u!114 &11
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -265,15 +267,15 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 948
-    height: 351.60004
-  m_MinSize: {x: 101, y: 121}
-  m_MaxSize: {x: 4001, y: 4021}
-  m_ActualView: {fileID: 19}
+    width: 535.2
+    height: 349.19998
+  m_MinSize: {x: 100, y: 100}
+  m_MaxSize: {x: 4000, y: 4000}
+  m_ActualView: {fileID: 21}
   m_Panes:
-  - {fileID: 18}
-  - {fileID: 19}
   - {fileID: 20}
+  - {fileID: 21}
+  - {fileID: 22}
   m_Selected: 1
   m_LastSelected: 0
 --- !u!114 &12
@@ -291,15 +293,15 @@ MonoBehaviour:
   m_Children: []
   m_Position:
     serializedVersion: 2
-    x: 948
+    x: 535.2
     y: 0
-    width: 221.59998
-    height: 351.60004
+    width: 256
+    height: 349.19998
   m_MinSize: {x: 202, y: 221}
   m_MaxSize: {x: 4002, y: 4021}
-  m_ActualView: {fileID: 21}
+  m_ActualView: {fileID: 23}
   m_Panes:
-  - {fileID: 21}
+  - {fileID: 23}
   m_Selected: 0
   m_LastSelected: 0
 --- !u!114 &13
@@ -317,20 +319,78 @@ MonoBehaviour:
   m_Children: []
   m_Position:
     serializedVersion: 2
-    x: 1169.6
+    x: 791.2
     y: 0
-    width: 352
-    height: 716.4
+    width: 744.8
+    height: 730.8
+  m_MinSize: {x: 101, y: 121}
+  m_MaxSize: {x: 4001, y: 4021}
+  m_ActualView: {fileID: 16}
+  m_Panes:
+  - {fileID: 24}
+  - {fileID: 25}
+  - {fileID: 16}
+  m_Selected: 2
+  m_LastSelected: 1
+--- !u!114 &14
+MonoBehaviour:
+  m_ObjectHideFlags: 52
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e029cf10310e49d093993a497effb240, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   m_MinSize: {x: 100, y: 100}
   m_MaxSize: {x: 4000, y: 4000}
-  m_ActualView: {fileID: 14}
-  m_Panes:
-  - {fileID: 22}
-  - {fileID: 14}
-  - {fileID: 23}
-  m_Selected: 1
-  m_LastSelected: 0
---- !u!114 &14
+  m_TitleContent:
+    m_Text: CachingService
+    m_Image: {fileID: 0}
+    m_Tooltip: 
+  m_Pos:
+    serializedVersion: 2
+    x: 0
+    y: 73.6
+    width: 402.2
+    height: 360.6
+  m_ViewDataDictionary: {fileID: 0}
+  m_OverlayCanvas:
+    m_LastAppliedPresetName: Default
+    m_SaveData: []
+    m_OverlaysVisible: 1
+--- !u!114 &15
+MonoBehaviour:
+  m_ObjectHideFlags: 52
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b172286d377d4ca7b0f13c3190ab426c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_MinSize: {x: 100, y: 100}
+  m_MaxSize: {x: 4000, y: 4000}
+  m_TitleContent:
+    m_Text: HttpWebServer Service
+    m_Image: {fileID: 0}
+    m_Tooltip: 
+  m_Pos:
+    serializedVersion: 2
+    x: 0
+    y: 73.6
+    width: 402.2
+    height: 360.6
+  m_ViewDataDictionary: {fileID: 0}
+  m_OverlayCanvas:
+    m_LastAppliedPresetName: Default
+    m_SaveData: []
+    m_OverlaysVisible: 1
+--- !u!114 &16
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -350,16 +410,16 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 1176.8
-    y: 80.8
-    width: 351
-    height: 695.4
+    x: 791.2
+    y: 73.6
+    width: 743.8
+    height: 709.8
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
     m_LastAppliedPresetName: Default
     m_SaveData: []
     m_OverlaysVisible: 1
---- !u!114 &15
+--- !u!114 &17
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -380,10 +440,10 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 7.2000003
-    y: 80.8
-    width: 249.4
-    height: 343.8
+    x: 0
+    y: 73.6
+    width: 402.2
+    height: 360.6
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
     m_LastAppliedPresetName: Default
@@ -392,9 +452,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: ea640000
-      m_LastClickedID: 25834
-      m_ExpandedIDs: 26fbffffdc640000fe640000
+      m_SelectedIDs: 
+      m_LastClickedID: 0
+      m_ExpandedIDs: 88d3ffff24d5ffff20d6ffffb8d9ffffb4daffffc8dbffffbedeffff9ce1ffff42e4ffff3ee5ffff76e6ffff72e7ffffa6eaffff8aedffffc2eeffff7ef3ffff9af6ffffa8f7ffff08f9ffff1efbffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -418,7 +478,7 @@ MonoBehaviour:
       m_IsLocked: 0
     m_CurrentSortingName: TransformSorting
   m_WindowGUID: 37b0836aa8b4bd74696073f7347c8c8a
---- !u!114 &16
+--- !u!114 &18
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -439,10 +499,10 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 257.6
-    y: 80.8
-    width: 917.19995
-    height: 343.8
+    x: 403.2
+    y: 73.6
+    width: 386
+    height: 360.6
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
     m_LastAppliedPresetName: Default
@@ -552,7 +612,7 @@ MonoBehaviour:
       collapsed: 0
       displayed: 0
       snapOffset: {x: -142.4, y: -101.600006}
-      snapOffsetDelta: {x: 0.000030517578, y: 0}
+      snapOffsetDelta: {x: 0, y: 0}
       snapCorner: 3
       id: Scene View/Camera
       index: 1
@@ -667,9 +727,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 285.34677, y: 187.15594, z: -23.292019}
+    m_Target: {x: 102.200005, y: 158.4, z: -0.0000019073486}
     speed: 2
-    m_Value: {x: 285.34677, y: 187.15594, z: -23.292019}
+    m_Value: {x: 102.200005, y: 158.4, z: -0.0000019073486}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -720,9 +780,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0.9771707, y: -0.013238792, z: 0.20215495, w: 0.06399615}
   m_Size:
-    m_Target: 154.26859
+    m_Target: 358.58453
     speed: 2
-    m_Value: 154.26859
+    m_Value: 358.58453
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -747,7 +807,7 @@ MonoBehaviour:
   m_SceneVisActive: 1
   m_LastLockedObject: {fileID: 0}
   m_ViewIsLockedToObject: 0
---- !u!114 &17
+--- !u!114 &19
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -768,16 +828,16 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 322.4
+    x: 403.2
     y: 73.6
-    width: 622.80005
-    height: 315
+    width: 386
+    height: 360.6
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
     m_LastAppliedPresetName: Default
     m_SaveData: []
     m_OverlaysVisible: 1
---- !u!114 &18
+--- !u!114 &20
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -798,10 +858,10 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 7.2000003
-    y: 445.6
-    width: 947
-    height: 330.60004
+    x: 0
+    y: 455.2
+    width: 534.2
+    height: 328.19998
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
     m_LastAppliedPresetName: Default
@@ -820,22 +880,22 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Plugins
+    - Assets/CustomUtils/Common/Editor
     m_Globs: []
     m_OriginalText: 
   m_ViewMode: 1
   m_StartGridSize: 16
   m_LastFolders:
-  - Assets/Plugins
+  - Assets/CustomUtils/Common/Editor
   m_LastFoldersGridSize: 16
   m_LastProjectPath: C:\Project\Unity\CustomUtils
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 9a670000
-    m_LastClickedID: 26522
-    m_ExpandedIDs: 000000007465000076650000786500007a6500007c6500007e65000080650000826500008465000086650000886500008a6500008c6500008e65000090650000926500009465000096650000986500009a6500009c65000096670000a267000000ca9a3b
+    scrollPos: {x: 0, y: 75.80002}
+    m_SelectedIDs: bc630000
+    m_LastClickedID: 25532
+    m_ExpandedIDs: 00000000ce610000d0610000d2610000d4610000d6610000d8610000da610000dc610000de610000e0610000e2610000e4610000e6610000e8610000ea610000ec610000ee610000f0610000f2610000f4610000f6610000f8610000fa610000fc610000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -863,7 +923,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 000000007465000076650000786500007a6500007c6500007e65000080650000826500008465000086650000886500008a6500008c6500008e65000090650000926500009465000096650000986500009a6500009c650000
+    m_ExpandedIDs: 00000000ce610000d0610000d2610000d4610000d6610000d8610000da610000dc610000de610000e0610000e2610000e4610000e6610000e8610000ea610000ec610000ee610000f0610000f2610000f4610000f6610000f8610000fa610000fc610000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -919,7 +979,7 @@ MonoBehaviour:
     m_GridSize: 16
   m_SkipHiddenPackages: 0
   m_DirectoriesAreaWidth: 252
---- !u!114 &19
+--- !u!114 &21
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -940,16 +1000,16 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 7.2000003
-    y: 445.6
-    width: 947
-    height: 330.60004
+    x: 0
+    y: 455.2
+    width: 534.2
+    height: 328.19998
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
     m_LastAppliedPresetName: Default
     m_SaveData: []
     m_OverlaysVisible: 1
---- !u!114 &20
+--- !u!114 &22
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -970,10 +1030,10 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 0
-    y: 483.2
-    width: 904.6
-    height: 300.19998
+    x: 7.2000003
+    y: 445.6
+    width: 804.6
+    height: 330.60004
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
     m_LastAppliedPresetName: Default
@@ -1098,12 +1158,12 @@ MonoBehaviour:
       oldMaxSizes: 
       oldSplitSize: 0
     m_HorizontalSplitter:
-      ID: 62
+      ID: 45
       splitterInitialOffset: 0
       currentActiveSplitter: -1
       realSizes:
-      - 271.2
-      - 633.6
+      - 241.59995
+      - 563.2
       relativeSizes:
       - 0.3
       - 0.7
@@ -1113,7 +1173,7 @@ MonoBehaviour:
       maxSizes:
       - 0
       - 0
-      lastTotalSize: 904.8
+      lastTotalSize: 804.8
       splitSize: 6
       xOffset: 0
       m_Version: 1
@@ -1127,7 +1187,7 @@ MonoBehaviour:
   m_ShowReferencedBuses: 1
   m_ShowBusConnections: 0
   m_ShowBusConnectionsOfSelection: 0
---- !u!114 &21
+--- !u!114 &23
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1148,10 +1208,10 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 955.2
-    y: 445.6
-    width: 219.59998
-    height: 330.60004
+    x: 535.2
+    y: 455.2
+    width: 254
+    height: 328.19998
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
     m_LastAppliedPresetName: Default
@@ -1163,7 +1223,7 @@ MonoBehaviour:
   m_ShowGizmos: 0
   m_TargetDisplay: 0
   m_ClearColor: {r: 0, g: 0, b: 0, a: 0}
-  m_TargetSize: {x: 219.59998, y: 309.60004}
+  m_TargetSize: {x: 254, y: 307.19998}
   m_TextureFilterMode: 0
   m_TextureHideFlags: 61
   m_RenderIMGUI: 1
@@ -1178,17 +1238,17 @@ MonoBehaviour:
     m_VRangeLocked: 0
     hZoomLockedByDefault: 0
     vZoomLockedByDefault: 0
-    m_HBaseRangeMin: -87.83999
-    m_HBaseRangeMax: 87.83999
-    m_VBaseRangeMin: -123.84002
-    m_VBaseRangeMax: 123.84002
+    m_HBaseRangeMin: -101.6
+    m_HBaseRangeMax: 101.6
+    m_VBaseRangeMin: -122.88
+    m_VBaseRangeMax: 122.88
     m_HAllowExceedBaseRangeMin: 1
     m_HAllowExceedBaseRangeMax: 1
     m_VAllowExceedBaseRangeMin: 1
     m_VAllowExceedBaseRangeMax: 1
     m_ScaleWithWindow: 0
-    m_HSlider: 1
-    m_VSlider: 1
+    m_HSlider: 0
+    m_VSlider: 0
     m_IgnoreScrollWheelUntilClicked: 0
     m_EnableMouseInput: 1
     m_EnableSliderZoomHorizontal: 0
@@ -1199,29 +1259,29 @@ MonoBehaviour:
       serializedVersion: 2
       x: 0
       y: 21
-      width: 219.59998
-      height: 309.60004
-    m_Scale: {x: 1.391502, y: 1.3915021}
-    m_Translation: {x: 117.24869, y: 151.49452}
+      width: 254
+      height: 307.19998
+    m_Scale: {x: 1, y: 1}
+    m_Translation: {x: 127, y: 153.59999}
     m_MarginLeft: 0
     m_MarginRight: 0
     m_MarginTop: 0
     m_MarginBottom: 0
     m_LastShownAreaInsideMargins:
       serializedVersion: 2
-      x: -84.26052
-      y: -108.87121
-      width: 157.81506
-      height: 222.4934
+      x: -127
+      y: -153.59999
+      width: 254
+      height: 307.19998
     m_MinimalGUI: 1
   m_defaultScale: 1
-  m_LastWindowPixelSize: {x: 274.49997, y: 413.25006}
+  m_LastWindowPixelSize: {x: 317.5, y: 410.24997}
   m_ClearInEditMode: 1
   m_NoCameraWarning: 1
   m_LowResolutionForAspectRatios: 01000000000000000000
   m_XRRenderMode: 0
   m_RenderTexture: {fileID: 0}
---- !u!114 &22
+--- !u!114 &24
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1242,10 +1302,10 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 975.2
-    y: 80.8
-    width: 552.6
-    height: 695.4
+    x: 791.2
+    y: 73.6
+    width: 743.8
+    height: 709.8
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
     m_LastAppliedPresetName: Default
@@ -1264,7 +1324,7 @@ MonoBehaviour:
   m_LockTracker:
     m_IsLocked: 0
   m_PreviewWindow: {fileID: 0}
---- !u!114 &23
+--- !u!114 &25
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1284,9 +1344,9 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 1059.2001
+    x: 791.2
     y: 73.6
-    width: 475.80005
+    width: 743.8
     height: 709.8
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
@@ -1294,15 +1354,15 @@ MonoBehaviour:
     m_SaveData: []
     m_OverlaysVisible: 1
   m_Spl:
-    ID: 158
-    splitterInitialOffset: 305.8
+    ID: 214
+    splitterInitialOffset: 318.4
     currentActiveSplitter: -1
     realSizes:
-    - 236.19998
-    - 403.80002
+    - 249.6
+    - 390.4
     relativeSizes:
-    - 0.36906248
-    - 0.6309375
+    - 0.39000002
+    - 0.61
     minSizes:
     - 32
     - 32
@@ -1319,7 +1379,7 @@ MonoBehaviour:
     oldSplitSize: 0
   m_TestTypeToolbarIndex: 1
   m_PlayModeTestListGUI:
-    m_Window: {fileID: 23}
+    m_Window: {fileID: 25}
     m_NewResultList:
     - id: 1004
       uniqueId: '[CustomUtils][suite]'
@@ -1337,306 +1397,12 @@ MonoBehaviour:
       categories: []
       parentId: 
       parentUniqueId: 
-    - id: 1009
-      uniqueId: '[PlayModeTestAssembly][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/PlayModeTestAssembly.dll][suite]'
-      name: PlayModeTestAssembly.dll
-      fullName: C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/PlayModeTestAssembly.dll
-      resultStatus: 2
-      duration: 37.118248
-      messages: One or more child tests had errors
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 1
-      categories: []
-      parentId: 1004
-      parentUniqueId: '[CustomUtils][suite]'
-    - id: 1005
-      uniqueId: PlayModeTestAssembly.dll/[PlayModeTestAssembly][PlayModeTestRunner][suite]
-      name: PlayModeTestRunner
-      fullName: PlayModeTestRunner
-      resultStatus: 2
-      duration: 37.094547
-      messages: One or more child tests had errors
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 1
-      categories: []
-      parentId: 1009
-      parentUniqueId: '[PlayModeTestAssembly][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/PlayModeTestAssembly.dll][suite]'
-    - id: 1002
-      uniqueId: PlayModeTestAssembly.dll/PlayModeTestRunner/[PlayModeTestAssembly][PlayModeTestRunner.TestGraphicService]
-      name: TestGraphicService
-      fullName: PlayModeTestRunner.TestGraphicService
-      resultStatus: 2
-      duration: 37.05633
-      messages: 'Unhandled log message: ''[Error] [GraphicService.IService.Start]
-        UniversalRenderer''. Use UnityEngine.TestTools.LogAssert.Expect'
-      output: '[GraphicService.IService.Start] [Very Low, 0], [VERY LOW, 0], [very
-        low, 0], [VeryLow, 0], [VERYLOW, 0], [verylow, 0], [Very_Low, 0], [VERY_LOW,
-        0], [very_low, 0], [Low, 1], [LOW, 1], [low, 1], [Medium, 2], [MEDIUM, 2],
-        [medium, 2], [High, 3], [HIGH, 3], [high, 3], [Very High, 4], [VERY HIGH,
-        4], [very high, 4], [VeryHigh, 4], [VERYHIGH, 4], [veryhigh, 4], [Very_High,
-        4], [VERY_HIGH, 4], [very_high, 4], [Ultra, 5], [ULTRA, 5], [ultra, 5]
-
-        [GraphicService.IService.Start]
-        [VeryLow, 0], [Very_Low, 0], [Low, 1]
-
-        [GraphicService.IService.Start]
-        UniversalRenderPipelineAssetLow
-
-        [GraphicService.IService.Start]
-        UniversalRenderer
-
-        <color=#00FFFF>[Service.StartService] Service
-        Start || GraphicService</color>
-
-'
-      stacktrace: 'Logger:Error (string) (at Assets/CustomUtils/Logger/Logger.cs:27)
-
-        Logger:TraceError
-        (string) (at Assets/CustomUtils/Logger/Logger.cs:79)
-
-        GraphicService:IService.Start
-        () (at Assets/CustomUtils/Service/GraphicService.cs:50)
-
-        Service:StartService
-        (IService) (at Assets/CustomUtils/Service/Core/Service.cs:46)
-
-        Service:GetService
-        (System.Type) (at Assets/CustomUtils/Service/Core/Service.cs:161)
-
-        Service:GetService<GraphicService>
-        () (at Assets/CustomUtils/Service/Core/Service.cs:152)
-
-        Service:TryGetService<GraphicService>
-        (GraphicService&) (at Assets/CustomUtils/Service/Core/Service.cs:148)
-
-        PlayModeTestRunner:TestGraphicService
-        () (at Assets/Test/PlayMode/PlayModeTestRunner.cs:8)
-
-        System.Reflection.MethodBase:Invoke
-        (object,object[])
-
-        NUnit.Framework.Internal.Reflect:InvokeMethod
-        (System.Reflection.MethodInfo,object,object[])
-
-        NUnit.Framework.Internal.MethodWrapper:Invoke
-        (object,object[])
-
-        NUnit.Framework.Internal.Commands.TestMethodCommand:RunNonAsyncTestMethod
-        (NUnit.Framework.Internal.ITestExecutionContext)
-
-        NUnit.Framework.Internal.Commands.TestMethodCommand:RunTestMethod
-        (NUnit.Framework.Internal.ITestExecutionContext)
-
-        NUnit.Framework.Internal.Commands.TestMethodCommand:Execute
-        (NUnit.Framework.Internal.ITestExecutionContext)
-
-        UnityEngine.SetupCoroutine:InvokeMoveNext
-        (System.Collections.IEnumerator,intptr)
-
-
-
-'
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1001
-      parentUniqueId: PlayModeTestAssembly.dll/[PlayModeTestAssembly][PlayModeTestRunner][suite]
-    - id: 1006
-      uniqueId: PlayModeTestAssembly.dll/PlayModeTestRunner/[PlayModeTestAssembly][PlayModeTestRunner.TestResourceService]
-      name: TestResourceService
-      fullName: PlayModeTestRunner.TestResourceService
-      resultStatus: 0
-      duration: 0.1857227
-      messages: 
-      output: '<color=#FFEB04>[ResourceService.Init] SubProvider is activated. Find
-        ResourceSubProviderAttribute...</color>
-
-        <color=#00FFFF>[ResourceService.Init]
-        Activate Provider || ResourcesProvider || ResourcesProvider</color>
-
-        <color=#00FFFF>[ResourceService.Init]
-        Activate Provider || AssetBundleProvider || AssetBundleProvider</color>
-
-        <color=#00FFFF>[Service.StartService]
-        Service Start || ResourceService</color>
-
-        [PlayModeTestRunner.TestResourceService]
-        TestPrefab
-
-        [PlayModeTestRunner.TestResourceService] TestPrefab_1
-
-        [PlayModeTestRunner.TestResourceService]
-        TestPrefab_2
-
-        [PlayModeTestRunner.TestResourceService] TestPrefab_3
-
-'
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1005
-      parentUniqueId: PlayModeTestAssembly.dll/[PlayModeTestAssembly][PlayModeTestRunner][suite]
-    - id: 1007
-      uniqueId: PlayModeTestAssembly.dll/PlayModeTestRunner/[PlayModeTestAssembly][PlayModeTestRunner.TestSound]
-      name: TestSound
-      fullName: PlayModeTestRunner.TestSound
-      resultStatus: 0
-      duration: 0.3464799
-      messages: 
-      output: "<color=#FFEB04>[Service.StartService] ResourceService is Already Serving</color>\r\n<color=#00FFFF>[TestSoundManager..ctor]
-        SoundCoreBase Activate</color>\r\n<color=#00FFFF>[TestSoundManager.InitSound]
-        TestSound Activate</color>\r\nExposed name does not exist: TYPE_1\r\n<color=#00FFFF>[TestSoundManager.InitSound]
-        Sample_SoundBgm Activate</color>\r\n[PlayModeTestRunner.TestSound] \nSample_SoundOrder\r\nname
-        || Test\r\ntype || \r\nmasterType || MASTER_TEST\r\nrepresentControlType
-        || TEST\r\n\r\n[TestSound.SubmitSoundOrder] Test || Play\r\n[TestSound.SubmitSoundOrder]
-        Test || Stop\r\n[TestSound.SubmitSoundOrder] Test || Mute\r\n"
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1005
-      parentUniqueId: PlayModeTestAssembly.dll/[PlayModeTestAssembly][PlayModeTestRunner][suite]
-    m_ResultText: 'TestGraphicService (37.056s)
-
-      ---
-
-      Unhandled log message:
-      ''[Error] [GraphicService.IService.Start] UniversalRenderer''. Use UnityEngine.TestTools.LogAssert.Expect
-
-      ---
-
-      Logger:Error
-      (string) (at Assets/CustomUtils/Logger/Logger.cs:27)
-
-      Logger:TraceError
-      (string) (at Assets/CustomUtils/Logger/Logger.cs:79)
-
-      GraphicService:IService.Start
-      () (at Assets/CustomUtils/Service/GraphicService.cs:50)
-
-      Service:StartService
-      (IService) (at Assets/CustomUtils/Service/Core/Service.cs:46)
-
-      Service:GetService
-      (System.Type) (at Assets/CustomUtils/Service/Core/Service.cs:161)
-
-      Service:GetService<GraphicService>
-      () (at Assets/CustomUtils/Service/Core/Service.cs:152)
-
-      Service:TryGetService<GraphicService>
-      (GraphicService&) (at Assets/CustomUtils/Service/Core/Service.cs:148)
-
-      PlayModeTestRunner:TestGraphicService
-      () (at Assets/Test/PlayMode/PlayModeTestRunner.cs:8)
-
-      System.Reflection.MethodBase:Invoke
-      (object,object[])
-
-      NUnit.Framework.Internal.Reflect:InvokeMethod (System.Reflection.MethodInfo,object,object[])
-
-      NUnit.Framework.Internal.MethodWrapper:Invoke
-      (object,object[])
-
-      NUnit.Framework.Internal.Commands.TestMethodCommand:RunNonAsyncTestMethod
-      (NUnit.Framework.Internal.ITestExecutionContext)
-
-      NUnit.Framework.Internal.Commands.TestMethodCommand:RunTestMethod
-      (NUnit.Framework.Internal.ITestExecutionContext)
-
-      NUnit.Framework.Internal.Commands.TestMethodCommand:Execute
-      (NUnit.Framework.Internal.ITestExecutionContext)
-
-      UnityEngine.SetupCoroutine:InvokeMoveNext
-      (System.Collections.IEnumerator,intptr)
-
-      ---
-
-      [GraphicService.IService.Start]
-      [Very Low, 0], [VERY LOW, 0], [very low, 0], [VeryLow, 0], [VERYLOW, 0], [verylow,
-      0], [Very_Low, 0], [VERY_LOW, 0], [very_low, 0], [Low, 1], [LOW, 1], [low,
-      1], [Medium, 2], [MEDIUM, 2], [medium, 2], [High, 3], [HIGH, 3], [high, 3],
-      [Very High, 4], [VERY HIGH, 4], [very high, 4], [VeryHigh, 4], [VERYHIGH, 4],
-      [veryhigh, 4], [Very_High, 4], [VERY_HIGH, 4], [very_high, 4], [Ultra, 5],
-      [ULTRA, 5], [ultra, 5]
-
-      [GraphicService.IService.Start] [VeryLow, 0],
-      [Very_Low, 0], [Low, 1]
-
-      [GraphicService.IService.Start] UniversalRenderPipelineAssetLow
-
-      [GraphicService.IService.Start]
-      UniversalRenderer
-
-      <color=#00FFFF>[Service.StartService] Service Start
-      || GraphicService</color>'
-    m_ResultStacktrace: 'Logger:Error (string) (at Assets/CustomUtils/Logger/Logger.cs:27)
-
-      Logger:TraceError
-      (string) (at Assets/CustomUtils/Logger/Logger.cs:79)
-
-      GraphicService:IService.Start
-      () (at Assets/CustomUtils/Service/GraphicService.cs:50)
-
-      Service:StartService
-      (IService) (at Assets/CustomUtils/Service/Core/Service.cs:46)
-
-      Service:GetService
-      (System.Type) (at Assets/CustomUtils/Service/Core/Service.cs:161)
-
-      Service:GetService<GraphicService>
-      () (at Assets/CustomUtils/Service/Core/Service.cs:152)
-
-      Service:TryGetService<GraphicService>
-      (GraphicService&) (at Assets/CustomUtils/Service/Core/Service.cs:148)
-
-      PlayModeTestRunner:TestGraphicService
-      () (at Assets/Test/PlayMode/PlayModeTestRunner.cs:8)
-
-      System.Reflection.MethodBase:Invoke
-      (object,object[])
-
-      NUnit.Framework.Internal.Reflect:InvokeMethod (System.Reflection.MethodInfo,object,object[])
-
-      NUnit.Framework.Internal.MethodWrapper:Invoke
-      (object,object[])
-
-      NUnit.Framework.Internal.Commands.TestMethodCommand:RunNonAsyncTestMethod
-      (NUnit.Framework.Internal.ITestExecutionContext)
-
-      NUnit.Framework.Internal.Commands.TestMethodCommand:RunTestMethod
-      (NUnit.Framework.Internal.ITestExecutionContext)
-
-      NUnit.Framework.Internal.Commands.TestMethodCommand:Execute
-      (NUnit.Framework.Internal.ITestExecutionContext)
-
-      UnityEngine.SetupCoroutine:InvokeMoveNext
-      (System.Collections.IEnumerator,intptr)
-
-
-
-'
+    m_ResultText: 
+    m_ResultStacktrace: 
     m_TestListState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 2d6aa65e
-      m_LastClickedID: 1587964461
+      m_SelectedIDs: 15f0bffc
+      m_LastClickedID: -54530027
       m_ExpandedIDs: 2d87f388adb59dfa5bc6d62ec29f393372cb9f48ffffff7f
       m_RenameOverlay:
         m_UserAcceptedRename: 0
@@ -1665,14 +1431,14 @@ MonoBehaviour:
       - Uncategorized
     m_SelectedOption: 0
   m_EditModeTestListGUI:
-    m_Window: {fileID: 23}
+    m_Window: {fileID: 25}
     m_NewResultList:
     - id: 1000
       uniqueId: '[CustomUtils][suite]'
       name: CustomUtils
       fullName: CustomUtils
       resultStatus: 1
-      duration: 0.1296993
+      duration: 13.422585
       messages: 
       output: 
       stacktrace: 
@@ -1683,12 +1449,12 @@ MonoBehaviour:
       categories: []
       parentId: 
       parentUniqueId: 
-    - id: 1010
+    - id: 1022
       uniqueId: '[EditrModeTestAssembly][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/EditrModeTestAssembly.dll][suite]'
       name: EditrModeTestAssembly.dll
       fullName: C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/EditrModeTestAssembly.dll
       resultStatus: 1
-      duration: 0.0954226
+      duration: 13.403259
       messages: 
       output: 
       stacktrace: 
@@ -1697,15 +1463,15 @@ MonoBehaviour:
       description: 
       isSuite: 1
       categories: []
-      parentId: 1007
+      parentId: 1000
       parentUniqueId: '[CustomUtils][suite]'
     - id: 1001
       uniqueId: EditrModeTestAssembly.dll/[EditrModeTestAssembly][AnalyzerTestRunner][suite]
       name: AnalyzerTestRunner
       fullName: AnalyzerTestRunner
-      resultStatus: 2
-      duration: 3.1270306
-      messages: One or more child tests had errors
+      resultStatus: 1
+      duration: 1.4777031
+      messages: 
       output: 
       stacktrace: 
       notRunnable: 0
@@ -1713,15 +1479,15 @@ MonoBehaviour:
       description: 
       isSuite: 1
       categories: []
-      parentId: 1009
+      parentId: 1022
       parentUniqueId: '[EditrModeTestAssembly][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/EditrModeTestAssembly.dll][suite]'
-    - id: 1004
-      uniqueId: EditrModeTestAssembly.dll/AnalyzerTestRunner/[EditrModeTestAssembly][AnalyzerTestRunner.AnalyzerTest][suite]
-      name: AnalyzerTest
-      fullName: AnalyzerTestRunner.AnalyzerTest
-      resultStatus: 2
-      duration: 3.1203382
-      messages: One or more child tests had errors
+    - id: 1005
+      uniqueId: EditrModeTestAssembly.dll/AnalyzerTestRunner/[EditrModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCaseTest][suite]
+      name: AnalyzerTestCaseTest
+      fullName: AnalyzerTestRunner.AnalyzerTestCaseTest
+      resultStatus: 1
+      duration: 1.4740905
+      messages: 
       output: 
       stacktrace: 
       notRunnable: 0
@@ -1732,9 +1498,9 @@ MonoBehaviour:
       parentId: 1001
       parentUniqueId: EditrModeTestAssembly.dll/[EditrModeTestAssembly][AnalyzerTestRunner][suite]
     - id: 1002
-      uniqueId: EditrModeTestAssembly.dll/AnalyzerTestRunner/AnalyzerTest/[EditrModeTestAssembly][AnalyzerTestRunner.AnalyzerTest(RequiresStaticMethodImplementationAttributeAnalyzer,"Test/EditMode/AnalyzerTestCaseCode/RequiresStaticMethodTestCase")]
-      name: AnalyzerTest(RequiresStaticMethodImplementationAttributeAnalyzer,"Test/EditMode/AnalyzerTestCaseCode/RequiresStaticMethodTestCase")
-      fullName: AnalyzerTestRunner.AnalyzerTest(RequiresStaticMethodImplementationAttributeAnalyzer,"Test/EditMode/AnalyzerTestCaseCode/RequiresStaticMethodTestCase")
+      uniqueId: EditrModeTestAssembly.dll/AnalyzerTestRunner/AnalyzerTestCaseTest/[EditrModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCaseTest(RequiresStaticMethodImplementationAttributeAnalyzer,"Test/EditMode/AnalyzerTestCaseCode/RequiresStaticMethodTestCase")]
+      name: AnalyzerTestCaseTest(RequiresStaticMethodImplementationAttributeAnalyzer,"Test/EditMode/AnalyzerTestCaseCode/RequiresStaticMethodTestCase")
+      fullName: AnalyzerTestRunner.AnalyzerTestCaseTest(RequiresStaticMethodImplementationAttributeAnalyzer,"Test/EditMode/AnalyzerTestCaseCode/RequiresStaticMethodTestCase")
       resultStatus: 0
       duration: 0
       messages: 
@@ -1746,12 +1512,12 @@ MonoBehaviour:
       isSuite: 0
       categories:
       - Uncategorized
-      parentId: 1004
-      parentUniqueId: EditrModeTestAssembly.dll/AnalyzerTestRunner/[EditrModeTestAssembly][AnalyzerTestRunner.AnalyzerTest][suite]
+      parentId: 1005
+      parentUniqueId: EditrModeTestAssembly.dll/AnalyzerTestRunner/[EditrModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCaseTest][suite]
     - id: 1003
-      uniqueId: EditrModeTestAssembly.dll/AnalyzerTestRunner/AnalyzerTest/[EditrModeTestAssembly][AnalyzerTestRunner.AnalyzerTest(RequiresAttributeImplementationAttributeAnalyzer,"Test/EditMode/AnalyzerTestCaseCode/RequiresAttributeTestCase")]
-      name: AnalyzerTest(RequiresAttributeImplementationAttributeAnalyzer,"Test/EditMode/AnalyzerTestCaseCode/RequiresAttributeTestCase")
-      fullName: AnalyzerTestRunner.AnalyzerTest(RequiresAttributeImplementationAttributeAnalyzer,"Test/EditMode/AnalyzerTestCaseCode/RequiresAttributeTestCase")
+      uniqueId: EditrModeTestAssembly.dll/AnalyzerTestRunner/AnalyzerTestCaseTest/[EditrModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCaseTest(RequiresAttributeImplementationAttributeAnalyzer,"Test/EditMode/AnalyzerTestCaseCode/RequiresAttributeTestCase")]
+      name: AnalyzerTestCaseTest(RequiresAttributeImplementationAttributeAnalyzer,"Test/EditMode/AnalyzerTestCaseCode/RequiresAttributeTestCase")
+      fullName: AnalyzerTestRunner.AnalyzerTestCaseTest(RequiresAttributeImplementationAttributeAnalyzer,"Test/EditMode/AnalyzerTestCaseCode/RequiresAttributeTestCase")
       resultStatus: 0
       duration: 0
       messages: 
@@ -1763,14 +1529,14 @@ MonoBehaviour:
       isSuite: 0
       categories:
       - Uncategorized
-      parentId: 1004
-      parentUniqueId: EditrModeTestAssembly.dll/AnalyzerTestRunner/[EditrModeTestAssembly][AnalyzerTestRunner.AnalyzerTest][suite]
-    - id: 1008
+      parentId: 1005
+      parentUniqueId: EditrModeTestAssembly.dll/AnalyzerTestRunner/[EditrModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCaseTest][suite]
+    - id: 1017
       uniqueId: EditrModeTestAssembly.dll/[EditrModeTestAssembly][EditModeTestRunner][suite]
       name: EditModeTestRunner
       fullName: EditModeTestRunner
       resultStatus: 1
-      duration: 0.0837758
+      duration: 13.399505
       messages: 
       output: 
       stacktrace: 
@@ -1779,79 +1545,49 @@ MonoBehaviour:
       description: 
       isSuite: 1
       categories: []
-      parentId: 1010
+      parentId: 1022
       parentUniqueId: '[EditrModeTestAssembly][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/EditrModeTestAssembly.dll][suite]'
-    - id: 1008
-      uniqueId: EditrModeTestAssembly.dll/EditModeTestRunner/[EditrModeTestAssembly][EditModeTestRunner.CaseTest][suite]
-      name: CaseTest
-      fullName: EditModeTestRunner.CaseTest
-      resultStatus: 0
-      duration: 0
+    - id: 1006
+      uniqueId: EditrModeTestAssembly.dll/EditModeTestRunner/[EditrModeTestAssembly][EditModeTestRunner.TcpServerTest]
+      name: TcpServerTest
+      fullName: EditModeTestRunner.TcpServerTest
+      resultStatus: 1
+      duration: 13.395558
       messages: 
-      output: 
+      output: '<color=#00FF00>[SimpleTcpServer.Start] SimpleTcpServer Start || 0.0.0.0:8890</color>
+
+        [<TcpServerTest>d__1.MoveNext]
+        Return
+
+        <color=#FFEB04>[SimpleTcpServer.Stop] SimpleTcpServer Stop</color>
+
+'
       stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
       description: 
-      isSuite: 1
-      categories: []
+      isSuite: 0
+      categories:
+      - Uncategorized
       parentId: 1005
       parentUniqueId: EditrModeTestAssembly.dll/[EditrModeTestAssembly][EditModeTestRunner][suite]
-    - id: 1006
-      uniqueId: EditrModeTestAssembly.dll/EditModeTestRunner/CaseTest/[EditrModeTestAssembly][EditModeTestRunner.CaseTest(1)]
-      name: CaseTest(1)
-      fullName: EditModeTestRunner.CaseTest(1)
-      resultStatus: 0
-      duration: 0
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1008
-      parentUniqueId: EditrModeTestAssembly.dll/EditModeTestRunner/[EditrModeTestAssembly][EditModeTestRunner.CaseTest][suite]
-    - id: 1007
-      uniqueId: EditrModeTestAssembly.dll/EditModeTestRunner/CaseTest/[EditrModeTestAssembly][EditModeTestRunner.CaseTest(2)]
-      name: CaseTest(2)
-      fullName: EditModeTestRunner.CaseTest(2)
-      resultStatus: 0
-      duration: 0
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1008
-      parentUniqueId: EditrModeTestAssembly.dll/EditModeTestRunner/[EditrModeTestAssembly][EditModeTestRunner.CaseTest][suite]
-    m_ResultText: 'CacheServerTest (0.039s)
+    m_ResultText: 'TcpServerTest (13.396s)
 
       ---
 
-      [EditModeTestRunner.CacheServerTest]
-      cacheServerEndpoint || localhost
+      <color=#00FF00>[SimpleTcpServer.Start]
+      SimpleTcpServer Start || 0.0.0.0:8890</color>
 
-      [EditModeTestRunner.CacheServerTest]
-      cacheServerNamespacePrefix || default
+      [<TcpServerTest>d__1.MoveNext]
+      Return
 
-      [EditModeTestRunner.CacheServerTest]
-      cacheServerEnableDownload || True
-
-      [EditModeTestRunner.CacheServerTest]
-      cacheServerEnableUpload || True'
+      <color=#FFEB04>[SimpleTcpServer.Stop] SimpleTcpServer Stop</color>'
     m_ResultStacktrace: 
     m_TestListState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 1b5f49a7
-      m_LastClickedID: -1488363749
-      m_ExpandedIDs: f6d801c437575fccec808f0abdddfc27c29f393322524b3a9dda8a415d4c0954ffffff7f
+      m_SelectedIDs: a8103d32
+      m_LastClickedID: 842862760
+      m_ExpandedIDs: f6d801c437575fcc09d9cedca4da07e173294026bdddfc27c29f393322524b3a9dda8a415d4c0954db1cfa66ffffff7f
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 

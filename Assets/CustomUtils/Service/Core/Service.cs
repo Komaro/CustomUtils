@@ -194,13 +194,13 @@ public static class Service {
         return false;
     }
     
-    public static List<IService> GetServiceList(Enum serviceType) => _serviceDic.Values.Where(x => x.GetType().GetCustomAttribute<ServiceAttribute>()?.serviceTypeList.Contains(serviceType) ?? false).ToList();
-    public static List<Type> GetTypeList(Enum serviceType) => _cachedServiceTypeList.FindAll(x => x.GetCustomAttribute<ServiceAttribute>()?.serviceTypeList.Contains(serviceType) ?? false);
+    public static List<IService> GetServiceList(Enum serviceType) => _serviceDic.Values.Where(x => x.GetType().GetCustomAttribute<ServiceAttribute>()?.serviceTypeSet.Contains(serviceType) ?? false).ToList();
+    public static List<Type> GetTypeList(Enum serviceType) => _cachedServiceTypeList.FindAll(x => x.GetCustomAttribute<ServiceAttribute>()?.serviceTypeSet.Contains(serviceType) ?? false);
 }
 
 public enum DEFAULT_SERVICE_TYPE {
     NONE,
-    INIT_MAIN_THREAD,
+    START_MAIN_THREAD,
     RESOURCE_LOAD,
     PLAY_DURING,
     PLAY_FOCUS_DURING,
@@ -210,14 +210,16 @@ public enum DEFAULT_SERVICE_TYPE {
 [AttributeUsage(AttributeTargets.Class)]
 public sealed class ServiceAttribute : Attribute {
 
-    public List<Enum> serviceTypeList = new();
+    public HashSet<Enum> serviceTypeSet = new();
 
-    public ServiceAttribute() => serviceTypeList.Add(DEFAULT_SERVICE_TYPE.NONE);
-    
+    public ServiceAttribute() {
+        serviceTypeSet.Add(DEFAULT_SERVICE_TYPE.NONE);
+    }
+
     public ServiceAttribute(params object[] serviceTypes) {
         foreach (var type in serviceTypes) {
             if (type is Enum enumType) {
-                serviceTypeList.Add(enumType);
+                serviceTypeSet.Add(enumType);
             }
         }
     }

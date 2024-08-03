@@ -1,9 +1,8 @@
 ﻿using System;
 using UnityEngine;
-using System.Linq;
 using UniRx;
 
-[ServiceAttribute(DEFAULT_SERVICE_TYPE.NONE)]
+[Service(DEFAULT_SERVICE_TYPE.NONE)]
 public class TimeUpdateService : IService {
 
     private IObservable<long> _updateStream;

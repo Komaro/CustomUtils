@@ -1,0 +1,14 @@
+﻿[RequiresUnityEditorAttribute]
+public class Test {
+    
+}
+
+[RequiresUnityEditor]
+public class Test1 {
+
+}
+
+[RequiresUnityEditor]
+public class Test2 {
+
+}

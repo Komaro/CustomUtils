@@ -99,6 +99,15 @@ public static class CollectionExtension {
         sourceSet.ForEach(key => workDictionary.TryAdd(key, createFunc.Invoke(key)));
     }
 
+    public static void SafeClear<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, Action<TKey, TValue> releaseAction) {
+        try {
+            dictionary.ForEach(x => releaseAction?.Invoke(x.Key, x.Value));
+            dictionary.Clear();
+        } catch (Exception ex) {
+            Logger.TraceError(ex);
+        }
+    }
+
     public static void SafeClear<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, Action<TValue> releaseAction) {
         try {
             dictionary.Values.ForEach(x => releaseAction?.Invoke(x));
@@ -116,7 +125,7 @@ public static class CollectionExtension {
             Logger.TraceError(ex);
         }
     }
-    
+
     public static void AutoAdd<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key, TValue value) {
         if (dictionary.ContainsKey(key)) {
             dictionary[key] = value;
@@ -540,9 +549,10 @@ public static class CollectionExtension {
         return convertList;
     }
 
+    public static string ToStringCollection<T>(this IEnumerable<T> enumerable, char separator = ' ') => string.Join(separator, enumerable);
     public static string ToStringCollection<T>(this IEnumerable<T> enumerable, string separator = " ") => string.Join(separator, enumerable);
+    public static string ToStringCollection<T>(this IEnumerable<T> enumerable, Func<T, string> selector, char separator = ' ') => string.Join(separator, enumerable.Select(selector.Invoke));
     public static string ToStringCollection<T>(this IEnumerable<T> enumerable, Func<T, string> selector, string separator = " ") => string.Join(separator, enumerable.Select(selector.Invoke));
-    public static string ToStringCollection<T>(this IEnumerable<T> enumerable, Func<T, object> selector, string separator = " ") => string.Join(separator, enumerable.Select(selector.Invoke));
 
     // Fisher–Yates shuffle 기반
     private static readonly Random _randomGenerator = new Random();

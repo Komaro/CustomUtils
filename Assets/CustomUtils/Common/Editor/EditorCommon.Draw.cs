@@ -49,7 +49,7 @@ public static partial class EditorCommon {
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static string DrawButtonTextField(string buttonText, ref string text, Action onClick = null, float buttonWidth = 0f) {
         using (new GUILayout.HorizontalScope()) {
-            if (GUILayout.Button(buttonText, Constants.Draw.BUTTON, buttonWidth == 0f ? GetCachedFixWidthOption(buttonText, Constants.Draw.LABEL) : GUILayout.Width(buttonWidth))) {
+            if (GUILayout.Button(buttonText, Constants.Draw.BUTTON, buttonWidth <= 0f ? GetCachedFixWidthOption(buttonText, Constants.Draw.BUTTON) : GUILayout.Width(buttonWidth))) {
                 onClick?.Invoke();
             }
 
@@ -285,10 +285,18 @@ public static partial class EditorCommon {
     public static bool DrawFitButton(GUIContent buttonContent, GUIStyle style = null) => GUILayout.Button(buttonContent, style ?? Constants.Draw.FIT_X2_BUTTON, GUILayout.ExpandWidth(false), GUILayout.ExpandHeight(false));
     
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static bool DrawFitToggle(Rect position, ref bool isActive) => isActive = EditorGUI.Toggle(position.GetCenterRect(Constants.Draw.TOGGLE.CalcSize(GUIContent.none)), isActive);
+    public static bool DrawFitToggle(Rect position, bool toggle, bool isDisabled = true) {
+        using (new EditorGUI.DisabledGroupScope(isDisabled)) {
+            return EditorGUI.Toggle(position.GetCenterRect(Constants.Draw.TOGGLE.CalcSize(GUIContent.none)), toggle);
+        }
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static bool DrawFitToggle(Rect position, ref bool toggle) => toggle = EditorGUI.Toggle(position.GetCenterRect(Constants.Draw.TOGGLE.CalcSize(GUIContent.none)), toggle);
     
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static bool DrawFitToggle(ref bool toggle) => toggle = EditorGUILayout.Toggle(toggle, Constants.Draw.TOGGLE, GetCachedFixWidthOption(Constants.Draw.TOGGLE));
+    
     
     #endregion
 

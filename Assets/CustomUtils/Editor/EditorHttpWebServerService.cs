@@ -12,7 +12,7 @@ public class EditorHttpWebServerService : EditorService {
     private static EditorWindow _window;
     private static EditorWindow Window => _window == null ? _window = GetWindow<EditorHttpWebServerService>("HttpWebServer Service") : _window;
 
-    private SimpleHttpWebServer _httpServer;
+    private SimpleHttpServer _httpServer;
     
     private static string _targetDirectory;
     private static string _url;
@@ -218,7 +218,7 @@ public class EditorHttpWebServerService : EditorService {
     }
 
     private void StartHttpWebServer() {
-        _httpServer ??= new SimpleHttpWebServer(_url);
+        _httpServer ??= new SimpleHttpServer(_url);
         if (_httpServer.IsRunning()) {
             EditorCommon.OpenCheckDialogue("경고", "현재 임시 웹 서버가 동작중입니다.\n확인 시 종료 후 서버를 재시작합니다.", ok: () => {
                 _httpServer.Restart();

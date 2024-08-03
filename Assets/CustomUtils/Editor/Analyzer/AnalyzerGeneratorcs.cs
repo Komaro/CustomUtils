@@ -20,14 +20,14 @@ public static class AnalyzerGenerator {
     public static void GenerateCustomAnalyzerDll(string dllName, IEnumerable<Type> typeEnumerable) {
         var pathList = new List<string>();
         foreach (var type in typeEnumerable) {
-            if (AssemblyProvider.TryGetSourceFilePath(type, out var path)) {
+            if (UnityAssemblyProvider.TryGetSourceFilePath(type, out var path)) {
                 pathList.Add(path);
             }
         }
 
         if (pathList.Count <= 0) {
             Logger.TraceLog($"{nameof(pathList)} is empty. Building all Analyzers that inherit from {nameof(DiagnosticAnalyzer)}.", Color.yellow);
-            pathList = ReflectionProvider.GetSubClassTypes<DiagnosticAnalyzer>().Where(type => PLUGINS_FOLDER.IsMatch(type.Assembly.Location) == false).Select(AssemblyProvider.GetSourceFilePath).ToList();
+            pathList = ReflectionProvider.GetSubClassTypes<DiagnosticAnalyzer>().Where(type => PLUGINS_FOLDER.IsMatch(type.Assembly.Location) == false).Select(UnityAssemblyProvider.GetSourceFilePath).ToList();
         }
 
         if (pathList.Any() == false) {
@@ -68,7 +68,7 @@ public static class AnalyzerGenerator {
     }
     
     private static void GenerateCustomAnalyzerDllOnAssemblyBuilder(params string[] sourceFiles) {
-        if (AssemblyProvider.TryGetUnityAssembly(SystemAssembly.GetExecutingAssembly(), out var assembly)) {
+        if (UnityAssemblyProvider.TryGetUnityAssembly(SystemAssembly.GetExecutingAssembly(), out var assembly)) {
             try {
                 var outputPath = $"{Constants.Path.PROJECT_TEMP_FOLDER}/{Constants.Analyzer.ANALYZER_NAME}{Constants.Extension.DLL}";
                 var builder = new AssemblyBuilder(outputPath, sourceFiles) {

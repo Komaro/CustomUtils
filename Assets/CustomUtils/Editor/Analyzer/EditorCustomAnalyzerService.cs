@@ -9,6 +9,7 @@ using System.Reflection;
 using System.Text.RegularExpressions;
 using Microsoft.CodeAnalysis.Diagnostics;
 using UniRx;
+using Unity.EditorCoroutines.Editor;
 using UnityEditor;
 using UnityEditor.AnimatedValues;
 using UnityEditor.Callbacks;
@@ -47,7 +48,7 @@ public class EditorCustomAnalyzerService : EditorService {
 
     [MenuItem("Service/Analyzer/Analyzer View Service")]
     private static void OpenWindow() {
-        MainThreadDispatcher.StartEndOfFrameMicroCoroutine(CacheRefreshCoroutine());
+        EditorCoroutineUtility.StartCoroutine(CacheRefreshCoroutine(), Window);
         Window.Show();
         Window.Focus();
     }
@@ -55,7 +56,7 @@ public class EditorCustomAnalyzerService : EditorService {
     [DidReloadScripts(99999)]
     private static void CacheRefresh() {
         if (HasOpenInstances<EditorCustomAnalyzerService>()) {
-            MainThreadDispatcher.StartEndOfFrameMicroCoroutine(CacheRefreshCoroutine());
+            EditorCoroutineUtility.StartCoroutine(CacheRefreshCoroutine(), Window);
         }
     }
 
@@ -201,6 +202,7 @@ internal record AnalyzerImplementInfo {
     public readonly string assemblyName;
     public readonly string name;
     public readonly string description;
+    public readonly bool isValid; 
     
     public bool isOpen;
     public bool isCheck;
@@ -210,6 +212,7 @@ internal record AnalyzerImplementInfo {
         assemblyName = analyzerType.Assembly.GetName().Name;
         name = analyzerType.Name;
         description = analyzerType.TryGetCustomAttribute<DescriptionAttribute>(out var descriptionAttribute) ? descriptionAttribute.Description : string.Empty;
+        isValid = analyzerType.IsDefined<DiagnosticAnalyzerAttribute>();
     }
 
     public virtual bool IsMatch(string match) => name.IndexOf(match, StringComparison.OrdinalIgnoreCase) >= 0;
@@ -264,6 +267,7 @@ internal class AnalyzerActivateTreeView : AnalyzerImplementTreeView {
         CreateColumn("No", 35f, 35f),
         CreateColumn("어셈블리",70f),
         CreateColumn("명칭", 350f),
+        CreateColumn("유효", 35f, 35f),
     };
     
     public AnalyzerActivateTreeView() : base(COLUMNS) { }
@@ -273,28 +277,17 @@ internal class AnalyzerActivateTreeView : AnalyzerImplementTreeView {
             EditorGUI.LabelField(args.GetCellRect(0), item.id.ToString(), Constants.Draw.CENTER_LABEL);
             EditorGUI.LabelField(args.GetCellRect(1), item.info.assemblyName, Constants.Draw.CENTER_LABEL);
             EditorGUI.LabelField(args.GetCellRect(2), item.info.name);
+            EditorCommon.DrawFitToggle(args.GetCellRect(3), item.info.isValid);
         }
     }
 
-    protected override IEnumerable<TreeViewItem> GetOrderBy(int index, bool isAscending) {
-        if (rootItem.children.TryCast<AnalyzerImplementTreeViewItem>(out var enumerable)) {
-            enumerable = EnumUtil.ConvertInt<SORT_TYPE>(index) switch {
-                SORT_TYPE.NO => enumerable.OrderBy(x => x.id, isAscending),
-                SORT_TYPE.ASSEMBLY => enumerable.OrderBy(x => x.info.assemblyName, isAscending),
-                SORT_TYPE.NAME => enumerable.OrderBy(x => x.info.name, isAscending),
-                _ => enumerable
-            };
-
-            return enumerable;
+    protected override IEnumerable<TreeViewItem> GetOrderBy(SORT_TYPE type, bool isAscending, IEnumerable<AnalyzerImplementTreeViewItem> enumerable) {
+        switch (type) {
+            case SORT_TYPE.ASSEMBLY:
+                return enumerable.OrderBy(x => x.info.assemblyName, isAscending);
         }
 
-        return Enumerable.Empty<TreeViewItem>();
-    }
-    
-    private enum SORT_TYPE {
-        NO,
-        ASSEMBLY,
-        NAME,
+        return base.GetOrderBy(type, isAscending, enumerable);
     }
 }
 
@@ -304,6 +297,7 @@ internal class AnalyzerImplementTreeView : EditorServiceTreeView {
         CreateColumn("No", 35f, 35f),
         CreateColumn("선택", 35f, 35f),
         CreateColumn("명칭", 350f),
+        CreateColumn("유효", 35f, 35f),
     };
     
     public AnalyzerImplementTreeView() : base(COLUMNS) { }
@@ -328,6 +322,7 @@ internal class AnalyzerImplementTreeView : EditorServiceTreeView {
             EditorGUI.LabelField(args.GetCellRect(0), item.id.ToString(), Constants.Draw.CENTER_LABEL);
             EditorCommon.DrawFitToggle(args.GetCellRect(1), ref item.info.isCheck);
             EditorGUI.LabelField(args.GetCellRect(2), item.info.name);
+            EditorCommon.DrawFitToggle(args.GetCellRect(3), item.info.isValid);
         }
     }
 
@@ -340,18 +335,23 @@ internal class AnalyzerImplementTreeView : EditorServiceTreeView {
     public virtual void Add(AnalyzerImplementInfo info) => itemList.Add(new AnalyzerImplementTreeViewItem(itemList.Count, info));
 
     protected override IEnumerable<TreeViewItem> GetOrderBy(int index, bool isAscending) {
-        if (rootItem.children.TryCast<AnalyzerImplementTreeViewItem>(out var enumerable)) {
-            enumerable = EnumUtil.ConvertInt<SORT_TYPE>(index) switch {
-                SORT_TYPE.NO => enumerable.OrderBy(x => x.id, isAscending),
-                SORT_TYPE.SELECTION => enumerable.OrderBy(x => x.info.isCheck, isAscending),
-                SORT_TYPE.NAME => enumerable.OrderBy(x => x.info.name, isAscending),
-                _ => enumerable
-            };
-
-            return enumerable;
+        if (rootItem.children.TryCast<AnalyzerImplementTreeViewItem>(out var enumerable) && EnumUtil.TryConvert<SORT_TYPE>(index, out var type)) {
+            return GetOrderBy(type, isAscending, enumerable);
         }
 
         return Enumerable.Empty<TreeViewItem>();
+    }
+
+    protected virtual IEnumerable<TreeViewItem> GetOrderBy(SORT_TYPE type, bool isAscending, IEnumerable<AnalyzerImplementTreeViewItem> enumerable) {
+        enumerable = type switch {
+            SORT_TYPE.NO => enumerable.OrderBy(x => x.id, isAscending),
+            SORT_TYPE.SELECTION => enumerable.OrderBy(x => x.info.isCheck, isAscending),
+            SORT_TYPE.NAME => enumerable.OrderBy(x => x.info.name, isAscending),
+            SORT_TYPE.VALID => enumerable.OrderBy(x => x.info.isValid, isAscending),
+            _ => enumerable
+        };
+
+        return enumerable;
     }
 
     protected sealed class AnalyzerImplementTreeViewItem : TreeViewItem {
@@ -365,11 +365,14 @@ internal class AnalyzerImplementTreeView : EditorServiceTreeView {
         }
     }
     
-    private enum SORT_TYPE {
-        NO,
-        SELECTION,
-        NAME,
-    }
+}
+
+internal enum SORT_TYPE {
+    NO,
+    SELECTION,
+    NAME,
+    ASSEMBLY,
+    VALID,
 }
 
 #endregion

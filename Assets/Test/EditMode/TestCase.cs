@@ -16,7 +16,7 @@ internal struct TestCaseCode {
             return null;
         }
         
-        if (EnumUtil.TryGetValue<TEST_RESULT_CASE_TYPE>(splitName[1], out var type)) {
+        if (EnumUtil.TryConvert<TEST_RESULT_CASE_TYPE>(splitName[1], out var type)) {
             if (SystemUtil.TryReadAllText(path, out var source)) {
                 return new TestCaseCode {
                     name = fullName,

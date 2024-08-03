@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using UnityEditor;
 using UnityEditor.Build;
 using UnityEditor.Build.Reporting;
@@ -51,6 +48,7 @@ public class BuildManager : IPostprocessBuildWithReport {
         }
     }
 
+    // TODO. 외부 접근 인터페이스로 추출
     public static void BuildOnCLI() {
         try {
             Debug.Log($"=============== Start {nameof(BuildOnCLI)} ===============");
@@ -84,6 +82,7 @@ public class BuildManager : IPostprocessBuildWithReport {
     }
 }
 
+[RequiresAttributeImplementation(typeof(BuilderAttribute))]
 public abstract class Builder {
 
     private int _countNum = 0;

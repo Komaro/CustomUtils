@@ -43,7 +43,7 @@ public class Sample_SoundBgm : SoundBase {
         }
 
         var splitName = info.name.Split(NAME_SEPARATOR);
-        if (splitName != null && splitName.Length >= 3 && EnumUtil.TryGetValue<SAMPLE_BGM_TYPE>(splitName[1], out var type)) {
+        if (splitName != null && splitName.Length >= 3 && EnumUtil.TryConvert<SAMPLE_BGM_TYPE>(splitName[1], out var type)) {
             _bgmTrackNameDic.AutoAdd(type, string.Join(NAME_SEPARATOR, splitName, 2, splitName.Length - 2), info.name);
         }
     }

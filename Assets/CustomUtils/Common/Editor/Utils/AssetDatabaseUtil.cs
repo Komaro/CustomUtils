@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Linq;
-using System.Reflection;
 using System.Text.RegularExpressions;
 using UnityEditor;
-using UnityEngine;
 using Object = UnityEngine.Object;
 
 public static class AssetDatabaseUtil {

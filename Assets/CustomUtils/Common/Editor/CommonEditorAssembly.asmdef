@@ -1,0 +1,21 @@
+{
+    "name": "CommonEditorAssembly",
+    "rootNamespace": "",
+    "references": [
+        "GUID:cfb6063ef43c4c4da20a2093012689dc",
+        "GUID:478a2357cc57436488a56e564b08d223"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [
+        "UNITY_EDITOR"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

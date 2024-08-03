@@ -6,18 +6,17 @@ public struct OverridenMethod {
 
     private readonly HashSet<string> _overrideSet;
 
-    public OverridenMethod(Type type, params string[] methods) {
+    public OverridenMethod(Type baseType, params string[] methods) {
         _overrideSet = new HashSet<string>();
-        foreach (var method in methods) {
-            if (type.TryGetMethod(method, out var info, BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public)) {
-                var declaringType = info.GetBaseDefinition().DeclaringType;
-                if (declaringType != info.DeclaringType) {
-                    _overrideSet.Add(method);
-                }
+        var methodSet = methods.ToHashSetWithDistinct();
+        foreach (var info in baseType.GetMethods(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public)) {
+            var name = info.TryGetCustomAttribute<MethodAliasAttribute>(out var attribute) ? attribute.alias : info.Name;
+            if (methodSet.Contains(name) && info.GetBaseDefinition().DeclaringType != info.DeclaringType) {
+                _overrideSet.Add(name);
             }
         }
     }
-        
+    
     public bool HasOverriden(Type type) => _overrideSet.Contains(type.Name);
     public bool HasOverriden(string type) => _overrideSet.Contains(type);
 }

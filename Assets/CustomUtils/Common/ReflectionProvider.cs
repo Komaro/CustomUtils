@@ -14,7 +14,7 @@ public static class ReflectionProvider {
         public static IEnumerable<Type> CachedClasses => _cachedClasses ??= CachedTypes.Where(type => type.IsClass);
 
         private static IEnumerable<Type> _cachedEnums;
-        public static IEnumerable<Type> CachedEnums => _cachedEnums ??= Cache.CachedTypes.Where(type => type.IsEnum);
+        public static IEnumerable<Type> CachedEnums => _cachedEnums ??= CachedTypes.Where(type => type.IsEnum);
     }
     
     #region [Class]

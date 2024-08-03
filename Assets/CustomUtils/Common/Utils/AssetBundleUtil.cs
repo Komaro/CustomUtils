@@ -1,9 +1,8 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 public static class AssetBundleUtil {
     
-    public static bool TryLoadFromMemoryOrDecrypt(byte[] bytes, string key, out AssetBundle assetBundle, uint crc = 0, ENCRYPT_TYPE type = default) {
+    public static bool TryLoadFromMemoryOrDecrypt(out AssetBundle assetBundle, byte[] bytes, string key, uint crc = 0, ENCRYPT_TYPE type = default) {
         assetBundle = LoadFromMemoryOrDecrypt(bytes, key, crc, type);
         return assetBundle != null;
     }

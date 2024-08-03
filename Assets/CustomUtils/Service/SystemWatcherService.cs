@@ -48,7 +48,7 @@ public class SystemWatcherService : IService {
 
         watcher = _fileSystemWatcherDic.GetOrAddValue(order);
         watcher.BeginInit();
-            
+        
         watcher.Path = order.path;
         watcher.Filter = order.filter;
         watcher.NotifyFilter = order.filters;

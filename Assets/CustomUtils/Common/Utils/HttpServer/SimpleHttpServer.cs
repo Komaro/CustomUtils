@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 
 
-public class SimpleHttpWebServer : IDisposable {
+public class SimpleHttpServer : IDisposable {
     
     private HttpListener _listener = new();
     private Task _listenerTask;
@@ -16,10 +16,18 @@ public class SimpleHttpWebServer : IDisposable {
 
     private string _targetDirectory;
 
-    public SimpleHttpWebServer(string prefix, HttpServeModule module) : this(prefix) => AddServeModule(module);
-    public SimpleHttpWebServer(string prefix) => _listener.Prefixes.Add(prefix);
-    public SimpleHttpWebServer() : this(Constants.Network.DEFAULT_LOCAL_HOST) { }
-
+    public SimpleHttpServer(string prefix, HttpServeModule module) : this(prefix) => AddServeModule(module);
+    public SimpleHttpServer(string prefix) => _listener.Prefixes.Add(prefix);
+    public SimpleHttpServer() : this(Constants.Network.DEFAULT_LOCAL_HOST) { }
+    
+    ~SimpleHttpServer() => Dispose();
+    
+    public void Dispose() {
+        if (IsRunning()) {
+            Close();
+        }
+    }
+    
     public void Start(string targetDirectory) {
         _targetDirectory = targetDirectory;
         Start();
@@ -35,7 +43,7 @@ public class SimpleHttpWebServer : IDisposable {
         try {
             _listenerCancelToken = new CancellationTokenSource();
             _ = Task.Run(() => Run(_listenerCancelToken.Token), _listenerCancelToken.Token);
-            Logger.TraceLog($"{nameof(SimpleHttpWebServer)} {nameof(Start)} || {_listener.Prefixes.ToStringCollection(", ")}", Color.green);
+            Logger.TraceLog($"{nameof(SimpleHttpServer)} {nameof(Start)} || {_listener.Prefixes.ToStringCollection(", ")}", Color.green);
         } catch (Exception ex) {
             Logger.TraceError(ex);
         }
@@ -53,7 +61,7 @@ public class SimpleHttpWebServer : IDisposable {
         }
 
         _listener.Stop();
-        Logger.TraceLog($"{nameof(SimpleHttpWebServer)} {nameof(Stop)}", Color.yellow);
+        Logger.TraceLog($"{nameof(SimpleHttpServer)} {nameof(Stop)}", Color.yellow);
     }
 
     public void Close() {
@@ -62,7 +70,7 @@ public class SimpleHttpWebServer : IDisposable {
         }
         
         _listener.Close();
-        Logger.TraceLog($"{nameof(SimpleHttpWebServer)} {nameof(Close)}", Color.red);
+        Logger.TraceLog($"{nameof(SimpleHttpServer)} {nameof(Close)}", Color.red);
     }
 
     private async void Run(CancellationToken token) {
@@ -95,7 +103,7 @@ public class SimpleHttpWebServer : IDisposable {
             if (_listener.IsListening) {
                 _listener.Stop();
                 _listener.Close();
-                Logger.TraceLog($"{nameof(SimpleHttpWebServer)} {nameof(Exception)} {nameof(Close)}", Color.red);
+                Logger.TraceLog($"{nameof(SimpleHttpServer)} {nameof(Exception)} {nameof(Close)}", Color.red);
             }
         }
     }
@@ -176,14 +184,6 @@ public class SimpleHttpWebServer : IDisposable {
         _serveModuleDic.SafeClear(module => module.Close());
         Logger.TraceLog("Clear Serve Module", Color.red);
     }
-
-    public void Dispose() {
-        if (IsRunning()) {
-            Close();
-        }
-    }
-
-    ~SimpleHttpWebServer() => Dispose();
 
     public string GetURL() => _listener?.Prefixes.FirstOrDefault() ?? string.Empty;
     public string GetTargetDirectory() => _targetDirectory;

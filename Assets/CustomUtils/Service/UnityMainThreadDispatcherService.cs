@@ -1,15 +1,11 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Concurrent;
-using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
-using Unity.Collections;
-using Unity.Jobs;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-[Service(DEFAULT_SERVICE_TYPE.INIT_MAIN_THREAD)]
+[Service(DEFAULT_SERVICE_TYPE.START_MAIN_THREAD)]
 public class UnityMainThreadDispatcherService : IService {
 
     private int _mainThreadId;
@@ -53,10 +49,18 @@ public class UnityMainThreadDispatcherService : IService {
 
     public void Enqueue(Action action) => _context.Post(_ => action.Invoke(), null);
     
-    public void Enqueue(IEnumerator enumerator) => _threadObject.Enqueue(enumerator);
+    public void Enqueue(IEnumerator enumerator) {
+#if UNITY_EDITOR
+        if (Application.isPlaying == false) {
+            throw new InvalidOperationException($"The {nameof(Coroutine)} handling of the {nameof(UnityMainThreadDispatcherService)} must only operate during Play Mode.");
+        }
+#endif
+        
+        _threadObject.Enqueue(enumerator);
+    }
 
     public bool IsMainThread() => _mainThreadId == Thread.CurrentThread.ManagedThreadId;
-
+    
     private class MainThreadDispatcherObject : MonoBehaviour, IDisposable {
 
         private readonly Object _queueLock = new();
@@ -69,7 +73,7 @@ public class UnityMainThreadDispatcherService : IService {
             var go = new GameObject(nameof(MainThreadDispatcherObject)) {
                 hideFlags = HideFlags.HideAndDontSave
             };
-            
+
             return go.AddComponent<MainThreadDispatcherObject>();
         }
 
@@ -96,7 +100,7 @@ public class UnityMainThreadDispatcherService : IService {
         }
 
         public void Enqueue(IEnumerator enumerator) {
-            lock (_coroutineQueue) {
+            lock (_queueLock) {
                 _coroutineQueue.Enqueue(enumerator);
             }
         }
@@ -104,9 +108,7 @@ public class UnityMainThreadDispatcherService : IService {
         public void Dispose() {
             lock (_queueLock) {
                 _workQueue.Clear();
-            }
-
-            lock (_coroutineQueue) {
+                
                 StopAllCoroutines();
                 _coroutineQueue.Clear();
             }

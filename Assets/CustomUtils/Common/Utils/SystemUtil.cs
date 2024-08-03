@@ -32,7 +32,7 @@ public static class SystemUtil {
             throw new DirectoryNotFoundException($"{nameof(workPath)} is Missing. Check {nameof(workPath)} || {workPath}");
         }
         
-        if (EnumUtil.TryGetValueAllCase<VALID_EXECUTE_EXTENSION>(Path.GetExtension(scriptPath).Remove(0, 1), out var executeType)) {
+        if (EnumUtil.TryConvertAllCase<VALID_EXECUTE_EXTENSION>(Path.GetExtension(scriptPath).Remove(0, 1), out var executeType)) {
             switch (executeType) {
                 case VALID_EXECUTE_EXTENSION.BAT:
                     ExecuteBatch(scriptPath, workPath, args);
@@ -202,6 +202,24 @@ public static class SystemUtil {
         return false;
     }
 
+    public static bool TryWriteAllBytes(string path, byte[] bytes, out FileInfo info) => (info = WriteAllBytes(path, bytes)) != null;
+
+    public static FileInfo WriteAllBytes(string path, byte[] bytes) {
+        if (bytes == null) {
+            return null;
+        }
+        
+        try {
+            EnsureDirectoryExists(path);
+            File.WriteAllBytes(path, bytes);
+            return new FileInfo(path);
+        } catch (Exception ex) {
+            Logger.TraceError(ex);
+        }
+
+        return null;
+    }
+
     public static void CopyAllFiles(string sourceFolder, string targetFolder, params string[] suffixes) {
         if (Directory.Exists(sourceFolder) && Directory.Exists(targetFolder)) {
             Debug.Log($"Copy Files || {sourceFolder} => {targetFolder}\n{nameof(suffixes)} || {suffixes.ToStringCollection(", ")}");
@@ -243,9 +261,28 @@ public static class SystemUtil {
         if (EditorApplication.isPlayingOrWillChangePlaymode) {
             return default;
         }
+#endif  
+        return Activator.CreateInstance(type) as T;
+    }
+
+    public static bool TrySafeCreateInstance<T>(out T instance, Type type, params object[] args) where T : class {
+        instance = SafeCreateInstance<T>(type, args);
+        return instance != default;
+    }
+    
+    public static T SafeCreateInstance<T>(Type type, params object[] args) where T : class {
+        if (args is { Length: <= 0 }) {
+            Logger.TraceError($"{nameof(args)} is null or empty");
+            return default;
+        }
+    
+#if UNITY_EDITOR
+        if (EditorApplication.isPlayingOrWillChangePlaymode) {
+            return default;
+        }
 #endif
         
-        return Activator.CreateInstance(type) as T;
+        return Activator.CreateInstance(type, args) as T;
     }
 
     public static bool IsUnixBasePlatform() {

@@ -13,6 +13,7 @@ public class EditorResourcesProviderDrawer : EditorResourceDrawer {
     protected override string CONFIG_NAME => string.Empty;
     protected override string CONFIG_PATH => string.Empty;
     
+    public EditorResourcesProviderDrawer(EditorWindow window) : base(window) { }
     public override void CacheRefresh() { }
 
     public override void Draw() {

@@ -10,7 +10,7 @@ public class RuntimeInitializer {
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
     private static void OnInitializeOnLoadSubsystemRegistration() {
-        Service.StartService(DEFAULT_SERVICE_TYPE.INIT_MAIN_THREAD);
+        Service.StartService(DEFAULT_SERVICE_TYPE.START_MAIN_THREAD);
     }
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]

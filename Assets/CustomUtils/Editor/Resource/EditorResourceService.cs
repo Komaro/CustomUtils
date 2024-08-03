@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using Unity.EditorCoroutines.Editor;
 using UnityEditor;
 using UnityEditor.Callbacks;
 using UnityEngine;
@@ -56,7 +58,7 @@ public class EditorResourceService : EditorService {
             foreach (var type in ReflectionProvider.GetSubClassTypes<EditorResourceDrawer>()) {
                 if (type.TryGetCustomAttribute<EditorResourceDrawerAttribute>(out var attribute)) {
                     var key = (attribute.menuType, attribute.providerType);
-                    if ((_drawerDic.TryGetValue(key, out var drawer) == false || drawer == null) && SystemUtil.TrySafeCreateInstance(type, out drawer)) {
+                    if ((_drawerDic.TryGetValue(key, out var drawer) == false || drawer == null) && SystemUtil.TrySafeCreateInstance(out drawer, type, Window)) {
                         _drawerDic.AutoAdd(key, drawer);
                     }
                 }
@@ -89,7 +91,7 @@ public class EditorResourceService : EditorService {
         _selectDrawerTypeIndex = EditorGUILayout.Popup(_selectDrawerTypeIndex, _providerTypeNames);
         if (_selectMenuIndex != (int)_selectMenuType && _selectMenuIndex < EDITOR_MENUS.Length) {
             DrawerClose();
-            _selectMenuType = EnumUtil.ConvertInt<RESOURCE_SERVICE_MENU_TYPE>(_selectMenuIndex);
+            _selectMenuType = EnumUtil.Convert<RESOURCE_SERVICE_MENU_TYPE>(_selectMenuIndex);
             EditorCommon.Set(SELECT_MENU_SAVE_KEY, _selectMenuType);
             DrawerCacheRefresh();
         } else if (_selectDrawerType != _providerTypes[_selectDrawerTypeIndex] && _selectDrawerTypeIndex < _providerTypes.Length) {
@@ -144,7 +146,11 @@ public class EditorResourceDrawerAttribute : Attribute {
 
 [RequiresAttributeImplementation(typeof(EditorResourceDrawerAttribute))]
 public abstract class EditorResourceDrawer {
-    
+
+    protected EditorWindow window;
+
+    public EditorResourceDrawer(EditorWindow window) => this.window = window;
+
     protected abstract string CONFIG_NAME { get; }
     protected abstract string CONFIG_PATH { get; }
     
@@ -152,6 +158,9 @@ public abstract class EditorResourceDrawer {
     public virtual void Destroy() { }
     public abstract void CacheRefresh();
     public abstract void Draw();
+    
+    public EditorCoroutine StartCoroutine(IEnumerator enumerator, object owner = null) => EditorCoroutineUtility.StartCoroutine(enumerator, owner ?? window);
+    protected void Repaint() => window.Repaint();
 }
 
 public abstract class EditorResourceDrawerAutoConfig<TConfig, TNullConfig> : EditorResourceDrawer
@@ -161,7 +170,7 @@ public abstract class EditorResourceDrawerAutoConfig<TConfig, TNullConfig> : Edi
     protected TConfig config;
     protected SystemWatcherServiceOrder watcherOrder;
 
-    protected EditorResourceDrawerAutoConfig() {
+    protected EditorResourceDrawerAutoConfig(EditorWindow window) : base(window) {
         config = new TNullConfig();
         watcherOrder = CreateWatcherOrder();
     }

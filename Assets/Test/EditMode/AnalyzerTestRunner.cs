@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.IO;
@@ -13,9 +14,27 @@ using UnityEngine;
 
 public class AnalyzerTestRunner {
     
+    // public static IEnumerable RequiresUnityEditorAttributeRepeatProvider {
+    //     get {
+    //         for (var i = 0; i < 10; i++) {
+    //             yield return new TestCaseData(typeof(RequiresUnityEditorAttributeAnalyzer), "Test/EditMode/AnalyzerTestCaseCode/UnityEditorAnalyzerTestCase");
+    //         }
+    //     }
+    // }
+    
     [TestCase(typeof(RequiresStaticMethodImplementationAttributeAnalyzer), "Test/EditMode/AnalyzerTestCaseCode/RequiresStaticMethodTestCase")]
     [TestCase(typeof(RequiresAttributeImplementationAttributeAnalyzer), "Test/EditMode/AnalyzerTestCaseCode/RequiresAttributeTestCase")]
-    public async Task AnalyzerTest(Type type, string testCaseCodeFolder) {
+    // [TestCase(typeof(RequiresUnityEditorAttributeAnalyzer), "Test/EditMode/AnalyzerTestCaseCode/RequiresUnityEditorAttributeAnalyzerTestCase")]
+    // [TestCase(typeof(UnityUsingDuplicateAnalyzer), "Test/EditMode/AnalyzerTestCaseCode/UnityUsingDuplicateAnalyzerTestCas")]
+    public async Task AnalyzerTestCaseTest(Type type, string testCaseCodeFolder) => await AnalyzerRunner.AnalyzerTest(type, testCaseCodeFolder);
+    
+    // [TestCaseSource(nameof(RequiresUnityEditorAttributeRepeatProvider))]
+    // public async Task RequiresUnityEditorAttributeAnalyzerRepeatTest(Type type, string testCaseCodeFolder) => await AnalyzerRunner.AnalyzerTest(type, testCaseCodeFolder);
+}
+
+internal static class AnalyzerRunner {
+    
+    public static async Task AnalyzerTest(Type type, string testCaseCodeFolder) {
         var path = Path.Combine(Application.dataPath, testCaseCodeFolder);
         if (Directory.Exists(path)) {
             var logs = await AnalyzerTestTask(type, path);
@@ -34,7 +53,7 @@ public class AnalyzerTestRunner {
         }
     }
 
-    private Task<TestCaseLog[]> AnalyzerTestTask(Type type, string testCaseCodeFolder) {
+    public static Task<TestCaseLog[]> AnalyzerTestTask(Type type, string testCaseCodeFolder) {
         if (Activator.CreateInstance(type) is not DiagnosticAnalyzer analyzer) {
             Logger.TraceError($"{type.Name} is an invalid {nameof(Type)}");
             return Task.CompletedTask as Task<TestCaseLog[]>;
@@ -50,7 +69,7 @@ public class AnalyzerTestRunner {
         
         var metaDataReferences = AssemblyProvider.GetSystemAssemblySet().Select(assembly => MetadataReference.CreateFromFile(assembly.Location)).Cast<MetadataReference>().ToList();
         var taskList = new List<Task<TestCaseLog>>();
-        foreach (var testCaseCode in testCaseCodeList) {
+        foreach (var testCaseCode in testCaseCodeList.OrderBy(x => x.type)) {
             taskList.Add(Task.Run(() => {
                 var testCompilation = CSharpCompilation.Create("AnalyzerTestAssembly"
                     , new [] { CSharpSyntaxTree.ParseText(SourceText.From(testCaseCode.source), path:testCaseCode.name) }
@@ -61,7 +80,7 @@ public class AnalyzerTestRunner {
                 var result = task.Result;
                 switch (testCaseCode.type) {
                     case TEST_RESULT_CASE_TYPE.SUCCESS when result.Length != 0:
-                        return new TestCaseLog(LogType.Error, $"[Script Test] Failed || {testCaseCode.name}");
+                        return new TestCaseLog(LogType.Error, $"[Script Test] Failed || {testCaseCode.name}\n\t{result.ToStringCollection(x => $"[{x.Id}] {x.Location.ToPositionString()} || {x.GetMessage()}", "\n\t")}");
                     case TEST_RESULT_CASE_TYPE.FAIL when result.Length == 0: 
                         return new TestCaseLog(LogType.Error, $"[Script Test] Failed || {testCaseCode.name}\n\t{result.ToStringCollection(x => $"[{x.Id}] {x.Location.ToPositionString()} || {x.GetMessage()}", "\n\t")}");
                 }
@@ -72,4 +91,4 @@ public class AnalyzerTestRunner {
 
         return Task.WhenAll(taskList);
     }
-}
+} 

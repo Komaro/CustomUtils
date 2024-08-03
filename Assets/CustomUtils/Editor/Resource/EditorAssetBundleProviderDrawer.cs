@@ -30,7 +30,7 @@ public class EditorAssetBundleProviderDrawer : EditorResourceDrawerAutoConfig<As
     protected override string CONFIG_NAME => $"{nameof(AssetBundleProviderConfig)}{Constants.Extension.JSON}";
     protected override string CONFIG_PATH => $"{Constants.Path.COMMON_CONFIG_FOLDER}/{CONFIG_NAME}";
 
-    public EditorAssetBundleProviderDrawer() => BUILD_OPTION_LIST = EnumUtil.GetValues<BuildAssetBundleOptions>(true, true).ToList();
+    public EditorAssetBundleProviderDrawer(EditorWindow window) : base(window) => BUILD_OPTION_LIST = EnumUtil.GetValues<BuildAssetBundleOptions>(true, true).ToList();
 
     public sealed override void CacheRefresh() {
         Service.GetService<SystemWatcherService>().Start(watcherOrder);
@@ -509,7 +509,7 @@ internal class AssetBundleTreeView : EditorServiceTreeView {
 
     protected override IEnumerable<TreeViewItem> GetOrderBy(int index, bool isAscending) {
         if (rootItem.children.TryCast<AssetBundleTreeViewItem>(out var enumerable)) {
-            enumerable = EnumUtil.ConvertInt<SORT_TYPE>(index) switch {
+            enumerable = EnumUtil.Convert<SORT_TYPE>(index) switch {
                 SORT_TYPE.NO => enumerable.OrderBy(x => x.id, isAscending),
                 SORT_TYPE.NAME => enumerable.OrderBy(x => x.info.name, isAscending),
                 SORT_TYPE.SELECTABLE_ENCRYPT => enumerable.OrderBy(x => x.info.isEncrypt, isAscending),

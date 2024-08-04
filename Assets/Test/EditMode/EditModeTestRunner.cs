@@ -22,7 +22,7 @@ public class EditModeTestRunner {
     public async Task TcpServerTest() {
         var server = new SimpleTcpServer();
         server.Start();
-
+        
         using (var client = new TcpClient("localhost", 8890)) {
             if (client.Connected == false) {
                 Logger.TraceError("Connect Failed");

@@ -114,9 +114,7 @@ public class SimpleHttpServer : IDisposable {
                 throw new NoServeModuleException();
             }
 
-            if (token.IsCancellationRequested) {
-                throw new OperationCanceledException();
-            }
+            token.ThrowIfCancellationRequested();
 
             if (context.Request != null) {
                 foreach (var module in _serveModuleDic.Values) {

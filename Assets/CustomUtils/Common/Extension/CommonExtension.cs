@@ -8,34 +8,42 @@ using System.Text;
 using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.Pool;
 
 public static class CommonExtension {
 
-    private static readonly StringBuilder _stringBuilder = new();
+    private static readonly ObjectPool<StringBuilder> _stringBuilderPool = new(() => new StringBuilder(), builder => builder.Clear());
 
-    public static string ToStringAllFields(this object ob, BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.Public) {
-        if (_stringBuilder == null) {
+    public static string ToStringAllFields(this object ob, string prefix = "", BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.Public) {
+        if (_stringBuilderPool == null) {
             return string.Empty;
         }
-        
+
+        var stringBuilder = _stringBuilderPool.Get();
         var type = ob.GetType();
-        _stringBuilder.Clear();
-        _stringBuilder.AppendLine(type.Name);
+        stringBuilder.Append($"{type.Name}");
+        if (type.IsClass) {
+            stringBuilder.AppendLine(" (Class)");
+        } else if (type.IsStruct()) {
+            stringBuilder.AppendLine(" (Struct)");
+        }
         foreach (var info in type.GetFields(bindingFlags)) {
             var (name, field) = (info.Name, info.GetValue(ob));
             var fieldType = field.GetType();
             if (fieldType.IsArray && field is Array array) {
-                _stringBuilder.AppendLine($"{name} || {array.Cast<object>()?.ToStringCollection(", ")}");
+                stringBuilder.AppendLine($"{prefix}{name} || {array.Cast<object>()?.ToStringCollection(", ")}");
             } else if (fieldType.IsGenericCollectionType() && field is ICollection collection) {
-                _stringBuilder.AppendLine($"{name} || {collection.Cast<object>().ToStringCollection(", ")}");
+                stringBuilder.AppendLine($"{prefix}{name} || {collection.Cast<object>().ToStringCollection(", ")}");
+            } else if (fieldType.IsValueType && fieldType.IsPrimitive == false) {
+                stringBuilder.AppendLine($"{prefix}{field.ToStringAllFields("\t", bindingFlags)}");
             } else {
-                _stringBuilder.AppendLine($"{name} || {field}");
+                stringBuilder.AppendLine($"{prefix}{name} || {field}");
             }
         }
 
-        return _stringBuilder.ToString();
+        return stringBuilder.ToString();
     }
-    
+
     public static string GetString(this byte[] bytes, ENCODING_FORMAT format = ENCODING_FORMAT.UTF_8) => format switch {
         ENCODING_FORMAT.UTF_32 => Encoding.UTF32.GetString(bytes),
         ENCODING_FORMAT.UNICODE => Encoding.Unicode.GetString(bytes),

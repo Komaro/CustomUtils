@@ -74,15 +74,22 @@ public static class StringExtension {
     
     public static string GetForceTitleCase(this string content) => GetTitleCase(content.ToLower());
     public static string GetTitleCase(this string content) => _textInfo?.ToTitleCase(content);
-    
-    public static byte[] GetBytes(this string content, ENCODING_FORMAT format = ENCODING_FORMAT.UTF_8) => format switch {
+
+    public static int GetByteCount(this string content, ENCODING_FORMAT format = ENCODING_FORMAT.UTF_8) => format switch {
+        ENCODING_FORMAT.UTF_32 => Encoding.UTF32.GetByteCount(content),
+        ENCODING_FORMAT.UNICODE => Encoding.Unicode.GetByteCount(content),
+        ENCODING_FORMAT.ASCII => Encoding.ASCII.GetByteCount(content),
+        _ => Encoding.UTF8.GetByteCount(content)
+    };
+
+    public static byte[] ToBytes(this string content, ENCODING_FORMAT format = ENCODING_FORMAT.UTF_8) => format switch {
         ENCODING_FORMAT.UTF_32 => Encoding.UTF32.GetBytes(content),
         ENCODING_FORMAT.UNICODE => Encoding.Unicode.GetBytes(content),
         ENCODING_FORMAT.ASCII => Encoding.ASCII.GetBytes(content),
         _ => Encoding.UTF8.GetBytes(content)
     };
 
-    public static byte[] GetRawBytes(this string content) => Convert.FromBase64String(content);
+    public static byte[] ToRawBytes(this string content) => Convert.FromBase64String(content);
 
     public static string GetColorString(this string content, Color color) {
         if (string.IsNullOrEmpty(content) == false) {

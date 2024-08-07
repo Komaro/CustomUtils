@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Buffers;
 using System.Collections.Concurrent;
-using System.IO;
 using System.Net;
 using System.Net.Sockets;
-using System.Runtime.InteropServices;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using UnityEditor.PackageManager;
 using UnityEngine;
 
 public class SimpleTcpServer : IDisposable {
@@ -66,6 +64,7 @@ public class SimpleTcpServer : IDisposable {
 
     public void Stop() {
         _listener.Stop();
+        _listener.Server?.Disconnect(true);
         _isRunning = false;
         Logger.TraceLog($"{nameof(SimpleTcpServer)} {nameof(Stop)}", Color.yellow);
     }
@@ -83,21 +82,34 @@ public class SimpleTcpServer : IDisposable {
     }
 
     private async void ClientHandler(TcpClient client, CancellationToken token) {
-        using (var session = await _serveModule.ConnectAsync(client, token)) {
-            try {
-                while (session.Connected && token.IsCancellationRequested == false) {
-                    var header = await _serveModule.ReceiveHeaderAsync(session, token);
-                    if (header.HasValue) {
-                        await _serveModule.ReceiveDataAsync(session, header.Value, token);
+        var connectCount = 0;
+        var maxConnectCount = 5;
+        try {
+            while (token.IsCancellationRequested == false && client.Connected && connectCount < maxConnectCount) {
+                connectCount++;
+                using (var session = await _serveModule.ConnectAsync(client, token)) {
+                    if (session == null) {
+                        continue;
+                    }
+
+                    try {
+                        while (session.Connected && token.IsCancellationRequested == false) {
+                            var header = await _serveModule.ReceiveHeaderAsync(session, token);
+                            if (header.HasValue) {
+                                await _serveModule.ReceiveDataAsync(session, header.Value, token);
+                            }
+                        }
+                    } catch (InvalidSessionData ex) {
+                        Logger.TraceLog(ex, Color.yellow);
+                        Logger.TraceLog($"Start Reconnect {client.GetIpAddress()}... ({connectCount} / {maxConnectCount})", Color.yellow);
+                    } 
+                    catch (Exception) {
+                        client.Close();
                     }
                 }
-            } finally {
-                if (session != null) {
-                    _sessionDic.TryRemove(session.ID, out _);
-                } else {
-                    client.Dispose();
-                }
             }
+        } finally {
+            client.Dispose();   
         }
     }
 
@@ -146,8 +158,7 @@ public class DisconnectSessionException : Exception {
 
     private readonly string _address;
     private readonly uint _id;
-
-
+    
     public DisconnectSessionException(TcpSession session) : this(session.Client, session.ID) { }
     public DisconnectSessionException(TcpClient client, uint id) : this(client) => _id = id;
     public DisconnectSessionException(TcpClient client) => _address = client.GetIpAddress();
@@ -156,15 +167,31 @@ public class DisconnectSessionException : Exception {
     public override string ToString() => $"Session Disconnected.\n[{nameof(IPEndPoint.Address)}] {_address}{(_id != 0 ? $"\n[Session] {_id}" : string.Empty)}";
 }
 
-public abstract class TcpResponseException<T> : Exception where T : struct {
+public abstract class TcpResponseException<T> : Exception where T : ITcpStructure {
 
-    public virtual T CreateResponse() => default;
+    public TcpResponseException() { }
+    public TcpResponseException(string message) : base(message) { }
+
+    public abstract TCP_ERROR Error { get; }
+
+    public virtual TcpHeader CreateErrorHeader() => new(Error);
+    public virtual TcpHeader CreateErrorHeader(uint sessionId) => new(sessionId, Error);
 }
 
+public class InvalidSessionData : TcpResponseException<TcpError> {
+    
+    public InvalidSessionData(TcpRequestConnect connect) : base($"The value {connect.sessionId} of {nameof(connect.sessionId)} is invalid") { }
+    public override TCP_ERROR Error => TCP_ERROR.INVALID_SESSION_DATA;
+}
 
-public class DuplicateSessionException : TcpResponseException<TcpResponseSession> {
+public class DuplicateSessionException : TcpResponseException<TcpError> {
 
-    public override TcpResponseSession CreateResponse() => new(TCP_ERROR.DUPLICATE_SESSION);
+    public override TCP_ERROR Error => TCP_ERROR.DUPLICATE_SESSION;
+}
+
+public class InvalidTestCount : TcpResponseException<TcpError> {
+    
+    public override TCP_ERROR Error => TCP_ERROR.INVALID_TEST_COUNT;
 }
 
 public static class TcpExtension {

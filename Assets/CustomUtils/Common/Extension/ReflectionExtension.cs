@@ -57,4 +57,6 @@ public static class ReflectionExtension {
         attributeList = info.GetCustomAttributes<T>().ToList();
         return attributeList is { Count: > 0 };
     }
+
+    public static bool IsStruct(this Type type) => type.IsValueType && type.IsPrimitive == false;
 }

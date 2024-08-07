@@ -7,7 +7,7 @@ public static class EncryptUtil {
     #region [MD5]
 
     public static string GetMD5(string text) => GetMD5Bytes(text).GetRawString();
-    public static byte[] GetMD5Bytes(string text) => GetMD5Bytes(text.GetBytes());
+    public static byte[] GetMD5Bytes(string text) => GetMD5Bytes(text.ToBytes());
 
     public static byte[] GetMD5Bytes(byte[] bytes) {
         try {
@@ -28,9 +28,9 @@ public static class EncryptUtil {
     public static string GetSHA256(string text) => GetSHA256Bytes(text).GetRawString();
     public static string GetSHA512(string text) => GetSHA512Bytes(text).GetRawString();
 
-    public static byte[] GetSHA1Bytes(string text) => GetSHA1Bytes(text.GetBytes());
-    public static byte[] GetSHA256Bytes(string text) => GetSHA256Bytes(text.GetBytes());
-    public static byte[] GetSHA512Bytes(string text) => GetSHA512Bytes(text.GetBytes());
+    public static byte[] GetSHA1Bytes(string text) => GetSHA1Bytes(text.ToBytes());
+    public static byte[] GetSHA256Bytes(string text) => GetSHA256Bytes(text.ToBytes());
+    public static byte[] GetSHA512Bytes(string text) => GetSHA512Bytes(text.ToBytes());
 
     public static byte[] GetSHA1LimitBytes(string plainKey, int byteLength) => TrimBytes(GetSHA1Bytes(plainKey), byteLength);
     public static byte[] GetSHA256LimitBytes(string plainKey, int byteLength) => TrimBytes(GetSHA256Bytes(plainKey), byteLength);
@@ -76,8 +76,8 @@ public static class EncryptUtil {
     public static string EncryptDES(string plainText, string key = nameof(EncryptUtil)) => EncryptDESBytes(plainText, key).GetRawString();
     public static string DecryptDES(string cipherText, string key = nameof(EncryptUtil)) => DecryptDESBytes(cipherText, key).GetString();
 
-    public static byte[] EncryptDESBytes(string plainText, string key = nameof(EncryptUtil)) => EncryptDESBytes(plainText.GetBytes(), key);
-    public static byte[] DecryptDESBytes(string cipherText, string key = nameof(EncryptUtil)) => DecryptDESBytes(cipherText.GetRawBytes(), key);
+    public static byte[] EncryptDESBytes(string plainText, string key = nameof(EncryptUtil)) => EncryptDESBytes(plainText.ToBytes(), key);
+    public static byte[] DecryptDESBytes(string cipherText, string key = nameof(EncryptUtil)) => DecryptDESBytes(cipherText.ToRawBytes(), key);
 
     public static byte[] EncryptDESBytes(byte[] bytes, string key = nameof(EncryptUtil)) {
         try {
@@ -130,18 +130,18 @@ public static class EncryptUtil {
     public static string DecryptAES(string cipherText, string key = nameof(EncryptUtil)) => DecryptAESBytes(cipherText, key).GetString();
 
     public static bool TryEncryptAESBytes(out byte[] cipherBytes, string plainText, string key = nameof(EncryptUtil)) {
-        cipherBytes = EncryptAESBytes(plainText.GetBytes(), key);
+        cipherBytes = EncryptAESBytes(plainText.ToBytes(), key);
         return cipherBytes is { Length: > 0 };
     }
     
-    public static byte[] EncryptAESBytes(string plainText, string key = nameof(EncryptUtil)) => EncryptAESBytes(plainText.GetBytes(), key);
+    public static byte[] EncryptAESBytes(string plainText, string key = nameof(EncryptUtil)) => EncryptAESBytes(plainText.ToBytes(), key);
     
     public static bool TryDecryptAESBytes(out byte[] plainBytes, string cipherText, string key = nameof(EncryptUtil)) {
-        plainBytes = DecryptAESBytes(cipherText.GetRawBytes(), key);
+        plainBytes = DecryptAESBytes(cipherText.ToRawBytes(), key);
         return plainBytes is { Length: > 0 };
     }
 
-    public static byte[] DecryptAESBytes(string cipherText, string key = nameof(EncryptUtil)) => DecryptAESBytes(cipherText.GetRawBytes(), key);
+    public static byte[] DecryptAESBytes(string cipherText, string key = nameof(EncryptUtil)) => DecryptAESBytes(cipherText.ToRawBytes(), key);
 
     public static bool TryEncryptAESBytes(out byte[] cipherBytes, byte[] bytes, string key = nameof(EncryptUtil)) {
         cipherBytes = EncryptAESBytes(bytes, key);

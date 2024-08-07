@@ -1,103 +1,112 @@
-﻿using System;
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 
-
-[StructLayout(LayoutKind.Sequential, Pack = 4)]
-public struct TcpSendSession {
-
-    public readonly uint sessionId;
-}
-
-[StructLayout(LayoutKind.Sequential, Pack = 4)]
-public struct TcpResponseSession {
-
-    public readonly TCP_ERROR error;
-    
-    public TcpResponseSession(TCP_ERROR error) => this.error = error;
-}
-
-[StructLayout(LayoutKind.Sequential, Pack = 8)]
-public struct TcpSendHeader {
-
-    public readonly uint sessionId;
-    public readonly uint dataLength;
-}
-
-[StructLayout(LayoutKind.Sequential, Pack = 4)]
-public struct TcpResponseHeader {
-    
-    public readonly TCP_ERROR error;
+public interface ITcpStructure {
+    public bool IsValid();
 }
 
 [StructLayout(LayoutKind.Sequential)]
-public struct TcpRequestPing {
+public struct TcpHeader : ITcpStructure {
 
-    public readonly int count;
-}
+    public uint sessionId;
+    public TCP_BODY bodyType;
+    public int byteLength;
 
-public static class StructExtension {
+    public TCP_ERROR error;
 
-    public static bool TryBytes<T>(this ref T structure, out byte[] bytes) where T : struct {
-        bytes = structure.ToBytes();
-        return bytes != Array.Empty<byte>();
-    }
-
-    public static byte[] ToBytes<T>(this ref T structure) where T : struct {
-        var size = Marshal.SizeOf(structure);
-        var pointer = Marshal.AllocHGlobal(size);
-        var bytes = new byte[size];
-
-        try {
-            MemoryMarshal.Read<T>(bytes);
-            Marshal.StructureToPtr(structure, pointer, true);
-            Marshal.Copy(pointer, bytes, 0, size);
-        } catch (Exception) {
-            return Array.Empty<byte>();
-        } finally {
-            Marshal.FreeHGlobal(pointer);
-        }
-
-        return bytes;
-    }
-
-    public static bool TrySpan<T>(this ref T structure, out Span<byte> bytes) where T : struct {
-        bytes = new byte[Marshal.SizeOf(structure)];
-        return MemoryMarshal.TryWrite(bytes, ref structure);
+    public TcpHeader(TCP_ERROR error) {
+        sessionId = 0;
+        bodyType = TCP_BODY.NONE;
+        byteLength = 0;
+        this.error = error;
     }
     
-    public static Span<byte> ToSpan<T>(this ref T structure) where T : struct {
-        Span<byte> bytes = new byte[Marshal.SizeOf(structure)];
-        MemoryMarshal.Write(bytes, ref structure);
-        return bytes;
+    public TcpHeader(TcpSession session) {
+        sessionId = session.ID;
+        bodyType = TCP_BODY.NONE;
+        byteLength = 0;
+        error = TCP_ERROR.NONE;
+    }
+    
+    public TcpHeader(uint sessionId, TCP_ERROR error) {
+        this.sessionId = sessionId;
+        bodyType = TCP_BODY.NONE;
+        byteLength = 0; 
+        this.error = error;
+    }
+    
+    public TcpHeader(TcpSession session, TCP_BODY bodyType) {
+        sessionId = session.ID;
+        this.bodyType = bodyType;
+        byteLength = 0;
+        error = TCP_ERROR.NONE;
+    }
+    
+    public TcpHeader(TcpSession session, TCP_BODY bodyType, int byteLength) {
+        sessionId = session.ID;
+        this.bodyType = bodyType;
+        this.byteLength = byteLength;
+        error = TCP_ERROR.NONE;
     }
 
-    public static T? ToStruct<T>(this ref Memory<byte> memory) where T : struct {
-        try {
-            return MemoryMarshal.Read<T>(memory.Span);
-        } catch (Exception) {
-            return null;
-        }
+    public bool IsValid() => true;
+}
+
+[StructLayout(LayoutKind.Sequential)]
+public struct TcpRequestConnect : ITcpStructure {
+
+    public uint sessionId;
+
+    public TcpRequestConnect(TcpSession session) => sessionId = session.ID;
+    public TcpRequestConnect(uint sessionId) => this.sessionId = sessionId;
+    public bool IsValid() => sessionId != 0;
+}
+
+[StructLayout(LayoutKind.Sequential)]
+public struct TcpResponseConnect : ITcpStructure {
+
+    public bool isConnected;
+
+    public TcpResponseConnect(bool isConnected) => this.isConnected = isConnected;
+
+    public bool IsValid() => true;
+}
+
+[StructLayout(LayoutKind.Sequential)]
+public struct TcpError : ITcpStructure {
+
+    public TCP_ERROR error;
+    
+    public TcpError(TCP_ERROR error) => this.error = error;
+    
+    public bool IsValid() => true;
+}
+
+[StructLayout(LayoutKind.Sequential)]
+public struct TcpRequestTest : ITcpStructure {
+
+    public readonly int count;
+
+    public TcpRequestTest(int count) => this.count = count;
+    public bool IsValid() => count > 0;
+}
+
+[StructLayout(LayoutKind.Sequential)]
+public struct TcpResponseTest : ITcpStructure {
+
+    public readonly TCP_ERROR error;
+    public readonly string text;
+
+    public TcpResponseTest(TCP_ERROR error) {
+        this.error = error;
+        text = string.Empty;
     }
 
-    public static T? ToStruct<T>(this ref Span<byte> span) where T : struct {
-        try {
-            return MemoryMarshal.Read<T>(span);
-        } catch (Exception) {
-            return null;
-        }
+    public TcpResponseTest(string text) {
+        error = TCP_ERROR.NONE;
+        this.text = text;
     }
 
-    public static T? ToStruct<T>(this byte[] bytes) where T : struct {
-        var pointer = Marshal.AllocHGlobal(bytes.Length);
-        try {
-            Marshal.Copy(pointer, bytes, 0, bytes.Length);
-            return Marshal.PtrToStructure<T>(pointer);
-        } catch (Exception) {
-            return null;
-        } finally {
-            Marshal.FreeHGlobal(pointer);
-        }
-    }
+    public bool IsValid() => error == TCP_ERROR.NONE;
 }
 
 public enum TCP_ERROR {
@@ -105,7 +114,7 @@ public enum TCP_ERROR {
     
     // Session
     DUPLICATE_SESSION = 100,
-    INVALID_SESSION = 102,
+    INVALID_SESSION_DATA = 101,
     
     // Data
     MISSING_DATA = 200,
@@ -113,5 +122,19 @@ public enum TCP_ERROR {
     // Progress
     EXCEPTION_PROGRESS = 300,
     
-    TEST = 1000,
+    INVALID_TEST_COUNT = 1000,
+}
+
+public enum TCP_BODY {
+    NONE = 0,
+    ERROR = 1,
+    HEADER,
+    
+    // Struct
+    CONNECT = 100,
+    SESSION,
+    TEST,
+    
+    // Bytes
+    TEST_STRING = 90000,
 }

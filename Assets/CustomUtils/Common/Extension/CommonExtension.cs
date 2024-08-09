@@ -4,8 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.Pool;
@@ -27,6 +29,7 @@ public static class CommonExtension {
         } else if (type.IsStruct()) {
             stringBuilder.AppendLine(" (Struct)");
         }
+
         foreach (var info in type.GetFields(bindingFlags)) {
             var (name, field) = (info.Name, info.GetValue(ob));
             var fieldType = field.GetType();
@@ -43,6 +46,13 @@ public static class CommonExtension {
 
         return stringBuilder.ToString();
     }
+
+    public static string GetString(this ref Span<byte> span, ENCODING_FORMAT format = ENCODING_FORMAT.UTF_8) => format switch {
+        ENCODING_FORMAT.UTF_32 => Encoding.UTF32.GetString(span),
+        ENCODING_FORMAT.UNICODE => Encoding.Unicode.GetString(span),
+        ENCODING_FORMAT.ASCII => Encoding.ASCII.GetString(span),
+        _ => Encoding.UTF8.GetString(span)
+    };
 
     public static string GetString(this byte[] bytes, ENCODING_FORMAT format = ENCODING_FORMAT.UTF_8) => format switch {
         ENCODING_FORMAT.UTF_32 => Encoding.UTF32.GetString(bytes),
@@ -78,12 +88,14 @@ public static class CommonExtension {
         match = regex.Match(text);
         return match.Success;
     }
-    
+
     public static float GetPreferredWidth(this TextGenerator textGenerator, string text, TextGenerationSettings settings) => textGenerator.GetPreferredWidth(text, settings);
     public static float GetPreferredHeight(this TextGenerator textGenerator, string text, TextGenerationSettings settings) => textGenerator.GetPreferredHeight(text, settings);
 
     public static ulong GetContentLength(this UnityWebRequestAsyncOperation operation) => operation.webRequest?.GetContentLength() ?? 0u;
-    public static ulong GetContentLength(this UnityWebRequest request) => ulong.TryParse(request.GetResponseHeader(HttpResponseHeader.ContentLength.GetName()), out var contentLength) ? contentLength : 0u;
+
+    public static ulong GetContentLength(this UnityWebRequest request) =>
+        ulong.TryParse(request.GetResponseHeader(HttpResponseHeader.ContentLength.GetName()), out var contentLength) ? contentLength : 0u;
 
     // 필요한 경우 갱신
     public static string GetName(this HttpResponseHeader header) => header switch {
@@ -91,4 +103,11 @@ public static class CommonExtension {
         HttpResponseHeader.ContentType => "Content-Type",
         _ => header.ToString()
     };
+
+    public static byte[] ToBytes(this int value) {
+        Span<byte> bytes = stackalloc byte[4];
+        MemoryMarshal.Write(bytes, ref value);
+        return bytes.ToArray();
+    }
+
 }

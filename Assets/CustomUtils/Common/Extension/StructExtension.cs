@@ -2,7 +2,7 @@
 using System.Runtime.InteropServices;
 
 public static class StructExtension {
-    
+
     public static bool TryBytes<T>(this ref T structure, out byte[] bytes) where T : struct {
         bytes = structure.ToBytes();
         return bytes != Array.Empty<byte>();

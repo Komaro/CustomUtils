@@ -74,7 +74,7 @@ public static class StringExtension {
     
     public static string GetForceTitleCase(this string content) => GetTitleCase(content.ToLower());
     public static string GetTitleCase(this string content) => _textInfo?.ToTitleCase(content);
-
+    
     public static int GetByteCount(this string content, ENCODING_FORMAT format = ENCODING_FORMAT.UTF_8) => format switch {
         ENCODING_FORMAT.UTF_32 => Encoding.UTF32.GetByteCount(content),
         ENCODING_FORMAT.UNICODE => Encoding.Unicode.GetByteCount(content),

@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Buffers;
 using System.IO;
+using System.Net;
 using System.Net.Sockets;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using NUnit.Framework;
-using UnityEditor.Graphs;
-using UnityEngine;
 
+[TestFixture]
 public class EditModeTestRunner {
     
     // [TestCase(1)]
@@ -18,61 +18,103 @@ public class EditModeTestRunner {
     // }
 
     private static SimpleTcpServer _server;
+    private static CancellationTokenSource _source;
     
+    [SetUp]
+    public void SetUpTcpServerTest() {
+        _source?.Cancel();
+        _source = new CancellationTokenSource();
+        
+        _server?.Dispose();
+        _server = new SimpleTcpServer(IPAddress.Any, 8890);
+    }
+
+    [TearDown]
+    public void TearDownTcpServerTest() {
+        _source?.Cancel();
+        _server?.Stop();
+    }
+
     [Test]
     public async Task SimpleTcpServerTest() {
-        _server ??= new SimpleTcpServer();
-        _server.ChangeServeModule(new TcpSimpleServeModule(_server));
+        _server.ChangeServeModule(new TcpPingServeModule());
         _server.Start();
-
-        var source = new CancellationTokenSource();
+        
         var client = new TcpClient();
-        await client.ConnectAsync("localhost", 8890);
+        try {
+            await client.ConnectAsync("localhost", 8890);
+            
+            // _ = Task.Run(() => TcpStructServeModuleTest(client, _source.Token));
+            _ = Task.Run(() => TcpPingServeModuleTest(client, _source.Token));
+            
+            await Task.Delay(5000, _source.Token);
+        } catch (SocketException ex) {
+            Logger.TraceError($"{ex.SocketErrorCode.ToString()} || {ex.Message}");
+        } catch (Exception ex) {
+            Logger.TraceError(ex);
+        } finally {
+            client?.Close();
+            await Task.CompletedTask;
+        }
+    }
+    
+    private async Task TcpPingServeModuleTest(TcpClient client, CancellationToken token) {
+        using (var owner = MemoryPool<byte>.Shared.Rent(32)) {
+            while (token.IsCancellationRequested == false) {
+                var buffer = owner.Memory;
+                var length = await client.GetStream().ReadAsync(buffer, token);
+                if (length == 0) {
+                    throw new DisconnectSessionException(client);
+                }
+
+                var textBytes = buffer[..length].ToArray();
+                Logger.TraceLog(textBytes.GetString());
+
+                var bytes = new byte[sizeof(bool)];
+                var value = true;
+                MemoryMarshal.Write(bytes, ref value);
+                await client.GetStream().WriteAsync(bytes, token);
+            }
+        }
+    }
+
+    private async Task TcpStructServeModuleTest(TcpClient client, CancellationToken token) {
         if (client.Connected) {
             var session = new TcpSession(client, 9999u);
-            var stream = session.Stream;
             var connect = new TcpRequestConnect(session);
-            await stream.WriteAsync(connect.ToBytes(), source.Token);
-
+            await session.Stream.WriteAsync(connect.ToBytes(), token);
             using (var owner = MemoryPool<byte>.Shared.Rent(Marshal.SizeOf<TcpHeader>())) {
                 var buffer = owner.Memory;
-                var bytesLength = await stream.ReadAsync(buffer, source.Token);
+                var bytesLength = await session.Stream.ReadAsync(buffer, token);
                 if (bytesLength <= 0) {
                     throw new DisconnectSessionException(session);
                 }
-                
+
                 var header = buffer.ToStruct<TcpHeader>();
                 if (header is { error: TCP_ERROR.NONE }) {
-                    _ = Task.Run(() => ReceiveAsync(session, source.Token), source.Token);
-                    if (TcpHandlerProvider.TryGetSendHandler<TcpRequestTest>(out var handler)) {
-                        await handler.SendAsync(session, new TcpRequestTest(15), source.Token);
+                    _ = Task.Run(() => ReceiveAsync(session, token), token);
+                    if (TcpStructHandlerProvider.TryGetSendHandler<TcpRequestTest>(out var handler)) {
+                        await handler.SendAsync(session, new TcpRequestTest(15), token);
                     }
                 }
             }
         }
-
-        await Task.Delay(5000, source.Token);
-
-        source.Cancel();
-        client.Dispose();
-        _server.Dispose();
     }
 
     private async Task ReceiveAsync(TcpSession session, CancellationToken token) {
-        var stream = session.Stream;
         using (var owner = MemoryPool<byte>.Shared.Rent(1024)) {
             var buffer = owner.Memory;
             while (session.Connected) {
-                var header = await ReceiveHeaderAsync(session);
+                 var header = await ReceiveHeaderAsync(session);
                 if (header.sessionId != session.ID) {
                     throw new InvalidDataException();
                 }
 
-                if (TcpHandlerProvider.TryGetReceiveHandler(header.bodyType, out var handler)) {
+                if (TcpStructHandlerProvider.TryGetReceiveHandler(header.bodyType, out var handler)) {
                     var totalReadLength = 0;
                     using (var memoryStream = new MemoryStream()) {
                         while (totalReadLength < header.byteLength) {
-                            var readLength = await stream.ReadAsync(buffer, token);
+                            var readLength = await session.Stream.ReadAsync(buffer, token);
                             if (readLength <= 0) {
                                 throw new DisconnectSessionException(session);
                             }
@@ -104,7 +146,7 @@ public class EditModeTestRunner {
             throw new InvalidCastException();
         }
     }
-    
+
     #region [Unsafe Test]
     
     [Test]
@@ -282,6 +324,54 @@ public class EditModeTestRunner {
 
             public static bool operator !=(TestInnerStruct a, TestInnerStruct b) => (a == b) == false;
         }
+    }
+    
+    #endregion
+
+    #region [Marshal Test]
+
+    [Test]
+    public void IntMarshalTest() {
+        var service = Service.GetService<StopWatchService>();
+        var intValue = 453323453;
+        
+        service.Start();
+        intValue.ToBytes();
+        service.Stop();
+    }
+
+    [Test]
+    public void StringMarshalTest() {
+        var text = "Hello World!!";
+        Span<byte> textBytes = text.ToBytes();
+        Span<byte> dataBytes = new byte[4 + textBytes.Length];
+        textBytes.Length.ToBytes().CopyTo(dataBytes[..4]);
+        textBytes.CopyTo(dataBytes.Slice(4, textBytes.Length));
+
+        var handle = GCHandle.Alloc(dataBytes.ToArray(), GCHandleType.Pinned);
+        try {
+            var ptr = handle.AddrOfPinnedObject();
+            var readLength = Marshal.ReadInt32(ptr);
+            Logger.TraceLog($"Read Length || {readLength}");
+            Assert.IsTrue(text.Length == readLength);
+
+            var bytes = new byte[readLength];
+            Marshal.Copy(IntPtr.Add(ptr, 4), bytes, 0, readLength);
+
+            var readText = bytes.GetString();
+            Logger.TraceLog($"Read text || {bytes.GetString()}");
+            Assert.IsTrue(text == readText);
+        } catch (Exception ex) {
+            Logger.TraceError(ex);
+        } finally {
+            handle.Free();
+        }
+    }
+
+    public enum TestEnumType {
+        NONE,
+        FIRST,
+        SECOND,
     }
     
     #endregion

@@ -30,7 +30,7 @@ public class EditorAssetBundleProviderDrawer : EditorResourceDrawerAutoConfig<As
     protected override string CONFIG_NAME => $"{nameof(AssetBundleProviderConfig)}{Constants.Extension.JSON}";
     protected override string CONFIG_PATH => $"{Constants.Path.COMMON_CONFIG_FOLDER}/{CONFIG_NAME}";
 
-    public EditorAssetBundleProviderDrawer(EditorWindow window) : base(window) => BUILD_OPTION_LIST = EnumUtil.GetValues<BuildAssetBundleOptions>(true, true).ToList();
+    public EditorAssetBundleProviderDrawer(EditorWindow window) : base(window) => BUILD_OPTION_LIST = EnumUtil.GetValueList<BuildAssetBundleOptions>(true, true).ToList();
 
     public sealed override void CacheRefresh() {
         Service.GetService<SystemWatcherService>().Start(watcherOrder);
@@ -411,7 +411,7 @@ public class AssetBundleProviderConfig : JsonAutoConfig {
     public string checksumFileName = nameof(AssetBundleChecksumInfo);
 
     public BuildTarget selectBuildTarget;
-    public readonly Dictionary<BuildAssetBundleOptions, bool> buildOptionDic = EnumUtil.GetValues<BuildAssetBundleOptions>(true).ToDictionary(x => x, _ => false);
+    public readonly Dictionary<BuildAssetBundleOptions, bool> buildOptionDic = EnumUtil.GetValueList<BuildAssetBundleOptions>(true).ToDictionary(x => x, _ => false);
     
     
     [JsonProperty("lastBuildInfoList")]

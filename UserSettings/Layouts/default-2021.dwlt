@@ -8,6 +8,30 @@ MonoBehaviour:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 12004, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_PixelRect:
+    serializedVersion: 2
+    x: 25.6
+    y: 67.200005
+    width: 766.4
+    height: 643.2
+  m_ShowMode: 0
+  m_Title: Test Report
+  m_RootView: {fileID: 4}
+  m_MinSize: {x: 640, y: 501}
+  m_MaxSize: {x: 4000, y: 4021}
+  m_Maximized: 0
+--- !u!114 &2
+MonoBehaviour:
+  m_ObjectHideFlags: 52
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
   m_EditorHideFlags: 1
   m_Script: {fileID: 12004, guid: 0000000000000000e000000000000000, type: 0}
   m_Name: 
@@ -19,12 +43,62 @@ MonoBehaviour:
     width: 1536
     height: 780.8
   m_ShowMode: 4
-  m_Title: Resource Service
-  m_RootView: {fileID: 2}
+  m_Title: Test Runner
+  m_RootView: {fileID: 5}
   m_MinSize: {x: 875, y: 350}
   m_MaxSize: {x: 10000, y: 10000}
   m_Maximized: 1
---- !u!114 &2
+--- !u!114 &3
+MonoBehaviour:
+  m_ObjectHideFlags: 52
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: TestReportWindow
+  m_EditorClassIdentifier: 
+  m_Children: []
+  m_Position:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 766.4
+    height: 643.2
+  m_MinSize: {x: 640, y: 480}
+  m_MaxSize: {x: 4000, y: 4000}
+  m_ActualView: {fileID: 17}
+  m_Panes:
+  - {fileID: 17}
+  m_Selected: 0
+  m_LastSelected: 0
+--- !u!114 &4
+MonoBehaviour:
+  m_ObjectHideFlags: 52
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 12010, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Children:
+  - {fileID: 3}
+  m_Position:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 766.4
+    height: 643.2
+  m_MinSize: {x: 640, y: 501}
+  m_MaxSize: {x: 4000, y: 4021}
+  vertical: 0
+  controlID: 1935
+--- !u!114 &5
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -37,9 +111,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Children:
-  - {fileID: 3}
-  - {fileID: 5}
-  - {fileID: 4}
+  - {fileID: 6}
+  - {fileID: 8}
+  - {fileID: 7}
   m_Position:
     serializedVersion: 2
     x: 0
@@ -52,7 +126,7 @@ MonoBehaviour:
   m_TopViewHeight: 30
   m_UseBottomView: 1
   m_BottomViewHeight: 20
---- !u!114 &3
+--- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -74,7 +148,7 @@ MonoBehaviour:
   m_MinSize: {x: 0, y: 0}
   m_MaxSize: {x: 0, y: 0}
   m_LastLoadedLayoutName: 
---- !u!114 &4
+--- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -95,81 +169,6 @@ MonoBehaviour:
     height: 20
   m_MinSize: {x: 0, y: 0}
   m_MaxSize: {x: 0, y: 0}
---- !u!114 &5
-MonoBehaviour:
-  m_ObjectHideFlags: 52
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 1
-  m_Script: {fileID: 12010, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Children:
-  - {fileID: 6}
-  - {fileID: 13}
-  m_Position:
-    serializedVersion: 2
-    x: 0
-    y: 30
-    width: 1536
-    height: 730.8
-  m_MinSize: {x: 300, y: 200}
-  m_MaxSize: {x: 24288, y: 16192}
-  vertical: 0
-  controlID: 81
---- !u!114 &6
-MonoBehaviour:
-  m_ObjectHideFlags: 52
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 1
-  m_Script: {fileID: 12010, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Children:
-  - {fileID: 7}
-  - {fileID: 10}
-  m_Position:
-    serializedVersion: 2
-    x: 0
-    y: 0
-    width: 791.2
-    height: 730.8
-  m_MinSize: {x: 200, y: 200}
-  m_MaxSize: {x: 16192, y: 16192}
-  vertical: 1
-  controlID: 90
---- !u!114 &7
-MonoBehaviour:
-  m_ObjectHideFlags: 52
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 1
-  m_Script: {fileID: 12010, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Children:
-  - {fileID: 8}
-  - {fileID: 9}
-  m_Position:
-    serializedVersion: 2
-    x: 0
-    y: 0
-    width: 791.2
-    height: 381.6
-  m_MinSize: {x: 200, y: 100}
-  m_MaxSize: {x: 16192, y: 8096}
-  vertical: 0
-  controlID: 49
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -179,8 +178,83 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 1
+  m_Script: {fileID: 12010, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Children:
+  - {fileID: 9}
+  - {fileID: 16}
+  m_Position:
+    serializedVersion: 2
+    x: 0
+    y: 30
+    width: 1536
+    height: 730.8
+  m_MinSize: {x: 300, y: 200}
+  m_MaxSize: {x: 24288, y: 16192}
+  vertical: 0
+  controlID: 409
+--- !u!114 &9
+MonoBehaviour:
+  m_ObjectHideFlags: 52
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 1
+  m_Script: {fileID: 12010, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Children:
+  - {fileID: 10}
+  - {fileID: 13}
+  m_Position:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 791.2
+    height: 730.8
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 16192, y: 16192}
+  vertical: 1
+  controlID: 435
+--- !u!114 &10
+MonoBehaviour:
+  m_ObjectHideFlags: 52
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 1
+  m_Script: {fileID: 12010, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Children:
+  - {fileID: 11}
+  - {fileID: 12}
+  m_Position:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 791.2
+    height: 381.6
+  m_MinSize: {x: 200, y: 100}
+  m_MaxSize: {x: 16192, y: 8096}
+  vertical: 0
+  controlID: 402
+--- !u!114 &11
+MonoBehaviour:
+  m_ObjectHideFlags: 52
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 1
   m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: EditorCachingService
+  m_Name: SceneHierarchyWindow
   m_EditorClassIdentifier: 
   m_Children: []
   m_Position:
@@ -189,16 +263,14 @@ MonoBehaviour:
     y: 0
     width: 403.2
     height: 381.6
-  m_MinSize: {x: 101, y: 121}
+  m_MinSize: {x: 201, y: 221}
   m_MaxSize: {x: 4001, y: 4021}
-  m_ActualView: {fileID: 14}
+  m_ActualView: {fileID: 19}
   m_Panes:
-  - {fileID: 17}
-  - {fileID: 15}
-  - {fileID: 14}
-  m_Selected: 2
-  m_LastSelected: 1
---- !u!114 &9
+  - {fileID: 19}
+  m_Selected: 0
+  m_LastSelected: 2
+--- !u!114 &12
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -219,13 +291,13 @@ MonoBehaviour:
     height: 381.6
   m_MinSize: {x: 202, y: 221}
   m_MaxSize: {x: 4002, y: 4021}
-  m_ActualView: {fileID: 18}
+  m_ActualView: {fileID: 20}
   m_Panes:
-  - {fileID: 18}
-  - {fileID: 19}
+  - {fileID: 20}
+  - {fileID: 21}
   m_Selected: 0
   m_LastSelected: 1
---- !u!114 &10
+--- !u!114 &13
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -238,8 +310,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Children:
-  - {fileID: 11}
-  - {fileID: 12}
+  - {fileID: 14}
+  - {fileID: 15}
   m_Position:
     serializedVersion: 2
     x: 0
@@ -249,8 +321,8 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 91
---- !u!114 &11
+  controlID: 436
+--- !u!114 &14
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -267,18 +339,18 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 535.2
+    width: 612.8
     height: 349.19998
-  m_MinSize: {x: 100, y: 100}
-  m_MaxSize: {x: 4000, y: 4000}
-  m_ActualView: {fileID: 21}
+  m_MinSize: {x: 101, y: 121}
+  m_MaxSize: {x: 4001, y: 4021}
+  m_ActualView: {fileID: 22}
   m_Panes:
-  - {fileID: 20}
-  - {fileID: 21}
+  - {fileID: 18}
   - {fileID: 22}
+  - {fileID: 23}
   m_Selected: 1
   m_LastSelected: 0
---- !u!114 &12
+--- !u!114 &15
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -293,18 +365,18 @@ MonoBehaviour:
   m_Children: []
   m_Position:
     serializedVersion: 2
-    x: 535.2
+    x: 612.8
     y: 0
-    width: 256
+    width: 178.40002
     height: 349.19998
   m_MinSize: {x: 202, y: 221}
   m_MaxSize: {x: 4002, y: 4021}
-  m_ActualView: {fileID: 23}
+  m_ActualView: {fileID: 24}
   m_Panes:
-  - {fileID: 23}
+  - {fileID: 24}
   m_Selected: 0
   m_LastSelected: 0
---- !u!114 &13
+--- !u!114 &16
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -314,7 +386,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 1
   m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: EditorResourceService
+  m_Name: TestRunnerWindow
   m_EditorClassIdentifier: 
   m_Children: []
   m_Position:
@@ -323,103 +395,327 @@ MonoBehaviour:
     y: 0
     width: 744.8
     height: 730.8
-  m_MinSize: {x: 101, y: 121}
-  m_MaxSize: {x: 4001, y: 4021}
-  m_ActualView: {fileID: 16}
+  m_MinSize: {x: 100, y: 100}
+  m_MaxSize: {x: 4000, y: 4000}
+  m_ActualView: {fileID: 26}
   m_Panes:
-  - {fileID: 24}
   - {fileID: 25}
-  - {fileID: 16}
-  m_Selected: 2
-  m_LastSelected: 1
---- !u!114 &14
-MonoBehaviour:
-  m_ObjectHideFlags: 52
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e029cf10310e49d093993a497effb240, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_MinSize: {x: 100, y: 100}
-  m_MaxSize: {x: 4000, y: 4000}
-  m_TitleContent:
-    m_Text: CachingService
-    m_Image: {fileID: 0}
-    m_Tooltip: 
-  m_Pos:
-    serializedVersion: 2
-    x: 0
-    y: 73.6
-    width: 402.2
-    height: 360.6
-  m_ViewDataDictionary: {fileID: 0}
-  m_OverlayCanvas:
-    m_LastAppliedPresetName: Default
-    m_SaveData: []
-    m_OverlaysVisible: 1
---- !u!114 &15
-MonoBehaviour:
-  m_ObjectHideFlags: 52
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b172286d377d4ca7b0f13c3190ab426c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_MinSize: {x: 100, y: 100}
-  m_MaxSize: {x: 4000, y: 4000}
-  m_TitleContent:
-    m_Text: HttpWebServer Service
-    m_Image: {fileID: 0}
-    m_Tooltip: 
-  m_Pos:
-    serializedVersion: 2
-    x: 0
-    y: 73.6
-    width: 402.2
-    height: 360.6
-  m_ViewDataDictionary: {fileID: 0}
-  m_OverlayCanvas:
-    m_LastAppliedPresetName: Default
-    m_SaveData: []
-    m_OverlaysVisible: 1
---- !u!114 &16
-MonoBehaviour:
-  m_ObjectHideFlags: 52
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 626172d18d1b4be1baf2d2d9f105d85b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_MinSize: {x: 100, y: 100}
-  m_MaxSize: {x: 4000, y: 4000}
-  m_TitleContent:
-    m_Text: Resource Service
-    m_Image: {fileID: 0}
-    m_Tooltip: 
-  m_Pos:
-    serializedVersion: 2
-    x: 791.2
-    y: 73.6
-    width: 743.8
-    height: 709.8
-  m_ViewDataDictionary: {fileID: 0}
-  m_OverlayCanvas:
-    m_LastAppliedPresetName: Default
-    m_SaveData: []
-    m_OverlaysVisible: 1
+  - {fileID: 26}
+  m_Selected: 1
+  m_LastSelected: 0
 --- !u!114 &17
+MonoBehaviour:
+  m_ObjectHideFlags: 52
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4272062d6dbd273438736c85848ea974, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_MinSize: {x: 640, y: 480}
+  m_MaxSize: {x: 4000, y: 4000}
+  m_TitleContent:
+    m_Text: Test Report
+    m_Image: {fileID: 0}
+    m_Tooltip: 
+  m_Pos:
+    serializedVersion: 2
+    x: 25.6
+    y: 67.200005
+    width: 766.4
+    height: 622.2
+  m_ViewDataDictionary: {fileID: 0}
+  m_OverlayCanvas:
+    m_LastAppliedPresetName: Default
+    m_SaveData: []
+    m_OverlaysVisible: 1
+  m_colorWhite: {r: 1, g: 1, b: 1, a: 1}
+  m_colorBarBackground: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  m_colorBoxAndWhiskerBackground: {r: 0.4, g: 0.4, b: 0.4, a: 1}
+  m_colorBar: {r: 0.95, g: 0.95, b: 0.95, a: 1}
+  m_colorStandardLine: {r: 1, g: 1, b: 1, a: 1}
+  m_colorMedianLine: {r: 0.2, g: 0.5, b: 1, a: 0.5}
+  m_colorMedianText: {r: 0.4, g: 0.7, b: 1, a: 1}
+  m_colorWarningText: {r: 1, g: 0, b: 0, a: 1}
+  m_toolbarSeparator: {r: 0.15, g: 0.15, b: 0.15, a: 1}
+  m_testListTreeViewState:
+    scrollPos: {x: 0, y: 0}
+    m_SelectedIDs: 01000000
+    m_LastClickedID: 1
+    m_ExpandedIDs: ffffffff0100000002000000
+    m_RenameOverlay:
+      m_UserAcceptedRename: 0
+      m_Name: 
+      m_OriginalName: 
+      m_EditFieldRect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 0
+        height: 0
+      m_UserData: 0
+      m_IsWaitingForDelay: 0
+      m_IsRenaming: 0
+      m_OriginalEventType: 11
+      m_IsRenamingFilename: 0
+      m_ClientGUIView: {fileID: 0}
+    m_SearchString: 
+  m_testListMulticolumnHeaderState:
+    m_Columns:
+    - width: 500
+      sortedAscending: 1
+      headerContent:
+        m_Text: Name
+        m_Image: {fileID: 0}
+        m_Tooltip: Name of test
+      contextMenuText: 
+      headerTextAlignment: 0
+      sortingArrowAlignment: 0
+      minWidth: 100
+      maxWidth: 1000000
+      autoResize: 0
+      allowToggleVisibility: 0
+      canSort: 1
+      userData: 0
+    - width: 50
+      sortedAscending: 0
+      headerContent:
+        m_Text: Groups
+        m_Image: {fileID: 0}
+        m_Tooltip: Number of Sample Groups
+      contextMenuText: 
+      headerTextAlignment: 0
+      sortingArrowAlignment: 0
+      minWidth: 50
+      maxWidth: 1000000
+      autoResize: 1
+      allowToggleVisibility: 1
+      canSort: 1
+      userData: 0
+    - width: 50
+      sortedAscending: 0
+      headerContent:
+        m_Text: SD
+        m_Image: {fileID: 0}
+        m_Tooltip: Standard Deviation
+      contextMenuText: 
+      headerTextAlignment: 0
+      sortingArrowAlignment: 0
+      minWidth: 50
+      maxWidth: 1000000
+      autoResize: 1
+      allowToggleVisibility: 1
+      canSort: 1
+      userData: 0
+    - width: 50
+      sortedAscending: 0
+      headerContent:
+        m_Text: Deviation
+        m_Image: {fileID: 0}
+        m_Tooltip: Standard Deviation / Median
+      contextMenuText: 
+      headerTextAlignment: 0
+      sortingArrowAlignment: 0
+      minWidth: 50
+      maxWidth: 1000000
+      autoResize: 1
+      allowToggleVisibility: 1
+      canSort: 1
+      userData: 0
+    - width: 50
+      sortedAscending: 0
+      headerContent:
+        m_Text: Median
+        m_Image: {fileID: 0}
+        m_Tooltip: Median value
+      contextMenuText: 
+      headerTextAlignment: 0
+      sortingArrowAlignment: 0
+      minWidth: 50
+      maxWidth: 1000000
+      autoResize: 1
+      allowToggleVisibility: 1
+      canSort: 1
+      userData: 0
+    - width: 50
+      sortedAscending: 0
+      headerContent:
+        m_Text: Min
+        m_Image: {fileID: 0}
+        m_Tooltip: Min value
+      contextMenuText: 
+      headerTextAlignment: 0
+      sortingArrowAlignment: 0
+      minWidth: 50
+      maxWidth: 1000000
+      autoResize: 1
+      allowToggleVisibility: 1
+      canSort: 1
+      userData: 0
+    - width: 50
+      sortedAscending: 0
+      headerContent:
+        m_Text: Max
+        m_Image: {fileID: 0}
+        m_Tooltip: Max value
+      contextMenuText: 
+      headerTextAlignment: 0
+      sortingArrowAlignment: 0
+      minWidth: 50
+      maxWidth: 1000000
+      autoResize: 1
+      allowToggleVisibility: 1
+      canSort: 1
+      userData: 0
+    m_VisibleColumns: 00000000010000000300000002000000040000000500000006000000
+    m_SortedColumns: 00000000
+  searchString: 
+--- !u!114 &18
+MonoBehaviour:
+  m_ObjectHideFlags: 52
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 1
+  m_Script: {fileID: 12014, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_MinSize: {x: 230, y: 250}
+  m_MaxSize: {x: 10000, y: 10000}
+  m_TitleContent:
+    m_Text: Project
+    m_Image: {fileID: -5179483145760003458, guid: 0000000000000000d000000000000000,
+      type: 0}
+    m_Tooltip: 
+  m_Pos:
+    serializedVersion: 2
+    x: 0
+    y: 455.2
+    width: 611.8
+    height: 328.19998
+  m_ViewDataDictionary: {fileID: 0}
+  m_OverlayCanvas:
+    m_LastAppliedPresetName: Default
+    m_SaveData: []
+    m_OverlaysVisible: 1
+  m_SearchFilter:
+    m_NameFilter: 
+    m_ClassNames: []
+    m_AssetLabels: []
+    m_AssetBundleNames: []
+    m_VersionControlStates: []
+    m_SoftLockControlStates: []
+    m_ReferencingInstanceIDs: 
+    m_SceneHandles: 
+    m_ShowAllHits: 0
+    m_SkipHidden: 0
+    m_SearchArea: 1
+    m_Folders:
+    - Assets/Test/EditMode
+    m_Globs: []
+    m_OriginalText: 
+  m_ViewMode: 1
+  m_StartGridSize: 16
+  m_LastFolders:
+  - Assets/Test/EditMode
+  m_LastFoldersGridSize: 16
+  m_LastProjectPath: C:\Project\Unity\CustomUtils
+  m_LockTracker:
+    m_IsLocked: 0
+  m_FolderTreeState:
+    scrollPos: {x: 0, y: 191.80002}
+    m_SelectedIDs: f4630000
+    m_LastClickedID: 25588
+    m_ExpandedIDs: 00000000f2610000f4610000f6610000f8610000fa610000fc610000fe61000000620000026200000462000006620000086200000a6200000c6200000e62000010620000126200001462000016620000186200001a6200001c6200001e620000206200002262000000ca9a3b
+    m_RenameOverlay:
+      m_UserAcceptedRename: 0
+      m_Name: 
+      m_OriginalName: 
+      m_EditFieldRect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 0
+        height: 0
+      m_UserData: 0
+      m_IsWaitingForDelay: 0
+      m_IsRenaming: 0
+      m_OriginalEventType: 11
+      m_IsRenamingFilename: 1
+      m_ClientGUIView: {fileID: 0}
+    m_SearchString: 
+    m_CreateAssetUtility:
+      m_EndAction: {fileID: 0}
+      m_InstanceID: 0
+      m_Path: 
+      m_Icon: {fileID: 0}
+      m_ResourceFile: 
+  m_AssetTreeState:
+    scrollPos: {x: 0, y: 0}
+    m_SelectedIDs: 
+    m_LastClickedID: 0
+    m_ExpandedIDs: 00000000f2610000f4610000f6610000f8610000fa610000fc610000fe61000000620000026200000462000006620000086200000a6200000c6200000e62000010620000126200001462000016620000186200001a6200001c6200001e6200002062000022620000
+    m_RenameOverlay:
+      m_UserAcceptedRename: 0
+      m_Name: 
+      m_OriginalName: 
+      m_EditFieldRect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 0
+        height: 0
+      m_UserData: 0
+      m_IsWaitingForDelay: 0
+      m_IsRenaming: 0
+      m_OriginalEventType: 11
+      m_IsRenamingFilename: 1
+      m_ClientGUIView: {fileID: 0}
+    m_SearchString: 
+    m_CreateAssetUtility:
+      m_EndAction: {fileID: 0}
+      m_InstanceID: 0
+      m_Path: 
+      m_Icon: {fileID: 0}
+      m_ResourceFile: 
+  m_ListAreaState:
+    m_SelectedInstanceIDs: 
+    m_LastClickedInstanceID: 0
+    m_HadKeyboardFocusLastEvent: 1
+    m_ExpandedInstanceIDs: c6230000ac060000fc56000092f6ffff2a66000002670000
+    m_RenameOverlay:
+      m_UserAcceptedRename: 0
+      m_Name: 
+      m_OriginalName: 
+      m_EditFieldRect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 0
+        height: 0
+      m_UserData: 0
+      m_IsWaitingForDelay: 0
+      m_IsRenaming: 0
+      m_OriginalEventType: 11
+      m_IsRenamingFilename: 1
+      m_ClientGUIView: {fileID: 0}
+    m_CreateAssetUtility:
+      m_EndAction: {fileID: 0}
+      m_InstanceID: 0
+      m_Path: 
+      m_Icon: {fileID: 0}
+      m_ResourceFile: 
+    m_NewAssetIndexInList: -1
+    m_ScrollPosition: {x: 0, y: 0}
+    m_GridSize: 16
+  m_SkipHiddenPackages: 0
+  m_DirectoriesAreaWidth: 252
+--- !u!114 &19
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -454,7 +750,7 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: 88d3ffff24d5ffff20d6ffffb8d9ffffb4daffffc8dbffffbedeffff9ce1ffff42e4ffff3ee5ffff76e6ffff72e7ffffa6eaffff8aedffffc2eeffff7ef3ffff9af6ffffa8f7ffff08f9ffff1efbffff
+      m_ExpandedIDs: 5e51fdff6c5bfdffc27ffdff2293fdffbea4fdff3ab2fdff9ebdfdffe8d0fdffc4e5fdffd0f3fdff90f9fdff180afeff3c15feff6219feffe81cfeff5623feff0427feff3a2afefff22efeffc832feff1634feffdc38feff7e43feff9047feffe852feff705dfefff860feff346ffeffc089feff1490feff709ffeff40b1feff38c1feffbee3feff42eefeff1e02ffff2206ffff1e09ffff6e10ffffa613ffff2218ffff661bfffff220ffffd22cffffb22fffff6e37ffffd23affff0a3cfffff844ffff8c4cffff004fffff1850ffffbe51ffff7a54ffffc268ffff9a69ffff726affff4a6bffff226cffff9c6effff746fffff6070ffff3871ffff1072ffffe872ffffc073ffff8e76ffff8e77ffff6678ffff3e79ffff167affff907cffff6c7fffff4480ffff1c81ffff4482ffff3083ffff1c84fffff484ffff0886ffffbe88ffff968bffff6e8cffff468dffff1e8efffff68effffce8fffffa690ffff5c93ffff7094ffff1297ffffea97ffffea98ffff529bffff2a9cffff169dffff169effff169fffff2aa0ffff3ea1ffff2aa2ffff52a3ffff2aa4ffff02a5ffffdaa5ffffa4a8ffff7ca9ffffa4aaffffb0b0ffff88b1ffff60b2ffff38b3ffff10b4ffffe8b4ffffc0b5ffff98b6ffff70b7ffff48b8ffff20b9fffff8b9ffffd0baffffa8bbffff80bcffff0ebfffffe6bfffffbec0ffff96c1ffff96c2ffff6ec3ffff46c4ffff1ec5ffff78c8ffff50c9ffff28caffff00cbffffd8cbffffb0ccffff88cdffff60ceffff38cfffff10d0ffffe8d0ffffc0d1ffff98d2ffff00d5ffffd8d5ffff90d8ffff48dbffff48dcffffecdeffffc4dfffff68e2ffff40e3ffff18e4fffff0e4ffffc8e5ffffa0e6ffff78e7ffff50e8ffff28e9ffff00eaffffccecffffa4edffff7ceeffff54efffff2cf0ffff04f1ffffdcf1ffff24f5fffffcf5ffffd4f6ffffacf7ffff86f8ffff1afbffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -470,7 +766,7 @@ MonoBehaviour:
         m_IsRenaming: 0
         m_OriginalEventType: 11
         m_IsRenamingFilename: 0
-        m_ClientGUIView: {fileID: 8}
+        m_ClientGUIView: {fileID: 11}
       m_SearchString: 
     m_ExpandedScenes: []
     m_CurrenRootInstanceID: 0
@@ -478,7 +774,7 @@ MonoBehaviour:
       m_IsLocked: 0
     m_CurrentSortingName: TransformSorting
   m_WindowGUID: 37b0836aa8b4bd74696073f7347c8c8a
---- !u!114 &18
+--- !u!114 &20
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -800,14 +1096,14 @@ MonoBehaviour:
     m_FarClip: 10000
     m_DynamicClip: 1
     m_OcclusionCulling: 0
-  m_LastSceneViewRotation: {x: -0.08717229, y: 0.89959055, z: -0.21045254, w: -0.3726226}
+  m_LastSceneViewRotation: {x: 0.97717243, y: -0.013238816, z: 0.2021553, w: 0.06399626}
   m_LastSceneViewOrtho: 0
   m_ReplacementShader: {fileID: 0}
   m_ReplacementString: 
   m_SceneVisActive: 1
   m_LastLockedObject: {fileID: 0}
   m_ViewIsLockedToObject: 0
---- !u!114 &19
+--- !u!114 &21
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -837,149 +1133,7 @@ MonoBehaviour:
     m_LastAppliedPresetName: Default
     m_SaveData: []
     m_OverlaysVisible: 1
---- !u!114 &20
-MonoBehaviour:
-  m_ObjectHideFlags: 52
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 1
-  m_Script: {fileID: 12014, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_MinSize: {x: 230, y: 250}
-  m_MaxSize: {x: 10000, y: 10000}
-  m_TitleContent:
-    m_Text: Project
-    m_Image: {fileID: -5179483145760003458, guid: 0000000000000000d000000000000000,
-      type: 0}
-    m_Tooltip: 
-  m_Pos:
-    serializedVersion: 2
-    x: 0
-    y: 455.2
-    width: 534.2
-    height: 328.19998
-  m_ViewDataDictionary: {fileID: 0}
-  m_OverlayCanvas:
-    m_LastAppliedPresetName: Default
-    m_SaveData: []
-    m_OverlaysVisible: 1
-  m_SearchFilter:
-    m_NameFilter: 
-    m_ClassNames: []
-    m_AssetLabels: []
-    m_AssetBundleNames: []
-    m_VersionControlStates: []
-    m_SoftLockControlStates: []
-    m_ReferencingInstanceIDs: 
-    m_SceneHandles: 
-    m_ShowAllHits: 0
-    m_SkipHidden: 0
-    m_SearchArea: 1
-    m_Folders:
-    - Assets/CustomUtils/Common/Editor
-    m_Globs: []
-    m_OriginalText: 
-  m_ViewMode: 1
-  m_StartGridSize: 16
-  m_LastFolders:
-  - Assets/CustomUtils/Common/Editor
-  m_LastFoldersGridSize: 16
-  m_LastProjectPath: C:\Project\Unity\CustomUtils
-  m_LockTracker:
-    m_IsLocked: 0
-  m_FolderTreeState:
-    scrollPos: {x: 0, y: 75.80002}
-    m_SelectedIDs: bc630000
-    m_LastClickedID: 25532
-    m_ExpandedIDs: 00000000ce610000d0610000d2610000d4610000d6610000d8610000da610000dc610000de610000e0610000e2610000e4610000e6610000e8610000ea610000ec610000ee610000f0610000f2610000f4610000f6610000f8610000fa610000fc610000
-    m_RenameOverlay:
-      m_UserAcceptedRename: 0
-      m_Name: 
-      m_OriginalName: 
-      m_EditFieldRect:
-        serializedVersion: 2
-        x: 0
-        y: 0
-        width: 0
-        height: 0
-      m_UserData: 0
-      m_IsWaitingForDelay: 0
-      m_IsRenaming: 0
-      m_OriginalEventType: 11
-      m_IsRenamingFilename: 1
-      m_ClientGUIView: {fileID: 11}
-    m_SearchString: 
-    m_CreateAssetUtility:
-      m_EndAction: {fileID: 0}
-      m_InstanceID: 0
-      m_Path: 
-      m_Icon: {fileID: 0}
-      m_ResourceFile: 
-  m_AssetTreeState:
-    scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 
-    m_LastClickedID: 0
-    m_ExpandedIDs: 00000000ce610000d0610000d2610000d4610000d6610000d8610000da610000dc610000de610000e0610000e2610000e4610000e6610000e8610000ea610000ec610000ee610000f0610000f2610000f4610000f6610000f8610000fa610000fc610000
-    m_RenameOverlay:
-      m_UserAcceptedRename: 0
-      m_Name: 
-      m_OriginalName: 
-      m_EditFieldRect:
-        serializedVersion: 2
-        x: 0
-        y: 0
-        width: 0
-        height: 0
-      m_UserData: 0
-      m_IsWaitingForDelay: 0
-      m_IsRenaming: 0
-      m_OriginalEventType: 11
-      m_IsRenamingFilename: 1
-      m_ClientGUIView: {fileID: 0}
-    m_SearchString: 
-    m_CreateAssetUtility:
-      m_EndAction: {fileID: 0}
-      m_InstanceID: 0
-      m_Path: 
-      m_Icon: {fileID: 0}
-      m_ResourceFile: 
-  m_ListAreaState:
-    m_SelectedInstanceIDs: 
-    m_LastClickedInstanceID: 0
-    m_HadKeyboardFocusLastEvent: 1
-    m_ExpandedInstanceIDs: c6230000ac060000fc56000092f6ffff2a66000002670000
-    m_RenameOverlay:
-      m_UserAcceptedRename: 0
-      m_Name: 
-      m_OriginalName: 
-      m_EditFieldRect:
-        serializedVersion: 2
-        x: 0
-        y: 0
-        width: 0
-        height: 0
-      m_UserData: 0
-      m_IsWaitingForDelay: 0
-      m_IsRenaming: 0
-      m_OriginalEventType: 11
-      m_IsRenamingFilename: 1
-      m_ClientGUIView: {fileID: 11}
-    m_CreateAssetUtility:
-      m_EndAction: {fileID: 0}
-      m_InstanceID: 0
-      m_Path: 
-      m_Icon: {fileID: 0}
-      m_ResourceFile: 
-    m_NewAssetIndexInList: -1
-    m_ScrollPosition: {x: 0, y: 0}
-    m_GridSize: 16
-  m_SkipHiddenPackages: 0
-  m_DirectoriesAreaWidth: 252
---- !u!114 &21
+--- !u!114 &22
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1002,14 +1156,14 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 455.2
-    width: 534.2
+    width: 611.8
     height: 328.19998
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
     m_LastAppliedPresetName: Default
     m_SaveData: []
     m_OverlaysVisible: 1
---- !u!114 &22
+--- !u!114 &23
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1187,7 +1341,7 @@ MonoBehaviour:
   m_ShowReferencedBuses: 1
   m_ShowBusConnections: 0
   m_ShowBusConnectionsOfSelection: 0
---- !u!114 &23
+--- !u!114 &24
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1208,9 +1362,9 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 535.2
+    x: 612.8
     y: 455.2
-    width: 254
+    width: 176.40002
     height: 328.19998
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
@@ -1223,7 +1377,7 @@ MonoBehaviour:
   m_ShowGizmos: 0
   m_TargetDisplay: 0
   m_ClearColor: {r: 0, g: 0, b: 0, a: 0}
-  m_TargetSize: {x: 254, y: 307.19998}
+  m_TargetSize: {x: 176.40002, y: 307.19998}
   m_TextureFilterMode: 0
   m_TextureHideFlags: 61
   m_RenderIMGUI: 1
@@ -1238,8 +1392,8 @@ MonoBehaviour:
     m_VRangeLocked: 0
     hZoomLockedByDefault: 0
     vZoomLockedByDefault: 0
-    m_HBaseRangeMin: -101.6
-    m_HBaseRangeMax: 101.6
+    m_HBaseRangeMin: -70.56001
+    m_HBaseRangeMax: 70.56001
     m_VBaseRangeMin: -122.88
     m_VBaseRangeMax: 122.88
     m_HAllowExceedBaseRangeMin: 1
@@ -1259,29 +1413,29 @@ MonoBehaviour:
       serializedVersion: 2
       x: 0
       y: 21
-      width: 254
+      width: 176.40002
       height: 307.19998
     m_Scale: {x: 1, y: 1}
-    m_Translation: {x: 127, y: 153.59999}
+    m_Translation: {x: 88.20001, y: 153.59999}
     m_MarginLeft: 0
     m_MarginRight: 0
     m_MarginTop: 0
     m_MarginBottom: 0
     m_LastShownAreaInsideMargins:
       serializedVersion: 2
-      x: -127
+      x: -88.20001
       y: -153.59999
-      width: 254
+      width: 176.40002
       height: 307.19998
     m_MinimalGUI: 1
   m_defaultScale: 1
-  m_LastWindowPixelSize: {x: 317.5, y: 410.24997}
+  m_LastWindowPixelSize: {x: 220.50003, y: 410.24997}
   m_ClearInEditMode: 1
   m_NoCameraWarning: 1
   m_LowResolutionForAspectRatios: 01000000000000000000
   m_XRRenderMode: 0
   m_RenderTexture: {fileID: 0}
---- !u!114 &24
+--- !u!114 &25
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1324,7 +1478,7 @@ MonoBehaviour:
   m_LockTracker:
     m_IsLocked: 0
   m_PreviewWindow: {fileID: 0}
---- !u!114 &25
+--- !u!114 &26
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1354,8 +1508,8 @@ MonoBehaviour:
     m_SaveData: []
     m_OverlaysVisible: 1
   m_Spl:
-    ID: 214
-    splitterInitialOffset: 318.4
+    ID: 458
+    splitterInitialOffset: 317.6
     currentActiveSplitter: -1
     realSizes:
     - 249.6
@@ -1379,7 +1533,7 @@ MonoBehaviour:
     oldSplitSize: 0
   m_TestTypeToolbarIndex: 1
   m_PlayModeTestListGUI:
-    m_Window: {fileID: 25}
+    m_Window: {fileID: 26}
     m_NewResultList:
     - id: 1004
       uniqueId: '[CustomUtils][suite]'
@@ -1397,12 +1551,95 @@ MonoBehaviour:
       categories: []
       parentId: 
       parentUniqueId: 
+    - id: 1015
+      uniqueId: '[PlayModeTestAssembly][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/PlayModeTestAssembly.dll][suite]'
+      name: PlayModeTestAssembly.dll
+      fullName: C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/PlayModeTestAssembly.dll
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1010
+      parentUniqueId: '[CustomUtils][suite]'
+    - id: 1011
+      uniqueId: PlayModeTestAssembly.dll/[PlayModeTestAssembly][PlayModeTestRunner][suite]
+      name: PlayModeTestRunner
+      fullName: PlayModeTestRunner
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1015
+      parentUniqueId: '[PlayModeTestAssembly][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/PlayModeTestAssembly.dll][suite]'
+    - id: 1012
+      uniqueId: PlayModeTestAssembly.dll/PlayModeTestRunner/[PlayModeTestAssembly][PlayModeTestRunner.TestGraphicService]
+      name: TestGraphicService
+      fullName: PlayModeTestRunner.TestGraphicService
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1011
+      parentUniqueId: PlayModeTestAssembly.dll/[PlayModeTestAssembly][PlayModeTestRunner][suite]
+    - id: 1013
+      uniqueId: PlayModeTestAssembly.dll/PlayModeTestRunner/[PlayModeTestAssembly][PlayModeTestRunner.TestResourceService]
+      name: TestResourceService
+      fullName: PlayModeTestRunner.TestResourceService
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1011
+      parentUniqueId: PlayModeTestAssembly.dll/[PlayModeTestAssembly][PlayModeTestRunner][suite]
+    - id: 1014
+      uniqueId: PlayModeTestAssembly.dll/PlayModeTestRunner/[PlayModeTestAssembly][PlayModeTestRunner.TestSound]
+      name: TestSound
+      fullName: PlayModeTestRunner.TestSound
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1011
+      parentUniqueId: PlayModeTestAssembly.dll/[PlayModeTestAssembly][PlayModeTestRunner][suite]
     m_ResultText: 
     m_ResultStacktrace: 
     m_TestListState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 15f0bffc
-      m_LastClickedID: -54530027
+      m_SelectedIDs: 61371cb6
+      m_LastClickedID: -1239664799
       m_ExpandedIDs: 2d87f388adb59dfa5bc6d62ec29f393372cb9f48ffffff7f
       m_RenameOverlay:
         m_UserAcceptedRename: 0
@@ -1431,14 +1668,14 @@ MonoBehaviour:
       - Uncategorized
     m_SelectedOption: 0
   m_EditModeTestListGUI:
-    m_Window: {fileID: 25}
+    m_Window: {fileID: 26}
     m_NewResultList:
     - id: 1000
       uniqueId: '[CustomUtils][suite]'
       name: CustomUtils
       fullName: CustomUtils
       resultStatus: 1
-      duration: 13.422585
+      duration: 4.2915583
       messages: 
       output: 
       stacktrace: 
@@ -1454,7 +1691,7 @@ MonoBehaviour:
       name: EditrModeTestAssembly.dll
       fullName: C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/EditrModeTestAssembly.dll
       resultStatus: 1
-      duration: 13.403259
+      duration: 4.283077
       messages: 
       output: 
       stacktrace: 
@@ -1536,7 +1773,7 @@ MonoBehaviour:
       name: EditModeTestRunner
       fullName: EditModeTestRunner
       resultStatus: 1
-      duration: 13.399505
+      duration: 4.280042
       messages: 
       output: 
       stacktrace: 
@@ -1547,19 +1784,81 @@ MonoBehaviour:
       categories: []
       parentId: 1022
       parentUniqueId: '[EditrModeTestAssembly][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/EditrModeTestAssembly.dll][suite]'
-    - id: 1006
-      uniqueId: EditrModeTestAssembly.dll/EditModeTestRunner/[EditrModeTestAssembly][EditModeTestRunner.TcpServerTest]
-      name: TcpServerTest
-      fullName: EditModeTestRunner.TcpServerTest
+    - id: 1007
+      uniqueId: EditrModeTestAssembly.dll/EditModeTestRunner/[EditrModeTestAssembly][EditModeTestRunner.EnumCastPerformanceTest]
+      name: EnumCastPerformanceTest
+      fullName: EditModeTestRunner.EnumCastPerformanceTest
       resultStatus: 1
-      duration: 13.395558
+      duration: 1.0667372
       messages: 
-      output: '<color=#00FF00>[SimpleTcpServer.Start] SimpleTcpServer Start || 0.0.0.0:8890</color>
+      output: "Direct.GC() in Undefineds\nMin:\t\t0.00 \nMedian:\t\t0.00 \nMax:\t\t0.00
+        \nAvg:\t\t0.00 \nStdDev:\t\t0.00 \nSampleCount:\t25\nSum:\t\t0.00 \r\nFirst
+        samples:\t\u2581\u2582\u2582\u2582\u2581\u2581\u2581\u2581\u2581\u2588\u2581\u2581\u2582\u2582\u2582\u2582\u2582\u2582\u2582\u2582\u2582\u2582\u2582\u2582\u2582\r\nHistogram:\t\u2585\u2588\u2581\u2581\u2581\u2581\r\n\r\nDirect
+        in Microseconds\nMin:\t\t119.20 \u03BCs\nMedian:\t\t119.55 \u03BCs\nMax:\t\t123.10
+        \u03BCs\nAvg:\t\t119.92 \u03BCs\nStdDev:\t\t1.10 \u03BCs\nSampleCount:\t10\nSum:\t\t1199.20
+        \u03BCs\r\nFirst samples:\t\u2582\u2583\u2582\u2581\u2588\u2582\u2582\u2581\u2581\u2581\r\n(not
+        enough samples for histogram)\n\r\nCast.GC() in Undefineds\nMin:\t\t4.00
+        \nMedian:\t\t4.00 \nMax:\t\t4.00 \nAvg:\t\t4.00 \nStdDev:\t\t0.00 \nSampleCount:\t25\nSum:\t\t100.01
+        \r\nFirst samples:\t\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2588\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\r\nHistogram:\t\u2588\u2585\u2581\u2581\u2581\u2581\r\n\r\nCast
+        in Microseconds\nMin:\t\t7247.40 \u03BCs\nMedian:\t\t7554.75 \u03BCs\nMax:\t\t8247.30
+        \u03BCs\nAvg:\t\t7600.63 \u03BCs\nStdDev:\t\t326.47 \u03BCs\nSampleCount:\t10\nSum:\t\t76006.30
+        \u03BCs\r\nFirst samples:\t\u2585\u2581\u2588\u2583\u2584\u2581\u2581\u2581\u2586\u2583\r\n(not
+        enough samples for histogram)\n\r\n\r\n##performancetestresult2:{\"Name\":\"EditModeTestRunner.EnumCastPerformanceTest\",\"ClassName\":\"EditModeTestRunner\",\"MethodName\":\"EnumCastPerformanceTest\",\"Version\":\"1\",\"Categories\":[\"Performance\"],\"SampleGroups\":[{\"Name\":\"Direct.GC()\",\"Unit\":8,\"IncreaseIsBetter\":false,\"Samples\":[0.0001,0.0002,0.0002,0.0002,0.0001,0.0001,0.0001,0.0001,0.0001,0.0008,0.0001,0.0001,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002],\"Min\":0.0001,\"Max\":0.0008,\"Median\":0.0002,\"Average\":0.00019199999999999995,\"StandardDeviation\":0.00013242356285797483,\"Sum\":0.004799999999999999},{\"Name\":\"Direct\",\"Unit\":1,\"IncreaseIsBetter\":false,\"Samples\":[119.49999999995953,120.29999999998609,119.70000000002301,119.19999999997799,123.10000000002219,119.59999999999127,119.79999999999791,119.39999999998463,119.39999999998463,119.20000000003484],\"Min\":119.19999999997799,\"Max\":123.10000000002219,\"Median\":119.5499999999754,\"Average\":119.91999999999621,\"StandardDeviation\":1.1034491379385836,\"Sum\":1199.199999999962},{\"Name\":\"Cast.GC()\",\"Unit\":8,\"IncreaseIsBetter\":false,\"Samples\":[4.0002,4.0002,4.0002,4.0002,4.0002,4.0002,4.0002,4.0002,4.0002,4.0002,4.0009,4.0002,4.0002,4.0002,4.0002,4.0002,4.0002,4.0002,4.0002,4.0002,4.0002,4.0002,4.0002,4.0002,4.0002],\"Min\":4.0002,\"Max\":4.0009,\"Median\":4.0002,\"Average\":4.000228000000003,\"StandardDeviation\":0.00013717142559571232,\"Sum\":100.00570000000006},{\"Name\":\"Cast\",\"Unit\":1,\"IncreaseIsBetter\":false,\"Samples\":[7856.800000000021,7247.3999999999705,8247.299999999996,7566.399999999987,7721.20000000001,7296.899999999994,7288.000000000011,7267.800000000079,7971.400000000017,7543.099999999981],\"Min\":7247.3999999999705,\"Max\":8247.299999999996,\"Median\":7554.749999999984,\"Average\":7600.6300000000065,\"StandardDeviation\":326.47063282935388,\"Sum\":76006.30000000006}]}\r\n##performancetestruninfo2:{\"TestSuite\":\"Editmode\",\"Date\":1723364896231,\"Player\":{\"Development\":true,\"ScreenWidth\":1920,\"ScreenHeight\":1080,\"ScreenRefreshRate\":60,\"Fullscreen\":false,\"Vsync\":1,\"AntiAliasing\":0,\"Batchmode\":false,\"RenderThreadingMode\":\"MultiThreaded\",\"GpuSkinning\":false,\"Platform\":\"WindowsEditor\",\"ColorSpace\":\"Gamma\",\"AnisotropicFiltering\":\"Disable\",\"BlendWeights\":\"FourBones\",\"GraphicsApi\":\"Direct3D11\",\"ScriptingBackend\":\"Mono2x\",\"AndroidTargetSdkVersion\":\"AndroidApiLevelAuto\",\"AndroidBuildSystem\":\"Gradle\",\"BuildTarget\":\"StandaloneWindows64\",\"StereoRenderingPath\":\"MultiPass\"},\"Hardware\":{\"OperatingSystem\":\"Windows
+        10  (10.0.19045) 64bit\",\"DeviceModel\":\"82R4 (LENOVO)\",\"DeviceName\":\"DESKTOP-55T0R54\",\"ProcessorType\":\"AMD
+        Ryzen 5 5500U with Radeon Graphics \",\"ProcessorCount\":12,\"GraphicsDeviceName\":\"AMD
+        Radeon(TM) Graphics\",\"SystemMemorySizeMB\":14181},\"Editor\":{\"Version\":\"2021.3.21f1\",\"Branch\":\"2021.3/staging\",\"Changeset\":\"1b156197d683\",\"Date\":1678195707},\"Dependencies\":[\"com.unity.2d.animation@7.0.9\",\"com.unity.2d.pixel-perfect@5.0.3\",\"com.unity.2d.psdimporter@6.0.7\",\"com.unity.2d.sprite@1.0.0\",\"com.unity.2d.spriteshape@7.0.6\",\"com.unity.2d.tilemap@1.0.0\",\"com.unity.assetbundlebrowser@1.7.0\",\"com.unity.collab-proxy@2.0.1\",\"com.unity.editorcoroutines@1.0.0\",\"com.unity.ide.rider@3.0.31\",\"com.unity.ide.vscode@1.2.5\",\"com.unity.mobile.android-logcat@1.3.2\",\"com.unity.performance.profile-analyzer@1.2.2\",\"com.unity.profiling.core@1.0.2\",\"com.unity.render-pipelines.universal@12.1.10\",\"com.unity.test-framework@1.3.9\",\"com.unity.test-framework.performance@3.0.3\",\"com.unity.textmeshpro@3.0.9\",\"com.unity.timeline@1.6.5\",\"com.unity.ugui@1.0.0\",\"com.unity.modules.ai@1.0.0\",\"com.unity.modules.androidjni@1.0.0\",\"com.unity.modules.animation@1.0.0\",\"com.unity.modules.assetbundle@1.0.0\",\"com.unity.modules.audio@1.0.0\",\"com.unity.modules.cloth@1.0.0\",\"com.unity.modules.director@1.0.0\",\"com.unity.modules.imageconversion@1.0.0\",\"com.unity.modules.imgui@1.0.0\",\"com.unity.modules.jsonserialize@1.0.0\",\"com.unity.modules.particlesystem@1.0.0\",\"com.unity.modules.physics@1.0.0\",\"com.unity.modules.physics2d@1.0.0\",\"com.unity.modules.screencapture@1.0.0\",\"com.unity.modules.terrain@1.0.0\",\"com.unity.modules.terrainphysics@1.0.0\",\"com.unity.modules.tilemap@1.0.0\",\"com.unity.modules.ui@1.0.0\",\"com.unity.modules.uielements@1.0.0\",\"com.unity.modules.umbra@1.0.0\",\"com.unity.modules.unityanalytics@1.0.0\",\"com.unity.modules.unitywebrequest@1.0.0\",\"com.unity.modules.unitywebrequestassetbundle@1.0.0\",\"com.unity.modules.unitywebrequestaudio@1.0.0\",\"com.unity.modules.unitywebrequesttexture@1.0.0\",\"com.unity.modules.unitywebrequestwww@1.0.0\",\"com.unity.modules.vehicles@1.0.0\",\"com.unity.modules.video@1.0.0\",\"com.unity.modules.vr@1.0.0\",\"com.unity.modules.wind@1.0.0\",\"com.unity.modules.xr@1.0.0\",\"com.unity.modules.subsystems@1.0.0\",\"com.unity.modules.uielementsnative@1.0.0\",\"com.unity.ext.nunit@2.0.3\",\"com.unity.mathematics@1.2.6\",\"com.unity.burst@1.8.2\",\"com.unity.render-pipelines.core@12.1.10\",\"com.unity.shadergraph@12.1.10\",\"com.unity.2d.common@6.0.6\",\"com.unity.2d.path@5.0.2\",\"com.unity.searcher@4.9.1\"],\"Results\":[]}\r\n"
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1005
+      parentUniqueId: EditrModeTestAssembly.dll/[EditrModeTestAssembly][EditModeTestRunner][suite]
+    - id: 1006
+      uniqueId: EditrModeTestAssembly.dll/EditModeTestRunner/[EditrModeTestAssembly][EditModeTestRunner.EnumParsePerformanceTest]
+      name: EnumParsePerformanceTest
+      fullName: EditModeTestRunner.EnumParsePerformanceTest
+      resultStatus: 1
+      duration: 1.3913908
+      messages: 
+      output: "EnumToInt.GC() in Undefineds\nMin:\t\t0.00 \nMedian:\t\t0.00 \nMax:\t\t0.02
+        \nAvg:\t\t0.00 \nStdDev:\t\t0.00 \nSampleCount:\t20\nSum:\t\t0.03 \r\nFirst
+        samples:\t\u2588\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\r\nHistogram:\t\u2588\u2583\u2581\u2581\u2581\u2581\r\n\r\nEnumToInt
+        in Milliseconds\nMin:\t\t0.26 ms\nMedian:\t\t0.26 ms\nMax:\t\t0.58 ms\nAvg:\t\t0.29
+        ms\nStdDev:\t\t0.10 ms\nSampleCount:\t10\nSum:\t\t2.92 ms\r\nFirst samples:\t\u2581\u2581\u2581\u2581\u2581\u2588\u2581\u2581\u2581\u2581\r\n(not
+        enough samples for histogram)\n\r\nIntToEnum.GC() in Undefineds\nMin:\t\t0.00
+        \nMedian:\t\t0.00 \nMax:\t\t0.00 \nAvg:\t\t0.00 \nStdDev:\t\t0.00 \nSampleCount:\t20\nSum:\t\t0.00
+        \r\nFirst samples:\t\u2582\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2588\u2581\u2581\r\nHistogram:\t\u2588\u2583\u2581\u2581\u2581\u2581\r\n\r\nIntToEnum
+        in Milliseconds\nMin:\t\t0.25 ms\nMedian:\t\t0.26 ms\nMax:\t\t0.27 ms\nAvg:\t\t0.26
+        ms\nStdDev:\t\t0.00 ms\nSampleCount:\t10\nSum:\t\t2.57 ms\r\nFirst samples:\t\u2583\u2588\u2584\u2583\u2581\u2584\u2581\u2581\u2581\u2581\r\n(not
+        enough samples for histogram)\n\r\nStringToEnum.GC() in Undefineds\nMin:\t\t2.00
+        \nMedian:\t\t2.00 \nMax:\t\t2.00 \nAvg:\t\t2.00 \nStdDev:\t\t0.00 \nSampleCount:\t20\nSum:\t\t40.00
+        \r\nFirst samples:\t\u2582\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2588\u2581\u2581\u2581\u2581\u2581\r\nHistogram:\t\u2588\u2582\u2581\u2581\u2581\u2581\r\n\r\nStringToEnum
+        in Milliseconds\nMin:\t\t17.23 ms\nMedian:\t\t17.68 ms\nMax:\t\t18.88 ms\nAvg:\t\t17.81
+        ms\nStdDev:\t\t0.54 ms\nSampleCount:\t10\nSum:\t\t178.10 ms\r\nFirst samples:\t\u2588\u2586\u2583\u2581\u2585\u2583\u2582\u2581\u2581\u2585\r\n(not
+        enough samples for histogram)\n\r\n\r\n##performancetestresult2:{\"Name\":\"EditModeTestRunner.EnumParsePerformanceTest\",\"ClassName\":\"EditModeTestRunner\",\"MethodName\":\"EnumParsePerformanceTest\",\"Version\":\"1\",\"Categories\":[\"Performance\"],\"SampleGroups\":[{\"Name\":\"EnumToInt.GC()\",\"Unit\":8,\"IncreaseIsBetter\":false,\"Samples\":[0.0214,0.0002,0.0002,0.0002,0.0002,0.0002,0.0009,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002],\"Min\":0.0002,\"Max\":0.0214,\"Median\":0.0002,\"Average\":0.0012949999999999989,\"StandardDeviation\":0.0046149187425132448,\"Sum\":0.02589999999999998},{\"Name\":\"EnumToInt\",\"Unit\":2,\"IncreaseIsBetter\":false,\"Samples\":[0.25960000000000607,0.2593999999999994,0.2621000000000038,0.2598000000000127,0.25969999999998097,0.5833999999999833,0.2592999999999961,0.25950000000000275,0.25960000000003449,0.25950000000000275],\"Min\":0.2592999999999961,\"Max\":0.5833999999999833,\"Median\":0.25960000000002028,\"Average\":0.2921900000000022,\"StandardDeviation\":0.09707306990097085,\"Sum\":2.921900000000022},{\"Name\":\"IntToEnum.GC()\",\"Unit\":8,\"IncreaseIsBetter\":false,\"Samples\":[0.0003,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0009,0.0002,0.0002],\"Min\":0.0002,\"Max\":0.0009,\"Median\":0.0002,\"Average\":0.00024000000000000003,\"StandardDeviation\":0.00015297058540778355,\"Sum\":0.0048000000000000008},{\"Name\":\"IntToEnum\",\"Unit\":2,\"IncreaseIsBetter\":false,\"Samples\":[0.2570999999999799,0.26650000000000775,0.25979999999998429,0.25780000000000316,0.25440000000000398,0.2588000000000079,0.2541999999999689,0.2541999999999689,0.2540000000000191,0.25430000000000066],\"Min\":0.2540000000000191,\"Max\":0.26650000000000775,\"Median\":0.25574999999999195,\"Average\":0.25710999999999448,\"StandardDeviation\":0.003749519969280204,\"Sum\":2.5710999999999446},{\"Name\":\"StringToEnum.GC()\",\"Unit\":8,\"IncreaseIsBetter\":false,\"Samples\":[2.0003,2.0002,2.0002,2.0002,2.0002,2.0002,2.0002,2.0002,2.0002,2.0002,2.0002,2.0002,2.0002,2.0002,2.0009,2.0002,2.0002,2.0002,2.0002,2.0002],\"Min\":2.0002,\"Max\":2.0009,\"Median\":2.0002,\"Average\":2.00024,\"StandardDeviation\":0.00015297058540781898,\"Sum\":40.004799999999999},{\"Name\":\"StringToEnum\",\"Unit\":2,\"IncreaseIsBetter\":false,\"Samples\":[18.875099999999976,18.406999999999984,17.75029999999998,17.228399999999966,18.261300000000007,17.608799999999975,17.358600000000025,17.27150000000006,17.286000000000059,18.05510000000004],\"Min\":17.228399999999966,\"Max\":18.875099999999976,\"Median\":17.679549999999979,\"Average\":17.810210000000006,\"StandardDeviation\":0.5390006093688443,\"Sum\":178.10210000000007}]}\r\n"
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1005
+      parentUniqueId: EditrModeTestAssembly.dll/[EditrModeTestAssembly][EditModeTestRunner][suite]
+    - id: 1008
+      uniqueId: EditrModeTestAssembly.dll/EditModeTestRunner/[EditrModeTestAssembly][EditModeTestRunner.IntMarshalTest]
+      name: IntMarshalTest
+      fullName: EditModeTestRunner.IntMarshalTest
+      resultStatus: 1
+      duration: 0.0095605
+      messages: 
+      output: '<color=#00FFFF>[Service.StartService] Service Start || StopWatchService</color>
 
-        [<TcpServerTest>d__1.MoveNext]
-        Return
-
-        <color=#FFEB04>[SimpleTcpServer.Stop] SimpleTcpServer Stop</color>
+        <color=#00FF00>[StopWatchService.Stop]
+        IntMarshalTest => 20934 tick || 2  milSec|| 00:00:00.0020934</color>
 
 '
       stacktrace: 
@@ -1571,23 +1870,273 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1005
       parentUniqueId: EditrModeTestAssembly.dll/[EditrModeTestAssembly][EditModeTestRunner][suite]
-    m_ResultText: 'TcpServerTest (13.396s)
+    - id: 1008
+      uniqueId: EditrModeTestAssembly.dll/EditModeTestRunner/[EditrModeTestAssembly][EditModeTestRunner.JsonPerformanceTest][suite]
+      name: JsonPerformanceTest
+      fullName: EditModeTestRunner.JsonPerformanceTest
+      resultStatus: 1
+      duration: 4.2767634
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1005
+      parentUniqueId: EditrModeTestAssembly.dll/[EditrModeTestAssembly][EditModeTestRunner][suite]
+    - id: 1008
+      uniqueId: EditrModeTestAssembly.dll/EditModeTestRunner/JsonPerformanceTest/[EditrModeTestAssembly][EditModeTestRunner.JsonPerformanceTest(2500)]
+      name: JsonPerformanceTest(2500)
+      fullName: EditModeTestRunner.JsonPerformanceTest(2500)
+      resultStatus: 1
+      duration: 4.2737627
+      messages: 
+      output: "Serialize in Milliseconds\nMin:\t\t13.30 ms\nMedian:\t\t13.59 ms\nMax:\t\t32.18
+        ms\nAvg:\t\t15.42 ms\nStdDev:\t\t5.51 ms\nSampleCount:\t20\nSum:\t\t308.47
+        ms\r\nFirst samples:\t\u2581\u2581\u2581\u2581\u2581\u2581\u2588\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2588\u2581\u2581\u2581\r\nHistogram:\t\u2588\u2582\u2581\u2581\u2581\u2581\r\n\r\nRequest
+        in Milliseconds\nMin:\t\t1.31 ms\nMedian:\t\t1.35 ms\nMax:\t\t1.36 ms\nAvg:\t\t1.35
+        ms\nStdDev:\t\t0.02 ms\nSampleCount:\t20\nSum:\t\t26.97 ms\r\nFirst samples:\t\u2582\u2583\u2584\u2586\u2587\u2586\u2587\u2587\u2582\u2581\u2587\u2587\u2588\u2588\u2588\u2587\u2587\u2588\u2587\u2588\r\nHistogram:\t\u2588\u2582\u2581\u2581\u2582\u2581\r\n\r\nRequestStream
+        in Milliseconds\nMin:\t\t10.45 ms\nMedian:\t\t28.51 ms\nMax:\t\t30.83 ms\nAvg:\t\t21.65
+        ms\nStdDev:\t\t9.01 ms\nSampleCount:\t20\nSum:\t\t433.01 ms\r\nFirst samples:\t\u2587\u2581\u2587\u2587\u2581\u2587\u2581\u2587\u2587\u2581\u2588\u2581\u2587\u2587\u2581\u2587\u2581\u2587\u2587\u2581\r\nHistogram:\t\u2588\u2582\u2581\u2581\u2583\u2581\r\n\r\nResponse
+        in Milliseconds\nMin:\t\t31.29 ms\nMedian:\t\t32.03 ms\nMax:\t\t51.42 ms\nAvg:\t\t38.57
+        ms\nStdDev:\t\t8.95 ms\nSampleCount:\t20\nSum:\t\t771.37 ms\r\nFirst samples:\t\u2588\u2581\u2581\u2588\u2581\u2581\u2588\u2581\u2581\u2588\u2581\u2581\u2587\u2581\u2581\u2588\u2582\u2588\u2581\u2581\r\nHistogram:\t\u2588\u2582\u2581\u2581\u2583\u2581\r\n\r\nResponseStream
+        in Milliseconds\nMin:\t\t13.40 ms\nMedian:\t\t31.56 ms\nMax:\t\t32.99 ms\nAvg:\t\t27.21
+        ms\nStdDev:\t\t7.87 ms\nSampleCount:\t20\nSum:\t\t544.14 ms\r\nFirst samples:\t\u2588\u2581\u2588\u2588\u2587\u2581\u2588\u2588\u2587\u2587\u2581\u2587\u2587\u2587\u2581\u2587\u2588\u2588\u2587\u2581\r\nHistogram:\t\u2588\u2582\u2581\u2581\u2584\u2581\r\n\r\n\r\n##performancetestresult2:{\"Name\":\"EditModeTestRunner.JsonPerformanceTest(2500)\",\"ClassName\":\"EditModeTestRunner\",\"MethodName\":\"JsonPerformanceTest\",\"Version\":\"1\",\"Categories\":[\"Performance\"],\"SampleGroups\":[{\"Name\":\"Serialize\",\"Unit\":2,\"IncreaseIsBetter\":false,\"Samples\":[13.473700000000008,13.616300000000024,13.638700000000029,13.479100000000017,13.294999999999959,13.453499999999963,31.70580000000001,13.45010000000002,13.408900000000017,13.64179999999999,13.597500000000025,13.439999999999998,13.555200000000014,14.432800000000043,13.502299999999991,13.737100000000055,32.182399999999919,13.577399999999898,13.63659999999993,13.643500000000018],\"Min\":13.294999999999959,\"Max\":32.182399999999919,\"Median\":13.587449999999962,\"Average\":15.423384999999997,\"StandardDeviation\":5.511768024987526,\"Sum\":308.4676999999999},{\"Name\":\"Request\",\"Unit\":2,\"IncreaseIsBetter\":false,\"Samples\":[1.3219999999999992,1.3293999999999998,1.3302999999999977,1.3491999999999962,1.3520000000000039,1.3508000000000067,1.3544000000000054,1.3582000000000037,1.3216000000000037,1.3121999999999972,1.3519999999999968,1.357599999999998,1.3617999999999953,1.3598,1.3622000000000015,1.3545000000000017,1.3585000000000065,1.3623000000000048,1.356900000000003,1.3614999999999995],\"Min\":1.3121999999999972,\"Max\":1.3623000000000048,\"Median\":1.3544500000000035,\"Average\":1.348360000000001,\"StandardDeviation\":0.015393940366261834,\"Sum\":26.96720000000002},{\"Name\":\"RequestStream\",\"Unit\":2,\"IncreaseIsBetter\":false,\"Samples\":[29.083200000000035,10.701700000000017,28.585900000000039,29.022099999999968,10.453400000000102,28.89289999999994,10.654499999999985,28.635400000000005,28.945899999999939,10.615199999999959,30.829700000000004,10.689100000000054,29.212400000000004,28.424300000000018,10.562199999999962,29.065600000000019,10.687800000000039,28.359500000000027,28.95060000000001,10.634000000000015],\"Min\":10.453400000000102,\"Max\":30.829700000000004,\"Median\":28.505100000000028,\"Average\":21.650270000000007,\"StandardDeviation\":9.01484186473062,\"Sum\":433.0054000000001},{\"Name\":\"Response\",\"Unit\":2,\"IncreaseIsBetter\":false,\"Samples\":[50.82319999999993,31.96429999999998,31.779300000000036,50.46850000000006,31.47550000000001,31.9067,50.27959999999996,31.99590000000012,31.466699999999947,50.970400000000157,32.2043000000001,31.772100000000138,49.859300000000079,31.52260000000001,31.28729999999996,51.05559999999991,35.58369999999991,51.41800000000012,32.07060000000001,31.46349999999984],\"Min\":31.28729999999996,\"Max\":51.41800000000012,\"Median\":32.033250000000069,\"Average\":38.56835500000001,\"StandardDeviation\":8.945012944679018,\"Sum\":771.3671000000003},{\"Name\":\"ResponseStream\",\"Unit\":2,\"IncreaseIsBetter\":false,\"Samples\":[31.60119999999995,13.779999999999973,32.043499999999998,31.86379999999997,31.447700000000056,13.396800000000099,31.893799999999943,31.695600000000014,31.55239999999992,31.376800000000004,13.870000000000005,31.58820000000003,31.55619999999999,31.557199999999967,13.461799999999926,31.06529999999998,32.98939999999993,32.36869999999999,31.58960000000002,13.446800000000167],\"Min\":13.396800000000099,\"Max\":32.98939999999993,\"Median\":31.556699999999979,\"Average\":27.207239999999996,\"StandardDeviation\":7.871201326379579,\"Sum\":544.1447999999999}]}\r\n##performancetestruninfo2:{\"TestSuite\":\"Editmode\",\"Date\":1723364953962,\"Player\":{\"Development\":true,\"ScreenWidth\":1920,\"ScreenHeight\":1080,\"ScreenRefreshRate\":60,\"Fullscreen\":false,\"Vsync\":1,\"AntiAliasing\":0,\"Batchmode\":false,\"RenderThreadingMode\":\"MultiThreaded\",\"GpuSkinning\":false,\"Platform\":\"WindowsEditor\",\"ColorSpace\":\"Gamma\",\"AnisotropicFiltering\":\"Disable\",\"BlendWeights\":\"FourBones\",\"GraphicsApi\":\"Direct3D11\",\"ScriptingBackend\":\"Mono2x\",\"AndroidTargetSdkVersion\":\"AndroidApiLevelAuto\",\"AndroidBuildSystem\":\"Gradle\",\"BuildTarget\":\"StandaloneWindows64\",\"StereoRenderingPath\":\"MultiPass\"},\"Hardware\":{\"OperatingSystem\":\"Windows
+        10  (10.0.19045) 64bit\",\"DeviceModel\":\"82R4 (LENOVO)\",\"DeviceName\":\"DESKTOP-55T0R54\",\"ProcessorType\":\"AMD
+        Ryzen 5 5500U with Radeon Graphics \",\"ProcessorCount\":12,\"GraphicsDeviceName\":\"AMD
+        Radeon(TM) Graphics\",\"SystemMemorySizeMB\":14181},\"Editor\":{\"Version\":\"2021.3.21f1\",\"Branch\":\"2021.3/staging\",\"Changeset\":\"1b156197d683\",\"Date\":1678195707},\"Dependencies\":[\"com.unity.2d.animation@7.0.9\",\"com.unity.2d.pixel-perfect@5.0.3\",\"com.unity.2d.psdimporter@6.0.7\",\"com.unity.2d.sprite@1.0.0\",\"com.unity.2d.spriteshape@7.0.6\",\"com.unity.2d.tilemap@1.0.0\",\"com.unity.assetbundlebrowser@1.7.0\",\"com.unity.collab-proxy@2.0.1\",\"com.unity.editorcoroutines@1.0.0\",\"com.unity.ide.rider@3.0.31\",\"com.unity.ide.vscode@1.2.5\",\"com.unity.mobile.android-logcat@1.3.2\",\"com.unity.performance.profile-analyzer@1.2.2\",\"com.unity.profiling.core@1.0.2\",\"com.unity.render-pipelines.universal@12.1.10\",\"com.unity.test-framework@1.3.9\",\"com.unity.test-framework.performance@3.0.3\",\"com.unity.textmeshpro@3.0.9\",\"com.unity.timeline@1.6.5\",\"com.unity.ugui@1.0.0\",\"com.unity.modules.ai@1.0.0\",\"com.unity.modules.androidjni@1.0.0\",\"com.unity.modules.animation@1.0.0\",\"com.unity.modules.assetbundle@1.0.0\",\"com.unity.modules.audio@1.0.0\",\"com.unity.modules.cloth@1.0.0\",\"com.unity.modules.director@1.0.0\",\"com.unity.modules.imageconversion@1.0.0\",\"com.unity.modules.imgui@1.0.0\",\"com.unity.modules.jsonserialize@1.0.0\",\"com.unity.modules.particlesystem@1.0.0\",\"com.unity.modules.physics@1.0.0\",\"com.unity.modules.physics2d@1.0.0\",\"com.unity.modules.screencapture@1.0.0\",\"com.unity.modules.terrain@1.0.0\",\"com.unity.modules.terrainphysics@1.0.0\",\"com.unity.modules.tilemap@1.0.0\",\"com.unity.modules.ui@1.0.0\",\"com.unity.modules.uielements@1.0.0\",\"com.unity.modules.umbra@1.0.0\",\"com.unity.modules.unityanalytics@1.0.0\",\"com.unity.modules.unitywebrequest@1.0.0\",\"com.unity.modules.unitywebrequestassetbundle@1.0.0\",\"com.unity.modules.unitywebrequestaudio@1.0.0\",\"com.unity.modules.unitywebrequesttexture@1.0.0\",\"com.unity.modules.unitywebrequestwww@1.0.0\",\"com.unity.modules.vehicles@1.0.0\",\"com.unity.modules.video@1.0.0\",\"com.unity.modules.vr@1.0.0\",\"com.unity.modules.wind@1.0.0\",\"com.unity.modules.xr@1.0.0\",\"com.unity.modules.subsystems@1.0.0\",\"com.unity.modules.uielementsnative@1.0.0\",\"com.unity.ext.nunit@2.0.3\",\"com.unity.mathematics@1.2.6\",\"com.unity.burst@1.8.2\",\"com.unity.render-pipelines.core@12.1.10\",\"com.unity.shadergraph@12.1.10\",\"com.unity.2d.common@6.0.6\",\"com.unity.2d.path@5.0.2\",\"com.unity.searcher@4.9.1\"],\"Results\":[]}\r\n"
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1009
+      parentUniqueId: EditrModeTestAssembly.dll/EditModeTestRunner/[EditrModeTestAssembly][EditModeTestRunner.JsonPerformanceTest][suite]
+    - id: 1009
+      uniqueId: EditrModeTestAssembly.dll/EditModeTestRunner/[EditrModeTestAssembly][EditModeTestRunner.StringMarshalTest]
+      name: StringMarshalTest
+      fullName: EditModeTestRunner.StringMarshalTest
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1005
+      parentUniqueId: EditrModeTestAssembly.dll/[EditrModeTestAssembly][EditModeTestRunner][suite]
+    - id: 1010
+      uniqueId: EditrModeTestAssembly.dll/EditModeTestRunner/[EditrModeTestAssembly][EditModeTestRunner.UnsafePerformanceTest]
+      name: UnsafePerformanceTest
+      fullName: EditModeTestRunner.UnsafePerformanceTest
+      resultStatus: 1
+      duration: 0.1372534
+      messages: 
+      output: "[EditModeTestRunner.UnsafePerformanceTest] TEST\r\nUnsafe in Milliseconds\nMin:\t\t0.05
+        ms\nMedian:\t\t0.05 ms\nMax:\t\t0.24 ms\nAvg:\t\t0.06 ms\nStdDev:\t\t0.04
+        ms\nSampleCount:\t20\nSum:\t\t1.13 ms\r\nFirst samples:\t\u2588\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\r\nHistogram:\t\u2588\u2581\u2581\u2581\u2581\r\n\r\nConvert
+        in Milliseconds\nMin:\t\t1.23 ms\nMedian:\t\t1.26 ms\nMax:\t\t1.55 ms\nAvg:\t\t1.29
+        ms\nStdDev:\t\t0.08 ms\nSampleCount:\t20\nSum:\t\t25.76 ms\r\nFirst samples:\t\u2588\u2582\u2581\u2581\u2582\u2582\u2582\u2582\u2582\u2581\u2581\u2581\u2585\u2585\u2581\u2581\u2581\u2583\u2581\u2581\r\nHistogram:\t\u2588\u2582\u2581\u2581\u2581\r\n\r\nDuplicateCast
+        in Milliseconds\nMin:\t\t0.25 ms\nMedian:\t\t0.33 ms\nMax:\t\t19.42 ms\nAvg:\t\t1.28
+        ms\nStdDev:\t\t4.16 ms\nSampleCount:\t20\nSum:\t\t25.54 ms\r\nFirst samples:\t\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2588\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\r\nHistogram:\t\u2588\u2581\u2581\u2581\u2581\r\n\r\nLambdaExpressEnumToInt
+        in Milliseconds\nMin:\t\t0.10 ms\nMedian:\t\t0.11 ms\nMax:\t\t0.41 ms\nAvg:\t\t0.12
+        ms\nStdDev:\t\t0.07 ms\nSampleCount:\t20\nSum:\t\t2.41 ms\r\nFirst samples:\t\u2588\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\r\nHistogram:\t\u2588\u2581\u2581\u2581\u2581\r\n\r\nLambdaExpressIntToEnum
+        in Milliseconds\nMin:\t\t0.09 ms\nMedian:\t\t0.09 ms\nMax:\t\t0.21 ms\nAvg:\t\t0.11
+        ms\nStdDev:\t\t0.03 ms\nSampleCount:\t20\nSum:\t\t2.13 ms\r\nFirst samples:\t\u2588\u2583\u2583\u2583\u2583\u2583\u2583\u2583\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\r\nHistogram:\t\u2588\u2582\u2581\u2581\u2581\r\n\r\n\r\n##performancetestresult2:{\"Name\":\"EditModeTestRunner.UnsafePerformanceTest\",\"ClassName\":\"EditModeTestRunner\",\"MethodName\":\"UnsafePerformanceTest\",\"Version\":\"1\",\"Categories\":[\"Performance\"],\"SampleGroups\":[{\"Name\":\"Unsafe\",\"Unit\":2,\"IncreaseIsBetter\":false,\"Samples\":[0.24250000000000006,0.046699999999999967,0.04630000000000001,0.04630000000000001,0.0526000000000002,0.04789999999999983,0.04630000000000001,0.0461999999999998,0.0461999999999998,0.04620000000000024,0.04620000000000024,0.04630000000000001,0.0461999999999998,0.0461999999999998,0.04630000000000001,0.04630000000000001,0.04630000000000001,0.04620000000000024,0.0461999999999998,0.0461999999999998],\"Min\":0.0461999999999998,\"Max\":0.24250000000000006,\"Median\":0.04630000000000001,\"Average\":0.056479999999999978,\"StandardDeviation\":0.0426991170868907,\"Sum\":1.1295999999999996},{\"Name\":\"Convert\",\"Unit\":2,\"IncreaseIsBetter\":false,\"Samples\":[1.5520000000000003,1.2699000000000003,1.2328000000000006,1.2410999999999995,1.2835,1.2684000000000007,1.2558000000000008,1.2772000000000006,1.2605000000000005,1.2553999999999999,1.2413000000000008,1.2493999999999997,1.4078,1.4366999999999984,1.2388000000000013,1.2394999999999997,1.2476999999999983,1.3118000000000017,1.2368999999999986,1.250399999999999],\"Min\":1.2328000000000006,\"Max\":1.5520000000000003,\"Median\":1.2556000000000003,\"Average\":1.287845,\"StandardDeviation\":0.08055111715550562,\"Sum\":25.756899999999999},{\"Name\":\"DuplicateCast\",\"Unit\":2,\"IncreaseIsBetter\":false,\"Samples\":[0.4197,0.2567,0.2564000000000001,0.2632000000000001,0.25449999999999997,0.2539,0.25319999999999989,0.26890000000000016,0.25669999999999995,19.4213,0.40220000000000058,0.5350999999999999,0.3484000000000016,0.3390999999999984,0.35190000000000057,0.3399000000000001,0.33889999999999889,0.3263999999999996,0.3291000000000004,0.3277000000000001],\"Min\":0.25319999999999989,\"Max\":19.4213,\"Median\":0.32840000000000027,\"Average\":1.2771599999999999,\"StandardDeviation\":4.163133822422719,\"Sum\":25.5432},{\"Name\":\"LambdaExpressEnumToInt\",\"Unit\":2,\"IncreaseIsBetter\":false,\"Samples\":[0.40750000000000005,0.10739999999999994,0.10450000000000004,0.10499999999999998,0.10509999999999997,0.10499999999999998,0.10510000000000008,0.1051000000000002,0.10509999999999997,0.10470000000000002,0.10699999999999999,0.10529999999999995,0.1048,0.10499999999999998,0.1048,0.1049,0.10470000000000024,0.1046999999999998,0.10509999999999975,0.10490000000000022],\"Min\":0.10450000000000004,\"Max\":0.40750000000000005,\"Median\":0.10499999999999998,\"Average\":0.120285,\"StandardDeviation\":0.06589542681400584,\"Sum\":2.4057},{\"Name\":\"LambdaExpressIntToEnum\",\"Unit\":2,\"IncreaseIsBetter\":false,\"Samples\":[0.20950000000000003,0.12160000000000004,0.11710000000000004,0.11699999999999999,0.11560000000000004,0.11719999999999997,0.11770000000000003,0.12,0.09119999999999995,0.09330000000000016,0.0898000000000001,0.09160000000000013,0.09160000000000013,0.09170000000000012,0.09160000000000013,0.0915999999999999,0.0915999999999999,0.08899999999999997,0.08919999999999995,0.0935999999999999],\"Min\":0.08899999999999997,\"Max\":0.20950000000000003,\"Median\":0.09250000000000014,\"Average\":0.10657500000000002,\"StandardDeviation\":0.026788763969246507,\"Sum\":2.1315000000000006}]}\r\n##performancetestruninfo2:{\"TestSuite\":\"Editmode\",\"Date\":1723360998537,\"Player\":{\"Development\":true,\"ScreenWidth\":1920,\"ScreenHeight\":1080,\"ScreenRefreshRate\":60,\"Fullscreen\":false,\"Vsync\":1,\"AntiAliasing\":0,\"Batchmode\":false,\"RenderThreadingMode\":\"MultiThreaded\",\"GpuSkinning\":false,\"Platform\":\"WindowsEditor\",\"ColorSpace\":\"Gamma\",\"AnisotropicFiltering\":\"Disable\",\"BlendWeights\":\"FourBones\",\"GraphicsApi\":\"Direct3D11\",\"ScriptingBackend\":\"Mono2x\",\"AndroidTargetSdkVersion\":\"AndroidApiLevelAuto\",\"AndroidBuildSystem\":\"Gradle\",\"BuildTarget\":\"StandaloneWindows64\",\"StereoRenderingPath\":\"MultiPass\"},\"Hardware\":{\"OperatingSystem\":\"Windows
+        10  (10.0.19045) 64bit\",\"DeviceModel\":\"82R4 (LENOVO)\",\"DeviceName\":\"DESKTOP-55T0R54\",\"ProcessorType\":\"AMD
+        Ryzen 5 5500U with Radeon Graphics \",\"ProcessorCount\":12,\"GraphicsDeviceName\":\"AMD
+        Radeon(TM) Graphics\",\"SystemMemorySizeMB\":14181},\"Editor\":{\"Version\":\"2021.3.21f1\",\"Branch\":\"2021.3/staging\",\"Changeset\":\"1b156197d683\",\"Date\":1678195707},\"Dependencies\":[\"com.unity.2d.animation@7.0.9\",\"com.unity.2d.pixel-perfect@5.0.3\",\"com.unity.2d.psdimporter@6.0.7\",\"com.unity.2d.sprite@1.0.0\",\"com.unity.2d.spriteshape@7.0.6\",\"com.unity.2d.tilemap@1.0.0\",\"com.unity.assetbundlebrowser@1.7.0\",\"com.unity.collab-proxy@2.0.1\",\"com.unity.editorcoroutines@1.0.0\",\"com.unity.ide.rider@3.0.31\",\"com.unity.ide.vscode@1.2.5\",\"com.unity.mobile.android-logcat@1.3.2\",\"com.unity.performance.profile-analyzer@1.2.2\",\"com.unity.profiling.core@1.0.2\",\"com.unity.render-pipelines.universal@12.1.10\",\"com.unity.test-framework@1.3.9\",\"com.unity.test-framework.performance@3.0.3\",\"com.unity.textmeshpro@3.0.9\",\"com.unity.timeline@1.6.5\",\"com.unity.ugui@1.0.0\",\"com.unity.modules.ai@1.0.0\",\"com.unity.modules.androidjni@1.0.0\",\"com.unity.modules.animation@1.0.0\",\"com.unity.modules.assetbundle@1.0.0\",\"com.unity.modules.audio@1.0.0\",\"com.unity.modules.cloth@1.0.0\",\"com.unity.modules.director@1.0.0\",\"com.unity.modules.imageconversion@1.0.0\",\"com.unity.modules.imgui@1.0.0\",\"com.unity.modules.jsonserialize@1.0.0\",\"com.unity.modules.particlesystem@1.0.0\",\"com.unity.modules.physics@1.0.0\",\"com.unity.modules.physics2d@1.0.0\",\"com.unity.modules.screencapture@1.0.0\",\"com.unity.modules.terrain@1.0.0\",\"com.unity.modules.terrainphysics@1.0.0\",\"com.unity.modules.tilemap@1.0.0\",\"com.unity.modules.ui@1.0.0\",\"com.unity.modules.uielements@1.0.0\",\"com.unity.modules.umbra@1.0.0\",\"com.unity.modules.unityanalytics@1.0.0\",\"com.unity.modules.unitywebrequest@1.0.0\",\"com.unity.modules.unitywebrequestassetbundle@1.0.0\",\"com.unity.modules.unitywebrequestaudio@1.0.0\",\"com.unity.modules.unitywebrequesttexture@1.0.0\",\"com.unity.modules.unitywebrequestwww@1.0.0\",\"com.unity.modules.vehicles@1.0.0\",\"com.unity.modules.video@1.0.0\",\"com.unity.modules.vr@1.0.0\",\"com.unity.modules.wind@1.0.0\",\"com.unity.modules.xr@1.0.0\",\"com.unity.modules.subsystems@1.0.0\",\"com.unity.modules.uielementsnative@1.0.0\",\"com.unity.ext.nunit@2.0.3\",\"com.unity.mathematics@1.2.6\",\"com.unity.burst@1.8.2\",\"com.unity.render-pipelines.core@12.1.10\",\"com.unity.shadergraph@12.1.10\",\"com.unity.2d.common@6.0.6\",\"com.unity.2d.path@5.0.2\",\"com.unity.searcher@4.9.1\"],\"Results\":[]}\r\n"
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1005
+      parentUniqueId: EditrModeTestAssembly.dll/[EditrModeTestAssembly][EditModeTestRunner][suite]
+    - id: 1008
+      uniqueId: EditrModeTestAssembly.dll/EditModeTestRunner/[EditrModeTestAssembly][EditModeTestRunner.UnsafeTest]
+      name: UnsafeTest
+      fullName: EditModeTestRunner.UnsafeTest
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1005
+      parentUniqueId: EditrModeTestAssembly.dll/[EditrModeTestAssembly][EditModeTestRunner][suite]
+    - id: 1009
+      uniqueId: EditrModeTestAssembly.dll/[EditrModeTestAssembly][TcpServerTestRunner][suite]
+      name: TcpServerTestRunner
+      fullName: TcpServerTestRunner
+      resultStatus: 1
+      duration: 5.1406155
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: Tcp Server Network Test
+      isSuite: 1
+      categories:
+      - Network
+      parentId: 1011
+      parentUniqueId: '[EditrModeTestAssembly][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/EditrModeTestAssembly.dll][suite]'
+    - id: 1012
+      uniqueId: EditrModeTestAssembly.dll/TcpServerTestRunner/[EditrModeTestAssembly][TcpServerTestRunner.TcpServeModuleTest][suite]
+      name: TcpServeModuleTest
+      fullName: TcpServerTestRunner.TcpServeModuleTest
+      resultStatus: 2
+      duration: 13.343658
+      messages: One or more child tests had errors
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories:
+      - Network
+      parentId: 1009
+      parentUniqueId: EditrModeTestAssembly.dll/[EditrModeTestAssembly][TcpServerTestRunner][suite]
+    - id: 1010
+      uniqueId: EditrModeTestAssembly.dll/TcpServerTestRunner/TcpServeModuleTest/[EditrModeTestAssembly][TcpServerTestRunner.TcpServeModuleTest(TcpStructServeModule,TcpServerTestRunner+TestTcpStructClient)]
+      name: TcpServeModuleTest(TcpStructServeModule,TcpServerTestRunner+TestTcpStructClient)
+      fullName: TcpServerTestRunner.TcpServeModuleTest(TcpStructServeModule,TcpServerTestRunner+TestTcpStructClient)
+      resultStatus: 1
+      duration: 2.5526285
+      messages: 
+      output: '<color=#00FF00>[SimpleTcpServer.Start] SimpleTcpServer Start || 0.0.0.0:8890</color>
 
-      ---
+        <color=#FFEB04>[SimpleTcpServer.Stop]
+        SimpleTcpServer Stop</color>
 
-      <color=#00FF00>[SimpleTcpServer.Start]
-      SimpleTcpServer Start || 0.0.0.0:8890</color>
+'
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Network
+      parentId: 1012
+      parentUniqueId: EditrModeTestAssembly.dll/TcpServerTestRunner/[EditrModeTestAssembly][TcpServerTestRunner.TcpServeModuleTest][suite]
+    - id: 1011
+      uniqueId: EditrModeTestAssembly.dll/TcpServerTestRunner/TcpServeModuleTest/[EditrModeTestAssembly][TcpServerTestRunner.TcpServeModuleTest(TcpPingServeModule,TcpServerTestRunner+TestTcpPingClient)]
+      name: TcpServeModuleTest(TcpPingServeModule,TcpServerTestRunner+TestTcpPingClient)
+      fullName: TcpServerTestRunner.TcpServeModuleTest(TcpPingServeModule,TcpServerTestRunner+TestTcpPingClient)
+      resultStatus: 2
+      duration: 13.339899
+      messages: "Unhandled log message: '[Error] [TcpServerTestRunner.TcpServeModuleTest]
+        Success || \uC791\uC5C5\uC744 \uC644\uB8CC\uD588\uC2B5\uB2C8\uB2E4.\r\n'.
+        Use UnityEngine.TestTools.LogAssert.Expect\r\nTearDown : System.NullReferenceException
+        : Object reference not set to an instance of an object"
+      output: "<color=#FFEB04>[SimpleTcpServer.Stop] SimpleTcpServer is already stopped</color>\r\n<color=#00FF00>[SimpleTcpServer.Start]
+        SimpleTcpServer Start || 0.0.0.0:8890</color>\r\n[TcpServerTestRunner.TcpServeModuleTest]
+        Success || \uC791\uC5C5\uC744 \uC644\uB8CC\uD588\uC2B5\uB2C8\uB2E4.\r\n\r\n<color=#FF0000>[SimpleTcpServer.Stop]
+        SimpleTcpServer Stop</color>\r\n"
+      stacktrace: "Logger:Error (string) (at Assets/CustomUtils/Common/Logger/Logger.cs:27)\r\nLogger:TraceError
+        (string) (at Assets/CustomUtils/Common/Logger/Logger.cs:79)\r\nTcpServerTestRunner:TcpServeModuleTest
+        (System.Type,System.Type) (at Assets/Test/EditMode/TcpServerTestRunner.cs:68)\r\nSystem.Reflection.MethodBase:Invoke
+        (object,object[])\r\nNUnit.Framework.Internal.Reflect:InvokeMethod (System.Reflection.MethodInfo,object,object[])\r\nNUnit.Framework.Internal.MethodWrapper:Invoke
+        (object,object[])\r\nNUnit.Framework.Internal.Commands.TestMethodCommand:RunNonAsyncTestMethod
+        (NUnit.Framework.Internal.ITestExecutionContext)\r\nNUnit.Framework.Internal.Commands.TestMethodCommand:RunTestMethod
+        (NUnit.Framework.Internal.ITestExecutionContext)\r\nNUnit.Framework.Internal.Commands.TestMethodCommand:Execute
+        (NUnit.Framework.Internal.ITestExecutionContext)\r\nUnityEditor.EditorApplication:Internal_CallUpdateFunctions
+        ()\r\n\r\n\r\n--TearDown\r\n  at System.Net.Sockets.TcpClient.get_Connected
+        () [0x00000] in <111da4cba18442e7addb95bcddc21c3b>:0 \r\n  at TcpServerTestRunner+TestTcpClient.Close
+        () [0x00001] in C:\\Project\\Unity\\CustomUtils\\Assets\\Test\\EditMode\\TcpServerTestRunner.cs:158
+        \r\n  at TcpServerTestRunner.TearDownTestRunner () [0x00023] in C:\\Project\\Unity\\CustomUtils\\Assets\\Test\\EditMode\\TcpServerTestRunner.cs:41
+        \r\n  at (wrapper managed-to-native) System.Reflection.RuntimeMethodInfo.InternalInvoke(System.Reflection.RuntimeMethodInfo,object,object[],System.Exception&)\r\n 
+        at System.Reflection.RuntimeMethodInfo.Invoke (System.Object obj, System.Reflection.BindingFlags
+        invokeAttr, System.Reflection.Binder binder, System.Object[] parameters,
+        System.Globalization.CultureInfo culture) [0x0006a] in <88e4733ac7bc4ae1b496735e6b83bbd3>:0 "
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Network
+      parentId: 1012
+      parentUniqueId: EditrModeTestAssembly.dll/TcpServerTestRunner/[EditrModeTestAssembly][TcpServerTestRunner.TcpServeModuleTest][suite]
+    - id: 1015
+      uniqueId: EditrModeTestAssembly.dll/TcpServerTestRunner/[EditrModeTestAssembly][TcpServerTestRunner.TcpServeModuleTestAsync][suite]
+      name: TcpServeModuleTestAsync
+      fullName: TcpServerTestRunner.TcpServeModuleTestAsync
+      resultStatus: 1
+      duration: 26.362892
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories:
+      - Network
+      parentId: 1009
+      parentUniqueId: EditrModeTestAssembly.dll/[EditrModeTestAssembly][TcpServerTestRunner][suite]
+    - id: 1013
+      uniqueId: EditrModeTestAssembly.dll/TcpServerTestRunner/TcpServeModuleTestAsync/[EditrModeTestAssembly][TcpServerTestRunner.TcpServeModuleTestAsync(TcpStructServeModule,TcpServerTestRunner+TestTcpStructClient)]
+      name: TcpServeModuleTestAsync(TcpStructServeModule,TcpServerTestRunner+TestTcpStructClient)
+      fullName: TcpServerTestRunner.TcpServeModuleTestAsync(TcpStructServeModule,TcpServerTestRunner+TestTcpStructClient)
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Network
+      parentId: 1015
+      parentUniqueId: EditrModeTestAssembly.dll/TcpServerTestRunner/[EditrModeTestAssembly][TcpServerTestRunner.TcpServeModuleTestAsync][suite]
+    - id: 1014
+      uniqueId: EditrModeTestAssembly.dll/TcpServerTestRunner/TcpServeModuleTestAsync/[EditrModeTestAssembly][TcpServerTestRunner.TcpServeModuleTestAsync(TcpPingServeModule,TcpServerTestRunner+TestTcpPingClient)]
+      name: TcpServeModuleTestAsync(TcpPingServeModule,TcpServerTestRunner+TestTcpPingClient)
+      fullName: TcpServerTestRunner.TcpServeModuleTestAsync(TcpPingServeModule,TcpServerTestRunner+TestTcpPingClient)
+      resultStatus: 1
+      duration: 26.326977
+      messages: 
+      output: '<color=#00FF00>[SimpleTcpServer.Start] SimpleTcpServer Start || 0.0.0.0:8890</color>
 
-      [<TcpServerTest>d__1.MoveNext]
-      Return
+        <color=#FF0000>[SimpleTcpServer.Stop]
+        SimpleTcpServer Stop</color>
 
-      <color=#FFEB04>[SimpleTcpServer.Stop] SimpleTcpServer Stop</color>'
+'
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Network
+      parentId: 1015
+      parentUniqueId: EditrModeTestAssembly.dll/TcpServerTestRunner/[EditrModeTestAssembly][TcpServerTestRunner.TcpServeModuleTestAsync][suite]
+    m_ResultText: JsonPerformanceTest (4.277s)
     m_ResultStacktrace: 
     m_TestListState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: a8103d32
-      m_LastClickedID: 842862760
-      m_ExpandedIDs: f6d801c437575fcc09d9cedca4da07e173294026bdddfc27c29f393322524b3a9dda8a415d4c0954db1cfa66ffffff7f
+      m_SelectedIDs: 9267dffe
+      m_LastClickedID: -18913390
+      m_ExpandedIDs: f6d801c4416d28c537575fcc09d9cedca4da07e1732940267a14c82ac29f393322524b3a9dda8a415d4c09542cae4f5b739d6464db1cfa6616b81e6cd585a773ffffff7f
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -1612,4 +2161,6 @@ MonoBehaviour:
       m_SearchString: 
       selectedCategoryMask: 0
       availableCategories:
+      - Network
+      - Performance
       - Uncategorized

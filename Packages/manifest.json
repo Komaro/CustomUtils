@@ -16,6 +16,7 @@
     "com.unity.profiling.core": "1.0.2",
     "com.unity.render-pipelines.universal": "12.1.10",
     "com.unity.test-framework": "1.3.9",
+    "com.unity.test-framework.performance": "https://github.com/needle-mirror/com.unity.test-framework.performance.git",
     "com.unity.textmeshpro": "3.0.9",
     "com.unity.timeline": "1.6.5",
     "com.unity.ugui": "1.0.0",

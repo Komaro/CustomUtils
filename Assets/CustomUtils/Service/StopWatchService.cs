@@ -12,6 +12,7 @@ public class StopWatchService : IService {
 
     void IService.Start() => _watchDic.Clear();
     void IService.Stop() => _watchDic.Clear();
+    void IService.Refresh() => _watchDic.Clear();
 
     public void Start([CallerMemberName] string caller = null) {
         if (_watchDic.TryGetValue(caller, out var watch)) {
@@ -37,6 +38,13 @@ public class StopWatchService : IService {
         Start(caller);
     }
 
+    public void RecordAverage([CallerMemberName] string caller = null) {
+        if (_watchDic.TryGetValue(caller, out var watch)) {
+            watch.Stop();
+            _averageDic.AutoAccumulateAdd(caller, watch.ElapsedTicks);
+        }
+    }
+
     public void StopAverage([CallerMemberName] string caller = null) {
         if (_watchDic.TryGetValue(caller, out var watch)) {
             watch.Stop();
@@ -48,4 +56,12 @@ public class StopWatchService : IService {
             }
         }
     }
+
+    public void LogAverage([CallerMemberName] string caller = null) {
+        if (_watchDic.TryGetValue(caller, out var watch) && _countDic.TryGetValue(caller, out var count) && _averageDic.TryGetValue(caller, out var total)) {
+            Logger.TraceLog($"{caller} => {watch.ElapsedTicks} tick || {watch.ElapsedMilliseconds} milSec || {watch.Elapsed} || Avg = {total / count} tick", Color.magenta);
+        }
+    }
+
+    public double GetAverage([CallerMemberName] string caller = null) => _watchDic.TryGetValue(caller, out var watch) && _countDic.TryGetValue(caller, out var count) && _averageDic.TryGetValue(caller, out var total) ? total / count : 0d;
 }

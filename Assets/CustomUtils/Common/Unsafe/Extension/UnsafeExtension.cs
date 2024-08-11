@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 public static class UnsafeExtension {
+
+    public static int ToIntUnsafe<TEnum>(this TEnum type) where TEnum : struct, Enum => Unsafe.As<TEnum, int>(ref type);
 
     public static unsafe byte[] ToBytesUnsafe<T>(this ref T value) where T : unmanaged {
         var bytes = new byte[Marshal.SizeOf<T>()];

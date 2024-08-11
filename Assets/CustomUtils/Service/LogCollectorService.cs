@@ -12,7 +12,7 @@ public class LogCollectorService : IService {
 
     void IService.Init() {
         _logList = new List<string>(_maxLog / 2);
-        _filterSet = new HashSet<LogType>(EnumUtil.GetValues<LogType>());
+        _filterSet = new HashSet<LogType>(EnumUtil.GetValueList<LogType>());
     }
 
     void IService.Start() {

@@ -2,6 +2,7 @@
 using System.Buffers;
 using System.Collections.Concurrent;
 using System.Net.Sockets;
+using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Channels;
 using System.Threading.Tasks;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 public interface ITcpServeModule {
     
     public bool Start(TcpListener listener, CancellationToken token);
+    public void Stop();
     public void Close();
     
     public Task<TcpSession> ConnectSessionAsync(TcpClient client, CancellationToken token);
@@ -30,18 +32,18 @@ public interface ITcpSendModule<in TData> : ITcpServeModule {
 public abstract class TcpServeModule<THeader, TData> : ITcpReceiveModule<THeader>, ITcpSendModule<TData>, IDisposable {
 
     protected TcpListener listener;
-    protected Task serveTask;
     
     protected readonly MemoryPool<byte> memoryPool = MemoryPool<byte>.Shared;
     protected readonly ConcurrentDictionary<uint, TcpSession> sessionDic = new();
 
     protected readonly Channel<(TcpClient, CancellationToken)> connectChannel = Channel.CreateBounded<(TcpClient, CancellationToken)>(new BoundedChannelOptions(5));
-    protected Task readConnectTask;
-    
     protected readonly Channel<(TcpSession, TData)> _sendChannel = Channel.CreateBounded<(TcpSession, TData)>(new BoundedChannelOptions(50));
-    protected Task readSendTask;
     
-    protected CancellationTokenSource channelToken;
+    protected CancellationTokenSource channelCancelToken;
+
+    protected bool isRunning;
+
+    protected virtual int RECEIVE_BUFFER_SIZE => 1024; 
 
     ~TcpServeModule() => Dispose();
     public void Dispose() => Close();
@@ -58,26 +60,24 @@ public abstract class TcpServeModule<THeader, TData> : ITcpReceiveModule<THeader
 
         this.listener = listener;
         try {
-            serveTask = Task.Run(() => ServeAsync(token), token);
+            Task.Run(() => ServeAsync(token), token);
             
-            channelToken = new CancellationTokenSource();
-            readConnectTask = Task.Run(async () => await ReadConnectChannelAsync(), channelToken.Token);
-            readSendTask = Task.Run(async () => await ReadSendChannelAsync(), channelToken.Token);
+            channelCancelToken = new CancellationTokenSource();
+            Task.Run(async () => await ReadConnectChannelAsync(channelCancelToken.Token), channelCancelToken.Token);
+            Task.Run(async () => await ReadSendChannelAsync(channelCancelToken.Token), channelCancelToken.Token);
         } catch (Exception ex) {
             Logger.TraceError(ex);
             Close();
             return false;
         }
         
+        isRunning = true;
         return true;
     }
 
     public virtual void Stop() {
-        channelToken?.Cancel();
-        
-        serveTask?.Dispose();
-        readConnectTask?.Dispose();
-        readSendTask?.Dispose();
+        isRunning = false;
+        channelCancelToken?.Cancel();
     }
 
     public virtual void Close() {
@@ -90,13 +90,24 @@ public abstract class TcpServeModule<THeader, TData> : ITcpReceiveModule<THeader
 
     
     protected virtual async Task ServeAsync(CancellationToken token) {
-        try {
-            while (token.IsCancellationRequested == false) {
-                var client = await listener.AcceptTcpClientAsync();
-                token.ThrowIfCancellationRequested();
-                await connectChannel.Writer.WriteAsync((client, token), channelToken.Token);
+        while (token.IsCancellationRequested == false) {
+            try {
+                var client = await AcceptAsync(token);
+                await connectChannel.Writer.WriteAsync((client, token), channelCancelToken.Token);
             }
-        } catch (OperationCanceledException) { }
+            catch (OperationCanceledException) { }
+            catch (SocketException ex) {
+                Logger.TraceLog($"{ex.SocketErrorCode} || {ex.Message}");
+            } catch (SystemException ex) {
+                Logger.TraceLog(ex);
+            } 
+        }
+    }
+
+    protected virtual async Task<TcpClient> AcceptAsync(CancellationToken token) {
+        token.ThrowIfCancellationRequested();
+        var client = await listener.AcceptTcpClientAsync();
+        return client;
     }
 
     protected virtual async Task<bool> ConnectAsync(TcpClient client, CancellationToken token) {
@@ -140,9 +151,10 @@ public abstract class TcpServeModule<THeader, TData> : ITcpReceiveModule<THeader
         }
     }
     
-    private async Task ReadConnectChannelAsync() {
+    private async Task ReadConnectChannelAsync(CancellationToken channelToken) {
         while (IsRunning()) {
-            var (client, token) = await connectChannel.Reader.ReadAsync();
+            var (client, token) = await connectChannel.Reader.ReadAsync(channelToken);
+            channelToken.ThrowIfCancellationRequested();
             if (await ConnectAsync(client, token) == false) {
                 Logger.TraceError($"Failed to connect to {client.GetIpAddress()}");
             }
@@ -151,10 +163,11 @@ public abstract class TcpServeModule<THeader, TData> : ITcpReceiveModule<THeader
         await Task.CompletedTask;
     }
 
-    private async Task ReadSendChannelAsync() {
+    private async Task ReadSendChannelAsync(CancellationToken channelToken) {
         while (IsRunning()) {
-            var (session, data) = await _sendChannel.Reader.ReadAsync();
-            if (await SendAsync(session, data, channelToken.Token) == false) {
+            var (session, data) = await _sendChannel.Reader.ReadAsync(channelToken);
+            channelToken.ThrowIfCancellationRequested();
+            if (await SendAsync(session, data, channelToken) == false) {
                 Logger.TraceError($"Failed to send to {session.ID} [{data.GetType().Name}]");
             }
         }
@@ -175,5 +188,5 @@ public abstract class TcpServeModule<THeader, TData> : ITcpReceiveModule<THeader
     
     public void Send<T>(TcpSession session, T data) where T : TData => _sendChannel.Writer.WriteAsync((session, data));
 
-    public bool IsRunning() => serveTask is { IsCanceled: false, IsCompleted: false };
+    public bool IsRunning() => isRunning;
 }

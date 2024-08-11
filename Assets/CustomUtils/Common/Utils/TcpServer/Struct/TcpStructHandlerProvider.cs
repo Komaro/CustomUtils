@@ -12,10 +12,10 @@ public static class TcpStructHandlerProvider {
 
     private static readonly Dictionary<Enum, Type> _handlerEnumDic = new();
     private static readonly Dictionary<Type, Type> _handlerGenericDic = new();
-    private static readonly ConcurrentDictionary<Type, ITcpStructHandler> _handlerDic = new();
+    private static readonly ConcurrentDictionary<Type, ITcpHandler> _handlerDic = new();
 
     static TcpStructHandlerProvider() {
-        foreach (var type in ReflectionProvider.GetInterfaceTypes<ITcpStructHandler>().ToHashSetWithDistinct()) {
+        foreach (var type in ReflectionProvider.GetInterfaceTypes<ITcpHandler>().ToHashSetWithDistinct()) {
             if (type.IsAbstract || type.IsInterface) {
                 continue;
             }
@@ -31,12 +31,12 @@ public static class TcpStructHandlerProvider {
         }
     }
 
-    public static bool TryGetReceiveHandler(TCP_STRUCT_BODY bodyType, out ITcpStructReceiveHandler handler) => (handler = GetReceiveHandler(bodyType)) != null;
+    public static bool TryGetReceiveHandler(TCP_BODY bodyType, out ITcpReceiveHandler handler) => (handler = GetReceiveHandler(bodyType)) != null;
 
-    public static ITcpStructReceiveHandler GetReceiveHandler(TCP_STRUCT_BODY bodyType) {
+    public static ITcpReceiveHandler GetReceiveHandler(TCP_BODY bodyType) {
         try {
             if (_handlerEnumDic.TryGetValue(bodyType, out var type)) {
-                return _handlerDic.GetOrAdd(type, _ => Activator.CreateInstance(type) as ITcpStructHandler) as ITcpStructReceiveHandler;
+                return _handlerDic.GetOrAdd(type, _ => Activator.CreateInstance(type) as ITcpHandler) as ITcpReceiveHandler;
             }
         } catch (Exception ex) {
             Logger.TraceError(ex);
@@ -45,12 +45,12 @@ public static class TcpStructHandlerProvider {
         return null;
     }
 
-    public static bool TryGetReceiveHandler<T>(out ITcpStructReceiveHandler handler) where T : ITcpPacket => (handler = GetReceiveHandler<T>()) != null;
+    public static bool TryGetReceiveHandler<T>(out ITcpReceiveHandler handler) where T : ITcpPacket => (handler = GetReceiveHandler<T>()) != null;
 
-    public static ITcpStructReceiveHandler GetReceiveHandler<T>() where T : ITcpPacket {
+    public static ITcpReceiveHandler GetReceiveHandler<T>() where T : ITcpPacket {
         try {
             if (_handlerGenericDic.TryGetValue(typeof(T), out var type)) {
-                return _handlerDic.GetOrAdd(type, _ => Activator.CreateInstance(type) as ITcpStructHandler) as ITcpStructReceiveHandler;
+                return _handlerDic.GetOrAdd(type, _ => Activator.CreateInstance(type) as ITcpHandler) as ITcpReceiveHandler;
             }
         } catch (Exception ex) {
             Logger.TraceError(ex);
@@ -59,12 +59,12 @@ public static class TcpStructHandlerProvider {
         return default;
     }
 
-    public static bool TryGetSendHandler<T>(TCP_STRUCT_BODY bodyType, out ITcpStructSendHandler<T> handler) where T : ITcpPacket => (handler = GetSendHandler<T>(bodyType)) != null;
+    public static bool TryGetSendHandler<T>(TCP_BODY bodyType, out ITcpSendHandler<T> handler) where T : ITcpPacket => (handler = GetSendHandler<T>(bodyType)) != null;
 
-    public static ITcpStructSendHandler<T> GetSendHandler<T>(TCP_STRUCT_BODY bodyType) where T : ITcpPacket {
+    public static ITcpSendHandler<T> GetSendHandler<T>(TCP_BODY bodyType) where T : ITcpPacket {
         try {
             if (_handlerEnumDic.TryGetValue(bodyType, out var type)) {
-                return _handlerDic.GetOrAdd(type, _ => Activator.CreateInstance(type) as ITcpStructHandler) as ITcpStructSendHandler<T>;
+                return _handlerDic.GetOrAdd(type, _ => Activator.CreateInstance(type) as ITcpHandler) as ITcpSendHandler<T>;
             }
         } catch (Exception ex) {
             Logger.TraceError(ex);
@@ -73,12 +73,12 @@ public static class TcpStructHandlerProvider {
         return null;
     }
 
-    public static bool TryGetSendHandler<T>(out ITcpStructSendHandler<T> handler) where T : ITcpPacket => (handler = GetSendHandler<T>()) != null;
+    public static bool TryGetSendHandler<T>(out ITcpSendHandler<T> handler) where T : ITcpPacket => (handler = GetSendHandler<T>()) != null;
 
-    public static ITcpStructSendHandler<T> GetSendHandler<T>() where T : ITcpPacket {
+    public static ITcpSendHandler<T> GetSendHandler<T>() where T : ITcpPacket {
         try {
             if (_handlerGenericDic.TryGetValue(typeof(T), out var type)) {
-                return _handlerDic.GetOrAdd(type, _ => Activator.CreateInstance(type) as ITcpStructHandler) as ITcpStructSendHandler<T>;
+                return _handlerDic.GetOrAdd(type, _ => Activator.CreateInstance(type) as ITcpHandler) as ITcpSendHandler<T>;
             }
         } catch (Exception ex) {
             Logger.TraceError(ex);
@@ -87,47 +87,8 @@ public static class TcpStructHandlerProvider {
         return null;
     }
 
-    public static TcpHeader CreateErrorHeader(TcpSession session, TCP_ERROR error) => new(session, TCP_STRUCT_BODY.ERROR);
+    public static TcpHeader CreateErrorHeader(TcpSession session, TCP_ERROR error) => new(session, TCP_BODY.ERROR);
 
-    public static async Task<Exception> ResponseExceptionAsync<TPacket>(_TcpResponseException<TPacket> exception, TcpSession session, CancellationToken token) where TPacket : ITcpPacket {
-        if (session.Connected) {
-            var packet = exception.GetPacketBytes(session);
-            await session.Stream.WriteAsync(packet, token);
-            return exception;
-        }
-
-        return new DisconnectSessionException(session);
-    }
-    
-    public static async Task<Exception> AsyncResponseException<T>(TcpResponseException<T> exception, TcpSession session, CancellationToken token) where T : struct, ITcpPacket {
-        if (session.Connected) {
-            var header = exception.CreateErrorHeader(session.ID);
-            await session.Stream.WriteAsync(header.ToBytes(), token);
-            return exception;
-        }
-
-        return new DisconnectSessionException(session);
-    }
-    
-    public static async Task<Exception> AsyncResponseException<T>(TcpResponseException<T> exception, TcpClient client, CancellationToken token) where T : struct, ITcpPacket {
-        if (client.Connected) {
-            var header = exception.CreateErrorHeader();
-            await client.GetStream().WriteAsync(header.ToBytes(), token);
-            return exception;
-        }
-        
-        return new DisconnectSessionException(client);
-    }
-    
-    public static async Task<Exception> AsyncResponseException<T>(TcpResponseException<T> exception, Stream stream, CancellationToken token) where T : struct, ITcpPacket {
-        if (stream.CanWrite) {
-            var header = exception.CreateErrorHeader();
-            await stream.WriteAsync(header.ToBytes(), token);
-            return exception;
-        }
-        
-        return new InvalidOperationException($"Current {nameof(stream)} is not writable");
-    }
 }
 
 public class TcpHandlerAttribute : Attribute {

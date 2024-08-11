@@ -1,60 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 
 [StructLayout(LayoutKind.Sequential)]
-public struct TcpHeader : ITcpPacket {
-
-    public uint sessionId;
-    public TCP_STRUCT_BODY bodyType;
-    public int byteLength;
-
-    public TCP_ERROR error;
-
-    public TcpHeader(TCP_STRUCT_BODY bodyType, TCP_ERROR error) {
-        sessionId = 0;
-        this.bodyType = bodyType;
-        byteLength = 0;
-        this.error = error;
-    }
-    
-    public TcpHeader(TcpSession session) {
-        sessionId = session.ID;
-        bodyType = TCP_STRUCT_BODY.NONE;
-        byteLength = 0;
-        error = TCP_ERROR.NONE;
-    }
-    
-    public TcpHeader(uint sessionId, TCP_ERROR error) {
-        this.sessionId = sessionId;
-        bodyType = TCP_STRUCT_BODY.NONE;
-        byteLength = 0; 
-        this.error = error;
-    }
-
-    public TcpHeader(uint sessionId, TCP_STRUCT_BODY bodyType, TCP_ERROR error) {
-        this.sessionId = sessionId;
-        this.bodyType = bodyType;
-        byteLength = 0;
-        this.error = error;
-    }
-    
-    public TcpHeader(TcpSession session, TCP_STRUCT_BODY bodyType) {
-        sessionId = session.ID;
-        this.bodyType = bodyType;
-        byteLength = 0;
-        error = TCP_ERROR.NONE;
-    }
-    
-    public TcpHeader(TcpSession session, TCP_STRUCT_BODY bodyType, int byteLength) {
-        sessionId = session.ID;
-        this.bodyType = bodyType;
-        this.byteLength = byteLength;
-        error = TCP_ERROR.NONE;
-    }
-
-    public bool IsValid() => sessionId > 0;
-}
-
-[StructLayout(LayoutKind.Sequential)]
 public struct TcpRequestConnect : ITcpPacket {
 
     public uint sessionId;
@@ -123,17 +69,19 @@ public readonly struct TcpResponseTestText : ITcpPacket {
     public bool IsValid() => string.IsNullOrEmpty(text) == false;
 }
 
-public enum TCP_STRUCT_BODY {
+public enum TCP_BODY {
     NONE = 0,
     ERROR = 1,
     HEADER,
     
-    // Struct
     CONNECT = 100,
-    SESSION,
+    
+    SESSION_REQUEST,
+    SESSION_RESPONSE,
+    
     TEST,
     TEST_TEXT,
     
-    // Bytes
+    // Binary
     STRING = 90000,
 }

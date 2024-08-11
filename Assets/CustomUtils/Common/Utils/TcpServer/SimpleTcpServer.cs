@@ -61,10 +61,19 @@ public class SimpleTcpServer : IDisposable {
     }
 
     public void Stop() {
-        _isRunning = false;
-        _listenerCancelToken.Cancel();
-        _listener.Stop();
-        Logger.TraceLog($"{nameof(SimpleTcpServer)} {nameof(Stop)}", Color.yellow);
+        if (_isRunning) {
+            try {
+                _isRunning = false;
+                _listenerCancelToken.Cancel();
+                _serveModule.Stop();
+                _listener.Stop();
+                Logger.TraceLog($"{nameof(SimpleTcpServer)} {nameof(Stop)}", Color.red);
+            } catch (Exception ex) {
+                Logger.TraceError(ex);
+            }
+        } else {
+            Logger.TraceLog($"{nameof(SimpleTcpServer)} is already stopped", Color.yellow);
+        }
     }
 
     public void Send<TData>(TcpSession session, TData data) {

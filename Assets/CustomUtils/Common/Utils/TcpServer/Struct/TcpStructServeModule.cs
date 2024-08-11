@@ -25,12 +25,12 @@ public class TcpStructServeModule : TcpServeModule<TcpHeader, ITcpPacket> {
             var data = buffer.ToStruct<TcpRequestConnect>();
             if (data.HasValue) {
                 if (data.Value.IsValid() == false) {
-                    throw await TcpStructHandlerProvider.AsyncResponseException(new InvalidSessionData(data.Value), client, token);
+                    throw await TcpExceptionProvider.ResponseExceptionAsync(new InvalidSessionData(data.Value), client, token);
                 }
             
                 var id = data.Value.sessionId;
                 if (sessionDic.TryGetValue(id, out var session) && session.Connected) {
-                    throw await TcpStructHandlerProvider.AsyncResponseException(new DuplicateSessionException(), client, token);
+                    throw await TcpExceptionProvider.ResponseExceptionAsync(new DuplicateSessionException(), client, token);
                 }
                 
                 var newSession = new TcpSession(client, id);
@@ -79,23 +79,23 @@ public class TcpStructServeModule : TcpServeModule<TcpHeader, ITcpPacket> {
             return;
         }
     
-        using (var memoryOwner = memoryPool.Rent(1024)) {
+        using (var memoryOwner = memoryPool.Rent(RECEIVE_BUFFER_SIZE)) {
             using var memoryStream = new MemoryStream();
             var buffer = memoryOwner.Memory;
-            var totalReadBytesLength = 0;
-            while (totalReadBytesLength < header.byteLength) {
-                var readBytes = await session.Stream.ReadAsync(buffer, token);
-                if (readBytes == 0) {
+            var totalBytesLength = 0;
+            while (totalBytesLength < header.byteLength) {
+                var bytesLength = await session.Stream.ReadAsync(buffer, token);
+                if (bytesLength == 0) {
                     throw new DisconnectSessionException(session);
                 }
                 
                 token.ThrowIfCancellationRequested();
 
-                await memoryStream.WriteAsync(buffer[..readBytes], token);
-                totalReadBytesLength += readBytes;
+                await memoryStream.WriteAsync(buffer[..bytesLength], token);
+                totalBytesLength += bytesLength;
             }
             
-            if (header.bodyType != TCP_STRUCT_BODY.NONE && TcpStructHandlerProvider.TryGetReceiveHandler(header.bodyType, out var handler)) {
+            if (header.bodyType != TCP_BODY.NONE && TcpStructHandlerProvider.TryGetReceiveHandler(header.bodyType, out var handler)) {
                 await handler.ReceiveAsync(session, memoryStream.ToArray(), token);
             }
             

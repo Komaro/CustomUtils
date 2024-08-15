@@ -16,7 +16,7 @@ public class AnalyzerTestRunner {
     
     // public static IEnumerable RequiresUnityEditorAttributeRepeatProvider {
     //     get {
-    //         for (var i = 0; i < 10; i++) {
+    //         for (var i = 0; i < 10; i++) {public abstract claclass TestAAbastractA {}ClasTestAClassA
     //             yield return new TestCaseData(typeof(RequiresUnityEditorAttributeAnalyzer), "Test/EditMode/AnalyzerTestCaseCode/UnityEditorAnalyzerTestCase");
     //         }
     //     }

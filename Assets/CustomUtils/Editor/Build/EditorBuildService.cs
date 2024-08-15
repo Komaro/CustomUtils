@@ -63,7 +63,7 @@ public class EditorBuildService : EditorWindow {
     
     private string _buildPath;
 
-    private static Enum _buildType;
+    private static Enum _buildType; // TODO. 처리 수정. 현재 하나의 Attribute만 처리할 수 있는 상태
     private static Enum _selectBuildType;
     private static Dictionary<BuildTargetGroup, Dictionary<Enum, EnumValueAttribute>> _buildOptionDic = new ();
     private static Dictionary<Enum, EnumValueAttribute> _defineSymbolDic = new Dictionary<Enum, EnumValueAttribute>();
@@ -211,7 +211,7 @@ public class EditorBuildService : EditorWindow {
                 DrawIosOption();
                 break;
             default:
-                return;
+                break;
         }
         
         if (GUILayout.Button("BUILD", GUILayout.Width(150f), GUILayout.Height(50f))) {

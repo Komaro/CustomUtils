@@ -7,13 +7,11 @@ public static class LambdaExpressionProvider {
     
     public static Func<TEnum, int> GetEnumToIntFun<TEnum>() where TEnum : struct, Enum => StaticLambdaCache<TEnum>.EnumToIntFunc;
     public static Func<int, TEnum> GetIntToEnumFunc<TEnum>() where TEnum : struct, Enum => StaticLambdaCache<TEnum>.IntToEnumFunc;
-    // public static Func<string, TEnum> GetStringToEnumFunc<TEnum>() where TEnum : struct, Enum => StaticLambdaCache<TEnum>.StringToEnumFunc;
 
     private static class StaticLambdaCache<TEnum> where TEnum : struct, Enum {
         
         public static Func<TEnum, int> EnumToIntFunc;
         public static Func<int, TEnum> IntToEnumFunc;
-        public static Func<string, TEnum> StringToEnumFunc;
 
         static StaticLambdaCache() {
             var parameter = Expression.Parameter(typeof(TEnum));

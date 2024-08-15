@@ -36,8 +36,20 @@ public class DisconnectSessionException : Exception {
     public DisconnectSessionException(TcpClient client, uint id) : this(client) => _id = id;
     public DisconnectSessionException(TcpClient client) => _address = client.GetIpAddress();
 
-    // TODO. Need Test
     public override string ToString() => $"Session Disconnected.\n[{nameof(IPEndPoint.Address)}] {_address}{(_id != 0 ? $"\n[Session] {_id}" : string.Empty)}";
+}
+
+public class InvalidHeaderException : Exception {
+
+    public InvalidHeaderException() : base($"Receive invalid type header") { }
+    public InvalidHeaderException(string message) : base(message) { }
+}
+
+public class NotImplementHandlerException<TEnum> : Exception where TEnum : struct, Enum {
+
+    public NotImplementHandlerException(object ob) : base($"There is no handler implemented for the '{ob.GetType().FullName}'") { }
+    public NotImplementHandlerException(int type) : base($"There is no handler implemented for the '{EnumUtil.ConvertFast<TEnum>(type)}'") { }
+    public NotImplementHandlerException(TEnum type) : base($"There is no handler implemented for the '{type}'") { }
 }
 
 public abstract class TcpResponseException<TPacket> : Exception where TPacket : ITcpPacket {
@@ -62,7 +74,7 @@ public abstract class TcpStructResponseException : TcpResponseException<TcpHeade
     public TcpStructResponseException() { }
     public TcpStructResponseException(string message) : base(message) { }
     
-    public override TcpHeader CreatePacket(uint sessionId) => new(sessionId, Body, Error);
+    public override TcpHeader CreatePacket(uint sessionId) => new(sessionId, (int)Error);
     
     public override byte[] GetPacketBytes(uint sessionId) {
         var packet = CreatePacket(sessionId);
@@ -73,19 +85,19 @@ public abstract class TcpStructResponseException : TcpResponseException<TcpHeade
 public class InvalidTestCount : TcpStructResponseException {
     
     public override TCP_ERROR Error => TCP_ERROR.INVALID_TEST_COUNT;
-    public override TCP_BODY Body => TCP_BODY.TEST;
+    public override TCP_BODY Body => TCP_BODY.TEST_REQUEST;
 }
 
 public class InvalidSessionData : TcpStructResponseException {
 
-    public InvalidSessionData(TcpRequestConnect connect) : base($"The value {connect.sessionId} of {nameof(connect.sessionId)} is invalid") { }
+    public InvalidSessionData() : base("Invalid session data") { }
     
     public override TCP_ERROR Error => TCP_ERROR.INVALID_SESSION_DATA;
-    public override TCP_BODY Body => TCP_BODY.SESSION_REQUEST;
+    public override TCP_BODY Body => TCP_BODY.SESSION_RESPONSE;
 }
 
 public class DuplicateSessionException : TcpStructResponseException {
 
     public override TCP_ERROR Error => TCP_ERROR.DUPLICATE_SESSION;
-    public override TCP_BODY Body => TCP_BODY.SESSION_REQUEST;
+    public override TCP_BODY Body => TCP_BODY.SESSION_RESPONSE;
 }

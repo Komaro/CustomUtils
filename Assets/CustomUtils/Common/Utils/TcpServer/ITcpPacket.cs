@@ -6,70 +6,56 @@ public interface ITcpPacket {
     public bool IsValid();
 }
 
-// TODO. TcpHeader 대체 예정
 [StructLayout(LayoutKind.Sequential)]
-public struct TcpNewHeader : ITcpPacket {
+public struct TcpPacket : ITcpPacket {
+    
+    public ITcpPacket header;
+    public ITcpPacket body;
 
-    public uint sessionId;
-    public int body;
-    public int byteLength;
-    public int error;
-
-    public bool IsValid() => true;
+    public bool IsValid() => (header?.IsValid() ?? false) && (body?.IsValid() ?? false);
 }
 
+// TODO. TcpHeader 대체 예정
 [StructLayout(LayoutKind.Sequential)]
 public struct TcpHeader : ITcpPacket {
 
     public uint sessionId;
-    public TCP_BODY bodyType;
-    public int byteLength;
+    public int body;
+    public int length;
+    public int error;
 
-    public TCP_ERROR error;
-
-    public TcpHeader(TCP_BODY bodyType, TCP_ERROR error) {
-        sessionId = 0;
-        this.bodyType = bodyType;
-        byteLength = 0;
-        this.error = error;
-    }
-    
-    public TcpHeader(TcpSession session) {
-        sessionId = session.ID;
-        bodyType = TCP_BODY.NONE;
-        byteLength = 0;
-        error = TCP_ERROR.NONE;
-    }
-    
-    public TcpHeader(uint sessionId, TCP_ERROR error) {
+    public TcpHeader(uint sessionId, int body, int length) {
         this.sessionId = sessionId;
-        bodyType = TCP_BODY.NONE;
-        byteLength = 0; 
-        this.error = error;
+        this.body = body;
+        this.length = length;
+        error = 0;
     }
 
-    public TcpHeader(uint sessionId, TCP_BODY bodyType, TCP_ERROR error) {
+    public TcpHeader(uint sessionId, int error) {
         this.sessionId = sessionId;
-        this.bodyType = bodyType;
-        byteLength = 0;
+        body = 0;
+        length = 0;
         this.error = error;
     }
     
-    public TcpHeader(TcpSession session, TCP_BODY bodyType) {
-        sessionId = session.ID;
-        this.bodyType = bodyType;
-        byteLength = 0;
-        error = TCP_ERROR.NONE;
-    }
+    public bool TryGetEnumBody<TEnum>(out TEnum enumValue) where TEnum : struct, Enum => EnumUtil.TryConvertFast(body, out enumValue);
+    public TEnum GetEnumBody<TEnum>() where TEnum : struct, Enum => EnumUtil.ConvertFast<TEnum>(body);
+
+    public bool IsValid() => true;
+}
+
+public enum TCP_BODY {
+    NONE = 0,
+    ERROR = 1,
+    HEADER,
     
-    public TcpHeader(TcpSession session, TCP_BODY bodyType, int byteLength) {
-        sessionId = session.ID;
-        this.bodyType = bodyType;
-        this.byteLength = byteLength;
-        error = TCP_ERROR.NONE;
-    }
-
-    public T GetBody<T>() where T : struct, Enum => (T)Enum.ToObject(typeof(T), bodyType);
-
-    public bool IsValid() => sessionId > 0;
+    CONNECT = 100,
+    
+    SESSION_RESPONSE,
+    
+    TEST_REQUEST,
+    TEST_RESPONSE,
+    
+    // Binary
+    STRING = 90000,
 }

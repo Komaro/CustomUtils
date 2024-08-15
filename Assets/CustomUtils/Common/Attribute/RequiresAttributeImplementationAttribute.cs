@@ -8,7 +8,7 @@ public class RequiresAttributeImplementationAttribute : Attribute {
     public RequiresAttributeImplementationAttribute(Type implementTargetAttributeType) => this.implementTargetAttributeType = implementTargetAttributeType;
 }
 
-[AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
+[AttributeUsage(AttributeTargets.Class | AttributeTargets.Interface, AllowMultiple = true)]
 public class RequiresStaticMethodImplementationAttribute : Attribute {
 
     public string methodName;

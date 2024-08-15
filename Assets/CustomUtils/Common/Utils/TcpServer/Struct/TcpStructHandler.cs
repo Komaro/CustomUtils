@@ -1,107 +1,127 @@
-﻿using System.Net.Sockets;
-using System.Runtime.InteropServices;
+﻿using System;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 
-[RequiresAttributeImplementation(typeof(TcpHandlerAttribute))]
-public abstract class TcpStructHandler<T> : ITcpReceiveHandler, ITcpSendHandler<T> where T : struct, ITcpPacket {
+[SingletonParam(typeof(TcpStructHandler<>))]
+public class TcpStructHandlerProvider : SingletonWithParameter<TcpStructHandlerProvider, TcpHandlerProvider<TCP_BODY>> { }
 
-    public abstract Task ReceiveAsync(TcpSession session, byte[] bytes, CancellationToken token);
-    public abstract Task SendAsync(TcpSession session, T send, CancellationToken token);
+public abstract class TcpStructHandler<TData> : TcpHandler<TData, TcpHeader> where TData : struct, ITcpPacket {
 
-    internal virtual TcpHeader CreateHeader(TcpSession session, TCP_BODY bodyType, ref T structure) => new() {
+    public override TcpHeader CreateHeader(TcpSession session, int length) => new() {
         sessionId = session.ID,
-        byteLength = Marshal.SizeOf<T>(),
-        bodyType = bodyType
+        body = Body,
+        length = length,
     };
 
-    protected async Task WriteAsyncWithCancellationCheck(NetworkStream stream, byte[] bytes, CancellationToken token) {
-        await stream.WriteAsync(bytes, token);
-        token.ThrowIfCancellationRequested();
-    }
-    
-    protected async Task WriteAsyncWithCancellationCheck(TcpSession session, byte[] bytes, CancellationToken token) {
-        await session.Stream.WriteAsync(bytes, token);
-        token.ThrowIfCancellationRequested();
+    public override async Task<byte[]> ReceiveAsync(TcpSession session, byte[] bytes, CancellationToken token) {
+        await ReceiveBytesAsync(session, bytes, token);
+        return bytes;
     }
 
-    protected bool TryGetStruct(byte[] bytes, out T structure) {
-        var outStructure = bytes.ToStruct<T>();
-        if (outStructure.HasValue) {
-            structure = outStructure.Value;
-            return true;
+    public override async Task<TData> ReceiveBytesAsync(TcpSession session, byte[] bytes, CancellationToken token) {
+        var data = bytes.ToStruct<TData>();
+        if (data.HasValue) {
+            await ReceiveDataAsync(session, data.Value, token);
+            return data.Value;
         }
 
-        structure = default;
-        return false;
+        throw new InvalidDataException();
     }
 
-    public ITcpReceiveHandler GetReceiveHandler() => this;
+    public override async Task<bool> SendAsync(TcpSession session, byte[] bytes, CancellationToken token) => await SendBytesAsync(session, bytes, token);
+
+    public override async Task<bool> SendBytesAsync(TcpSession session, byte[] bytes, CancellationToken token) {
+        var data = bytes.ToStruct<TData>();
+        if (data.HasValue) {
+            return await SendDataAsync(session, data.Value, token);
+        }
+
+        throw new InvalidCastException();
+    }
+
+    public override async Task<bool> SendDataAsync(TcpSession session, TData data, CancellationToken token) {
+        if (session.Connected == false) {
+            throw new DisconnectSessionException(session);
+        }
+
+        if (VerifyData(session, data)) {
+            throw new InvalidDataException();
+        }
+        
+        var bytes = data.ToBytes();
+        var header = CreateHeader(session, bytes.Length);
+        await WriteAsyncWithCancellationCheck(session, header.ToBytes(), token);
+        await WriteAsyncWithCancellationCheck(session, bytes, token);
+        return true;
+    }
+    
+    protected override bool VerifyData(TcpSession session, TData data) => session.IsValid() && data.IsValid();
 }
 
 #region [Test Implement]
     
-[TcpHandler(TCP_BODY.TEST)]
+[TcpHandler(TCP_BODY.TEST_REQUEST)]
 public class RequestTestHandler : TcpStructHandler<TcpRequestTest> {
 
-    public override async Task ReceiveAsync(TcpSession session, byte[] bytes, CancellationToken token) {
-        if (TryGetStruct(bytes, out var request) && request.IsValid()) {
-            if (request.count <= 0) {
-                throw await TcpExceptionProvider.ResponseExceptionAsync(new InvalidTestCount(), session, token);
-            }
-
-            if (TcpStructHandlerProvider.TryGetSendHandler<TcpResponseTest>(out var handler)) {
-                await handler.SendAsync(session, new TcpResponseTest($"Count : {request.count}"), token);
-            }
+    public override async Task<TcpRequestTest> ReceiveDataAsync(TcpSession session, TcpRequestTest data, CancellationToken token) {
+        if (data.IsValid() == false) {
+            throw new InvalidDataException();
         }
+
+        if (TcpStructHandlerProvider.inst.TryGetSendHandler<TcpResponseText>(out var handler)) {
+            await handler.SendDataAsync(session, new TcpResponseText($"Count : {data.count}"), token);
+        }
+
+        return data;
     }
 
-    public override async Task SendAsync(TcpSession session, TcpRequestTest send, CancellationToken token) {
-        if (session.Connected && send.IsValid()) {
-            var header = CreateHeader(session, TCP_BODY.TEST, ref send);
-            await session.Stream.WriteAsync(header.ToBytes(), token);
-            await session.Stream.WriteAsync(send.ToBytes(), token);
+    public override async Task<bool> SendDataAsync(TcpSession session, TcpRequestTest data, CancellationToken token) {
+        if (session.Connected && data.IsValid()) {
+            var bytes = data.ToBytes();
+            var header = CreateHeader(session, bytes.Length);
+            await WriteAsyncWithCancellationCheck(session, header.ToBytes(), token);
+            await WriteAsyncWithCancellationCheck(session, bytes, token);
+            return true;
         }
+
+        return false;
     }
 }
 
+public abstract class TcpStructStringHandler<TData> : TcpStructHandler<TData> where TData : struct, ITcpPacket {
+
+    public override async Task<byte[]> ReceiveAsync(TcpSession session, byte[] bytes, CancellationToken token) {
+        await ReceiveStringAsync(session, bytes.GetString(), token);
+        return bytes;
+    }
+
+    public override async Task<TData> ReceiveDataAsync(TcpSession session, TData data, CancellationToken token) {
+        await Task.CompletedTask;
+        return data;
+    }
+
+    protected abstract Task ReceiveStringAsync(TcpSession session, string text, CancellationToken token);
+}
+
 [TcpHandler(TCP_BODY.STRING)]
-public class ResponseTestHandler : TcpStructHandler<TcpResponseTest> {
+public class ResponseTestHandler : TcpStructStringHandler<TcpResponseText> {
 
-    internal override TcpHeader CreateHeader(TcpSession session, TCP_BODY bodyType, ref TcpResponseTest structure) => new(session, bodyType, structure.text.GetByteCount());
-
-    public override async Task ReceiveAsync(TcpSession session, byte[] bytes, CancellationToken token) {
-        var text = bytes.GetString();
+    protected override async Task ReceiveStringAsync(TcpSession session, string text, CancellationToken token) {
         Logger.TraceLog(text);
         await Task.CompletedTask;
     }
 
-    public override async Task SendAsync(TcpSession session, TcpResponseTest send, CancellationToken token) {
-        if (session.Connected && send.IsValid()) {
-            var header = CreateHeader(session, TCP_BODY.STRING, ref send);
+    public override async Task<bool> SendDataAsync(TcpSession session, TcpResponseText data, CancellationToken token) {
+        if (session.Connected && VerifyData(session, data)) {
+            var bytes = data.text.ToBytes();
+            var header = CreateHeader(session, bytes.Length);
             await WriteAsyncWithCancellationCheck(session, header.ToBytes(), token);
-            await WriteAsyncWithCancellationCheck(session, send.text.ToBytes(), token);
+            await WriteAsyncWithCancellationCheck(session, bytes, token);
+            return true;
         }
-    }
-}
-
-[TcpHandler(TCP_BODY.TEST_TEXT)]
-public class ResponseTestTextHandler : TcpStructHandler<TcpResponseTestText> {
-
-    public override async Task ReceiveAsync(TcpSession session, byte[] bytes, CancellationToken token) {
-        if (session.Connected && TryGetStruct(bytes, out var data)) {
-            Logger.TraceLog($"{data.text.Length} || {data.text}");
-        }
-
-        await Task.CompletedTask;
-    }
-
-    public override async Task SendAsync(TcpSession session, TcpResponseTestText send, CancellationToken token) {
-        if (session.Connected && send.IsValid()) {
-            var header = CreateHeader(session, TCP_BODY.TEST_TEXT, ref send);
-            await WriteAsyncWithCancellationCheck(session, header.ToBytes(), token);
-            await WriteAsyncWithCancellationCheck(session, send.ToBytes(), token);
-        }
+        
+        return false;
     }
 }
 

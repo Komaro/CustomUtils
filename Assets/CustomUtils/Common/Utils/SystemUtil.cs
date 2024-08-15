@@ -236,41 +236,33 @@ public static class SystemUtil {
         }
     }
     
-    public static bool TrySafeCreateInstance<T>(out T instance) {
-        instance = SafeCreateInstance<T>();
+    public static bool TrySafeCreateInstance<T>(Type type, out T instance) where T : class => (instance = SafeCreateInstance<T>(type)) != null;
+    public static T SafeCreateInstance<T>(Type type) where T : class => SafeCreateInstance(type) as T;
+
+    public static bool TrySafeCreateInstance<T>(out T instance, Type type, params object[] args) where T : class => (instance = SafeCreateInstance<T>(type, args)) != null;
+    public static T SafeCreateInstance<T>(Type type, params object[] args) where T : class => SafeCreateInstance(type, args) as T;
+
+    public static bool TrySafeCreateInstance(Type type, out object instance) {
+        instance = SafeCreateInstance(type);
         return instance != null;
     }
-
-    public static T SafeCreateInstance<T>() {
+    
+    public static object SafeCreateInstance(Type type) {
 #if UNITY_EDITOR
         if (EditorApplication.isPlayingOrWillChangePlaymode) {
             return default;
         }
 #endif
-        
-        return Activator.CreateInstance<T>();
+
+        return Activator.CreateInstance(type);
     }
 
-    public static bool TrySafeCreateInstance<T>(Type type, out T instance) where T : class {
-        instance = SafeCreateInstance<T>(type);
-        return instance != default;
+    public static bool TrySafeCreateInstance(out object instance, Type type, params object[] args) {
+        instance = SafeCreateInstance(type, args);
+        return instance != null;
     }
     
-    public static T SafeCreateInstance<T>(Type type) where T : class {
-#if UNITY_EDITOR
-        if (EditorApplication.isPlayingOrWillChangePlaymode) {
-            return default;
-        }
-#endif  
-        return Activator.CreateInstance(type) as T;
-    }
-
-    public static bool TrySafeCreateInstance<T>(out T instance, Type type, params object[] args) where T : class {
-        instance = SafeCreateInstance<T>(type, args);
-        return instance != default;
-    }
-    
-    public static T SafeCreateInstance<T>(Type type, params object[] args) where T : class {
+    public static object SafeCreateInstance(Type type, params object[] args) {
         if (args is { Length: <= 0 }) {
             Logger.TraceError($"{nameof(args)} is null or empty");
             return default;
@@ -282,9 +274,21 @@ public static class SystemUtil {
         }
 #endif
         
-        return Activator.CreateInstance(type, args) as T;
+        return Activator.CreateInstance(type, args);
     }
+    
+    public static bool TrySafeCreateInstance<T>(out T instance) where T : class => (instance = SafeCreateInstance<T>()) != null;
 
+    public static T SafeCreateInstance<T>() where T : class {
+#if UNITY_EDITOR
+        if (EditorApplication.isPlayingOrWillChangePlaymode) {
+            return null;
+        }
+#endif
+        
+        return Activator.CreateInstance<T>();
+    }
+    
     public static bool IsUnixBasePlatform() {
         switch (Environment.OSVersion.Platform) {
             case PlatformID.MacOSX:

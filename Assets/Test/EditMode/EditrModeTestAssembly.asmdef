@@ -27,7 +27,8 @@
         "System.Collections.Immutable.dll",
         "Microsoft.CodeAnalysis.Workspaces.dll",
         "Microsoft.CodeAnalysis.Workspaces.MSBuild.dll",
-        "Newtonsoft.Json.dll"
+        "Newtonsoft.Json.dll",
+        "System.Threading.Channels.dll"
     ],
     "autoReferenced": false,
     "defineConstraints": [

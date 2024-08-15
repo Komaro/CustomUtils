@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -16,24 +17,66 @@ public class EditModeTestRunner {
     //     Logger.TraceLog($"{nameof(CaseTest)} param || {value}");
     // }
 
-    #region [Enum]
+    [Test]
+    [Performance]
+    public void TempTest() {
+        
+        // var defaultGroup = new SampleGroup("DefaultGroup");
+        // var fastGroup = new SampleGroup("FastGroup");
+        //
+        // var type = typeof(TcpHandlerProviderBase<>);
+        // Measure.Method(() => {
+        //     if (type.GetInterfaces().Any(x => x.IsDefined<RequiresStaticMethodImplementationAttribute>())) {
+        //         
+        //     }
+        // }).WarmupCount(5).MeasurementCount(10).IterationsPerMeasurement(1000).SampleGroup(defaultGroup).Run();
+        //
+        // Measure.Method(() => {
+        //     foreach (var interfaceType in type.GetInterfaces()) {
+        //         if (interfaceType.IsDefined<RequiresStaticMethodImplementationAttribute>()) {
+        //             
+        //         }
+        //     }
+        // }).WarmupCount(5).MeasurementCount(10).IterationsPerMeasurement(1000).SampleGroup(fastGroup).Run();
+    }
     
+    #region [Enum]
+
     [Test]
     [Performance]
     public void EnumParsePerformanceTest() {
         var enumToIntGroup = new SampleGroup("EnumToInt");
-        var intToEnumGroup = new SampleGroup("IntToEnum");
-        var stringToEnumGroup = new SampleGroup("StringToEnum");
+        var enumToIntFastGroup = new SampleGroup("EnumToIntFast");
         
-        var enumValue = TCP_BODY.TEST;
+        var intToEnumGroup = new SampleGroup("IntToEnum");
+        var intToEnumFastGroup = new SampleGroup("IntToEnumFast");
+        
+        var stringToEnumGroup = new SampleGroup("StringToEnum");
+        var stringToEnumBagGroup = new SampleGroup("StringToEnumBag");
+
+        var getValuesGroup = new SampleGroup("GetValues");
+        var getValueListGroup = new SampleGroup("GetValueList");
+        var getUtilsValueListGroup = new SampleGroup("GetUtilsValueList");
+
+        var enumValue = TCP_BODY.TEST_REQUEST;
         var intValue = (int) enumValue;
         var stringValue = enumValue.ToString();
 
-        Measure.Method(() => EnumUtil.ConvertFast(enumValue)).WarmupCount(10).MeasurementCount(10).IterationsPerMeasurement(10000).SampleGroup(enumToIntGroup).GC().Run();
-        Measure.Method(() => EnumUtil.ConvertFast<TCP_BODY>(intValue)).WarmupCount(10).MeasurementCount(10).IterationsPerMeasurement(10000).SampleGroup(intToEnumGroup).GC().Run();
-        Measure.Method(() => EnumUtil.Convert<TCP_BODY>(stringValue)).WarmupCount(10).MeasurementCount(10).IterationsPerMeasurement(10000).SampleGroup(stringToEnumGroup).GC().Run();
+        var count = 500;
+        Measure.Method(() => _ = EnumUtil.Convert(enumValue)).WarmupCount(10).MeasurementCount(15).IterationsPerMeasurement(count).SampleGroup(enumToIntGroup).GC().Run();
+        Measure.Method(() => _ = EnumUtil.ConvertFast(enumValue)).WarmupCount(10).MeasurementCount(15).IterationsPerMeasurement(count).SampleGroup(enumToIntFastGroup).GC().Run();
+        
+        Measure.Method(() => _ = EnumUtil.Convert<TCP_BODY>(intValue)).WarmupCount(10).MeasurementCount(15).IterationsPerMeasurement(count).SampleGroup(intToEnumGroup).GC().Run();
+        Measure.Method(() => _ = EnumUtil.ConvertFast<TCP_BODY>(intValue)).WarmupCount(10).MeasurementCount(15).IterationsPerMeasurement(count).SampleGroup(intToEnumFastGroup).GC().Run();
+        
+        Measure.Method(() => _ = EnumUtil.Convert<TCP_BODY>(stringValue)).WarmupCount(10).MeasurementCount(15).IterationsPerMeasurement(count).SampleGroup(stringToEnumGroup).GC().Run();
+        Measure.Method(() => _ = EnumUtil.ConvertFast<TCP_BODY>(stringValue)).WarmupCount(10).MeasurementCount(15).IterationsPerMeasurement(count).SampleGroup(stringToEnumBagGroup).GC().Run();
+
+        Measure.Method(() => _ = enumValue.GetValues(true, true)).WarmupCount(10).MeasurementCount(15).IterationsPerMeasurement(count).SampleGroup(getValuesGroup).GC().Run();
+        Measure.Method(() => _ = enumValue.GetValueList(true, true)).WarmupCount(10).MeasurementCount(15).IterationsPerMeasurement(count).SampleGroup(getValueListGroup).GC().Run();
+        Measure.Method(() => _ = EnumUtil.GetValueList<TCP_BODY>(true, true)).WarmupCount(10).MeasurementCount(15).IterationsPerMeasurement(count).SampleGroup(getUtilsValueListGroup).GC().Run();
     }
-    
+
     [Test]
     [Performance]
     public void EnumCastPerformanceTest() {
@@ -78,7 +121,7 @@ public class EditModeTestRunner {
         var responseGroup = new SampleGroup("Response");
         var responseStreamGroup = new SampleGroup("ResponseStream");
         
-        var request = new TcpJsonRequestSessionPacket(9851153);
+        var request = new TcpJsonConnectSessionPacket { sessionId = 9851153 };
         var requestString = JsonConvert.SerializeObject(request);
         var requestBytes = requestString.ToBytes();
 
@@ -101,7 +144,7 @@ public class EditModeTestRunner {
         
         Measure.Method(() => {
             var responseString = requestBytes.GetString();
-            _ = JsonConvert.DeserializeObject<TcpJsonRequestSessionPacket>(responseString);
+            _ = JsonConvert.DeserializeObject<TcpJsonConnectSessionPacket>(responseString);
         }).WarmupCount(20).MeasurementCount(20).IterationsPerMeasurement(count).SampleGroup(responseGroup).Run();
         
         Measure.Method(() => {
@@ -109,7 +152,7 @@ public class EditModeTestRunner {
                 memoryStream.Write(requestBytes);
                 using (var reader = new StreamReader(memoryStream, Encoding.ASCII))
                 using (var jsonReader = new JsonTextReader(reader)) {
-                    _ = new JsonSerializer().Deserialize<TcpJsonRequestSessionPacket>(jsonReader);
+                    _ = new JsonSerializer().Deserialize<TcpJsonConnectSessionPacket>(jsonReader);
                 }
             }
         }).WarmupCount(20).MeasurementCount(20).IterationsPerMeasurement(count).SampleGroup(responseStreamGroup).Run();
@@ -131,10 +174,10 @@ public class EditModeTestRunner {
         var test = LambdaExpressionProvider.GetIntToEnumFunc<TCP_BODY>().Invoke(102);
         Logger.TraceLog(test.ToString());
 
-        Measure.Method(() => TCP_BODY.TEST.ToIntUnsafe()).MeasurementCount(20).IterationsPerMeasurement(5000).SampleGroup(unsafeGroup).Run();
-        Measure.Method(() => _ = EnumUtil.Convert(TCP_BODY.TEST)).MeasurementCount(20).IterationsPerMeasurement(5000).SampleGroup(covertGroup).Run();
-        Measure.Method(() => _ = (int)(object)TCP_BODY.TEST).MeasurementCount(20).IterationsPerMeasurement(5000).SampleGroup(duplicateCastGroup).Run();
-        Measure.Method(() => _ = LambdaExpressionProvider.GetEnumToIntFun<TCP_BODY>().Invoke(TCP_BODY.TEST)).MeasurementCount(20).IterationsPerMeasurement(5000).SampleGroup(enumToIntLambdaGroup).Run();
+        Measure.Method(() => TCP_BODY.TEST_REQUEST.ToIntUnsafe()).MeasurementCount(20).IterationsPerMeasurement(5000).SampleGroup(unsafeGroup).Run();
+        Measure.Method(() => _ = EnumUtil.Convert(TCP_BODY.TEST_REQUEST)).MeasurementCount(20).IterationsPerMeasurement(5000).SampleGroup(covertGroup).Run();
+        Measure.Method(() => _ = (int)(object)TCP_BODY.TEST_REQUEST).MeasurementCount(20).IterationsPerMeasurement(5000).SampleGroup(duplicateCastGroup).Run();
+        Measure.Method(() => _ = LambdaExpressionProvider.GetEnumToIntFun<TCP_BODY>().Invoke(TCP_BODY.TEST_REQUEST)).MeasurementCount(20).IterationsPerMeasurement(5000).SampleGroup(enumToIntLambdaGroup).Run();
         Measure.Method(() => _ = LambdaExpressionProvider.GetIntToEnumFunc<TCP_BODY>().Invoke(102)).MeasurementCount(20).IterationsPerMeasurement(5000).SampleGroup(intToEnumLambdaGroup).Run();
     }
     

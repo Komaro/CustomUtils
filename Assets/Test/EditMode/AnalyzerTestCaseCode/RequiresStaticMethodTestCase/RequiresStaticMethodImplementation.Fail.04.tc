@@ -1,0 +1,12 @@
+﻿public class ClassB : ClassA {
+    
+}
+
+public abstract class ClassA : ITestInterface {
+    
+}
+
+[RequiresStaticMethodImplementation("AbstractStaticMethod")]
+public interface ITestInterface {
+    
+}

@@ -1,32 +1,48 @@
-﻿
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
-public abstract class TcpJsonPacket : ITcpPacket {
+public abstract record TcpJsonPacket : ITcpPacket {
+
+    [JsonProperty("id")]
+    public uint sessionId;
 
     public byte[] ToBytes() {
         var json = JsonConvert.SerializeObject(this);
         return json.ToBytes();
     }
-    
+
+    public T ToPopulate<T>(string json) where T : TcpJsonPacket {
+        JsonConvert.PopulateObject(json, this);
+        return this as T;
+    } 
+
     public abstract bool IsValid();
 }
 
-public class TcpJsonRequestSessionPacket : TcpJsonPacket {
-
-    [JsonProperty("sid")]
-    public uint sessionId;
-
-    public TcpJsonRequestSessionPacket(uint sessionId) => this.sessionId = sessionId;
+public record TcpJsonConnectSessionPacket : TcpJsonPacket {
 
     public override bool IsValid() => sessionId > 0;
 }
 
-public class TcpJsonResponseSessionPacket : TcpJsonPacket {
+public record TcpJsonResponseSessionPacket : TcpJsonPacket {
 
     [JsonProperty("ia")]
     public bool isActive;
+
+    public override bool IsValid() => true;
+}
+
+public record TcpJsonRequestTestPacket : TcpJsonPacket {
+
+    [JsonProperty("rt")]
+    public string requestText;
     
-    public TcpJsonResponseSessionPacket(bool isActive) => this.isActive = isActive;
-    
+    public override bool IsValid() => string.IsNullOrEmpty(requestText) == false;
+}
+
+public record TcpJsonResponseTestPacket : TcpJsonPacket {
+
+    [JsonProperty("rt")]
+    public string responseText;
+
     public override bool IsValid() => true;
 }

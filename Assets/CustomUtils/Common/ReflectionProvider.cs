@@ -25,19 +25,33 @@ public static class ReflectionProvider {
     /// T 와 동일한 ClassType
     /// </summary>
     public static Type GetClassType<T>() where T : class => Cache.CachedClasses.FirstOrDefault(type => typeof(T) == type);
+    
+    /// <summary>
+    /// T를 SubClass(상속 관계) 로 가지는 ClassType
+    /// </summary>
+    public static IEnumerable<Type> GetSubClassTypes<T>() where T : class => GetSubClassTypes(typeof(T));
+    /// <summary>
+    /// subClassType을 SubClass(상속 관계) 로 가지는 ClassType
+    /// </summary>
+    public static IEnumerable<Type> GetSubClassTypes(Type subClassType) => Cache.CachedClasses.Where(type => type.IsSubclassOf(subClassType));
 
     /// <summary>
-    /// T 를 SubClass(상속 관계) 로 가지는 ClassType
+    /// T를 Interface로 가지는 ClassType
     /// </summary>
-    public static IEnumerable<Type> GetSubClassTypes<T>() where T : class => Cache.CachedClasses.Where(type => type.IsSubclassOf(typeof(T)));
+    public static IEnumerable<Type> GetInterfaceTypes<T>() => GetInterfaceTypes(typeof(T));
     /// <summary>
-    /// T 를 Interface 로 가지는 ClassType
+    /// interfaceType을 Interface 로 가지는 ClassType
     /// </summary>
-    public static IEnumerable<Type> GetInterfaceTypes<T>() => Cache.CachedClasses.Where(type => typeof(T).IsAssignableFrom(type));
+    public static IEnumerable<Type> GetInterfaceTypes(Type interfaceType) => Cache.CachedClasses.Where(interfaceType.IsAssignableFrom);
+
     /// <summary>
-    /// T 를 Attribute 로 가지는 ClassType
+    /// T를 Attribute로 가지는 ClassType
     /// </summary>
-    public static IEnumerable<Type> GetAttributeTypes<T>() where T : Attribute => Cache.CachedClasses.Where(type => type.IsDefined(typeof(T), false));
+    public static IEnumerable<Type> GetAttributeTypes<T>() where T : Attribute => GetAttributeTypes(typeof(T));
+    /// <summary>
+    /// attributeType을 Attribute 로 가지는 ClassType
+    /// </summary>
+    public static IEnumerable<Type> GetAttributeTypes(Type attributeType) => Cache.CachedClasses.Where(type => type.IsDefined(attributeType, false));
     
     #endregion
 

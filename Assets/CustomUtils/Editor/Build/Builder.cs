@@ -105,8 +105,8 @@ public abstract class Builder {
 
         var attribute = GetType().GetCustomAttribute<BuilderAttribute>();
         if (attribute != null) {
-            buildOptions.target = attribute.buildTarget;
-            buildOptions.targetGroup = attribute.buildTargetGroup;
+            this.buildOptions.target = attribute.buildTarget;
+            this.buildOptions.targetGroup = attribute.buildTargetGroup;
         } else {
             Debug.LogWarning($"{nameof(attribute)} is Null. Checking {nameof(BuilderAttribute)}");  
         }
@@ -114,7 +114,7 @@ public abstract class Builder {
         PreProcess();
         AssetDatabase.Refresh();
         
-        BuildPipeline.BuildPlayer(buildOptions);
+        BuildPipeline.BuildPlayer(this.buildOptions);
     }
 
     protected void PreProcess() {
@@ -219,12 +219,20 @@ public abstract class Builder {
         Debug.Log($"{BuildCount} - {nameof(PlayerSettings.GetApiCompatibilityLevel)} || {PlayerSettings.GetApiCompatibilityLevel(targetGroup)}");
     }
 
-    protected void SetConditionBuildOptions(ref BuildPlayerOptions refBuildOptions, bool isCondition, BuildOptions type) {
+    protected void SetConditionBuildOptions(ref BuildPlayerOptions buildPlayerOptions, bool isCondition, BuildOptions type) {
         if (isCondition) {
-            refBuildOptions.options |= type;
+            buildPlayerOptions.options |= type;
         } else {
-            refBuildOptions.options &= ~type;
+            buildPlayerOptions.options &= ~type;
         }
+        Debug.Log($"{BuildCount} - {type.ToString()} || {isCondition}");
+    }
+
+    protected void SetSubTarget(ref BuildPlayerOptions buildPlayerOptions, StandaloneBuildSubtarget subtarget) => SetSubTarget(ref buildPlayerOptions, (int)subtarget);
+
+    protected void SetSubTarget(ref BuildPlayerOptions buildPlayerOptions, int subTarget) {
+        buildPlayerOptions.subtarget = subTarget;
+        Debug.Log($"{BuildCount} - {nameof(buildPlayerOptions.subtarget)} || {subTarget}");
     }
 
     #endregion

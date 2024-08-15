@@ -1,54 +1,102 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 
-[RequiresAttributeImplementation(typeof(TcpHandlerAttribute))]
-public abstract class TcpJsonHandler<TData> : ITcpReceiveHandler, ITcpSendHandler<TData> where TData : ITcpPacket {
+[SingletonParam(typeof(TcpJsonHandler<>))]
+public class TcpJsonHandlerProvider : SingletonWithParameter<TcpJsonHandlerProvider, TcpHandlerProvider<TCP_BODY>> { }
 
-    protected readonly int bodyCode; 
-    
-    public TcpJsonHandler() {
-        if (GetType().TryGetCustomAttribute<TcpHandlerAttribute>(out var attribute)) {
-            // TODO. Set bodyCode
-        }
+public abstract class TcpJsonHandler<TData> : TcpHandler<TData, TcpHeader> where TData : TcpJsonPacket, ITcpPacket {
+
+    public override TcpHeader CreateHeader(TcpSession session, int length) {
+        return new TcpHeader {
+            sessionId = session.ID,
+            body = Body,
+            length = length,
+        };
     }
 
-    internal virtual TcpHeader CreateHeader(TcpSession session, TCP_BODY bodyType, int bytesLength) => new() {
-        sessionId = session.ID,
-        byteLength = bytesLength,
-        bodyType = bodyType
-    };
-
-    public virtual async Task ReceiveAsync(TcpSession session, byte[] bytes, CancellationToken token) {
-        var json = bytes.GetString();
-        var data = JsonConvert.DeserializeObject<TData>(json);
-        if (data != null) {
-            // TODO. Progress
-        }
+    public override async Task<byte[]> ReceiveAsync(TcpSession session, byte[] bytes, CancellationToken token) {
+        await ReceiveBytesAsync(session, bytes, token);
+        return bytes;
     }
 
-    public virtual async Task SendAsync(TcpSession session, TData send, CancellationToken token) {
-        var json = JsonConvert.SerializeObject(send);
-        if (string.IsNullOrEmpty(json) == false) {
-            var bytes = json.ToBytes();
-            var header = new TcpHeader(session, TCP_BODY.TEST, bytes.Length);
-            
-            await session.Stream.WriteAsync(bytes, token);
+    public override async Task<TData> ReceiveBytesAsync(TcpSession session, byte[] bytes, CancellationToken token) {
+        if (bytes.GetString().TryToJson<TData>(out var data)) {
+            await ReceiveDataAsync(session, data, token);
+            return data;
         }
+        
+        throw new InvalidCastException();
     }
+
+    public override async Task<bool> SendAsync(TcpSession session, byte[] bytes, CancellationToken token) => await SendBytesAsync(session, bytes, token);
+
+    public override async Task<bool> SendBytesAsync(TcpSession session, byte[] bytes, CancellationToken token) {
+        if (session.Connected && bytes.GetString().TryToJson<TData>(out var data)) {
+            return await SendDataAsync(session, data, token);
+        }
+
+        return false;
+    }
+
+    public override async Task<bool> SendDataAsync(TcpSession session, TData data, CancellationToken token) {
+        if (VerifyData(session, data)) {
+           var bytes = data.ToBytes();
+           var header = CreateHeader(session, bytes.Length);
+           await WriteAsyncWithCancellationCheck(session, header.ToBytes(), token);
+           await WriteAsyncWithCancellationCheck(session, bytes, token);
+           return true;
+        }
+
+        return false;
+    }
+
+    protected override bool VerifyData(TcpSession session, TData data) => data.IsValid() && session.VerifySession(data.sessionId);
 }
 
-[TcpHandler(TCP_BODY.SESSION_REQUEST)]
-public class JsonRequestSession : TcpJsonHandler<TcpJsonRequestSessionPacket> {
+[TcpHandler(TCP_BODY.CONNECT)]
+public class JsonConnectSession : TcpJsonHandler<TcpJsonConnectSessionPacket> {
 
-    public override Task SendAsync(TcpSession session, TcpJsonRequestSessionPacket send, CancellationToken token) => throw new System.NotImplementedException();
+    public override async Task<TcpJsonConnectSessionPacket> ReceiveDataAsync(TcpSession session, TcpJsonConnectSessionPacket data, CancellationToken token) {
+        await Task.CompletedTask;
+        return data;
+    }
 }
 
 [TcpHandler(TCP_BODY.SESSION_RESPONSE)]
 public class JsonResponseSession : TcpJsonHandler<TcpJsonResponseSessionPacket> {
 
-    public override Task ReceiveAsync(TcpSession session, byte[] bytes, CancellationToken token) => throw new System.NotImplementedException();
+    public override async Task<TcpJsonResponseSessionPacket> ReceiveDataAsync(TcpSession session, TcpJsonResponseSessionPacket data, CancellationToken token) {
+        Logger.TraceLog(data.isActive ? "Session Connected" : "Session Connect Failed");
+        await Task.CompletedTask;
+        return data;
+    }
+}
 
-    public override Task SendAsync(TcpSession session, TcpJsonResponseSessionPacket send, CancellationToken token) => throw new System.NotImplementedException();
+[TcpHandler(TCP_BODY.TEST_REQUEST)]
+public class JsonRequestTest : TcpJsonHandler<TcpJsonRequestTestPacket> {
+
+    public override async Task<TcpJsonRequestTestPacket> ReceiveDataAsync(TcpSession session, TcpJsonRequestTestPacket data, CancellationToken token) {
+        Logger.TraceLog($"Response || {data.sessionId} || {data.requestText}");
+        if (session.Connected && session.ID == data.sessionId && TcpJsonHandlerProvider.inst.TryGetSendHandler<TcpJsonResponseTestPacket>(out var handler)) {
+            var responseData = new TcpJsonResponseTestPacket {
+                sessionId = session.ID,
+                responseText = data.requestText,
+            };
+            
+            await handler.SendDataAsync(session, responseData, token);
+        }
+        
+        return data;
+    }
+}
+
+[TcpHandler(TCP_BODY.TEST_RESPONSE)]
+public class JsonResponseTest : TcpJsonHandler<TcpJsonResponseTestPacket> {
+
+    public override async Task<TcpJsonResponseTestPacket> ReceiveDataAsync(TcpSession session, TcpJsonResponseTestPacket data, CancellationToken token) {
+        Logger.TraceLog($"Response || {data.sessionId} || {data.responseText}");
+        await Task.CompletedTask;
+        return data;
+    }
 }

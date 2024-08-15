@@ -32,6 +32,8 @@ public class SimpleTcpServer : IDisposable {
         if (_isRunning) {
             Stop();
         }
+        
+        GC.SuppressFinalize(this);
     }
 
     public void Start() {
@@ -77,7 +79,7 @@ public class SimpleTcpServer : IDisposable {
     }
 
     public void Send<TData>(TcpSession session, TData data) {
-        if (_serveModule is ITcpSendModule<TData> sendModule) { 
+        if (_serveModule is ITcpSendModule<TData> sendModule) {
             sendModule.Send(session, data);
         }
     }
@@ -97,12 +99,17 @@ public class SimpleTcpServer : IDisposable {
     }
 }
 
-public sealed class TcpSession : IDisposable {
+public class TcpSession : IDisposable {
 
     public TcpClient Client { get; }
     public uint ID { get; }
     public bool Connected => IsValid() && Client.Connected;
     public NetworkStream Stream => IsValid() ? Client.GetStream() : null;
+
+    public TcpSession(TcpClient client) {
+        Client = client;
+        ID = 0;
+    }
 
     public TcpSession(TcpClient client, uint id) {
         Client = client;
@@ -115,6 +122,7 @@ public sealed class TcpSession : IDisposable {
     public void Close() => Client?.Close();
 
     public bool IsValid() => Client != null;
+    public bool VerifySession(uint id) => ID == id;
 }
 
 

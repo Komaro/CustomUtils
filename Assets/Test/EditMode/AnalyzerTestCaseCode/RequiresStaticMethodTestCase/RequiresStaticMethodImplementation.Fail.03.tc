@@ -1,0 +1,12 @@
+﻿public class ClassB : ClassA {
+    
+}
+
+public class ClassA : AbstractClass {
+    
+}
+
+[RequiresStaticMethodImplementation("AbstractStaticMethod")]
+public abstract class AbstractClass {
+    
+}

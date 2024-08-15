@@ -3,118 +3,75 @@ using System.Net.Sockets;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 
-public class TcpJsonServeModule : TcpServeModule<TcpHeader, IJsonData> {
+public class TcpJsonServeModule : TcpServeModule<TcpHeader, TcpJsonPacket> {
 
     private static readonly int TCP_HEADER_SIZE = Marshal.SizeOf<TcpHeader>();
-    
+
     public override async Task<TcpSession> ConnectSessionAsync(TcpClient client, CancellationToken token) {
-        using (var headerOwner = memoryPool.Rent(TCP_HEADER_SIZE)) {
-            var buffer = headerOwner.Memory;
-            var bytesLength = await client.GetStream().ReadAsync(buffer, token);
-            if (bytesLength == 0) {
-                throw new DisconnectSessionException(client);
+        var bytes = await ReceiveBytesAsync(client, TCP_HEADER_SIZE, token);
+        var header = bytes.ToStruct<TcpHeader>();
+        if (header.HasValue == false) {
+            throw new InvalidHeaderException();
+        }
+        
+        bytes = await ReceiveBytesAsync(client, header.Value.length, token);
+        if (bytes.GetString().TryToJson<TcpJsonConnectSessionPacket>(out var data)) {
+            if (data.IsValid() == false) {
+                throw await TcpExceptionProvider.ResponseExceptionAsync(new InvalidSessionData(), client, token);
             }
             
-            var requestHeader = buffer.ToStruct<TcpHeader>();
-            if (requestHeader.HasValue) {
-                using (var connectOwner = memoryPool.Rent(requestHeader.Value.byteLength)) {
-                    buffer = connectOwner.Memory;
-                    bytesLength = await client.GetStream().ReadAsync(buffer, token);
-                    if (bytesLength == 0) {
-                        throw new DisconnectSessionException(client);
-                    }
-
-                    var json = buffer.GetString();
-                    var requestSession = JsonConvert.DeserializeObject<TcpJsonRequestSessionPacket>(json);
-                    if (requestSession?.IsValid() ?? false) {
-                        if (sessionDic.TryGetValue(requestSession.sessionId, out var session) && session.Connected) {
-                            // TODO. Add Exception Response
-                            throw await TcpExceptionProvider.ResponseExceptionAsync(new DuplicateSessionException(), session, token);
-                        }
-                        
-                        session = new TcpSession(client, requestSession.sessionId);
-                        sessionDic.AddOrUpdate(requestSession.sessionId, session, (_, oldSession) => {
-                            oldSession.Close();
-                            return session;
-                        });
-
-                        try {
-                            var responseBytes = new TcpJsonResponseSessionPacket(true).ToBytes(); 
-                            
-                            var responseHeader = new TcpHeader(session, TCP_BODY.CONNECT, responseBytes.Length);
-                            var headerBytes = responseHeader.ToBytes();
-                            
-                            await session.Stream.WriteAsync(headerBytes, token);
-                            token.ThrowIfCancellationRequested();
-                            
-                            await session.Stream.WriteAsync(responseBytes, token);
-                            token.ThrowIfCancellationRequested();
-                        } catch {
-                            Logger.Error($"Failed to convert {nameof(TcpError)} to byte[]");
-                            return null;
-                        }
-                    }
-                }
+            if (sessionDic.TryGetValue(data.sessionId, out var session) && session.Connected) {
+                throw await TcpExceptionProvider.ResponseExceptionAsync(new DuplicateSessionException(), session, token);
             }
+            
+            session = new TcpSession(client, data.sessionId);
+            sessionDic.AddOrUpdate(data.sessionId, session, (_, oldSession) => {
+                oldSession.Close();
+                return session;
+            });
 
-            throw new SocketException((int)SocketError.AccessDenied);
+            var response = new TcpJsonResponseSessionPacket {
+                sessionId = session.ID,
+                isActive = true,
+            };
+
+            await SendAsync(session, response, token);
+            return session;
         }
+        
+        throw new InvalidDataException();
     }
 
     public override async Task<TcpHeader> ReceiveHeaderAsync(TcpSession session, CancellationToken token) {
-        using (var memoryOwner = memoryPool.Rent(TCP_HEADER_SIZE)) {
-            var buffer = memoryOwner.Memory;
-            var bytesLength = await session.Stream.ReadAsync(buffer, token);
-            if (bytesLength == 0) {
-                throw new DisconnectSessionException(session);
-            }
-            
-            token.ThrowIfCancellationRequested();
-
-            var header = buffer.ToStruct<TcpHeader>();
-            return header ?? default;
+        var bytes = await ReceiveBytesAsync(session, TCP_HEADER_SIZE, token);
+        var header = bytes.ToStruct<TcpHeader>();
+        if (header.HasValue) {
+            return header.Value;
         }
+
+        throw new InvalidHeaderException();
     }
 
     public override async Task ReceiveDataAsync(TcpSession session, TcpHeader header, CancellationToken token) {
-        if (header.IsValid() && header.bodyType != default) {
-            using (var owner = memoryPool.Rent(RECEIVE_BUFFER_SIZE)) {
-                using var memoryStream = new MemoryStream(header.byteLength);
-                var buffer = owner.Memory;
-                var totalBytesLength = 0;
-                while (totalBytesLength < header.byteLength) {
-                    var bytesLength = await session.Stream.ReadAsync(buffer, token);
-                    if (bytesLength == 0) {
-                        throw new DisconnectSessionException(session);
-                    }
-                    
-                    token.ThrowIfCancellationRequested();
-
-                    await memoryStream.WriteAsync(buffer[..bytesLength], token);
-                    totalBytesLength += bytesLength;
-                }
-                
-                token.ThrowIfCancellationRequested();
-
-                if (memoryStream.TryGetBuffer(out var segment) ) {
-                    // TODO. handler 개발 후 처리
-                }
-
-                await memoryStream.DisposeAsync();
-            }
+        if (header.IsValid()) {
+            throw new InvalidHeaderException(header.ToStringAllFields());
         }
-    }
-
-    public override async Task<bool> SendAsync<T>(TcpSession session, T data, CancellationToken token) {
-        // TODO. handler 개발 후 처리
-        
-
-        return true;
-    }
-}
-
-public interface IJsonData {
     
+        if (TcpJsonHandlerProvider.inst.TryGetHandler(header.body, out var handler)) {
+            var bytes = await ReceiveBytesAsync(session, header.length, token);
+            await handler.ReceiveAsync(session, bytes, token);
+        }
+
+        throw new NotImplementHandlerException<TCP_BODY>(header.body);
+    }
+
+    public override async Task<bool> SendAsync<TData>(TcpSession session, TData data, CancellationToken token) {
+        if (data.IsValid() && TcpJsonHandlerProvider.inst.TryGetSendHandler<TData>(out var handler)) {
+            await handler.SendDataAsync(session, data, token);
+            return true;
+        }
+        
+        return false;
+    }
 }

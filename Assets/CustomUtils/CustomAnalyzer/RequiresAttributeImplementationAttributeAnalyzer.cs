@@ -25,9 +25,13 @@ public class RequiresAttributeImplementationAttributeAnalyzer : DiagnosticAnalyz
     }
 
     private void AnalyzeSymbol(SymbolAnalysisContext context) {
+        if (context.Symbol.IsAbstract) {
+            return;
+        } 
+        
         var namedTypeSymbol = (INamedTypeSymbol) context.Symbol;
         var baseType = namedTypeSymbol.BaseType;
-        if (baseType == null || namedTypeSymbol.IsAbstract) {
+        if (baseType == null) {
             return;
         }
     

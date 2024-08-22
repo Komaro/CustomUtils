@@ -10,9 +10,9 @@ public static class AssetBundleExtension {
     }
 
     public static AssetBundleManifest FineManifest(this AssetBundle assetBundle) {
-        foreach (var assetBundleName in assetBundle.GetAllAssetNames()) {
-            if (assetBundleName.Contains(MANIFEST)) {
-                var manifest = assetBundle.LoadAsset<AssetBundleManifest>(assetBundleName);
+        foreach (var name in assetBundle.GetAllAssetNames()) {
+            if (name.Contains(MANIFEST)) {
+                var manifest = assetBundle.LoadAsset<AssetBundleManifest>(name);
                 return manifest;
             }
         }

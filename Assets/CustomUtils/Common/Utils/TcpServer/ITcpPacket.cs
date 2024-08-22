@@ -7,16 +7,6 @@ public interface ITcpPacket {
 }
 
 [StructLayout(LayoutKind.Sequential)]
-public struct TcpPacket : ITcpPacket {
-    
-    public ITcpPacket header;
-    public ITcpPacket body;
-
-    public bool IsValid() => (header?.IsValid() ?? false) && (body?.IsValid() ?? false);
-}
-
-// TODO. TcpHeader 대체 예정
-[StructLayout(LayoutKind.Sequential)]
 public struct TcpHeader : ITcpPacket {
 
     public uint sessionId;
@@ -47,13 +37,11 @@ public struct TcpHeader : ITcpPacket {
 public enum TCP_BODY {
     NONE = 0,
     ERROR = 1,
-    HEADER,
     
-    CONNECT = 100,
+    CONNECT = 50,
+    CONNECT_RESPONSE,
     
-    SESSION_RESPONSE,
-    
-    TEST_REQUEST,
+    TEST_REQUEST = 10000,
     TEST_RESPONSE,
     
     // Binary

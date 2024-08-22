@@ -32,17 +32,7 @@ public class RequiresStaticMethodImplementationAttributeAnalyzer : DiagnosticAna
     public override void Initialize(AnalysisContext context) {
         context.EnableConcurrentExecution();
         context.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.None);
-        context.RegisterSymbolAction(AnalyzeSymbolImplement, SymbolKind.NamedType);
         context.RegisterSymbolAction(AnalyzeSymbolRestrict, SymbolKind.NamedType);
-    }
-
-    private void AnalyzeSymbolImplement(SymbolAnalysisContext context) {
-        var namedTypeSymbol = (INamedTypeSymbol) context.Symbol;
-        if (namedTypeSymbol.GetAttributes().Any(x => x.AttributeClass?.Name.Equals(ATTRIBUTE_NAME, StringComparison.Ordinal) ?? false)) {
-            if (namedTypeSymbol.IsAbstract == false && namedTypeSymbol.TypeKind != TypeKind.Interface) {
-                context.ReportDiagnostic(Diagnostic.Create(IMPLEMENT_RULE, namedTypeSymbol.Locations[0]));
-            }
-        }
     }
 
     private void AnalyzeSymbolRestrict(SymbolAnalysisContext context) {

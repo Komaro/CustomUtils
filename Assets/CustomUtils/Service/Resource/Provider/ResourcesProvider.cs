@@ -30,7 +30,7 @@ public class ResourcesProvider : IResourceProvider {
         _isLoaded = true;
     }
 
-    public void AsyncLoad() {
+    public void LoadAsync() {
         throw new System.NotImplementedException();
     }
 

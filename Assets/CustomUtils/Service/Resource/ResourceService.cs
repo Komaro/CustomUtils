@@ -10,7 +10,7 @@ public interface IResourceProvider {
     bool Valid();
     void Init();
     void Load();
-    void AsyncLoad();
+    void LoadAsync();
     void Unload(Dictionary<string, Object> cacheResource);
     Object Get(string name);
     string GetPath(string name);
@@ -32,7 +32,7 @@ public class ResourceService : IService {
     void IService.Init() {
         try {
             var providerTypeList = ReflectionProvider.GetInterfaceTypes<IResourceProvider>().ToList();
-            _isActiveSubProvider = ReflectionProvider.GetAttributes<ResourceSubProviderAttribute>().Any();
+            _isActiveSubProvider = providerTypeList.Any(type => type.IsDefined<ResourceSubProviderAttribute>());
             if (_isActiveSubProvider) {
                 Logger.TraceLog($"SubProvider is activated. Find {nameof(ResourceSubProviderAttribute)}...", Color.yellow);
                 _subProvider = Init(providerTypeList.Where(x => x.IsDefined<ResourceSubProviderAttribute>()).OrderBy(x => x.GetCustomAttribute<ResourceSubProviderAttribute>().order));
@@ -62,7 +62,7 @@ public class ResourceService : IService {
         }
         
         Logger.TraceError($"Failed to find a valid provider. Check {nameof(IResourceProvider)}.{nameof(IResourceProvider.Valid)} Method Implementation");
-        Logger.TraceLog($"Temporarily create {nameof(NullResourceProvider)}", Color.red);
+        
         var nullProvider = new NullResourceProvider();
         nullProvider.Init();
         return nullProvider;

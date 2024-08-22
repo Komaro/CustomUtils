@@ -93,7 +93,7 @@ public static class StringExtension {
 
     public static string GetColorString(this string content, Color color) {
         if (string.IsNullOrEmpty(content) == false) {
-            return $"<color=#{color.GetColorCode()}>{content}</color>";
+            return $"<color=#{color.ToHex()}>{content}</color>";
         }
         
         return content;

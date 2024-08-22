@@ -46,7 +46,7 @@ public class EditorHttpWebServerService : EditorService {
     [DidReloadScripts(99999)]
     private static void CacheRefresh() {
         if (string.IsNullOrEmpty(_configPath)) {
-            _configPath = $"{Constants.Path.COMMON_CONFIG_FOLDER}/{CONFIG_NAME}";
+            _configPath = $"{Constants.Path.COMMON_CONFIG_PATH}/{CONFIG_NAME}";
         }
 
         _config = null;

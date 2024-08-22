@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Buffers;
 using System.Collections.Concurrent;
+using System.Drawing;
 using System.IO;
 using System.Net.Sockets;
 using System.Threading;
@@ -41,9 +42,11 @@ public abstract class TcpServeModule<THeader, TData> : ITcpServeModule, ITcpRece
     protected readonly ConcurrentDictionary<uint, TcpSession> sessionDic = new();
 
     protected readonly Channel<(TcpClient, CancellationToken)> connectChannel = Channel.CreateBounded<(TcpClient, CancellationToken)>(new BoundedChannelOptions(5));
-    protected readonly Channel<(TcpSession, TData)> _sendChannel = Channel.CreateBounded<(TcpSession, TData)>(new BoundedChannelOptions(50));
     
-    protected CancellationTokenSource channelCancelToken;
+    // TODO. 심각한 결함. TData 형태로 처리하는 경우 Handler를 통한 정상처리가 불가능함.
+    protected readonly Channel<(TcpSession, TData)> sendChannel = Channel.CreateBounded<(TcpSession, TData)>(new BoundedChannelOptions(50));
+    
+    protected CancellationTokenSource cancelToken;
 
     protected bool isRunning;
 
@@ -66,11 +69,9 @@ public abstract class TcpServeModule<THeader, TData> : ITcpServeModule, ITcpRece
         try {
             Task.Run(() => ServeAsync(token), token);
             
-            channelCancelToken = new CancellationTokenSource();
-            for (var i = 0; i < 5; i++) {
-                Task.Run(() => ReadConnectChannelAsync(channelCancelToken.Token), channelCancelToken.Token);
-                Task.Run(() => ReadSendChannelAsync(channelCancelToken.Token), channelCancelToken.Token);
-            }
+            cancelToken = new CancellationTokenSource();
+            Task.Run(() => ReadConnectChannelAsync(cancelToken.Token), cancelToken.Token);
+            Task.Run(() => ReadSendChannelAsync(cancelToken.Token), cancelToken.Token);
         } catch (Exception ex) {
             Logger.TraceError(ex);
             Close();
@@ -83,7 +84,8 @@ public abstract class TcpServeModule<THeader, TData> : ITcpServeModule, ITcpRece
 
     public virtual void Stop() {
         isRunning = false;
-        channelCancelToken?.Cancel();
+        sessionDic.SafeClear(session => session.Close());
+        cancelToken?.Cancel();
     }
 
     public virtual void Close() {
@@ -98,7 +100,7 @@ public abstract class TcpServeModule<THeader, TData> : ITcpServeModule, ITcpRece
         while (token.IsCancellationRequested == false) {
             try {
                 var client = await AcceptAsync(token);
-                await connectChannel.Writer.WriteAsync((client, token), channelCancelToken.Token);
+                await connectChannel.Writer.WriteAsync((client, token), cancelToken.Token);
             }
             catch (OperationCanceledException) { }
             catch (SocketException ex) {
@@ -112,6 +114,7 @@ public abstract class TcpServeModule<THeader, TData> : ITcpServeModule, ITcpRece
     protected virtual async Task<TcpClient> AcceptAsync(CancellationToken token) {
         token.ThrowIfCancellationRequested();
         var client = await listener.AcceptTcpClientAsync();
+        token.ThrowIfCancellationRequested();
         return client;
     }
 
@@ -138,8 +141,9 @@ public abstract class TcpServeModule<THeader, TData> : ITcpServeModule, ITcpRece
             }
         } catch (SocketException ex) {
             Logger.TraceError($"{ex.SocketErrorCode.ToString()} || {ex.Message}");
-        } catch(Exception){
-            client.Dispose();
+        } catch(Exception ex){
+            Logger.TraceLog(ex);
+            client.Close();
             return false;
         }
         
@@ -147,6 +151,7 @@ public abstract class TcpServeModule<THeader, TData> : ITcpServeModule, ITcpRece
     }
 
     protected virtual async Task ReceiveAsync(TcpSession session, CancellationToken token) {
+        Logger.TraceLog($"Start {nameof(ReceiveAsync)} {nameof(Task)}", Color.LightGreen);
         while (session.Connected && token.IsCancellationRequested == false) {
             var header = await ReceiveHeaderAsync(session, token);
             token.ThrowIfCancellationRequested();
@@ -157,11 +162,12 @@ public abstract class TcpServeModule<THeader, TData> : ITcpServeModule, ITcpRece
     }
     
     private async Task ReadConnectChannelAsync(CancellationToken channelToken) {
+        Logger.TraceLog($"Start {nameof(ReadConnectChannelAsync)} {nameof(Task)}", Color.LightGreen);
         while (IsRunning()) {
-            channelToken.ThrowIfCancellationRequested();
             var (client, token) = await connectChannel.Reader.ReadAsync(channelToken);
+            channelToken.ThrowIfCancellationRequested();
             if (await ConnectAsync(client, token) == false) {
-                Logger.TraceError($"Failed to connect to {client.GetIpAddress()}");
+                Logger.TraceError($"Failed to connect to");
             }
         }
 
@@ -169,8 +175,9 @@ public abstract class TcpServeModule<THeader, TData> : ITcpServeModule, ITcpRece
     }
 
     private async Task ReadSendChannelAsync(CancellationToken channelToken) {
+        Logger.TraceLog($"Start {nameof(ReadSendChannelAsync)} {nameof(Task)}", Color.LightGreen);
         while (IsRunning()) {
-            var (session, data) = await _sendChannel.Reader.ReadAsync(channelToken);
+            var (session, data) = await sendChannel.Reader.ReadAsync(channelToken);
             channelToken.ThrowIfCancellationRequested();
             if (await SendAsync(session, data, channelToken) == false) {
                 Logger.TraceError($"Failed to send to {session.ID} [{data.GetType().Name}]");
@@ -182,66 +189,60 @@ public abstract class TcpServeModule<THeader, TData> : ITcpServeModule, ITcpRece
 
     public abstract Task<TcpSession> ConnectSessionAsync(TcpClient client, CancellationToken token);
     
-    public virtual async Task<byte[]> ReceiveBytesAsync(TcpClient client, int length, CancellationToken token) {
-        using (var owner = memoryPool.Rent(RECEIVE_BUFFER_SIZE))
-        using (var stream = new MemoryStream(length)) {
-            var buffer = owner.Memory;
-            var totalBytesLength = 0;
-            while (totalBytesLength < length) {
-                var bytesLength = await client.GetStream().ReadAsync(buffer, token);
-                if (bytesLength == 0) {
-                    throw new DisconnectSessionException(client);
-                }
-                
-                token.ThrowIfCancellationRequested();
-                
-                await stream.WriteAsync(buffer[..bytesLength], token);
-                totalBytesLength += bytesLength;
-            }
-
-            return stream.GetBuffer();
+    public virtual async Task<byte[]> ReadBytesAsync(TcpClient client, int length, CancellationToken token) {
+        try {
+            return await ReadBytesAsync(client.GetStream(), length, token);
+        } catch (DisconnectSessionException) {
+            throw new DisconnectSessionException(client);
         }
     }
     
-    public virtual async Task<byte[]> ReceiveBytesAsync(TcpSession session, int length, CancellationToken token) {
-        using (var owner = memoryPool.Rent(RECEIVE_BUFFER_SIZE))
-        using (var stream = new MemoryStream(length)) {
+    public virtual async Task<byte[]> ReadBytesAsync(TcpSession session, int length, CancellationToken token) {
+        try {
+            return await ReadBytesAsync(session.Stream, length, token);
+        } catch (DisconnectSessionException) {
+            throw new DisconnectSessionException(session);
+        }
+    }
+
+    protected virtual async Task<byte[]> ReadBytesAsync(NetworkStream stream, int length, CancellationToken token) {
+        using (var owner = memoryPool.Rent(length))
+        using (var memoryStream = new MemoryStream(length)) {
             var buffer = owner.Memory;
             var totalBytesLength = 0;
             while (totalBytesLength < length) {
-                var bytesLength = await session.Stream.ReadAsync(buffer, token);
+                var bytesLength = await stream.ReadAsync(buffer, token);
                 if (bytesLength == 0) {
-                    throw new DisconnectSessionException(session);
+                    throw new DisconnectSessionException();
                 }
                 
                 token.ThrowIfCancellationRequested();
                 
-                await stream.WriteAsync(buffer[..bytesLength], token);
+                await memoryStream.WriteAsync(buffer[..bytesLength], token);
                 totalBytesLength += bytesLength;
             }
 
-            return stream.GetBuffer();
+            return memoryStream.GetBuffer();
         }
     }
+    
     public abstract Task<THeader> ReceiveHeaderAsync(TcpSession session, CancellationToken token);
     public abstract Task ReceiveDataAsync(TcpSession session, THeader header, CancellationToken token);
     public abstract Task<bool> SendAsync<T>(TcpSession session, T data, CancellationToken token) where T : TData;
 
-    public bool Send<T>(uint sessionId, T data) where T : TData => sessionDic.TryGetValue(sessionId, out var session) && _sendChannel.Writer.TryWrite((session, data));
-    public bool Send<T>(TcpSession session, T data) where T : TData => _sendChannel.Writer.TryWrite((session, data));
+    public bool Send<T>(uint sessionId, T data) where T : TData => sessionDic.TryGetValue(sessionId, out var session) && Send(session, data);
+    public virtual bool Send<T>(TcpSession session, T data) where T : TData => sendChannel.Writer.TryWrite((session, data));
 
     public async Task<bool> SendAsync<T>(uint sessionId, T data) where T : TData {
         if (sessionDic.TryGetValue(sessionId, out var session)) {
-            var task = _sendChannel.Writer.WriteAsync((session, data));
-            await task;
-            return task.IsCompletedSuccessfully;
+            return await SendAsync(session, data);
         }
 
         return false;
-    }    
+    }
     
-    public async Task<bool> SendAsync<T>(TcpSession session, T data) where T : TData {
-        var task = _sendChannel.Writer.WriteAsync((session, data));
+    public virtual async Task<bool> SendAsync<T>(TcpSession session, T data) where T : TData {
+        var task = sendChannel.Writer.WriteAsync((session, data));
         await task;
         return task.IsCompletedSuccessfully;
     }

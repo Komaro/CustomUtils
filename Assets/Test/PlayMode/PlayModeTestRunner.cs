@@ -1,16 +1,11 @@
 ﻿using NUnit.Framework;
+using UnityEngine;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 using UnityEngine.TestTools;
 
 public class PlayModeTestRunner {
 
-    
-    [Test]
-    public void TestGraphicService() {
-        if (Service.TryGetService<GraphicService>(out var service)) {
-            
-        }
-    }
-    
     [Test]
     public void TestResourceService() {
         if (Service.TryGetService<ResourceService>(out var service)) {
@@ -29,9 +24,15 @@ public class PlayModeTestRunner {
             var testPrefab3 = service.Get("TestPrefab_3");
             Assert.IsNotNull(testPrefab3);
             Logger.TraceLog($"{testPrefab3.name}");
+            
+            var testPipeline = service.Get<UniversalRenderPipelineAsset>("UniversalRenderPipelineAssetLow");
+            Assert.IsNotNull(testPipeline);
+            Logger.TraceLog(testPipeline.name);
+
+            if (GraphicsSettings.renderPipelineAsset == testPipeline) {
+                Logger.TraceLog("Catch");
+            }
         }
-        
-        Assert.IsNotNull(service);
     }
     
     [Test]

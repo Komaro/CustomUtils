@@ -63,7 +63,7 @@ public class CommandEventPlayableBehavior : PlayableBehaviour {
             _isPlaying = false;
 #if UNITY_EDITOR
             if (Application.isPlaying == false) {
-                Logger.TraceError($"Exit Execute || {exitCommand}", Color.magenta);
+                Logger.TraceError($"Exit Execute || {exitCommand}");
             }
 #endif
             if (Application.isPlaying && string.IsNullOrEmpty(exitCommand) == false) {

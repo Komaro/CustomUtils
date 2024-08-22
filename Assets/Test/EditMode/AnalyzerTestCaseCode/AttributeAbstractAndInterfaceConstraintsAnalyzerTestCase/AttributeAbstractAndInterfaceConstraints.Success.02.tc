@@ -1,0 +1,9 @@
+﻿[RequiresStaticMethodImplementation("SampleMethod")]
+public abstract class TestClass {
+    
+}
+
+[RequiresStaticMethodImplementation("SampleMethod")]
+public interface ITestInterface {
+    
+}

@@ -43,7 +43,7 @@ public static class AnalyzerGenerator {
             dllName = Constants.Analyzer.ANALYZER_PLUGIN_NAME;
         }
     
-        var outputPath = $"{Constants.Path.PROJECT_TEMP_FOLDER}/{dllName.AutoSwitchExtension(Constants.Extension.DLL)}";
+        var outputPath = $"{Constants.Path.PROJECT_TEMP_PATH}/{dllName.AutoSwitchExtension(Constants.Extension.DLL)}";
         var syntaxTreeList = new List<SyntaxTree>();
         foreach (var path in sourceFiles) {
             if (SystemUtil.TryReadAllText(Path.Combine(Constants.Path.PROJECT_PATH, path), out var source)) {
@@ -70,7 +70,7 @@ public static class AnalyzerGenerator {
     private static void GenerateCustomAnalyzerDllOnAssemblyBuilder(params string[] sourceFiles) {
         if (UnityAssemblyProvider.TryGetUnityAssembly(SystemAssembly.GetExecutingAssembly(), out var assembly)) {
             try {
-                var outputPath = $"{Constants.Path.PROJECT_TEMP_FOLDER}/{Constants.Analyzer.ANALYZER_NAME}{Constants.Extension.DLL}";
+                var outputPath = $"{Constants.Path.PROJECT_TEMP_PATH}/{Constants.Analyzer.ANALYZER_NAME}{Constants.Extension.DLL}";
                 var builder = new AssemblyBuilder(outputPath, sourceFiles) {
                     additionalReferences = assembly.assemblyReferences.Select(x => x.outputPath).ToArray(),
                 };
@@ -108,7 +108,7 @@ public static class AnalyzerGenerator {
     }
     
     private static void AnalyzerBuildPostProcess(string outputPath) {
-        var copyPath = Path.Combine(Constants.Path.PLUGINS_FOLDER, Path.GetFileName(outputPath));
+        var copyPath = Path.Combine(Constants.Path.PLUGINS_FULL_PATH, Path.GetFileName(outputPath));
         SystemUtil.MoveFile(outputPath, copyPath);
         File.Delete(outputPath.AutoSwitchExtension(Constants.Extension.PDB));
         AssetDatabase.Refresh();

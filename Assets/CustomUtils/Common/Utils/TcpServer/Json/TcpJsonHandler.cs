@@ -7,39 +7,29 @@ public class TcpJsonHandlerProvider : SingletonWithParameter<TcpJsonHandlerProvi
 
 public abstract class TcpJsonHandler<TData> : TcpHandler<TData, TcpHeader> where TData : TcpJsonPacket, ITcpPacket {
 
-    public override TcpHeader CreateHeader(TcpSession session, int length) {
-        return new TcpHeader {
-            sessionId = session.ID,
-            body = Body,
-            length = length,
-        };
-    }
-
-    public override async Task<byte[]> ReceiveAsync(TcpSession session, byte[] bytes, CancellationToken token) {
-        await ReceiveBytesAsync(session, bytes, token);
-        return bytes;
-    }
+    public override TcpHeader CreateHeader(TcpSession session, int length) => new(session.ID, Body, length);
 
     public override async Task<TData> ReceiveBytesAsync(TcpSession session, byte[] bytes, CancellationToken token) {
         if (bytes.GetString().TryToJson<TData>(out var data)) {
-            await ReceiveDataAsync(session, data, token);
-            return data;
+            return await ReceiveDataAsync(session, data, token);
         }
         
         throw new InvalidCastException();
     }
-
-    public override async Task<bool> SendAsync(TcpSession session, byte[] bytes, CancellationToken token) => await SendBytesAsync(session, bytes, token);
 
     public override async Task<bool> SendBytesAsync(TcpSession session, byte[] bytes, CancellationToken token) {
         if (session.Connected && bytes.GetString().TryToJson<TData>(out var data)) {
             return await SendDataAsync(session, data, token);
         }
 
-        return false;
+        throw new InvalidCastException();
     }
-
+    
     public override async Task<bool> SendDataAsync(TcpSession session, TData data, CancellationToken token) {
+        if (session.Connected == false) {
+            throw new DisconnectSessionException(session);
+        }
+    
         if (VerifyData(session, data)) {
            var bytes = data.ToBytes();
            var header = CreateHeader(session, bytes.Length);
@@ -48,6 +38,7 @@ public abstract class TcpJsonHandler<TData> : TcpHandler<TData, TcpHeader> where
            return true;
         }
 
+        Logger.TraceError($"Invalid Data || {data.GetType().Name}");
         return false;
     }
 
@@ -55,31 +46,31 @@ public abstract class TcpJsonHandler<TData> : TcpHandler<TData, TcpHeader> where
 }
 
 [TcpHandler(TCP_BODY.CONNECT)]
-public class JsonConnectSession : TcpJsonHandler<TcpJsonConnectSessionPacket> {
+public class JsonConnectSession : TcpJsonHandler<TcpJsonSessionConnect> {
 
-    public override async Task<TcpJsonConnectSessionPacket> ReceiveDataAsync(TcpSession session, TcpJsonConnectSessionPacket data, CancellationToken token) {
+    public override async Task<TcpJsonSessionConnect> ReceiveDataAsync(TcpSession session, TcpJsonSessionConnect data, CancellationToken token) {
         await Task.CompletedTask;
+        Logger.TraceLog($"Receive Session Data || {data.sessionId}");
         return data;
     }
 }
 
-[TcpHandler(TCP_BODY.SESSION_RESPONSE)]
-public class JsonResponseSession : TcpJsonHandler<TcpJsonResponseSessionPacket> {
+[TcpHandler(TCP_BODY.CONNECT_RESPONSE)]
+public class JsonResponseSession : TcpJsonHandler<TcpJsonSessionConnectResponse> {
 
-    public override async Task<TcpJsonResponseSessionPacket> ReceiveDataAsync(TcpSession session, TcpJsonResponseSessionPacket data, CancellationToken token) {
-        Logger.TraceLog(data.isActive ? "Session Connected" : "Session Connect Failed");
+    public override async Task<TcpJsonSessionConnectResponse> ReceiveDataAsync(TcpSession session, TcpJsonSessionConnectResponse data, CancellationToken token) {
         await Task.CompletedTask;
         return data;
     }
 }
 
 [TcpHandler(TCP_BODY.TEST_REQUEST)]
-public class JsonRequestTest : TcpJsonHandler<TcpJsonRequestTestPacket> {
+public class JsonRequestTest : TcpJsonHandler<TcpJsonTestRequest> {
 
-    public override async Task<TcpJsonRequestTestPacket> ReceiveDataAsync(TcpSession session, TcpJsonRequestTestPacket data, CancellationToken token) {
+    public override async Task<TcpJsonTestRequest> ReceiveDataAsync(TcpSession session, TcpJsonTestRequest data, CancellationToken token) {
         Logger.TraceLog($"Response || {data.sessionId} || {data.requestText}");
-        if (session.Connected && session.ID == data.sessionId && TcpJsonHandlerProvider.inst.TryGetSendHandler<TcpJsonResponseTestPacket>(out var handler)) {
-            var responseData = new TcpJsonResponseTestPacket {
+        if (session.Connected && session.ID == data.sessionId && TcpJsonHandlerProvider.inst.TryGetSendHandler<TcpJsonTestResponse>(out var handler)) {
+            var responseData = new TcpJsonTestResponse {
                 sessionId = session.ID,
                 responseText = data.requestText,
             };
@@ -92,9 +83,9 @@ public class JsonRequestTest : TcpJsonHandler<TcpJsonRequestTestPacket> {
 }
 
 [TcpHandler(TCP_BODY.TEST_RESPONSE)]
-public class JsonResponseTest : TcpJsonHandler<TcpJsonResponseTestPacket> {
+public class JsonResponseTest : TcpJsonHandler<TcpJsonTestResponse> {
 
-    public override async Task<TcpJsonResponseTestPacket> ReceiveDataAsync(TcpSession session, TcpJsonResponseTestPacket data, CancellationToken token) {
+    public override async Task<TcpJsonTestResponse> ReceiveDataAsync(TcpSession session, TcpJsonTestResponse data, CancellationToken token) {
         Logger.TraceLog($"Response || {data.sessionId} || {data.responseText}");
         await Task.CompletedTask;
         return data;

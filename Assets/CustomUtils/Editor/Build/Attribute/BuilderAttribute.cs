@@ -8,11 +8,11 @@ public class BuilderAttribute : Attribute {
     public BuildTarget buildTarget;
     public BuildTargetGroup buildTargetGroup;
     
-    /// <param name="buildType">enum Value</param>
+    /// <param name="buildType">Enum Value</param>
     /// <param name="buildTarget"></param>
     /// <param name="buildTargetGroup"></param>
     public BuilderAttribute(object buildType, BuildTarget buildTarget, BuildTargetGroup buildTargetGroup) {
-        this.buildType = buildType is Enum enumType ? enumType : default;
+        this.buildType = buildType as Enum;
         this.buildTarget = buildTarget;
         this.buildTargetGroup = buildTargetGroup;
     }

@@ -29,7 +29,7 @@ public partial class EditorAssetBundleTesterDrawer : EditorResourceDrawerAutoCon
     private readonly SystemWatcherServiceOrder _infoAutoTrackingOrder;
 
     protected override string CONFIG_NAME => $"{nameof(AssetBundleTesterConfig)}{Constants.Extension.JSON}";
-    protected override string CONFIG_PATH => $"{Constants.Path.COMMON_CONFIG_FOLDER}/{CONFIG_NAME}";
+    protected override string CONFIG_PATH => $"{Constants.Path.COMMON_CONFIG_PATH}/{CONFIG_NAME}";
 
     public EditorAssetBundleTesterDrawer(EditorWindow window) : base(window) {
         _infoAutoTrackingOrder = new(Constants.Extension.JSON_FILTER) {

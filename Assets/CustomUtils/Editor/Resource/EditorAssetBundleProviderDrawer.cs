@@ -28,7 +28,7 @@ public class EditorAssetBundleProviderDrawer : EditorResourceDrawerAutoConfig<As
     private readonly List<BuildAssetBundleOptions> BUILD_OPTION_LIST;
 
     protected override string CONFIG_NAME => $"{nameof(AssetBundleProviderConfig)}{Constants.Extension.JSON}";
-    protected override string CONFIG_PATH => $"{Constants.Path.COMMON_CONFIG_FOLDER}/{CONFIG_NAME}";
+    protected override string CONFIG_PATH => $"{Constants.Path.COMMON_CONFIG_PATH}/{CONFIG_NAME}";
 
     public EditorAssetBundleProviderDrawer(EditorWindow window) : base(window) => BUILD_OPTION_LIST = EnumUtil.GetValueList<BuildAssetBundleOptions>(true, true).ToList();
 
@@ -342,13 +342,14 @@ public class EditorAssetBundleProviderDrawer : EditorResourceDrawerAutoConfig<As
 
     private AssetBundleChecksumInfo GenerateChecksumInfo(AssetBundleManifest manifest, string buildPath) {
         var info = new AssetBundleChecksumInfo {
-            generateTime = DateTime.Now
+            generateTime = DateTime.Now,
+            target = config.selectBuildTarget.ToString(),
         };
-                
+
         if (BuildPipeline.GetCRCForAssetBundle(Path.Combine(buildPath, config.selectBuildTarget.ToString()), out var crc)) {
             info.crcDic.AutoAdd(config.selectBuildTarget.ToString(), crc);
         }
-                
+        
         foreach (var name in manifest.GetAllAssetBundles()) {
             if (BuildPipeline.GetCRCForAssetBundle(Path.Combine(buildPath, name), out crc)) {
                 info.crcDic.AutoAdd(name, crc);
@@ -445,26 +446,6 @@ public record AssetBundleSelectableInfo {
     }
 }
 
-internal record AssetBundleChecksumInfo {
-
-    public DateTime generateTime;
-    public Dictionary<string, uint> crcDic = new();
-    public Dictionary<string, string> hashDic = new();
-
-    public bool TryGetChecksum(string assetBundle, out (uint crc, Hash128? hash) info) {
-        info = GetChecksum(assetBundle);
-        return info != (0, null);
-    }
-
-    public (uint crc, Hash128? hash) GetChecksum(string assetBundle) {
-        if (crcDic.TryGetValue(assetBundle, out var crc) && hashDic.TryGetValue(assetBundle, out var hash)) {
-            return (crc, Hash128.Parse(hash));
-        }
-
-        return (0, null);
-    }
-}
-
 #region [TreeView]
 
 internal class AssetBundleTreeView : EditorServiceTreeView {
@@ -482,8 +463,7 @@ internal class AssetBundleTreeView : EditorServiceTreeView {
 
     public AssetBundleTreeView() : base(new MultiColumnHeader(new MultiColumnHeaderState(COLUMNS))) { }
     protected override TreeViewItem BuildRoot() => new() { id = 0, depth = -1, children = _itemDic.ToValueList() };
-    protected override bool DoesItemMatchSearch(TreeViewItem item, string search) => item is AssetBundleTreeViewItem bundleItem && bundleItem.info.name.IndexOf(search, StringComparison.OrdinalIgnoreCase) >= 0;
-
+    
     protected override void RowGUI(RowGUIArgs args) {
         if (args.item is AssetBundleTreeViewItem item) {
             EditorGUI.LabelField(args.GetCellRect(0), item.id.ToString(), Constants.Draw.CENTER_LABEL);
@@ -491,12 +471,10 @@ internal class AssetBundleTreeView : EditorServiceTreeView {
 
             using (new EditorGUI.DisabledGroupScope(_bindConfig is not { isAssetBundleSelectableEncrypted: not false })) {
                 EditorCommon.DrawFitToggle(args.GetCellRect(2), ref item.info.isEncrypt);
-                // item.info.isEncrypt = EditorGUI.Toggle(args.GetCellRect(2).GetCenterRect(EditorCommon.TOGGLE_FIT_SIZE), item.info.isEncrypt);
             }
 
             using (new EditorGUI.DisabledGroupScope(_bindConfig is not { isSelectableBuild: not false})) {
                 EditorCommon.DrawFitToggle(args.GetCellRect(3), ref item.info.isSelect);
-                // item.info.isSelect = EditorGUI.Toggle(args.GetCellRect(3).GetCenterRect(EditorCommon.TOGGLE_FIT_SIZE), item.info.isSelect);
             }
         }
     }
@@ -523,7 +501,9 @@ internal class AssetBundleTreeView : EditorServiceTreeView {
     }
 
     public void SetConfig(AssetBundleProviderConfig config) => _bindConfig = config;
-    
+
+    protected override bool OnDoesItemMatchSearch(TreeViewItem item, string search) => item is AssetBundleTreeViewItem bundleItem && bundleItem.info.name.IndexOf(search, StringComparison.OrdinalIgnoreCase) >= 0;
+
     private sealed class AssetBundleTreeViewItem : TreeViewItem {
     
         public AssetBundleSelectableInfo info;

@@ -1,0 +1,4 @@
+﻿[RequiresStaticMethodImplementation("SampleMethod")]
+public class TestClass_2 {
+    
+}

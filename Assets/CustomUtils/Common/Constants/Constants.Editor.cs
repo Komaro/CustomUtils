@@ -12,6 +12,7 @@ public static partial class Constants {
         public static readonly GUIStyle LABEL = new(GUI.skin.label) { richText = true };
         public static readonly GUIStyle BOLD_LABEL = new(LABEL) { fontStyle = FontStyle.Bold };
         public static readonly GUIStyle CENTER_LABEL = new(LABEL) { alignment = TextAnchor.MiddleCenter };
+        public static readonly GUIStyle BOLD_CENTER_LABEL = new(BOLD_LABEL) { alignment = TextAnchor.MiddleCenter };
         
         public static readonly GUIStyle TEXT_FIELD = new(GUI.skin.textField) { richText = true };
         public static readonly GUIStyle BOLD_TEXT_FIELD = new(TEXT_FIELD) { fontStyle = FontStyle.Bold };
@@ -90,7 +91,7 @@ public static partial class Constants {
         public const string ROSLYN_ANALYZER_LABEL = "RoslynAnalyzer";
         
         public static readonly string ANALYZER_PLUGIN_NAME = $"{ANALYZER_NAME}{Extension.DLL}";
-        public static readonly string ANALYZER_PLUGIN_PATH = SystemPath.Combine(Path.PLUGINS_FOLDER, $"{ANALYZER_PLUGIN_NAME}");
+        public static readonly string ANALYZER_PLUGIN_PATH = SystemPath.Combine(Path.PLUGINS_FULL_PATH, $"{ANALYZER_PLUGIN_NAME}");
     }
 }
 

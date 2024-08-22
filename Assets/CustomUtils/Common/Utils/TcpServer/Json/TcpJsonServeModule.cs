@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Drawing;
+using System.IO;
 using System.Net.Sockets;
 using System.Runtime.InteropServices;
 using System.Threading;
@@ -9,14 +10,16 @@ public class TcpJsonServeModule : TcpServeModule<TcpHeader, TcpJsonPacket> {
     private static readonly int TCP_HEADER_SIZE = Marshal.SizeOf<TcpHeader>();
 
     public override async Task<TcpSession> ConnectSessionAsync(TcpClient client, CancellationToken token) {
-        var bytes = await ReceiveBytesAsync(client, TCP_HEADER_SIZE, token);
+        Logger.TraceLog($"Start {nameof(ConnectSessionAsync)}", Color.LightGreen);
+    
+        var bytes = await ReadBytesAsync(client, TCP_HEADER_SIZE, token);
         var header = bytes.ToStruct<TcpHeader>();
         if (header.HasValue == false) {
             throw new InvalidHeaderException();
         }
         
-        bytes = await ReceiveBytesAsync(client, header.Value.length, token);
-        if (bytes.GetString().TryToJson<TcpJsonConnectSessionPacket>(out var data)) {
+        bytes = await ReadBytesAsync(client, header.Value.length, token);
+        if (bytes.GetString().TryToJson<TcpJsonSessionConnect>(out var data)) {
             if (data.IsValid() == false) {
                 throw await TcpExceptionProvider.ResponseExceptionAsync(new InvalidSessionData(), client, token);
             }
@@ -31,20 +34,24 @@ public class TcpJsonServeModule : TcpServeModule<TcpHeader, TcpJsonPacket> {
                 return session;
             });
 
-            var response = new TcpJsonResponseSessionPacket {
+            var response = new TcpJsonSessionConnectResponse {
                 sessionId = session.ID,
                 isActive = true,
             };
 
-            await SendAsync(session, response, token);
-            return session;
+            if (await SendAsync(session, response, token)) {
+                Logger.TraceLog($"{nameof(TcpSession)} connection was successful", Color.SkyBlue);
+                return session;
+            }
+
+            throw new SessionConnectFail(session);
         }
         
         throw new InvalidDataException();
     }
 
     public override async Task<TcpHeader> ReceiveHeaderAsync(TcpSession session, CancellationToken token) {
-        var bytes = await ReceiveBytesAsync(session, TCP_HEADER_SIZE, token);
+        var bytes = await ReadBytesAsync(session, TCP_HEADER_SIZE, token);
         var header = bytes.ToStruct<TcpHeader>();
         if (header.HasValue) {
             return header.Value;
@@ -59,7 +66,7 @@ public class TcpJsonServeModule : TcpServeModule<TcpHeader, TcpJsonPacket> {
         }
     
         if (TcpJsonHandlerProvider.inst.TryGetHandler(header.body, out var handler)) {
-            var bytes = await ReceiveBytesAsync(session, header.length, token);
+            var bytes = await ReadBytesAsync(session, header.length, token);
             await handler.ReceiveAsync(session, bytes, token);
         }
 

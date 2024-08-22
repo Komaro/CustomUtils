@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using JetBrains.Annotations;
 using UnityEditor;
 using Object = UnityEngine.Object;
 
@@ -50,6 +52,10 @@ public static class AssetDatabaseUtil {
 
         return false;
     }
+
+    public static IEnumerable<string> GetAllPluginPaths() => AssetDatabase.FindAssets("t:DefaultAsset", new [] { Constants.Path.PLUGINS_PATH })
+        .Select(AssetDatabase.GUIDToAssetPath)
+        .Where(path => string.IsNullOrEmpty(path) == false && path.ContainsExtension(Constants.Extension.DLL));
 
     public static string GetCollectionPath(string path) => ASSETS_GET_AFTER_REGEX.TryMatch(path, out var match) ? match.Value : path;
     

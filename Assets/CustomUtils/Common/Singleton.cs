@@ -7,7 +7,7 @@ public class Singleton<T> where T : class, new() {
 }
 
 [RequiresAttributeImplementation(typeof(SingletonParamAttribute))]
-public class SingletonWithParameter<T> where T : class {
+public abstract class SingletonWithParameter<T> where T : class {
     
     private static T _instance;
 
@@ -28,7 +28,7 @@ public class SingletonWithParameter<T> where T : class {
 }
 
 [RequiresAttributeImplementation(typeof(SingletonParamAttribute))]
-public class SingletonWithParameter<TBase, TInstance> where TInstance : class {
+public abstract class SingletonWithParameter<TBase, TInstance> where TInstance : class {
 
     private static TInstance _instance;
 

@@ -107,7 +107,20 @@ public static class SystemUtil {
             Logger.TraceError(ex);
         }
     }
+    
+    public static string[] FindFiles(string directoryPath, string searchPattern) {
+        try {
+            if (Directory.Exists(directoryPath)) {
+                return Directory.GetFiles(directoryPath, searchPattern, SearchOption.AllDirectories);
+            }
+        } catch (Exception ex) {
+            Logger.TraceError(ex);
+            throw;
+        }
 
+        return Array.Empty<string>();
+    }
+    
     public static void MoveFile(string sourcePath, string targetPath, bool overwrite = true) {
         try {
             if (File.Exists(sourcePath)) {
@@ -235,6 +248,42 @@ public static class SystemUtil {
             }
         }
     }
+
+
+    #region [Create Instance]
+
+    public static bool TryCreateInstance<T>(out T instance) where T : class {
+        try {
+            return (instance = Activator.CreateInstance<T>()) != null;
+        } catch (Exception ex) {
+            Logger.TraceError(ex);
+        }
+
+        instance = null;
+        return false;
+    }
+    
+    public static bool TryCreateInstance<T>(out T instance, Type type, params object[] args) where T : class {
+        try {
+            return (instance = Activator.CreateInstance(type, args) as T) != null;
+        } catch (Exception ex) {
+            Logger.TraceError(ex);
+        }
+        
+        instance = null;
+        return false;
+    }
+    
+    public static bool TryCreateInstance(out object instance, Type type, params object[] args) {
+        try {
+            return (instance = Activator.CreateInstance(type, args)) != null;
+        } catch (Exception ex) {
+            Logger.TraceError(ex);
+        }
+        
+        instance = null;
+        return false;
+    }
     
     public static bool TrySafeCreateInstance<T>(Type type, out T instance) where T : class => (instance = SafeCreateInstance<T>(type)) != null;
     public static T SafeCreateInstance<T>(Type type) where T : class => SafeCreateInstance(type) as T;
@@ -289,6 +338,8 @@ public static class SystemUtil {
         return Activator.CreateInstance<T>();
     }
     
+    #endregion
+
     public static bool IsUnixBasePlatform() {
         switch (Environment.OSVersion.Platform) {
             case PlatformID.MacOSX:

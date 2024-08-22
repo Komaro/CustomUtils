@@ -13,10 +13,12 @@ public static partial class Constants {
         public const string MANIFEST = ".manifest";
         public const string DLL = ".dll";
         public const string PDB = ".pdb";
+        public const string ZIP = ".zip";
 
         public const string JSON_FILTER = "*.json";
         public const string SOLUTION_FILTER = "*.sln";
         public const string TEST_CASE_FILTER = "*.tc";
+        public const string DLL_FILTER = "*.dll";
     }
 
     public static class Culture {
@@ -47,19 +49,21 @@ public static partial class Constants {
         public static readonly string PROJECT_PATH = Directory.GetParent(Application.dataPath)?.FullName;
         public static readonly string SOLUTION_PATH = Directory.GetFiles(PROJECT_PATH, Extension.SOLUTION_FILTER).FirstOrDefault();
         
-        public static readonly string COMMON_CONFIG_FOLDER = $"{PROJECT_PATH}/{Folder.CONFIG}";
-        public static readonly string PROJECT_TEMP_FOLDER = $"{PROJECT_PATH}/{Folder.TEMP}";
-        public static readonly string PLUGINS_FOLDER = $"{Application.dataPath}/{Folder.PLUGINS}";
+        public static readonly string COMMON_CONFIG_PATH = $"{PROJECT_PATH}/{Folder.CONFIG}";
+        public static readonly string PROJECT_TEMP_PATH = $"{PROJECT_PATH}/{Folder.TEMP}";
+        
+        public static readonly string PLUGINS_FULL_PATH = $"{Application.dataPath}/{Folder.PLUGINS}";
+        public static readonly string PLUGINS_PATH = $"{Folder.ASSETS}/{Folder.PLUGINS}";
     }
 
     public static class Folder {
 
+        public const string ASSETS = "Assets";
         public const string CONFIG = "Config";
         public const string TEMP = "Temp";
         public const string SCRIPT_ASSEMBLIES = "ScriptAssemblies";
         public const string PLUGINS = "Plugins";
         public const string RESOURCES = "Resources";
-        public static readonly string ASSETS = "Assets";
     }
 
     public static class Regex {

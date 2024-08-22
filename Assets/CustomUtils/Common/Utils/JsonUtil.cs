@@ -6,9 +6,6 @@ using UnityEngine;
 
 public static class JsonUtil {
 
-    public static bool TryToJson<T>(this string text, out T json) => (json = text.ToJson<T>()) != null;
-    public static T ToJson<T>(this string text) => JsonConvert.DeserializeObject<T>(text);
-
     public static bool TryLoadJsonOrDecrypt<T>(out T json, string path, string key, ENCRYPT_TYPE type = default) {
         json = LoadJsonOrDecrypt<T>(path, key, type);
         return json != null;
@@ -58,7 +55,7 @@ public static class JsonUtil {
                 return JsonConvert.DeserializeObject<T>(plainText);
             }
         } catch (Exception ex) {
-            Logger.TraceError(ex, Color.red);
+            Logger.TraceError(ex);
         }
 
         return default;

@@ -31,7 +31,8 @@ public class DisconnectSessionException : Exception {
 
     private readonly string _address;
     private readonly uint _id;
-    
+
+    public DisconnectSessionException() { }
     public DisconnectSessionException(TcpSession session) : this(session.Client, session.ID) { }
     public DisconnectSessionException(TcpClient client, uint id) : this(client) => _id = id;
     public DisconnectSessionException(TcpClient client) => _address = client.GetIpAddress();
@@ -39,14 +40,30 @@ public class DisconnectSessionException : Exception {
     public override string ToString() => $"Session Disconnected.\n[{nameof(IPEndPoint.Address)}] {_address}{(_id != 0 ? $"\n[Session] {_id}" : string.Empty)}";
 }
 
+public class SessionConnectFail : Exception {
+
+    public SessionConnectFail() : base("Failed to connect to the session") { }
+    public SessionConnectFail(TcpSession session) : base($"Failed to connect to the {nameof(TcpSession)} || {session.ID}") { }
+    public SessionConnectFail(string message) : base(message) { }
+}
+
 public class InvalidHeaderException : Exception {
 
-    public InvalidHeaderException() : base($"Receive invalid type header") { }
+    public InvalidHeaderException() : base("Invalid type header received") { }
     public InvalidHeaderException(string message) : base(message) { }
+    public InvalidHeaderException(ITcpPacket header) : base($"Invalid type header received || {header.GetType().FullName}") { }
+}
+
+public class NotImplementHandlerException : Exception {
+
+    public NotImplementHandlerException(Type type) : base($"There is no handler implemented for the '{type.FullName}'") { }
+    public NotImplementHandlerException(object ob) : base($"There is no handler implemented for the '{ob.GetType().FullName}'") { }
+    public NotImplementHandlerException(Enum type) : base($"There is no handler implemented for the '{type}'") { }
 }
 
 public class NotImplementHandlerException<TEnum> : Exception where TEnum : struct, Enum {
 
+    public NotImplementHandlerException(Type type) : base($"There is no handler implemented for the '{type.FullName}'") { }
     public NotImplementHandlerException(object ob) : base($"There is no handler implemented for the '{ob.GetType().FullName}'") { }
     public NotImplementHandlerException(int type) : base($"There is no handler implemented for the '{EnumUtil.ConvertFast<TEnum>(type)}'") { }
     public NotImplementHandlerException(TEnum type) : base($"There is no handler implemented for the '{type}'") { }
@@ -82,22 +99,16 @@ public abstract class TcpStructResponseException : TcpResponseException<TcpHeade
     }
 }
 
-public class InvalidTestCount : TcpStructResponseException {
-    
-    public override TCP_ERROR Error => TCP_ERROR.INVALID_TEST_COUNT;
-    public override TCP_BODY Body => TCP_BODY.TEST_REQUEST;
-}
-
 public class InvalidSessionData : TcpStructResponseException {
 
     public InvalidSessionData() : base("Invalid session data") { }
     
     public override TCP_ERROR Error => TCP_ERROR.INVALID_SESSION_DATA;
-    public override TCP_BODY Body => TCP_BODY.SESSION_RESPONSE;
+    public override TCP_BODY Body => TCP_BODY.CONNECT_RESPONSE;
 }
 
 public class DuplicateSessionException : TcpStructResponseException {
 
     public override TCP_ERROR Error => TCP_ERROR.DUPLICATE_SESSION;
-    public override TCP_BODY Body => TCP_BODY.SESSION_RESPONSE;
+    public override TCP_BODY Body => TCP_BODY.CONNECT_RESPONSE;
 }

@@ -18,12 +18,15 @@ public abstract record TcpJsonPacket : ITcpPacket {
     public abstract bool IsValid();
 }
 
-public record TcpJsonConnectSessionPacket : TcpJsonPacket {
+public record TcpJsonSessionConnect : TcpJsonPacket {
 
     public override bool IsValid() => sessionId > 0;
+
+    public TcpJsonSessionConnect() { }
+    public TcpJsonSessionConnect(uint sessionId) => this.sessionId = sessionId;
 }
 
-public record TcpJsonResponseSessionPacket : TcpJsonPacket {
+public record TcpJsonSessionConnectResponse : TcpJsonPacket {
 
     [JsonProperty("ia")]
     public bool isActive;
@@ -31,7 +34,7 @@ public record TcpJsonResponseSessionPacket : TcpJsonPacket {
     public override bool IsValid() => true;
 }
 
-public record TcpJsonRequestTestPacket : TcpJsonPacket {
+public record TcpJsonTestRequest : TcpJsonPacket {
 
     [JsonProperty("rt")]
     public string requestText;
@@ -39,7 +42,7 @@ public record TcpJsonRequestTestPacket : TcpJsonPacket {
     public override bool IsValid() => string.IsNullOrEmpty(requestText) == false;
 }
 
-public record TcpJsonResponseTestPacket : TcpJsonPacket {
+public record TcpJsonTestResponse : TcpJsonPacket {
 
     [JsonProperty("rt")]
     public string responseText;

@@ -14,7 +14,7 @@ public class TcpPingServeModule : TcpServeModule<bool, Ping> {
                     var client = await AcceptAsync(token);
                     token.ThrowIfCancellationRequested();
                     _ = Task.Run(() => SendAsync(new TcpSession(client, 9999u), new Ping(), token), token);
-                    await connectChannel.Writer.WriteAsync((client, token), channelCancelToken.Token);
+                    await connectChannel.Writer.WriteAsync((client, token), cancelToken.Token);
                 } catch (SocketException ex) {
                     Logger.TraceLog(ex);
                 } catch (SystemException ex) {

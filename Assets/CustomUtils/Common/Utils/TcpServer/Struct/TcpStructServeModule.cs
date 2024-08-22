@@ -9,14 +9,14 @@ public class TcpStructServeModule : TcpServeModule<TcpHeader, ITcpPacket> {
     private static readonly int TCP_HEADER_SIZE = Marshal.SizeOf<TcpHeader>();
 
     public override async Task<TcpSession> ConnectSessionAsync(TcpClient client, CancellationToken token) {
-        var bytes = await ReceiveBytesAsync(client, TCP_HEADER_SIZE, token);
+        var bytes = await ReadBytesAsync(client, TCP_HEADER_SIZE, token);
         var header = bytes.ToStruct<TcpHeader>();
         if (header.HasValue == false) {
             throw new InvalidHeaderException();
         }
         
-        bytes = await ReceiveBytesAsync(client, header.Value.length, token);
-        var data = bytes.ToStruct<TcpRequestConnect>();
+        bytes = await ReadBytesAsync(client, header.Value.length, token);
+        var data = bytes.ToStruct<TcpStructSessionConnect>();
         if (data.HasValue) {
             if (data.Value.IsValid() == false) {
                 throw await TcpExceptionProvider.ResponseExceptionAsync(new InvalidSessionData(), client, token);
@@ -33,7 +33,7 @@ public class TcpStructServeModule : TcpServeModule<TcpHeader, ITcpPacket> {
                 return session;
             });
 
-            var response = new TcpResponseConnect(true);
+            var response = new TcpStructSessionConnectResponse(true);
             await SendAsync(session, response, token);
 
             return session;
@@ -43,7 +43,7 @@ public class TcpStructServeModule : TcpServeModule<TcpHeader, ITcpPacket> {
     }
 
     public override async Task<TcpHeader> ReceiveHeaderAsync(TcpSession session, CancellationToken token) {
-        var bytes = await ReceiveBytesAsync(session, TCP_HEADER_SIZE, token);
+        var bytes = await ReadBytesAsync(session, TCP_HEADER_SIZE, token);
         var header = bytes.ToStruct<TcpHeader>();
         if (header.HasValue) {
             return header.Value;
@@ -58,7 +58,7 @@ public class TcpStructServeModule : TcpServeModule<TcpHeader, ITcpPacket> {
         }
 
         if (TcpStructHandlerProvider.inst.TryGetHandler(header.body, out var handler)) {
-            var bytes = await ReceiveBytesAsync(session, header.length, token);
+            var bytes = await ReadBytesAsync(session, header.length, token);
             await handler.ReceiveAsync(session, bytes, token);
         }
 
@@ -73,4 +73,10 @@ public class TcpStructServeModule : TcpServeModule<TcpHeader, ITcpPacket> {
 
         return false;
     }
+
+    // Temp
+    public override bool Send<T>(TcpSession session, T data) => SendAsync(session, data, cancelToken.Token).Result;
+
+    // Temp
+    public override async Task<bool> SendAsync<T>(TcpSession session, T data) => await SendAsync(session, data, cancelToken.Token);
 }

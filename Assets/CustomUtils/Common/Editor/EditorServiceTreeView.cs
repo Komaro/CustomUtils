@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
 using UnityEditor.IMGUI.Controls;
@@ -31,6 +32,7 @@ public abstract class EditorServiceTreeView : TreeView {
     }
 
     protected override TreeViewItem BuildRoot() => new() { id = 0, depth = -1, children = itemList };
+    protected override bool DoesItemMatchSearch(TreeViewItem item, string search) => OnDoesItemMatchSearch(item, search);
     
     public void Clear() => itemList.Clear();
     
@@ -56,7 +58,7 @@ public abstract class EditorServiceTreeView : TreeView {
         if (rows.Count <= 1 || header.sortedColumnIndex == -1) {
             return;
         }
-            
+        
         var sortedColumns = header.state.sortedColumns;
         if (sortedColumns.Length <= 0) {
             return;
@@ -69,6 +71,14 @@ public abstract class EditorServiceTreeView : TreeView {
             rootItem.children.ForEach(x => rows.Add(x));
             Repaint();
         }
+    }
+
+    protected virtual bool OnDoesItemMatchSearch(TreeViewItem item, string search) {
+        if (string.IsNullOrEmpty(item.displayName)) {
+            return true;
+        }
+
+        return item.displayName.IndexOf(search, StringComparison.OrdinalIgnoreCase)>= 0;
     }
     
     public static MultiColumnHeaderState.Column CreateColumn(string headerContent, float minWidth = 20f, float maxWidth = 1000000f, TextAlignment textAlignment = TextAlignment.Center) => new() {

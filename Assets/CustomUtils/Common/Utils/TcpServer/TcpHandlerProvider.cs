@@ -39,12 +39,12 @@ public class TcpHandlerProvider<TEnum> where TEnum : struct, Enum {
         return handler != null;
     }
     
-    public ITcpHandler GetHandler(TEnum enumValue) {
+    public virtual ITcpHandler GetHandler(TEnum enumValue) {
         if (_handlerDic.TryGetValue(enumValue, out var handler)) {
             return handler;
         }
-
-        if (_handlerTypeDic.TryGetValue(enumValue, out var handlerType) && SystemUtil.TrySafeCreateInstance(handlerType, out handler)) {
+        
+        if (_handlerTypeDic.TryGetValue(enumValue, out var handlerType) && SystemUtil.TryCreateInstance(out handler, handlerType)) {
             _handlerDic.TryAdd(enumValue, handler);
             return handler;
         } 
@@ -55,11 +55,17 @@ public class TcpHandlerProvider<TEnum> where TEnum : struct, Enum {
 
     public bool TryGetHandler<TData>(out ITcpHandler handler) where TData : ITcpPacket => (handler = GetHandler<TData>()) != null;
 
-    public ITcpHandler GetHandler<TData>() where TData : ITcpPacket {
-        if (_handlerGenericDic.TryGetValue(typeof(TData), out var enumValue) && TryGetHandler(enumValue, out var handler)) {
-            return handler;
+    public virtual ITcpHandler GetHandler<TData>() where TData : ITcpPacket {
+        if (_handlerGenericDic.TryGetValue(typeof(TData), out var enumValue)) {
+            if (TryGetHandler(enumValue, out var handler)) {
+                return handler;
+            }
+
+            Logger.TraceError($"{enumValue} is an invalid enum value");
+            return null;
         }
 
+        Logger.TraceError($"{typeof(TData).Name} is invalid handler generic type");
         return null;
     }
     

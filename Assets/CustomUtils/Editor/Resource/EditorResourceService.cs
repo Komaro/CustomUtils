@@ -208,7 +208,7 @@ public abstract class EditorResourceDrawerAutoConfig<TConfig, TNullConfig> : Edi
         }
     }
 
-    protected SystemWatcherServiceOrder CreateWatcherOrder() => new(Constants.Path.COMMON_CONFIG_FOLDER, CONFIG_NAME, OnSystemWatcherEventHandler);
+    protected SystemWatcherServiceOrder CreateWatcherOrder() => new(Constants.Path.COMMON_CONFIG_PATH, CONFIG_NAME, OnSystemWatcherEventHandler);
     
     protected virtual void OnSystemWatcherEventHandler(object ob, FileSystemEventArgs args) {
         if (config == null) {

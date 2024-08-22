@@ -1,56 +1,46 @@
 ﻿using System.Runtime.InteropServices;
 
 [StructLayout(LayoutKind.Sequential)]
-public struct TcpRequestConnect : ITcpPacket {
+public struct TcpStructSessionConnect : ITcpPacket {
 
     public uint sessionId;
 
-    public TcpRequestConnect(TcpSession session) => sessionId = session.ID;
-    public TcpRequestConnect(uint sessionId) => this.sessionId = sessionId;
+    public TcpStructSessionConnect(TcpSession session) => sessionId = session.ID;
+    public TcpStructSessionConnect(uint sessionId) => this.sessionId = sessionId;
     public bool IsValid() => sessionId != 0;
 }
 
 [StructLayout(LayoutKind.Sequential)]
-public struct TcpResponseConnect : ITcpPacket {
+public struct TcpStructSessionConnectResponse : ITcpPacket {
 
     public bool isConnected;
 
-    public TcpResponseConnect(bool isConnected) => this.isConnected = isConnected;
+    public TcpStructSessionConnectResponse(bool isConnected) => this.isConnected = isConnected;
 
     public bool IsValid() => true;
 }
 
 [StructLayout(LayoutKind.Sequential)]
-public struct TcpErrorPacket : ITcpPacket {
+public struct TcpStructTestRequest : ITcpPacket {
 
-    public TCP_ERROR error;
-    
-    public TcpErrorPacket(TCP_ERROR error) => this.error = error;
-    
-    public bool IsValid() => true;
-}
+    public int count;
 
-[StructLayout(LayoutKind.Sequential)]
-public readonly struct TcpRequestTest : ITcpPacket {
-
-    public readonly int count;
-
-    public TcpRequestTest(int count) => this.count = count;
+    public TcpStructTestRequest(int count) => this.count = count;
     public bool IsValid() => count > 0;
 }
 
 [StructLayout(LayoutKind.Sequential)]
-public readonly struct TcpResponseText : ITcpPacket {
+public struct TcpStructTextResponse : ITcpPacket {
 
-    public readonly TCP_ERROR error;
-    public readonly string text;
+    public TCP_ERROR error;
+    public string text;
 
-    public TcpResponseText(TCP_ERROR error) {
+    public TcpStructTextResponse(TCP_ERROR error) {
         this.error = error;
         text = string.Empty;
     }
 
-    public TcpResponseText(string text) {
+    public TcpStructTextResponse(string text) {
         error = TCP_ERROR.NONE;
         this.text = text;
     }

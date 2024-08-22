@@ -10,6 +10,7 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Diagnostics;
 using Microsoft.CodeAnalysis.Text;
 using NUnit.Framework;
+using Unity.PerformanceTesting;
 using UnityEngine;
 
 public class AnalyzerTestRunner {
@@ -22,14 +23,36 @@ public class AnalyzerTestRunner {
     //     }
     // }
     
-    [TestCase(typeof(RequiresStaticMethodImplementationAttributeAnalyzer), "Test/EditMode/AnalyzerTestCaseCode/RequiresStaticMethodTestCase")]
-    [TestCase(typeof(RequiresAttributeImplementationAttributeAnalyzer), "Test/EditMode/AnalyzerTestCaseCode/RequiresAttributeTestCase")]
-    // [TestCase(typeof(RequiresUnityEditorAttributeAnalyzer), "Test/EditMode/AnalyzerTestCaseCode/RequiresUnityEditorAttributeAnalyzerTestCase")]
-    // [TestCase(typeof(UnityUsingDuplicateAnalyzer), "Test/EditMode/AnalyzerTestCaseCode/UnityUsingDuplicateAnalyzerTestCas")]
-    public async Task AnalyzerTestCaseTest(Type type, string testCaseCodeFolder) => await AnalyzerRunner.AnalyzerTest(type, testCaseCodeFolder);
-    
     // [TestCaseSource(nameof(RequiresUnityEditorAttributeRepeatProvider))]
     // public async Task RequiresUnityEditorAttributeAnalyzerRepeatTest(Type type, string testCaseCodeFolder) => await AnalyzerRunner.AnalyzerTest(type, testCaseCodeFolder);
+    
+    [TestCase(typeof(RequiresStaticMethodImplementationAttributeAnalyzer), "Test/EditMode/AnalyzerTestCaseCode/RequiresStaticMethodTestCase")]
+    [TestCase(typeof(RequiresAttributeImplementationAttributeAnalyzer), "Test/EditMode/AnalyzerTestCaseCode/RequiresAttributeTestCase")]
+    [TestCase(typeof(BuilderAttributeVerifyAnalyzer), "Test/EditMode/AnalyzerTestCaseCode/BuilderAttributeVerifyAnalyzerTestCase")]
+    [TestCase(typeof(AttributeAbstractAndInterfaceConstraintsAnalyzer), "Test/EditMode/AnalyzerTestCaseCode/AttributeAbstractAndInterfaceConstraintsAnalyzerTestCase")]
+    public async Task AnalyzerTestCaseTest(Type type, string testCaseCodeFolder) => await AnalyzerRunner.AnalyzerTest(type, testCaseCodeFolder);
+
+    [Performance]
+    [TestCase(typeof(RequiresStaticMethodImplementationAttributeAnalyzer), "Test/EditMode/AnalyzerTestCaseCode/RequiresStaticMethodTestCase")]
+    [TestCase(typeof(RequiresAttributeImplementationAttributeAnalyzer), "Test/EditMode/AnalyzerTestCaseCode/RequiresAttributeTestCase")]
+    [TestCase(typeof(BuilderAttributeVerifyAnalyzer), "Test/EditMode/AnalyzerTestCaseCode/BuilderAttributeVerifyAnalyzerTestCase")]
+    [TestCase(typeof(AttributeAbstractAndInterfaceConstraintsAnalyzer), "Test/EditMode/AnalyzerTestCaseCode/AttributeAbstractAndInterfaceConstraintsAnalyzerTestCase")]
+    public void AnalyzerTestCasePerformanceTest(Type type, string testCaseCodeFolder) {
+        var analyzerPerformanceTestGroup = new SampleGroup("PerformanceGroup");
+        
+        var taskList = AnalyzerRunner.GetTestCaseTaskList(type, Path.Combine(Application.dataPath, testCaseCodeFolder));
+        async void Action() {
+            await Task.WhenAll(taskList);
+        }
+        
+        Measure.Method(Action)
+            .WarmupCount(1)
+            .MeasurementCount(10)
+            .IterationsPerMeasurement(5)
+            .SampleGroup(analyzerPerformanceTestGroup)
+            .GC()
+            .Run();
+    }
 }
 
 internal static class AnalyzerRunner {
@@ -37,7 +60,7 @@ internal static class AnalyzerRunner {
     public static async Task AnalyzerTest(Type type, string testCaseCodeFolder) {
         var path = Path.Combine(Application.dataPath, testCaseCodeFolder);
         if (Directory.Exists(path)) {
-            var logs = await AnalyzerTestTask(type, path);
+            var logs = await Task.WhenAll(GetTestCaseTaskList(type, path));
             foreach (var result in logs) {
                 Logger.Log(result);
             }
@@ -53,10 +76,10 @@ internal static class AnalyzerRunner {
         }
     }
 
-    public static Task<TestCaseLog[]> AnalyzerTestTask(Type type, string testCaseCodeFolder) {
+    public static List<Task<TestCaseLog>> GetTestCaseTaskList(Type type, string testCaseCodeFolder) {
         if (Activator.CreateInstance(type) is not DiagnosticAnalyzer analyzer) {
             Logger.TraceError($"{type.Name} is an invalid {nameof(Type)}");
-            return Task.CompletedTask as Task<TestCaseLog[]>;
+            return new List<Task<TestCaseLog>>();
         }
         
         var testCaseCodeList = new List<TestCaseCode>();
@@ -75,7 +98,7 @@ internal static class AnalyzerRunner {
                     , new [] { CSharpSyntaxTree.ParseText(SourceText.From(testCaseCode.source), path:testCaseCode.name) }
                     , metaDataReferences
                     , new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
-                var testAnalyzerCompilation = testCompilation.WithAnalyzers(ImmutableArray.Create<DiagnosticAnalyzer>(analyzer));
+                var testAnalyzerCompilation = testCompilation.WithAnalyzers(ImmutableArray.Create(analyzer));
                 var task = testAnalyzerCompilation.GetAnalyzerDiagnosticsAsync();
                 var result = task.Result;
                 switch (testCaseCode.type) {
@@ -88,7 +111,7 @@ internal static class AnalyzerRunner {
                 return new TestCaseLog($"[Script Test] Success || {testCaseCode.name}");
             }));
         }
-
-        return Task.WhenAll(taskList);
+        
+        return taskList;
     }
 } 

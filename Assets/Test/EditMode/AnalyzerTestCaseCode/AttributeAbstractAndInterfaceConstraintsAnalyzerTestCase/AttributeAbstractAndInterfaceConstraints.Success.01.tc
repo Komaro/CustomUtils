@@ -1,0 +1,13 @@
+﻿[RequiresAttributeImplementation(typeof(TestDummyAttribute))]
+public abstract class TestClass {
+    
+}
+
+[RequiresAttributeImplementation(typeof(TestDummyAttribute))]
+public interface ITestInterface {
+    
+}
+
+public class TestDummyAttribute : Attribute {
+    
+}

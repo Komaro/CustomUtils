@@ -71,11 +71,9 @@ public class EditorBuildService : EditorWindow {
     private static EditorWindow _window;
     private static EditorWindow Window => _window == null ? _window = GetWindow<EditorBuildService>("Build Service") : _window;
     
-    // TODO. 기능 제거. 역할과 동작이 명확하지 않음. 예외처리를 위해 추가되었으나 적용하기 까다로움. 제거 후 다른 기능으로 대체 예정
+    // TODO. 기능 제거. 역할과 동작이 명확하지 않음. 예외처리를 위해 추가되었으나 적용하기 까다로움. 제거 후 다른 기능으로 대체 예정. BuildTypeEnumAttribute는 중복을 허용하기 때문에 문제가 될 소지가 있음 
     private static readonly Enum DEFAULT_BUILD_TYPE = (Enum) ReflectionProvider.GetAttributeEnumTypes<BuildTypeEnumAttribute>().FirstOrDefault()?.GetEnumValues().GetValue(0);
 
-    // private static readonly GUILayoutOption Constants.Editor.DEFAULT_LAYOUT = GUILayout.Width(300f);
-    
     private static readonly Regex NEW_LINE_REGEX = new Regex(@"(\n)");
 
     [MenuItem("Service/Build/Build Service %F1")]

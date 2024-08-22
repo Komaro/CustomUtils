@@ -1,0 +1,8 @@
+﻿[RequiresAttributeImplementation(typeof(TestDummyAttribute))]
+public class TestClass {
+    
+}
+
+public class TestDummyAttribute : Attribute {
+    
+}

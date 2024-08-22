@@ -34,14 +34,18 @@ public abstract class TcpHandler<TData, THeader> : ITcpReceiveHandler<TData>, IT
 
     public abstract THeader CreateHeader(TcpSession session, int length);
 
-    public abstract Task<byte[]> ReceiveAsync(TcpSession session, byte[] bytes, CancellationToken token);
+    public virtual async Task<byte[]> ReceiveAsync(TcpSession session, byte[] bytes, CancellationToken token) {
+        await ReceiveBytesAsync(session, bytes, token);
+        return bytes;
+    }
+    
     public abstract Task<TData> ReceiveBytesAsync(TcpSession session, byte[] bytes, CancellationToken token);
     public abstract Task<TData> ReceiveDataAsync(TcpSession session, TData data, CancellationToken token);
     
-    public abstract Task<bool> SendAsync(TcpSession session, byte[] bytes, CancellationToken token);
+    public virtual async Task<bool> SendAsync(TcpSession session, byte[] bytes, CancellationToken token) => await SendBytesAsync(session, bytes, token);
+    
     public abstract Task<bool> SendBytesAsync(TcpSession session, byte[] bytes, CancellationToken token);
     public abstract Task<bool> SendDataAsync(TcpSession session, TData data, CancellationToken token);
-
     
     protected async Task WriteAsyncWithCancellationCheck(NetworkStream stream, byte[] bytes, CancellationToken token) {
         await stream.WriteAsync(bytes, token);

@@ -12,7 +12,6 @@ internal static class EnumBag<TEnum> where TEnum : struct, Enum {
     private static readonly TEnum[] _values;
     private static readonly TEnum[] _ignoreObsoleteValues;
     private static readonly ConcurrentDictionary<string, TEnum> _stringToEnumDic = new();
-    private static readonly ConcurrentDictionary<TEnum, int> _test = new();
 
     static EnumBag() {
         var enumType = typeof(TEnum);

@@ -12,17 +12,16 @@ public static class StructExtension {
         var size = Marshal.SizeOf<T>();
         var pointer = Marshal.AllocHGlobal(size);
         var bytes = new byte[size];
-
+        
         try {
             Marshal.StructureToPtr(structure, pointer, true);
             Marshal.Copy(pointer, bytes, 0, size);
+            return bytes;
         } catch (Exception) {
             return Array.Empty<byte>();
         } finally {
             Marshal.FreeHGlobal(pointer);
         }
-
-        return bytes;
     }
 
     public static bool TrySpan<T>(this ref T structure, out Span<byte> byteSpan) where T : struct {

@@ -8,7 +8,6 @@ using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using Microsoft.CodeAnalysis.Diagnostics;
-using UniRx;
 using Unity.EditorCoroutines.Editor;
 using UnityEditor;
 using UnityEditor.AnimatedValues;
@@ -70,7 +69,7 @@ public class EditorCustomAnalyzerService : EditorService {
         
         yield return null;
         
-        var analyzerList = ReflectionProvider.GetSubClassTypes<DiagnosticAnalyzer>().Where(type => type.IsAbstract == false).ToList();
+        var analyzerList = ReflectionProvider.GetSubClassTypes<DiagnosticAnalyzer>().Where(type => type.IsAbstract == false && type.IsDefined<ObsoleteAttribute>() == false).ToList();
         var progressTick = 1.0f / analyzerList.Count;
         foreach (var type in analyzerList) {
             if (ASSEMBLY_REGEX.IsMatch(type.Assembly.Location)) {
@@ -177,7 +176,7 @@ public class EditorCustomAnalyzerService : EditorService {
                         if (GUILayout.Button("Custom Analyzer DLL 빌드", GUILayout.Height(30f))) {
                             EditorCommon.OpenCheckDialogue("경고", "Analyzer dll 파일을 빌드합니다.\n" +
                                                                  "환경에 따라 많은 시간이 소요될 수 있습니다.\n" +
-                                                                 $"빌드가 완료된 후 {_dllName} 파일은 자동적으로 {Constants.Path.PLUGINS_FOLDER}로 복사됩니다.", ok: () => {
+                                                                 $"빌드가 완료된 후 {_dllName} 파일은 자동적으로 {Constants.Path.PLUGINS_FULL_PATH}로 복사됩니다.", ok: () => {
                                 
                                 AnalyzerGenerator.GenerateCustomAnalyzerDll(_dllName, _implementInfoDic.Values.Where(info => info.isCheck).Select(info => info.type));
                             });
@@ -225,7 +224,7 @@ internal class ActivateAssemblyTreeView : EditorServiceTreeView {
     private static readonly MultiColumnHeaderState.Column[] COLUMNS = {
         CreateColumn("No", 35f, 35f),
         CreateColumn("명칭", 100f),
-        CreateColumn("생성일", 60f),
+        CreateColumn("마지막 수정", 60f),
     };
 
     public ActivateAssemblyTreeView() : base(COLUMNS) { }
@@ -236,7 +235,7 @@ internal class ActivateAssemblyTreeView : EditorServiceTreeView {
         if (args.item is ActivateAssemblyTreeViewItem item) {
             EditorGUI.LabelField(args.GetCellRect(0), item.id.ToString(), Constants.Draw.CENTER_LABEL);
             EditorGUI.LabelField(args.GetCellRect(1), item.name, Constants.Draw.CENTER_LABEL);
-            EditorGUI.LabelField(args.GetCellRect(2), item.createDate.ToString(CultureInfo.CurrentCulture), Constants.Draw.CENTER_LABEL);
+            EditorGUI.LabelField(args.GetCellRect(2), item.lastWriteDate.ToString(CultureInfo.CurrentCulture), Constants.Draw.CENTER_LABEL);
         }
     }
 
@@ -251,12 +250,13 @@ internal class ActivateAssemblyTreeView : EditorServiceTreeView {
     private sealed class ActivateAssemblyTreeViewItem : TreeViewItem {
 
         public readonly string name;
-        public readonly DateTime createDate;
+        public readonly DateTime lastWriteDate;
+        
         
         public ActivateAssemblyTreeViewItem(int id, Assembly assembly) {
             this.id = id;
             name = assembly.GetName().Name;
-            createDate = File.GetCreationTime(assembly.Location);
+            lastWriteDate = File.GetLastWriteTime(assembly.Location);
         }
     }
 }
@@ -302,8 +302,6 @@ internal class AnalyzerImplementTreeView : EditorServiceTreeView {
     
     public AnalyzerImplementTreeView() : base(COLUMNS) { }
     public AnalyzerImplementTreeView(MultiColumnHeaderState.Column[] columns) : base(columns) { }
-    protected override bool DoesItemMatchSearch(TreeViewItem item, string search) => item is AnalyzerImplementTreeViewItem implementItem && implementItem.info.IsMatch(search);
-
     public override void Draw() {
         searchString = searchField.OnToolbarGUI(searchString);
         OnGUI(EditorGUILayout.GetControlRect(GUILayout.ExpandWidth(true), GUILayout.ExpandHeight(true), GUILayout.MinHeight(100f)));
@@ -353,6 +351,8 @@ internal class AnalyzerImplementTreeView : EditorServiceTreeView {
 
         return enumerable;
     }
+    
+    protected override bool OnDoesItemMatchSearch(TreeViewItem item, string search) => item is AnalyzerImplementTreeViewItem implementItem && implementItem.info.IsMatch(search);
 
     protected sealed class AnalyzerImplementTreeViewItem : TreeViewItem {
 

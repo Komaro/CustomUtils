@@ -140,7 +140,7 @@ public abstract class RendererFeatureHandler {
             Logger.TraceError($"{type.Name} does not inherit from {nameof(ScriptableRendererFeature)}. Please check the implementation again.");
             return null;
         }
-        
+
         if (GraphicsSettings.currentRenderPipeline is UniversalRenderPipelineAsset universalPipelineAsset) {
             var renderer = universalPipelineAsset.scriptableRenderer;
             if (renderer != null && renderer.GetType().TryGetPropertyValue(renderer, TARGET_PROPERTY_NAME, out List<ScriptableRendererFeature> list, BindingFlags.GetProperty | BindingFlags.NonPublic)) {

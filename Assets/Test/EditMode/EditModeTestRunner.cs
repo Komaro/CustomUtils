@@ -1,7 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Linq;
-using System.Linq.Expressions;
 using System.Runtime.InteropServices;
 using System.Text;
 using Newtonsoft.Json;
@@ -10,34 +8,15 @@ using Unity.PerformanceTesting;
 
 [TestFixture]
 public class EditModeTestRunner {
-    
-    // [TestCase(1)]
-    // [TestCase(2)]
-    // public void CaseTest(int value) {
-    //     Logger.TraceLog($"{nameof(CaseTest)} param || {value}");
-    // }
 
     [Test]
     [Performance]
     public void TempTest() {
+        var defaultGroup = new SampleGroup("DefaultTestGroup");
+        Measure.Method(() => {
+            // Test Code
         
-        // var defaultGroup = new SampleGroup("DefaultGroup");
-        // var fastGroup = new SampleGroup("FastGroup");
-        //
-        // var type = typeof(TcpHandlerProviderBase<>);
-        // Measure.Method(() => {
-        //     if (type.GetInterfaces().Any(x => x.IsDefined<RequiresStaticMethodImplementationAttribute>())) {
-        //         
-        //     }
-        // }).WarmupCount(5).MeasurementCount(10).IterationsPerMeasurement(1000).SampleGroup(defaultGroup).Run();
-        //
-        // Measure.Method(() => {
-        //     foreach (var interfaceType in type.GetInterfaces()) {
-        //         if (interfaceType.IsDefined<RequiresStaticMethodImplementationAttribute>()) {
-        //             
-        //         }
-        //     }
-        // }).WarmupCount(5).MeasurementCount(10).IterationsPerMeasurement(1000).SampleGroup(fastGroup).Run();
+        }).WarmupCount(5).MeasurementCount(10).IterationsPerMeasurement(1000).SampleGroup(defaultGroup).Run();
     }
     
     #region [Enum]
@@ -121,7 +100,7 @@ public class EditModeTestRunner {
         var responseGroup = new SampleGroup("Response");
         var responseStreamGroup = new SampleGroup("ResponseStream");
         
-        var request = new TcpJsonConnectSessionPacket { sessionId = 9851153 };
+        var request = new TcpJsonSessionConnect(9851153);
         var requestString = JsonConvert.SerializeObject(request);
         var requestBytes = requestString.ToBytes();
 
@@ -144,7 +123,7 @@ public class EditModeTestRunner {
         
         Measure.Method(() => {
             var responseString = requestBytes.GetString();
-            _ = JsonConvert.DeserializeObject<TcpJsonConnectSessionPacket>(responseString);
+            _ = JsonConvert.DeserializeObject<TcpJsonSessionConnect>(responseString);
         }).WarmupCount(20).MeasurementCount(20).IterationsPerMeasurement(count).SampleGroup(responseGroup).Run();
         
         Measure.Method(() => {
@@ -152,7 +131,7 @@ public class EditModeTestRunner {
                 memoryStream.Write(requestBytes);
                 using (var reader = new StreamReader(memoryStream, Encoding.ASCII))
                 using (var jsonReader = new JsonTextReader(reader)) {
-                    _ = new JsonSerializer().Deserialize<TcpJsonConnectSessionPacket>(jsonReader);
+                    _ = new JsonSerializer().Deserialize<TcpJsonSessionConnect>(jsonReader);
                 }
             }
         }).WarmupCount(20).MeasurementCount(20).IterationsPerMeasurement(count).SampleGroup(responseStreamGroup).Run();
@@ -252,7 +231,7 @@ public class EditModeTestRunner {
     }
 
     private struct TestStruct {
-    
+        
         public int intValue;
         public byte byteValue;
         public TestInnerStruct innerStruct;
@@ -274,9 +253,13 @@ public class EditModeTestRunner {
         }
 
         public static bool operator !=(TestStruct a, TestStruct b) => (a == b) == false;
+        
+        public bool Equals(TestStruct other) => intValue == other.intValue && byteValue == other.byteValue && innerStruct.Equals(other.innerStruct);
+        public override bool Equals(object obj) => obj is TestStruct other && Equals(other);
+        public override int GetHashCode() => HashCode.Combine(intValue, byteValue, innerStruct);
 
         internal struct TestInnerStruct {
-            
+
             public int intValue;
             public byte byteValue;
             public double doubleValue;
@@ -303,12 +286,16 @@ public class EditModeTestRunner {
             }
 
             public static bool operator !=(TestInnerStruct a, TestInnerStruct b) => (a == b) == false;
+            
+            public bool Equals(TestInnerStruct other) => intValue == other.intValue && byteValue == other.byteValue && doubleValue.Equals(other.doubleValue) && doubleValue2.Equals(other.doubleValue2);
+            public override bool Equals(object obj) => obj is TestInnerStruct other && Equals(other);
+            public override int GetHashCode() => HashCode.Combine(intValue, byteValue, doubleValue, doubleValue2);
         }
     }
 
     [StructLayout(LayoutKind.Sequential)]
     private struct TestSequentialStruct {
-        
+
         public int intValue;
         public float floatValue;
         public TestInnerStruct innerStruct;
@@ -330,10 +317,14 @@ public class EditModeTestRunner {
         }
 
         public static bool operator !=(TestSequentialStruct a, TestSequentialStruct b) => (a == b) == false;
+        
+        public bool Equals(TestSequentialStruct other) => intValue == other.intValue && floatValue.Equals(other.floatValue) && innerStruct.Equals(other.innerStruct);
+        public override bool Equals(object obj) => obj is TestSequentialStruct other && Equals(other);
+        public override int GetHashCode() => HashCode.Combine(intValue, floatValue, innerStruct);
 
         [StructLayout(LayoutKind.Sequential, Pack = 4)]
         internal struct TestInnerStruct {
-            
+
             public int intValue;
             public byte byteValue;
             public double doubleValue;
@@ -355,6 +346,10 @@ public class EditModeTestRunner {
             }
 
             public static bool operator !=(TestInnerStruct a, TestInnerStruct b) => (a == b) == false;
+            
+            public bool Equals(TestInnerStruct other) => intValue == other.intValue && byteValue == other.byteValue && doubleValue.Equals(other.doubleValue);
+            public override bool Equals(object obj) => obj is TestInnerStruct other && Equals(other);
+            public override int GetHashCode() => HashCode.Combine(intValue, byteValue, doubleValue);
         }
     }
     

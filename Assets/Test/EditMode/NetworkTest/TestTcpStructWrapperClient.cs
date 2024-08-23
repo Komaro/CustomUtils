@@ -3,12 +3,14 @@ using System.Net.Sockets;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
+using Random = System.Random;
 
 public abstract record TcpStructWrapperBasePacket : ITcpPacket {
 
     public abstract byte[] ToBytes();
     public abstract bool ToPopulate(byte[] bytes);
     public abstract bool IsValid();
+    public abstract Type GetGenericType();
 }
 
 public record TcpStructWrapperPacket<TData> : TcpStructWrapperBasePacket where TData : struct, ITcpPacket {
@@ -38,41 +40,34 @@ public record TcpStructWrapperPacket<TData> : TcpStructWrapperBasePacket where T
     }
     
     public override bool IsValid() => structure.IsValid();
+    public override Type GetGenericType() => typeof(TData);
 }
 
-public record TcpStructWrapperSessionConnect : TcpStructWrapperPacket<TcpStructSessionConnect> {
+internal class TestTcpStructWrapperClient : SimpleTcpClient<TcpHeader, TcpStructWrapperBasePacket>, ITestHandler {
     
-}
-
-public record TcpStructWrapperSessionConnectResponse : TcpStructWrapperPacket<TcpStructSessionConnectResponse> {
-    
-}
-
-internal class TestTcpStructWrapperClient : SimpleTcpClient<TcpHeader, ITcpPacket>, ITestHandler {
-
-    public TestTcpStructWrapperClient(string host, int port) : base(host, port) { }
-
     private static readonly int TCP_HEADER_SIZE = Marshal.SizeOf<TcpHeader>();
     protected override int HEADER_SIZE => TCP_HEADER_SIZE;
+    
+    public TestTcpStructWrapperClient(string host, int port) : base(host, port) { }
 
     public override async Task<TcpSession> ConnectSessionAsync(TcpClient client, CancellationToken token) {
         if (TcpStructHandlerProvider.inst.TryGetSendHandler<TcpStructSessionConnect>(out var handler)) {
             var newSession = new TcpSession(client, CreateSessionId());
-            var sessionData = new TcpStructSessionConnect(newSession);
-            
-            await handler.SendDataAsync(session, sessionData, token);
+            if (await handler.SendDataAsync(newSession, new TcpStructSessionConnect(newSession), token) == false) {
+                throw new SessionConnectFail();
+            }
             
             var header = await ReceiveHeaderAsync(newSession, token);
             if (header.IsValid() == false) {
                 throw new InvalidHeaderException(header);
             }
-            
-            var responseData = await ReceiveDataAsync<TcpStructWrapperPacket<TcpStructSessionConnectResponse>>(newSession, header, token);
+
+            var responseData = await ReceiveDataAsync<TcpStructSessionConnectResponse>(newSession, header, token);
             if (responseData.IsValid() == false) {
                 throw new InvalidSessionData();
             }
             
-            if (responseData.structure.isConnected) {
+            if (responseData.isConnected) {
                 return newSession;
             }
 
@@ -82,7 +77,7 @@ internal class TestTcpStructWrapperClient : SimpleTcpClient<TcpHeader, ITcpPacke
         throw new NotImplementHandlerException<TCP_BODY>(typeof(TcpStructSessionConnect));
     }
 
-    public override async Task<TcpHeader> ReceiveHeaderAsync(TcpSession session, CancellationToken token) {
+    protected override async Task<TcpHeader> ReceiveHeaderAsync(TcpSession session, CancellationToken token) {
         var bytes = await ReadBytesAsync(session, HEADER_SIZE, token);
         var header = bytes.ToStruct<TcpHeader>();
         if (header.HasValue) {
@@ -114,17 +109,22 @@ internal class TestTcpStructWrapperClient : SimpleTcpClient<TcpHeader, ITcpPacke
         throw new NotImplementHandlerException(typeof(T));
     }
 
-    public override async Task<bool> SendAsync<T>(TcpSession session, T data, CancellationToken token) {
-        if (TcpStructHandlerProvider.inst.TryGetSendHandler<T>(out var handler)) {
-            await handler.SendDataAsync(session, data, token);
+    protected override async Task<bool> SendDataAsync<T>(TcpSession session, T data, CancellationToken token) {
+        if (TcpStructHandlerProvider.inst.TryGetHandler(data.GetGenericType(), out var handler)) {
+            await handler.SendAsync(session, data.ToBytes(), token);
         }
 
         throw new NotImplementHandlerException(data);
     }
 
+    protected override ITcpHandler GetHandler(TcpStructWrapperBasePacket data) => TcpStructHandlerProvider.inst.TryGetHandler(data.GetType(), out var handler) ? handler : null;
+    protected override byte[] GetBytes(TcpStructWrapperBasePacket data) => data.ToBytes();
+
     protected override uint CreateSessionId() => (uint) new Random(DateTime.Now.GetHashCode()).Next();
 
     public void StartTest(CancellationToken token) {
         Logger.TraceLog("Start Test");
+        var structure = new TcpStructTestRequest(4533);
+        SendDataPublish(session, new TcpStructWrapperPacket<TcpStructTestRequest>(ref structure));
     }
 }

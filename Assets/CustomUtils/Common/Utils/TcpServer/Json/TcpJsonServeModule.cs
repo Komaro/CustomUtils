@@ -74,8 +74,8 @@ public class TcpJsonServeModule : TcpServeModule<TcpHeader, TcpJsonPacket> {
     }
 
     public override async Task<bool> SendAsync<TData>(TcpSession session, TData data, CancellationToken token) {
-        if (data.IsValid() && TcpJsonHandlerProvider.inst.TryGetSendHandler<TData>(out var handler)) {
-            await handler.SendDataAsync(session, data, token);
+        if (data.IsValid() && TcpJsonHandlerProvider.inst.TryGetHandler(data.GetType(), out var handler)) {
+            await handler.SendAsync(session, data.ToBytes(), token);
             return true;
         }
         

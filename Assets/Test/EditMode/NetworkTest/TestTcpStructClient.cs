@@ -14,8 +14,7 @@ internal class TestTcpStructClient : SimpleTcpClient<TcpHeader, ITcpPacket>, ITe
     public override async Task<TcpSession> ConnectSessionAsync(TcpClient client, CancellationToken token) {
         if (TcpStructHandlerProvider.inst.TryGetSendHandler<TcpStructSessionConnect>(out var handler)) {
             var newSession = new TcpSession(client, CreateSessionId());
-            var sessionData = new TcpStructSessionConnect(newSession);
-            if (await handler.SendDataAsync(newSession, sessionData, token) == false) {
+            if (await handler.SendDataAsync(newSession, new TcpStructSessionConnect(newSession), token) == false) {
                 throw new SessionConnectFail(newSession);
             }
 
@@ -39,7 +38,7 @@ internal class TestTcpStructClient : SimpleTcpClient<TcpHeader, ITcpPacket>, ITe
         throw new NotImplementHandlerException<TCP_BODY>(typeof(TcpStructSessionConnect));
     }
 
-    public override async Task<TcpHeader> ReceiveHeaderAsync(TcpSession session, CancellationToken token) {
+    protected override async Task<TcpHeader> ReceiveHeaderAsync(TcpSession session, CancellationToken token) {
         var bytes = await ReadBytesAsync(session, TCP_HEADER_SIZE, token);
         var header = bytes.ToStruct<TcpHeader>();
         if (header.HasValue) {
@@ -71,21 +70,39 @@ internal class TestTcpStructClient : SimpleTcpClient<TcpHeader, ITcpPacket>, ITe
         throw new NotImplementHandlerException<TCP_BODY>(header.body);
     }
 
-    public override async Task<bool> SendAsync<T>(TcpSession session, T data, CancellationToken token) {
-        if (data.IsValid() && TcpStructHandlerProvider.inst.TryGetSendHandler<T>(out var handler)) {
-            return await handler.SendDataAsync(session, data, token);
+    protected override async Task<bool> SendDataAsync<T>(TcpSession session, T data, CancellationToken token) {
+        if (data.IsValid() && TcpStructHandlerProvider.inst.TryGetHandler(data.GetType(), out var handler)) {
+            var bytes = GetBytes(data);
+            if (bytes != Array.Empty<byte>()) {
+                await handler.SendAsync(session, bytes, token);
+                return true;
+            }
         }
 
         throw new NotImplementHandlerException<TCP_BODY>(data);
     }
 
-    // Temp
-    // public override bool Send<T>(uint sessionId, T data) => session != null && session.VerifySession(sessionId) && SendAsync(session, data, cancelToken.Token).Result;
-    //
-    // // Temp
-    // public override async Task<bool> SendAsync<T>(uint sessionId, T data) => session != null && session.VerifySession(sessionId) && await SendAsync(session, data, cancelToken.Token);
+    protected override ITcpHandler GetHandler(ITcpPacket data) => TcpStructHandlerProvider.inst.TryGetHandler(data.GetType(), out var handler) ? handler : null;
+
+    protected override byte[] GetBytes(ITcpPacket data) {
+        var type = data.GetType();
+        if (type.IsStruct()) {
+            var size = Marshal.SizeOf(type);
+            var pointer = Marshal.AllocHGlobal(size);
+            var bytes = new byte[size];
+        
+            try {
+                Marshal.StructureToPtr(data, pointer, true);
+                Marshal.Copy(pointer, bytes, 0, size);
+            } finally {
+                Marshal.FreeHGlobal(pointer);
+            }
+        }
+
+        return Array.Empty<byte>();
+    }
 
     protected override uint CreateSessionId() => (uint) new Random(DateTime.Now.GetHashCode()).Next();
 
-    public void StartTest(CancellationToken token) => Send(session, new TcpStructTestRequest(20));
+    public void StartTest(CancellationToken token) => SendDataPublish(session, new TcpStructTestRequest(20));
 }

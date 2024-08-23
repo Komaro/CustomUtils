@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Net.Sockets;
 using System.Runtime.InteropServices;
 using System.Threading;
@@ -26,7 +27,7 @@ public class TcpStructServeModule : TcpServeModule<TcpHeader, ITcpPacket> {
             if (sessionDic.TryGetValue(id, out var session) && session.Connected) {
                 throw await TcpExceptionProvider.ResponseExceptionAsync(new DuplicateSessionException(), client, token);
             }
-                
+            
             session = new TcpSession(client, id);
             sessionDic.AddOrUpdate(id, session, (_, oldSession) => {
                 oldSession.Close();
@@ -66,17 +67,34 @@ public class TcpStructServeModule : TcpServeModule<TcpHeader, ITcpPacket> {
     }
 
     public override async Task<bool> SendAsync<T>(TcpSession session, T data, CancellationToken token) {
-        if (data.IsValid() && TcpStructHandlerProvider.inst.TryGetSendHandler<T>(out var handler)) {
-            await handler.SendDataAsync(session, data, token);
-            return true;
+        if (TcpStructHandlerProvider.inst.TryGetHandler(data.GetType(), out var handler)) {
+            var bytes = ToBytes(data);
+            if (bytes != Array.Empty<byte>()) {
+                await handler.SendAsync(session, bytes, token);
+                return true;
+            }
+
+            return false;
         }
 
-        return false;
+        throw new NotImplementHandlerException(data);
     }
 
-    // Temp
-    public override bool Send<T>(TcpSession session, T data) => SendAsync(session, data, cancelToken.Token).Result;
-
-    // Temp
-    public override async Task<bool> SendAsync<T>(TcpSession session, T data) => await SendAsync(session, data, cancelToken.Token);
+    private byte[] ToBytes<T>(T data) where T : ITcpPacket {
+        var type = data.GetType();
+        if (type.IsStruct()) {
+            var size = Marshal.SizeOf(type);
+            var bytes = new byte[size];
+            var pointer = Marshal.AllocHGlobal(size);
+                
+            try {
+                Marshal.StructureToPtr(data, pointer, true);
+                Marshal.Copy(pointer, bytes, 0, size);
+                return bytes;
+            } finally {
+                Marshal.FreeHGlobal(pointer);
+            }
+        }
+        return Array.Empty<byte>();
+    }
 }

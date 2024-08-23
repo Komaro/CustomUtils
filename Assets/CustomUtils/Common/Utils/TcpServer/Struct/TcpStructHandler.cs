@@ -19,30 +19,29 @@ public abstract class TcpStructHandler<TData> : TcpHandler<TData, TcpHeader> whe
         throw new InvalidDataException();
     }
 
-    public override async Task<bool> SendBytesAsync(TcpSession session, byte[] bytes, CancellationToken token) {
-        var data = bytes.ToStruct<TData>();
-        if (data.HasValue) {
-            return await SendDataAsync(session, data.Value, token);
-        }
-
-        throw new InvalidCastException();
-    }
-
     public override async Task<bool> SendDataAsync(TcpSession session, TData data, CancellationToken token) {
         if (session.Connected == false) {
             throw new DisconnectSessionException(session);
         }
 
         if (VerifyData(session, data)) {
-            var bytes = data.ToBytes();
-            var header = CreateHeader(session, bytes.Length);
-            await WriteAsyncWithCancellationCheck(session, header.ToBytes(), token);
-            await WriteAsyncWithCancellationCheck(session, bytes, token);
-            return true;
+            return await SendBytesAsync(session, data.ToBytes(), token);
         }
         
         Logger.TraceError($"Invalid Data || {data.GetType().Name}");
         return false;
+    }
+    
+    public override async Task<bool> SendBytesAsync(TcpSession session, byte[] bytes, CancellationToken token) {
+        try {
+            var header = CreateHeader(session, bytes.Length);
+            await WriteAsyncWithCancellationCheck(session, header.ToBytes(), token);
+            await WriteAsyncWithCancellationCheck(session, bytes, token);
+            return true;
+        } catch (Exception ex) {
+            Logger.TraceError(ex);
+            return false;
+        }
     }
     
     protected override bool VerifyData(TcpSession session, TData data) => session.IsValid() && data.IsValid();
@@ -55,6 +54,7 @@ public class TcpSessionConnectHandler : TcpStructHandler<TcpStructSessionConnect
 
     public override async Task<TcpStructSessionConnect> ReceiveDataAsync(TcpSession session, TcpStructSessionConnect data, CancellationToken token) {
         await Task.CompletedTask;
+        Logger.TraceLog($"Receive Session Data || {data.sessionId}");
         return data;
     }
 }
@@ -98,10 +98,7 @@ public class RequestTestHandler : TcpStructHandler<TcpStructTestRequest> {
 
 public abstract class TcpStructStringHandler<TData> : TcpStructHandler<TData> where TData : struct, ITcpPacket {
 
-    public override async Task<byte[]> ReceiveAsync(TcpSession session, byte[] bytes, CancellationToken token) {
-        await ReceiveStringAsync(session, bytes.GetString(), token);
-        return bytes;
-    }
+    public override async Task ReceiveAsync(TcpSession session, byte[] bytes, CancellationToken token) => await ReceiveStringAsync(session, bytes.GetString(), token);
 
     public override async Task<TData> ReceiveDataAsync(TcpSession session, TData data, CancellationToken token) {
         await Task.CompletedTask;

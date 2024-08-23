@@ -31,6 +31,22 @@ public class TcpHandlerProvider<TEnum> where TEnum : struct, Enum {
     
     #region [Handler]
     
+    public bool TryGetHandler(Type type, out ITcpHandler handler) => (handler = GetHandler(type)) != null;
+
+    public ITcpHandler GetHandler(Type type) {
+        if (_handlerGenericDic.TryGetValue(type, out var enumValue)) {
+            if (TryGetHandler(enumValue, out var handler)) {
+                return handler;
+            }
+            
+            Logger.TraceError($"{enumValue} is an invalid enum value");
+            return null;
+        }
+
+        Logger.TraceError($"{type.Name} is invalid handler generic type");
+        return null;
+    }
+    
     public bool TryGetHandler(int body, out ITcpHandler handler) => (handler = GetHandler(body)) != null;
     public ITcpHandler GetHandler(int body) => GetHandler(EnumUtil.ConvertFast<TEnum>(body));
     
@@ -38,7 +54,23 @@ public class TcpHandlerProvider<TEnum> where TEnum : struct, Enum {
         handler = GetHandler(enumValue);
         return handler != null;
     }
-    
+
+    public bool TryGetHandler<TData>(out ITcpHandler handler) => (handler = GetHandler<TData>()) != null;
+
+    public virtual ITcpHandler GetHandler<TData>() {
+        if (_handlerGenericDic.TryGetValue(typeof(TData), out var enumValue)) {
+            if (TryGetHandler(enumValue, out var handler)) {
+                return handler;
+            }
+
+            Logger.TraceError($"{enumValue} is an invalid enum value");
+            return null;
+        }
+
+        Logger.TraceError($"{typeof(TData).Name} is invalid handler generic type");
+        return null;
+    }
+
     public virtual ITcpHandler GetHandler(TEnum enumValue) {
         if (_handlerDic.TryGetValue(enumValue, out var handler)) {
             return handler;
@@ -52,45 +84,29 @@ public class TcpHandlerProvider<TEnum> where TEnum : struct, Enum {
         Logger.TraceError($"{nameof(enumValue)} is an invalid enum value");
         return null;
     }
-
-    public bool TryGetHandler<TData>(out ITcpHandler handler) where TData : ITcpPacket => (handler = GetHandler<TData>()) != null;
-
-    public virtual ITcpHandler GetHandler<TData>() where TData : ITcpPacket {
-        if (_handlerGenericDic.TryGetValue(typeof(TData), out var enumValue)) {
-            if (TryGetHandler(enumValue, out var handler)) {
-                return handler;
-            }
-
-            Logger.TraceError($"{enumValue} is an invalid enum value");
-            return null;
-        }
-
-        Logger.TraceError($"{typeof(TData).Name} is invalid handler generic type");
-        return null;
-    }
     
     #endregion
     
     #region [Receive Handler]
     
-    public bool TryGetReceiveHandler<TData>(int body, out ITcpReceiveHandler<TData> handler) where TData : ITcpPacket => (handler = GetReceiveHandler<TData>(body)) != null;
-    public ITcpReceiveHandler<TData> GetReceiveHandler<TData>(int body) where TData : ITcpPacket => GetHandler(EnumUtil.ConvertFast<TEnum>(body)) as ITcpReceiveHandler<TData>;
+    public bool TryGetReceiveHandler<TData>(int body, out ITcpReceiveHandler<TData> handler) => (handler = GetReceiveHandler<TData>(body)) != null;
+    public ITcpReceiveHandler<TData> GetReceiveHandler<TData>(int body) => GetHandler(EnumUtil.ConvertFast<TEnum>(body)) as ITcpReceiveHandler<TData>;
     
-    public bool TryGetReceiveHandler<TData>(TEnum body, out ITcpReceiveHandler<TData> handler) where TData : ITcpPacket => (handler = GetReceiveHandler<TData>(body)) != null;
-    public ITcpReceiveHandler<TData> GetReceiveHandler<TData>(TEnum body) where TData : ITcpPacket => GetHandler(body) as ITcpReceiveHandler<TData>;
+    public bool TryGetReceiveHandler<TData>(TEnum body, out ITcpReceiveHandler<TData> handler) => (handler = GetReceiveHandler<TData>(body)) != null;
+    public ITcpReceiveHandler<TData> GetReceiveHandler<TData>(TEnum body) => GetHandler(body) as ITcpReceiveHandler<TData>;
 
-    public bool TryGetReceiveHandler<TData>(out ITcpReceiveHandler<TData> handler) where TData : ITcpPacket => (handler = GetReceiveHandler<TData>()) != null;
-    public ITcpReceiveHandler<TData> GetReceiveHandler<TData>() where TData : ITcpPacket => TryGetHandler<TData>(out var handler) ? handler as ITcpReceiveHandler<TData> : null;
+    public bool TryGetReceiveHandler<TData>(out ITcpReceiveHandler<TData> handler) => (handler = GetReceiveHandler<TData>()) != null;
+    public ITcpReceiveHandler<TData> GetReceiveHandler<TData>() => TryGetHandler<TData>(out var handler) ? handler as ITcpReceiveHandler<TData> : null;
 
     #endregion
 
     #region [Send Handler]
     
-    public bool TryGetSendHandler<TData>(TEnum body, out ITcpSendHandler<TData> handler) where TData : ITcpPacket => (handler = GetSendHandler<TData>(body)) != null;
-    public ITcpSendHandler<TData> GetSendHandler<TData>(TEnum body) where TData : ITcpPacket => GetHandler(body) as ITcpSendHandler<TData>;
+    public bool TryGetSendHandler<TData>(TEnum body, out ITcpSendHandler<TData> handler) => (handler = GetSendHandler<TData>(body)) != null;
+    public ITcpSendHandler<TData> GetSendHandler<TData>(TEnum body) => GetHandler(body) as ITcpSendHandler<TData>;
 
-    public bool TryGetSendHandler<TData>(out ITcpSendHandler<TData> handler) where TData : ITcpPacket => (handler = GetSendHandler<TData>()) != null;
-    public ITcpSendHandler<TData> GetSendHandler<TData>() where TData : ITcpPacket => GetHandler<TData>() as ITcpSendHandler<TData>;
+    public bool TryGetSendHandler<TData>(out ITcpSendHandler<TData> handler) => (handler = GetSendHandler<TData>()) != null;
+    public ITcpSendHandler<TData> GetSendHandler<TData>() => GetHandler<TData>() as ITcpSendHandler<TData>;
 
     #endregion
 }

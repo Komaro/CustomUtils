@@ -17,31 +17,31 @@ public abstract class TcpJsonHandler<TData> : TcpHandler<TData, TcpHeader> where
         throw new InvalidCastException();
     }
 
-    public override async Task<bool> SendBytesAsync(TcpSession session, byte[] bytes, CancellationToken token) {
-        if (session.Connected && bytes.GetString().TryToJson<TData>(out var data)) {
-            return await SendDataAsync(session, data, token);
-        }
-
-        throw new InvalidCastException();
-    }
-    
     public override async Task<bool> SendDataAsync(TcpSession session, TData data, CancellationToken token) {
         if (session.Connected == false) {
             throw new DisconnectSessionException(session);
         }
     
         if (VerifyData(session, data)) {
-           var bytes = data.ToBytes();
-           var header = CreateHeader(session, bytes.Length);
-           await WriteAsyncWithCancellationCheck(session, header.ToBytes(), token);
-           await WriteAsyncWithCancellationCheck(session, bytes, token);
-           return true;
+            return await SendBytesAsync(session, data.ToBytes(), token);
         }
 
         Logger.TraceError($"Invalid Data || {data.GetType().Name}");
         return false;
     }
 
+    public override async Task<bool> SendBytesAsync(TcpSession session, byte[] bytes, CancellationToken token) {
+        try {
+            var header = CreateHeader(session, bytes.Length);
+            await WriteAsyncWithCancellationCheck(session, header.ToBytes(), token);
+            await WriteAsyncWithCancellationCheck(session, bytes, token);
+            return true;
+        } catch (Exception ex) {
+            Logger.TraceError(ex);
+            return false;
+        }
+    }
+    
     protected override bool VerifyData(TcpSession session, TData data) => data.IsValid() && session.VerifySession(data.sessionId);
 }
 

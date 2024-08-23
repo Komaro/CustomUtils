@@ -24,6 +24,7 @@ public record TcpJsonSessionConnect : TcpJsonPacket {
 
     public TcpJsonSessionConnect() { }
     public TcpJsonSessionConnect(uint sessionId) => this.sessionId = sessionId;
+    public TcpJsonSessionConnect(TcpSession session) : this(session.ID) { }
 }
 
 public record TcpJsonSessionConnectResponse : TcpJsonPacket {

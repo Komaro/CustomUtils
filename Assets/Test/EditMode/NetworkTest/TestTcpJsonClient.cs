@@ -37,10 +37,10 @@ internal class TestTcpJsonClient : SimpleTcpClient<TcpHeader, TcpJsonPacket>, IT
             throw new SessionConnectFail($"Failed to connect to the session. || {host} || {port}");
         }
 
-        throw new NotImplementHandlerException<TCP_BODY>(typeof(TcpJsonSessionConnect));
+        throw new NotImplementHandlerException(typeof(TcpJsonSessionConnect));
     }
-    
-    public override async Task<TcpHeader> ReceiveHeaderAsync(TcpSession session, CancellationToken token) {
+
+    protected override async Task<TcpHeader> ReceiveHeaderAsync(TcpSession session, CancellationToken token) {
         var bytes = await ReadBytesAsync(session, TCP_HEADER_SIZE, token);
         var header = bytes.ToStruct<TcpHeader>();
         if (header.HasValue) {
@@ -59,8 +59,17 @@ internal class TestTcpJsonClient : SimpleTcpClient<TcpHeader, TcpJsonPacket>, IT
             var bytes = await ReadBytesAsync(session, header.length, token);
             await handler.ReceiveAsync(session, bytes, token);
         } else {
-            throw new NotImplementHandlerException<TCP_BODY>(header.body);
+            throw new NotImplementHandlerException(header.GetEnumBody<TCP_BODY>());
         }
+    }
+
+    protected override async Task<bool> SendDataAsync<T>(TcpSession session, T data, CancellationToken token) {
+        if (TryGetHandler(data, out var handler)) {
+            await handler.SendAsync(session, data.ToBytes(), token);
+            return true;
+        }
+
+        throw new NotImplementHandlerException(data);
     }
 
     public override async Task<T> ReceiveDataAsync<T>(TcpSession session, TcpHeader header, CancellationToken token) {
@@ -69,17 +78,13 @@ internal class TestTcpJsonClient : SimpleTcpClient<TcpHeader, TcpJsonPacket>, IT
             return await handler.ReceiveBytesAsync(session, bytes, token);
         }
 
-        throw new NotImplementHandlerException<TCP_BODY>(header.body);
+        throw new NotImplementHandlerException(typeof(T));
     }
 
-    public override async Task<bool> SendAsync<T>(TcpSession session, T data, CancellationToken token) {
-        if (TcpJsonHandlerProvider.inst.TryGetSendHandler<T>(out var handler)) {
-            return await handler.SendDataAsync(session, data, token);
-        }
-
-        throw new NotImplementHandlerException<TCP_BODY>(data);
-    }
+    protected override ITcpHandler GetHandler(TcpJsonPacket data) => TcpJsonHandlerProvider.inst.TryGetHandler(data.GetType(), out var handler) ? handler : null;
     
+    protected override byte[] GetBytes(TcpJsonPacket data) => data.ToBytes();
+
     protected override uint CreateSessionId() => (uint) new Random(DateTime.Now.GetHashCode()).Next();
     
     public async void StartTest(CancellationToken token) {
@@ -88,8 +93,8 @@ internal class TestTcpJsonClient : SimpleTcpClient<TcpHeader, TcpJsonPacket>, IT
                 sessionId = session.ID,
                 requestText = "Hello World!!",
             };
-            
-            await SendAsync(session, data, token);
+
+            await SendDataPublishAsync(session, data);
             Logger.TraceLog($"Send {nameof(data)} || {data.sessionId} || {data.requestText}", Color.magenta);
         }
     }

@@ -1,19 +1,19 @@
-﻿
-using System;
+﻿using System;
 using System.Buffers;
 using System.IO;
 using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Channels;
 using System.Threading.Tasks;
+using UnityEngine;
 
-public abstract class SimpleTcpClient<THeader, TData> : ITcpClient where THeader : ITcpPacket where TData : ITcpPacket {
+public abstract class SimpleTcpClient<THeader, TData> : ITcpClient where THeader : ITcpPacket {
 
         protected TcpSession session;
         protected string host;
         protected int port;
 
-        protected readonly Channel<TData> sendChannel = Channel.CreateBounded<TData>(new BoundedChannelOptions(5));
+        protected readonly Channel<(ITcpHandler handler, byte[] bytes)> sendChannel = Channel.CreateBounded<(ITcpHandler, byte[])>(new BoundedChannelOptions(5));
         protected readonly MemoryPool<byte> memoryPool = MemoryPool<byte>.Shared;
 
         protected readonly CancellationTokenSource cancelToken = new();
@@ -50,6 +50,7 @@ public abstract class SimpleTcpClient<THeader, TData> : ITcpClient where THeader
             if (await ConnectAsync(client)) {
                 session = await ConnectSessionAsync(client, token);
                 if (session.IsValid()) {
+                    Logger.TraceLog($"Connected Session || {session.ID} || {session.Client.GetIpAddress()}", Color.green);
                     _ = Task.Run(() => ReceiveDataAsync(session, token), token);
                     _ = Task.Run(() => ReadSendChannelAsync(token), token);
                 }
@@ -79,13 +80,13 @@ public abstract class SimpleTcpClient<THeader, TData> : ITcpClient where THeader
         protected virtual async Task ReadSendChannelAsync(CancellationToken token) {
             while (session.Connected) {
                 token.ThrowIfCancellationRequested();
-                var data = await sendChannel.Reader.ReadAsync(token);
+                var (handler, bytes) = await sendChannel.Reader.ReadAsync(token);
                 
                 token.ThrowIfCancellationRequested();
-                await SendAsync(session, data, token);
+                await SendBytesAsync(handler, session, bytes, token);
             }
         }
-        
+
         public virtual async Task<byte[]> ReadBytesAsync(TcpSession session, int length, CancellationToken token) {
             using (var owner = memoryPool.Rent(length))
             using (var stream = new MemoryStream(length)) {
@@ -106,27 +107,38 @@ public abstract class SimpleTcpClient<THeader, TData> : ITcpClient where THeader
                 return stream.GetBuffer();
             }
         }
-        
-        public abstract Task<THeader> ReceiveHeaderAsync(TcpSession session, CancellationToken token);
-        public abstract Task ReceiveDataAsync(TcpSession session, THeader header, CancellationToken token);
-        public abstract Task<T> ReceiveDataAsync<T>(TcpSession session, THeader header, CancellationToken token) where T : TData;
-        
-        public abstract Task<bool> SendAsync<T>(TcpSession session, T data, CancellationToken token) where T : TData;
-        
-        public bool Send<T>(TcpSession session, T data) where T : TData => Send(session.ID, data);
-        public virtual bool Send<T>(uint sessionId, T data) where T : TData => (session?.VerifySession(sessionId) ?? false) && sendChannel.Writer.TryWrite(data);
 
-        public async Task<bool> SendAsync<T>(TcpSession session, T data) where T : TData => await SendAsync(session.ID, data);
+        protected abstract Task<THeader> ReceiveHeaderAsync(TcpSession session, CancellationToken token);
         
-        public virtual async Task<bool> SendAsync<T>(uint sessionId, T data) where T : TData {
+        public abstract Task ReceiveDataAsync(TcpSession session, THeader header, CancellationToken token);
+        public abstract Task<T> ReceiveDataAsync<T>(TcpSession session, THeader header, CancellationToken token);
+
+        protected virtual async Task SendBytesAsync(ITcpHandler handler, TcpSession session, byte[] bytes, CancellationToken token) => await handler.SendAsync(session, bytes, token);
+        protected abstract Task<bool> SendDataAsync<T>(TcpSession session, T data, CancellationToken token) where T : TData;
+        
+        public bool SendDataPublish<T>(TcpSession session, T data) where T : TData => SendDataPublish(session.ID, data);
+        public bool SendDataPublish<T>(uint sessionId, T data) where T : TData => (session?.VerifySession(sessionId) ?? false) && sendChannel.Writer.TryWrite(CreateSendInfo(data));
+
+        public async Task<bool> SendDataPublishAsync<T>(TcpSession session, T data) where T : TData => await SendDataPublishAsync(session.ID, data);
+        
+        public async Task<bool> SendDataPublishAsync<T>(uint sessionId, T data) where T : TData {
             if (session?.VerifySession(sessionId) ?? false) {
-                var task = sendChannel.Writer.WriteAsync(data);
+                var task = sendChannel.Writer.WriteAsync(CreateSendInfo(data));
                 await task;
                 return task.IsCompletedSuccessfully;
             }
             
             return false;
         }
+
+        
+        protected virtual (ITcpHandler, byte[]) CreateSendInfo(TData data) => (GetHandler(data), GetBytes(data));
+
+        protected bool TryGetHandler(TData data, out ITcpHandler handler) => (handler = GetHandler(data)) != null;
+        protected abstract ITcpHandler GetHandler(TData data);
+
+        protected bool TryGetBytes(TData data, out byte[] bytes) => (bytes = GetBytes(data)) != Array.Empty<byte>();
+        protected abstract byte[] GetBytes(TData data);
         
         protected abstract uint CreateSessionId();
     }

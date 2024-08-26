@@ -87,6 +87,8 @@ public static class Logger {
         Log($"[{caller?.GetMethod()?.ReflectedType?.Name ?? string.Empty}.{caller?.GetMethod()?.Name ?? string.Empty}] {obj?.ToString() ?? string.Empty}", color);
     }
 
+    public static void SimpleTraceLog(string text, [CallerFilePath] string path = null, [CallerMemberName] string method = null, [CallerLineNumber] int line = 0) => Log($"[{Path.GetFileNameWithoutExtension(path)}.{method}.{line}] {text}");
+
     #endregion
 
     #region [TraceWarning]
@@ -105,6 +107,8 @@ public static class Logger {
         var caller = GetCaller();
         Warning($"[{caller?.GetMethod()?.ReflectedType?.Name ?? string.Empty}.{caller?.GetMethod()?.Name ?? string.Empty}] {obj?.ToString() ?? string.Empty}");
     }
+    
+    public static void SimpleTraceWarning(string text, [CallerFilePath] string path = null, [CallerMemberName] string method = null, [CallerLineNumber] int line = 0) => Warning($"[{Path.GetFileNameWithoutExtension(path)}.{method}.{line}] {text}");
     
     #endregion
 

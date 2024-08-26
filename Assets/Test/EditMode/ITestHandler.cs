@@ -1,6 +1,8 @@
 ﻿using System.Threading;
 
-internal interface ITestHandler {
+public interface ITestHandler {
     
+    public void SetUp() { }
+    public void TearDown() { }
     public void StartTest(CancellationToken token);
 }

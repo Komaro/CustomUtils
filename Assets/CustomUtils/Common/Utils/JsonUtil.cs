@@ -6,6 +6,16 @@ using UnityEngine;
 
 public static class JsonUtil {
 
+    public static bool TryDeserialize(string text, Type type, out object ob) {
+        try {
+            return (ob = JsonConvert.DeserializeObject(text, type)) != null;
+        } catch (Exception ex) {
+            Logger.TraceError(ex);
+            ob = null;
+            return false;
+        }
+    }
+
     public static bool TryLoadJsonOrDecrypt<T>(out T json, string path, string key, ENCRYPT_TYPE type = default) {
         json = LoadJsonOrDecrypt<T>(path, key, type);
         return json != null;

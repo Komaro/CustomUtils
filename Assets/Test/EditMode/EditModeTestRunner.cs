@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -10,13 +11,33 @@ using Unity.PerformanceTesting;
 public class EditModeTestRunner {
 
     [Test]
-    [Performance]
     public void TempTest() {
-        var defaultGroup = new SampleGroup("DefaultTestGroup");
-        Measure.Method(() => {
-            // Test Code
         
-        }).WarmupCount(5).MeasurementCount(10).IterationsPerMeasurement(1000).SampleGroup(defaultGroup).Run();
+    }
+
+    [Test]
+    [Performance]
+    public void TempPerformanceTest() {
+        var group_01 = new SampleGroup("Group_01");
+        var group_02 = new SampleGroup("Group_02");
+        var group_03 = new SampleGroup("Group_03");
+        
+        var sample = "SomeData.dll";
+        Measure.Method(() => {
+            if (Path.HasExtension(sample)) {
+                var test = Path.GetFileNameWithoutExtension(sample);
+            }
+        }).WarmupCount(5).MeasurementCount(10).IterationsPerMeasurement(1000).GC().SampleGroup(group_01).Run();
+        
+        Measure.Method(() => {
+            var test = sample.GetFileNameFast();
+        }).WarmupCount(5).MeasurementCount(10).IterationsPerMeasurement(1000).GC().SampleGroup(group_02).Run();
+
+        Measure.Method(() => {
+            if (Path.HasExtension(sample)) {
+                var test = sample.GetFileNameFast();
+            }
+        }).WarmupCount(5).MeasurementCount(10).IterationsPerMeasurement(1000).GC().SampleGroup(group_03).Run();
     }
     
     #region [Enum]
@@ -402,4 +423,5 @@ public class EditModeTestRunner {
     }
     
     #endregion
+
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 public static class ReflectionProvider {
     
@@ -34,6 +35,23 @@ public static class ReflectionProvider {
     /// subClassType을 SubClass(상속 관계) 로 가지는 ClassType
     /// </summary>
     public static IEnumerable<Type> GetSubClassTypes(Type subClassType) => Cache.CachedClasses.Where(type => type.IsSubclassOf(subClassType));
+
+    /// <summary>
+    /// subClassTypeDefinition을 SubClass(상속 관계) 로 가지는 ClassType
+    /// </summary>
+    public static IEnumerable<Type> GetSubClassTypeDefinitions(Type typeDefinition) => Cache.CachedClasses.Where(type => {
+        if (type.IsAbstract) {
+            return false;
+        }
+
+        while ((type = type.BaseType) != null) {
+            if (type.IsGenericType && type.GetGenericTypeDefinition() == typeDefinition) {
+                return true;
+            }
+        }
+
+        return false;
+    });
 
     /// <summary>
     /// T를 Interface로 가지는 ClassType

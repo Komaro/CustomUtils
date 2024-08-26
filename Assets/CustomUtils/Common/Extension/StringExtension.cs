@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Text;
 using UnityEngine;
 
@@ -54,24 +55,20 @@ public static class StringExtension {
 
     public static string GetUpperBeforeSpace(this string content) => Constants.Regex.UPPER_UNICODE_REGEX.Replace(content, "$1").Trim();
 
-    public static List<string> GetAllCaseList(this string content) {
-        var list = new List<string> { content, content.ToUpper(), content.ToLower() };
-
-        _builder.Clear();
-        var replaceContent = _builder.Append(content).Replace(" ", string.Empty).ToString();
-        list.Add(replaceContent);
-        list.Add(replaceContent.ToUpper());
-        list.Add(replaceContent.ToLower());
-
-        _builder.Clear();
-        replaceContent = _builder.Append(content).Replace(" ", "_").ToString();
-        list.Add(replaceContent);
-        list.Add(replaceContent.ToUpper());
-        list.Add(replaceContent.ToLower());
-        
-        return list;
+    public static IEnumerable<string> GetCaseVariation(this string content) {
+        yield return content;
+        yield return content.ToUpper();
+        yield return content.ToLower();
     }
     
+    public static IEnumerable<string> GetPossibleVariantCases(this string content) {
+        yield return content;
+        yield return content.ToNoSpace();
+        yield return content.Replace(" ", "_");
+    }
+    
+    public static IEnumerable<string> GetAllPossibleVariantCases(this string content) => GetPossibleVariantCases(content).SelectMany(GetCaseVariation);
+
     public static string GetForceTitleCase(this string content) => GetTitleCase(content.ToLower());
     public static string GetTitleCase(this string content) => _textInfo?.ToTitleCase(content);
     
@@ -102,6 +99,10 @@ public static class StringExtension {
     public static bool WrappedIn(this string content, string matchContent, StringComparison comparison = StringComparison.Ordinal) => content.StartsWith(matchContent, comparison) && content.EndsWith(matchContent, comparison);
     public static bool EqualsFast(this string content, string comparedString) => content.Equals(comparedString, StringComparison.Ordinal);
     public static bool ContainsFast(this string content, string containedContent) => content.Contains(containedContent, StringComparison.Ordinal);
+
+    public static string ToNoSpace(this string content) => content.Replace(" ", string.Empty);
+
+    public static string GetFileNameFast(this string content) => content.Split('.')?[0];
 
     public static string AutoSwitchExtension(this string content,  string extension) {
         if (content.ContainsExtension(extension) == false) {

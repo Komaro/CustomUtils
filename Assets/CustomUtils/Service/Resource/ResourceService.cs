@@ -1,17 +1,19 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-public interface IResourceProvider {
+[RequiresAttributeImplementation(typeof(ResourceProviderAttribute))]
+public interface IResourceProvider : IImplementNullable {
 
     bool Valid();
     void Init();
     void Load();
     void LoadAsync();
-    void Unload(Dictionary<string, Object> cacheResource);
+    void Unload(IDictionary<string, Object> cacheResource);
     Object Get(string name);
     string GetPath(string name);
     bool IsLoaded();
@@ -22,7 +24,7 @@ public class ResourceService : IService {
 
     private IResourceProvider _provider;
     private IResourceProvider _subProvider;
-    private Dictionary<string, Object> _cacheResourceDic = new();
+    private ConcurrentDictionary<string, Object> _cacheResourceDic = new();
 
     private bool _isServing;
     private bool _isActiveSubProvider;
@@ -35,13 +37,15 @@ public class ResourceService : IService {
             _isActiveSubProvider = providerTypeList.Any(type => type.IsDefined<ResourceSubProviderAttribute>());
             if (_isActiveSubProvider) {
                 Logger.TraceLog($"SubProvider is activated. Find {nameof(ResourceSubProviderAttribute)}...", Color.yellow);
-                _subProvider = Init(providerTypeList.Where(x => x.IsDefined<ResourceSubProviderAttribute>()).OrderBy(x => x.GetCustomAttribute<ResourceSubProviderAttribute>().order));
+                _subProvider = Init(providerTypeList.Where(x => x.IsDefined<ResourceSubProviderAttribute>()).OrderBy(x => x.GetCustomAttribute<ResourceSubProviderAttribute>().priority));
                 if (_subProvider == null) {
-                    Logger.TraceError($"{nameof(_subProvider)} is Null. Check {nameof(ResourceSubProviderAttribute)} Implementation");
+                    Logger.TraceError($"{nameof(_subProvider)} is Null. Check {nameof(ResourceSubProviderAttribute)} Implementation. Temporarily create {nameof(NullResourceProvider)}");
+                    _subProvider = new NullResourceProvider();
+                    _subProvider.Init();
                 }
             }
             
-            _provider = Init(providerTypeList.Where(x => x.IsDefined<ResourceProviderAttribute>()).OrderBy(x => x.GetCustomAttribute<ResourceProviderAttribute>().order));
+            _provider = Init(providerTypeList.Where(x => x.IsDefined<ResourceProviderAttribute>()).OrderBy(x => x.GetCustomAttribute<ResourceProviderAttribute>().priority));
         } catch (Exception ex) {
             Logger.TraceError(ex);
             if (_provider == null || _provider.IsLoaded() == false) {
@@ -175,17 +179,13 @@ public class ResourceService : IService {
 }
 
 [AttributeUsage(AttributeTargets.Class)]
-public class ResourceProviderAttribute : Attribute {
+public class ResourceProviderAttribute : PriorityAttribute {
 
-    public readonly int order;
-
-    public ResourceProviderAttribute(int order = 0) => this.order = order;
+    public ResourceProviderAttribute(int priority) : base(priority) { }
 }
 
 [AttributeUsage(AttributeTargets.Class)]
-public class ResourceSubProviderAttribute : Attribute {
+public class ResourceSubProviderAttribute : PriorityAttribute {
 
-    public readonly int order;
-
-    public ResourceSubProviderAttribute(int order = 0) => this.order = order;
+    public ResourceSubProviderAttribute(int priority) : base(priority) { }
 }

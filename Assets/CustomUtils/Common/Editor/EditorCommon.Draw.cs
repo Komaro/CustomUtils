@@ -8,7 +8,7 @@ public static partial class EditorCommon {
         
     private static readonly Dictionary<string, GUILayoutOption> _widthCacheDic = new ();
 
-    public static void OpenCheckDialogue(string title, string message, string okText = "확인", string cancelText = "취소", Action ok = null, Action cancel = null) {
+    public static void ShowCheckDialogue(string title, string message, string okText = "확인", string cancelText = "취소", Action ok = null, Action cancel = null) {
         if (EditorUtility.DisplayDialog(title, message, okText, cancelText)) {
             ok?.Invoke();
         } else {

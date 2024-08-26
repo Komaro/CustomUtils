@@ -43,7 +43,7 @@ public class EditorResourcesProviderDrawer : EditorResourceDrawer {
         
         if (GUILayout.Button("생성 & 갱신")) {
             if (Directory.Exists(RESOURCES_PATH) == false) {
-                EditorCommon.OpenCheckDialogue("경고", $"{nameof(Resources)} 폴더가 존재하지 않습니다. 생성하시겠습니까?\n확인을 누르면 폴더 생성후 Json 파일을 생성합니다.", "확인", "취소", () => {
+                EditorCommon.ShowCheckDialogue("경고", $"{nameof(Resources)} 폴더가 존재하지 않습니다. 생성하시겠습니까?\n확인을 누르면 폴더 생성후 Json 파일을 생성합니다.", "확인", "취소", () => {
                     CreateResourcesFolder();
                     ResourceGenerator.GenerateResourcesListJson($"{RESOURCES_PATH}/{Constants.Resource.RESOURCE_LIST_JSON}", OnProgress, OnEnd);
                 });

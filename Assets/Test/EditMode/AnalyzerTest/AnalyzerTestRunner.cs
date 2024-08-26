@@ -26,17 +26,17 @@ public class AnalyzerTestRunner {
     // [TestCaseSource(nameof(RequiresUnityEditorAttributeRepeatProvider))]
     // public async Task RequiresUnityEditorAttributeAnalyzerRepeatTest(Type type, string testCaseCodeFolder) => await AnalyzerRunner.AnalyzerTest(type, testCaseCodeFolder);
     
-    [TestCase(typeof(RequiresStaticMethodImplementationAttributeAnalyzer), "Test/EditMode/AnalyzerTestCaseCode/RequiresStaticMethodTestCase")]
-    [TestCase(typeof(RequiresAttributeImplementationAttributeAnalyzer), "Test/EditMode/AnalyzerTestCaseCode/RequiresAttributeTestCase")]
-    [TestCase(typeof(BuilderAttributeVerifyAnalyzer), "Test/EditMode/AnalyzerTestCaseCode/BuilderAttributeVerifyAnalyzerTestCase")]
-    [TestCase(typeof(AttributeAbstractAndInterfaceConstraintsAnalyzer), "Test/EditMode/AnalyzerTestCaseCode/AttributeAbstractAndInterfaceConstraintsAnalyzerTestCase")]
+    [TestCase(typeof(RequiresStaticMethodImplementationAttributeAnalyzer), "Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/RequiresStaticMethodTestCase")]
+    [TestCase(typeof(RequiresAttributeImplementationAttributeAnalyzer), "Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/RequiresAttributeTestCase")]
+    [TestCase(typeof(BuilderAttributeVerifyAnalyzer), "Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/BuilderAttributeVerifyAnalyzerTestCase")]
+    [TestCase(typeof(AttributeAbstractAndInterfaceConstraintsAnalyzer), "Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/AttributeAbstractAndInterfaceConstraintsAnalyzerTestCase")]
     public async Task AnalyzerTestCaseTest(Type type, string testCaseCodeFolder) => await AnalyzerRunner.AnalyzerTest(type, testCaseCodeFolder);
 
     [Performance]
-    [TestCase(typeof(RequiresStaticMethodImplementationAttributeAnalyzer), "Test/EditMode/AnalyzerTestCaseCode/RequiresStaticMethodTestCase")]
-    [TestCase(typeof(RequiresAttributeImplementationAttributeAnalyzer), "Test/EditMode/AnalyzerTestCaseCode/RequiresAttributeTestCase")]
-    [TestCase(typeof(BuilderAttributeVerifyAnalyzer), "Test/EditMode/AnalyzerTestCaseCode/BuilderAttributeVerifyAnalyzerTestCase")]
-    [TestCase(typeof(AttributeAbstractAndInterfaceConstraintsAnalyzer), "Test/EditMode/AnalyzerTestCaseCode/AttributeAbstractAndInterfaceConstraintsAnalyzerTestCase")]
+    [TestCase(typeof(RequiresStaticMethodImplementationAttributeAnalyzer), "Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/RequiresStaticMethodTestCase")]
+    [TestCase(typeof(RequiresAttributeImplementationAttributeAnalyzer), "Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/RequiresAttributeTestCase")]
+    [TestCase(typeof(BuilderAttributeVerifyAnalyzer), "Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/BuilderAttributeVerifyAnalyzerTestCase")]
+    [TestCase(typeof(AttributeAbstractAndInterfaceConstraintsAnalyzer), "Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/AttributeAbstractAndInterfaceConstraintsAnalyzerTestCase")]
     public void AnalyzerTestCasePerformanceTest(Type type, string testCaseCodeFolder) {
         var analyzerPerformanceTestGroup = new SampleGroup("PerformanceGroup");
         

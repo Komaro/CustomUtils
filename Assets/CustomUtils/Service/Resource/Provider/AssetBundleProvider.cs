@@ -32,7 +32,6 @@ public class AssetBundleProvider : IResourceProvider {
         _cacheAssetBundleDic.SafeClear(x => x.Unload(true));
         _cacheAssetDic.Clear();
         foreach (var bundle in AssetBundle.GetAllLoadedAssetBundles()) {
-            Logger.TraceError(bundle.name);
             _cacheAssetBundleDic.AutoAdd(bundle.name, bundle);
         }
     }
@@ -112,7 +111,10 @@ public class AssetBundleProvider : IResourceProvider {
         throw new System.NotImplementedException();
     }
 
-    public void Unload(Dictionary<string, Object> cacheResource) => _cacheAssetBundleDic.SafeClear(x => x.Unload(true));
+    public void Unload(IDictionary<string, Object> cacheResource) {
+        _cacheAssetBundleDic.SafeClear(x => x.Unload(true));
+        AssetBundle.UnloadAllAssetBundles(true);
+    }
 
     public Object Get(string name) {
         name = name.ToUpper();
@@ -134,4 +136,5 @@ public class AssetBundleProvider : IResourceProvider {
     public string GetPath(string name) => _cacheAssetPathDic.TryGetValue(name.ToUpper(), out var info) ? info.path : string.Empty;
 
     public bool IsLoaded() => _isLoaded;
+    public bool IsNull() => false;
 }

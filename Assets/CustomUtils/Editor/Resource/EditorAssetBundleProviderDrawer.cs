@@ -249,7 +249,7 @@ public class EditorAssetBundleProviderDrawer : EditorResourceDrawerAutoConfig<As
             }
 
             if (config.selectBuildTarget != EditorUserBuildSettings.activeBuildTarget) {
-                EditorCommon.OpenCheckDialogue("경고", "선택된 빌드 플랫폼과 현재 에디터의 빌드 플랫폼이 다릅니다. 전환 후 빌드하시겠습니까?\n" +
+                EditorCommon.ShowCheckDialogue("경고", "선택된 빌드 플랫폼과 현재 에디터의 빌드 플랫폼이 다릅니다. 전환 후 빌드하시겠습니까?\n" +
                                                      $"{EditorUserBuildSettings.selectedBuildTargetGroup} ▷ {config.selectBuildTarget.GetTargetGroup()}\n" +
                                                      $"{EditorUserBuildSettings.activeBuildTarget} ▷ {config.selectBuildTarget}\n\n" +
                                                      $"대상 디렉토리 : {config.GetBuildPath()}\n\n" +
@@ -259,7 +259,7 @@ public class EditorAssetBundleProviderDrawer : EditorResourceDrawerAutoConfig<As
                         BuildAssetBundleWithLogging(options);
                     });
             } else {
-                EditorCommon.OpenCheckDialogue("에셋번들 빌드", $"에셋번들 빌드를 진행합니다.\n" +
+                EditorCommon.ShowCheckDialogue("에셋번들 빌드", $"에셋번들 빌드를 진행합니다.\n" +
                                                           $"{EditorUserBuildSettings.selectedBuildTargetGroup}\n{EditorUserBuildSettings.activeBuildTarget}\n\n" +
                                                           $"대상 디렉토리 : {config.buildDirectory}/{config.selectBuildTarget}\n\n" +
                                                           $"활성화된 옵션\n{options.ToString()}", ok: () => BuildAssetBundleWithLogging(options));

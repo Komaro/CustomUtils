@@ -21,7 +21,7 @@ public class GraphicService : IService {
 
     void IService.Init() {
         QualitySettings.names.IndexForEach((name, index) => {
-            foreach (var nameCase in name.GetAllCaseList()) {
+            foreach (var nameCase in name.GetAllPossibleVariantCases()) {
                 _allQualityLevelDic.AutoAdd(nameCase, index);
             }
         });

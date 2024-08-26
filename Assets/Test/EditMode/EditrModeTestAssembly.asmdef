@@ -28,7 +28,8 @@
         "Microsoft.CodeAnalysis.Workspaces.dll",
         "Microsoft.CodeAnalysis.Workspaces.MSBuild.dll",
         "Newtonsoft.Json.dll",
-        "System.Threading.Channels.dll"
+        "System.Threading.Channels.dll",
+        "CsvHelper.dll"
     ],
     "autoReferenced": false,
     "defineConstraints": [

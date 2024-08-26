@@ -14,6 +14,7 @@ public static partial class Constants {
         public const string DLL = ".dll";
         public const string PDB = ".pdb";
         public const string ZIP = ".zip";
+        public const string XML = ".xml";
 
         public const string JSON_FILTER = "*.json";
         public const string SOLUTION_FILTER = "*.sln";
@@ -54,6 +55,9 @@ public static partial class Constants {
         
         public static readonly string PLUGINS_FULL_PATH = $"{Application.dataPath}/{Folder.PLUGINS}";
         public static readonly string PLUGINS_PATH = $"{Folder.ASSETS}/{Folder.PLUGINS}";
+
+        public static readonly string RESOURCES_FULL_PATH = $"{Application.dataPath}/{Folder.RESOURCES}";
+        public static readonly string RESOURCES_PATH = $"{Folder.ASSETS}/{Folder.RESOURCES}";
     }
 
     public static class Folder {

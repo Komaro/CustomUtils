@@ -10,10 +10,10 @@ using UnityEditor.Callbacks;
 using UnityEditor.IMGUI.Controls;
 using UnityEngine;
 
-public class EditorPackageExtractService : EditorService {
+public class EditorNugetExtractService : EditorService {
 
     private static EditorWindow _window;
-    private static EditorWindow Window => _window == null ? _window = GetWindow<EditorPackageExtractService>("PackageExtractService") : _window;
+    private static EditorWindow Window => _window == null ? _window = GetWindow<EditorNugetExtractService>("NugetExtractService") : _window;
 
     private static PackageTreeView _packageTreeView;
 
@@ -23,10 +23,16 @@ public class EditorPackageExtractService : EditorService {
     private static readonly Regex NETSTANDARD_2_0_REGEX = new(string.Format(Constants.Regex.FOLDER_CONTAINS_FORMAT, "netstandard2.0"));
     private static readonly Regex NETSTANDARD_1_3_REGEX = new(string.Format(Constants.Regex.FOLDER_CONTAINS_FORMAT, "netstandard1.3"));
 
+    private static readonly List<Regex> NETSTANDARD_REGEX_LIST = new() {
+        new(string.Format(Constants.Regex.FOLDER_CONTAINS_FORMAT, "netstandard2.1")),
+        new(string.Format(Constants.Regex.FOLDER_CONTAINS_FORMAT, "netstandard2.0")),
+        new(string.Format(Constants.Regex.FOLDER_CONTAINS_FORMAT, "netstandard1.3")),
+    };
+
     protected override void OnEditorOpenInitialize() => CacheRefresh();
     
     
-    [MenuItem("Service/Package Extract Service")]
+    [MenuItem("Service/Nuget Extract Service")]
     public static void OpenWindow() {
         Window.Show();
         CacheRefresh();
@@ -35,15 +41,26 @@ public class EditorPackageExtractService : EditorService {
     
     [DidReloadScripts(99999)]
     private static void CacheRefresh() {
-        if (HasOpenInstances<EditorPackageExtractService>()) {
+        if (HasOpenInstances<EditorNugetExtractService>()) {
             _packageTreeView ??= new PackageTreeView();
             _packageTreeView.Clear();
 
             _pluginPathDic.Clear();
+            
+            foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies()) {
+                var assemblyName = assembly.GetName();
+                Logger.TraceLog($"{assemblyName.Name} || {assemblyName.Version} || {assemblyName.FullName}");
+            }
+            
             foreach (var path in AssetDatabaseUtil.GetAllPluginPaths()) {
                 var name = Path.GetFileNameWithoutExtension(path);
+                var version = "unknown";
+                if (AssemblyProvider.GetSystemAssemblyDic().TryGetValue(name, out var assembly)) {
+                    version = assembly.GetName().Version.ToString();
+                }
+                
                 _pluginPathDic.TryAdd(name, path);
-                _packageTreeView.Add(name, path);
+                _packageTreeView.Add(name, version, path);
             }
             
             _packageTreeView.Reload();
@@ -59,7 +76,7 @@ public class EditorPackageExtractService : EditorService {
         }
 
         EditorCommon.DrawSeparator();
-        
+
         var dragArea = EditorGUILayout.GetControlRect(GUILayout.ExpandWidth(true), GUILayout.ExpandHeight(true));
         GUI.Box(dragArea, string.Empty, Constants.Draw.BOX);
         EditorGUI.LabelField(dragArea.GetCenterRect(200f, 50f), "Drag & Drop\n(Folder or ZipFile)", Constants.Draw.BOLD_CENTER_LABEL);
@@ -106,10 +123,15 @@ public class EditorPackageExtractService : EditorService {
                                 break;
                         }
                     }
+
+                    var extractFiles = Directory.GetFiles(extractPath);
+                    if (extractFiles.Length > 0) {
+                        EditorCommon.ShowCheckDialogue("DLL 추출 완료", $"DLL 파일 추출을 완료했습니다.\n{extractFiles.ToStringCollection(Path.GetFileName, '\n')}", ok: () => {
+                            SystemUtil.CopyAllFiles(extractPath, Constants.Path.PLUGINS_FULL_PATH);
+                            SystemUtil.DeleteDirectory(extractPath);
+                        }, cancel:() => SystemUtil.DeleteDirectory(extractPath));
+                    }
                     
-                    SystemUtil.CopyAllFiles(extractPath, $"{Constants.Path.PLUGINS_FULL_PATH}");
-                    
-                    SystemUtil.DeleteDirectory(extractPath);
                     currentEvent.Use();
                 }
                 break;
@@ -118,6 +140,11 @@ public class EditorPackageExtractService : EditorService {
     
     private IEnumerable<string> GetValidPaths(IEnumerable<string> filePaths) {
         foreach (var path in filePaths) {
+            if (_pluginPathDic.ContainsKey(Path.GetFileNameWithoutExtension(path))) {
+                Logger.TraceLog($"The {Path.GetFileName(path)} DLL is already imported into the project", Color.yellow);
+                continue;
+            }
+            
             foreach (var isMatch in CheckPathMatches(path)) {
                 if (isMatch) {
                     yield return path;
@@ -129,6 +156,11 @@ public class EditorPackageExtractService : EditorService {
 
     private IEnumerable<ZipArchiveEntry> GetValidPaths(IEnumerable<ZipArchiveEntry> entries) {
         foreach (var entry in entries) {
+            if (_pluginPathDic.ContainsKey(Path.GetFileNameWithoutExtension(entry.FullName))) {
+                Logger.TraceLog($"The {Path.GetFileName(entry.FullName)} DLL is already imported into the project", Color.yellow);
+                continue;
+            }
+            
             foreach (var isMatch in CheckPathMatches(entry.FullName)) {
                 if (isMatch) {
                     yield return entry;
@@ -138,11 +170,7 @@ public class EditorPackageExtractService : EditorService {
         }
     }
     
-    private IEnumerable<bool> CheckPathMatches(string path) {
-        yield return NETSTANDARD_2_1_REGEX.IsMatch(path);
-        yield return NETSTANDARD_2_0_REGEX.IsMatch(path);
-        yield return NETSTANDARD_1_3_REGEX.IsMatch(path);
-    }
+    private IEnumerable<bool> CheckPathMatches(string path) => NETSTANDARD_REGEX_LIST.Select(regex => regex.IsMatch(path));
 
     private enum GROUP_TYPE {
         NONE,
@@ -151,7 +179,6 @@ public class EditorPackageExtractService : EditorService {
     }
 }
 
-
 #region [TreeView]
 
 internal class PackageTreeView : EditorServiceTreeView {
@@ -159,6 +186,7 @@ internal class PackageTreeView : EditorServiceTreeView {
     private static readonly MultiColumnHeaderState.Column[] COLUMNS = {
         CreateColumn("No", 35f, 35f),
         CreateColumn("명칭", 200f),
+        CreateColumn("버전", 50f, 100f),
         CreateColumn("경로", 350f),
     };
 
@@ -173,11 +201,12 @@ internal class PackageTreeView : EditorServiceTreeView {
         if (args.item is PackageTreeViewItem item) {
             EditorGUI.LabelField(args.GetCellRect(0), item.id.ToString(), Constants.Draw.CENTER_LABEL);
             EditorGUI.LabelField(args.GetCellRect(1), item.name);
-            EditorGUI.LabelField(args.GetCellRect(2), item.path);
+            EditorGUI.LabelField(args.GetCellRect(2), item.version);
+            EditorGUI.LabelField(args.GetCellRect(3), item.path);
         }
     }
 
-    public void Add(string name, string path) => itemList.Add(new PackageTreeViewItem(itemList.Count, name, path));
+    public void Add(string name, string version, string path) => itemList.Add(new PackageTreeViewItem(itemList.Count, name, version, path));
 
     protected override IEnumerable<TreeViewItem> GetOrderBy(int index, bool isAscending) {
         if (rootItem.children.TryCast<PackageTreeViewItem>(out var enumerable) && EnumUtil.TryConvertFast<SORT_TYPE>(index, out var type)) {
@@ -197,11 +226,13 @@ internal class PackageTreeView : EditorServiceTreeView {
     protected sealed class PackageTreeViewItem : TreeViewItem {
 
         public string name;
+        public string version;
         public string path;
         
-        public PackageTreeViewItem(int id, string name, string path) {
+        public PackageTreeViewItem(int id, string name, string version, string path) {
             this.id = id;
             this.name = name;
+            this.version = version;
             this.path = path;
         }
     }

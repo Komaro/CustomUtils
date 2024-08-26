@@ -1,4 +1,4 @@
-﻿public interface INullable {
+﻿public interface IImplementNullable {
 
     public bool IsNull();
 }

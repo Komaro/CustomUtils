@@ -49,7 +49,7 @@ public class EditorResourceService : EditorService {
     [DidReloadScripts(99999)]
     private static void CacheRefresh() {
         if (HasOpenInstances<EditorResourceService>()) {
-            var providerTypeList = ReflectionProvider.GetInterfaceTypes<IResourceProvider>()?.OrderBy(x => x.GetCustomAttribute<ResourceProviderAttribute>()?.order ?? 99).ToList();
+            var providerTypeList = ReflectionProvider.GetInterfaceTypes<IResourceProvider>()?.OrderBy(x => x.GetCustomAttribute<ResourceProviderAttribute>()?.priority ?? 999).ToList();
             if (providerTypeList?.Any() ?? false) {
                 _providerTypes = providerTypeList.ToArray();
                 _providerTypeNames = providerTypeList.Select(x => x.Name).ToArray();
@@ -194,7 +194,7 @@ public abstract class EditorResourceDrawerAutoConfig<TConfig, TNullConfig> : Edi
         if (config?.IsNull() ?? true) {
             EditorGUILayout.HelpBox($"{CONFIG_NAME} 파일이 존재하지 않습니다. 선택한 설정이 저장되지 않으며 일부 기능을 사용할 수 없습니다.", MessageType.Warning);
             if (GUILayout.Button($"{CONFIG_NAME} 파일 생성")) {
-                EditorCommon.OpenCheckDialogue($"{CONFIG_NAME} 파일 생성", $"{CONFIG_NAME} 파일을 생성합니다.\n경로는 아래와 같습니다.\n{CONFIG_PATH}", ok: () => {
+                EditorCommon.ShowCheckDialogue($"{CONFIG_NAME} 파일 생성", $"{CONFIG_NAME} 파일을 생성합니다.\n경로는 아래와 같습니다.\n{CONFIG_PATH}", ok: () => {
                     if ((config = config.Clone<TConfig>()) != null) {
                         config.Save(CONFIG_PATH);
                         config.StartAutoSave(CONFIG_PATH);

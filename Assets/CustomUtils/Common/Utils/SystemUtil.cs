@@ -11,6 +11,8 @@ using UnityEditor;
 #endif
 
 public static class SystemUtil {
+
+    #region [Script]
     
     private const string WINDOWS_CMD = "cmd.exe";
 
@@ -108,6 +110,21 @@ public static class SystemUtil {
         }
     }
     
+    #endregion
+
+    public static bool SafeDelete(string path) {
+        try {
+            if (File.Exists(path)) {
+                File.Delete(path);
+                return true;
+            }
+        } catch (Exception ex) {
+            Logger.TraceError(ex);
+        }
+        
+        return false;
+    }
+    
     public static string[] FindFiles(string directoryPath, string searchPattern) {
         try {
             if (Directory.Exists(directoryPath)) {
@@ -136,11 +153,11 @@ public static class SystemUtil {
 
     public static void EnsureDirectoryExists(string path) {
         try {
-            if (Constants.Regex.FILE_PATH_REGEX.IsMatch(path)) {
+            if (File.Exists(path)) {
                 path = Directory.GetParent(path)?.FullName ?? path;
             }
 
-            if (Constants.Regex.FOLDER_PATH_REGEX.IsMatch(path) && Directory.Exists(path) == false) {
+            if (Directory.Exists(path) == false) {
                 Logger.TraceLog($"Create Directory || {path}", Color.green);
                 Directory.CreateDirectory(path);
             }

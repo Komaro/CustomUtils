@@ -62,7 +62,7 @@ public class EditorHttpWebServerService : EditorService {
         if (_config == null) {
             EditorGUILayout.HelpBox($"{CONFIG_NAME} 파일이 존재하지 않습니다. 선택한 서버 설정이 저장되지 않으며 일부 기능을 사용할 수 없습니다.", MessageType.Warning);
             if (GUILayout.Button("Config 파일 생성")) {
-                EditorCommon.OpenCheckDialogue("Config 파일 생성", $"Config 파일을 생성합니다.\n경로는 아래와 같습니다.\n{_configPath}", ok: () => {
+                EditorCommon.ShowCheckDialogue("Config 파일 생성", $"Config 파일을 생성합니다.\n경로는 아래와 같습니다.\n{_configPath}", ok: () => {
                     _config = new Config();
                     _config.Save(_configPath);
                 });
@@ -220,7 +220,7 @@ public class EditorHttpWebServerService : EditorService {
     private void StartHttpWebServer() {
         _httpServer ??= new SimpleHttpServer(_url);
         if (_httpServer.IsRunning()) {
-            EditorCommon.OpenCheckDialogue("경고", "현재 임시 웹 서버가 동작중입니다.\n확인 시 종료 후 서버를 재시작합니다.", ok: () => {
+            EditorCommon.ShowCheckDialogue("경고", "현재 임시 웹 서버가 동작중입니다.\n확인 시 종료 후 서버를 재시작합니다.", ok: () => {
                 _httpServer.Restart();
             });
         } else {

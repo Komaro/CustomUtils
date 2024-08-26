@@ -8,8 +8,9 @@ public class NullResourceProvider : IResourceProvider {
     public void Init() { }
     public void Load() { }
     public void LoadAsync() { }
-    public void Unload(Dictionary<string, Object> cacheResource) { }
+    public void Unload(IDictionary<string, Object> cacheResource) { }
     public Object Get(string name) => null;
     public string GetPath(string name) => string.Empty;
     public bool IsLoaded() => false;
+    public bool IsNull() => true;
 }

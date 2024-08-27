@@ -46,12 +46,7 @@ public class EditorNugetExtractService : EditorService {
             _packageTreeView.Clear();
 
             _pluginPathDic.Clear();
-            
-            foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies()) {
-                var assemblyName = assembly.GetName();
-                Logger.TraceLog($"{assemblyName.Name} || {assemblyName.Version} || {assemblyName.FullName}");
-            }
-            
+
             foreach (var path in AssetDatabaseUtil.GetAllPluginPaths()) {
                 var name = Path.GetFileNameWithoutExtension(path);
                 var version = "unknown";

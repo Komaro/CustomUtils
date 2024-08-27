@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 1536
     height: 780.8
   m_ShowMode: 4
-  m_Title: Console
+  m_Title: Test Runner
   m_RootView: {fileID: 2}
   m_MinSize: {x: 875, y: 350}
   m_MaxSize: {x: 10000, y: 10000}
@@ -119,7 +119,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 200}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 42
+  controlID: 117
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -139,12 +139,12 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 791.2
+    width: 920.8
     height: 730.8
   m_MinSize: {x: 200, y: 200}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 1
-  controlID: 60
+  controlID: 88
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -164,12 +164,12 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 791.2
+    width: 920.8
     height: 381.6
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 50
+  controlID: 21
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -187,10 +187,10 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 403.2
+    width: 468.8
     height: 381.6
-  m_MinSize: {x: 200, y: 200}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 201, y: 221}
+  m_MaxSize: {x: 4001, y: 4021}
   m_ActualView: {fileID: 15}
   m_Panes:
   - {fileID: 15}
@@ -211,12 +211,12 @@ MonoBehaviour:
   m_Children: []
   m_Position:
     serializedVersion: 2
-    x: 403.2
+    x: 468.8
     y: 0
-    width: 388
+    width: 452
     height: 381.6
-  m_MinSize: {x: 200, y: 200}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 202, y: 221}
+  m_MaxSize: {x: 4002, y: 4021}
   m_ActualView: {fileID: 16}
   m_Panes:
   - {fileID: 16}
@@ -242,12 +242,12 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 381.6
-    width: 791.2
+    width: 920.8
     height: 349.19998
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 61
+  controlID: 89
 --- !u!114 &11
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -265,7 +265,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 592
+    width: 686.4
     height: 349.19998
   m_MinSize: {x: 101, y: 121}
   m_MaxSize: {x: 4001, y: 4021}
@@ -291,12 +291,12 @@ MonoBehaviour:
   m_Children: []
   m_Position:
     serializedVersion: 2
-    x: 592
+    x: 686.4
     y: 0
-    width: 199.20001
+    width: 234.39996
     height: 349.19998
-  m_MinSize: {x: 202, y: 221}
-  m_MaxSize: {x: 4002, y: 4021}
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 21}
   m_Panes:
   - {fileID: 21}
@@ -312,23 +312,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 1
   m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: InspectorWindow
+  m_Name: TestRunnerWindow
   m_EditorClassIdentifier: 
   m_Children: []
   m_Position:
     serializedVersion: 2
-    x: 791.2
+    x: 920.8
     y: 0
-    width: 744.8
+    width: 615.2
     height: 730.8
-  m_MinSize: {x: 275, y: 50}
-  m_MaxSize: {x: 4000, y: 4000}
-  m_ActualView: {fileID: 22}
+  m_MinSize: {x: 101, y: 121}
+  m_MaxSize: {x: 4001, y: 4021}
+  m_ActualView: {fileID: 14}
   m_Panes:
   - {fileID: 22}
   - {fileID: 14}
-  m_Selected: 0
-  m_LastSelected: 1
+  m_Selected: 1
+  m_LastSelected: 0
 --- !u!114 &14
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -349,9 +349,9 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 791.2
+    x: 920.8
     y: 73.6
-    width: 743.8
+    width: 614.2
     height: 709.8
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
@@ -359,7 +359,7 @@ MonoBehaviour:
     m_SaveData: []
     m_OverlaysVisible: 1
   m_Spl:
-    ID: 136
+    ID: 2272
     splitterInitialOffset: 290.8
     currentActiveSplitter: -1
     realSizes:
@@ -534,7 +534,7 @@ MonoBehaviour:
       name: CustomUtils
       fullName: CustomUtils
       resultStatus: 1
-      duration: 8.885607
+      duration: 9.95082
       messages: 
       output: 
       stacktrace: 
@@ -550,7 +550,7 @@ MonoBehaviour:
       name: EditrModeTestAssembly.dll
       fullName: C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/EditrModeTestAssembly.dll
       resultStatus: 1
-      duration: 8.872248
+      duration: 9.940006
       messages: 
       output: 
       stacktrace: 
@@ -750,8 +750,8 @@ MonoBehaviour:
       uniqueId: EditrModeTestAssembly.dll/[EditrModeTestAssembly][EditModeTestRunner][suite]
       name: EditModeTestRunner
       fullName: EditModeTestRunner
-      resultStatus: 0
-      duration: 0.1909201
+      resultStatus: 1
+      duration: 0.1488043
       messages: 
       output: 
       stacktrace: 
@@ -885,18 +885,10 @@ MonoBehaviour:
       uniqueId: EditrModeTestAssembly.dll/EditModeTestRunner/[EditrModeTestAssembly][EditModeTestRunner.TempTest]
       name: TempTest
       fullName: EditModeTestRunner.TempTest
-      resultStatus: 0
-      duration: 0.1690926
+      resultStatus: 1
+      duration: 0.1114961
       messages: 
-      output: "[EditModeTestRunner.TempTest] <?xml version=\"1.0\" encoding=\"utf-16\"?>\r\n<TestXml
-        xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"
-        tt=\"TestText\" ve=\"4533\">\r\n  <sv>valueString</sv>\r\n  <lt index=\"0\"
-        txt=\"n\" text=\"0\" />\r\n  <lt index=\"1\" txt=\"f\" text=\"1\" />\r\n 
-        <lt index=\"2\" txt=\"s\" text=\"2\" />\r\n  <lt index=\"3\" txt=\"n\" text=\"3\"
-        />\r\n  <lt index=\"4\" txt=\"f\" text=\"4\" />\r\n  <lt index=\"5\" txt=\"s\"
-        text=\"5\" />\r\n  <lt index=\"6\" txt=\"n\" text=\"6\" />\r\n  <lt index=\"7\"
-        txt=\"f\" text=\"7\" />\r\n  <lt index=\"8\" txt=\"s\" text=\"8\" />\r\n 
-        <lt index=\"9\" txt=\"n\" text=\"9\" />\r\n</TestXml>\r\n"
+      output: "[EditModeTestRunner.TempTest] intValue,stringValue\r\n4533,\uC0AC\uC624\uC0BC\uC0BC\r\n1132,\uC0AC\uC624\uC0BC\uC0BC\r\n4142,\uC0AC\uC624\uC0BC\uC0BC\r\n\r\n"
       stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
@@ -945,7 +937,7 @@ MonoBehaviour:
       name: GameDBTestRunner
       fullName: GameDBTestRunner
       resultStatus: 1
-      duration: 8.868671
+      duration: 9.938474
       messages: 
       output: 
       stacktrace: 
@@ -961,7 +953,7 @@ MonoBehaviour:
       name: StartTest
       fullName: GameDBTestRunner.StartTest
       resultStatus: 1
-      duration: 8.858935
+      duration: 9.913084
       messages: 
       output: 
       stacktrace: 
@@ -977,65 +969,65 @@ MonoBehaviour:
       name: StartTest(GameDBTestRunner+JsonTestRunner)
       fullName: GameDBTestRunner.StartTest(GameDBTestRunner+JsonTestRunner)
       resultStatus: 1
-      duration: 0.2823694
+      duration: 0.1298693
       messages: 
-      output: '<color=#00FF00>[SystemUtil.EnsureDirectoryExists] Create Directory
-        || C:\Project\Unity\CustomUtils/Temp/.temp_db</color>
-
-        <color=#00FFFF>[Service.StartService]
-        Service Start || GameDBService</color>
-
-        [JsonTestRunner.StartTest]
-        Test 3
-
-        [JsonTestRunner.StartTest] Test 2
-
-        [JsonTestRunner.StartTest]
-        Test 2
-
-        [JsonTestRunner.StartTest] Test 2
-
-        [JsonTestRunner.StartTest]
-        Test 1
-
-        [JsonTestRunner.StartTest] Test 1
-
-        [JsonTestRunner.StartTest]
-        Test 3
-
-        [JsonTestRunner.StartTest] Test 2
-
-        [JsonTestRunner.StartTest]
-        Test 3
-
-        [JsonTestRunner.StartTest] Test 0
-
-        [JsonTestRunner.StartTest]
-        Test 0
-
-        [JsonTestRunner.StartTest] Test 0
-
-        [JsonTestRunner.StartTest]
-        Test 1
-
-        [JsonTestRunner.StartTest] Test 0
-
-        [JsonTestRunner.StartTest]
-        Test 2
-
-        [JsonTestRunner.StartTest] Test 2
-
-        [JsonTestRunner.StartTest]
-        Test 2
-
-        [JsonTestRunner.StartTest] Test 3
-
-        [JsonTestRunner.StartTest]
-        Test 1
-
-        [JsonTestRunner.StartTest] Test 2
-
-'
+      output: "<color=#00FF00>[SystemUtil.EnsureDirectoryExists] Create Directory
+        || C:\\Project\\Unity\\CustomUtils/Temp/.temp_db</color>\r\n<color=#FF0000>[GameDBService.IService.Init]
+        System.IO.FileNotFoundException: Could not find file \"C:\\Project\\Unity\\CustomUtils\\Temp\\.temp_db\\TestSampleGameDB_01.csv\"\r\nFile
+        name: 'C:\\Project\\Unity\\CustomUtils\\Temp\\.temp_db\\TestSampleGameDB_01.csv'\r\n 
+        at System.IO.FileStream..ctor (System.String path, System.IO.FileMode mode,
+        System.IO.FileAccess access, System.IO.FileShare share, System.Int32 bufferSize,
+        System.Boolean anonymous, System.IO.FileOptions options) [0x0019e] in <88e4733ac7bc4ae1b496735e6b83bbd3>:0
+        \r\n  at System.IO.FileStream..ctor (System.String path, System.IO.FileMode
+        mode, System.IO.FileAccess access, System.IO.FileShare share, System.Int32
+        bufferSize, System.IO.FileOptions options) [0x00000] in <88e4733ac7bc4ae1b496735e6b83bbd3>:0
+        \r\n  at (wrapper remoting-invoke-with-check) System.IO.FileStream..ctor(string,System.IO.FileMode,System.IO.FileAccess,System.IO.FileShare,int,System.IO.FileOptions)\r\n 
+        at System.IO.StreamReader..ctor (System.String path, System.Text.Encoding
+        encoding, System.Boolean detectEncodingFromByteOrderMarks, System.Int32 bufferSize)
+        [0x00055] in <88e4733ac7bc4ae1b496735e6b83bbd3>:0 \r\n  at System.IO.StreamReader..ctor
+        (System.String path, System.Boolean detectEncodingFromByteOrderMarks) [0x00007]
+        in <88e4733ac7bc4ae1b496735e6b83bbd3>:0 \r\n  at System.IO.StreamReader..ctor
+        (System.String path) [0x00000] in <88e4733ac7bc4ae1b496735e6b83bbd3>:0 \r\n 
+        at (wrapper remoting-invoke-with-check) System.IO.StreamReader..ctor(string)\r\n 
+        at CsvUtil.DeserializeFromFile (System.String path, System.Type type) [0x00001]
+        in C:\\Project\\Unity\\CustomUtils\\Assets\\CustomUtils\\Common\\Utils\\CsvUtil.cs:103
+        \r\n  at CsvUtil.TryDeserializeFromFile (System.String path, System.Type
+        type, System.Collections.Generic.IEnumerable`1[System.Object]& csv) [0x00000]
+        in C:\\Project\\Unity\\CustomUtils\\Assets\\CustomUtils\\Common\\Utils\\CsvUtil.cs:94
+        \r\n  at SampleCsvGameDBProvider.Init (System.Collections.Generic.IEnumerable`1[T]
+        dbTypes) [0x0010a] in C:\\Project\\Unity\\CustomUtils\\Assets\\Test\\EditMode\\GameDBTest\\SampleCsvGameDBProvider.cs:21
+        \r\n  at GameDBService.IService.Init () [0x000a7] in C:\\Project\\Unity\\CustomUtils\\Assets\\CustomUtils\\Service\\GameDB\\GameDBService.cs:20
+        </color>\r\n<color=#FF0000>[GameDBService.IService.Init] System.IO.FileNotFoundException:
+        Could not find file \"C:\\Project\\Unity\\CustomUtils\\Temp\\.temp_db\\TestSampleGameDB_01.xml\"\r\nFile
+        name: 'C:\\Project\\Unity\\CustomUtils\\Temp\\.temp_db\\TestSampleGameDB_01.xml'\r\n 
+        at System.IO.FileStream..ctor (System.String path, System.IO.FileMode mode,
+        System.IO.FileAccess access, System.IO.FileShare share, System.Int32 bufferSize,
+        System.Boolean anonymous, System.IO.FileOptions options) [0x0019e] in <88e4733ac7bc4ae1b496735e6b83bbd3>:0
+        \r\n  at System.IO.FileStream..ctor (System.String path, System.IO.FileMode
+        mode, System.IO.FileAccess access, System.IO.FileShare share, System.Int32
+        bufferSize, System.Boolean isAsync, System.Boolean anonymous) [0x00000] in
+        <88e4733ac7bc4ae1b496735e6b83bbd3>:0 \r\n  at System.IO.FileStream..ctor
+        (System.String path, System.IO.FileMode mode, System.IO.FileAccess access)
+        [0x00000] in <88e4733ac7bc4ae1b496735e6b83bbd3>:0 \r\n  at (wrapper remoting-invoke-with-check)
+        System.IO.FileStream..ctor(string,System.IO.FileMode,System.IO.FileAccess)\r\n 
+        at XmlUtil.TryDeserializeFromFile (System.String path, System.Type type,
+        System.Object& xml) [0x00001] in C:\\Project\\Unity\\CustomUtils\\Assets\\CustomUtils\\Common\\Utils\\XmlUtil.cs:85
+        \r\n  at SampleXmlGameDBProvider.Init (System.Collections.Generic.IEnumerable`1[T]
+        dbTypes) [0x00100] in C:\\Project\\Unity\\CustomUtils\\Assets\\Test\\EditMode\\GameDBTest\\SampleXmlGameDBProvider.cs:23
+        \r\n  at GameDBService.IService.Init () [0x000a7] in C:\\Project\\Unity\\CustomUtils\\Assets\\CustomUtils\\Service\\GameDB\\GameDBService.cs:20
+        </color>\r\n[GameDBService.IService.Init] GameDBService initialized successfully.
+        The target provider is SampleJsonGameDBProvider\r\n<color=#00FFFF>[Service.StartService]
+        Service Start || GameDBService</color>\r\n[GameDBTestRunnerBase.StartTest]
+        Test 0\r\n[GameDBTestRunnerBase.StartTest] Test 1\r\n[GameDBTestRunnerBase.StartTest]
+        Test 2\r\n[GameDBTestRunnerBase.StartTest] Test 0\r\n[GameDBTestRunnerBase.StartTest]
+        Test 2\r\n[GameDBTestRunnerBase.StartTest] Test 3\r\n[GameDBTestRunnerBase.StartTest]
+        Test 1\r\n[GameDBTestRunnerBase.StartTest] Test 0\r\n[GameDBTestRunnerBase.StartTest]
+        Test 0\r\n[GameDBTestRunnerBase.StartTest] Test 1\r\n[GameDBTestRunnerBase.StartTest]
+        Test 0\r\n[GameDBTestRunnerBase.StartTest] Test 1\r\n[GameDBTestRunnerBase.StartTest]
+        Test 3\r\n[GameDBTestRunnerBase.StartTest] Test 1\r\n[GameDBTestRunnerBase.StartTest]
+        Test 2\r\n[GameDBTestRunnerBase.StartTest] Test 0\r\n[GameDBTestRunnerBase.StartTest]
+        Test 2\r\n[GameDBTestRunnerBase.StartTest] Test 2\r\n[GameDBTestRunnerBase.StartTest]
+        Test 3\r\n[GameDBTestRunnerBase.StartTest] Test 3\r\n\nIgnoreFailingMessages:true\r\n"
       stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
@@ -1050,65 +1042,57 @@ MonoBehaviour:
       name: StartTest(GameDBTestRunner+XmlTestRunner)
       fullName: GameDBTestRunner.StartTest(GameDBTestRunner+XmlTestRunner)
       resultStatus: 1
-      duration: 8.853644
+      duration: 0.5138899
       messages: 
-      output: '<color=#00FF00>[SystemUtil.EnsureDirectoryExists] Create Directory
-        || C:\Project\Unity\CustomUtils/Temp/.temp_db</color>
-
-        <color=#00FFFF>[Service.StartService]
-        Service Start || GameDBService</color>
-
-        [XmlTestRunner.StartTest]
-        Test 0
-
-        [XmlTestRunner.StartTest] Test 0
-
-        [XmlTestRunner.StartTest]
-        Test 0
-
-        [XmlTestRunner.StartTest] Test 3
-
-        [XmlTestRunner.StartTest]
-        Test 0
-
-        [XmlTestRunner.StartTest] Test 3
-
-        [XmlTestRunner.StartTest]
-        Test 0
-
-        [XmlTestRunner.StartTest] Test 2
-
-        [XmlTestRunner.StartTest]
-        Test 0
-
-        [XmlTestRunner.StartTest] Test 0
-
-        [XmlTestRunner.StartTest]
-        Test 2
-
-        [XmlTestRunner.StartTest] Test 1
-
-        [XmlTestRunner.StartTest]
-        Test 3
-
-        [XmlTestRunner.StartTest] Test 1
-
-        [XmlTestRunner.StartTest]
-        Test 2
-
-        [XmlTestRunner.StartTest] Test 0
-
-        [XmlTestRunner.StartTest]
-        Test 0
-
-        [XmlTestRunner.StartTest] Test 1
-
-        [XmlTestRunner.StartTest]
-        Test 2
-
-        [XmlTestRunner.StartTest] Test 3
-
-'
+      output: "<color=#00FF00>[SystemUtil.EnsureDirectoryExists] Create Directory
+        || C:\\Project\\Unity\\CustomUtils/Temp/.temp_db</color>\r\n<color=#FF0000>[GameDBService.IService.Init]
+        System.IO.FileNotFoundException: Could not find file \"C:\\Project\\Unity\\CustomUtils\\Temp\\.temp_db\\TestSampleGameDB_01.csv\"\r\nFile
+        name: 'C:\\Project\\Unity\\CustomUtils\\Temp\\.temp_db\\TestSampleGameDB_01.csv'\r\n 
+        at System.IO.FileStream..ctor (System.String path, System.IO.FileMode mode,
+        System.IO.FileAccess access, System.IO.FileShare share, System.Int32 bufferSize,
+        System.Boolean anonymous, System.IO.FileOptions options) [0x0019e] in <88e4733ac7bc4ae1b496735e6b83bbd3>:0
+        \r\n  at System.IO.FileStream..ctor (System.String path, System.IO.FileMode
+        mode, System.IO.FileAccess access, System.IO.FileShare share, System.Int32
+        bufferSize, System.IO.FileOptions options) [0x00000] in <88e4733ac7bc4ae1b496735e6b83bbd3>:0
+        \r\n  at (wrapper remoting-invoke-with-check) System.IO.FileStream..ctor(string,System.IO.FileMode,System.IO.FileAccess,System.IO.FileShare,int,System.IO.FileOptions)\r\n 
+        at System.IO.StreamReader..ctor (System.String path, System.Text.Encoding
+        encoding, System.Boolean detectEncodingFromByteOrderMarks, System.Int32 bufferSize)
+        [0x00055] in <88e4733ac7bc4ae1b496735e6b83bbd3>:0 \r\n  at System.IO.StreamReader..ctor
+        (System.String path, System.Boolean detectEncodingFromByteOrderMarks) [0x00007]
+        in <88e4733ac7bc4ae1b496735e6b83bbd3>:0 \r\n  at System.IO.StreamReader..ctor
+        (System.String path) [0x00000] in <88e4733ac7bc4ae1b496735e6b83bbd3>:0 \r\n 
+        at (wrapper remoting-invoke-with-check) System.IO.StreamReader..ctor(string)\r\n 
+        at CsvUtil.DeserializeFromFile (System.String path, System.Type type) [0x00001]
+        in C:\\Project\\Unity\\CustomUtils\\Assets\\CustomUtils\\Common\\Utils\\CsvUtil.cs:103
+        \r\n  at CsvUtil.TryDeserializeFromFile (System.String path, System.Type
+        type, System.Collections.Generic.IEnumerable`1[System.Object]& csv) [0x00000]
+        in C:\\Project\\Unity\\CustomUtils\\Assets\\CustomUtils\\Common\\Utils\\CsvUtil.cs:94
+        \r\n  at SampleCsvGameDBProvider.Init (System.Collections.Generic.IEnumerable`1[T]
+        dbTypes) [0x0010a] in C:\\Project\\Unity\\CustomUtils\\Assets\\Test\\EditMode\\GameDBTest\\SampleCsvGameDBProvider.cs:21
+        \r\n  at GameDBService.IService.Init () [0x000a7] in C:\\Project\\Unity\\CustomUtils\\Assets\\CustomUtils\\Service\\GameDB\\GameDBService.cs:20
+        </color>\r\n[GameDBService.IService.Init] GameDBService initialized successfully.
+        The target provider is SampleXmlGameDBProvider\r\n<color=#00FFFF>[Service.StartService]
+        Service Start || GameDBService</color>\r\n[GameDBTestRunnerBase.StartTest]
+        Test 0\r\n[GameDBTestRunnerBase.StartTest] Test 1\r\n[GameDBTestRunnerBase.StartTest]
+        Test 3\r\n[GameDBTestRunnerBase.StartTest] Test 2\r\n[GameDBTestRunnerBase.StartTest]
+        Test 2\r\n[GameDBTestRunnerBase.StartTest] Test 1\r\n[GameDBTestRunnerBase.StartTest]
+        Test 3\r\n[GameDBTestRunnerBase.StartTest] Test 2\r\n[GameDBTestRunnerBase.StartTest]
+        Test 3\r\n[GameDBTestRunnerBase.StartTest] Test 1\r\n[GameDBTestRunnerBase.StartTest]
+        Test 3\r\n[GameDBTestRunnerBase.StartTest] Test 3\r\n[GameDBTestRunnerBase.StartTest]
+        Test 3\r\n[GameDBTestRunnerBase.StartTest] Test 1\r\n[GameDBTestRunnerBase.StartTest]
+        Test 1\r\n[GameDBTestRunnerBase.StartTest] Test 1\r\n[GameDBTestRunnerBase.StartTest]
+        Test 2\r\n[GameDBTestRunnerBase.StartTest] Test 1\r\n[GameDBTestRunnerBase.StartTest]
+        Test 0\r\n[GameDBTestRunnerBase.StartTest] Test 3\r\n[GameDBTestRunnerBase.StartTest]
+        NONE\r\n[GameDBTestRunnerBase.StartTest] FIRST\r\n[GameDBTestRunnerBase.StartTest]
+        FIRST\r\n[GameDBTestRunnerBase.StartTest] FIRST\r\n[GameDBTestRunnerBase.StartTest]
+        FIRST\r\n[GameDBTestRunnerBase.StartTest] NONE\r\n[GameDBTestRunnerBase.StartTest]
+        FIRST\r\n[GameDBTestRunnerBase.StartTest] NONE\r\n[GameDBTestRunnerBase.StartTest]
+        FIRST\r\n[GameDBTestRunnerBase.StartTest] SECOND\r\n[GameDBTestRunnerBase.StartTest]
+        SECOND\r\n[GameDBTestRunnerBase.StartTest] FIRST\r\n[GameDBTestRunnerBase.StartTest]
+        NONE\r\n[GameDBTestRunnerBase.StartTest] NONE\r\n[GameDBTestRunnerBase.StartTest]
+        FIRST\r\n[GameDBTestRunnerBase.StartTest] NONE\r\n[GameDBTestRunnerBase.StartTest]
+        FIRST\r\n[GameDBTestRunnerBase.StartTest] NONE\r\n[GameDBTestRunnerBase.StartTest]
+        FIRST\r\n[GameDBTestRunnerBase.StartTest] FIRST\r\n\nIgnoreFailingMessages:true\r\n"
       stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
@@ -1123,9 +1107,121 @@ MonoBehaviour:
       name: StartTest(GameDBTestRunner+CsvTestRunner)
       fullName: GameDBTestRunner.StartTest(GameDBTestRunner+CsvTestRunner)
       resultStatus: 1
-      duration: 0.0029342
+      duration: 9.895931
       messages: 
-      output: 
+      output: '<color=#00FF00>[SystemUtil.EnsureDirectoryExists] Create Directory
+        || C:\Project\Unity\CustomUtils/Temp/.temp_db</color>
+
+        [GameDBService.IService.Init]
+        GameDBService initialized successfully. The target provider is SampleCsvGameDBProvider
+
+        <color=#00FFFF>[Service.StartService]
+        Service Start || GameDBService</color>
+
+        [GameDBTestRunnerBase.StartTest]
+        Test 3
+
+        [GameDBTestRunnerBase.StartTest] Test 1
+
+        [GameDBTestRunnerBase.StartTest]
+        Test 2
+
+        [GameDBTestRunnerBase.StartTest] Test 3
+
+        [GameDBTestRunnerBase.StartTest]
+        Test 1
+
+        [GameDBTestRunnerBase.StartTest] Test 0
+
+        [GameDBTestRunnerBase.StartTest]
+        Test 1
+
+        [GameDBTestRunnerBase.StartTest] Test 2
+
+        [GameDBTestRunnerBase.StartTest]
+        Test 1
+
+        [GameDBTestRunnerBase.StartTest] Test 2
+
+        [GameDBTestRunnerBase.StartTest]
+        Test 3
+
+        [GameDBTestRunnerBase.StartTest] Test 2
+
+        [GameDBTestRunnerBase.StartTest]
+        Test 2
+
+        [GameDBTestRunnerBase.StartTest] Test 3
+
+        [GameDBTestRunnerBase.StartTest]
+        Test 1
+
+        [GameDBTestRunnerBase.StartTest] Test 1
+
+        [GameDBTestRunnerBase.StartTest]
+        Test 3
+
+        [GameDBTestRunnerBase.StartTest] Test 1
+
+        [GameDBTestRunnerBase.StartTest]
+        Test 2
+
+        [GameDBTestRunnerBase.StartTest] Test 3
+
+        [GameDBTestRunnerBase.StartTest]
+        NONE
+
+        [GameDBTestRunnerBase.StartTest] FIRST
+
+        [GameDBTestRunnerBase.StartTest]
+        SECOND
+
+        [GameDBTestRunnerBase.StartTest] SECOND
+
+        [GameDBTestRunnerBase.StartTest]
+        FIRST
+
+        [GameDBTestRunnerBase.StartTest] SECOND
+
+        [GameDBTestRunnerBase.StartTest]
+        NONE
+
+        [GameDBTestRunnerBase.StartTest] FIRST
+
+        [GameDBTestRunnerBase.StartTest]
+        FIRST
+
+        [GameDBTestRunnerBase.StartTest] SECOND
+
+        [GameDBTestRunnerBase.StartTest]
+        SECOND
+
+        [GameDBTestRunnerBase.StartTest] SECOND
+
+        [GameDBTestRunnerBase.StartTest]
+        NONE
+
+        [GameDBTestRunnerBase.StartTest] FIRST
+
+        [GameDBTestRunnerBase.StartTest]
+        FIRST
+
+        [GameDBTestRunnerBase.StartTest] FIRST
+
+        [GameDBTestRunnerBase.StartTest]
+        NONE
+
+        [GameDBTestRunnerBase.StartTest] NONE
+
+        [GameDBTestRunnerBase.StartTest]
+        FIRST
+
+        [GameDBTestRunnerBase.StartTest] NONE
+
+
+        IgnoreFailingMessages:true
+
+'
       stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
@@ -1286,70 +1382,126 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1025
       parentUniqueId: EditrModeTestAssembly.dll/[EditrModeTestAssembly][TcpServerTestRunner][suite]
-    m_ResultText: 'StartTest(GameDBTestRunner+XmlTestRunner) (8.854s)
+    m_ResultText: 'StartTest(GameDBTestRunner+CsvTestRunner) (9.896s)
 
       ---
 
       <color=#00FF00>[SystemUtil.EnsureDirectoryExists]
       Create Directory || C:\Project\Unity\CustomUtils/Temp/.temp_db</color>
 
+      [GameDBService.IService.Init]
+      GameDBService initialized successfully. The target provider is SampleCsvGameDBProvider
+
       <color=#00FFFF>[Service.StartService]
       Service Start || GameDBService</color>
 
-      [XmlTestRunner.StartTest] Test
-      0
-
-      [XmlTestRunner.StartTest] Test 0
-
-      [XmlTestRunner.StartTest]
-      Test 0
-
-      [XmlTestRunner.StartTest] Test 3
-
-      [XmlTestRunner.StartTest]
-      Test 0
-
-      [XmlTestRunner.StartTest] Test 3
-
-      [XmlTestRunner.StartTest]
-      Test 0
-
-      [XmlTestRunner.StartTest] Test 2
-
-      [XmlTestRunner.StartTest]
-      Test 0
-
-      [XmlTestRunner.StartTest] Test 0
-
-      [XmlTestRunner.StartTest]
-      Test 2
-
-      [XmlTestRunner.StartTest] Test 1
-
-      [XmlTestRunner.StartTest]
+      [GameDBTestRunnerBase.StartTest]
       Test 3
 
-      [XmlTestRunner.StartTest] Test 1
+      [GameDBTestRunnerBase.StartTest] Test 1
 
-      [XmlTestRunner.StartTest]
+      [GameDBTestRunnerBase.StartTest]
       Test 2
 
-      [XmlTestRunner.StartTest] Test 0
+      [GameDBTestRunnerBase.StartTest] Test 3
 
-      [XmlTestRunner.StartTest]
-      Test 0
+      [GameDBTestRunnerBase.StartTest]
+      Test 1
 
-      [XmlTestRunner.StartTest] Test 1
+      [GameDBTestRunnerBase.StartTest] Test 0
 
-      [XmlTestRunner.StartTest]
+      [GameDBTestRunnerBase.StartTest]
+      Test 1
+
+      [GameDBTestRunnerBase.StartTest] Test 2
+
+      [GameDBTestRunnerBase.StartTest]
+      Test 1
+
+      [GameDBTestRunnerBase.StartTest] Test 2
+
+      [GameDBTestRunnerBase.StartTest]
+      Test 3
+
+      [GameDBTestRunnerBase.StartTest] Test 2
+
+      [GameDBTestRunnerBase.StartTest]
       Test 2
 
-      [XmlTestRunner.StartTest] Test 3'
+      [GameDBTestRunnerBase.StartTest] Test 3
+
+      [GameDBTestRunnerBase.StartTest]
+      Test 1
+
+      [GameDBTestRunnerBase.StartTest] Test 1
+
+      [GameDBTestRunnerBase.StartTest]
+      Test 3
+
+      [GameDBTestRunnerBase.StartTest] Test 1
+
+      [GameDBTestRunnerBase.StartTest]
+      Test 2
+
+      [GameDBTestRunnerBase.StartTest] Test 3
+
+      [GameDBTestRunnerBase.StartTest]
+      NONE
+
+      [GameDBTestRunnerBase.StartTest] FIRST
+
+      [GameDBTestRunnerBase.StartTest]
+      SECOND
+
+      [GameDBTestRunnerBase.StartTest] SECOND
+
+      [GameDBTestRunnerBase.StartTest]
+      FIRST
+
+      [GameDBTestRunnerBase.StartTest] SECOND
+
+      [GameDBTestRunnerBase.StartTest]
+      NONE
+
+      [GameDBTestRunnerBase.StartTest] FIRST
+
+      [GameDBTestRunnerBase.StartTest]
+      FIRST
+
+      [GameDBTestRunnerBase.StartTest] SECOND
+
+      [GameDBTestRunnerBase.StartTest]
+      SECOND
+
+      [GameDBTestRunnerBase.StartTest] SECOND
+
+      [GameDBTestRunnerBase.StartTest]
+      NONE
+
+      [GameDBTestRunnerBase.StartTest] FIRST
+
+      [GameDBTestRunnerBase.StartTest]
+      FIRST
+
+      [GameDBTestRunnerBase.StartTest] FIRST
+
+      [GameDBTestRunnerBase.StartTest]
+      NONE
+
+      [GameDBTestRunnerBase.StartTest] NONE
+
+      [GameDBTestRunnerBase.StartTest]
+      FIRST
+
+      [GameDBTestRunnerBase.StartTest] NONE
+
+
+      IgnoreFailingMessages:true'
     m_ResultStacktrace: 
     m_TestListState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: aaeeb389
-      m_LastClickedID: -1984696662
+      m_SelectedIDs: a76e0136
+      m_LastClickedID: 906063527
       m_ExpandedIDs: 2c5c4ec2416d28c537575fcc53f7ced709d9cedc502e7e0d07dc1a20732940267a14c82ac29f393322524b3a9dda8a41045add4d5d4c09542cae4f5b88e2b55c739d6464db1cfa6616b81e6cffffff7f
       m_RenameOverlay:
         m_UserAcceptedRename: 0
@@ -1400,7 +1552,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 73.6
-    width: 402.2
+    width: 467.8
     height: 360.6
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
@@ -1410,9 +1562,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: f8220000
+      m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: 18fbffff
+      m_ExpandedIDs: d498ffff1a99ffff949affff069bfffffc9bffff429cffff869cffffcc9cffffc49dffff0a9effff009fffff469fffff8e9fffffd49fffffd4a0ffff1aa1ffff5ea1ffffa4a1ffffe8a1ffff2ea2ffff72a2ffffb8a2fffffca2ffff42a3ffff3aa4ffff80a4ffff76a5ffffbca5ffff00a6ffff46a6ffff8ca6ffffd2a6ffff16a7ffff5ca7ffffbca8ffff02a9ffff48a9ffff8ea9ffffd4a9ffff1aaaffff62aaffffa8aafffff0aaffff36abffff80abffffc6abffff0eacffff54acffff50adffff96adffffe2adffff28aeffff6eaeffffb4aeffff08afffff4eafffff16b0ffff88b0ffffceb0ffff14b1ffff5cb1ffffa2b1ffffe6b1ffff2cb2ffff72b2ffffb8b2fffffcb2ffff42b3ffff86b3ffffccb3ffff16b4ffff5cb4ffff52b5ffff98b5ffffe0b5ffff26b6ffff20b7ffff66b7ffff6cb8ffffb2b8ffffa6b9ffffecb9ffff34baffff7abaffffc0baffff06bbffff52bbffff98bbffff8ebcffffd4bcffff1abdffff60bdffffa8bdffffeebdffff38beffff7ebeffffd2beffff18bfffff10c0ffff56c0ffff9cc0ffffe2c0ffffdec1ffff24c2ffff72c2ffffb8c2fffffec2ffff44c3ffff4ec4ffff94c4ffff94c5ffffdac5ffff22c6ffff68c6ffffb2c6fffff8c6fffff4c7ffff3ac8ffff00c9ffff72c9ffffbac9ffff00caffff1ccbffff62cbffff60ccffffa6ccffffeeccffff34cdffff44ceffff8aceffff7ecfffffc4cfffff0ed0ffff54d0ffff9ed0ffffe4d0ffff2cd1ffff72d1ffff72d2ffffb8d2ffffacd3fffff2d3ffff38d4ffff7ed4ffffc4d4ffff0ad5ffff7ed5ffffc4d5ffffbcd6ffff02d7fffffad7ffff40d8ffff3ed9ffff84d9ffff7adaffffc0daffffbadbffff00dcfffffadcffff40ddffff38deffff7edeffff4cdfffffbedfffff0ce0ffff52e0ffff02e2ffff48e2ffff3ce3ffff82e3ffffc8e3ffff0ee4ffff5ce4ffffa2e4ffff9ee5ffffe4e5ffffdce6ffff22e7ffffcae8ffff10e9ffff0aeaffff52eaffff20fbffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -1457,9 +1609,9 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 403.2
+    x: 468.80002
     y: 73.6
-    width: 386
+    width: 450
     height: 360.6
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
@@ -1818,7 +1970,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 455.2
-    width: 611.8
+    width: 685.4
     height: 328.19998
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
@@ -1826,7 +1978,7 @@ MonoBehaviour:
     m_SaveData: []
     m_OverlaysVisible: 1
   m_SearchFilter:
-    m_NameFilter: 
+    m_NameFilter: bcl
     m_ClassNames: []
     m_AssetLabels: []
     m_AssetBundleNames: []
@@ -1838,36 +1990,36 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Plugins/Dotnet/Analyzer
+    - Assets/Plugins/Dotnet/InMemory
     m_Globs: []
-    m_OriginalText: 
+    m_OriginalText: bcl
   m_ViewMode: 1
   m_StartGridSize: 16
   m_LastFolders:
-  - Assets/Plugins/Dotnet/Analyzer
+  - Assets/Plugins/Dotnet/InMemory
   m_LastFoldersGridSize: 16
   m_LastProjectPath: C:\Project\Unity\CustomUtils
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: dc640000
-    m_LastClickedID: 25820
-    m_ExpandedIDs: 0000000050620000526200005462000056620000586200005a6200005c6200005e62000060620000626200006462000066620000686200006a6200006c6200006e62000070620000726200007462000076620000786200007a6200007c6200007e62000074640000786400007c64000000ca9a3b
+    scrollPos: {x: 0, y: 75.80002}
+    m_SelectedIDs: be630000
+    m_LastClickedID: 25534
+    m_ExpandedIDs: 00000000d6610000d8610000da610000dc610000de610000e0610000e2610000e4610000e6610000e8610000ea610000ec610000ee610000f0610000f2610000f4610000f6610000f8610000fa610000fc610000fe610000006200000262000004620000b0630000b2630000bc63000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: 
-      m_OriginalName: 
+      m_Name: CustomUtils
+      m_OriginalName: CustomUtils
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 0
         height: 0
-      m_UserData: 0
+      m_UserData: 25520
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
-      m_OriginalEventType: 11
+      m_OriginalEventType: 0
       m_IsRenamingFilename: 1
       m_ClientGUIView: {fileID: 11}
     m_SearchString: 
@@ -1881,7 +2033,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 0000000050620000526200005462000056620000586200005a6200005c6200005e62000060620000626200006462000066620000686200006a6200006c6200006e62000070620000726200007462000076620000786200007a6200007c6200007e620000
+    m_ExpandedIDs: 00000000d6610000d8610000da610000dc610000de610000e0610000e2610000e4610000e6610000e8610000ea610000ec610000ee610000f0610000f2610000f4610000f6610000f8610000fa610000fc610000fe610000006200000262000004620000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1906,9 +2058,9 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: f8220000
-    m_LastClickedInstanceID: 8952
-    m_HadKeyboardFocusLastEvent: 1
+    m_SelectedInstanceIDs: 
+    m_LastClickedInstanceID: 0
+    m_HadKeyboardFocusLastEvent: 0
     m_ExpandedInstanceIDs: c6230000ac060000fc56000092f6ffff2a66000002670000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -1960,7 +2112,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 455.2
-    width: 591
+    width: 685.4
     height: 328.19998
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
@@ -2166,9 +2318,9 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 592
+    x: 686.4
     y: 455.2
-    width: 197.20001
+    width: 232.39996
     height: 328.19998
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
@@ -2181,7 +2333,7 @@ MonoBehaviour:
   m_ShowGizmos: 0
   m_TargetDisplay: 0
   m_ClearColor: {r: 0, g: 0, b: 0, a: 0}
-  m_TargetSize: {x: 197.20001, y: 307.19998}
+  m_TargetSize: {x: 232.39996, y: 307.19998}
   m_TextureFilterMode: 0
   m_TextureHideFlags: 61
   m_RenderIMGUI: 1
@@ -2196,8 +2348,8 @@ MonoBehaviour:
     m_VRangeLocked: 0
     hZoomLockedByDefault: 0
     vZoomLockedByDefault: 0
-    m_HBaseRangeMin: -78.880005
-    m_HBaseRangeMax: 78.880005
+    m_HBaseRangeMin: -92.959984
+    m_HBaseRangeMax: 92.959984
     m_VBaseRangeMin: -122.88
     m_VBaseRangeMax: 122.88
     m_HAllowExceedBaseRangeMin: 1
@@ -2217,23 +2369,23 @@ MonoBehaviour:
       serializedVersion: 2
       x: 0
       y: 21
-      width: 197.20001
+      width: 232.39996
       height: 307.19998
     m_Scale: {x: 1, y: 1}
-    m_Translation: {x: 98.600006, y: 153.59999}
+    m_Translation: {x: 116.19998, y: 153.59999}
     m_MarginLeft: 0
     m_MarginRight: 0
     m_MarginTop: 0
     m_MarginBottom: 0
     m_LastShownAreaInsideMargins:
       serializedVersion: 2
-      x: -98.600006
+      x: -116.19998
       y: -153.59999
-      width: 197.20001
+      width: 232.39996
       height: 307.19998
     m_MinimalGUI: 1
   m_defaultScale: 1
-  m_LastWindowPixelSize: {x: 246.50002, y: 410.24997}
+  m_LastWindowPixelSize: {x: 290.49994, y: 410.24997}
   m_ClearInEditMode: 1
   m_NoCameraWarning: 1
   m_LowResolutionForAspectRatios: 01000000000000000000
@@ -2260,9 +2412,9 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 791.2
+    x: 920.8
     y: 73.6
-    width: 743.8
+    width: 614.2
     height: 709.8
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:

@@ -57,6 +57,20 @@ public static class ReflectionExtension {
         attributeList = info.GetCustomAttributes<T>().ToList();
         return attributeList is { Count: > 0 };
     }
+    
+    public static bool IsGenericCollectionType(this Type type) {
+        if (type.IsGenericType == false) {
+            return false;
+        }
 
+        foreach (var interfaceType in type.GetInterfaces()) {
+            if (interfaceType.IsGenericType && interfaceType.GetGenericTypeDefinition() == typeof(IEnumerable<>)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+    
     public static bool IsStruct(this Type type) => type.IsValueType && type.IsPrimitive == false;
 }

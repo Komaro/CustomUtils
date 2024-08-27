@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 
 public abstract class GameDB<TKey, TData> : IDisposable {
 
@@ -17,7 +16,7 @@ public abstract class GameDB<TKey, TData> : IDisposable {
     public void Dispose() => _dictionary.Clear();
     
     private void Init(GameDBProvider provider) { 
-        foreach (var data in provider.GetList<TData>()) {
+        foreach (var data in provider.GetDataList<TData>()) {
             var key = CreateKey(data);
             if (_dictionary.TryAdd(key, data) == false) {
                 Logger.TraceError($"Duplicate key value || {key} ");
@@ -36,5 +35,4 @@ public abstract class GameDB<TKey, TData> : IDisposable {
     }
     
     protected abstract TKey CreateKey(TData data);
-
 }

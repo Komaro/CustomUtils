@@ -9,6 +9,7 @@ using Unity.PerformanceTesting;
 
 [TestFixture]
 public class EditModeTestRunner {
+    
 
     [Test]
     public void TempTest() {

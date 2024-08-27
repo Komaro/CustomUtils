@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Concurrent;
 using System.Threading;
+using System.Threading.Tasks;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -59,7 +60,7 @@ public class UnityMainThreadDispatcherService : IService {
         _threadObject.Enqueue(enumerator);
     }
 
-    public bool IsMainThread() => _mainThreadId == Thread.CurrentThread.ManagedThreadId;
+    public bool IsMainThread() => Thread.CurrentThread.ManagedThreadId == _mainThreadId;
     
     private class MainThreadDispatcherObject : MonoBehaviour, IDisposable {
 
@@ -78,6 +79,17 @@ public class UnityMainThreadDispatcherService : IService {
         }
 
         private void OnDestroy() => Dispose();
+
+        public void Dispose() {
+            lock (_queueLock) {
+                _workQueue.Clear();
+                
+                StopAllCoroutines();
+                _coroutineQueue.Clear();
+            }
+            
+            GC.SuppressFinalize(this);
+        }
 
         private void Update() {
             lock (_queueLock) {
@@ -103,17 +115,6 @@ public class UnityMainThreadDispatcherService : IService {
             lock (_queueLock) {
                 _coroutineQueue.Enqueue(enumerator);
             }
-        }
-
-        public void Dispose() {
-            lock (_queueLock) {
-                _workQueue.Clear();
-                
-                StopAllCoroutines();
-                _coroutineQueue.Clear();
-            }
-            
-            GC.SuppressFinalize(this);
         }
     }
 }

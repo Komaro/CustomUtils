@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading;
 using NUnit.Framework;
 using UnityEngine;
+using UnityEngine.TestTools;
 
 public class GameDBTestRunner {
 
@@ -43,102 +44,12 @@ public class GameDBTestRunner {
         handler.TearDown();
     }
 
-    #region [Json]
-    
-    public class JsonTestRunner : ITestHandler {
-        
-        private static readonly string DB_LIST_JSON = $"{DB_LIST}{Constants.Extension.JSON}";
-        private static readonly string TEST_GAME_DB_JSON = $"{TEST_GAME_SAMPLE_DB_01}{Constants.Extension.JSON}";
-    
-        private static readonly string JSON_DB_LIST_JSON_FULL_PATH = $"{TEST_TEMP_FOLDER_PATH}/{DB_LIST_JSON}";
-        private static readonly string TEST_GAME_DB_JSON_FULL_PATH = $"{TEST_TEMP_FOLDER_PATH}/{TEST_GAME_DB_JSON}";
-        
-        public void SetUp() {
-            if (File.Exists(JSON_DB_LIST_JSON_FULL_PATH) == false) {
-                var jsonData = new SampleJsonDBList {
-                    db = new List<string> {
-                        TEST_GAME_SAMPLE_DB_01
-                    }
-                };
+    public abstract class GameDBTestRunnerBase : ITestHandler {
 
-                JsonUtil.SaveJson(JSON_DB_LIST_JSON_FULL_PATH, jsonData);
-            }
+        public virtual void SetUp() => LogAssert.ignoreFailingMessages = false;
+        public virtual void TearDown() => LogAssert.ignoreFailingMessages = true;
 
-            if (File.Exists(TEST_GAME_DB_JSON_FULL_PATH) == false) {
-                var dummyData = new SampleJsonGameData<TestSampleGameDB_01.TestData>(new List<TestSampleGameDB_01.TestData> {
-                    new() { index = 0, text = "Test 0" },
-                    new() { index = 1, text = "Test 1" },
-                    new() { index = 2, text = "Test 2" },
-                    new() { index = 3, text = "Test 3" },
-                });
-                
-                JsonUtil.SaveJson(TEST_GAME_DB_JSON_FULL_PATH, dummyData);
-            }
-        }
-
-        public void StartTest(CancellationToken token) {
-            var db = Service.GetService<GameDBService>().Get<TestSampleGameDB_01>();
-            if (db == null) {
-                Assert.Fail();
-            }
-
-            for (var count = 0; count < 20; count++) {
-                if (db.TryGet(RandomUtil.GetRandom(0, 4), out var data) == false) {
-                    Assert.Fail();
-                }
-                
-                Logger.TraceLog(data.text);
-            }
-        }
-    }
-
-    #endregion
-
-    #region [Xml]
-    
-    public class XmlTestRunner : ITestHandler {
-        
-        private static readonly string DB_LIST_XML = $"{DB_LIST}{Constants.Extension.XML}";
-        private static readonly string TEST_GAME_DB_01_XML = $"{TEST_GAME_SAMPLE_DB_01}{Constants.Extension.XML}";
-        private static readonly string TEST_GAME_DB_02_XML = $"{TEST_GAME_SAMPLE_DB_02}{Constants.Extension.XML}";
-
-        private static readonly string DB_LIST_XML_FULL_PATH = $"{TEST_TEMP_FOLDER_PATH}/{DB_LIST_XML}";
-        private static readonly string TEST_GAME_DB_XML_01_FULL_PATH = $"{TEST_TEMP_FOLDER_PATH}/{TEST_GAME_DB_01_XML}";
-        private static readonly string TEST_GAME_DB_XML_02_FULL_PATH = $"{TEST_TEMP_FOLDER_PATH}/{TEST_GAME_DB_02_XML}";
-
-        public void SetUp() {
-            if (File.Exists(DB_LIST_XML_FULL_PATH) == false) {
-                var xmlData = new SampleXmlDBList {
-                    db = new string[] { TEST_GAME_SAMPLE_DB_01, TEST_GAME_SAMPLE_DB_02 },
-                };
-                
-                XmlUtil.SerializeToFile(DB_LIST_XML_FULL_PATH, typeof(SampleXmlDBList), xmlData);
-            }
-            
-            if (File.Exists(TEST_GAME_DB_XML_01_FULL_PATH) == false) {
-                var dummyData = new SampleXmlGameData<TestSampleGameDB_01.TestData>(new List<TestSampleGameDB_01.TestData> {
-                    new() { index = 0, text = "Test 0" },
-                    new() { index = 1, text = "Test 1" },
-                    new() { index = 2, text = "Test 2" },
-                    new() { index = 3, text = "Test 3" },
-                });
-                
-                XmlUtil.SerializeToFile(TEST_GAME_DB_XML_01_FULL_PATH, typeof(SampleXmlGameData<TestSampleGameDB_01.TestData>), dummyData);
-            }
-
-            if (File.Exists(TEST_GAME_DB_XML_02_FULL_PATH) == false) {
-                var dummyData = new SampleXmlGameData<TestSampleGameDB_02.TestData>(new List<TestSampleGameDB_02.TestData> {
-                    new() { index = 0, type = TestSampleGameDB_02.TEST_SAMPLE_TYPE.NONE },
-                    new() { index = 1, type = TestSampleGameDB_02.TEST_SAMPLE_TYPE.FIRST },
-                    new() { index = 2, type = TestSampleGameDB_02.TEST_SAMPLE_TYPE.SECOND },
-                    new() { index = 3, type = TestSampleGameDB_02.TEST_SAMPLE_TYPE.FIRST },
-                });
-                
-                XmlUtil.SerializeToFile(TEST_GAME_DB_XML_02_FULL_PATH, typeof(SampleXmlGameData<TestSampleGameDB_02.TestData>), dummyData);
-            }
-        }
-
-        public void StartTest(CancellationToken token) {
+        public virtual void StartTest(CancellationToken token) {
             if (Service.GetService<GameDBService>().TryGet<TestSampleGameDB_01>(out var db_01)) {
                 for (var count = 0; count < 20; count++) {
                     if (db_01.TryGet(RandomUtil.GetRandom(0, db_01.Length), out var data)) {
@@ -160,36 +71,164 @@ public class GameDBTestRunner {
             }
         }
     }
+
+    #region [Json]
+    
+    public class JsonTestRunner : GameDBTestRunnerBase {
+        
+        private static readonly string DB_LIST_JSON = $"{DB_LIST}{Constants.Extension.JSON}";
+        private static readonly string TEST_GAME_DB_01_JSON = $"{TEST_GAME_SAMPLE_DB_01}{Constants.Extension.JSON}";
+        private static readonly string TEST_GAME_DB_02_JSON = $"{TEST_GAME_SAMPLE_DB_02}{Constants.Extension.JSON}";
+    
+        private static readonly string JSON_DB_LIST_JSON_FULL_PATH = $"{Constants.Path.PROJECT_TEMP_PATH}/{DB_LIST_JSON}";
+        private static readonly string TEST_GAME_DB_JSON_01_FULL_PATH = $"{TEST_TEMP_FOLDER_PATH}/{TEST_GAME_DB_01_JSON}";
+        private static readonly string TEST_GAME_DB_JSON_02_FULL_PATH = $"{TEST_TEMP_FOLDER_PATH}/{TEST_GAME_DB_02_JSON}";
+        
+        public override void SetUp() {
+            base.SetUp();
+            
+            if (File.Exists(JSON_DB_LIST_JSON_FULL_PATH) == false) {
+                var data = new SampleDBList {
+                    names = new[] { TEST_GAME_SAMPLE_DB_01, TEST_GAME_SAMPLE_DB_02 }
+                };
+
+                JsonUtil.SaveJson(JSON_DB_LIST_JSON_FULL_PATH, data);
+            }
+
+            if (File.Exists(TEST_GAME_DB_JSON_01_FULL_PATH) == false) {
+                var data = new SampleRawGameDB<TestSampleGameDB_01.TestData>(TestSampleGameDB_01.CreateSamples());
+                JsonUtil.SaveJson(TEST_GAME_DB_JSON_01_FULL_PATH, data);
+            }
+
+            if (File.Exists(TEST_GAME_DB_JSON_02_FULL_PATH) == false) {
+                var data = new SampleRawGameDB<TestSampleGameDB_02.TestData>(TestSampleGameDB_02.CreateSamples());
+                JsonUtil.SaveJson(TEST_GAME_DB_JSON_02_FULL_PATH, data);
+            }
+        }
+    }
+
+    #endregion
+
+    #region [Xml]
+    
+    public class XmlTestRunner : GameDBTestRunnerBase {
+        
+        private static readonly string DB_LIST_XML = $"{DB_LIST}{Constants.Extension.XML}";
+        private static readonly string TEST_GAME_DB_01_XML = $"{TEST_GAME_SAMPLE_DB_01}{Constants.Extension.XML}";
+        private static readonly string TEST_GAME_DB_02_XML = $"{TEST_GAME_SAMPLE_DB_02}{Constants.Extension.XML}";
+
+        private static readonly string DB_LIST_XML_FULL_PATH = $"{Constants.Path.PROJECT_TEMP_PATH}/{DB_LIST_XML}";
+        private static readonly string TEST_GAME_DB_XML_01_FULL_PATH = $"{TEST_TEMP_FOLDER_PATH}/{TEST_GAME_DB_01_XML}";
+        private static readonly string TEST_GAME_DB_XML_02_FULL_PATH = $"{TEST_TEMP_FOLDER_PATH}/{TEST_GAME_DB_02_XML}";
+
+        public override void SetUp() {
+            base.SetUp();
+            
+            if (File.Exists(DB_LIST_XML_FULL_PATH) == false) {
+                var data = new SampleDBList {
+                    names = new[] { TEST_GAME_SAMPLE_DB_01, TEST_GAME_SAMPLE_DB_02 },
+                };
+                
+                XmlUtil.SerializeToFile(DB_LIST_XML_FULL_PATH, typeof(SampleDBList), data);
+            }
+            
+            if (File.Exists(TEST_GAME_DB_XML_01_FULL_PATH) == false) {
+                var data = new SampleRawGameDB<TestSampleGameDB_01.TestData>(TestSampleGameDB_01.CreateSampleList());
+                XmlUtil.SerializeToFile(TEST_GAME_DB_XML_01_FULL_PATH, typeof(SampleRawGameDB<TestSampleGameDB_01.TestData>), data);
+            }
+
+            if (File.Exists(TEST_GAME_DB_XML_02_FULL_PATH) == false) {
+                var data = new SampleRawGameDB<TestSampleGameDB_02.TestData>(TestSampleGameDB_02.CreateSampleList());
+                XmlUtil.SerializeToFile(TEST_GAME_DB_XML_02_FULL_PATH, typeof(SampleRawGameDB<TestSampleGameDB_02.TestData>), data);
+            }
+        }
+    }
     
     #endregion
 
     #region [Csv]
 
-    public class CsvTestRunner : ITestHandler {
+    public class CsvTestRunner : GameDBTestRunnerBase {
+    
+        private static readonly string DB_LIST_CSV = $"{DB_LIST}{Constants.Extension.CSV}";
+        private static readonly string TEST_GAME_DB_01_CSV = $"{TEST_GAME_SAMPLE_DB_01}{Constants.Extension.CSV}";
+        private static readonly string TEST_GAME_DB_02_CSV = $"{TEST_GAME_SAMPLE_DB_02}{Constants.Extension.CSV}";
+
+        private static readonly string DB_LIST_CSV_FULL_PATH = $"{Constants.Path.PROJECT_TEMP_PATH}/{DB_LIST_CSV}";
+        private static readonly string TEST_GAME_DB_CSV_01_FULL_PATH = $"{TEST_TEMP_FOLDER_PATH}/{TEST_GAME_DB_01_CSV}";
+        private static readonly string TEST_GAME_DB_CSV_02_FULL_PATH = $"{TEST_TEMP_FOLDER_PATH}/{TEST_GAME_DB_02_CSV}";
         
-        public void SetUp() {
+        public override void SetUp() {
+            base.SetUp();
             
-        }
+            if (File.Exists(DB_LIST_CSV) == false) {
+                var records = new List<SampleDBName> {
+                    new() { name = TEST_GAME_SAMPLE_DB_01 },
+                    new() { name = TEST_GAME_SAMPLE_DB_02 },
+                };
 
-        public void TearDown() { }
+                CsvUtil.SerializeToFile(DB_LIST_CSV_FULL_PATH, records);
+            }
+        
+            if (File.Exists(TEST_GAME_DB_CSV_01_FULL_PATH) == false) {
+                var csv = new SampleRawGameDB<TestSampleGameDB_01.TestData>(TestSampleGameDB_01.CreateSamples());
+                CsvUtil.SerializeToFile(TEST_GAME_DB_CSV_01_FULL_PATH, csv.data);
+            }
 
-        public void StartTest(CancellationToken token) {
-            
+            if (File.Exists(TEST_GAME_DB_CSV_02_FULL_PATH) == false) {
+                var csv = new SampleRawGameDB<TestSampleGameDB_02.TestData>(TestSampleGameDB_02.CreateSamples());
+                CsvUtil.SerializeToFile(TEST_GAME_DB_CSV_02_FULL_PATH, csv.data);
+            }
         }
     }
     
     #endregion
 }
 
-public class TestSampleGameDB_01 : GameDB<int, TestSampleGameDB_01.TestData> {
+#region [Sample Data]
+
+public record SampleDBList {
+
+    public string[] names { get; set; }
+}
+
+public record SampleDBName {
     
+    public string name { get; set; }
+}
+
+public record SampleRawGameDB<T> {
+
+    public T[] data { get; set; }
+
+    public SampleRawGameDB() { }
+    public SampleRawGameDB(IEnumerable<object> data) => this.data = data.OfType<T>().ToArray();
+    public SampleRawGameDB(IEnumerable<T> data) => this.data = data.ToArray();
+}
+
+public class TestSampleGameDB_01 : GameDB<int, TestSampleGameDB_01.TestData> {
+
     public TestSampleGameDB_01(GameDBProvider provider) : base(provider) { }
     protected override int CreateKey(TestData data) => data.index;
-    
+
+    public static TestData[] CreateSamples() => new[] {
+        new TestData { index = 0, text = "Test 0" },
+        new TestData { index = 1, text = "Test 1" },
+        new TestData { index = 2, text = "Test 2" },
+        new TestData { index = 3, text = "Test 3" },
+    };
+
+    public static List<TestData> CreateSampleList() => new() {
+        new TestData { index = 0, text = "Test 0" },
+        new TestData { index = 1, text = "Test 1" },
+        new TestData { index = 2, text = "Test 2" },
+        new TestData { index = 3, text = "Test 3" },
+    };
+
     public record TestData {
 
-        public int index;
-        public string text;
+        public int index { get; set; }
+        public string text { get; set; }
     }
 }
 
@@ -198,11 +237,25 @@ public class TestSampleGameDB_02 : GameDB<uint, TestSampleGameDB_02.TestData> {
     public TestSampleGameDB_02(GameDBProvider provider) : base(provider) { }
 
     protected override uint CreateKey(TestData data) => data.index;
+
+    public static TestData[] CreateSamples() => new[] {
+        new TestData { index = 0, type = TEST_SAMPLE_TYPE.NONE },
+        new TestData { index = 1, type = TEST_SAMPLE_TYPE.FIRST },
+        new TestData { index = 2, type = TEST_SAMPLE_TYPE.SECOND },
+        new TestData { index = 3, type = TEST_SAMPLE_TYPE.FIRST },
+    };
     
+    public static List<TestData> CreateSampleList() => new() {
+        new TestData { index = 0, type = TEST_SAMPLE_TYPE.NONE },
+        new TestData { index = 1, type = TEST_SAMPLE_TYPE.FIRST },
+        new TestData { index = 2, type = TEST_SAMPLE_TYPE.SECOND },
+        new TestData { index = 3, type = TEST_SAMPLE_TYPE.FIRST },
+    };
+
     public record TestData {
         
-        public uint index;
-        public TEST_SAMPLE_TYPE type;
+        public uint index { get; set; }
+        public TEST_SAMPLE_TYPE type { get; set; }
     }
 
     public enum TEST_SAMPLE_TYPE {
@@ -211,3 +264,5 @@ public class TestSampleGameDB_02 : GameDB<uint, TestSampleGameDB_02.TestData> {
         SECOND,
     }
 }
+
+#endregion

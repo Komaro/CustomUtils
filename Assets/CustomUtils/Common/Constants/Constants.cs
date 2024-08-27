@@ -15,6 +15,7 @@ public static partial class Constants {
         public const string PDB = ".pdb";
         public const string ZIP = ".zip";
         public const string XML = ".xml";
+        public const string CSV = ".csv";
 
         public const string JSON_FILTER = "*.json";
         public const string SOLUTION_FILTER = "*.sln";

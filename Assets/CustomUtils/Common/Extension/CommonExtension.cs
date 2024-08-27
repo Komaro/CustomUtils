@@ -77,20 +77,6 @@ public static class CommonExtension {
 
     public static string GetRawString(this byte[] bytes) => Convert.ToBase64String(bytes);
 
-    public static bool IsGenericCollectionType(this Type type) {
-        if (type.IsGenericType == false) {
-            return false;
-        }
-
-        foreach (var interfaceType in type.GetInterfaces()) {
-            if (interfaceType.IsGenericType && interfaceType.GetGenericTypeDefinition() == typeof(IEnumerable<>)) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
     public static bool TryMatch(this Regex regex, string text, out Match match) {
         match = regex.Match(text);
         return match.Success;
@@ -100,9 +86,7 @@ public static class CommonExtension {
     public static float GetPreferredHeight(this TextGenerator textGenerator, string text, TextGenerationSettings settings) => textGenerator.GetPreferredHeight(text, settings);
 
     public static ulong GetContentLength(this UnityWebRequestAsyncOperation operation) => operation.webRequest?.GetContentLength() ?? 0u;
-
-    public static ulong GetContentLength(this UnityWebRequest request) =>
-        ulong.TryParse(request.GetResponseHeader(HttpResponseHeader.ContentLength.GetName()), out var contentLength) ? contentLength : 0u;
+    public static ulong GetContentLength(this UnityWebRequest request) => ulong.TryParse(request.GetResponseHeader(HttpResponseHeader.ContentLength.GetName()), out var contentLength) ? contentLength : 0u;
 
     // 필요한 경우 갱신
     public static string GetName(this HttpResponseHeader header) => header switch {
@@ -117,4 +101,12 @@ public static class CommonExtension {
         return bytes.ToArray();
     }
 
+    public static async Task<IEnumerable<T>> ToEnumerable<T>(this IAsyncEnumerable<T> asyncEnumerable) {
+        var list = new List<T>();
+        await foreach (var value in asyncEnumerable) {
+            list.Add(value);
+        }
+
+        return list;
+    }
 }

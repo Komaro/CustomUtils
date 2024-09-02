@@ -11,7 +11,7 @@ using UnityEditor.Callbacks;
 using UnityEngine;
 
 // TODO. EditorService 로 전환 및 코드 리팩토링 및 Config 처리 추가
-public class EditorBuildService : EditorWindow {
+public partial class EditorBuildService : EditorWindow {
     
     #region [Common]
     private string _applicationIdentifier;
@@ -46,10 +46,12 @@ public class EditorBuildService : EditorWindow {
     #endregion
 
     #region [iOS]
+    
     private string _buildNumber;
     private string _appleDeveloperTeamID;
     private ProvisioningProfileType _iOSManualProvisioningProfileType = ProvisioningProfileType.Distribution;
     private string _iOSManualProvisioningProfileID;
+    
     #endregion
 
     #region [Option]
@@ -286,7 +288,7 @@ public class EditorBuildService : EditorWindow {
             var key = defineList[i];
             var attribute = _defineSymbolDic[key];
             if (attribute != null) {
-                DrawTextField(attribute.divideText);
+                DrawTextField(attribute.header);
             }
             
             using (new EditorGUILayout.HorizontalScope()) {
@@ -331,7 +333,7 @@ public class EditorBuildService : EditorWindow {
         if (_buildOptionDic.TryGetValue(targetGroup, out var optionDic)) {
             foreach (var option in optionDic) {
                 if (option.Value != null) {
-                    DrawTextField(option.Value.divideText);
+                    DrawTextField(option.Value.header);
                 }
                 
                 using (new EditorGUILayout.HorizontalScope()) {

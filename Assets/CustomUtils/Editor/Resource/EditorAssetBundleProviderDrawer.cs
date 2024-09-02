@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using UnityEditor;
 using UnityEditor.IMGUI.Controls;
 using UnityEngine;
 
 [EditorResourceDrawer(RESOURCE_SERVICE_MENU_TYPE.Provider, typeof(AssetBundleProvider))]
-public class EditorAssetBundleProviderDrawer : EditorResourceDrawerAutoConfig<AssetBundleProviderConfig, AssetBundleProviderConfig.NullConfig> {
+public class EditorAssetBundleProviderDrawer : EditorAutoConfigResourceDrawer<AssetBundleProviderConfig, AssetBundleProviderConfig.NullConfig> {
 
     private int _buildInfoCursor;
     private string _buildInfoMemo;
@@ -28,13 +27,11 @@ public class EditorAssetBundleProviderDrawer : EditorResourceDrawerAutoConfig<As
     private readonly List<BuildAssetBundleOptions> BUILD_OPTION_LIST;
 
     protected override string CONFIG_NAME => $"{nameof(AssetBundleProviderConfig)}{Constants.Extension.JSON}";
-    protected override string CONFIG_PATH => $"{Constants.Path.COMMON_CONFIG_PATH}/{CONFIG_NAME}";
 
     public EditorAssetBundleProviderDrawer(EditorWindow window) : base(window) => BUILD_OPTION_LIST = EnumUtil.GetValueList<BuildAssetBundleOptions>(true, true).ToList();
 
     public sealed override void CacheRefresh() {
-        Service.GetService<SystemWatcherService>().Start(watcherOrder);
-        
+        Service.GetService<SystemWatcherService>().Start(order);
         if (JsonUtil.TryLoadJson(CONFIG_PATH, out config)) {
             _plainEncryptKey = string.IsNullOrEmpty(config.cipherEncryptKey) == false ? EncryptUtil.DecryptDES(config.cipherEncryptKey) : string.Empty;
             config.StartAutoSave(CONFIG_PATH);

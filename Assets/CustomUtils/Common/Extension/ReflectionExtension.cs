@@ -4,6 +4,13 @@ using System.Linq;
 using System.Reflection;
 
 public static class ReflectionExtension {
+
+    public static string GetAlias(this Type type) => type.TryGetCustomAttribute<AliasAttribute>(out var attribute) ? attribute.alias : type.Name;
+    public static string GetAlias(this MethodInfo info) => info.TryGetCustomAttribute<AliasAttribute>(out var attribute) ? attribute.alias : info.Name;
+
+    public static IEnumerable<(string name, object value)> GetAllDataMemberNameWithValue(this Type type, object ob, BindingFlags bindingFlags = default) => 
+        type.GetFields(bindingFlags).ConvertTo(info => (info.Name, info.GetValue(ob)))
+        .Concat(type.GetProperties(bindingFlags).ConvertTo(info => (info.Name, info.GetValue(ob))));
     
     public static bool TryGetField(this Type type, string name, out FieldInfo info) {
         info = type.GetField(name);

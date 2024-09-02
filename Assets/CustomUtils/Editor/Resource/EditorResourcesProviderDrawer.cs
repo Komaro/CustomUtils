@@ -4,17 +4,16 @@ using UnityEditor;
 using UnityEngine;
 
 [EditorResourceDrawer(RESOURCE_SERVICE_MENU_TYPE.Provider, typeof(ResourcesProvider))]
-public class EditorResourcesProviderDrawer : EditorResourceDrawer {
+public class EditorResourcesProviderDrawer : EditorAutoConfigResourceDrawer<ResourcesProviderConfig, ResourcesProviderConfig.NullConfig> {
 
     private JObject _resourcesListJson;
 
     private readonly string RESOURCES_PATH = $"{Application.dataPath}/{Constants.Folder.RESOURCES}";
 
-    protected override string CONFIG_NAME => string.Empty;
-    protected override string CONFIG_PATH => string.Empty;
-    
     public EditorResourcesProviderDrawer(EditorWindow window) : base(window) { }
     public override void CacheRefresh() { }
+
+    protected override string CONFIG_NAME => $"{nameof(ResourcesProviderConfig)}{Constants.Extension.JSON}";
 
     public override void Draw() {
         if (_resourcesListJson == null) {
@@ -70,4 +69,12 @@ public class EditorResourcesProviderDrawer : EditorResourceDrawer {
         SystemUtil.CreateDirectory(RESOURCES_PATH);
         AssetDatabase.Refresh();
     }
+}
+
+public class ResourcesProviderConfig : JsonAutoConfig {
+
+    // TODO. implement
+    
+    public override bool IsNull() => false;
+    public class NullConfig : ResourcesProviderConfig { }
 }

@@ -83,6 +83,7 @@ public static class Service {
     }
 
     public static bool RestartService(Type type) => RestartService(_serviceDic.TryGetValue(type, out var service) ? service : CreateService(type));
+    
     public static bool RestartService<TService>() where TService : class, IService, new() => RestartService(_serviceDic.TryGetValue(typeof(TService), out var service) ? service : CreateService<TService>());
 
     public static bool RestartService(Enum serviceType) {
@@ -101,8 +102,8 @@ public static class Service {
             service.Start();
             Logger.TraceLog($"Service Restart || {service.GetType().Name}", Color.green);
             return true;
-        } catch (Exception e) {
-            Logger.TraceError(e);
+        } catch (Exception ex) {
+            Logger.TraceError(ex);
             Logger.TraceError($"Service Restart Failed || {service?.GetType().Name}");
             return false;
         }
@@ -212,9 +213,7 @@ public sealed class ServiceAttribute : Attribute {
 
     public HashSet<Enum> serviceTypeSet = new();
 
-    public ServiceAttribute() {
-        serviceTypeSet.Add(DEFAULT_SERVICE_TYPE.NONE);
-    }
+    public ServiceAttribute() => serviceTypeSet.Add(DEFAULT_SERVICE_TYPE.NONE);
 
     public ServiceAttribute(params object[] serviceTypes) {
         foreach (var type in serviceTypes) {

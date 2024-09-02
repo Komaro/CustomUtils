@@ -308,7 +308,8 @@ public static class CollectionExtension {
 
     public static List<TValue> ToValueList<TKey, TValue>(this IDictionary<TKey, TValue> dictionary) => dictionary.Values.ToList();
     public static List<TKey> ToKeyList<TKey, TValue>(this IDictionary<TKey, TValue> dictionary) => dictionary.Keys.ToList();
-    
+
+    public static string ToStringPair<TKey, TValue>(this KeyValuePair<TKey, TValue> pair, string separator = " ") => $"{pair.Key}{separator}{pair.Value}";
     public static string ToStringCollection<TKey, TValue>(this IDictionary<TKey, TValue> dictionary) => string.Join(' ', dictionary.Select(x => $"({x.Key} , {x.Value})"));
     
     public static bool TryGetRandom<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, out TKey key, out TValue value) {
@@ -535,8 +536,8 @@ public static class CollectionExtension {
         return index > -1 && list.Count > index;
     }
 
-    public static List<T2> ConvertTo<T1, T2>(this IEnumerable<T1> enumerable, Func<T1, T2> converter) {
-        var convertList = new List<T2>();
+    public static List<TResult> ConvertTo<T, TResult>(this IEnumerable<T> enumerable, Func<T, TResult> converter) {
+        var convertList = new List<TResult>();
         foreach (var item in enumerable) {
             var convertItem = converter.Invoke(item);
             if (convertItem == null) {
@@ -547,6 +548,20 @@ public static class CollectionExtension {
         }
 
         return convertList;
+    }
+
+    public static IEnumerable<TResult> ConvertTo<T, TResult>(this IEnumerable<T> enumerable, Func<T, IEnumerable<TResult>> converter) {
+        var list = new List<TResult>();
+        foreach (var item in enumerable) {
+            var convertItem = converter?.Invoke(item);
+            if (convertItem == null) {
+                continue;
+            }
+            
+            list.AddRange(convertItem);
+        }
+
+        return list;
     }
 
     public static string ToStringCollection<T>(this IEnumerable<T> enumerable, char separator = ' ') => string.Join(separator, enumerable);

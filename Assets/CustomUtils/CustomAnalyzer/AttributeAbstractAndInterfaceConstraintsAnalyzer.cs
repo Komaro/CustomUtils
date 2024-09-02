@@ -31,7 +31,7 @@ public class AttributeAbstractAndInterfaceConstraintsAnalyzer : BaseDianosticAna
         if (TryGetAttributeData(namedTypeSymbol, out var attributes)) {
             if (attributes.Any(attribute => attribute.AttributeClass != null && targetAttributes.Contains(attribute.AttributeClass.Name))) {
                 if (namedTypeSymbol.IsAbstract == false && namedTypeSymbol.TypeKind != TypeKind.Interface) {
-                    context.ReportDiagnostic(Diagnostic.Create(RULE, namedTypeSymbol.Locations[0]));
+                    context.ReportDiagnostic(Diagnostic.Create(RULE, namedTypeSymbol.Locations[0], namedTypeSymbol.Name));
                 }
             }
         }

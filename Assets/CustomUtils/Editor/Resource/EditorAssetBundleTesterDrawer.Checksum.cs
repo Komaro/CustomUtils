@@ -47,7 +47,7 @@ public partial class EditorAssetBundleTesterDrawer {
                     }
 
                     if (config.isActiveAutoTrackingChecksum) {
-                        EditorCommon.DrawFolderOpenSelector("탐색 폴더", "선택", ref config.checksumInfoTrackingDirectory);
+                        EditorCommon.DrawFolderOpenSelector("탐색 폴더", "선택", ref config.checksumInfoTrackingDirectory, 120f);
                         EditorCommon.DrawLabelTextField("Json 파일 경로", config.checksumInfoPath, 120f);
                     }
 

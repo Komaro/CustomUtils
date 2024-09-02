@@ -9,7 +9,7 @@ using UnityEditor;
 using Debug = UnityEngine.Debug;
 #if  UNITY_IOS
 using UnityEditor.iOS.Xcode;
-using AppleAuth.Editor;
+// using AppleAuth.Editor;
 #endif
 
 [Builder(SAMPLE_BUILD_TYPE.IOS, BuildTarget.iOS, BuildTargetGroup.iOS)]
@@ -132,7 +132,8 @@ public class Sample_Builder_Ios : Builder {
             var unityFrameworkGUID = pbxProject.TargetGuidByName("UnityFramework");
 #endif
             
-        #region [Framework]
+            #region [Framework]
+            
             pbxProject.AddFrameworkToProject(targetGUID, "UnityFramework.framework", false);
             pbxProject.AddFrameworkToProject(targetGUID, "GameKit.framework", false);
             pbxProject.AddFrameworkToProject(targetGUID, "iAd.framework", false);
@@ -143,9 +144,11 @@ public class Sample_Builder_Ios : Builder {
             
             pbxProject.AddFrameworkToProject(unityFrameworkGUID, "AppTrackingTransparency.framework", false);
             pbxProject.AddFrameworkToProject(unityFrameworkGUID, "GameKit.framework", false);
-        #endregion
             
-        #region [Build Property]
+            #endregion
+            
+            #region [Build Property]
+            
             pbxProject.SetBuildProperty(targetGUID, "ENABLE_BITCODE", "false");
             pbxProject.SetBuildProperty(targetGUID, "ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES", "YES");
             
@@ -153,14 +156,16 @@ public class Sample_Builder_Ios : Builder {
             pbxProject.AddBuildProperty(targetGUID, "LD_RUNPATH_SEARCH_PATHS", "libswiftCore.dylib");
             
             pbxProject.SetBuildProperty(unityFrameworkGUID, "ENABLE_BITCODE", "false");
-            pbxProject.SetBuildProperty(unityFrameworkGUID, "ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES", "NO");
-        #endregion
+            pbxProject.SetBuildProperty(unityFrameworkGUID, "ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES", "NO");   
             
-        #region [Add Resource]
-        
-        #endregion
+            #endregion
+            
+            #region [Add Resource]
+            
+            #endregion
 
-        #region [plist]
+            #region [plist]
+            
             var plistPath = Path.Combine(buildOptions.locationPathName, "Info.plist");
             var plist = new PlistDocument();
             plist.ReadFromFile(plistPath);
@@ -180,15 +185,17 @@ public class Sample_Builder_Ios : Builder {
             dic.SetBoolean("NSAllowsArbitraryLoads", true);
 
             plist.WriteToFile(plistPath);
+            
         #endregion
             
             pbxProject.WriteToFile(projectPath);
             Debug.Log($"{BuildCount} - PBXProject Written Complete");
             
-        #region [Capability Manager]
+            #region [Capability Manager]
+            
 #if UNITY_2019_3_OR_NEWER
             var manager = new ProjectCapabilityManager(projectPath, $"Entitlements.entitlements", null, targetGUID);
-            manager.AddSignInWithAppleWithCompatibility(unityFrameworkGUID);
+            // manager.AddSignInWithAppleWithCompatibility(unityFrameworkGUID);
             manager.AddPushNotifications(false);
             manager.AddBackgroundModes(BackgroundModesOptions.RemoteNotifications);
 #else
@@ -197,9 +204,9 @@ public class Sample_Builder_Ios : Builder {
             manager.AddPushNotifications(false);
             manager.AddBackgroundModes(BackgroundModesOptions.RemoteNotifications);
 #endif
-            
             manager.WriteToFile();
-        #endregion
+            
+            #endregion
         } catch (Exception e) {
             Debug.LogError(e.Message);
         }
@@ -235,5 +242,6 @@ public class Sample_Builder_Ios : Builder {
 [BuildTypeEnum]
 public enum SAMPLE_BUILD_TYPE {
     Default,
+    STANDALONE,
     IOS,
 }

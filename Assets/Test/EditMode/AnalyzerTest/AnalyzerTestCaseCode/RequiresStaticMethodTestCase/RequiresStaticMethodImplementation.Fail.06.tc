@@ -1,0 +1,8 @@
+﻿public class ClassA : IInterfaceA {
+    
+}
+
+[RequiresStaticMethodImplementation("AbstractStaticMethod")]
+public interface IInterfaceA {
+    
+}

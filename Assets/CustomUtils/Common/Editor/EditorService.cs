@@ -6,6 +6,7 @@ using UnityEditor.Callbacks;
 using UnityEngine;
 
 [RequiresStaticMethodImplementation("CacheRefresh", typeof(DidReloadScripts))]
+[RequiresStaticMethodImplementation("OpenWindow", typeof(MenuItem))]
 public abstract class EditorService : EditorWindow {
 
     protected virtual string SessionKey => $"{GetType().Name}_FirstOpen";

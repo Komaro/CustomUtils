@@ -37,3 +37,8 @@ public abstract class BaseDianosticAnalzyer : DiagnosticAnalyzer {
         }
     }
 }
+
+public static class AnalyzerExtension {
+
+    public static bool IsString(this TypedConstant constant) => constant.Kind == TypedConstantKind.Primitive && constant.Type?.MetadataName == "String";
+}

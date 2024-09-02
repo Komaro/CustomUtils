@@ -91,40 +91,36 @@ public abstract class Builder {
 
     protected BuildPlayerOptions buildOptions;
     
-    protected string ProjectPath => Directory.GetParent(Application.dataPath)?.FullName;
     protected string BuildPath => buildOptions.locationPathName;
     protected string BuildParentPath => Directory.GetParent(buildOptions.locationPathName)?.FullName;
-    protected string BuildExecutePath => $"{ProjectPath}/{BUILD_EXECUTE_FOLDER}/{GetType()?.GetCustomAttribute<BuilderAttribute>()?.buildType.ToString()}";
+    
+    protected string BuildExecutePath => $"{Constants.Path.PROJECT_PATH}/{BUILD_EXECUTE_FOLDER}/{GetType()?.GetCustomAttribute<BuilderAttribute>()?.buildType.ToString()}";
 
     protected const string BUILD_EXECUTE_FOLDER = "BuildExecute";
-    protected const string RESOURCES_ROOT_FOLDER = "Assets/Resources/";
-    protected const string WINDOWS_CMD = "cmd.exe";
 
     public virtual void StartBuild(BuildPlayerOptions buildOptions) {
         this.buildOptions = buildOptions;
-
-        var attribute = GetType().GetCustomAttribute<BuilderAttribute>();
-        if (attribute != null) {
+        if (GetType().TryGetCustomAttribute<BuilderAttribute>(out var attribute)) {
             this.buildOptions.target = attribute.buildTarget;
             this.buildOptions.targetGroup = attribute.buildTargetGroup;
         } else {
-            Debug.LogWarning($"{nameof(attribute)} is Null. Checking {nameof(BuilderAttribute)}");  
+            Debug.LogWarning($"{nameof(attribute)} is null. Checking {nameof(BuilderAttribute)}");  
         }
-        
+
         PreProcess();
         AssetDatabase.Refresh();
-        
+
         BuildPipeline.BuildPlayer(this.buildOptions);
     }
 
     protected void PreProcess() {
-        Debug.Log($"{BuildCount} - Preprocess");
+        Debug.Log($"{BuildCount} - {nameof(PreProcess)}");
         CommonPreProcess();
         OnPreProcess();
     }
 
     public void PostProcess() {
-        Debug.Log($"{BuildCount} - Postprocess");
+        Debug.Log($"{BuildCount} - {nameof(PostProcess)}");
         OnPostProcess();
 
         if (BuildSettings.Instance.TryGetValue<bool>("cleanBurstDebug", out var isClean) && isClean) {

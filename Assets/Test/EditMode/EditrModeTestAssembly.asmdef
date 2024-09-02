@@ -29,7 +29,10 @@
         "Microsoft.CodeAnalysis.Workspaces.MSBuild.dll",
         "Newtonsoft.Json.dll",
         "System.Threading.Channels.dll",
-        "CsvHelper.dll"
+        "CsvHelper.dll",
+        "Microsoft.EntityFrameworkCore.dll",
+        "Microsoft.EntityFrameworkCore.InMemory.dll",
+        "System.ComponentModel.Annotations.dll"
     ],
     "autoReferenced": false,
     "defineConstraints": [

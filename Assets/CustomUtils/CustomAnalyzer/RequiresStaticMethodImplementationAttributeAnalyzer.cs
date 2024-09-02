@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.ComponentModel;
@@ -54,7 +55,7 @@ public class RequiresStaticMethodImplementationAttributeAnalyzer : DiagnosticAna
                 if (ordinaryMethodDic.TryGetValue(implementName, out var methodSymbol) == false || methodSymbol.IsStatic == false) {
                     context.ReportDiagnostic(Diagnostic.Create(STATIC_RULE, namedTypeSymbol.Locations[0], namedTypeSymbol.Name, implementName));
                 }
-
+            
                 if (methodSymbol != null && data.ConstructorArguments.Length > 1 && data.ConstructorArguments[1].Value != null) {
                     implementName = data.ConstructorArguments[1].Value.ToString();
                     if (methodSymbol.GetAttributes().Any(x => x.AttributeClass?.ToString().Equals(implementName, StringComparison.Ordinal) ?? false) == false) {
@@ -66,11 +67,15 @@ public class RequiresStaticMethodImplementationAttributeAnalyzer : DiagnosticAna
     }
     
     private IEnumerable<INamedTypeSymbol> GetInheritedClassAndInterfaces(INamedTypeSymbol symbol) {
-        var type = symbol;
-        while ((type = type.BaseType) != null) {
-            yield return type;
-            foreach (var interfaceType in type.AllInterfaces) {
-                yield return interfaceType;
+        var typeSymbol = symbol;
+        foreach (var interfaceSymbol in typeSymbol.AllInterfaces) {
+            yield return interfaceSymbol;
+        }
+        
+        while ((typeSymbol = typeSymbol.BaseType) != null) {
+            yield return typeSymbol;
+            foreach (var interfaceSymbol in typeSymbol.AllInterfaces) {
+                yield return interfaceSymbol;
             }
         }
     }

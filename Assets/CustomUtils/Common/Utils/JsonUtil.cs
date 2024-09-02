@@ -138,5 +138,23 @@ public static class JsonUtil {
         }
     }
 
+    public static JObject LoadJObject(string path) {
+        try {
+            path = FixJsonExtensionPath(path);
+            if (File.Exists(path) == false) {
+                Logger.TraceLog($"Invalid Path || {path}", Color.yellow);
+                throw new FileNotFoundException();
+            }
+
+            if (SystemUtil.TryReadAllText(path, out var jsonText)) {
+                return JObject.Parse(jsonText);
+            }
+        } catch (Exception ex) {
+            Logger.TraceError(ex);
+        }
+
+        return default;
+    }
+
     public static string FixJsonExtensionPath(string path) => Path.HasExtension(path) == false ? Path.ChangeExtension(path, Constants.Extension.JSON) : path;
 }

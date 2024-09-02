@@ -6,7 +6,7 @@ using UnityEditor;
 using UnityEngine;
 
 [EditorResourceDrawer(RESOURCE_SERVICE_MENU_TYPE.Test, typeof(AssetBundleProvider))]
-public partial class EditorAssetBundleTesterDrawer : EditorResourceDrawerAutoConfig<AssetBundleTesterConfig, AssetBundleTesterConfig.NullConfig> {
+public partial class EditorAssetBundleTesterDrawer : EditorAutoConfigResourceDrawer<AssetBundleTesterConfig, AssetBundleTesterConfig.NullConfig> {
     
     private CachingService _cachingService;
     private DownloadService _downloadService;
@@ -29,7 +29,6 @@ public partial class EditorAssetBundleTesterDrawer : EditorResourceDrawerAutoCon
     private readonly SystemWatcherServiceOrder _infoAutoTrackingOrder;
 
     protected override string CONFIG_NAME => $"{nameof(AssetBundleTesterConfig)}{Constants.Extension.JSON}";
-    protected override string CONFIG_PATH => $"{Constants.Path.COMMON_CONFIG_PATH}/{CONFIG_NAME}";
 
     public EditorAssetBundleTesterDrawer(EditorWindow window) : base(window) {
         _infoAutoTrackingOrder = new(Constants.Extension.JSON_FILTER) {
@@ -40,7 +39,7 @@ public partial class EditorAssetBundleTesterDrawer : EditorResourceDrawerAutoCon
     }
     
     public override void CacheRefresh() {
-        Service.GetService<SystemWatcherService>().Start(watcherOrder);
+        Service.GetService<SystemWatcherService>().Start(order);
         _cachingService ??= Service.GetService<CachingService>();
         _downloadService ??= Service.GetService<DownloadService>();
         
@@ -84,7 +83,7 @@ public partial class EditorAssetBundleTesterDrawer : EditorResourceDrawerAutoCon
             using (new GUILayout.VerticalScope("box")) {
                 EditorCommon.DrawEnumPopup($"빌드 타겟", ref config.selectBuildTarget);
                 EditorCommon.DrawLabelTextField("URL", ref config.url, 120f);
-                EditorCommon.DrawFolderOpenSelector("다운로드 폴더", "선택", ref config.downloadDirectory);
+                EditorCommon.DrawFolderOpenSelector("다운로드 폴더", "선택", ref config.downloadDirectory, 120f);
                 EditorCommon.DrawButtonPasswordField("암호화 키 저장", ref _plainEncryptKey, ref _isShowEncryptKey, plainEncryptKey => config.cipherEncryptKey = EncryptUtil.EncryptDES(plainEncryptKey), 120f);
             }
             

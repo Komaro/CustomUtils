@@ -65,7 +65,7 @@ public static class PlayerPrefsUtil {
         return false;
     }
     
-    public static bool TryGet<T>(string key, out T value, T defaultValue = default) where T : struct, Enum {
+    public static bool TryGet<TEnum>(string key, out TEnum value, TEnum defaultValue = default) where TEnum : struct, Enum {
         try {
             if (TryGet(key, out string rawValue) && Enum.TryParse(rawValue, out value)) {
                 return true;
@@ -84,7 +84,7 @@ public static class PlayerPrefsUtil {
     public static void Set(string key, long value) => SetString(key, value.ToString(Constants.Culture.DEFAULT_CULTURE_INFO));
     public static void Set(string key, float value) => SetFloat(key, value);
     public static void Set(string key, double value) => SetString(key, value.ToString(Constants.Culture.DEFAULT_CULTURE_INFO));
-    public static void Set<T>(string key, T value) where T : struct, Enum => SetString(key, value.ToString());
+    public static void Set<TEnum>(string key, TEnum value) where TEnum : struct, Enum => SetString(key, value.ToString());
     
     public static string GetString(string key, string defaultValue = "") {
         try {

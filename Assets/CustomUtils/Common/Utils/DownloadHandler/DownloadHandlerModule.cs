@@ -73,7 +73,7 @@ public abstract class DownloadHandlerModule<TReturn> : DownloadHandlerScript, ID
     
     public virtual bool TryGetContent<TType>(out TType content) => (content = GetContent<TType>()) != null;
 
-    [MethodAlias(nameof(GetContent) + "_TType")]
+    [Alias(nameof(GetContent) + "_TType")]
     public virtual TType GetContent<TType>() {
         if (_overridenMethod.HasOverriden($"{nameof(GetContent)}_TType")) {
             Logger.TraceLog($"{nameof(GetContent)}_TOut has not been overridden.", Color.red);

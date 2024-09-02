@@ -16,6 +16,7 @@ public static partial class Constants {
         public const string ZIP = ".zip";
         public const string XML = ".xml";
         public const string CSV = ".csv";
+        public const string EXE = ".exe";
 
         public const string JSON_FILTER = "*.json";
         public const string SOLUTION_FILTER = "*.sln";
@@ -59,6 +60,8 @@ public static partial class Constants {
 
         public static readonly string RESOURCES_FULL_PATH = $"{Application.dataPath}/{Folder.RESOURCES}";
         public static readonly string RESOURCES_PATH = $"{Folder.ASSETS}/{Folder.RESOURCES}";
+
+        public static readonly string BUILD_ROOT_PATH = $"{PROJECT_PATH}/{Folder.BUILD}";
     }
 
     public static class Folder {
@@ -69,6 +72,7 @@ public static partial class Constants {
         public const string SCRIPT_ASSEMBLIES = "ScriptAssemblies";
         public const string PLUGINS = "Plugins";
         public const string RESOURCES = "Resources";
+        public const string BUILD = "Build";
     }
 
     public static class Regex {
@@ -83,5 +87,11 @@ public static partial class Constants {
 
     public static class Colors {
         
+    }
+
+    public static class Separator {
+
+        public const char BUILD_ARGUMENT = ':';
+        public const char DEFINE_SYMBOL = ';';
     }
 }

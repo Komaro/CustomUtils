@@ -35,7 +35,7 @@ public static class ReflectionProvider {
     /// subClassType을 SubClass(상속 관계) 로 가지는 ClassType
     /// </summary>
     public static IEnumerable<Type> GetSubClassTypes(Type subClassType) => Cache.CachedClasses.Where(type => type.IsSubclassOf(subClassType));
-
+    
     /// <summary>
     /// subClassTypeDefinition을 SubClass(상속 관계) 로 가지는 ClassType
     /// </summary>
@@ -70,6 +70,8 @@ public static class ReflectionProvider {
     /// attributeType을 Attribute 로 가지는 ClassType
     /// </summary>
     public static IEnumerable<Type> GetAttributeTypes(Type attributeType) => Cache.CachedClasses.Where(type => type.IsDefined(attributeType, false));
+
+    public static IEnumerable<(T attribute, Type type)> GetAttributeTypeInfos<T>() where T : Attribute => Cache.CachedClasses.Where(type => type.IsDefined<T>()).Where(type => type.IsDefined<T>()).Select(type => (type.GetCustomAttribute<T>(), type));
     
     #endregion
 
@@ -94,9 +96,7 @@ public static class ReflectionProvider {
         return type?.Any() ?? false;
     }
 
-    public static IEnumerable<(T attribute, Type enumType)> GetAttributeEnumInfos<T>() where T : Attribute {
-        return Cache.CachedEnums.Where(type => type.IsDefined(typeof(T), false)).Select(type => (type.GetCustomAttribute<T>(false), type));
-    }
+    public static IEnumerable<(T attribute, Type enumType)> GetAttributeEnumInfos<T>() where T : Attribute => Cache.CachedEnums.Where(type => type.IsDefined(typeof(T), false)).Select(type => (type.GetCustomAttribute<T>(false), type));
 
     public static bool TryGetAttributeEnumInfos<T>(out IEnumerable<(T attribute, Type enumType)> infos) where T : Attribute {
         infos = GetAttributeEnumInfos<T>();

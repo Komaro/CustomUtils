@@ -30,17 +30,17 @@ public static class CommonExtension {
             stringBuilder.AppendLine(" (Struct)");
         }
 
-        foreach (var info in type.GetFields(bindingFlags)) {
-            var (name, field) = (info.Name, info.GetValue(ob));
-            var fieldType = field.GetType();
-            if (fieldType.IsArray && field is Array array) {
-                stringBuilder.AppendLine($"{prefix}{name} || {array.Cast<object>()?.ToStringCollection(", ")}");
-            } else if (fieldType.IsGenericCollectionType() && field is ICollection collection) {
-                stringBuilder.AppendLine($"{prefix}{name} || {collection.Cast<object>().ToStringCollection(", ")}");
-            } else if (fieldType.IsValueType && fieldType.IsPrimitive == false) {
-                stringBuilder.AppendLine($"{prefix}{field.ToStringAllFields("\t", bindingFlags)}");
+        foreach (var (name, value) in type.GetAllDataMemberNameWithValue(ob, bindingFlags)) {
+            var memberType = value.GetType();
+            stringBuilder.Append($"{prefix} [{memberType.Name}] ");
+            if (memberType.IsArray && value is Array array) {
+                stringBuilder.AppendLine($"{name} || {array.Cast<object>()?.ToStringCollection(", ")}");
+            } else if (memberType.IsGenericCollectionType() && value is ICollection collection) {
+                stringBuilder.AppendLine($"{name} || {collection.Cast<object>().ToStringCollection(", ")}");
+            } else if (memberType.IsEnum == false && memberType.IsStruct()) {
+                stringBuilder.AppendLine($"{value.ToStringAllFields("\t", bindingFlags)}");
             } else {
-                stringBuilder.AppendLine($"{prefix}{name} || {field}");
+                stringBuilder.AppendLine($"{name} || {value}");
             }
         }
 

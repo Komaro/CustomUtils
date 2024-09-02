@@ -39,10 +39,10 @@ public static partial class EditorCommon {
     }
     
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static string DrawLabelTextField(string label, ref string text, float labelWidth = 120f) {
+    public static void DrawLabelTextField(string label, ref string text, float labelWidth = 120f) {
         using (new GUILayout.HorizontalScope()) {
             EditorGUILayout.LabelField(label, Constants.Draw.TITLE_STYLE, GUILayout.Width(labelWidth));
-            return text = EditorGUILayout.TextField(text, Constants.Draw.TEXT_FIELD);
+            text = EditorGUILayout.TextField(text, Constants.Draw.TEXT_FIELD);
         }
     }
 
@@ -54,6 +54,19 @@ public static partial class EditorCommon {
             }
 
             return text = EditorGUILayout.TextField(text, Constants.Draw.TEXT_FIELD);
+        }
+    }
+    
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static string DrawLabelTextFieldWithRefresh(string label, string text, Action onClick = null) {
+        using (new GUILayout.HorizontalScope()) {
+            EditorGUILayout.LabelField(label, Constants.Draw.TITLE_STYLE, GetCachedFixWidthOption(label, Constants.Draw.TITLE_STYLE));
+            if (DrawFitButton(Constants.Draw.REFRESH_ICON)) {
+                GUI.FocusControl(null);
+                onClick?.Invoke();
+            }
+
+            return EditorGUILayout.TextField(text, Constants.Draw.TEXT_FIELD, GUILayout.ExpandWidth(true));
         }
     }
     
@@ -148,23 +161,36 @@ public static partial class EditorCommon {
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void DrawFolderOpenSelector(string label, string buttonText, ref string targetDirectory, Action onSelect = null, float width = 120f) {
+    public static void DrawFolderOpenSelector(string label, string buttonText, ref string targetDirectory, Action onSelect = null) {
+        using (new GUILayout.HorizontalScope()) {
+            DrawFitLabel(label, Constants.Draw.TITLE_STYLE);
+            DrawFolderOpenSelector(buttonText, ref targetDirectory, onSelect);
+        }
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void DrawFolderOpenSelector(string label, string buttonText, ref string targetDirectory, float width, Action onSelect = null) {
         using (new GUILayout.HorizontalScope()) {
             EditorGUILayout.LabelField(label, Constants.Draw.TITLE_STYLE, GUILayout.Width(width));
-            if (DrawFixButton(Constants.Draw.FOLDER_OPEN_ICON)) {
-                EditorUtility.RevealInFinder(targetDirectory);
-            }
-            
-            if (GUILayout.Button(buttonText, Constants.Draw.BUTTON, GUILayout.ExpandWidth(false))) {
-                var selectDirectory = EditorUtility.OpenFolderPanel("폴더 선택", targetDirectory, string.Empty);
-                if (string.IsNullOrEmpty(selectDirectory) == false) {
-                    targetDirectory = selectDirectory;
-                    onSelect?.Invoke();
-                }
-            }
-            
-            EditorGUILayout.TextField(targetDirectory, Constants.Draw.TEXT_FIELD, GUILayout.ExpandWidth(true));
+            DrawFolderOpenSelector(buttonText, ref targetDirectory, onSelect);
         }
+    }
+    
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void DrawFolderOpenSelector(string buttonText, ref string targetDirectory, Action onSelect = null) {
+        if (DrawFixButton(Constants.Draw.FOLDER_OPEN_ICON)) {
+            EditorUtility.RevealInFinder(targetDirectory);
+        }
+            
+        if (GUILayout.Button(buttonText, Constants.Draw.BUTTON, GUILayout.ExpandWidth(false))) {
+            var selectDirectory = EditorUtility.OpenFolderPanel("폴더 선택", targetDirectory, string.Empty);
+            if (string.IsNullOrEmpty(selectDirectory) == false) {
+                targetDirectory = selectDirectory;
+                onSelect?.Invoke();
+            }
+        }
+        
+        EditorGUILayout.TextField(targetDirectory, Constants.Draw.TEXT_FIELD, GUILayout.ExpandWidth(true));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -246,10 +272,18 @@ public static partial class EditorCommon {
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static T DrawEnumPopup<T>(string label, ref T selected, float labelWidth = 120f, params GUILayoutOption[] options) where T : Enum {
+    public static void DrawEnumPopup<T>(string label, ref T selected, float labelWidth = 120f, params GUILayoutOption[] options) where T : Enum {
         using (new GUILayout.HorizontalScope()) {
             EditorGUILayout.LabelField(label, Constants.Draw.TITLE_STYLE, GUILayout.Width(labelWidth));
-            return selected = (T) EditorGUILayout.EnumPopup(selected, options);
+            selected = (T) EditorGUILayout.EnumPopup(selected, options); 
+        }
+    }
+    
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static T DrawEnumPopup<T>(string label, T selected, float labelWidth = 120f, params GUILayoutOption[] options) where T : Enum {
+        using (new GUILayout.HorizontalScope()) {
+            EditorGUILayout.LabelField(label, Constants.Draw.TITLE_STYLE, GUILayout.Width(labelWidth));
+            return (T) EditorGUILayout.EnumPopup(selected, options);
         }
     }
 
@@ -260,7 +294,7 @@ public static partial class EditorCommon {
     public static int DrawTopToolbar(int index, Action<int> onChange = null, params string[] texts) {
         using (new EditorGUILayout.HorizontalScope()) {
             GUILayout.FlexibleSpace();
-            var selectIndex = GUILayout.Toolbar(index, texts, "LargeButton", GUI.ToolbarButtonSize.FitToContents);
+            var selectIndex = GUILayout.Toolbar(index, texts, Constants.Draw.LARGE_BUTTON, GUI.ToolbarButtonSize.FitToContents);
             GUILayout.FlexibleSpace();
             if (selectIndex != index) {
                 onChange?.Invoke(selectIndex);
@@ -273,6 +307,21 @@ public static partial class EditorCommon {
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void DrawTopToolbar(ref int index, Action<int> onChange = null, params string[] texts) => index = DrawTopToolbar(index, onChange, texts);
 
+    public static void DrawToggleBox(IEnumerable<ToggleDraw> toggleDraws, Action onChange = null) {
+        EditorGUI.BeginChangeCheck();
+        foreach (var defineSymbol in toggleDraws) {
+            if (defineSymbol.HasHeader()) {
+                DrawFitLabel(defineSymbol.header);
+            }
+
+            DrawLabelToggle(ref defineSymbol.isActive, defineSymbol.name, 150f);
+        }
+        
+        if (EditorGUI.EndChangeCheck()) {
+            onChange?.Invoke();
+        }
+    }
+    
     #region [Fit]
     
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -292,11 +341,13 @@ public static partial class EditorCommon {
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static bool DrawFitToggle(Rect position, ref bool toggle) => toggle = EditorGUI.Toggle(position.GetCenterRect(Constants.Draw.TOGGLE.CalcSize(GUIContent.none)), toggle);
+    public static void DrawFitToggle(Rect position, ref bool toggle) => toggle = EditorGUI.Toggle(position.GetCenterRect(Constants.Draw.TOGGLE.CalcSize(GUIContent.none)), toggle);
     
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static bool DrawFitToggle(ref bool toggle) => toggle = EditorGUILayout.Toggle(toggle, Constants.Draw.TOGGLE, GetCachedFixWidthOption(Constants.Draw.TOGGLE));
+    public static void DrawFitToggle(ref bool toggle) => toggle = EditorGUILayout.Toggle(toggle, Constants.Draw.TOGGLE, GetCachedFixWidthOption(Constants.Draw.TOGGLE));
     
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static bool DrawFitToggle(bool toggle) => toggle = EditorGUILayout.Toggle(toggle, Constants.Draw.TOGGLE, GetCachedFixWidthOption(Constants.Draw.TOGGLE));
     
     #endregion
 
@@ -332,4 +383,23 @@ public static partial class EditorCommon {
 
         return option;
     }
+}
+
+public record ToggleDraw {
+
+    public string name;
+    public bool isActive;
+
+    public string header;
+
+    public ToggleDraw(string name, bool isActive) {
+        this.name = name;
+        this.isActive = isActive;
+    }
+        
+    public ToggleDraw(string name, bool isActive, string header) : this(name, isActive) => this.header = header;
+
+    public bool HasHeader() => string.IsNullOrEmpty(header) == false;
+
+    public override string ToString() => name;
 }

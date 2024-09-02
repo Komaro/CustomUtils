@@ -10,7 +10,7 @@ public struct OverridenMethod {
         _overrideSet = new HashSet<string>();
         var methodSet = methods.ToHashSetWithDistinct();
         foreach (var info in baseType.GetMethods(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public)) {
-            var name = info.TryGetCustomAttribute<MethodAliasAttribute>(out var attribute) ? attribute.alias : info.Name;
+            var name = info.GetAlias();
             if (methodSet.Contains(name) && info.GetBaseDefinition().DeclaringType != info.DeclaringType) {
                 _overrideSet.Add(name);
             }

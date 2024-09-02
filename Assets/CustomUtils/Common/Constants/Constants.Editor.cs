@@ -6,7 +6,7 @@ using SystemPath = System.IO.Path;
 using SystemRegex = System.Text.RegularExpressions.Regex;
 
 public static partial class Constants {
-    
+   
     public static class Draw {
 
         public static readonly GUIStyle LABEL = new(GUI.skin.label) { richText = true };
@@ -21,6 +21,7 @@ public static partial class Constants {
         public static readonly GUIStyle CLIPPING_TEXT_AREA = new(TEXT_AREA) { wordWrap = true};
         
         public static readonly GUIStyle BUTTON = new(GUI.skin.button) { richText = true };
+        public static readonly GUIStyle LARGE_BUTTON = new(BUTTON) { richText = true, fixedHeight = 24 };
         
         public static readonly GUIStyle TOGGLE = new(GUI.skin.toggle) { richText = true };
         

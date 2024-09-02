@@ -69,8 +69,11 @@ internal static class AnalyzerRunner {
             Logger.Log("\nAnalyzer test complete\n" +
                        $"Success : {logs.Length - errorCount}\n" +
                        $"Failed  : {errorCount}");
-                
-            Assert.IsTrue(errorCount == 0);
+
+            if (errorCount != 0) {
+                Logger.TraceError(logs.Where(log => log.type == LogType.Error).ToStringCollection('\n'));
+                Assert.Fail();
+            }
         } else {
             Logger.TraceError($"{nameof(testCaseCodeFolder)} is an invalid path || {testCaseCodeFolder}");
         }

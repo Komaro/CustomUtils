@@ -153,7 +153,7 @@ public static class SystemUtil {
 
     public static void EnsureDirectoryExists(string path) {
         try {
-            if (File.Exists(path)) {
+            if (Path.HasExtension(path)) {
                 path = Directory.GetParent(path)?.FullName ?? path;
             }
 

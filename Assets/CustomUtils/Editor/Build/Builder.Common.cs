@@ -1,7 +1,8 @@
 ﻿using UnityEditor;
 using UnityEngine;
 
-public partial class BuilderEx {
+public partial class Builder {
+    
     protected void SetApplicationId(string appId) {
         if (string.IsNullOrEmpty(appId)) {
             Debug.LogError($"{nameof(appId)} is null or empty.");

@@ -3,16 +3,16 @@ using UnityEditor.Build;
 using UnityEditor.Build.Reporting;
 using UnityEngine;
 
-public class UnityBuildInteractionInterface : IPostprocessBuildWithReport {
+public class BuildInteractionInterface : IPostprocessBuildWithReport {
 
-    private static BuilderEx _builder;
+    private static Builder _builder;
 
     public int callbackOrder => 1000;
 
-    public static bool TryAttachBuilder(Type type, out BuilderEx builder) => (builder = AttachBuilder(type)) != null;
+    public static bool TryAttachBuilder(Type type, out Builder builder) => (builder = AttachBuilder(type)) != null;
 
-    public static BuilderEx AttachBuilder(Type type) {
-        if (BuilderEx.TryCreateBuilder(type, out _builder)) {
+    public static Builder AttachBuilder(Type type) {
+        if (Builder.TryCreateBuilder(type, out _builder)) {
             return _builder;
         }
 
@@ -26,29 +26,32 @@ public class UnityBuildInteractionInterface : IPostprocessBuildWithReport {
     /// Using Only Command Line Build
     /// </summary>
     public static void BuildOnCLI() {
+        Debug.Log($"Start {nameof(BuildOnCLI)}");
         BuildConfigProvider.LoadOnCLI();
         if (BuildConfigProvider.TryGetValue<string>("buildType", out var enumText)) {
-            foreach (var (enumAttribute, type) in ReflectionProvider.GetAttributeEnumInfos<BuildTypeEnumAttribute>()) {
-                if (Enum.TryParse(type, enumText, out var ob) && ob is Enum enumValue && BuilderEx.TryCreateBuilder(enumValue, out _builder)) {
+            foreach (var type in ReflectionProvider.GetAttributeEnumTypes<BuildTypeEnumAttribute>()) {
+                if (Enum.TryParse(type, enumText, out var ob) && ob is Enum enumValue && Builder.TryCreateBuilder(enumValue, out _builder)) {
                     if (BuildConfigProvider.TryGetValue<string>("configPath", out var path)) {
                         BuildConfigProvider.Load(path);
                     } else {
                         foreach (var configType in ReflectionProvider.GetSubClassTypes<BuildConfig>()) {
-                            if (configType.TryGetCustomAttribute<BuildConfigAttribute>(out var attribute) && attribute.buildType.Equals(enumValue)) {
-                                BuildConfigProvider.Load($"{Constants.Path.COMMON_CONFIG_PATH}/{nameof(EditorBuildServiceEx)}/{configType.Name}{Constants.Extension.JSON}");
+                            if (configType.TryGetCustomAttribute<BuildConfigAttribute>(out var attribute) && attribute.buildType != null && attribute.buildType.Equals(enumValue)) {
+                                BuildConfigProvider.Load($"{Constants.Path.COMMON_CONFIG_PATH}/{nameof(EditorBuildService)}/{configType.Name}{Constants.Extension.JSON}");
                                 break;
                             }
                         }
                     }
-        
+
                     _builder.StartBuild();
                     break;
                 }
             }
+        } else {
+            throw new BuildFailedException("buildType parameter missing");
         }
 
         if (_builder == null) {
-            Debug.LogError($"Fail to create {nameof(BuilderEx)}");
+            throw new BuildFailedException($"Fail to create {nameof(Builder)}");
         }
     }
 }

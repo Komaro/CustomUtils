@@ -27,14 +27,6 @@ public class SampleIosEditorBuildSettingDrawer : SampleIosEditorBuildDrawer {
             EditorCommon.DrawLabelTextField(nameof(config.iOSManualProvisioningProfileID), ref config.iOSManualProvisioningProfileID, 200f);
             EditorCommon.DrawEnumPopup(nameof(config.iOSManualProvisioningProfileType), ref config.iOSManualProvisioningProfileType, 250f);
         }
-        
-        if (GUILayout.Button("Build")) {
-            if (SystemUtil.TryCreateInstance<Builder>(out var builder, builderType)) {
-                var options = new BuildPlayerOptions();
-                options.scenes = EditorBuildSettings.scenes.Where(x => x.enabled).Select(x => x.path).ToArray();
-                builder.StartBuild(options);
-            }
-        }
     }
 }
 

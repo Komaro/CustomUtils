@@ -7,10 +7,16 @@ public static class BuildConfigProvider {
 
     private static JObject _jObject;
 
-    public static bool TryConvert<T>(out T config) => (config = Convert<T>()) != null;
-    public static T Convert<T>() => _jObject.ToObject<T>() ?? default;
-
     public static void AddValue(string key, string value) {
+        if (_jObject == null) {
+            throw new NullReferenceException($"{nameof(_jObject)} is Null");
+        }
+        
+        _jObject.Remove(key);
+        _jObject.Add(key, value);
+    }
+
+    public static void AddValue(string key, bool value) {
         if (_jObject == null) {
             throw new NullReferenceException($"{nameof(_jObject)} is Null");
         }
@@ -64,29 +70,27 @@ public static class BuildConfigProvider {
         }
     }
 
-    /// <summary>
-    /// Using Only Command Line Build
-    /// </summary>
     public static JObject LoadOnCLI() {
         try {
             _jObject ??= new JObject();
-            foreach (var arg in Environment.GetCommandLineArgs()) {
-                var token = arg.Split(Constants.Separator.BUILD_ARGUMENT);
-                if (IsValidArgument(token)) {
-                    if (_jObject.ContainsKey(token[0])) {
-                        Debug.LogWarning($"'{token[0]}' already exists, and the value '{_jObject.GetValue(token[0])}' will be overwritten with the value of '{token[1]}'.");
+            var args = Environment.GetCommandLineArgs().AsSpan()[1..];
+            for (var index = 0; index < args.Length - 1; index++) {
+                if (args[index].StartsWith('-')) {
+                    if (args[index + 1].StartsWith('-') == false) {
+                        AddValue(args[index].Remove(0, 1), args[++index]);
+                    } else {
+                        AddValue(args[index].Remove(0, 1), true);
                     }
-                    
-                    _jObject.Add(token[0], token[1]);
                 }
             }
             
+            Debug.Log($"[{nameof(BuildConfigProvider)}]\n{_jObject.Properties().ToStringCollection(x => $"{x.Name.ToString()} || {x.Value}", '\n')}");
             return _jObject;
         } catch (Exception ex) {
             throw new JsonException(ex.Message);
         }
     }
-    
+
     #endregion
 
     private static bool IsValidArgument(string[] token) => token.Length >= 2 && string.IsNullOrEmpty(token[0]) == false && token[0].Length >= 2;

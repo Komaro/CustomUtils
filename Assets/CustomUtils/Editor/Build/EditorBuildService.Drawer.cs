@@ -1,21 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using System.Runtime.CompilerServices;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using UnityEditor;
 using UnityEngine;
 
-public partial class EditorBuildServiceEx {
+public partial class EditorBuildService {
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private void DrawDrawer() {
         if (_drawerDic.TryGetValue(_selectBuilderType, out var drawer)) {
             _editorWindowScrollViewPosition = EditorGUILayout.BeginScrollView(_editorWindowScrollViewPosition, GUILayout.ExpandWidth(true), GUILayout.ExpandHeight(true));
-            drawer.Draw();
+            drawer?.Draw();
             EditorGUILayout.EndScrollView();
+            
+            EditorCommon.DrawSeparator();
         } else {
             EditorGUILayout.HelpBox($"유효한 {typeof(EditorBuildDrawer<,>).Name}를 찾을 수 없습니다.", MessageType.Warning);
         }
@@ -23,13 +22,13 @@ public partial class EditorBuildServiceEx {
     
     private static void DrawerCacheRefresh() {
         if (_drawerDic.TryGetValue(_selectBuilderType, out var drawer)) {
-            drawer.CacheRefresh();
+            drawer?.CacheRefresh();
         }
     }
 
     private static void DrawerClose() {
         if (_drawerDic.TryGetValue(_selectBuilderType, out var drawer)) {
-            drawer.Close();
+            drawer?.Close();
         }
     }
 }
@@ -53,14 +52,14 @@ public class EditorBuildDrawerAttribute : Attribute {
     public EditorBuildDrawerAttribute(object buildType) {
         if (buildType is Enum enumValue) {
             this.buildType = enumValue;
-            foreach (var type in ReflectionProvider.GetSubClassTypes<BuilderEx>()) {
+            foreach (var type in ReflectionProvider.GetSubClassTypes<Builder>()) {
                 if (type.TryGetCustomAttribute<BuilderAttribute>(out var attribute) && attribute.buildType.Equals(this.buildType)) {
                     builderType = type;
                     return;
                 }
             }
             
-            Logger.TraceError($"{nameof(enumValue)} is invalid || {enumValue}. Missing target {nameof(BuilderEx)}");
+            Logger.TraceError($"{nameof(enumValue)} is invalid || {enumValue}. Missing target {nameof(Builder)}");
         }
     }
 }
@@ -81,7 +80,7 @@ public abstract class EditorBuildDrawer<TConfig, TNullConfig> : EditorAutoConfig
     protected static HashSet<string> buildOptionSet;
 
     protected override string CONFIG_NAME => $"{typeof(TConfig).Name}{Constants.Extension.JSON}";
-    protected override string CONFIG_PATH => $"{Constants.Path.COMMON_CONFIG_PATH}/{nameof(EditorBuildServiceEx)}/{CONFIG_NAME}";
+    protected override string CONFIG_PATH => $"{Constants.Path.COMMON_CONFIG_PATH}/{nameof(EditorBuildService)}/{CONFIG_NAME}";
 
     protected EditorBuildDrawer(EditorWindow window) : base(window) {
         var type = GetType();
@@ -115,7 +114,7 @@ public abstract class EditorBuildDrawer<TConfig, TNullConfig> : EditorAutoConfig
     public override void Draw() {
         base.Draw();
         if (buildTarget != EditorUserBuildSettings.activeBuildTarget) {
-            EditorGUILayout.HelpBox($"현재 활성화된 {nameof(BuildTarget)}({EditorUserBuildSettings.activeBuildTarget})과 {nameof(Builder)}의 {nameof(BuildTarget)}({buildTarget})이 일치하지 않습니다", MessageType.Warning);
+            EditorGUILayout.HelpBox($"현재 활성화된 {nameof(BuildTarget)}({EditorUserBuildSettings.activeBuildTarget})과 {nameof(Builder_Obsolete)}의 {nameof(BuildTarget)}({buildTarget})이 일치하지 않습니다", MessageType.Warning);
             if (GUILayout.Button($"{nameof(BuildTarget)} 전환\n[{EditorUserBuildSettings.activeBuildTarget} ==> {buildTarget}]")) {
                 SwitchPlatform();
             }
@@ -189,30 +188,30 @@ public abstract class EditorBuildDrawer<TConfig, TNullConfig> : EditorAutoConfig
                     }
                 }
             }
-            
-            EditorCommon.DrawSeparator();
-
-            using (new EditorGUILayout.HorizontalScope()) {
-                using (new EditorGUILayout.VerticalScope(GUILayout.ExpandWidth(false))) {
-                    using (new GUILayout.HorizontalScope()) {
-                        EditorGUILayout.TextField(buildTarget.ToString());
-                        EditorGUILayout.TextField(buildTargetGroup.ToString());
-                    }
-                    EditorGUILayout.TextField(EditorUserBuildSettings.activeBuildTarget.ToString());
-                }
-                
-                if (GUILayout.Button("Build", GUILayout.ExpandHeight(true), GUILayout.ExpandWidth(true))) {
-                    if (buildTarget != EditorUserBuildSettings.activeBuildTarget) {
-                        EditorCommon.ShowCheckDialogue($"{nameof(buildTarget)} miss match", $"현재 선택된 {nameof(BuildTarget)}({buildTarget})과 활성화된 {nameof(BuildTarget)}({EditorUserBuildSettings.activeBuildTarget})이 동일하지 않습니다. 플랫폼 전환 후 빌드를 진행합니다", ok: Build);
-                    } else {
-                        Build();
-                    }
-                }
-            }
-            
         }
     }
 
+    protected void DrawBuild() {
+        EditorCommon.DrawSeparator();
+        using (new EditorGUILayout.HorizontalScope()) {
+            using (new EditorGUILayout.VerticalScope(GUILayout.ExpandWidth(false))) {
+                using (new GUILayout.HorizontalScope()) {
+                    EditorGUILayout.TextField(buildTarget.ToString());
+                    EditorGUILayout.TextField(buildTargetGroup.ToString());
+                }
+                EditorGUILayout.TextField(EditorUserBuildSettings.activeBuildTarget.ToString());
+            }
+            
+            if (GUILayout.Button("Build", GUILayout.ExpandHeight(true), GUILayout.ExpandWidth(true))) {
+                if (buildTarget != EditorUserBuildSettings.activeBuildTarget) {
+                    EditorCommon.ShowCheckDialogue($"{nameof(buildTarget)} miss match", $"현재 선택된 {nameof(BuildTarget)}({buildTarget})과 활성화된 {nameof(BuildTarget)}({EditorUserBuildSettings.activeBuildTarget})이 동일하지 않습니다. 플랫폼 전환 후 빌드를 진행합니다", ok: Build);
+                } else {
+                    Build();
+                }
+            }
+        }
+    }
+    
     protected void SwitchPlatform() {
         if (buildTarget != EditorUserBuildSettings.activeBuildTarget) {
             EditorUserBuildSettings.SwitchActiveBuildTarget(buildTargetGroup, buildTarget);
@@ -221,7 +220,7 @@ public abstract class EditorBuildDrawer<TConfig, TNullConfig> : EditorAutoConfig
 
     protected void Build() {
         BuildConfigProvider.Load(config);
-        if (UnityBuildInteractionInterface.TryAttachBuilder(builderType, out var builder)) {
+        if (BuildInteractionInterface.TryAttachBuilder(builderType, out var builder)) {
             builder.StartBuild();
         }
     }

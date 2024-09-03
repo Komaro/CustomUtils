@@ -1,11 +1,14 @@
-﻿
-using UnityEditor;
+﻿using UnityEditor;
 
 [EditorBuildDrawer(SAMPLE_BUILD_TYPE.STANDALONE)]
 public class SampleStandaloneBuildDrawer : EditorBuildDrawer<SampleStandaloneBuildConfig, SampleStandaloneBuildConfig.NullBuildConfig> {
-
-
+    
     public SampleStandaloneBuildDrawer(EditorWindow window) : base(window) { }
+
+    public override void Draw() {
+        base.Draw();
+        DrawBuild();
+    }
 }
 
 [BuildConfig(SAMPLE_BUILD_TYPE.STANDALONE, BuildTarget.StandaloneWindows64, BuildTargetGroup.Standalone)]

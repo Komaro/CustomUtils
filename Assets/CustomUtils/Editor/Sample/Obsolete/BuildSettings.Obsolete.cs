@@ -4,20 +4,21 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using UnityEngine;
 
-public class BuildSettings {
+[Obsolete]
+public class BuildSettings_Obsolete {
 
     public JObject json;
 
-    private static BuildSettings _instance = null;
+    private static BuildSettings_Obsolete _instance = null;
 
-    public static BuildSettings Instance {
+    public static BuildSettings_Obsolete Instance {
         get {
-            _instance ??= new BuildSettings();
+            _instance ??= new BuildSettings_Obsolete();
             return _instance;
         }
     }
 
-    protected BuildSettings() { }
+    protected BuildSettings_Obsolete() { }
 
     public T GetValue<T>(string key) {
         if (json == null) {
@@ -43,7 +44,7 @@ public class BuildSettings {
         using var streamReader = File.OpenText(path);
         try {
             var jObject = JObject.Parse(streamReader.ReadToEnd());
-            _instance = JsonConvert.DeserializeObject<BuildSettings>(jObject.ToString());
+            _instance = JsonConvert.DeserializeObject<BuildSettings_Obsolete>(jObject.ToString());
             Instance.json = jObject;
                 
             Debug.Log("=================== [Build] Set Json Build Settings ===================");
@@ -62,7 +63,7 @@ public class BuildSettings {
                 throw new NullReferenceException($"{nameof(json)} is Null");
             }
 
-            _instance = JsonConvert.DeserializeObject<BuildSettings>(json.ToString());
+            _instance = JsonConvert.DeserializeObject<BuildSettings_Obsolete>(json.ToString());
             Instance.json = json;
             
             Debug.Log("=================== [Build] Set Json Build Settings ===================");

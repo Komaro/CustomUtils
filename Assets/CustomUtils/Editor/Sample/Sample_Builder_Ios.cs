@@ -5,7 +5,9 @@ using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.RegularExpressions;
+using Google.Apis.Util;
 using UnityEditor;
+using UnityEditor.Build.Reporting;
 using Debug = UnityEngine.Debug;
 #if  UNITY_IOS
 using UnityEditor.iOS.Xcode;
@@ -30,6 +32,8 @@ public class Sample_Builder_Ios : Builder {
     protected Regex DUPLICATE_CHECK_REGEX = new (@"\'CODE_SIGNING_ALLOWED\'|\'CODE_SIGNING_REQUIRED\'|\'EXPANDED_CODE_SIGN_IDENTITY\'");
     protected Regex INSTALLER_REGEX = new (@"\|installer\|", RegexOptions.Compiled | RegexOptions.IgnoreCase);
     
+    protected string EXECUTE_PATH => $"{Constants.Path.PROJECT_PATH}/BuildExecute/{GetType()?.GetCustomAttribute<BuilderAttribute>()?.buildType.ToString()}";
+    
     protected const string POD_FILE = "Podfile";
     protected const string INSTALL_POD_SHELL = "SOME_INSTALL_POD_SHELL";
 
@@ -45,11 +49,10 @@ public class Sample_Builder_Ios : Builder {
     protected const string APPEND_POD_CONTENT_SUFFIX = "\nend";
 
     public override void StartBuild(BuildPlayerOptions buildOptions) {
-        // Set Editor Development Options
-        SetDevelopmentBuild(BuildSettings.Instance.GetValue<bool>("developmentBuild"));
-        SetAutoConnectProfile(BuildSettings.Instance.GetValue<bool>("autoConnectProfile"));
-        SetDeepProfilingSupport(BuildSettings.Instance.GetValue<bool>("deepProfilingSupport"));
-        SetScriptDebugging(BuildSettings.Instance.GetValue<bool>("scriptDebugging"));
+        SetDevelopmentBuild(BuildConfigProvider.GetValue<bool>(nameof(BuildConfig.developmentBuild)));
+        SetAutoConnectProfile(BuildConfigProvider.GetValue<bool>(nameof(BuildConfig.autoConnectProfile)));
+        SetDeepProfilingSupport(BuildConfigProvider.GetValue<bool>(nameof(BuildConfig.deepProfilingSupport)));
+        SetScriptDebugging(BuildConfigProvider.GetValue<bool>(nameof(BuildConfig.scriptDebugging)));
         
         // Set Build Player Option Development Options
         SetConditionBuildOptions(ref buildOptions, EditorUserBuildSettings.development, BuildOptions.Development);
@@ -60,7 +63,7 @@ public class Sample_Builder_Ios : Builder {
         base.StartBuild(buildOptions);
     }
 
-    protected override void OnPreProcess() {
+    protected override void OnPreProcess(ref BuildPlayerOptions options) {
 #if UNITY_IOS
         // Set Target OS Version
         SetTargetOSVersion(DEFAULT_TARGET_OS_VERSION);
@@ -70,19 +73,19 @@ public class Sample_Builder_Ios : Builder {
  
         // Set Common Option
         SetApplicationIdentifier(BuildTargetGroup.iOS, DEFAULT_APPLICATION_IDENTIFIER);
-        SetVersionName(BuildSettings.Instance.GetValue<string>("bundleVersion"));
+        SetVersionName(BuildConfigProvider.GetValue<string>(nameof(SampleIosBuildConfig.bundleVersion)));
         
         // Set iOS Build Settings
-        SetBuildNumber(BuildSettings.Instance.GetValue<string>("buildNumber"));
+        SetBuildNumber(BuildConfigProvider.GetValue<string>(nameof(SampleIosBuildConfig.buildNumber)));
         SetAppleEnableAutomaticSigning(false);
-        SetAppleDeveloperTeamId(BuildSettings.Instance.GetValue<string>("appleDeveloperTeamID"));
+        SetAppleDeveloperTeamId(BuildConfigProvider.GetValue<string>(nameof(SampleIosBuildConfig.appleDeveloperTeamID)));
         if (string.IsNullOrEmpty(PlayerSettings.iOS.appleDeveloperTeamID)) {
             SetAppleDeveloperTeamId(DEFAULT_DEVELOPER_TEAM_ID);
         }
         
-        SetProvisioningProfileType(BuildSettings.Instance.GetValue<ProvisioningProfileType>("iOSManualProvisioningProfileType"));
+        SetProvisioningProfileType(BuildConfigProvider.GetValue<ProvisioningProfileType>(nameof(SampleIosBuildConfig.iOSManualProvisioningProfileType)));
         
-        if (string.IsNullOrEmpty(BuildSettings.Instance.GetValue<string>("iOSManualProvisioningProfileID"))) {
+        if (string.IsNullOrEmpty(BuildConfigProvider.GetValue<string>(nameof(SampleIosBuildConfig.iOSManualProvisioningProfileID)))) {
             switch (PlayerSettings.iOS.iOSManualProvisioningProfileType) {
                 case ProvisioningProfileType.Development:
                     SetiOSManualProvisioningProfileID(DEFAULT_DEVELOPMENT_PROFILE);
@@ -92,27 +95,27 @@ public class Sample_Builder_Ios : Builder {
                     break;
             }
         } else {
-            SetiOSManualProvisioningProfileID(BuildSettings.Instance.GetValue<string>("iOSManualProvisioningProfileID"));
+            SetiOSManualProvisioningProfileID(BuildConfigProvider.GetValue<string>(nameof(SampleIosBuildConfig.iOSManualProvisioningProfileID)));
         }
         
         SetHideHomeButton(true);
         
         // Delete Old Export Project
-        SystemUtil.DeleteDirectory(buildOptions.locationPathName);
+        SystemUtil.DeleteDirectory(options.locationPathName);
         
         // Delete Invalid Folder
         _removeDirectoryList.ForEach(SystemUtil.DeleteDirectory);
 #endif
     }
 
-    protected override void OnPostProcess() {
+    protected override void OnPostProcess(BuildSummary summary) {
 #if UNITY_IOS
         try {
             #region [Pod]
 
             try {
-                FixPodfile();
-                SystemUtil.ExecuteScript($"{BuildExecutePath}/{INSTALL_POD_SHELL}", BuildExecutePath, $"{BuildPath}");
+                FixPodfile(summary.outputPath);
+                SystemUtil.ExecuteScript($"{EXECUTE_PATH}/{INSTALL_POD_SHELL}", EXECUTE_PATH, $"{summary.outputPath}");
             } catch (Exception e) {
                 Debug.LogError(e);
                 throw;
@@ -120,7 +123,7 @@ public class Sample_Builder_Ios : Builder {
             
             #endregion
         
-            var projectPath = PBXProject.GetPBXProjectPath(buildOptions.locationPathName);
+            var projectPath = PBXProject.GetPBXProjectPath(summary.outputPath);
             var pbxProject = new PBXProject();
             pbxProject.ReadFromFile(projectPath);
 
@@ -166,7 +169,7 @@ public class Sample_Builder_Ios : Builder {
 
             #region [plist]
             
-            var plistPath = Path.Combine(buildOptions.locationPathName, "Info.plist");
+            var plistPath = Path.Combine(summary.outputPath, "Info.plist");
             var plist = new PlistDocument();
             plist.ReadFromFile(plistPath);
             
@@ -212,10 +215,10 @@ public class Sample_Builder_Ios : Builder {
         }
 #endif
     }
-    
+
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private void FixPodfile() {
-        var podPath = $"{BuildPath}/{POD_FILE}";
+    private void FixPodfile(string buildPath) {
+        var podPath = $"{buildPath}/{POD_FILE}";
         if (File.Exists(podPath) == false) {
             throw new FileNotFoundException($"Podfile is Missing. Check {nameof(podPath)} || {podPath}");
         }

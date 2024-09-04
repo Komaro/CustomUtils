@@ -50,7 +50,7 @@ public abstract partial class Builder : IDisposable {
         return null;
     }
 
-    public void StartBuild() {
+    public BuildReport StartBuild() {
         var options = new BuildPlayerOptions {
             scenes = EditorBuildSettings.scenes.Where(x => x.enabled).Select(x => x.path).ToArray()
         };
@@ -60,17 +60,17 @@ public abstract partial class Builder : IDisposable {
         }
 
         options.locationPathName = buildDirectory;
-        StartBuild(options);
+        return StartBuild(options);
     }
 
-    public virtual void StartBuild(BuildPlayerOptions options) {
+    public virtual BuildReport StartBuild(BuildPlayerOptions options) {
         options.target = buildTarget;
         options.targetGroup = buildTargetGroup;
 
         Debug.Log($"{BuildCount} - Start {nameof(OnPreProcess)}");
 
         PreProcess(ref options);
-        BuildPipeline.BuildPlayer(options);
+        return BuildPipeline.BuildPlayer(options);
     }
 
     protected virtual void PreProcess(ref BuildPlayerOptions options) {

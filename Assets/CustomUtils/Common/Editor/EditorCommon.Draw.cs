@@ -307,7 +307,8 @@ public static partial class EditorCommon {
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void DrawTopToolbar(ref int index, Action<int> onChange = null, params string[] texts) => index = DrawTopToolbar(index, onChange, texts);
 
-    public static void DrawToggleBox(IEnumerable<ToggleDraw> toggleDraws, Action onChange = null) {
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static bool DrawToggleBox(IEnumerable<ToggleDraw> toggleDraws, Action onChange = null) {
         EditorGUI.BeginChangeCheck();
         foreach (var defineSymbol in toggleDraws) {
             if (defineSymbol.HasHeader()) {
@@ -319,7 +320,10 @@ public static partial class EditorCommon {
         
         if (EditorGUI.EndChangeCheck()) {
             onChange?.Invoke();
+            return true;
         }
+
+        return false;
     }
     
     #region [Fit]
@@ -380,7 +384,7 @@ public static partial class EditorCommon {
         if (_widthCacheDic.TryGetValue(style.name, out var option) == false) {
             _widthCacheDic.Add(style.name, option = GUILayout.Width(style.CalcSize(GUIContent.none).x));
         }
-
+        
         return option;
     }
 }

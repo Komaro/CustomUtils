@@ -3,7 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using UnityEditor;
+using UnityEditor.SceneManagement;
+using UnityEditor.SearchService;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using Scene = UnityEngine.SceneManagement.Scene;
 
 public partial class EditorBuildService {
 
@@ -76,8 +80,13 @@ public abstract class EditorBuildDrawer<TConfig, TNullConfig> : EditorAutoConfig
     protected ToggleDraw[] defineSymbols = {};
     
     private Vector2 _defineSymbolScrollViewPosition;
+    private bool _activateSceneFoldOut;
+    private bool _sceneAssetFoldOut;
     
     protected static HashSet<string> buildOptionSet;
+
+    protected static Dictionary<string, EditorBuildSettingsScene> activateSceneDic = new();
+    protected static Dictionary<string, EditorAssetInfo<SceneAsset>> sceneAssetInfoDic = new();
 
     protected override string CONFIG_NAME => $"{typeof(TConfig).Name}{Constants.Extension.JSON}";
     protected override string CONFIG_PATH => $"{Constants.Path.COMMON_CONFIG_PATH}/{nameof(EditorBuildService)}/{CONFIG_NAME}";
@@ -109,12 +118,28 @@ public abstract class EditorBuildDrawer<TConfig, TNullConfig> : EditorAutoConfig
         buildOptionSet = ReflectionProvider.GetAttributeEnumInfos<BuildOptionEnumAttribute>()
             .Where(info => info.attribute.buildTargetGroup == BuildTargetGroup.Unknown || info.attribute.buildTargetGroup == buildTargetGroup)
             .ConvertTo(info => Enum.GetValues(info.enumType).Cast<object>()).Select(ob => ob.ToString()).ToHashSetWithDistinct();
+        
+        RefreshScenes();
+    }
+
+    private static void RefreshScenes() {
+        activateSceneDic.Clear();
+        if (EditorBuildSettings.scenes.Any()) {
+            activateSceneDic = EditorBuildSettings.scenes.ToDictionary(scene => scene.path, scene => scene);
+            Logger.TraceLog(activateSceneDic.ToStringCollection(x => x.Key));
+        }
+
+        sceneAssetInfoDic.Clear();
+        foreach (var info in AssetDatabaseUtil.FindAssetInfos<SceneAsset>("t:Scene")) {
+            Logger.TraceLog($"{info.Name} || {info.guid} || {info.path}");
+            sceneAssetInfoDic.Add(info.path, info);
+        }
     }
 
     public override void Draw() {
         base.Draw();
         if (buildTarget != EditorUserBuildSettings.activeBuildTarget) {
-            EditorGUILayout.HelpBox($"현재 활성화된 {nameof(BuildTarget)}({EditorUserBuildSettings.activeBuildTarget})과 {nameof(Builder_Obsolete)}의 {nameof(BuildTarget)}({buildTarget})이 일치하지 않습니다", MessageType.Warning);
+            EditorGUILayout.HelpBox($"현재 활성화된 {nameof(BuildTarget)}({EditorUserBuildSettings.activeBuildTarget})과 {nameof(Builder)}의 {nameof(BuildTarget)}({buildTarget})이 일치하지 않습니다", MessageType.Warning);
             if (GUILayout.Button($"{nameof(BuildTarget)} 전환\n[{EditorUserBuildSettings.activeBuildTarget} ==> {buildTarget}]")) {
                 SwitchPlatform();
             }
@@ -130,79 +155,141 @@ public abstract class EditorBuildDrawer<TConfig, TNullConfig> : EditorAutoConfig
             GUILayout.Label("빌드 옵션", Constants.Draw.AREA_TITLE_STYLE);
             using (new EditorGUILayout.VerticalScope(Constants.Draw.BOX)) {
                 EditorCommon.DrawLabelTextFieldWithRefresh(nameof(config.applicationIdentifier), config.applicationIdentifier, () => config.applicationIdentifier = PlayerSettings.applicationIdentifier);
-                
                 EditorCommon.DrawLabelTextField(nameof(config.bundleVersion), ref config.bundleVersion, 150f);
             }
             
-            using (new EditorGUILayout.VerticalScope(Constants.Draw.BOX)) {
-                GUILayout.Label("Stack Trace", Constants.Draw.BOLD_CENTER_LABEL);
-                using (new EditorGUILayout.HorizontalScope()) {
-                    foreach (var traceType in EnumUtil.GetValues<StackTraceLogType>()) {
-                        if (GUILayout.Button(traceType.ToString())) {
-                            foreach (var logType in EnumUtil.GetValues<LogType>()) {
-                                config.stackTraceDic[logType] = traceType;
-                            }
+            DrawStackTrace();
+            DrawBuildOptions();
+            
+            EditorCommon.DrawSeparator();
+            DrawDefineSymbol();
+            
+            EditorCommon.DrawSeparator();
+            DrawCustomOption();
+            
+            EditorCommon.DrawSeparator();
+            DrawScene();
+        }
+    }
+    
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    protected virtual void DrawStackTrace() {
+        using (new EditorGUILayout.VerticalScope(Constants.Draw.BOX)) {
+            GUILayout.Label("스택 트레이스 (Stack Trace)", Constants.Draw.BOLD_CENTER_LABEL);
+            using (new EditorGUILayout.HorizontalScope()) {
+                foreach (var traceType in EnumUtil.GetValues<StackTraceLogType>()) {
+                    if (GUILayout.Button(traceType.ToString())) {
+                        foreach (var logType in EnumUtil.GetValues<LogType>()) {
+                            config.stackTraceDic[logType] = traceType;
                         }
                     }
                 }
-                
-                foreach (var logType in EnumUtil.GetValues<LogType>()) {
-                    using (new EditorGUILayout.HorizontalScope()) {
-                        config.stackTraceDic[logType] = EditorCommon.DrawEnumPopup(logType.ToString(), config.stackTraceDic[logType], 60f);
-                    }
-                }
             }
-            
-            using (new EditorGUILayout.VerticalScope(Constants.Draw.BOX)) {
-                EditorCommon.DrawLabelToggle(ref config.developmentBuild, nameof(config.developmentBuild), 150f);
-                EditorCommon.DrawLabelToggle(ref config.autoConnectProfile, nameof(config.autoConnectProfile), 150f);
-                EditorCommon.DrawLabelToggle(ref config.deepProfilingSupport, nameof(config.deepProfilingSupport), 150f);
-                EditorCommon.DrawLabelToggle(ref config.scriptDebugging, nameof(config.scriptDebugging), 150f);
-            } 
-            
-            EditorCommon.DrawSeparator();
-            
-            using (new EditorGUILayout.VerticalScope(Constants.Draw.BOX)) {
-                GUILayout.Label("디파인 심볼 (Define Symbols)", Constants.Draw.AREA_TITLE_STYLE);
                 
-                _defineSymbolScrollViewPosition = EditorGUILayout.BeginScrollView(_defineSymbolScrollViewPosition, GUILayout.ExpandWidth(true), GUILayout.MinHeight(100f), GUILayout.MaxHeight(250f));
-                EditorCommon.DrawToggleBox(defineSymbols, () => config.defineSymbols = string.Join(Constants.Separator.DEFINE_SYMBOL, defineSymbols.Where(x => x.isActive)));
-                EditorGUILayout.EndScrollView();
-                
-                EditorCommon.DrawLabelTextFieldWithRefresh("Define Symbol", config.defineSymbols, () => {
-                    config.defineSymbols = PlayerSettings.GetScriptingDefineSymbolsForGroup(buildTargetGroup);
-                
-                    var defineSymbolSet = config.defineSymbols.Split(Constants.Separator.DEFINE_SYMBOL).ToHashSet();
-                    defineSymbols.ForEach(symbol => symbol.isActive = defineSymbolSet.Contains(symbol.name));
-                });
-                EditorGUILayout.HelpBox($"새로고침시 {nameof(PlayerSettings)}의 Define Symbol 값으로 {nameof(BuildConfig)}의 값을 갱신합니다", MessageType.Warning);
-            }
-            
-            EditorCommon.DrawSeparator();
-            
-            GUILayout.Label("커스텀 옵션", Constants.Draw.AREA_TITLE_STYLE);
-            using (new EditorGUILayout.VerticalScope(Constants.Draw.BOX)) {
-                foreach (var buildOption in buildOptionSet) {
-                    if (config.optionDic.ContainsKey(buildOption)) {
-                        config.optionDic[buildOption] = EditorCommon.DrawLabelToggle(config.optionDic[buildOption], buildOption, 200f);
-                    }
+            foreach (var logType in EnumUtil.GetValues<LogType>()) {
+                using (new EditorGUILayout.HorizontalScope()) {
+                    config.stackTraceDic[logType] = EditorCommon.DrawEnumPopup(logType.ToString(), config.stackTraceDic[logType], 60f);
                 }
             }
         }
     }
 
-    protected void DrawBuild() {
-        EditorCommon.DrawSeparator();
-        using (new EditorGUILayout.HorizontalScope()) {
-            using (new EditorGUILayout.VerticalScope(GUILayout.ExpandWidth(false))) {
-                using (new GUILayout.HorizontalScope()) {
-                    EditorGUILayout.TextField(buildTarget.ToString());
-                    EditorGUILayout.TextField(buildTargetGroup.ToString());
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    protected virtual void DrawBuildOptions() {
+        using (new EditorGUILayout.VerticalScope(Constants.Draw.BOX)) {
+            EditorCommon.DrawLabelToggle(ref config.developmentBuild, nameof(config.developmentBuild), 150f);
+            EditorCommon.DrawLabelToggle(ref config.autoConnectProfile, nameof(config.autoConnectProfile), 150f);
+            EditorCommon.DrawLabelToggle(ref config.deepProfilingSupport, nameof(config.deepProfilingSupport), 150f);
+            EditorCommon.DrawLabelToggle(ref config.scriptDebugging, nameof(config.scriptDebugging), 150f);
+        } 
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    protected virtual void DrawDefineSymbol() {
+        GUILayout.Label("디파인 심볼 (Define Symbols)", Constants.Draw.AREA_TITLE_STYLE);
+        using (new EditorGUILayout.VerticalScope(Constants.Draw.BOX)) {
+            _defineSymbolScrollViewPosition = EditorGUILayout.BeginScrollView(_defineSymbolScrollViewPosition, GUILayout.ExpandWidth(true), GUILayout.MinHeight(100f), GUILayout.MaxHeight(250f));
+            EditorCommon.DrawToggleBox(defineSymbols, () => config.defineSymbols = string.Join(Constants.Separator.DEFINE_SYMBOL, defineSymbols.Where(x => x.isActive)));
+            EditorGUILayout.EndScrollView();
+                
+            EditorCommon.DrawLabelTextFieldWithRefresh("Define Symbol", config.defineSymbols, () => {
+                config.defineSymbols = PlayerSettings.GetScriptingDefineSymbolsForGroup(buildTargetGroup);
+                
+                var defineSymbolSet = config.defineSymbols.Split(Constants.Separator.DEFINE_SYMBOL).ToHashSet();
+                defineSymbols.ForEach(symbol => symbol.isActive = defineSymbolSet.Contains(symbol.name));
+            });
+            EditorGUILayout.HelpBox($"새로고침시 {nameof(PlayerSettings)}의 Define Symbol 값으로 {nameof(BuildConfig)}의 값을 갱신합니다", MessageType.Warning);
+        }
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    protected virtual void DrawCustomOption() {
+        GUILayout.Label("커스텀 옵션", Constants.Draw.AREA_TITLE_STYLE);
+        using (new EditorGUILayout.VerticalScope(Constants.Draw.BOX)) {
+            foreach (var buildOption in buildOptionSet) {
+                if (config.optionDic.ContainsKey(buildOption)) {
+                    config.optionDic[buildOption] = EditorCommon.DrawLabelToggle(config.optionDic[buildOption], buildOption, 200f);
                 }
-                EditorGUILayout.TextField(EditorUserBuildSettings.activeBuildTarget.ToString());
+            }
+        }
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    protected virtual void DrawScene() {
+        if (EditorCommon.DrawLabelButton("씬 (Scene)", Constants.Draw.REFRESH_ICON, Constants.Draw.AREA_TITLE_STYLE)) {
+            RefreshScenes();
+        }
+
+        using (new EditorGUILayout.VerticalScope(Constants.Draw.BOX)) {
+            _activateSceneFoldOut = EditorGUILayout.BeginFoldoutHeaderGroup(_activateSceneFoldOut, "활성화 된 씬");
+            if (_activateSceneFoldOut) {
+                foreach (var (path, scene) in activateSceneDic) {
+                    using (new EditorGUILayout.HorizontalScope()) {
+                        EditorGUILayout.Space(15f, false);
+                        if (EditorCommon.DrawFitToggle(scene.enabled) != scene.enabled) {
+                            scene.enabled = scene.enabled == false;
+                            EditorBuildSettings.scenes = activateSceneDic.Values.ToArray();
+                        }
+                        
+                        EditorGUILayout.TextField(path);
+                    }
+                }
+            }
+
+            EditorGUILayout.EndFoldoutHeaderGroup();
+            if (_activateSceneFoldOut) {
+                EditorGUILayout.Space(15f);
+            }
+
+            _sceneAssetFoldOut = EditorGUILayout.BeginFoldoutHeaderGroup(_sceneAssetFoldOut, "프로젝트 전체 씬 에셋");
+            if (_sceneAssetFoldOut) {
+                foreach (var (path, info) in sceneAssetInfoDic) {
+                    using (new EditorGUILayout.HorizontalScope()) {
+                        EditorGUILayout.Space(15f, false);
+                        EditorCommon.DrawLabelTextField(info.Name, path);
+                    }
+                }
             }
             
-            if (GUILayout.Button("Build", GUILayout.ExpandHeight(true), GUILayout.ExpandWidth(true))) {
+            EditorGUILayout.EndFoldoutHeaderGroup();
+        }
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    protected void DrawBuildButton() {
+        EditorCommon.DrawSeparator();
+        
+        GUILayout.Label("빌드 (Build)", Constants.Draw.AREA_TITLE_STYLE);
+        using (new EditorGUILayout.VerticalScope()) {
+            EditorCommon.DrawLabelTextField("빌더 빌드 타겟", buildTarget.ToString());
+            EditorCommon.DrawLabelTextField("현재 빌드 타겟", EditorUserBuildSettings.activeBuildTarget.ToString());
+            
+            if (GUILayout.Button("Build", GUILayout.ExpandHeight(true), GUILayout.ExpandWidth(true), GUILayout.Height(45f))) {
+                if (EditorBuildSettings.scenes.Any(scene => scene.enabled) == false) {
+                    EditorUtility.DisplayDialog("경고", $"{nameof(EditorBuildSettings)}에 활성화 된 씬이 존재하지 않습니다.", "확인");
+                    return;
+                }
+            
                 if (buildTarget != EditorUserBuildSettings.activeBuildTarget) {
                     EditorCommon.ShowCheckDialogue($"{nameof(buildTarget)} miss match", $"현재 선택된 {nameof(BuildTarget)}({buildTarget})과 활성화된 {nameof(BuildTarget)}({EditorUserBuildSettings.activeBuildTarget})이 동일하지 않습니다. 플랫폼 전환 후 빌드를 진행합니다", ok: Build);
                 } else {
@@ -211,7 +298,7 @@ public abstract class EditorBuildDrawer<TConfig, TNullConfig> : EditorAutoConfig
             }
         }
     }
-    
+
     protected void SwitchPlatform() {
         if (buildTarget != EditorUserBuildSettings.activeBuildTarget) {
             EditorUserBuildSettings.SwitchActiveBuildTarget(buildTargetGroup, buildTarget);
@@ -221,7 +308,10 @@ public abstract class EditorBuildDrawer<TConfig, TNullConfig> : EditorAutoConfig
     protected void Build() {
         BuildConfigProvider.Load(config);
         if (BuildInteractionInterface.TryAttachBuilder(builderType, out var builder)) {
-            builder.StartBuild();
+            var report = builder.StartBuild();
+            if (report != null) {
+                Logger.SimpleTraceLog($"Memo\n{report.summary.ToStringAllFields()}");
+            }
         }
     }
 }

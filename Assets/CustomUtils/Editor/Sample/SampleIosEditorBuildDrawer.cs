@@ -1,7 +1,4 @@
-﻿using System;
-using System.Linq;
-using UnityEditor;
-using UnityEngine;
+﻿using UnityEditor;
 
 public abstract class SampleIosEditorBuildDrawer : EditorBuildDrawer<SampleIosBuildConfig, SampleIosBuildConfig.NullBuildConfig> {
 
@@ -27,6 +24,8 @@ public class SampleIosEditorBuildSettingDrawer : SampleIosEditorBuildDrawer {
             EditorCommon.DrawLabelTextField(nameof(config.iOSManualProvisioningProfileID), ref config.iOSManualProvisioningProfileID, 200f);
             EditorCommon.DrawEnumPopup(nameof(config.iOSManualProvisioningProfileType), ref config.iOSManualProvisioningProfileType, 250f);
         }
+
+        DrawBuildButton();
     }
 }
 

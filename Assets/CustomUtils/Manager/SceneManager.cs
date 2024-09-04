@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using UnitySceneManager = UnityEngine.SceneManagement.SceneManager;
 
-public class SceneManager : Singleton<SceneManager> {
+[Obsolete]
+public class SceneManager_Obsolete : Singleton<SceneManager_Obsolete> {
 
     Dictionary<string, int> _sceneDic = new Dictionary<string, int>();
 
-    public SceneManager() {
+    public SceneManager_Obsolete() {
         var totalSceneCount = UnitySceneManager.sceneCount;
         for (int i = 0; i < totalSceneCount; i++) {
             var scene = UnitySceneManager.GetSceneAt(i);

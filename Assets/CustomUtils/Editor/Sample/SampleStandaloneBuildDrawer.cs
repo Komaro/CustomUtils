@@ -7,7 +7,7 @@ public class SampleStandaloneBuildDrawer : EditorBuildDrawer<SampleStandaloneBui
 
     public override void Draw() {
         base.Draw();
-        DrawBuild();
+        DrawBuildButton();
     }
 }
 

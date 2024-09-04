@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using UnityEditor;
 using UnityEditor.Callbacks;
 using UnityEngine;
@@ -25,7 +24,7 @@ public partial class EditorBuildService : EditorService {
 
     protected override void OnEditorOpenInitialize() => CacheRefresh();
     
-    [MenuItem("Service/Build/Build Service ex")]
+    [MenuItem("Service/Build/Build Service")]
     public static void OpenWindow() {
         Window.Show();
         CacheRefresh();

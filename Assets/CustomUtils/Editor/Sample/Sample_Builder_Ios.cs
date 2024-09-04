@@ -48,7 +48,7 @@ public class Sample_Builder_Ios : Builder {
     end";
     protected const string APPEND_POD_CONTENT_SUFFIX = "\nend";
 
-    public override void StartBuild(BuildPlayerOptions buildOptions) {
+    public override BuildReport StartBuild(BuildPlayerOptions buildOptions) {
         SetDevelopmentBuild(BuildConfigProvider.GetValue<bool>(nameof(BuildConfig.developmentBuild)));
         SetAutoConnectProfile(BuildConfigProvider.GetValue<bool>(nameof(BuildConfig.autoConnectProfile)));
         SetDeepProfilingSupport(BuildConfigProvider.GetValue<bool>(nameof(BuildConfig.deepProfilingSupport)));
@@ -60,7 +60,7 @@ public class Sample_Builder_Ios : Builder {
         SetConditionBuildOptions(ref buildOptions, EditorUserBuildSettings.buildWithDeepProfilingSupport, BuildOptions.EnableDeepProfilingSupport);
         SetConditionBuildOptions(ref buildOptions, EditorUserBuildSettings.allowDebugging, BuildOptions.AllowDebugging);
 
-        base.StartBuild(buildOptions);
+        return base.StartBuild(buildOptions);
     }
 
     protected override void OnPreProcess(ref BuildPlayerOptions options) {

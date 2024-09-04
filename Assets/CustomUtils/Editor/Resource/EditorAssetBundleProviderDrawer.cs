@@ -106,10 +106,9 @@ public class EditorAssetBundleProviderDrawer : EditorAutoConfigResourceDrawer<As
             }
             
             EditorCommon.DrawSeparator();
-            using (new GUILayout.HorizontalScope()) {
-                if (EditorCommon.DrawLabelButton("전체 AssetBundle 리스트", Constants.Draw.REFRESH_ICON, Constants.Draw.AREA_TITLE_STYLE)) {
-                    RefreshAssetBundle();
-                }
+            
+            if (EditorCommon.DrawLabelButton("전체 AssetBundle 리스트", Constants.Draw.REFRESH_ICON, Constants.Draw.AREA_TITLE_STYLE)) {
+                RefreshAssetBundle();
             }
             
             DrawAssetBundleList();
@@ -231,7 +230,7 @@ public class EditorAssetBundleProviderDrawer : EditorAutoConfigResourceDrawer<As
             if (_assetBundleListFold && config.assetBundleInfoDic != null) {
                 _assetBundleTreeView.Draw();
             }
-                
+            
             EditorGUILayout.EndFoldoutHeaderGroup();
         }
     }

@@ -4,11 +4,6 @@
 public class SampleStandaloneBuildDrawer : EditorBuildDrawer<SampleStandaloneBuildConfig, SampleStandaloneBuildConfig.NullBuildConfig> {
     
     public SampleStandaloneBuildDrawer(EditorWindow window) : base(window) { }
-
-    public override void Draw() {
-        base.Draw();
-        DrawBuildButton();
-    }
 }
 
 [BuildConfig(SAMPLE_BUILD_TYPE.STANDALONE, BuildTarget.StandaloneWindows64, BuildTargetGroup.Standalone)]

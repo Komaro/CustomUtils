@@ -18,8 +18,6 @@ public partial class EditorBuildService : EditorService {
 
     private static readonly Dictionary<Type, EditorDrawer> _drawerDic = new();
     
-    private Vector2 _editorWindowScrollViewPosition;
-
     private static readonly string SELECT_DRAWER_KEY = $"{nameof(EditorBuildService)}_{nameof(EditorDrawer)}";
 
     protected override void OnEditorOpenInitialize() => CacheRefresh();

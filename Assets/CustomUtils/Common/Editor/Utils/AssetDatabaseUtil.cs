@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -90,7 +91,7 @@ public record EditorAssetInfo<T> where T : Object {
     public readonly string guid;
     public readonly string path;
 
-    public string Name => asset != null ? asset.name : string.Empty;
+    public string Name => asset != null ? asset.name : Path.GetFileName(path);
 
     public EditorAssetInfo(T asset, string guid, string path) {
         this.asset = asset;

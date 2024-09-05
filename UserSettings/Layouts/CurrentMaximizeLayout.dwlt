@@ -24,7 +24,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 200}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 427
+  controlID: 91
 --- !u!114 &2
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -34,139 +34,91 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 1
-  m_Script: {fileID: 12014, guid: 0000000000000000e000000000000000, type: 0}
+  m_Script: {fileID: 12015, guid: 0000000000000000e000000000000000, type: 0}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_MinSize: {x: 230, y: 250}
-  m_MaxSize: {x: 10000, y: 10000}
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
   m_TitleContent:
-    m_Text: Project
-    m_Image: {fileID: -5179483145760003458, guid: 0000000000000000d000000000000000,
+    m_Text: Game
+    m_Image: {fileID: 4621777727084837110, guid: 0000000000000000d000000000000000,
       type: 0}
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 0
+    x: 821.60004
     y: 455.2
-    width: 685.4
+    width: 282.80005
     height: 328.19998
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
     m_LastAppliedPresetName: Default
     m_SaveData: []
     m_OverlaysVisible: 1
-  m_SearchFilter:
-    m_NameFilter: bcl
-    m_ClassNames: []
-    m_AssetLabels: []
-    m_AssetBundleNames: []
-    m_VersionControlStates: []
-    m_SoftLockControlStates: []
-    m_ReferencingInstanceIDs: 
-    m_SceneHandles: 
-    m_ShowAllHits: 0
-    m_SkipHidden: 0
-    m_SearchArea: 1
-    m_Folders:
-    - Assets/Plugins/Dotnet/InMemory
-    m_Globs: []
-    m_OriginalText: bcl
-  m_ViewMode: 1
-  m_StartGridSize: 16
-  m_LastFolders:
-  - Assets/Plugins/Dotnet/InMemory
-  m_LastFoldersGridSize: 16
-  m_LastProjectPath: C:\Project\Unity\CustomUtils
-  m_LockTracker:
-    m_IsLocked: 0
-  m_FolderTreeState:
-    scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: c6630000
-    m_LastClickedID: 25542
-    m_ExpandedIDs: 00000000e2610000e4610000e6610000e8610000ea610000ec610000ee610000f0610000f2610000f4610000f6610000f8610000fa610000fc610000fe61000000620000026200000462000006620000086200000a6200000c6200000e62000010620000b8630000c863000000ca9a3b
-    m_RenameOverlay:
-      m_UserAcceptedRename: 0
-      m_Name: 
-      m_OriginalName: 
-      m_EditFieldRect:
-        serializedVersion: 2
-        x: 0
-        y: 0
-        width: 0
-        height: 0
-      m_UserData: 0
-      m_IsWaitingForDelay: 0
-      m_IsRenaming: 0
-      m_OriginalEventType: 11
-      m_IsRenamingFilename: 1
-      m_ClientGUIView: {fileID: 11}
-    m_SearchString: 
-    m_CreateAssetUtility:
-      m_EndAction: {fileID: 0}
-      m_InstanceID: 0
-      m_Path: 
-      m_Icon: {fileID: 0}
-      m_ResourceFile: 
-  m_AssetTreeState:
-    scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 
-    m_LastClickedID: 0
-    m_ExpandedIDs: 00000000e2610000e4610000e6610000e8610000ea610000ec610000ee610000f0610000f2610000f4610000f6610000f8610000fa610000fc610000fe61000000620000026200000462000006620000086200000a6200000c6200000e62000010620000
-    m_RenameOverlay:
-      m_UserAcceptedRename: 0
-      m_Name: 
-      m_OriginalName: 
-      m_EditFieldRect:
-        serializedVersion: 2
-        x: 0
-        y: 0
-        width: 0
-        height: 0
-      m_UserData: 0
-      m_IsWaitingForDelay: 0
-      m_IsRenaming: 0
-      m_OriginalEventType: 11
-      m_IsRenamingFilename: 1
-      m_ClientGUIView: {fileID: 0}
-    m_SearchString: 
-    m_CreateAssetUtility:
-      m_EndAction: {fileID: 0}
-      m_InstanceID: 0
-      m_Path: 
-      m_Icon: {fileID: 0}
-      m_ResourceFile: 
-  m_ListAreaState:
-    m_SelectedInstanceIDs: 
-    m_LastClickedInstanceID: 0
-    m_HadKeyboardFocusLastEvent: 0
-    m_ExpandedInstanceIDs: c6230000ac060000fc56000092f6ffff2a66000002670000
-    m_RenameOverlay:
-      m_UserAcceptedRename: 0
-      m_Name: 
-      m_OriginalName: 
-      m_EditFieldRect:
-        serializedVersion: 2
-        x: 0
-        y: 0
-        width: 0
-        height: 0
-      m_UserData: 0
-      m_IsWaitingForDelay: 0
-      m_IsRenaming: 0
-      m_OriginalEventType: 11
-      m_IsRenamingFilename: 1
-      m_ClientGUIView: {fileID: 11}
-    m_CreateAssetUtility:
-      m_EndAction: {fileID: 0}
-      m_InstanceID: 0
-      m_Path: 
-      m_Icon: {fileID: 0}
-      m_ResourceFile: 
-    m_NewAssetIndexInList: -1
-    m_ScrollPosition: {x: 0, y: 0}
-    m_GridSize: 16
-  m_SkipHiddenPackages: 0
-  m_DirectoriesAreaWidth: 253
+  m_SerializedViewNames: []
+  m_SerializedViewValues: []
+  m_PlayModeViewName: GameView
+  m_ShowGizmos: 0
+  m_TargetDisplay: 0
+  m_ClearColor: {r: 0, g: 0, b: 0, a: 0}
+  m_TargetSize: {x: 282.80005, y: 307.19998}
+  m_TextureFilterMode: 0
+  m_TextureHideFlags: 61
+  m_RenderIMGUI: 1
+  m_EnterPlayModeBehavior: 0
+  m_UseMipMap: 0
+  m_VSyncEnabled: 0
+  m_Gizmos: 0
+  m_Stats: 0
+  m_SelectedSizes: 00000000000000000000000000000000000000000000000000000000000000000000000000000000
+  m_ZoomArea:
+    m_HRangeLocked: 0
+    m_VRangeLocked: 0
+    hZoomLockedByDefault: 0
+    vZoomLockedByDefault: 0
+    m_HBaseRangeMin: -113.12002
+    m_HBaseRangeMax: 113.12002
+    m_VBaseRangeMin: -122.88
+    m_VBaseRangeMax: 122.88
+    m_HAllowExceedBaseRangeMin: 1
+    m_HAllowExceedBaseRangeMax: 1
+    m_VAllowExceedBaseRangeMin: 1
+    m_VAllowExceedBaseRangeMax: 1
+    m_ScaleWithWindow: 0
+    m_HSlider: 0
+    m_VSlider: 0
+    m_IgnoreScrollWheelUntilClicked: 0
+    m_EnableMouseInput: 1
+    m_EnableSliderZoomHorizontal: 0
+    m_EnableSliderZoomVertical: 0
+    m_UniformScale: 1
+    m_UpDirection: 1
+    m_DrawArea:
+      serializedVersion: 2
+      x: 0
+      y: 21
+      width: 282.80005
+      height: 307.19998
+    m_Scale: {x: 1, y: 1}
+    m_Translation: {x: 141.40002, y: 153.59999}
+    m_MarginLeft: 0
+    m_MarginRight: 0
+    m_MarginTop: 0
+    m_MarginBottom: 0
+    m_LastShownAreaInsideMargins:
+      serializedVersion: 2
+      x: -141.40002
+      y: -153.59999
+      width: 282.80005
+      height: 307.19998
+    m_MinimalGUI: 1
+  m_defaultScale: 1
+  m_LastWindowPixelSize: {x: 353.50006, y: 410.24997}
+  m_ClearInEditMode: 1
+  m_NoCameraWarning: 1
+  m_LowResolutionForAspectRatios: 01000000000000000000
+  m_XRRenderMode: 0
+  m_RenderTexture: {fileID: 0}
 --- !u!114 &3
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -186,12 +138,12 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 920.8
+    width: 1106.4
     height: 730.8
   m_MinSize: {x: 200, y: 200}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 1
-  controlID: 428
+  controlID: 92
 --- !u!114 &4
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -211,12 +163,12 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 920.8
+    width: 1106.4
     height: 381.6
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 106
+  controlID: 82
 --- !u!114 &5
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -234,10 +186,10 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 468.8
+    width: 538.4
     height: 381.6
-  m_MinSize: {x: 201, y: 221}
-  m_MaxSize: {x: 4001, y: 4021}
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 6}
   m_Panes:
   - {fileID: 6}
@@ -266,7 +218,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 73.6
-    width: 467.8
+    width: 537.4
     height: 360.6
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
@@ -278,7 +230,7 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: 16fbffff
+      m_ExpandedIDs: e4c2ffff28c3fffffcc4ffff20cdffff64cdffff38cffffff8d0ffff3cd1ffff46d1ffff26d2ffff6ad2ffff3ed4ffff94d6ffffd8d6ffffe2d6ffffced7ffff12d8ffffe6d9ffff8cdbffffd0dbffffa4ddffff36dfffff7adfffff4ee1ffffd8e2ffff1ce3fffff0e4fffff2eaffff36ebffff0aedffffaaeeffffeeeeffffc2f0ffff44f2ffff88f2ffff92f2ffff74f3ffffb8f3ffff8cf5ffffecf7ffff2ef8ffff02faffff1afbffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -317,9 +269,9 @@ MonoBehaviour:
   m_Children: []
   m_Position:
     serializedVersion: 2
-    x: 468.8
+    x: 538.4
     y: 0
-    width: 452
+    width: 568
     height: 381.6
   m_MinSize: {x: 202, y: 221}
   m_MaxSize: {x: 4002, y: 4021}
@@ -350,9 +302,9 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 468.80002
+    x: 538.4
     y: 73.6
-    width: 450
+    width: 566
     height: 360.6
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
@@ -629,11 +581,11 @@ MonoBehaviour:
   m_Rotation:
     m_Target: {x: 0.97717243, y: -0.013238816, z: 0.2021553, w: 0.06399626}
     speed: 2
-    m_Value: {x: 0, y: 0, z: 0, w: 1}
+    m_Value: {x: 0.9771707, y: -0.013238792, z: 0.20215495, w: 0.06399615}
   m_Size:
-    m_Target: 373.2686
+    m_Target: 356.4715
     speed: 2
-    m_Value: 373.2686
+    m_Value: 356.4715
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -702,17 +654,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Children:
   - {fileID: 11}
-  - {fileID: 14}
+  - {fileID: 15}
   m_Position:
     serializedVersion: 2
     x: 0
     y: 381.6
-    width: 920.8
+    width: 1106.4
     height: 349.19998
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 429
+  controlID: 93
 --- !u!114 &11
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -723,25 +675,167 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 1
   m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: ProjectBrowser
+  m_Name: ConsoleWindow
   m_EditorClassIdentifier: 
   m_Children: []
   m_Position:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 686.4
+    width: 821.6
     height: 349.19998
-  m_MinSize: {x: 231, y: 271}
-  m_MaxSize: {x: 10001, y: 10021}
-  m_ActualView: {fileID: 2}
+  m_MinSize: {x: 100, y: 100}
+  m_MaxSize: {x: 4000, y: 4000}
+  m_ActualView: {fileID: 13}
   m_Panes:
-  - {fileID: 2}
   - {fileID: 12}
   - {fileID: 13}
-  m_Selected: 0
-  m_LastSelected: 1
+  - {fileID: 14}
+  m_Selected: 1
+  m_LastSelected: 0
 --- !u!114 &12
+MonoBehaviour:
+  m_ObjectHideFlags: 52
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 1
+  m_Script: {fileID: 12014, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_MinSize: {x: 230, y: 250}
+  m_MaxSize: {x: 10000, y: 10000}
+  m_TitleContent:
+    m_Text: Project
+    m_Image: {fileID: -5179483145760003458, guid: 0000000000000000d000000000000000,
+      type: 0}
+    m_Tooltip: 
+  m_Pos:
+    serializedVersion: 2
+    x: 0
+    y: 455.2
+    width: 820.6
+    height: 328.19998
+  m_ViewDataDictionary: {fileID: 0}
+  m_OverlayCanvas:
+    m_LastAppliedPresetName: Default
+    m_SaveData: []
+    m_OverlaysVisible: 1
+  m_SearchFilter:
+    m_NameFilter: 
+    m_ClassNames: []
+    m_AssetLabels: []
+    m_AssetBundleNames: []
+    m_VersionControlStates: []
+    m_SoftLockControlStates: []
+    m_ReferencingInstanceIDs: 
+    m_SceneHandles: 
+    m_ShowAllHits: 0
+    m_SkipHidden: 0
+    m_SearchArea: 1
+    m_Folders:
+    - Assets/Test/PlayMode
+    m_Globs: []
+    m_OriginalText: 
+  m_ViewMode: 1
+  m_StartGridSize: 16
+  m_LastFolders:
+  - Assets/Test/PlayMode
+  m_LastFoldersGridSize: 16
+  m_LastProjectPath: C:\Project\Unity\CustomUtils
+  m_LockTracker:
+    m_IsLocked: 0
+  m_FolderTreeState:
+    scrollPos: {x: 0, y: 0}
+    m_SelectedIDs: 1e620000
+    m_LastClickedID: 25118
+    m_ExpandedIDs: 00000000f6610000f8610000fa610000fc610000fe61000000620000026200000462000006620000086200000a6200000c6200000e62000010620000126200001462000016620000186200001a6200001c6200001e620000206200002262000024620000266200002862000000ca9a3b
+    m_RenameOverlay:
+      m_UserAcceptedRename: 0
+      m_Name: 
+      m_OriginalName: 
+      m_EditFieldRect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 0
+        height: 0
+      m_UserData: 0
+      m_IsWaitingForDelay: 0
+      m_IsRenaming: 0
+      m_OriginalEventType: 11
+      m_IsRenamingFilename: 1
+      m_ClientGUIView: {fileID: 0}
+    m_SearchString: 
+    m_CreateAssetUtility:
+      m_EndAction: {fileID: 0}
+      m_InstanceID: 0
+      m_Path: 
+      m_Icon: {fileID: 0}
+      m_ResourceFile: 
+  m_AssetTreeState:
+    scrollPos: {x: 0, y: 0}
+    m_SelectedIDs: 
+    m_LastClickedID: 0
+    m_ExpandedIDs: 00000000f6610000f8610000fa610000fc610000fe61000000620000026200000462000006620000086200000a6200000c6200000e62000010620000126200001462000016620000186200001a6200001c6200001e6200002062000022620000246200002662000028620000
+    m_RenameOverlay:
+      m_UserAcceptedRename: 0
+      m_Name: 
+      m_OriginalName: 
+      m_EditFieldRect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 0
+        height: 0
+      m_UserData: 0
+      m_IsWaitingForDelay: 0
+      m_IsRenaming: 0
+      m_OriginalEventType: 11
+      m_IsRenamingFilename: 1
+      m_ClientGUIView: {fileID: 0}
+    m_SearchString: 
+    m_CreateAssetUtility:
+      m_EndAction: {fileID: 0}
+      m_InstanceID: 0
+      m_Path: 
+      m_Icon: {fileID: 0}
+      m_ResourceFile: 
+  m_ListAreaState:
+    m_SelectedInstanceIDs: 
+    m_LastClickedInstanceID: 0
+    m_HadKeyboardFocusLastEvent: 0
+    m_ExpandedInstanceIDs: c6230000ac060000fc56000092f6ffff2a6600000267000000000000
+    m_RenameOverlay:
+      m_UserAcceptedRename: 0
+      m_Name: 
+      m_OriginalName: 
+      m_EditFieldRect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 0
+        height: 0
+      m_UserData: 0
+      m_IsWaitingForDelay: 0
+      m_IsRenaming: 0
+      m_OriginalEventType: 11
+      m_IsRenamingFilename: 1
+      m_ClientGUIView: {fileID: 11}
+    m_CreateAssetUtility:
+      m_EndAction: {fileID: 0}
+      m_InstanceID: 0
+      m_Path: 
+      m_Icon: {fileID: 0}
+      m_ResourceFile: 
+    m_NewAssetIndexInList: -1
+    m_ScrollPosition: {x: 0, y: 0}
+    m_GridSize: 16
+  m_SkipHiddenPackages: 0
+  m_DirectoriesAreaWidth: 253
+--- !u!114 &13
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -764,14 +858,14 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 455.2
-    width: 685.4
+    width: 820.6
     height: 328.19998
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
     m_LastAppliedPresetName: Default
     m_SaveData: []
     m_OverlaysVisible: 1
---- !u!114 &13
+--- !u!114 &14
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -794,7 +888,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 455.2
-    width: 611.8
+    width: 685.4
     height: 328.19998
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
@@ -920,12 +1014,12 @@ MonoBehaviour:
       oldMaxSizes: 
       oldSplitSize: 0
     m_HorizontalSplitter:
-      ID: 58
+      ID: 118
       splitterInitialOffset: 0
       currentActiveSplitter: -1
       realSizes:
-      - 183.2
-      - 428.8
+      - 205.59998
+      - 480
       relativeSizes:
       - 0.3
       - 0.7
@@ -935,7 +1029,7 @@ MonoBehaviour:
       maxSizes:
       - 0
       - 0
-      lastTotalSize: 612
+      lastTotalSize: 685.6
       splitSize: 6
       xOffset: 0
       m_Version: 1
@@ -949,7 +1043,7 @@ MonoBehaviour:
   m_ShowReferencedBuses: 1
   m_ShowBusConnections: 0
   m_ShowBusConnectionsOfSelection: 0
---- !u!114 &14
+--- !u!114 &15
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -964,111 +1058,17 @@ MonoBehaviour:
   m_Children: []
   m_Position:
     serializedVersion: 2
-    x: 686.4
+    x: 821.6
     y: 0
-    width: 234.39996
+    width: 284.80005
     height: 349.19998
   m_MinSize: {x: 202, y: 221}
   m_MaxSize: {x: 4002, y: 4021}
-  m_ActualView: {fileID: 15}
+  m_ActualView: {fileID: 2}
   m_Panes:
-  - {fileID: 15}
+  - {fileID: 2}
   m_Selected: 0
   m_LastSelected: 0
---- !u!114 &15
-MonoBehaviour:
-  m_ObjectHideFlags: 52
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 1
-  m_Script: {fileID: 12015, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_MinSize: {x: 200, y: 200}
-  m_MaxSize: {x: 4000, y: 4000}
-  m_TitleContent:
-    m_Text: Game
-    m_Image: {fileID: 4621777727084837110, guid: 0000000000000000d000000000000000,
-      type: 0}
-    m_Tooltip: 
-  m_Pos:
-    serializedVersion: 2
-    x: 686.4
-    y: 455.2
-    width: 232.39996
-    height: 328.19998
-  m_ViewDataDictionary: {fileID: 0}
-  m_OverlayCanvas:
-    m_LastAppliedPresetName: Default
-    m_SaveData: []
-    m_OverlaysVisible: 1
-  m_SerializedViewNames: []
-  m_SerializedViewValues: []
-  m_PlayModeViewName: GameView
-  m_ShowGizmos: 0
-  m_TargetDisplay: 0
-  m_ClearColor: {r: 0, g: 0, b: 0, a: 0}
-  m_TargetSize: {x: 232.39996, y: 307.19998}
-  m_TextureFilterMode: 0
-  m_TextureHideFlags: 61
-  m_RenderIMGUI: 1
-  m_EnterPlayModeBehavior: 0
-  m_UseMipMap: 0
-  m_VSyncEnabled: 0
-  m_Gizmos: 0
-  m_Stats: 0
-  m_SelectedSizes: 00000000000000000000000000000000000000000000000000000000000000000000000000000000
-  m_ZoomArea:
-    m_HRangeLocked: 0
-    m_VRangeLocked: 0
-    hZoomLockedByDefault: 0
-    vZoomLockedByDefault: 0
-    m_HBaseRangeMin: -92.959984
-    m_HBaseRangeMax: 92.959984
-    m_VBaseRangeMin: -122.88
-    m_VBaseRangeMax: 122.88
-    m_HAllowExceedBaseRangeMin: 1
-    m_HAllowExceedBaseRangeMax: 1
-    m_VAllowExceedBaseRangeMin: 1
-    m_VAllowExceedBaseRangeMax: 1
-    m_ScaleWithWindow: 0
-    m_HSlider: 0
-    m_VSlider: 0
-    m_IgnoreScrollWheelUntilClicked: 0
-    m_EnableMouseInput: 1
-    m_EnableSliderZoomHorizontal: 0
-    m_EnableSliderZoomVertical: 0
-    m_UniformScale: 1
-    m_UpDirection: 1
-    m_DrawArea:
-      serializedVersion: 2
-      x: 0
-      y: 21
-      width: 232.39996
-      height: 307.19998
-    m_Scale: {x: 1, y: 1}
-    m_Translation: {x: 116.19998, y: 153.59999}
-    m_MarginLeft: 0
-    m_MarginRight: 0
-    m_MarginTop: 0
-    m_MarginBottom: 0
-    m_LastShownAreaInsideMargins:
-      serializedVersion: 2
-      x: -116.19998
-      y: -153.59999
-      width: 232.39996
-      height: 307.19998
-    m_MinimalGUI: 1
-  m_defaultScale: 1
-  m_LastWindowPixelSize: {x: 290.49994, y: 410.24997}
-  m_ClearInEditMode: 1
-  m_NoCameraWarning: 1
-  m_LowResolutionForAspectRatios: 01000000000000000000
-  m_XRRenderMode: 0
-  m_RenderTexture: {fileID: 0}
 --- !u!114 &16
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -1079,23 +1079,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 1
   m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: TestRunnerWindow
+  m_Name: EditorResourceService
   m_EditorClassIdentifier: 
   m_Children: []
   m_Position:
     serializedVersion: 2
-    x: 920.8
+    x: 1106.4
     y: 0
-    width: 615.2
+    width: 429.59998
     height: 730.8
-  m_MinSize: {x: 101, y: 121}
-  m_MaxSize: {x: 4001, y: 4021}
-  m_ActualView: {fileID: 18}
+  m_MinSize: {x: 100, y: 100}
+  m_MaxSize: {x: 4000, y: 4000}
+  m_ActualView: {fileID: 19}
   m_Panes:
   - {fileID: 17}
   - {fileID: 18}
-  m_Selected: 1
-  m_LastSelected: 0
+  - {fileID: 19}
+  m_Selected: 2
+  m_LastSelected: 3
 --- !u!114 &17
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -1169,7 +1170,7 @@ MonoBehaviour:
     m_SaveData: []
     m_OverlaysVisible: 1
   m_Spl:
-    ID: 141
+    ID: 787
     splitterInitialOffset: 290.8
     currentActiveSplitter: -1
     realSizes:
@@ -1344,7 +1345,7 @@ MonoBehaviour:
       name: CustomUtils
       fullName: CustomUtils
       resultStatus: 1
-      duration: 9.95082
+      duration: 1.5544983
       messages: 
       output: 
       stacktrace: 
@@ -1360,7 +1361,7 @@ MonoBehaviour:
       name: EditrModeTestAssembly.dll
       fullName: C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/EditrModeTestAssembly.dll
       resultStatus: 1
-      duration: 9.940006
+      duration: 1.5325527
       messages: 
       output: 
       stacktrace: 
@@ -1375,8 +1376,8 @@ MonoBehaviour:
       uniqueId: EditrModeTestAssembly.dll/[EditrModeTestAssembly][AnalyzerTestRunner][suite]
       name: AnalyzerTestRunner
       fullName: AnalyzerTestRunner
-      resultStatus: 0
-      duration: 0
+      resultStatus: 1
+      duration: 3.36683
       messages: 
       output: 
       stacktrace: 
@@ -1391,8 +1392,8 @@ MonoBehaviour:
       uniqueId: EditrModeTestAssembly.dll/AnalyzerTestRunner/[EditrModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCasePerformanceTest][suite]
       name: AnalyzerTestCasePerformanceTest
       fullName: AnalyzerTestRunner.AnalyzerTestCasePerformanceTest
-      resultStatus: 0
-      duration: 0
+      resultStatus: 1
+      duration: 1.062829
       messages: 
       output: 
       stacktrace: 
@@ -1408,10 +1409,19 @@ MonoBehaviour:
       uniqueId: EditrModeTestAssembly.dll/AnalyzerTestRunner/AnalyzerTestCasePerformanceTest/[EditrModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCasePerformanceTest(RequiresStaticMethodImplementationAttributeAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/RequiresStaticMethodTestCase")]
       name: AnalyzerTestCasePerformanceTest(RequiresStaticMethodImplementationAttributeAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/RequiresStaticMethodTestCase")
       fullName: AnalyzerTestRunner.AnalyzerTestCasePerformanceTest(RequiresStaticMethodImplementationAttributeAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/RequiresStaticMethodTestCase")
-      resultStatus: 0
-      duration: 0
+      resultStatus: 1
+      duration: 1.0319704
       messages: 
-      output: 
+      output: "PerformanceGroup.GC() in Undefineds\nMin:\t\t7.40 \nMedian:\t\t7.80
+        \nMax:\t\t27.40 \nAvg:\t\t9.84 \nStdDev:\t\t5.59 \nSampleCount:\t11\nSum:\t\t108.20
+        \r\nFirst samples:\t\u2588\u2582\u2581\u2582\u2581\u2581\u2582\u2581\u2581\u2581\u2581\r\n(not
+        enough samples for histogram)\n\r\nPerformanceGroup in Milliseconds\nMin:\t\t0.08
+        ms\nMedian:\t\t0.11 ms\nMax:\t\t0.23 ms\nAvg:\t\t0.13 ms\nStdDev:\t\t0.04
+        ms\nSampleCount:\t10\nSum:\t\t1.27 ms\r\nFirst samples:\t\u2584\u2582\u2584\u2582\u2588\u2582\u2581\u2582\u2581\u2584\r\n(not
+        enough samples for histogram)\n\r\n\r\n##performancetestresult2:{\"Name\":\"AnalyzerTestRunner.AnalyzerTestCasePerformanceTest(RequiresStaticMethodImplementationAttributeAnalyzer,\\\"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/RequiresStaticMethodTestCase\\\")\",\"ClassName\":\"AnalyzerTestRunner\",\"MethodName\":\"AnalyzerTestCasePerformanceTest\",\"Version\":\"1\",\"Categories\":[\"Performance\"],\"SampleGroups\":[{\"Name\":\"PerformanceGroup.GC()\",\"Unit\":8,\"IncreaseIsBetter\":false,\"Samples\":[27.4,9.0,7.8,9.0,7.4,8.0,9.2,7.6,7.6,7.6,7.6],\"Min\":7.4,\"Max\":27.4,\"Median\":7.8,\"Average\":9.836363636363635,\"StandardDeviation\":5.5901329838260109,\"Sum\":108.19999999999998},{\"Name\":\"PerformanceGroup\",\"Unit\":2,\"IncreaseIsBetter\":false,\"Samples\":[0.14919999999999335,0.10369999999998925,0.13880000000000337,0.1092999999999904,0.2272999999999854,0.11050000000000182,0.08309999999994489,0.11070000000000846,0.0905999999999949,0.14340000000004239],\"Min\":0.08309999999994489,\"Max\":0.2272999999999854,\"Median\":0.11060000000000514,\"Average\":0.12665999999999542,\"StandardDeviation\":0.03950476426964719,\"Sum\":1.2665999999999543}]}\r\n##performancetestruninfo2:{\"TestSuite\":\"Editmode\",\"Date\":1724800079921,\"Player\":{\"Development\":true,\"ScreenWidth\":1920,\"ScreenHeight\":1080,\"ScreenRefreshRate\":60,\"Fullscreen\":false,\"Vsync\":1,\"AntiAliasing\":0,\"Batchmode\":false,\"RenderThreadingMode\":\"MultiThreaded\",\"GpuSkinning\":false,\"Platform\":\"WindowsEditor\",\"ColorSpace\":\"Gamma\",\"AnisotropicFiltering\":\"Disable\",\"BlendWeights\":\"FourBones\",\"GraphicsApi\":\"Direct3D11\",\"ScriptingBackend\":\"Mono2x\",\"AndroidTargetSdkVersion\":\"AndroidApiLevelAuto\",\"AndroidBuildSystem\":\"Gradle\",\"BuildTarget\":\"StandaloneWindows64\",\"StereoRenderingPath\":\"MultiPass\"},\"Hardware\":{\"OperatingSystem\":\"Windows
+        10  (10.0.19045) 64bit\",\"DeviceModel\":\"82R4 (LENOVO)\",\"DeviceName\":\"DESKTOP-55T0R54\",\"ProcessorType\":\"AMD
+        Ryzen 5 5500U with Radeon Graphics \",\"ProcessorCount\":12,\"GraphicsDeviceName\":\"AMD
+        Radeon(TM) Graphics\",\"SystemMemorySizeMB\":14181},\"Editor\":{\"Version\":\"2021.3.21f1\",\"Branch\":\"2021.3/staging\",\"Changeset\":\"1b156197d683\",\"Date\":1678195707},\"Dependencies\":[\"com.unity.2d.animation@7.0.9\",\"com.unity.2d.pixel-perfect@5.0.3\",\"com.unity.2d.psdimporter@6.0.7\",\"com.unity.2d.sprite@1.0.0\",\"com.unity.2d.spriteshape@7.0.6\",\"com.unity.2d.tilemap@1.0.0\",\"com.unity.assetbundlebrowser@1.7.0\",\"com.unity.collab-proxy@2.0.1\",\"com.unity.editorcoroutines@1.0.0\",\"com.unity.ide.rider@3.0.31\",\"com.unity.ide.vscode@1.2.5\",\"com.unity.mobile.android-logcat@1.3.2\",\"com.unity.performance.profile-analyzer@1.2.2\",\"com.unity.profiling.core@1.0.2\",\"com.unity.render-pipelines.universal@12.1.10\",\"com.unity.test-framework@1.3.9\",\"com.unity.test-framework.performance@3.0.3\",\"com.unity.textmeshpro@3.0.9\",\"com.unity.timeline@1.6.5\",\"com.unity.ugui@1.0.0\",\"com.unity.modules.ai@1.0.0\",\"com.unity.modules.androidjni@1.0.0\",\"com.unity.modules.animation@1.0.0\",\"com.unity.modules.assetbundle@1.0.0\",\"com.unity.modules.audio@1.0.0\",\"com.unity.modules.cloth@1.0.0\",\"com.unity.modules.director@1.0.0\",\"com.unity.modules.imageconversion@1.0.0\",\"com.unity.modules.imgui@1.0.0\",\"com.unity.modules.jsonserialize@1.0.0\",\"com.unity.modules.particlesystem@1.0.0\",\"com.unity.modules.physics@1.0.0\",\"com.unity.modules.physics2d@1.0.0\",\"com.unity.modules.screencapture@1.0.0\",\"com.unity.modules.terrain@1.0.0\",\"com.unity.modules.terrainphysics@1.0.0\",\"com.unity.modules.tilemap@1.0.0\",\"com.unity.modules.ui@1.0.0\",\"com.unity.modules.uielements@1.0.0\",\"com.unity.modules.umbra@1.0.0\",\"com.unity.modules.unityanalytics@1.0.0\",\"com.unity.modules.unitywebrequest@1.0.0\",\"com.unity.modules.unitywebrequestassetbundle@1.0.0\",\"com.unity.modules.unitywebrequestaudio@1.0.0\",\"com.unity.modules.unitywebrequesttexture@1.0.0\",\"com.unity.modules.unitywebrequestwww@1.0.0\",\"com.unity.modules.vehicles@1.0.0\",\"com.unity.modules.video@1.0.0\",\"com.unity.modules.vr@1.0.0\",\"com.unity.modules.wind@1.0.0\",\"com.unity.modules.xr@1.0.0\",\"com.unity.modules.subsystems@1.0.0\",\"com.unity.modules.uielementsnative@1.0.0\",\"com.unity.ext.nunit@2.0.3\",\"com.unity.mathematics@1.2.6\",\"com.unity.burst@1.8.2\",\"com.unity.render-pipelines.core@12.1.10\",\"com.unity.shadergraph@12.1.10\",\"com.unity.2d.common@6.0.6\",\"com.unity.2d.path@5.0.2\",\"com.unity.searcher@4.9.1\"],\"Results\":[]}\r\n"
       stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
@@ -1476,8 +1486,8 @@ MonoBehaviour:
       uniqueId: EditrModeTestAssembly.dll/AnalyzerTestRunner/[EditrModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCaseTest][suite]
       name: AnalyzerTestCaseTest
       fullName: AnalyzerTestRunner.AnalyzerTestCaseTest
-      resultStatus: 0
-      duration: 0
+      resultStatus: 1
+      duration: 3.3575265
       messages: 
       output: 
       stacktrace: 
@@ -1492,10 +1502,20 @@ MonoBehaviour:
       uniqueId: EditrModeTestAssembly.dll/AnalyzerTestRunner/AnalyzerTestCaseTest/[EditrModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCaseTest(RequiresStaticMethodImplementationAttributeAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/RequiresStaticMethodTestCase")]
       name: AnalyzerTestCaseTest(RequiresStaticMethodImplementationAttributeAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/RequiresStaticMethodTestCase")
       fullName: AnalyzerTestRunner.AnalyzerTestCaseTest(RequiresStaticMethodImplementationAttributeAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/RequiresStaticMethodTestCase")
-      resultStatus: 0
-      duration: 0
+      resultStatus: 1
+      duration: 3.3416812
       messages: 
-      output: 
+      output: '[Script Test] Success || RequiresStaticMethodImplementation.Fail.06
+
+
+        Analyzer
+        test complete
+
+        Success : 1
+
+        Failed  : 0
+
+'
       stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
@@ -1509,10 +1529,23 @@ MonoBehaviour:
       uniqueId: EditrModeTestAssembly.dll/AnalyzerTestRunner/AnalyzerTestCaseTest/[EditrModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCaseTest(RequiresAttributeImplementationAttributeAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/RequiresAttributeTestCase")]
       name: AnalyzerTestCaseTest(RequiresAttributeImplementationAttributeAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/RequiresAttributeTestCase")
       fullName: AnalyzerTestRunner.AnalyzerTestCaseTest(RequiresAttributeImplementationAttributeAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/RequiresAttributeTestCase")
-      resultStatus: 0
-      duration: 0
+      resultStatus: 1
+      duration: 0.6979293
       messages: 
-      output: 
+      output: '[Script Test] Success || RequiresAttributeImplementation.Success.01
+
+        [Script
+        Test] Success || RequiresAttributeImplementation.Fail.01
+
+
+        Analyzer
+        test complete
+
+        Success : 2
+
+        Failed  : 0
+
+'
       stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
@@ -1526,10 +1559,23 @@ MonoBehaviour:
       uniqueId: EditrModeTestAssembly.dll/AnalyzerTestRunner/AnalyzerTestCaseTest/[EditrModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCaseTest(BuilderAttributeVerifyAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/BuilderAttributeVerifyAnalyzerTestCase")]
       name: AnalyzerTestCaseTest(BuilderAttributeVerifyAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/BuilderAttributeVerifyAnalyzerTestCase")
       fullName: AnalyzerTestRunner.AnalyzerTestCaseTest(BuilderAttributeVerifyAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/BuilderAttributeVerifyAnalyzerTestCase")
-      resultStatus: 0
-      duration: 0
+      resultStatus: 1
+      duration: 0.719281
       messages: 
-      output: 
+      output: '[Script Test] Success || BuilderAttributeVerify.Success.01
+
+        [Script
+        Test] Success || BuilderAttributeVerify.Fail.01
+
+
+        Analyzer test complete
+
+        Success
+        : 2
+
+        Failed  : 0
+
+'
       stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
@@ -1543,10 +1589,29 @@ MonoBehaviour:
       uniqueId: EditrModeTestAssembly.dll/AnalyzerTestRunner/AnalyzerTestCaseTest/[EditrModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCaseTest(AttributeAbstractAndInterfaceConstraintsAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/AttributeAbstractAndInterfaceConstraintsAnalyzerTestCase")]
       name: AnalyzerTestCaseTest(AttributeAbstractAndInterfaceConstraintsAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/AttributeAbstractAndInterfaceConstraintsAnalyzerTestCase")
       fullName: AnalyzerTestRunner.AnalyzerTestCaseTest(AttributeAbstractAndInterfaceConstraintsAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/AttributeAbstractAndInterfaceConstraintsAnalyzerTestCase")
-      resultStatus: 0
-      duration: 0
+      resultStatus: 1
+      duration: 0.9198402
       messages: 
-      output: 
+      output: '[Script Test] Success || AttributeAbstractAndInterfaceConstraints.Success.01
+
+        [Script
+        Test] Success || AttributeAbstractAndInterfaceConstraints.Success.02
+
+        [Script
+        Test] Success || AttributeAbstractAndInterfaceConstraints.Fail.01
+
+        [Script
+        Test] Success || AttributeAbstractAndInterfaceConstraints.Fail.02
+
+
+        Analyzer
+        test complete
+
+        Success : 4
+
+        Failed  : 0
+
+'
       stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
@@ -1557,11 +1622,46 @@ MonoBehaviour:
       parentId: 1006
       parentUniqueId: EditrModeTestAssembly.dll/AnalyzerTestRunner/[EditrModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCaseTest][suite]
     - id: 1012
+      uniqueId: EditrModeTestAssembly.dll/[EditrModeTestAssembly][DBTestRunner][suite]
+      name: DBTestRunner
+      fullName: DBTestRunner
+      resultStatus: 1
+      duration: 1.5287226
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1039
+      parentUniqueId: '[EditrModeTestAssembly][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/EditrModeTestAssembly.dll][suite]'
+    - id: 1013
+      uniqueId: EditrModeTestAssembly.dll/DBTestRunner/[EditrModeTestAssembly][DBTestRunner.InMemoryDatabaseTest]
+      name: InMemoryDatabaseTest
+      fullName: DBTestRunner.InMemoryDatabaseTest
+      resultStatus: 1
+      duration: 1.4953495
+      messages: 
+      output: "<color=#00FFFF>[Service.StartService] Service Start || InMemoryDatabaseService</color>\r\n[<InMemoryDatabaseTest>d__0.MoveNext]
+        SampleEntity (Class)\r\n [Int32] index || 1\r\n [String] text || tte2\r\n\r\n[<InMemoryDatabaseTest>d__0.MoveNext]
+        SampleEntity (Class)\r\n [Int32] index || 2\r\n [String] text || tte1\r\n\r\n"
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1012
+      parentUniqueId: EditrModeTestAssembly.dll/[EditrModeTestAssembly][DBTestRunner][suite]
+    - id: 1012
       uniqueId: EditrModeTestAssembly.dll/[EditrModeTestAssembly][EditModeTestRunner][suite]
       name: EditModeTestRunner
       fullName: EditModeTestRunner
       resultStatus: 1
-      duration: 0.1488043
+      duration: 42.55819
       messages: 
       output: 
       stacktrace: 
@@ -1696,9 +1796,11 @@ MonoBehaviour:
       name: TempTest
       fullName: EditModeTestRunner.TempTest
       resultStatus: 1
-      duration: 0.1114961
+      duration: 42.476593
       messages: 
-      output: "[EditModeTestRunner.TempTest] intValue,stringValue\r\n4533,\uC0AC\uC624\uC0BC\uC0BC\r\n1132,\uC0AC\uC624\uC0BC\uC0BC\r\n4142,\uC0AC\uC624\uC0BC\uC0BC\r\n\r\n"
+      output: "<color=#00FFFF>[Service.StartService] Service Start || InMemoryDatabaseService</color>\r\n[<TempTest>d__0.MoveNext]
+        TestEntity (Class)\r\n [Int32] index || 1\r\n [String] text || tte2\r\n\r\n[<TempTest>d__0.MoveNext]
+        TestEntity (Class)\r\n [Int32] index || 2\r\n [String] text || tte1\r\n\r\n"
       stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
@@ -2192,127 +2294,16 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1025
       parentUniqueId: EditrModeTestAssembly.dll/[EditrModeTestAssembly][TcpServerTestRunner][suite]
-    m_ResultText: 'StartTest(GameDBTestRunner+CsvTestRunner) (9.896s)
-
-      ---
-
-      <color=#00FF00>[SystemUtil.EnsureDirectoryExists]
-      Create Directory || C:\Project\Unity\CustomUtils/Temp/.temp_db</color>
-
-      [GameDBService.IService.Init]
-      GameDBService initialized successfully. The target provider is SampleCsvGameDBProvider
-
-      <color=#00FFFF>[Service.StartService]
-      Service Start || GameDBService</color>
-
-      [GameDBTestRunnerBase.StartTest]
-      Test 3
-
-      [GameDBTestRunnerBase.StartTest] Test 1
-
-      [GameDBTestRunnerBase.StartTest]
-      Test 2
-
-      [GameDBTestRunnerBase.StartTest] Test 3
-
-      [GameDBTestRunnerBase.StartTest]
-      Test 1
-
-      [GameDBTestRunnerBase.StartTest] Test 0
-
-      [GameDBTestRunnerBase.StartTest]
-      Test 1
-
-      [GameDBTestRunnerBase.StartTest] Test 2
-
-      [GameDBTestRunnerBase.StartTest]
-      Test 1
-
-      [GameDBTestRunnerBase.StartTest] Test 2
-
-      [GameDBTestRunnerBase.StartTest]
-      Test 3
-
-      [GameDBTestRunnerBase.StartTest] Test 2
-
-      [GameDBTestRunnerBase.StartTest]
-      Test 2
-
-      [GameDBTestRunnerBase.StartTest] Test 3
-
-      [GameDBTestRunnerBase.StartTest]
-      Test 1
-
-      [GameDBTestRunnerBase.StartTest] Test 1
-
-      [GameDBTestRunnerBase.StartTest]
-      Test 3
-
-      [GameDBTestRunnerBase.StartTest] Test 1
-
-      [GameDBTestRunnerBase.StartTest]
-      Test 2
-
-      [GameDBTestRunnerBase.StartTest] Test 3
-
-      [GameDBTestRunnerBase.StartTest]
-      NONE
-
-      [GameDBTestRunnerBase.StartTest] FIRST
-
-      [GameDBTestRunnerBase.StartTest]
-      SECOND
-
-      [GameDBTestRunnerBase.StartTest] SECOND
-
-      [GameDBTestRunnerBase.StartTest]
-      FIRST
-
-      [GameDBTestRunnerBase.StartTest] SECOND
-
-      [GameDBTestRunnerBase.StartTest]
-      NONE
-
-      [GameDBTestRunnerBase.StartTest] FIRST
-
-      [GameDBTestRunnerBase.StartTest]
-      FIRST
-
-      [GameDBTestRunnerBase.StartTest] SECOND
-
-      [GameDBTestRunnerBase.StartTest]
-      SECOND
-
-      [GameDBTestRunnerBase.StartTest] SECOND
-
-      [GameDBTestRunnerBase.StartTest]
-      NONE
-
-      [GameDBTestRunnerBase.StartTest] FIRST
-
-      [GameDBTestRunnerBase.StartTest]
-      FIRST
-
-      [GameDBTestRunnerBase.StartTest] FIRST
-
-      [GameDBTestRunnerBase.StartTest]
-      NONE
-
-      [GameDBTestRunnerBase.StartTest] NONE
-
-      [GameDBTestRunnerBase.StartTest]
-      FIRST
-
-      [GameDBTestRunnerBase.StartTest] NONE
-
-
-      IgnoreFailingMessages:true'
+    m_ResultText: "InMemoryDatabaseTest (1.495s)\n---\n<color=#00FFFF>[Service.StartService]
+      Service Start || InMemoryDatabaseService</color>\r\n[<InMemoryDatabaseTest>d__0.MoveNext]
+      SampleEntity (Class)\r\n [Int32] index || 1\r\n [String] text || tte2\r\n\r\n[<InMemoryDatabaseTest>d__0.MoveNext]
+      SampleEntity (Class)\r\n [Int32] index || 2\r\n [String] text || tte1"
     m_ResultStacktrace: 
     m_TestListState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: a76e0136
-      m_LastClickedID: 906063527
-      m_ExpandedIDs: 2c5c4ec2416d28c537575fcc53f7ced709d9cedc502e7e0d07dc1a20732940267a14c82ac29f393322524b3a9dda8a41045add4d5d4c09542cae4f5b88e2b55c739d6464db1cfa6616b81e6cffffff7f
+      m_SelectedIDs: 217b370f
+      m_LastClickedID: 255294241
+      m_ExpandedIDs: 5408f8a42c5c4ec2416d28c537575fcc53f7ced709d9cedca4da07e1502e7e0d732940267a14c82ac29f393322524b3a9dda8a41045add4d5d4c09542cae4f5b88e2b55c739d6464db1cfa6616b81e6cffffff7f
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -2339,3 +2330,32 @@ MonoBehaviour:
       availableCategories:
       - Performance
       - Uncategorized
+--- !u!114 &19
+MonoBehaviour:
+  m_ObjectHideFlags: 52
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 626172d18d1b4be1baf2d2d9f105d85b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_MinSize: {x: 100, y: 100}
+  m_MaxSize: {x: 4000, y: 4000}
+  m_TitleContent:
+    m_Text: Resource Service
+    m_Image: {fileID: 0}
+    m_Tooltip: 
+  m_Pos:
+    serializedVersion: 2
+    x: 1106.4
+    y: 73.6
+    width: 428.59998
+    height: 709.8
+  m_ViewDataDictionary: {fileID: 0}
+  m_OverlayCanvas:
+    m_LastAppliedPresetName: Default
+    m_SaveData: []
+    m_OverlaysVisible: 1

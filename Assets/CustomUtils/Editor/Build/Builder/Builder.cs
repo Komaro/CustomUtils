@@ -5,6 +5,7 @@ using System.Linq;
 using UnityEditor;
 using UnityEditor.Build.Reporting;
 using UnityEngine;
+using UnityEngine.Experimental.AssetBundlePatching;
 
 [RequiresAttributeImplementation(typeof(BuilderAttribute))]
 public abstract partial class Builder : IDisposable {
@@ -102,6 +103,11 @@ public abstract partial class Builder : IDisposable {
             if (optionDic.IsTrue(DEFAULT_CUSTOM_BUILD_OPTION.cleanIL2CPPSludge.ToString())) {
                 ClearIL2CPPSludge(path);
             }
+        }
+
+        if (optionDic.IsTrue(DEFAULT_CUSTOM_BUILD_OPTION.ignoreResourcesReimport.ToString())) {
+            AssetBundle.UnloadAllAssetBundles(true);
+            AssetDatabase.Refresh(ImportAssetOptions.ForceUpdate);
         }
         
         if (optionDic.IsTrue(DEFAULT_CUSTOM_BUILD_OPTION.revealInFinder.ToString())) {

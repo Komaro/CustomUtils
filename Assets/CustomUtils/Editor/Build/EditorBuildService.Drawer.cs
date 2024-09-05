@@ -1,23 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using Newtonsoft.Json;
 using UnityEditor;
-using UnityEditor.SceneManagement;
-using UnityEditor.SearchService;
+using UnityEditor.Build.Reporting;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using Scene = UnityEngine.SceneManagement.Scene;
 
 public partial class EditorBuildService {
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private void DrawDrawer() {
         if (_drawerDic.TryGetValue(_selectBuilderType, out var drawer)) {
-            _editorWindowScrollViewPosition = EditorGUILayout.BeginScrollView(_editorWindowScrollViewPosition, GUILayout.ExpandWidth(true), GUILayout.ExpandHeight(true));
             drawer?.Draw();
-            EditorGUILayout.EndScrollView();
-            
             EditorCommon.DrawSeparator();
         } else {
             EditorGUILayout.HelpBox($"유효한 {typeof(EditorBuildDrawer<,>).Name}를 찾을 수 없습니다.", MessageType.Warning);
@@ -72,6 +68,8 @@ public class EditorBuildDrawerAttribute : Attribute {
 public abstract class EditorBuildDrawer<TConfig, TNullConfig> : EditorAutoConfigDrawer<TConfig, TNullConfig> 
     where TConfig : BuildConfig, new() 
     where TNullConfig : TConfig, new() {
+
+    private string _buildInfoMemo;
     
     protected readonly Type builderType;
     protected readonly BuildTarget buildTarget;
@@ -79,12 +77,13 @@ public abstract class EditorBuildDrawer<TConfig, TNullConfig> : EditorAutoConfig
     
     protected ToggleDraw[] defineSymbols = {};
     
+    private Vector2 _editorWindowScrollViewPosition;
     private Vector2 _defineSymbolScrollViewPosition;
     private bool _activateSceneFoldOut;
     private bool _sceneAssetFoldOut;
+    private Vector2 _buildInfoMemoScrollViewPosition;
     
     protected static HashSet<string> buildOptionSet;
-
     protected static Dictionary<string, EditorBuildSettingsScene> activateSceneDic = new();
     protected static Dictionary<string, EditorAssetInfo<SceneAsset>> sceneAssetInfoDic = new();
 
@@ -126,18 +125,19 @@ public abstract class EditorBuildDrawer<TConfig, TNullConfig> : EditorAutoConfig
         activateSceneDic.Clear();
         if (EditorBuildSettings.scenes.Any()) {
             activateSceneDic = EditorBuildSettings.scenes.ToDictionary(scene => scene.path, scene => scene);
-            Logger.TraceLog(activateSceneDic.ToStringCollection(x => x.Key));
         }
 
         sceneAssetInfoDic.Clear();
         foreach (var info in AssetDatabaseUtil.FindAssetInfos<SceneAsset>("t:Scene")) {
-            Logger.TraceLog($"{info.Name} || {info.guid} || {info.path}");
             sceneAssetInfoDic.Add(info.path, info);
         }
     }
 
     public override void Draw() {
         base.Draw();
+        
+        _editorWindowScrollViewPosition = EditorGUILayout.BeginScrollView(_editorWindowScrollViewPosition, GUILayout.ExpandWidth(true), GUILayout.ExpandHeight(true));
+        
         if (buildTarget != EditorUserBuildSettings.activeBuildTarget) {
             EditorGUILayout.HelpBox($"현재 활성화된 {nameof(BuildTarget)}({EditorUserBuildSettings.activeBuildTarget})과 {nameof(Builder)}의 {nameof(BuildTarget)}({buildTarget})이 일치하지 않습니다", MessageType.Warning);
             if (GUILayout.Button($"{nameof(BuildTarget)} 전환\n[{EditorUserBuildSettings.activeBuildTarget} ==> {buildTarget}]")) {
@@ -169,7 +169,12 @@ public abstract class EditorBuildDrawer<TConfig, TNullConfig> : EditorAutoConfig
             
             EditorCommon.DrawSeparator();
             DrawScene();
+
+            EditorCommon.DrawSeparator();
+            DrawBuildButton();
         }
+        
+        EditorGUILayout.EndScrollView();
     }
     
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -211,7 +216,7 @@ public abstract class EditorBuildDrawer<TConfig, TNullConfig> : EditorAutoConfig
             _defineSymbolScrollViewPosition = EditorGUILayout.BeginScrollView(_defineSymbolScrollViewPosition, GUILayout.ExpandWidth(true), GUILayout.MinHeight(100f), GUILayout.MaxHeight(250f));
             EditorCommon.DrawToggleBox(defineSymbols, () => config.defineSymbols = string.Join(Constants.Separator.DEFINE_SYMBOL, defineSymbols.Where(x => x.isActive)));
             EditorGUILayout.EndScrollView();
-                
+            
             EditorCommon.DrawLabelTextFieldWithRefresh("Define Symbol", config.defineSymbols, () => {
                 config.defineSymbols = PlayerSettings.GetScriptingDefineSymbolsForGroup(buildTargetGroup);
                 
@@ -233,6 +238,8 @@ public abstract class EditorBuildDrawer<TConfig, TNullConfig> : EditorAutoConfig
             }
         }
     }
+
+    private SceneAsset sceneAsset;
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     protected virtual void DrawScene() {
@@ -276,42 +283,102 @@ public abstract class EditorBuildDrawer<TConfig, TNullConfig> : EditorAutoConfig
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    protected void DrawBuildButton() {
-        EditorCommon.DrawSeparator();
-        
+    protected virtual void DrawBuildButton() {
         GUILayout.Label("빌드 (Build)", Constants.Draw.AREA_TITLE_STYLE);
-        using (new EditorGUILayout.VerticalScope()) {
+        using (new EditorGUILayout.VerticalScope(Constants.Draw.BOX)) {
+            EditorCommon.DrawLabelToggle(ref config.isLogBuildReport, "빌드 결과 기록", 150f);
+        }
+        
+        using (new EditorGUILayout.VerticalScope(Constants.Draw.BOX)) {
+            if (config.isLogBuildReport) {
+                EditorGUILayout.Space(5f);
+                EditorCommon.DrawWideTextArea("메모", ref _buildInfoMemo);
+            }
+            
             EditorCommon.DrawLabelTextField("빌더 빌드 타겟", buildTarget.ToString());
             EditorCommon.DrawLabelTextField("현재 빌드 타겟", EditorUserBuildSettings.activeBuildTarget.ToString());
-            
-            if (GUILayout.Button("Build", GUILayout.ExpandHeight(true), GUILayout.ExpandWidth(true), GUILayout.Height(45f))) {
-                if (EditorBuildSettings.scenes.Any(scene => scene.enabled) == false) {
-                    EditorUtility.DisplayDialog("경고", $"{nameof(EditorBuildSettings)}에 활성화 된 씬이 존재하지 않습니다.", "확인");
-                    return;
+
+            if (EditorApplication.isCompiling || EditorApplication.isUpdating) {
+                EditorGUILayout.HelpBox($"Editor가 현재 컴파일 혹은 {nameof(AssetDatabase)} 업데이트중에 있습니다", MessageType.Error);
+                return;
+            }
+
+            if (string.IsNullOrEmpty(config.buildDirectory) == false) {
+                if (GUILayout.Button("Build", GUILayout.ExpandHeight(true), GUILayout.ExpandWidth(true), GUILayout.Height(45f))) {
+                    if (EditorBuildSettings.scenes.Any(scene => scene.enabled) == false) {
+                        EditorUtility.DisplayDialog("경고", $"{nameof(EditorBuildSettings)}에 활성화 된 씬이 존재하지 않습니다.", "확인");
+                        return;
+                    }
+                
+                    if (buildTarget != EditorUserBuildSettings.activeBuildTarget) {
+                        EditorCommon.ShowCheckDialogue($"{nameof(buildTarget)} miss match", $"현재 선택된 {nameof(BuildTarget)}({buildTarget})과 활성화된 {nameof(BuildTarget)}({EditorUserBuildSettings.activeBuildTarget})이 동일하지 않습니다. 플랫폼 전환 후 빌드를 진행합니다", ok: () => Build());
+                    } else {
+                        EditorCommon.ShowCheckDialogue("빌드", "빌드를 진행합니다.\n" +
+                                                             $"{EditorUserBuildSettings.selectedBuildTargetGroup}\n{EditorUserBuildSettings.activeBuildTarget}\n\n" +
+                                                             $"Define Symbol : {config.defineSymbols}\n\n" +
+                                                             $"대상 디렉토리 : {config.buildDirectory}\n\n" +
+                                                             $"활성화된 옵션\n\t{config.optionDic.ToStringCollection("\n\t")}", ok: () => Build(_buildInfoMemo));
+                    }
                 }
-            
-                if (buildTarget != EditorUserBuildSettings.activeBuildTarget) {
-                    EditorCommon.ShowCheckDialogue($"{nameof(buildTarget)} miss match", $"현재 선택된 {nameof(BuildTarget)}({buildTarget})과 활성화된 {nameof(BuildTarget)}({EditorUserBuildSettings.activeBuildTarget})이 동일하지 않습니다. 플랫폼 전환 후 빌드를 진행합니다", ok: Build);
-                } else {
-                    Build();
-                }
+            } else {
+                EditorGUILayout.HelpBox("빌드를 내보낼 폴더가 선택되지 않았습니다", MessageType.Error);
+            }
+        }
+        
+        if (config.GetInfoCount() > 0) {
+            using (new EditorGUILayout.VerticalScope(Constants.Draw.BOX)) {
+                config.Cursor = EditorCommon.DrawCursorNavigator("빌드 기록", config.Cursor, config.GetInfoCount());
+                
+                var info = config[config.Cursor];
+                EditorCommon.DrawLabelTextField("결과", info.result.ToString());
+                EditorCommon.DrawLabelTextField("타겟", info.buildTarget.ToString());
+                EditorCommon.DrawLabelTextField("경로", info.outputPath);
+                EditorCommon.DrawLabelTextField("시작", info.startTime.ToString(CultureInfo.CurrentCulture));
+                EditorCommon.DrawLabelTextField("종료", info.endTime.ToString(CultureInfo.CurrentCulture));
+                EditorCommon.DrawLabelTextField("시간", info.buildTime.ToString());
+
+                GUILayout.Space(5f);
+                
+                _buildInfoMemoScrollViewPosition = GUILayout.BeginScrollView(_buildInfoMemoScrollViewPosition, false, false, GUILayout.Height(250f));
+                EditorGUILayout.TextArea(info.memo, GUILayout.ExpandHeight(true), GUILayout.ExpandWidth(true));
+                GUILayout.EndScrollView();
             }
         }
     }
 
-    protected void SwitchPlatform() {
-        if (buildTarget != EditorUserBuildSettings.activeBuildTarget) {
-            EditorUserBuildSettings.SwitchActiveBuildTarget(buildTargetGroup, buildTarget);
-        }
-    }
-
-    protected void Build() {
+    protected void Build(string memo = "") {
         BuildConfigProvider.Load(config);
         if (BuildInteractionInterface.TryAttachBuilder(builderType, out var builder)) {
             var report = builder.StartBuild();
-            if (report != null) {
-                Logger.SimpleTraceLog($"Memo\n{report.summary.ToStringAllFields()}");
+            if (report != null && config.isLogBuildReport) {
+                if (Service.TryGetServiceWithStart<LogCollectorService>(out var service)) {
+                    service.ClearLog();
+                    service.SetFilter(LogType.Error);
+                }
+
+                config.AddBuildInfo(new BuildInfo {
+                    result = report.summary.result,
+                    buildTarget = report.summary.platform,
+                    outputPath = report.summary.outputPath,
+                    startTime = report.summary.buildStartedAt,
+                    endTime = report.summary.buildEndedAt,
+                    buildTime = report.summary.totalTime,
+                    memo = $"{memo}\n\n===================\n\n" +
+                           $"{config.ToStringAllFields()}\n\n===================\n\n" +
+                           $"{service?.Copy().ToStringCollection('\n')}",
+                });
+                
+                config.Save(CONFIG_PATH);
+                config.ResetCursor();
+
+                Service.StopService<LogCollectorService>();
             }
+        }
+    }
+    
+    protected void SwitchPlatform() {
+        if (buildTarget != EditorUserBuildSettings.activeBuildTarget) {
+            EditorUserBuildSettings.SwitchActiveBuildTarget(buildTargetGroup, buildTarget);
         }
     }
 }
@@ -342,11 +409,21 @@ public class BuildConfigAttribute : PriorityAttribute {
     }
 }
 
+public struct BuildInfo {
+
+    public BuildResult result;
+    public BuildTarget buildTarget;
+    public string outputPath;
+    public DateTime startTime;
+    public DateTime endTime;
+    public TimeSpan buildTime;
+    public string memo;
+}
+
 [RequiresAttributeImplementation(typeof(BuildConfigAttribute))]
 public abstract class BuildConfig : JsonAutoConfig {
 
     public string buildDirectory = string.Empty;
-
     public readonly Dictionary<string, bool> optionDic = new();
 
     public string defineSymbols;
@@ -359,6 +436,27 @@ public abstract class BuildConfig : JsonAutoConfig {
     public bool deepProfilingSupport;
     public bool scriptDebugging;
 
+    public bool isLogBuildReport;
+
+    #region [Build Info]
+    
+    private const int MAX_LOG_COUNT = 5;
+    
+    [JsonProperty("lastBuildInfoList")]
+    private readonly List<BuildInfo> _lastBuildInfoList = new();
+    
+    [JsonIgnore] public BuildInfo this[int index] => _lastBuildInfoList[index];
+    
+    [JsonIgnore] private int _cursor;
+    [JsonIgnore] public int Cursor { get => _cursor; set => _cursor = Math.Clamp(value, 0, _lastBuildInfoList.Count - 1); }
+    
+    public void AddBuildInfo(BuildInfo info) => _lastBuildInfoList.LimitedAdd(info, MAX_LOG_COUNT);
+    public int GetInfoCount() => _lastBuildInfoList.Count;
+    
+    public void ResetCursor() => Cursor = MAX_LOG_COUNT;
+    
+    #endregion
+    
     public BuildConfig() {
         var type = GetType();
         if (type.TryGetCustomAttribute<BuildConfigAttribute>(out var targetAttribute)) {
@@ -387,15 +485,6 @@ public abstract class BuildConfig : JsonAutoConfig {
         deepProfilingSupport = EditorUserBuildSettings.buildWithDeepProfilingSupport;
         scriptDebugging = EditorUserBuildSettings.allowDebugging;
     }
-
-    public bool IsActiveOption<TEnum>(TEnum option) where TEnum : struct, Enum => optionDic.TryGetValue(option.ToString(), out var isActive) && isActive;
-    public bool IsActiveOption(string option) => optionDic.TryGetValue(option, out var isActive) && isActive;
-}
-
-[BuildConfig(BuildTarget.NoTarget, BuildTargetGroup.Unknown)]
-public class NullBuildConfig : BuildConfig {
-
-    public override bool IsNull() => true;
 }
 
 [BuildOptionEnum]

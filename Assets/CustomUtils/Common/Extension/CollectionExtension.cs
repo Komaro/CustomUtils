@@ -336,6 +336,7 @@ public static class CollectionExtension {
     }
     
     public static TValue GetRandomValue<TKey, TValue>(this IDictionary<TKey, TValue> dictionary) => dictionary.Values.ToList().Shuffle().FirstOrDefault();
+    
     public static bool IsTrue<TKey>(this IDictionary<TKey, bool> dictionary, TKey key) => dictionary.TryGetValue(key, out var isTrue) && isTrue;
     public static bool IsDictionary(this Type type) => type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Dictionary<,>);
     public static bool IsEmpty(this IDictionary dictionary) => dictionary.Count <= 0;

@@ -288,9 +288,6 @@ public static partial class EditorCommon {
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void SetGUITooltip(string tooltip, bool condition) => GUI.tooltip = condition && Event.current.type == EventType.Repaint ? tooltip : string.Empty;
-    
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static int DrawTopToolbar(int index, Action<int> onChange = null, params string[] texts) {
         using (new EditorGUILayout.HorizontalScope()) {
             GUILayout.FlexibleSpace();
@@ -324,6 +321,45 @@ public static partial class EditorCommon {
         }
 
         return false;
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static string DrawWideTextArea(string label, string text, float height = 100f) {
+        using (new GUILayout.HorizontalScope()) {
+            GUILayout.Label(label, Constants.Draw.TITLE_STYLE, GetCachedFixWidthOption(label, Constants.Draw.TITLE_STYLE), GUILayout.Height(height));
+            return EditorGUILayout.TextArea(text, GUILayout.Height(height), GUILayout.ExpandWidth(true));
+        }
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void DrawWideTextArea(string label, ref string text, float height = 100f) {
+        using (new GUILayout.HorizontalScope()) {
+            GUILayout.Label(label, Constants.Draw.TITLE_STYLE, GetCachedFixWidthOption(label, Constants.Draw.TITLE_STYLE), GUILayout.Height(height));
+            text = EditorGUILayout.TextArea(text, GUILayout.Height(height), GUILayout.ExpandWidth(true));
+        }
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static int DrawCursorNavigator(string label, int cursor, int max) {
+        using (new GUILayout.HorizontalScope()) {
+            EditorGUI.BeginDisabledGroup(cursor <= 0);
+            if (GUILayout.Button("<", GUILayout.Height(30f))) {
+                cursor = cursor <= 0 ? max : cursor - 1;
+                // cursor = Math.Max(0, cursor - 1);
+            }
+            EditorGUI.EndDisabledGroup();
+                        
+            GUILayout.Label($"{label} [{cursor + 1} / {max}]", Constants.Draw.TITLE_STYLE, GUILayout.ExpandWidth(true), GUILayout.ExpandHeight(true), GUILayout.Width(200f));
+
+            EditorGUI.BeginDisabledGroup(max <= 1 || cursor >= max - 1);
+            if (GUILayout.Button(">", GUILayout.Height(30f))) {
+                cursor = (cursor + 1) % max;
+                // cursor = Math.Min(max, cursor + 1);
+            }
+            EditorGUI.EndDisabledGroup();
+        }
+        
+        return cursor;
     }
     
     #region [Fit]

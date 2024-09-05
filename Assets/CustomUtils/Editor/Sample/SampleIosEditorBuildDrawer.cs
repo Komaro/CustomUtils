@@ -17,6 +17,12 @@ public class SampleIosEditorBuildSettingDrawer : SampleIosEditorBuildDrawer {
         
         EditorCommon.DrawSeparator();
         
+        
+    }
+
+    protected override void DrawBuildOptions() {
+        base.DrawBuildOptions();
+        
         EditorGUILayout.LabelField("iOS 옵션", Constants.Draw.AREA_TITLE_STYLE);
         using (new EditorGUILayout.VerticalScope(Constants.Draw.BOX)) {
             EditorCommon.DrawLabelTextField(nameof(config.buildNumber), ref config.buildNumber, 200f);
@@ -24,8 +30,6 @@ public class SampleIosEditorBuildSettingDrawer : SampleIosEditorBuildDrawer {
             EditorCommon.DrawLabelTextField(nameof(config.iOSManualProvisioningProfileID), ref config.iOSManualProvisioningProfileID, 200f);
             EditorCommon.DrawEnumPopup(nameof(config.iOSManualProvisioningProfileType), ref config.iOSManualProvisioningProfileType, 250f);
         }
-
-        DrawBuildButton();
     }
 }
 

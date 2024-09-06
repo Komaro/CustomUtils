@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using Newtonsoft.Json;
 using UnityEditor;
-using UnityEditor.Build.Reporting;
 using UnityEngine;
 
 public partial class EditorBuildService {
@@ -121,31 +119,17 @@ public abstract class EditorBuildDrawer<TConfig, TNullConfig> : EditorAutoConfig
         RefreshScenes();
     }
 
-    private static void RefreshScenes() {
-        activateSceneDic.Clear();
-        if (EditorBuildSettings.scenes.Any()) {
-            activateSceneDic = EditorBuildSettings.scenes.ToDictionary(scene => scene.path, scene => scene);
-        }
-
-        sceneAssetInfoDic.Clear();
-        foreach (var info in AssetDatabaseUtil.FindAssetInfos<SceneAsset>("t:Scene")) {
-            sceneAssetInfoDic.Add(info.path, info);
-        }
-    }
-
     public override void Draw() {
         base.Draw();
-        
-        _editorWindowScrollViewPosition = EditorGUILayout.BeginScrollView(_editorWindowScrollViewPosition, GUILayout.ExpandWidth(true), GUILayout.ExpandHeight(true));
-        
-        if (buildTarget != EditorUserBuildSettings.activeBuildTarget) {
-            EditorGUILayout.HelpBox($"현재 활성화된 {nameof(BuildTarget)}({EditorUserBuildSettings.activeBuildTarget})과 {nameof(Builder)}의 {nameof(BuildTarget)}({buildTarget})이 일치하지 않습니다", MessageType.Warning);
-            if (GUILayout.Button($"{nameof(BuildTarget)} 전환\n[{EditorUserBuildSettings.activeBuildTarget} ==> {buildTarget}]")) {
-                SwitchPlatform();
+        if (config != null) {
+            _editorWindowScrollViewPosition = EditorGUILayout.BeginScrollView(_editorWindowScrollViewPosition, GUILayout.ExpandWidth(true), GUILayout.ExpandHeight(true));
+            if (buildTarget != EditorUserBuildSettings.activeBuildTarget) {
+                EditorGUILayout.HelpBox($"현재 활성화된 {nameof(BuildTarget)}({EditorUserBuildSettings.activeBuildTarget})과 {nameof(Builder)}의 {nameof(BuildTarget)}({buildTarget})이 일치하지 않습니다", MessageType.Warning);
+                if (GUILayout.Button($"{nameof(BuildTarget)} 전환\n[{EditorUserBuildSettings.activeBuildTarget} ==> {buildTarget}]")) {
+                    SwitchPlatform();
+                }
             }
-        }
-
-        if (config.IsNull() == false) {
+            
             using (new GUILayout.VerticalScope(Constants.Draw.BOX)) {
                 EditorCommon.DrawFolderOpenSelector("빌드 폴더", "선택", ref config.buildDirectory);
             }
@@ -172,9 +156,12 @@ public abstract class EditorBuildDrawer<TConfig, TNullConfig> : EditorAutoConfig
 
             EditorCommon.DrawSeparator();
             DrawBuildButton();
-        }
+            
+            EditorCommon.DrawSeparator();
+            DrawBuildResultRecord();
         
-        EditorGUILayout.EndScrollView();
+            EditorGUILayout.EndScrollView();
+        }
     }
     
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -239,8 +226,6 @@ public abstract class EditorBuildDrawer<TConfig, TNullConfig> : EditorAutoConfig
         }
     }
 
-    private SceneAsset sceneAsset;
-
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     protected virtual void DrawScene() {
         if (EditorCommon.DrawLabelButton("씬 (Scene)", Constants.Draw.REFRESH_ICON, Constants.Draw.AREA_TITLE_STYLE)) {
@@ -300,34 +285,37 @@ public abstract class EditorBuildDrawer<TConfig, TNullConfig> : EditorAutoConfig
 
             if (EditorApplication.isCompiling || EditorApplication.isUpdating) {
                 EditorGUILayout.HelpBox($"Editor가 현재 컴파일 혹은 {nameof(AssetDatabase)} 업데이트중에 있습니다", MessageType.Error);
-                return;
-            }
-
-            if (string.IsNullOrEmpty(config.buildDirectory) == false) {
-                if (GUILayout.Button("Build", GUILayout.ExpandHeight(true), GUILayout.ExpandWidth(true), GUILayout.Height(45f))) {
-                    if (EditorBuildSettings.scenes.Any(scene => scene.enabled) == false) {
-                        EditorUtility.DisplayDialog("경고", $"{nameof(EditorBuildSettings)}에 활성화 된 씬이 존재하지 않습니다.", "확인");
-                        return;
-                    }
-                
-                    if (buildTarget != EditorUserBuildSettings.activeBuildTarget) {
-                        EditorCommon.ShowCheckDialogue($"{nameof(buildTarget)} miss match", $"현재 선택된 {nameof(BuildTarget)}({buildTarget})과 활성화된 {nameof(BuildTarget)}({EditorUserBuildSettings.activeBuildTarget})이 동일하지 않습니다. 플랫폼 전환 후 빌드를 진행합니다", ok: () => Build());
-                    } else {
-                        EditorCommon.ShowCheckDialogue("빌드", "빌드를 진행합니다.\n" +
-                                                             $"{EditorUserBuildSettings.selectedBuildTargetGroup}\n{EditorUserBuildSettings.activeBuildTarget}\n\n" +
-                                                             $"Define Symbol : {config.defineSymbols}\n\n" +
-                                                             $"대상 디렉토리 : {config.buildDirectory}\n\n" +
-                                                             $"활성화된 옵션\n\t{config.optionDic.ToStringCollection("\n\t")}", ok: () => Build(_buildInfoMemo));
-                    }
-                }
             } else {
-                EditorGUILayout.HelpBox("빌드를 내보낼 폴더가 선택되지 않았습니다", MessageType.Error);
+                if (string.IsNullOrEmpty(config.buildDirectory) == false) {
+                    if (GUILayout.Button("Build", GUILayout.ExpandHeight(true), GUILayout.ExpandWidth(true), GUILayout.Height(45f))) {
+                        if (EditorBuildSettings.scenes.Any(scene => scene.enabled) == false) {
+                            EditorUtility.DisplayDialog("경고", $"{nameof(EditorBuildSettings)}에 활성화 된 씬이 존재하지 않습니다.", "확인");
+                            return;
+                        }
+                    
+                        if (buildTarget != EditorUserBuildSettings.activeBuildTarget) {
+                            EditorCommon.ShowCheckDialogue($"{nameof(buildTarget)} miss match", $"현재 선택된 {nameof(BuildTarget)}({buildTarget})과 활성화된 {nameof(BuildTarget)}({EditorUserBuildSettings.activeBuildTarget})이 동일하지 않습니다. 플랫폼 전환 후 빌드를 진행합니다", ok: () => Build());
+                        } else {
+                            EditorCommon.ShowCheckDialogue("빌드", "빌드를 진행합니다.\n" +
+                                                                 $"{EditorUserBuildSettings.selectedBuildTargetGroup}\n{EditorUserBuildSettings.activeBuildTarget}\n\n" +
+                                                                 $"Define Symbol : {config.defineSymbols}\n\n" +
+                                                                 $"대상 디렉토리 : {config.buildDirectory}\n\n" +
+                                                                 $"활성화된 옵션\n\t{config.optionDic.ToStringCollection("\n\t")}", ok: () => Build(_buildInfoMemo));
+                        }
+                    }
+                } else {
+                    EditorGUILayout.HelpBox("빌드를 내보낼 폴더가 선택되지 않았습니다", MessageType.Error);
+                }
             }
         }
-        
-        if (config.GetInfoCount() > 0) {
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    protected virtual void DrawBuildResultRecord() {
+        if (config.GetRecordCount() > 0) {
+            GUILayout.Label("빌드 결과", Constants.Draw.AREA_TITLE_STYLE);
             using (new EditorGUILayout.VerticalScope(Constants.Draw.BOX)) {
-                config.Cursor = EditorCommon.DrawCursorNavigator("빌드 기록", config.Cursor, config.GetInfoCount());
+                DrawBuildResultRecordCursorNavigator();
                 
                 var info = config[config.Cursor];
                 EditorCommon.DrawLabelTextField("결과", info.result.ToString());
@@ -339,14 +327,51 @@ public abstract class EditorBuildDrawer<TConfig, TNullConfig> : EditorAutoConfig
 
                 GUILayout.Space(5f);
                 
-                _buildInfoMemoScrollViewPosition = GUILayout.BeginScrollView(_buildInfoMemoScrollViewPosition, false, false, GUILayout.Height(250f));
+                _buildInfoMemoScrollViewPosition = GUILayout.BeginScrollView(_buildInfoMemoScrollViewPosition, false, false, GUILayout.Height(200f));
                 EditorGUILayout.TextArea(info.memo, GUILayout.ExpandHeight(true), GUILayout.ExpandWidth(true));
                 GUILayout.EndScrollView();
             }
         }
     }
 
-    protected void Build(string memo = "") {
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private void DrawBuildResultRecordCursorNavigator() {
+        using (new GUILayout.HorizontalScope()) {
+            if (GUILayout.Button("<", GUILayout.Height(40f))) {
+                config.Cursor = config.Cursor <= 0 ? config.GetRecordCount() : config.Cursor - 1;
+            }
+
+            using (new GUILayout.VerticalScope(GUILayout.ExpandWidth(true), GUILayout.ExpandHeight(true), GUILayout.Width(200f))) {
+                GUILayout.Label($"빌드 기록 [{config.Cursor + 1} / {config.GetRecordCount()}]", Constants.Draw.TITLE_STYLE);
+                using (new GUILayout.HorizontalScope()) {
+                    GUILayout.FlexibleSpace();
+                    if (EditorCommon.DrawFitButton("빌드 기록 제거")) {
+                        Logger.TraceLog($"Deleted the build result log at index {config.Cursor}", Color.red);
+                        config.DeleteBuildRecord(config.Cursor);
+                    }
+                    GUILayout.FlexibleSpace();
+                }
+            }
+
+            if (GUILayout.Button(">", GUILayout.Height(40f))) {
+                config.Cursor = (config.Cursor + 1) % config.GetRecordCount();
+            }
+        }
+    }
+
+    private void RefreshScenes() {
+        activateSceneDic.Clear();
+        if (EditorBuildSettings.scenes.Any()) {
+            activateSceneDic = EditorBuildSettings.scenes.ToDictionary(scene => scene.path, scene => scene);
+        }
+
+        sceneAssetInfoDic.Clear();
+        foreach (var info in AssetDatabaseUtil.FindAssetInfos<SceneAsset>("t:Scene")) {
+            sceneAssetInfoDic.Add(info.path, info);
+        }
+    }
+    
+    protected virtual void Build(string memo = "") {
         BuildConfigProvider.Load(config);
         if (BuildInteractionInterface.TryAttachBuilder(builderType, out var builder)) {
             var report = builder.StartBuild();
@@ -356,7 +381,7 @@ public abstract class EditorBuildDrawer<TConfig, TNullConfig> : EditorAutoConfig
                     service.SetFilter(LogType.Error);
                 }
 
-                config.AddBuildInfo(new BuildInfo {
+                config.AddBuildRecord(new BuildRecord {
                     result = report.summary.result,
                     buildTarget = report.summary.platform,
                     outputPath = report.summary.outputPath,
@@ -376,122 +401,9 @@ public abstract class EditorBuildDrawer<TConfig, TNullConfig> : EditorAutoConfig
         }
     }
     
-    protected void SwitchPlatform() {
+    protected virtual void SwitchPlatform() {
         if (buildTarget != EditorUserBuildSettings.activeBuildTarget) {
             EditorUserBuildSettings.SwitchActiveBuildTarget(buildTargetGroup, buildTarget);
         }
     }
-}
-
-/// <param name="buildType">Enum Value</param>
-/// <param name="buildTarget"></param>
-/// <param name="buildTargetGroup"></param>
-public class BuildConfigAttribute : PriorityAttribute {
-
-    public Enum buildType;
-    public BuildTarget buildTarget;
-    public BuildTargetGroup buildTargetGroup;
-
-    public BuildConfigAttribute() {
-        buildTarget = BuildTarget.NoTarget;
-        buildTargetGroup = BuildTargetGroup.Unknown;
-    }
-    
-    public BuildConfigAttribute(BuildTarget buildTarget, BuildTargetGroup buildTargetGroup) {
-        this.buildTarget = buildTarget;
-        this.buildTargetGroup = buildTargetGroup;
-    }
-
-    public BuildConfigAttribute(object buildType, BuildTarget buildTarget, BuildTargetGroup buildTargetGroup) : this(buildTarget, buildTargetGroup) {
-        if (buildType is Enum enumValue) {
-            this.buildType = enumValue;
-        }
-    }
-}
-
-public struct BuildInfo {
-
-    public BuildResult result;
-    public BuildTarget buildTarget;
-    public string outputPath;
-    public DateTime startTime;
-    public DateTime endTime;
-    public TimeSpan buildTime;
-    public string memo;
-}
-
-[RequiresAttributeImplementation(typeof(BuildConfigAttribute))]
-public abstract class BuildConfig : JsonAutoConfig {
-
-    public string buildDirectory = string.Empty;
-    public readonly Dictionary<string, bool> optionDic = new();
-
-    public string defineSymbols;
-    public string applicationIdentifier;
-    public string bundleVersion;
-    public readonly Dictionary<LogType, StackTraceLogType> stackTraceDic = new(); 
-
-    public bool developmentBuild;
-    public bool autoConnectProfile;
-    public bool deepProfilingSupport;
-    public bool scriptDebugging;
-
-    public bool isLogBuildReport;
-
-    #region [Build Info]
-    
-    private const int MAX_LOG_COUNT = 5;
-    
-    [JsonProperty("lastBuildInfoList")]
-    private readonly List<BuildInfo> _lastBuildInfoList = new();
-    
-    [JsonIgnore] public BuildInfo this[int index] => _lastBuildInfoList[index];
-    
-    [JsonIgnore] private int _cursor;
-    [JsonIgnore] public int Cursor { get => _cursor; set => _cursor = Math.Clamp(value, 0, _lastBuildInfoList.Count - 1); }
-    
-    public void AddBuildInfo(BuildInfo info) => _lastBuildInfoList.LimitedAdd(info, MAX_LOG_COUNT);
-    public int GetInfoCount() => _lastBuildInfoList.Count;
-    
-    public void ResetCursor() => Cursor = MAX_LOG_COUNT;
-    
-    #endregion
-    
-    public BuildConfig() {
-        var type = GetType();
-        if (type.TryGetCustomAttribute<BuildConfigAttribute>(out var targetAttribute)) {
-            defineSymbols = PlayerSettings.GetScriptingDefineSymbolsForGroup(targetAttribute.buildTargetGroup);
-            foreach (var (optionAttribute, enumType) in ReflectionProvider.GetAttributeEnumInfos<BuildOptionEnumAttribute>()) {
-                if (optionAttribute.buildTargetGroup == BuildTargetGroup.Unknown || optionAttribute.buildTargetGroup == targetAttribute.buildTargetGroup) {
-                    foreach (var ob in Enum.GetValues(enumType)) {
-                        optionDic.AutoAdd(ob.ToString(), false);
-                    }
-                }
-            }
-        } else {
-            defineSymbols = string.Empty;
-            optionDic.Clear();
-        }
-        
-        applicationIdentifier = PlayerSettings.applicationIdentifier;
-        bundleVersion = PlayerSettings.bundleVersion;
-        
-        foreach (var logType in EnumUtil.GetValues<LogType>()) {
-            stackTraceDic.AutoAdd(logType, PlayerSettings.GetStackTraceLogType(logType));
-        }
-        
-        developmentBuild = EditorUserBuildSettings.development;
-        autoConnectProfile = EditorUserBuildSettings.connectProfiler;
-        deepProfilingSupport = EditorUserBuildSettings.buildWithDeepProfilingSupport;
-        scriptDebugging = EditorUserBuildSettings.allowDebugging;
-    }
-}
-
-[BuildOptionEnum]
-public enum DEFAULT_CUSTOM_BUILD_OPTION {
-    ignoreResourcesReimport,
-    cleanBurstDebug,
-    cleanIL2CPPSludge,
-    revealInFinder,
-    refreshAssetDatabase,
 }

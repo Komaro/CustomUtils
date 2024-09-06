@@ -344,19 +344,34 @@ public static partial class EditorCommon {
         using (new GUILayout.HorizontalScope()) {
             EditorGUI.BeginDisabledGroup(cursor <= 0);
             if (GUILayout.Button("<", GUILayout.Height(30f))) {
-                cursor = cursor <= 0 ? max : cursor - 1;
-                // cursor = Math.Max(0, cursor - 1);
+                cursor = Math.Max(0, cursor - 1);
             }
             EditorGUI.EndDisabledGroup();
-                        
+            
             GUILayout.Label($"{label} [{cursor + 1} / {max}]", Constants.Draw.TITLE_STYLE, GUILayout.ExpandWidth(true), GUILayout.ExpandHeight(true), GUILayout.Width(200f));
 
             EditorGUI.BeginDisabledGroup(max <= 1 || cursor >= max - 1);
             if (GUILayout.Button(">", GUILayout.Height(30f))) {
-                cursor = (cursor + 1) % max;
-                // cursor = Math.Min(max, cursor + 1);
+                cursor = Math.Min(max, cursor + 1);
             }
             EditorGUI.EndDisabledGroup();
+        }
+
+        return cursor;
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static int DrawCursorRecursiveNavigator(string label, int cursor, int max) {
+        using (new GUILayout.HorizontalScope()) {
+            if (GUILayout.Button("<", GUILayout.Height(30f))) {
+                cursor = cursor <= 0 ? max : cursor - 1;
+            }
+                        
+            GUILayout.Label($"{label} [{cursor + 1} / {max}]", Constants.Draw.TITLE_STYLE, GUILayout.ExpandWidth(true), GUILayout.ExpandHeight(true), GUILayout.Width(200f));
+
+            if (GUILayout.Button(">", GUILayout.Height(30f))) {
+                cursor = (cursor + 1) % max;
+            }
         }
         
         return cursor;

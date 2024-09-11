@@ -14,6 +14,17 @@ public class ResourcesProvider : IResourceProvider {
     public bool Valid() => Resources.Load(Constants.Resource.RESOURCE_LIST) != null;
 
     public void Init() { }
+    public void Load(ResourceProviderOrder order) {
+        throw new System.NotImplementedException();
+    }
+
+    public void Unload() {
+        throw new System.NotImplementedException();
+    }
+
+    public void Unload(ResourceProviderOrder order) {
+        throw new System.NotImplementedException();
+    }
 
     public void Load() {
         _resourcePathDic.Clear();
@@ -30,13 +41,11 @@ public class ResourcesProvider : IResourceProvider {
         _isLoaded = true;
     }
 
-    public void LoadAsync() {
-        throw new System.NotImplementedException();
-    }
-
     public void Unload(IDictionary<string, Object> cacheResource) => cacheResource.SafeClear(Resources.UnloadAsset);
+    
     public Object Get(string name) => _resourcePathDic.TryGetValue(name.ToUpper(), out var path) ? Resources.Load(path) : null;
     public string GetPath(string name) => _resourcePathDic.TryGetValue(name.ToUpper(), out var path) ? path : string.Empty;
+    
     public bool IsLoaded() => _isLoaded;
     public bool IsNull() => false;
 }

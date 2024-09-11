@@ -1,11 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Net;
 using System.Threading.Tasks;
-using UniRx;
 using UnityEngine;
-using UnityEngine.Networking;
 
 [ResourceProvider(100)]
 public class AssetBundleProvider : IResourceProvider {
@@ -36,6 +32,18 @@ public class AssetBundleProvider : IResourceProvider {
         }
     }
 
+    public void Load(ResourceProviderOrder order) {
+        throw new System.NotImplementedException();
+    }
+
+    public void Unload() {
+        throw new System.NotImplementedException();
+    }
+
+    public void Unload(ResourceProviderOrder order) {
+        throw new System.NotImplementedException();
+    }
+
     public void Load() {
         // TODO. TestCode
         if (Application.internetReachability == NetworkReachability.NotReachable) {
@@ -49,7 +57,7 @@ public class AssetBundleProvider : IResourceProvider {
                 }
             }
         }
-
+        
         _isLoaded = true;
     }
 
@@ -107,13 +115,17 @@ public class AssetBundleProvider : IResourceProvider {
         }
     }
 
-    public void LoadAsync() {
-        throw new System.NotImplementedException();
+    public void Unload(IDictionary<string, Object> cacheResource) {
+        cacheResource.Clear();
+        _cacheAssetBundleDic.Clear();
+        AssetBundle.UnloadAllAssetBundles(true);
     }
 
-    public void Unload(IDictionary<string, Object> cacheResource) {
-        _cacheAssetBundleDic.SafeClear(x => x.Unload(true));
-        AssetBundle.UnloadAllAssetBundles(true);
+    public void UnloadAssetBundle(string key) {
+        if (_cacheAssetBundleDic.TryGetValue(key, out var assetBundle)) {
+            assetBundle.Unload(true);
+            _cacheAssetBundleDic.Remove(key);
+        }
     }
 
     public Object Get(string name) {

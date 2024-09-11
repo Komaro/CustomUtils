@@ -1,20 +1,52 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using NUnit.Framework;
+using Unity.EditorCoroutines.Editor;
 using Unity.PerformanceTesting;
+using UnityEngine;
 
 [TestFixture]
 public class EditModeTestRunner {
     
-
     [Test]
     public void TempTest() {
-        
+        Logger.TraceLog($"IsMainThread? || {Service.GetService<UnityMainThreadDispatcherService>().IsMainThread()}");
+        var progress = new Progress<float>(progress => Logger.TraceLog($"{Service.GetService<UnityMainThreadDispatcherService>().IsMainThread()} || {(progress / 2).ToPercent()}"));
+        EditorCoroutineUtility.StartCoroutine(StartCoroutine(Constants.Resource.RESOURCE_LIST, progress), this);
+        Logger.TraceLog("Success");
     }
+
+    private IEnumerator StartCoroutine(string target, IProgress<float> progress) {
+        var asyncOperation = LoadAsync(target);
+        while (asyncOperation.isDone == false) {
+            progress.Report(asyncOperation.progress);
+            yield return null;
+        }
+        
+        progress.Report(1f);
+
+        if (asyncOperation.asset is TextAsset textAsset) {
+            var jObject = JObject.Parse(textAsset.text);
+            var totalValues = jObject.Count;
+            var currentProgress = 0f;
+            foreach (var pair in jObject) {
+                currentProgress++;
+                progress.Report(1f + currentProgress / totalValues);
+                yield return null;
+            }
+        }
+        progress.Report(2f);
+    }
+    
+    private ResourceRequest LoadAsync(string target) => Resources.LoadAsync<TextAsset>(target);
 
     [Test]
     [Performance]

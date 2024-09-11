@@ -2,8 +2,8 @@
 
 public class PriorityAttribute : Attribute {
 
-    public int priority;
+    public uint priority;
 
     public PriorityAttribute() => priority = 0;
-    public PriorityAttribute(int priority) => this.priority = priority;
+    public PriorityAttribute(uint priority) => this.priority = priority;
 }

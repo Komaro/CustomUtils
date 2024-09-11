@@ -11,20 +11,61 @@ public interface IResourceProvider : IImplementNullable {
 
     bool Valid();
     void Init();
-    void Load();
-    void LoadAsync();
-    void Unload(IDictionary<string, Object> cacheResource);
+    // void Load();
+    void Load(ResourceProviderOrder order);
+    // void Unload(IDictionary<string, Object> cacheResource);
+    void Unload();
+    void Unload(ResourceProviderOrder order);
     Object Get(string name);
     string GetPath(string name);
-    bool IsLoaded();
+    // bool IsLoaded();
+}
+
+[RequiresAttributeImplementation(typeof(ResourceProviderAttribute))]
+public interface IResourceCacheProvider : IImplementNullable {
+
+    bool Valid();
+    void Init();
+    void Unload(ResourceProviderOrder order);
+    object Get(string name);
+    void Add(string name, object ob);
+}
+
+[RequiresAttributeImplementation(typeof(ResourceProviderAttribute))]
+public abstract class ResourceProviderModule {
+
+    private IResourceProvider _resourceProvider;
+    private IResourceCacheProvider _cacheProvider;
+
+    public ResourceProviderModule() {
+        // TODO. Create ResourceProvider & CacheProvider
+    }
+
+    public virtual void Load(ResourceProviderOrder order) => _resourceProvider.Load(order);
+
+    public virtual void Unload(ResourceProviderOrder order) {
+        _resourceProvider.Unload(order);
+        _cacheProvider.Unload(order);
+    }
+
+    public virtual object Get(string name) {
+        var ob = _cacheProvider.Get(name);
+        return ob ?? _resourceProvider.Get(name);
+    }
 }
 
 [Service(DEFAULT_SERVICE_TYPE.RESOURCE_LOAD)]
 public class ResourceService : IService {
 
+    private ResourceProviderModule _module;
+    private ResourceProviderModule _subModule;
+
     private IResourceProvider _provider;
     private IResourceProvider _subProvider;
     private ConcurrentDictionary<string, Object> _cacheResourceDic = new();
+
+    private IResourceCacheProvider _cacheProvider;
+    private IResourceCacheProvider _subCacheProvider;
 
     private bool _isServing;
     private bool _isActiveSubProvider;
@@ -41,17 +82,17 @@ public class ResourceService : IService {
                 if (_subProvider == null) {
                     Logger.TraceError($"{nameof(_subProvider)} is Null. Check {nameof(ResourceSubProviderAttribute)} Implementation. Temporarily create {nameof(NullResourceProvider)}");
                     _subProvider = new NullResourceProvider();
-                    _subProvider.Init();
+                    // _subProvider.Init();
                 }
             }
             
             _provider = Init(providerTypeList.Where(x => x.IsDefined<ResourceProviderAttribute>()).OrderBy(x => x.GetCustomAttribute<ResourceProviderAttribute>().priority));
         } catch (Exception ex) {
             Logger.TraceError(ex);
-            if (_provider == null || _provider.IsLoaded() == false) {
+            if (_provider == null) {
                 Logger.TraceLog($"Provider is Invalid. Temporarily create {nameof(NullResourceProvider)}");
                 _provider = new NullResourceProvider();
-                _provider.Init();
+                // _provider.Init();
             }
         }
     }
@@ -59,7 +100,7 @@ public class ResourceService : IService {
     private IResourceProvider Init(IEnumerable<Type> enumerable) {
         foreach (var type in enumerable) {
             if (Activator.CreateInstance(type) is IResourceProvider provider && provider.Valid()) {
-                provider.Init();
+                // provider.Init();
                 Logger.TraceLog($"Activate Provider || {type.Name} || {type.Name}", Color.cyan);
                 return provider;
             }
@@ -68,18 +109,18 @@ public class ResourceService : IService {
         Logger.TraceError($"Failed to find a valid provider. Check {nameof(IResourceProvider)}.{nameof(IResourceProvider.Valid)} Method Implementation");
         
         var nullProvider = new NullResourceProvider();
-        nullProvider.Init();
+        // nullProvider.Init();
         return nullProvider;
     }
 
     void IService.Start() {
-        if (_isActiveSubProvider && _subProvider.IsLoaded() == false) {
-            _subProvider.Load();
+        if (_isActiveSubProvider) {
+            _subProvider.Init();
+            _subCacheProvider.Init();
         }
 
-        if (_provider.IsLoaded() == false) {
-            _provider.Load();
-        }
+        _provider.Init();
+        _cacheProvider.Init();
 
         _isServing = true;
     }
@@ -88,12 +129,30 @@ public class ResourceService : IService {
 
     void IService.Remove() {
         if (_isActiveSubProvider) {
-            _subProvider.Unload(_cacheResourceDic);
+            _subProvider.Unload();
         }
         
-        _provider.Unload(_cacheResourceDic);
+        _provider.Unload();
 
         _isServing = false;
+    }
+
+    public void Load(ResourceProviderOrder order) {
+        if (order is ResourceSubProviderOrder && _isActiveSubProvider) {
+            _subProvider.Load(order);
+        } else {
+            _provider.Load(order);
+        }
+    }
+
+    public void Unload(ResourceProviderOrder order) {
+        if (order is ResourceSubProviderOrder && _isActiveSubProvider) {
+            // _subProvider.Unload();
+            _subCacheProvider.Unload(order);
+        } else {
+            // _provider.Unload();
+            _cacheProvider.Unload(order);
+        }
     }
 
     public bool TryGet(string name, out GameObject go) {
@@ -181,11 +240,17 @@ public class ResourceService : IService {
 [AttributeUsage(AttributeTargets.Class)]
 public class ResourceProviderAttribute : PriorityAttribute {
 
-    public ResourceProviderAttribute(int priority) : base(priority) { }
+    public ResourceProviderAttribute(uint priority) : base(priority) { }
 }
 
 [AttributeUsage(AttributeTargets.Class)]
 public class ResourceSubProviderAttribute : PriorityAttribute {
 
-    public ResourceSubProviderAttribute(int priority) : base(priority) { }
+    public ResourceSubProviderAttribute(uint priority) : base(priority) { }
 }
+
+public abstract record ResourceProviderOrder {
+    
+    public bool IsSub() => this is ResourceSubProviderOrder;
+}
+public abstract record ResourceSubProviderOrder : ResourceProviderOrder;

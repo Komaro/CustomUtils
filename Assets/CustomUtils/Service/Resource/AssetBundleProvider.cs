@@ -8,7 +8,7 @@ using UnityEngine;
 using Object = UnityEngine.Object;
 
 [ResourceProvider(1)]
-public class AssetBundlePovider : IResourceProvider {
+public class AssetBundleProvider : IResourceProvider {
 
     private AssetBundleChecksumInfo _checksumInfo;
     private ConcurrentDictionary<string, AssetBundleWrapper> _bundleDic = new();

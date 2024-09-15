@@ -20,18 +20,6 @@ public interface IResourceProvider : IImplementNullable {
     bool IsReady();
 }
 
-// public interface IResourceCacheProvider : IImplementNullable {
-//
-//     void Init();
-//     void Clear();
-//     void Unload(ResourceOrder order);
-//     Object Get(string name);
-//     Object Get(ResourceOrder order);
-//     void Add(string name, Object ob);
-//     void Add(ResourceOrder order, Object ob);
-//     bool IsReady();
-// }
-
 [Service(DEFAULT_SERVICE_TYPE.RESOURCE_LOAD)]
 public class ResourceService : IService {
 

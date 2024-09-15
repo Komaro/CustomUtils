@@ -33,7 +33,13 @@ public class ResourcesProvider : IResourceProvider {
 
     public void ExecuteOrder(ResourceOrder order) { }
     public void Load(ResourceOrder order) { }
-    public void Unload(ResourceOrder order) { }
+
+    public void Unload(ResourceOrder order) {
+        if (order is ResourcesUnloadAllOrder unloadAllOrder) {
+            _cacheDic.Clear();
+            unloadAllOrder.callback?.Invoke(Resources.UnloadUnusedAssets());
+        }
+    }
 
     public Object Get(string name) {
         name = name.ToUpper();
@@ -43,6 +49,9 @@ public class ResourcesProvider : IResourceProvider {
 
         if (_pathDic.TryGetValue(name, out var path)) {
             ob = Resources.Load(path);
+            if (ob != null) {
+                _cacheDic.TryAdd(name, ob);
+            }
         }
 
         return ob;

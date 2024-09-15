@@ -1,4 +1,3 @@
-#if UNITY_EDITOR
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -211,7 +210,7 @@ public class EditorLiappExporter : AssetPostprocessor {
                 return zipAligns.First();
             }
         }
-        
+
         return string.Empty;
     }
     
@@ -232,4 +231,3 @@ public class EditorLiappExporter : AssetPostprocessor {
         return string.Empty;
     }
 }
-#endif

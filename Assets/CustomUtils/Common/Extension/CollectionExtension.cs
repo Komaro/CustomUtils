@@ -11,7 +11,8 @@ public static class CollectionExtension {
 
     public static IEnumerator CloneEnumerator(this ICollection collection) => new ArrayList(collection).GetEnumerator();
     public static IEnumerable<TSource> OrderBy<TSource, TKey>(this IEnumerable<TSource> enumerable, Func<TSource, TKey> keySelector, bool isAscending) => isAscending ? enumerable.OrderBy(keySelector) : enumerable.OrderByDescending(keySelector) as IEnumerable<TSource>;
-
+    public static IEnumerable<TSource> WhereNotNull<TSource>(this IEnumerable<TSource> enumerable) where TSource : class => enumerable.Where(source => source != null);
+    
     public static Dictionary<TKey, TValue> ToDictionaryWithDistinct<TSource, TKey, TValue>(this IEnumerable<TSource> enumerable, Func<TSource, TKey> keySelector, Func<TSource, TValue> valueSelector) {
         var dictionary = new Dictionary<TKey, TValue>();
         foreach (var source in enumerable) {
@@ -22,17 +23,15 @@ public static class CollectionExtension {
 
         return dictionary;
     }
-
+    
     public static HashSet<T> ToHashSetWithDistinct<T>(this IEnumerable<T> enumerable) => enumerable.Distinct().ToHashSet();
 
-    public static IEnumerable<T> ForEach<T>(this IEnumerable<T> enumerable, Action<T> action) {
+    public static void ForEach<T>(this IEnumerable<T> enumerable, Action<T> action) {
         if (enumerable != null) {
             foreach (var item in enumerable) {
                 action?.Invoke(item);
             }
         }
-
-        return enumerable;
     }
 
     public static bool TryCast<T>(this IEnumerable enumerable, out IEnumerable<T> cast) {

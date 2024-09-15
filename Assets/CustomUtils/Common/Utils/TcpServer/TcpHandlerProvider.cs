@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Linq;
 
 public class TcpHandlerProvider<TEnum> where TEnum : struct, Enum {
@@ -21,8 +22,8 @@ public class TcpHandlerProvider<TEnum> where TEnum : struct, Enum {
                 if (baseType.GetGenericTypeDefinition() == handlerGenericType) {
                     var genericType = baseType.GetGenericArguments().FirstOrDefault();
                     if (genericType != null && type.TryGetCustomAttribute<TcpHandlerAttribute>(out var attribute) && attribute.body is TEnum enumType) {
-                        _handlerTypeDic.AutoAdd(enumType, type);
-                        _handlerGenericDic.AutoAdd(genericType, enumType);
+                        _handlerTypeDic.TryAdd(enumType, type);
+                        _handlerGenericDic.TryAdd(genericType, enumType);
                     }
                 }
             }

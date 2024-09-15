@@ -62,6 +62,8 @@ public static partial class Constants {
         public static readonly string RESOURCES_PATH = $"{Folder.ASSETS}/{Folder.RESOURCES}";
 
         public static readonly string BUILD_ROOT_PATH = $"{PROJECT_PATH}/{Folder.BUILD}";
+
+        public static readonly string MEMORY_CAPTURES_PATH = $"{PROJECT_PATH}/{Folder.MEMORY_CAPTURES}";
     }
 
     public static class Folder {
@@ -73,6 +75,7 @@ public static partial class Constants {
         public const string PLUGINS = "Plugins";
         public const string RESOURCES = "Resources";
         public const string BUILD = "Build";
+        public const string MEMORY_CAPTURES = "MemoryCaptures";
     }
 
     public static class Regex {

@@ -45,11 +45,9 @@ public static class ReflectionExtension {
         return attributeList is { Count: > 0};
     }
 
-    public static bool TryGetCustomAttribute<T>(this Type type, out T attribute) where T : Attribute {
-        attribute = type.GetCustomAttribute<T>();
-        return attribute != null;
-    }
-    
+    public static bool TryGetCustomAttribute<TAttribute>(this Type type, out TAttribute attribute) where TAttribute : Attribute => (attribute = type.GetCustomAttribute<TAttribute>()) != null;
+    public static bool TryGetCustomAttribute<TAttribute>(this Type type, Type attributeType, out TAttribute attribute) where TAttribute : Attribute => (attribute = type.GetCustomAttribute(attributeType) as TAttribute) != null;
+
     public static bool TryGetCustomAttribute<T>(this MemberInfo info, out T attribute) where T : Attribute {
         attribute = info.GetCustomAttribute<T>();
         return attribute != null;

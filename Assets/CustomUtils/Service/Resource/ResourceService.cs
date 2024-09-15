@@ -9,119 +9,86 @@ using Object = UnityEngine.Object;
 [RequiresAttributeImplementation(typeof(ResourceProviderAttribute))]
 public interface IResourceProvider : IImplementNullable {
 
-    bool Valid();
     void Init();
-    // void Load();
-    void Load(ResourceProviderOrder order);
-    // void Unload(IDictionary<string, Object> cacheResource);
-    void Unload();
-    void Unload(ResourceProviderOrder order);
+    void Clear();
+    void ExecuteOrder(ResourceOrder order);
+    void Load(ResourceOrder order);
+    void Unload(ResourceOrder order);
     Object Get(string name);
+    Object Get(ResourceOrder order);
     string GetPath(string name);
-    // bool IsLoaded();
+    bool IsReady();
 }
 
-[RequiresAttributeImplementation(typeof(ResourceProviderAttribute))]
-public interface IResourceCacheProvider : IImplementNullable {
-
-    bool Valid();
-    void Init();
-    void Unload(ResourceProviderOrder order);
-    object Get(string name);
-    void Add(string name, object ob);
-}
-
-[RequiresAttributeImplementation(typeof(ResourceProviderAttribute))]
-public abstract class ResourceProviderModule {
-
-    private IResourceProvider _resourceProvider;
-    private IResourceCacheProvider _cacheProvider;
-
-    public ResourceProviderModule() {
-        // TODO. Create ResourceProvider & CacheProvider
-    }
-
-    public virtual void Load(ResourceProviderOrder order) => _resourceProvider.Load(order);
-
-    public virtual void Unload(ResourceProviderOrder order) {
-        _resourceProvider.Unload(order);
-        _cacheProvider.Unload(order);
-    }
-
-    public virtual object Get(string name) {
-        var ob = _cacheProvider.Get(name);
-        return ob ?? _resourceProvider.Get(name);
-    }
-}
+// public interface IResourceCacheProvider : IImplementNullable {
+//
+//     void Init();
+//     void Clear();
+//     void Unload(ResourceOrder order);
+//     Object Get(string name);
+//     Object Get(ResourceOrder order);
+//     void Add(string name, Object ob);
+//     void Add(ResourceOrder order, Object ob);
+//     bool IsReady();
+// }
 
 [Service(DEFAULT_SERVICE_TYPE.RESOURCE_LOAD)]
 public class ResourceService : IService {
 
-    private ResourceProviderModule _module;
-    private ResourceProviderModule _subModule;
-
-    private IResourceProvider _provider;
+    private IResourceProvider _mainProvider;
     private IResourceProvider _subProvider;
-    private ConcurrentDictionary<string, Object> _cacheResourceDic = new();
-
-    private IResourceCacheProvider _cacheProvider;
-    private IResourceCacheProvider _subCacheProvider;
+    private readonly ConcurrentDictionary<Type, IResourceProvider> _extraProviderDic = new();
 
     private bool _isServing;
     private bool _isActiveSubProvider;
+    private bool _isActiveExtraProvider;
 
     bool IService.IsServing() => _isServing;
 
     void IService.Init() {
         try {
-            var providerTypeList = ReflectionProvider.GetInterfaceTypes<IResourceProvider>().ToList();
-            _isActiveSubProvider = providerTypeList.Any(type => type.IsDefined<ResourceSubProviderAttribute>());
-            if (_isActiveSubProvider) {
-                Logger.TraceLog($"SubProvider is activated. Find {nameof(ResourceSubProviderAttribute)}...", Color.yellow);
-                _subProvider = Init(providerTypeList.Where(x => x.IsDefined<ResourceSubProviderAttribute>()).OrderBy(x => x.GetCustomAttribute<ResourceSubProviderAttribute>().priority));
-                if (_subProvider == null) {
-                    Logger.TraceError($"{nameof(_subProvider)} is Null. Check {nameof(ResourceSubProviderAttribute)} Implementation. Temporarily create {nameof(NullResourceProvider)}");
-                    _subProvider = new NullResourceProvider();
-                    // _subProvider.Init();
+            var grouping = ReflectionProvider.GetInterfaceTypes<IResourceProvider>().GroupBy(type => {
+                if (type.IsDefined<ResourceExtraProviderAttribute>()) {
+                    return typeof(ResourceExtraProviderAttribute);
+                }
+
+                return type.IsDefined<ResourceSubProviderAttribute>() ? typeof(ResourceSubProviderAttribute) : typeof(ResourceProviderAttribute);
+            });
+            
+            var moduleDic = grouping.ToDictionary(group => group.Key, group => group.OrderBy(type => type.TryGetCustomAttribute<PriorityAttribute>(group.Key, out var attribute) ? attribute.priority : uint.MaxValue).ToList());
+            if (moduleDic.TryGetValue(typeof(ResourceSubProviderAttribute), out var typeList) && typeList.Count > 0) {
+                _isActiveSubProvider = true;
+                _subProvider = GetValidProvider(typeList);
+            }
+
+            if (moduleDic.TryGetValue(typeof(ResourceProviderAttribute), out typeList)) {
+                _mainProvider = GetValidProvider(typeList);
+            }
+
+            if (moduleDic.TryGetValue(typeof(ResourceExtraOrder), out typeList) && typeList.Count > 0) {
+                _isActiveExtraProvider = true;
+                foreach (var type in typeList) {
+                    if (SystemUtil.TryCreateInstance<IResourceProvider>(out var module, type) && module.IsReady() && type.TryGetCustomAttribute<ResourceExtraProviderAttribute>(out var attribute) && attribute.orderType != null) {
+                        _extraProviderDic.TryAdd(attribute.orderType, module);
+                    }
                 }
             }
-            
-            _provider = Init(providerTypeList.Where(x => x.IsDefined<ResourceProviderAttribute>()).OrderBy(x => x.GetCustomAttribute<ResourceProviderAttribute>().priority));
         } catch (Exception ex) {
             Logger.TraceError(ex);
-            if (_provider == null) {
-                Logger.TraceLog($"Provider is Invalid. Temporarily create {nameof(NullResourceProvider)}");
-                _provider = new NullResourceProvider();
-                // _provider.Init();
-            }
         }
-    }
-
-    private IResourceProvider Init(IEnumerable<Type> enumerable) {
-        foreach (var type in enumerable) {
-            if (Activator.CreateInstance(type) is IResourceProvider provider && provider.Valid()) {
-                // provider.Init();
-                Logger.TraceLog($"Activate Provider || {type.Name} || {type.Name}", Color.cyan);
-                return provider;
-            }
-        }
-        
-        Logger.TraceError($"Failed to find a valid provider. Check {nameof(IResourceProvider)}.{nameof(IResourceProvider.Valid)} Method Implementation");
-        
-        var nullProvider = new NullResourceProvider();
-        // nullProvider.Init();
-        return nullProvider;
     }
 
     void IService.Start() {
         if (_isActiveSubProvider) {
             _subProvider.Init();
-            _subCacheProvider.Init();
         }
+        
+        _mainProvider.Init();
 
-        _provider.Init();
-        _cacheProvider.Init();
-
+        if (_isActiveExtraProvider) {
+            _extraProviderDic.Values.ForEach(module => module.Init());
+        }
+        
         _isServing = true;
     }
 
@@ -129,32 +96,24 @@ public class ResourceService : IService {
 
     void IService.Remove() {
         if (_isActiveSubProvider) {
-            _subProvider.Unload();
+            _subProvider.Clear();
         }
         
-        _provider.Unload();
+        _mainProvider.Clear();
+
+        if (_isActiveExtraProvider) {
+            _extraProviderDic.SafeClear(module => module.Clear());
+        }
 
         _isServing = false;
     }
+    
+    public void ExecuteOrder(ResourceOrder order) => GetSwitchProvider(order).ExecuteOrder(order);
+    public void Load(ResourceOrder order) => GetSwitchProvider(order).Load(order);
+    public void Unload(ResourceOrder order) => GetSwitchProvider(order).Unload(order);
 
-    public void Load(ResourceProviderOrder order) {
-        if (order is ResourceSubProviderOrder && _isActiveSubProvider) {
-            _subProvider.Load(order);
-        } else {
-            _provider.Load(order);
-        }
-    }
-
-    public void Unload(ResourceProviderOrder order) {
-        if (order is ResourceSubProviderOrder && _isActiveSubProvider) {
-            // _subProvider.Unload();
-            _subCacheProvider.Unload(order);
-        } else {
-            // _provider.Unload();
-            _cacheProvider.Unload(order);
-        }
-    }
-
+    #region [Get]
+    
     public bool TryGet(string name, out GameObject go) {
         go = Get(name);
         return go != null;
@@ -167,27 +126,31 @@ public class ResourceService : IService {
         return ob != null;
     }
     
-    public T Get<T>(string name) where T : Object {
-        var ob = GetObject(name);
-        if (ob is T outObject) {
-            return outObject;
-        }
-        
-        return null;
-    }
-    
-    public Object GetObject(string name) {
-        if (_cacheResourceDic.TryGetValue(name, out var ob)) {
-            return ob;
-        }
+    public T Get<T>(string name) where T : Object => GetObject(name) as T;
 
-        ob = _provider?.Get(name) ?? _subProvider?.Get(name);
+    public Object GetObject(string name) {
+        var ob = _mainProvider?.Get(name) ?? _subProvider?.Get(name);
         if (ob == null) {
-            Logger.TraceError($"{nameof(ob)} is Null. Missing Resource || {name}");
+            Logger.TraceError($"{nameof(ob)} is null. missing resource || {name}");
             return default;
         }
         
-        _cacheResourceDic.AutoAdd(name, ob);
+        return ob;
+    }
+
+    public bool TryGet(ResourceOrder order, out GameObject go) => (go = Get(order)) != null;
+    public GameObject Get(ResourceOrder order) => GetObject(order) as GameObject;
+    
+    public bool TryGet<T>(ResourceOrder order, out T ob) where T : Object => (ob = Get<T>(order)) != null;
+    public T Get<T>(ResourceOrder order) where T : Object => GetObject(order) as T;
+
+    public object GetObject(ResourceOrder order) {
+        var ob = GetSwitchProvider(order).Get(order);
+        if (ob == null) {
+            Logger.TraceError($"{nameof(ob)} is null. missing resource || {order.GetType().Name}");
+            return default;
+        }
+
         return ob;
     }
 
@@ -195,46 +158,100 @@ public class ResourceService : IService {
         path = GetPath(name);
         return string.IsNullOrEmpty(path) == false;
     }
-    
-    public string GetPath(string name) => _provider.GetPath(name);
-    
-    public T Instantiate<T>(string name, GameObject parent, bool isAddComponent = false) where T : Component => Instantiate<T>(name, parent.transform, isAddComponent);
-    
-    public T Instantiate<T>(string name, Transform parent, bool isAddComponent = false) where T : Component {
-        var instant = Instantiate(name, parent);
-        if (instant == null) {
-            return null;
-        }
 
-        if (instant.TryGetComponent<T>(out var component)) {
-            return component;
-        }
+    public string GetPath(string name) => _mainProvider?.GetPath(name) ?? _subProvider?.GetPath(name);
 
-        if (isAddComponent) {
-            return instant.AddComponent<T>();
-        }
+    #endregion
 
-        Logger.TraceError($"Component Missing || {nameof(T)} || {name}");
-        return null;
-    }
-
-    public GameObject Instantiate(string name, GameObject parent) => Instantiate(name, parent.transform);
+    #region [Instantiate]
     
-    public GameObject Instantiate(string name, Transform parent) {
-        var go = Get(name);
+    public TComponent Instantiate<TComponent>(string name, GameObject parent, bool isAddComponent = false) where TComponent : Component => Instantiate<TComponent>(name, parent.transform, isAddComponent);
+    
+    public TComponent Instantiate<TComponent>(string name, Transform parent, bool isAddComponent = false) where TComponent : Component {
+        var go = Instantiate(name, parent) as GameObject;
         if (go == null) {
             return null;
         }
 
-        var instant = Object.Instantiate(go, parent);
+        if (go.TryGetComponent<TComponent>(out var component)) {
+            return component;
+        }
+
+        if (isAddComponent) {
+            return go.AddComponent<TComponent>();
+        }
+
+        Logger.TraceError($"{nameof(TComponent)} missing || {name}");
+        return null;
+    }
+
+    public Object Instantiate(string name, Transform parent) {
+        var ob = GetObject(name);
+        if (ob == null) {
+            Logger.TraceError($"{nameof(ob)} is null");
+            return null;
+        }
+        
+        var instant = Object.Instantiate(ob, parent);
         if (instant == null) {
-            Logger.TraceError($"{nameof(instant)} is Null");
+            Logger.TraceError($"{nameof(instant)} is null");
+            return null;
+        }
+        
+        return instant;
+    }
+
+    public T Instantiate<T>(ResourceOrder order, GameObject parent) where T : Object => Instantiate<T>(order, parent.transform);
+
+    public T Instantiate<T>(ResourceOrder order, Transform parent) where T : Object {
+        var ob = Get<T>(order);
+        if (ob == null) {
+            Logger.TraceError($"{nameof(ob)} is null");
+            return null;
+        }
+        
+        var instant = Object.Instantiate(ob, parent);
+        if (instant == null) {
+            Logger.TraceError($"{nameof(instant)} is null");
             return null;
         }
 
-        instant.name = name;
         return instant;
     }
+
+    #endregion
+    
+    private IResourceProvider GetValidProvider(IEnumerable<Type> enumerable) {
+        foreach (var type in enumerable) {
+            if (SystemUtil.TryCreateInstance<IResourceProvider>(out var provider, type) && provider.IsReady()) {
+                Logger.TraceLog($"Activate provider || {type.Name}", Color.cyan);
+                return provider;
+            }
+        }
+        
+        Logger.TraceError($"Failed to find a valid module. Check {nameof(IResourceProvider)}.{nameof(IResourceProvider.IsReady)} Method Implementation. Returns the {nameof(NullResourceProvider)}");
+        return new NullResourceProvider();
+    }
+    
+    private IResourceProvider GetSwitchProvider(ResourceOrder order) {
+        switch (order) {
+            case ResourceSubOrder:
+                if (_isActiveSubProvider) {
+                    return _subProvider;
+                }
+                break;
+            case ResourceExtraOrder:
+                if (_isActiveExtraProvider && _extraProviderDic.TryGetValue(order.GetType(), out var extraProvider)) {
+                    return extraProvider;
+                }
+                break;
+        }
+        
+        return _mainProvider;
+    }
+    
+    private IEnumerable<Type> GetFilteringModules<TAttribute>(IEnumerable<Type> enumerable) where TAttribute : PriorityAttribute => enumerable.Where(type => type.IsDefined<TAttribute>()).OrderBy(type => type.GetCustomAttribute<TAttribute>().priority);
+
 }
 
 [AttributeUsage(AttributeTargets.Class)]
@@ -249,8 +266,24 @@ public class ResourceSubProviderAttribute : PriorityAttribute {
     public ResourceSubProviderAttribute(uint priority) : base(priority) { }
 }
 
-public abstract record ResourceProviderOrder {
-    
-    public bool IsSub() => this is ResourceSubProviderOrder;
+[AttributeUsage(AttributeTargets.Class)]
+public class ResourceExtraProviderAttribute : Attribute {
+
+    public Type orderType;
+
+    public ResourceExtraProviderAttribute(Type orderType) {
+        if (orderType.IsSubclassOf(typeof(ResourceExtraOrder))) {
+            this.orderType = orderType; 
+        }
+    }
 }
-public abstract record ResourceSubProviderOrder : ResourceProviderOrder;
+
+public abstract record ResourceOrder {
+
+    public bool IsMain() => IsSub() == false && IsExtra() == false;
+    public bool IsSub() => this is ResourceSubOrder;
+    public bool IsExtra() => this is ResourceExtraOrder;
+}
+
+public abstract record ResourceSubOrder : ResourceOrder;
+public abstract record ResourceExtraOrder : ResourceOrder;

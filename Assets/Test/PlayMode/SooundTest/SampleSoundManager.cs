@@ -8,7 +8,7 @@ using UnityEngine.Audio;
 /// <summary>
 /// SoundOrder Test SoundManager
 /// </summary>
-public class TestSoundManager : Singleton<TestSoundManager> {
+public class SampleSoundManager : Singleton<SampleSoundManager> {
     
     private SoundCoreBase core;
     private List<SoundBase> soundList = new();
@@ -16,7 +16,7 @@ public class TestSoundManager : Singleton<TestSoundManager> {
 
     private IDisposable muteDisposable;
 
-    public TestSoundManager() {
+    public SampleSoundManager() {
         core = SoundCoreBase.Create<Sample_SoundCore>(OnChangeAudioConfiguration);
         if (core != null) {
             Logger.TraceLog($"{nameof(SoundCoreBase)} Activate", Color.cyan);
@@ -129,6 +129,6 @@ public enum TEST_MASTER_SOUND_TYPE {
 }
 
 [ControlSoundEnumType(TEST_MASTER_SOUND_TYPE.Master)]
-public enum TEST_CONTROL_SOUNT_TYPE {
+public enum TEST_CONTROL_SOUND_TYPE {
     TEST,
 }

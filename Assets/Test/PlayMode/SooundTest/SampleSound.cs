@@ -1,12 +1,12 @@
 ﻿using System;
 
-[MasterSound(TEST_MASTER_SOUND_TYPE.MASTER_TEST, TEST_CONTROL_SOUNT_TYPE.TEST)]
-[ControlSound(TEST_CONTROL_SOUNT_TYPE.TEST)]
-public class TestSound : SoundBase {
+[MasterSound(TEST_MASTER_SOUND_TYPE.MASTER_TEST, TEST_CONTROL_SOUND_TYPE.TEST)]
+[ControlSound(TEST_CONTROL_SOUND_TYPE.TEST)]
+public class SampleSound : SoundBase {
 
     private SoundOrder _currentOrder;
 
-    public TestSound(SoundCoreBase soundCore) : base(soundCore) {
+    public SampleSound(SoundCoreBase soundCore) : base(soundCore) {
     }
 
     protected override void UpdateSoundAssetInfo(SoundAssetInfo info) {

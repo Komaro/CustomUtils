@@ -1,14 +1,14 @@
 ﻿using UnityEditor;
 
-public abstract class SampleIosEditorBuildDrawer : EditorBuildDrawer<SampleIosBuildConfig, SampleIosBuildConfig.NullBuildConfig> {
+public abstract class Sample_IosEditorBuildDrawer : EditorBuildDrawer<SampleIosBuildConfig, SampleIosBuildConfig.NullBuildConfig> {
 
     protected override string CONFIG_NAME => $"{nameof(SampleIosBuildConfig)}{Constants.Extension.JSON}";
     
-    public SampleIosEditorBuildDrawer(EditorWindow window) : base(window) { }
+    public Sample_IosEditorBuildDrawer(EditorWindow window) : base(window) { }
 }
 
 [EditorBuildDrawer(typeof(Sample_Builder_Ios))]
-public class SampleIosEditorBuildSettingDrawer : SampleIosEditorBuildDrawer {
+public class SampleIosEditorBuildSettingDrawer : Sample_IosEditorBuildDrawer {
 
     public SampleIosEditorBuildSettingDrawer(EditorWindow window) : base(window) { }
     
@@ -16,8 +16,6 @@ public class SampleIosEditorBuildSettingDrawer : SampleIosEditorBuildDrawer {
         base.Draw();
         
         EditorCommon.DrawSeparator();
-        
-        
     }
 
     protected override void DrawBuildOptions() {

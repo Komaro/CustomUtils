@@ -6,62 +6,6 @@ using System.Runtime.CompilerServices;
 using UnityEditor;
 using UnityEngine;
 
-public partial class EditorBuildService {
-
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private void DrawDrawer() {
-        if (_drawerDic.TryGetValue(_selectBuilderType, out var drawer)) {
-            drawer?.Draw();
-            EditorCommon.DrawSeparator();
-        } else {
-            EditorGUILayout.HelpBox($"유효한 {typeof(EditorBuildDrawer<,>).Name}를 찾을 수 없습니다.", MessageType.Warning);
-        }
-    }
-    
-    private static void DrawerCacheRefresh() {
-        if (_drawerDic.TryGetValue(_selectBuilderType, out var drawer)) {
-            drawer?.CacheRefresh();
-        }
-    }
-
-    private static void DrawerClose() {
-        if (_drawerDic.TryGetValue(_selectBuilderType, out var drawer)) {
-            drawer?.Close();
-        }
-    }
-}
-
-public class EditorBuildDrawerAttribute : Attribute {
-
-    public readonly Type builderType;
-    public readonly Enum buildType;
-
-    public EditorBuildDrawerAttribute(Type builderType) {
-        if (builderType.IsSubclassOf(typeof(Builder))) {
-            this.builderType = builderType;
-            if (builderType.TryGetCustomAttribute<BuilderAttribute>(out var attribute)) {
-                buildType = attribute.buildType;
-            }
-        } else {
-            Logger.TraceError($"{builderType.Name} is Invalid {nameof(builderType)}. {nameof(builderType)} must inherit from {nameof(Builder)}.");
-        }
-    }
-
-    public EditorBuildDrawerAttribute(object buildType) {
-        if (buildType is Enum enumValue) {
-            this.buildType = enumValue;
-            foreach (var type in ReflectionProvider.GetSubClassTypes<Builder>()) {
-                if (type.TryGetCustomAttribute<BuilderAttribute>(out var attribute) && attribute.buildType.Equals(this.buildType)) {
-                    builderType = type;
-                    return;
-                }
-            }
-            
-            Logger.TraceError($"{nameof(enumValue)} is invalid || {enumValue}. Missing target {nameof(Builder)}");
-        }
-    }
-}
-
 [RequiresAttributeImplementation(typeof(EditorBuildDrawerAttribute))]
 public abstract class EditorBuildDrawer<TConfig, TNullConfig> : EditorAutoConfigDrawer<TConfig, TNullConfig> 
     where TConfig : BuildConfig, new() 
@@ -177,7 +121,7 @@ public abstract class EditorBuildDrawer<TConfig, TNullConfig> : EditorAutoConfig
                     }
                 }
             }
-                
+            
             foreach (var logType in EnumUtil.GetValues<LogType>()) {
                 using (new EditorGUILayout.HorizontalScope()) {
                     config.stackTraceDic[logType] = EditorCommon.DrawEnumPopup(logType.ToString(), config.stackTraceDic[logType], 60f);
@@ -404,6 +348,37 @@ public abstract class EditorBuildDrawer<TConfig, TNullConfig> : EditorAutoConfig
     protected virtual void SwitchPlatform() {
         if (buildTarget != EditorUserBuildSettings.activeBuildTarget) {
             EditorUserBuildSettings.SwitchActiveBuildTarget(buildTargetGroup, buildTarget);
+        }
+    }
+}
+
+public class EditorBuildDrawerAttribute : Attribute {
+
+    public readonly Type builderType;
+    public readonly Enum buildType;
+
+    public EditorBuildDrawerAttribute(Type builderType) {
+        if (builderType.IsSubclassOf(typeof(Builder))) {
+            this.builderType = builderType;
+            if (builderType.TryGetCustomAttribute<BuilderAttribute>(out var attribute)) {
+                buildType = attribute.buildType;
+            }
+        } else {
+            Logger.TraceError($"{builderType.Name} is Invalid {nameof(builderType)}. {nameof(builderType)} must inherit from {nameof(Builder)}.");
+        }
+    }
+
+    public EditorBuildDrawerAttribute(object buildType) {
+        if (buildType is Enum enumValue) {
+            this.buildType = enumValue;
+            foreach (var type in ReflectionProvider.GetSubClassTypes<Builder>()) {
+                if (type.TryGetCustomAttribute<BuilderAttribute>(out var attribute) && attribute.buildType.Equals(this.buildType)) {
+                    builderType = type;
+                    return;
+                }
+            }
+            
+            Logger.TraceError($"{nameof(enumValue)} is invalid || {enumValue}. Missing target {nameof(Builder)}");
         }
     }
 }

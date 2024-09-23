@@ -2,8 +2,8 @@
 using UnityEditor;
 using UnityEditor.Build.Reporting;
 
-[Builder(SAMPLE_BUILD_TYPE.STANDALONE, BuildTarget.StandaloneWindows64, BuildTargetGroup.Standalone)]
 [Alias("Sample Standalone Build")]
+[Builder(SAMPLE_BUILD_TYPE.STANDALONE, BuildTarget.StandaloneWindows64, BuildTargetGroup.Standalone)]
 public class Sample_Builder_Standalone : Builder {
 
     protected override void OnPreProcess(ref BuildPlayerOptions options) {

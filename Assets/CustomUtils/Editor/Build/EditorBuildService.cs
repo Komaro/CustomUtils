@@ -76,10 +76,26 @@ public partial class EditorBuildService : EditorService {
             DrawerCacheRefresh();
         }
         
-        DrawDrawer();
+        if (_drawerDic.TryGetValue(_selectBuilderType, out var drawer)) {
+            drawer?.Draw();
+            EditorCommon.DrawSeparator();
+        } else {
+            EditorGUILayout.HelpBox($"유효한 {typeof(EditorBuildDrawer<,>).Name}를 찾을 수 없습니다.", MessageType.Warning);
+        }
+    }
+    
+    private static void DrawerCacheRefresh() {
+        if (_drawerDic.TryGetValue(_selectBuilderType, out var drawer)) {
+            drawer?.CacheRefresh();
+        }
+    }
+
+    private static void DrawerClose() {
+        if (_drawerDic.TryGetValue(_selectBuilderType, out var drawer)) {
+            drawer?.Close();
+        }
     }
 }
-
 
 /// <param name="buildType">Enum Value</param>
 /// <param name="buildTarget"></param>

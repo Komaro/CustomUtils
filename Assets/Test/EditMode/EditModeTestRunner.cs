@@ -45,6 +45,7 @@ public class EditModeTestRunner {
     
     private ResourceRequest LoadAsync(string target) => Resources.LoadAsync<TextAsset>(target);
 
+
     [Test]
     [Performance]
     public void TempPerformanceTest() {

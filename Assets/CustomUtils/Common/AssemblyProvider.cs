@@ -10,7 +10,7 @@ public static class AssemblyProvider {
         #region [System.Reflection.Assembly]
         
         private static Dictionary<string, Assembly> _cachedSystemAssemblyDic;
-        public static Dictionary<string, Assembly> CachedSystemAssemblyDic => _cachedSystemAssemblyDic ??= AppDomain.CurrentDomain.GetAssemblies().AsParallel().Where(assembly => assembly.IsDynamic == false && string.IsNullOrEmpty(assembly.Location) == false).ToDictionary(assembly => assembly.GetName().Name, assembly => assembly);
+        public static Dictionary<string, Assembly> CachedSystemAssemblyDic => _cachedSystemAssemblyDic ??= AppDomain.CurrentDomain.GetAssemblies().AsParallel().Where(assembly => assembly.IsDynamic == false && string.IsNullOrEmpty(assembly.Location) == false).ToDictionaryWithDistinct(assembly => assembly.GetName().Name, assembly => assembly);
     
         private static HashSet<Assembly> _cachedSystemAssemblySet;
         public static HashSet<Assembly> CachedSystemAssemblySet => _cachedSystemAssemblySet ??= CachedSystemAssemblyDic.Values.ToHashSetWithDistinct();

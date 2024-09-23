@@ -21,7 +21,7 @@ public class BuildInteractionInterface : IPostprocessBuildWithReport {
     }
 
     public void OnPostprocessBuild(BuildReport report) => _builder?.PostProcess(report.summary);
-    
+
     /// <summary>
     /// Using Only Command Line Build
     /// </summary>

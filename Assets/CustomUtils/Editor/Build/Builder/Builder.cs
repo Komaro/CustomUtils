@@ -5,7 +5,6 @@ using System.Linq;
 using UnityEditor;
 using UnityEditor.Build.Reporting;
 using UnityEngine;
-using UnityEngine.Experimental.AssetBundlePatching;
 
 [RequiresAttributeImplementation(typeof(BuilderAttribute))]
 public abstract partial class Builder : IDisposable {

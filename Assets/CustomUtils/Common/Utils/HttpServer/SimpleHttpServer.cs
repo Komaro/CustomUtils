@@ -6,7 +6,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
 
-
 public class SimpleHttpServer : IDisposable {
     
     private HttpListener _listener = new();

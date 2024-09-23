@@ -7,7 +7,7 @@ using UnityEditor.Build.Reporting;
 using UnityEditor.Callbacks;
 using UnityEngine;
 
-public partial class EditorBuildService : EditorService {
+public class EditorBuildService : EditorService {
 
     private static EditorWindow _window;
     private static EditorWindow Window => _window == null ? _window = GetWindow<EditorBuildService>("Build Service") : _window;

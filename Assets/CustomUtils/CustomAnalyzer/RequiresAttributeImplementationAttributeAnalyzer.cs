@@ -48,21 +48,5 @@ public class RequiresAttributeImplementationAttributeAnalyzer : BaseDianosticAna
                 }
             }
         }
-
-        // var baseType = namedTypeSymbol.BaseType;
-        // if (baseType == null) {
-        //     return;
-        // }
-        //
-        // var requiresAttributeData = baseType.GetAttributes().Where(data => data.AttributeClass?.Name.Equals(ATTRIBUTE_NAME, StringComparison.Ordinal) ?? false);
-        // foreach (var data in requiresAttributeData) {
-        //     var implementType = data.ConstructorArguments[0].Value;
-        //     if (implementType != null) {
-        //         var implementName = implementType.ToString();
-        //         if (namedTypeSymbol.GetAttributes().Any(implementData => implementData.AttributeClass?.ToString().Equals(implementName, StringComparison.Ordinal) ?? false) == false) {
-        //             context.ReportDiagnostic(Diagnostic.Create(RULE, namedTypeSymbol.Locations[0], namedTypeSymbol.Name, implementName));
-        //         }
-        //     }
-        // }
     }
 }

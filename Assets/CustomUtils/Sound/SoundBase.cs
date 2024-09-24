@@ -59,12 +59,12 @@ public abstract class SoundBase {
         }
         
         if (soundCore.TryGetAudioMixerGroupDic(masterEnum, out var groupDic)) {
-            foreach (var pair in groupDic) {
-                audioMixerGroupDic.AutoAdd(pair);
-                audioSourceQueueDic.AutoAdd(pair.Key);
-                audioSourcePlayingDic.AutoAdd(pair.Key);
-                maxQueueDic.AutoAdd(pair.Key, 0);
-            }                
+            foreach (var (controlType, audioMixerGroup) in groupDic) {
+                audioMixerGroupDic.AutoAdd(controlType, audioMixerGroup);
+                audioSourceQueueDic.AutoAdd(controlType);
+                audioSourcePlayingDic.AutoAdd(controlType);
+                maxQueueDic.AutoAdd(controlType, 0);
+            }
         }
 
         if (soundCore.TryGetSoundAssetInfoList(representControlEnum, out var infoList)) {
@@ -77,7 +77,7 @@ public abstract class SoundBase {
     public virtual void ExtensionDataRefresh(SoundCoreBase soundCore) { }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    protected void UpdateQueue() {
+    protected virtual void UpdateQueue() {
         lock (audioSourcePlayingDic) {
             foreach (var pair in audioSourcePlayingDic) {
                 for (var i = 0; i < pair.Value.Count; i++) {
@@ -126,83 +126,83 @@ public abstract class SoundBase {
     
     protected virtual AudioSource GetRepresentAudioSource() => GetAudioSource(representControlEnum);
 
-    protected bool TryGetAudioSource(Enum type, out AudioSource audioSource) {
-        audioSource = GetAudioSource(type);
+    protected bool TryGetAudioSource(Enum controlType, out AudioSource audioSource) {
+        audioSource = GetAudioSource(controlType);
         return audioSource != null;
     }
     
-    protected virtual AudioSource GetAudioSource(Enum type) {
+    protected virtual AudioSource GetAudioSource(Enum controlType) {
         lock (audioSourceDic) {
-            if (audioSourceDic.TryGetValue(type, out var audioSource)) {
+            if (audioSourceDic.TryGetValue(controlType, out var audioSource)) {
                 return audioSource;
             }
 
-            if (TryCreateAudioSource(type, out audioSource)) {
-                audioSourceDic.AutoAdd(type, audioSource);
+            if (TryCreateAudioSource(controlType, out audioSource)) {
+                audioSourceDic.AutoAdd(controlType, audioSource);
                 return audioSource;
             }
         }
         
-        Logger.TraceError($"Invalid type || {type}");
+        Logger.TraceError($"Invalid type || {controlType}");
         return null;
     }
     
-    protected bool TryGetQueueAudioSource(Enum type, int maxCreateCount, out AudioSource audioSource) {
-        audioSource = GetQueueAudioSource(type, maxCreateCount);
+    protected bool TryGetQueueAudioSource(Enum controlType, int maxCreateCount, out AudioSource audioSource) {
+        audioSource = GetQueueAudioSource(controlType, maxCreateCount);
         return audioSource != null;
     }
 
-    protected virtual AudioSource GetQueueAudioSource(Enum type, int maxCreateCount) {
-        if (audioMixerGroupDic.ContainsKey(type) == false) {
-            Logger.TraceError($"{type} is Missing {nameof(AudioMixerGroup)}");
+    protected virtual AudioSource GetQueueAudioSource(Enum controlType, int maxCreateCount) {
+        if (audioMixerGroupDic.ContainsKey(controlType) == false) {
+            Logger.TraceError($"{controlType} is Missing {nameof(AudioMixerGroup)}");
             return null;
         }
 
         lock (audioSourceQueueDic) {
-            if (audioSourceQueueDic.TryGetValue(type, out var idleQueue) && audioSourcePlayingDic.TryGetValue(type, out var playQueue)) {
+            if (audioSourceQueueDic.TryGetValue(controlType, out var idleQueue) && audioSourcePlayingDic.TryGetValue(controlType, out var playQueue)) {
                 if (idleQueue.TryDequeue(out var audioSource)) {
                     playQueue.Enqueue(audioSource);
                     return audioSource;
                 }
 
-                if (maxQueueDic.TryGetValue(type, out var count) && count < maxCreateCount && TryCreateAudioSource(type, out audioSource)) {
-                    maxQueueDic.AutoIncreaseAdd(type);
+                if (maxQueueDic.TryGetValue(controlType, out var count) && count < maxCreateCount && TryCreateAudioSource(controlType, out audioSource)) {
+                    maxQueueDic.AutoIncreaseAdd(controlType);
                     playQueue.Enqueue(audioSource);
                     return audioSource;
                 }
             }
         }
 
-        Logger.TraceLog($"{type} || No More Create {nameof(AudioSource)}", Color.red);
+        Logger.TraceLog($"{controlType} || No More Create {nameof(AudioSource)}", Color.red);
         return null;
     }
     
-    protected bool TryCreateAudioSource(Enum type, out AudioSource audioSource) {
-        audioSource = CreateAudioSource(type);
+    protected bool TryCreateAudioSource(Enum controlType, out AudioSource audioSource) {
+        audioSource = CreateAudioSource(controlType);
         return audioSource != null;
     }
 
-    protected virtual AudioSource CreateAudioSource(Enum type) {
-        if (_audioSourceRootDic.TryGetValue(type, out var go) && TryCreateAudioSource(go, type, out var audioSource)) {
+    protected virtual AudioSource CreateAudioSource(Enum controlType) {
+        if (_audioSourceRootDic.TryGetValue(controlType, out var go) && TryCreateAudioSource(go, controlType, out var audioSource)) {
             return audioSource;
         }
         
-        if (soundCore.TryGetSoundRootObject(type, out go) && TryCreateAudioSource(go, type, out audioSource)) {
-            _audioSourceRootDic.AutoAdd(type, go);
+        if (soundCore.TryGetSoundRootObject(controlType, out go) && TryCreateAudioSource(go, controlType, out audioSource)) {
+            _audioSourceRootDic.AutoAdd(controlType, go);
             return audioSource;
         }
         
-        Logger.TraceError($"Missing || {type} {nameof(AudioMixerGroup)}");
+        Logger.TraceError($"Missing || {controlType} {nameof(AudioMixerGroup)}");
         return null;
     }
 
-    protected bool TryCreateAudioSource(GameObject go, Enum type, out AudioSource audioSource) {
-        audioSource = CreateAudioSource(go, type);
+    protected bool TryCreateAudioSource(GameObject go, Enum controlType, out AudioSource audioSource) {
+        audioSource = CreateAudioSource(go, controlType);
         return audioSource != null;
     }
     
-    protected virtual AudioSource CreateAudioSource(GameObject go, Enum type) {
-        if (audioMixerGroupDic.TryGetValue(type, out var mixerGroup)) {
+    protected virtual AudioSource CreateAudioSource(GameObject go, Enum controlType) {
+        if (audioMixerGroupDic.TryGetValue(controlType, out var mixerGroup)) {
             var audioSource = go.AddComponent<AudioSource>();
             audioSource.outputAudioMixerGroup = mixerGroup;
             audioSource.playOnAwake = false;
@@ -245,6 +245,7 @@ public abstract class SoundBase {
     public virtual void SetVolume(float volume) => soundCore.SetVolume(masterEnum, volume);
     
     public virtual bool GetMute() => isMute;
+    
     public virtual void SetMute(bool isMute) {
         this.isMute = isMute;
         lock (audioSourceDic) {

@@ -2,6 +2,7 @@ using System;
 using UniRx;
 using UnityEngine;
 
+[Obsolete]
 public class Sample_SoundHelper : MonoBehaviour {
     
     public string commandLine = "";

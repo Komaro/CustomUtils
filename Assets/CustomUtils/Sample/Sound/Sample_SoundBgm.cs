@@ -5,6 +5,7 @@ using UniRx;
 using UnityEngine;
 using UnityEngine.Audio;
 
+[Obsolete]
 [MasterSound(SAMPLE_MASTER_SOUND_TYPE.TYPE_1, SAMPLE_BGM_CONTROL_TYPE.TYPE_1)]
 [ControlSound(SAMPLE_MASTER_SOUND_TYPE.TYPE_1, SAMPLE_BGM_CONTROL_TYPE.TYPE_1)]
 public class Sample_SoundBgm : SoundBase {
@@ -144,12 +145,12 @@ public class Sample_SoundBgm : SoundBase {
         }
 
         switch (track.type) {
-            case E_TRACK_TYPE.OVERLAP:
+            case TRACK_TYPE.OVERLAP:
                 if (TryGetAudioSource(SAMPLE_BGM_CONTROL_TYPE.TYPE_2, out var audioSource)) {
                     track.eventList.ForEach(x => audioSource.PlayOneShot(x.clip));
                 }
                 break;
-            case E_TRACK_TYPE.RANDOM:
+            case TRACK_TYPE.RANDOM:
                 if (TryGetAudioSource(SAMPLE_BGM_CONTROL_TYPE.TYPE_2, out audioSource) && track.eventList.TryGetRandom(out var randomTrack)) {
                     audioSource.PlayOneShot(randomTrack.clip);
                 }
@@ -185,7 +186,7 @@ public class Sample_SoundBgm : SoundBase {
         }
     }
     
-    protected override AudioSource GetAudioSource(Enum type) => TryGetQueueAudioSource(type, SAMPLE_MAX_BGM_QUEUE_COUNT, out var audioSource) ? audioSource : null;
+    protected override AudioSource GetAudioSource(Enum controlType) => TryGetQueueAudioSource(controlType, SAMPLE_MAX_BGM_QUEUE_COUNT, out var audioSource) ? audioSource : null;
 
     public override void UnloadAudioClips() {
         StopBgm();

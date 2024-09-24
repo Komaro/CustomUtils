@@ -17,7 +17,7 @@ public class SampleSound : SoundBase {
 
     public override void SubmitSoundOrder(SoundOrder soundOrder) {
         // Implement SoundOrder Progress
-        if (soundOrder is Sample_SoundOrder order) {
+        if (soundOrder is SampleSoundOrder order) {
             Logger.TraceLog($"{order.name} || {order.type}");
             switch (order.type) {
                 case "Play":
@@ -33,19 +33,19 @@ public class SampleSound : SoundBase {
         }
     }
 
-    private void PlaySound(Sample_SoundOrder order) { }
-    private void StopSound(Sample_SoundOrder order) { }
-    private void MuteSound(Sample_SoundOrder order) { }
+    private void PlaySound(SampleSoundOrder order) { }
+    private void StopSound(SampleSoundOrder order) { }
+    private void MuteSound(SampleSoundOrder order) { }
 }
 
-public record Sample_SoundOrder : SoundOrder {
+public record SampleSoundOrder : SoundOrder {
 
     public string name;
     public string type;
 
-    public Sample_SoundOrder(Enum masterType, Enum representControlType) : base(masterType, representControlType) { }
+    public SampleSoundOrder(Enum masterType, Enum representControlType) : base(masterType, representControlType) { }
     
-    public Sample_SoundOrder(Enum masterType, Enum representControlType, string name, string type) : base(masterType, representControlType) {
+    public SampleSoundOrder(Enum masterType, Enum representControlType, string name, string type) : base(masterType, representControlType) {
         this.name = name;
         this.type = type;
     }

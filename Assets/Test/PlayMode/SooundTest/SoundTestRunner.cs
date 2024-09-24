@@ -11,7 +11,7 @@ public class SoundTestRunner {
         var soundManager = SampleSoundManager.inst;
         Assert.IsNotNull(soundManager);
 
-        var soundOrder = new Sample_SoundOrder(TEST_MASTER_SOUND_TYPE.MASTER_TEST, TEST_CONTROL_SOUND_TYPE.TEST) { name = "Test" };
+        var soundOrder = new SampleSoundOrder(TEST_MASTER_SOUND_TYPE.MASTER_TEST, TEST_CONTROL_SOUND_TYPE.TEST) { name = "Test" };
         Logger.TraceLog($"\n{soundOrder.ToStringAllFields()}");
 
         soundOrder.type = "Play";

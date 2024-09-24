@@ -17,7 +17,7 @@ public class SampleSoundManager : Singleton<SampleSoundManager> {
     private IDisposable muteDisposable;
 
     public SampleSoundManager() {
-        core = SoundCoreBase.Create<Sample_SoundCore>(OnChangeAudioConfiguration);
+        core = SoundCoreBase.Create<SampleSoundCore>(OnChangeAudioConfiguration);
         if (core != null) {
             Logger.TraceLog($"{nameof(SoundCoreBase)} Activate", Color.cyan);
         }
@@ -107,7 +107,12 @@ public class SampleSoundManager : Singleton<SampleSoundManager> {
 
     public AudioMixerGroup GetAudioMixerGroup(Enum type) => GetMatchSoundList(type)?.First()?.GetAudioMixerGroup(type);
     public void UnloadAllAudioClip() => soundList.ForEach(x => x.UnloadAudioClips());
-    public void TransitionSnapshot(SAMPLE_SOUND_SNAPSHOT_TYPE type, float transitionTime = 0f) => core?.TransitionSnapshot(type, transitionTime);
+    
+    public void TransitionSnapshot(SAMPLE_SOUND_SNAPSHOT_TYPE type, float transitionTime = 0f) {
+        if (core != null) {
+            core.TransitionSnapshot(type, transitionTime);
+        }
+    }
 
     private void OnChangeAudioConfiguration(bool isChanged) {
 #if UNITY_EDITOR == false && UNITY_ANDROID

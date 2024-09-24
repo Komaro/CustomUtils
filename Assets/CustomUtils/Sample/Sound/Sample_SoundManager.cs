@@ -8,6 +8,7 @@ using UniRx;
 using UnityEngine;
 using UnityEngine.Audio;
 
+[Obsolete]
 public sealed class Sample_SoundManager : Singleton<Sample_SoundManager> {
 
     private SoundCoreBase _core;
@@ -44,6 +45,8 @@ public sealed class Sample_SoundManager : Singleton<Sample_SoundManager> {
                         _soundList.Add(Sample_SoundBase);
                     }
                 }
+                
+                yield return null;
             }
 
             // Input Local Save Value
@@ -55,6 +58,7 @@ public sealed class Sample_SoundManager : Singleton<Sample_SoundManager> {
                 sound.LoadSystemVolume();
                 sound.ExtensionDataRefresh(_core);
                 Logger.TraceLog($"{sound.GetType().Name} Activate", Color.cyan);
+                yield return null;
             }
         }
 
@@ -121,10 +125,10 @@ public sealed class Sample_SoundManager : Singleton<Sample_SoundManager> {
         if (track != null && track.IsValid() && TryGetMatchSoundExList(out var soundList, type)) {
             var sound = soundList.First();
             switch (track.type) {
-                case E_TRACK_TYPE.OVERLAP:
+                case TRACK_TYPE.OVERLAP:
                     track.eventList.ForEach(x => sound.PlayOneShot(x.clip));
                     break;
-                case E_TRACK_TYPE.RANDOM:
+                case TRACK_TYPE.RANDOM:
                     sound.PlayOneShot(track.eventList.GetRandom().clip);
                     break;
                 default:

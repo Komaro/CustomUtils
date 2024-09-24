@@ -115,11 +115,17 @@ public abstract class SoundCoreBase : MonoBehaviour {
     public virtual void TransitionSnapshot(Enum type, float transitionTime) {
         if (_cacheSnapshotEnumSet.Contains(type)) {
             _currentSnapshotType = type;
-            _audioMixer?.FindSnapshot(type.ToString())?.TransitionTo(transitionTime);
+            if (_audioMixer != null) {
+                _audioMixer.FindSnapshot(type.ToString())?.TransitionTo(transitionTime);
+            }
         }
     }
 
-    public void TransitionSnapshot(string transitionName, float transitionTime) => _audioMixer?.FindSnapshot(transitionName)?.TransitionTo(transitionTime);
+    public void TransitionSnapshot(string transitionName, float transitionTime) {
+        if (_audioMixer != null) {
+            _audioMixer.FindSnapshot(transitionName)?.TransitionTo(transitionTime);
+        }
+    }
 
     public float GetVolume(Enum type) {
         if (_audioMixer == null) {
@@ -164,12 +170,12 @@ public abstract class SoundCoreBase : MonoBehaviour {
 
     protected virtual List<Enum> GetEnumList<T>() where T : Attribute => ReflectionProvider.TryGetAttributeEnumTypes<T>(out var types) ? types.SelectMany(x => Enum.GetValues(x).Cast<Enum>()).ToList() : null;
 
-    public bool TryGetAudioMixerGroupDic(Enum type, out Dictionary<Enum, AudioMixerGroup> groupDic) {
-        groupDic = GetAudioMixerGroupDic(type);
+    public bool TryGetAudioMixerGroupDic(Enum masterType, out Dictionary<Enum, AudioMixerGroup> groupDic) {
+        groupDic = GetAudioMixerGroupDic(masterType);
         return groupDic is { Count: > 0 };
     }
 
-    public Dictionary<Enum, AudioMixerGroup> GetAudioMixerGroupDic(Enum type) => _mixerGroupDic.TryGetValue(type, out var groupDic) ? groupDic : null;
+    public Dictionary<Enum, AudioMixerGroup> GetAudioMixerGroupDic(Enum masterType) => _mixerGroupDic.TryGetValue(masterType, out var groupDic) ? groupDic : null;
 
     public bool TryGetSoundRootObject(Enum type, out GameObject go) {
         go = GetSoundRootObject(type);
@@ -180,7 +186,7 @@ public abstract class SoundCoreBase : MonoBehaviour {
 
     public bool TryGetSoundAssetInfoList(Enum type, out List<SoundAssetInfo> list) {
         list = GetSoundAssetInfoList(type);
-        return list != null && list.Count > 0;
+        return list is { Count: > 0 };
     }
 
     public List<SoundAssetInfo> GetSoundAssetInfoList(Enum type) => _cacheSoundInfoDic.TryGetValue(type, out var list) ? list : null;

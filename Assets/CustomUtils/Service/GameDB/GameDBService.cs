@@ -45,13 +45,15 @@ public class GameDBService : IService {
         _dbDic.Clear();
     }
 
-    public bool TryGet<T>(out T db) where T : class => (db = Get<T>()) != null;
+    public bool TryGet<TGameDB>(out TGameDB db) where TGameDB : class => (db = Get<TGameDB>()) != null;
 
-    public T Get<T>() where T : class {
-        if (_dbDic.TryGetValue(typeof(T), out var db)) {
-            return db as T;
+    public TGameDB Get<TGameDB>() where TGameDB : class {
+        if (_dbDic.TryGetValue(typeof(TGameDB), out var db)) {
+            return db as TGameDB;
         }
 
         return null;
     }
+
+    public bool IsNullProvider() => _provider.IsNull();
 }

@@ -13,7 +13,7 @@ public class GameDBTestRunner {
     private const string TEST_GAME_SAMPLE_DB_01 = nameof(TestSampleGameDB_01);
     private const string TEST_GAME_SAMPLE_DB_02 = nameof(TestSampleGameDB_02);
 
-    private static readonly string TEST_TEMP_FOLDER_PATH = $"{Constants.Path.PROJECT_TEMP_PATH}/.temp_db";
+    private static readonly string TEST_TEMP_FOLDER_PATH = $"{Constants.Path.PROJECT_TEMP_PATH}/temp_db";
 
     [SetUp]
     public void SetUp() {
@@ -50,24 +50,30 @@ public class GameDBTestRunner {
         public virtual void TearDown() => LogAssert.ignoreFailingMessages = true;
 
         public virtual void StartTest(CancellationToken token) {
-            if (Service.GetService<GameDBService>().TryGet<TestSampleGameDB_01>(out var db_01)) {
-                for (var count = 0; count < 20; count++) {
-                    if (db_01.TryGet(RandomUtil.GetRandom(0, db_01.Length), out var data)) {
-                        Logger.TraceLog(data.text);
-                    }
+            if (Service.TryGetService<GameDBService>(out var service)) {
+                if (service.IsNullProvider()) {
+                    Assert.Fail();
                 }
-            } else {
-                Assert.Fail();
-            }
+                
+                if (service.TryGet<TestSampleGameDB_01>(out var db_01)) {
+                    for (var count = 0; count < 20; count++) {
+                        if (db_01.TryGet(RandomUtil.GetRandom(0, db_01.Length), out var data)) {
+                            Logger.TraceLog(data.text);
+                        }
+                    }
+                } else {
+                    Assert.Fail();
+                }
 
-            if (Service.GetService<GameDBService>().TryGet<TestSampleGameDB_02>(out var db_02)) {
-                for (var count = 0; count < 20; count++) {
-                    if (db_02.TryGet((uint)RandomUtil.GetRandom(0, db_02.Length), out var data)) {
-                        Logger.TraceLog(data.type);
+                if (service.TryGet<TestSampleGameDB_02>(out var db_02)) {
+                    for (var count = 0; count < 20; count++) {
+                        if (db_02.TryGet((uint)RandomUtil.GetRandom(0, db_02.Length), out var data)) {
+                            Logger.TraceLog(data.type);
+                        }
                     }
+                } else {
+                    Assert.Fail();
                 }
-            } else {
-                Assert.Fail();
             }
         }
     }

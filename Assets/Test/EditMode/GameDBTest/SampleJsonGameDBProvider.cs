@@ -18,7 +18,7 @@ public class SampleJsonGameDBProvider : GameDBProvider {
         if (JsonUtil.TryLoadJson<SampleDBList>($"{Constants.Path.PROJECT_TEMP_PATH}/{"DBList".AutoSwitchExtension(Constants.Extension.JSON)}", out var dbList)) {
             foreach (var name in dbList.names) {
                 if (typeDic.TryGetValue(name, out var type) && type.BaseType != null) {
-                    var text = File.ReadAllText($"{Constants.Path.PROJECT_TEMP_PATH}/.temp_db/{name.AutoSwitchExtension(Constants.Extension.JSON)}");
+                    var text = File.ReadAllText($"{Constants.Path.PROJECT_TEMP_PATH}/temp_db/{name.AutoSwitchExtension(Constants.Extension.JSON)}");
                     if (string.IsNullOrEmpty(text)) {
                         Logger.TraceError($"{text} is null or empty || {name}");
                         continue;

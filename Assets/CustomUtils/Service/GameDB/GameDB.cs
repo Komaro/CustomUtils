@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 
-public abstract class GameDB<TKey, TData> : IDisposable {
+public abstract class GameDB<TKey, TData> : IEnumerable<KeyValuePair<TKey, TData>>, IDisposable {
 
     private readonly ConcurrentDictionary<TKey, TData> _dictionary = new();
 
@@ -11,7 +13,7 @@ public abstract class GameDB<TKey, TData> : IDisposable {
     public int Count => _dictionary?.Count ?? 0;
     
     public GameDB(GameDBProvider provider) => Init(provider);
-    
+
     ~GameDB() => Dispose();
     public void Dispose() => _dictionary.Clear();
     
@@ -35,4 +37,7 @@ public abstract class GameDB<TKey, TData> : IDisposable {
     }
     
     protected abstract TKey CreateKey(TData data);
+    
+    public IEnumerator<KeyValuePair<TKey, TData>> GetEnumerator() => _dictionary.GetEnumerator();
+    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 }

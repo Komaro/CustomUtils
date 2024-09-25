@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 [Priority(5)]
@@ -19,7 +20,7 @@ public class SampleXmlGameDBProvider : GameDBProvider {
                 if (typeDic.TryGetValue(name, out var type) && type.BaseType != null) {
                     var dataType = type.BaseType.GetGenericArguments()[1];
                     var xmlType = typeof(SampleRawGameDB<>).MakeGenericType(dataType);
-                    if (XmlUtil.TryDeserializeFromFile($"{Constants.Path.PROJECT_TEMP_PATH}/.temp_db/{name.AutoSwitchExtension(Constants.Extension.XML)}", xmlType,out var db)) {
+                    if (XmlUtil.TryDeserializeFromFile($"{Constants.Path.PROJECT_TEMP_PATH}/temp_db/{name.AutoSwitchExtension(Constants.Extension.XML)}", xmlType,out var db)) {
                         _dbDic.AutoAdd(dataType, db);
                     }
                 }

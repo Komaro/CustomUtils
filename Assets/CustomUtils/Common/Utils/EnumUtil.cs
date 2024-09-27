@@ -186,7 +186,7 @@ public static class EnumUtil {
 }
 
 public static class EnumExtension {
-    
+
     public static short ConvertShort(this Enum enumValue) => enumValue.GetTypeCode() == TypeCode.Int16 ? System.Convert.ToInt16(enumValue) : (short) -1;
     public static int ConvertInt(this Enum enumValue) => enumValue.GetTypeCode() == TypeCode.Int32 ? System.Convert.ToInt32(enumValue) : -1;
     
@@ -203,4 +203,3 @@ public static class EnumExtension {
 
     public static List<TEnum> GetValueList<TEnum>(this TEnum _, bool ignoreDefault = false, bool ignoreObsolete = false) where TEnum : struct, Enum => EnumUtil.GetValueList<TEnum>(ignoreDefault, ignoreObsolete);
 }
-

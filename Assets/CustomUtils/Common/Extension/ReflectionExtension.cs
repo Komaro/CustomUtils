@@ -12,8 +12,8 @@ public static class ReflectionExtension {
         type.GetFields(bindingFlags).ConvertTo(info => (info.Name, info.GetValue(ob)))
         .Concat(type.GetProperties(bindingFlags).Where(info => info.GetIndexParameters().Length <= 0).ConvertTo(info => (info.Name, info.GetValue(ob))));
 
-    public static bool TryGetField(this Type type, string name, out FieldInfo info) {
-        info = type.GetField(name);
+    public static bool TryGetField(this Type type, string name, out FieldInfo info, BindingFlags bindingFlags = BindingFlags.Default) {
+        info = type.GetField(name, bindingFlags);
         return info != null;
     }
 

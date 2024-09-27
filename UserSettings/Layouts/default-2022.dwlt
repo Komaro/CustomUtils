@@ -119,7 +119,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 100}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 297
+  controlID: 145
   draggingID: 0
 --- !u!114 &6
 MonoBehaviour:
@@ -145,7 +145,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 1
-  controlID: 112
+  controlID: 108
   draggingID: 0
 --- !u!114 &7
 MonoBehaviour:
@@ -183,7 +183,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 1
   m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: SceneHierarchyWindow
+  m_Name: AudioMixerWindow
   m_EditorClassIdentifier: 
   m_Children: []
   m_Position:
@@ -192,13 +192,14 @@ MonoBehaviour:
     y: 0
     width: 484.8
     height: 381.6
-  m_MinSize: {x: 201, y: 221}
-  m_MaxSize: {x: 4001, y: 4021}
-  m_ActualView: {fileID: 15}
+  m_MinSize: {x: 100, y: 100}
+  m_MaxSize: {x: 4000, y: 4000}
+  m_ActualView: {fileID: 19}
   m_Panes:
   - {fileID: 15}
-  m_Selected: 0
-  m_LastSelected: 1
+  - {fileID: 19}
+  m_Selected: 1
+  m_LastSelected: 0
 --- !u!114 &9
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -249,7 +250,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 50}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 113
+  controlID: 109
   draggingID: 0
 --- !u!114 &11
 MonoBehaviour:
@@ -261,7 +262,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 1
   m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: ConsoleWindow
+  m_Name: ProjectBrowser
   m_EditorClassIdentifier: 
   m_Children: []
   m_Position:
@@ -270,15 +271,14 @@ MonoBehaviour:
     y: 0
     width: 740
     height: 349.19998
-  m_MinSize: {x: 101, y: 121}
-  m_MaxSize: {x: 4001, y: 4021}
-  m_ActualView: {fileID: 18}
+  m_MinSize: {x: 231, y: 271}
+  m_MaxSize: {x: 10001, y: 10021}
+  m_ActualView: {fileID: 17}
   m_Panes:
   - {fileID: 17}
   - {fileID: 18}
-  - {fileID: 19}
-  m_Selected: 1
-  m_LastSelected: 0
+  m_Selected: 0
+  m_LastSelected: 1
 --- !u!114 &12
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -331,7 +331,7 @@ MonoBehaviour:
   - {fileID: 20}
   - {fileID: 21}
   m_Selected: 0
-  m_LastSelected: 0
+  m_LastSelected: 1
 --- !u!114 &14
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -469,9 +469,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: e2690000
+      m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: 3cf7ffff7ef7ffffccf7ffff0ef8ffff52f8ffff24f9ffffcaf9ffffdefaffff
+      m_ExpandedIDs: b2e6fffff4e6fffff0e7ffff32e8ffff30e9ffff72e9ffff7ceaffffbeeaffff76ecffffb8ecffffbaedfffffcedffffc2eeffff36effffffef0ffff40f1ffff3ef2ffff80f2ffff86f3ffffc8f3ffffdef4ffff22f5ffffdefaffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -978,24 +978,24 @@ MonoBehaviour:
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 47.80002}
+    scrollPos: {x: 0, y: 127}
     m_SelectedIDs: 126c0000
     m_LastClickedID: 27666
-    m_ExpandedIDs: 00000000486a00004a6a00004c6a00004e6a0000506a0000526a0000546a0000566a0000586a00005a6a00005c6a00005e6a0000606a0000626a0000646a0000666a0000686a00006a6a00006c6a00006e6a0000706a0000726a0000746a0000766a0000786a00007a6a00007c6a00007e6a000000ca9a3b
+    m_ExpandedIDs: 00000000486a00004a6a00004c6a00004e6a0000506a0000526a0000546a0000566a0000586a00005a6a00005c6a00005e6a0000606a0000626a0000646a0000666a0000686a00006a6a00006c6a00006e6a0000706a0000726a0000746a0000766a0000786a00007a6a00007c6a00007e6a0000146c0000186c0000026d0000286e000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: 
-      m_OriginalName: 
+      m_Name: Service
+      m_OriginalName: Service
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 0
         height: 0
-      m_UserData: 0
+      m_UserData: 27904
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
-      m_OriginalEventType: 11
+      m_OriginalEventType: 0
       m_IsRenamingFilename: 1
       m_ClientGUIView: {fileID: 11}
     m_SearchString: 
@@ -1034,9 +1034,9 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: e2690000
-    m_LastClickedInstanceID: 27106
-    m_HadKeyboardFocusLastEvent: 0
+    m_SelectedInstanceIDs: 
+    m_LastClickedInstanceID: 0
+    m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: c6230000ac060000fc56000092f6ffff2a6600000267000000000000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -1122,9 +1122,9 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 0
-    y: 455.2
-    width: 739
-    height: 328.19998
+    y: 73.6
+    width: 483.8
+    height: 360.6
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -1155,7 +1155,7 @@ MonoBehaviour:
       m_IsRenaming: 0
       m_OriginalEventType: 11
       m_IsRenamingFilename: 0
-      m_ClientGUIView: {fileID: 0}
+      m_ClientGUIView: {fileID: 8}
     m_SearchString: 
     m_CreateAssetUtility:
       m_EndAction: {fileID: 0}
@@ -1254,12 +1254,12 @@ MonoBehaviour:
       oldMaxSizes: 
       oldSplitSize: 0
     m_HorizontalSplitter:
-      ID: 345
+      ID: 6298
       splitterInitialOffset: 0
       currentActiveSplitter: -1
       realSizes:
-      - 221.6
-      - 517.6
+      - 160
+      - 324
       relativeSizes:
       - 0.3
       - 0.7
@@ -1269,7 +1269,7 @@ MonoBehaviour:
       maxSizes:
       - 0
       - 0
-      lastTotalSize: 739.2
+      lastTotalSize: 484
       splitSize: 6
       xOffset: 0
       m_Version: 1
@@ -1321,7 +1321,7 @@ MonoBehaviour:
   m_ObjectsLockedBeforeSerialization: []
   m_InstanceIDsLockedBeforeSerialization: 
   m_PreviewResizer:
-    m_CachedPref: 160
+    m_CachedPref: -160
     m_ControlHash: -371814159
     m_PrefName: Preview_InspectorPreview
   m_LastInspectedObjectInstanceID: -1
@@ -1366,7 +1366,7 @@ MonoBehaviour:
     m_SaveData: []
     m_OverlaysVisible: 1
   m_Spl:
-    ID: 180
+    ID: 1080
     splitterInitialOffset: 290.8
     currentActiveSplitter: -1
     realSizes:
@@ -1605,9 +1605,9 @@ MonoBehaviour:
       uniqueId: '[CustomUtils][suite]'
       name: CustomUtils
       fullName: CustomUtils
-      resultStatus: 2
-      duration: 1.3092703
-      messages: One or more child tests had errors
+      resultStatus: 1
+      duration: 0.4133566
+      messages: 
       output: 
       stacktrace: 
       notRunnable: 0
@@ -1617,13 +1617,13 @@ MonoBehaviour:
       categories: []
       parentId: 
       parentUniqueId: 
-    - id: 1039
-      uniqueId: '[EditrModeTestAssembly][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/EditrModeTestAssembly.dll][suite]'
-      name: EditrModeTestAssembly.dll
-      fullName: C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/EditrModeTestAssembly.dll
-      resultStatus: 2
-      duration: 1.2981641
-      messages: One or more child tests had errors
+    - id: 1038
+      uniqueId: '[EditModeTestAssembly][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/EditModeTestAssembly.dll][suite]'
+      name: EditModeTestAssembly.dll
+      fullName: C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/EditModeTestAssembly.dll
+      resultStatus: 1
+      duration: 0.3858056
+      messages: 
       output: 
       stacktrace: 
       notRunnable: 0
@@ -1634,7 +1634,7 @@ MonoBehaviour:
       parentId: 1000
       parentUniqueId: '[CustomUtils][suite]'
     - id: 1001
-      uniqueId: EditrModeTestAssembly.dll/[EditrModeTestAssembly][AnalyzerTestRunner][suite]
+      uniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][AnalyzerTestRunner][suite]
       name: AnalyzerTestRunner
       fullName: AnalyzerTestRunner
       resultStatus: 0
@@ -1647,10 +1647,10 @@ MonoBehaviour:
       description: 
       isSuite: 1
       categories: []
-      parentId: 1039
-      parentUniqueId: '[EditrModeTestAssembly][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/EditrModeTestAssembly.dll][suite]'
+      parentId: 1038
+      parentUniqueId: '[EditModeTestAssembly][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/EditModeTestAssembly.dll][suite]'
     - id: 1011
-      uniqueId: EditrModeTestAssembly.dll/AnalyzerTestRunner/[EditrModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCasePerformanceTest][suite]
+      uniqueId: EditModeTestAssembly.dll/AnalyzerTestRunner/[EditModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCasePerformanceTest][suite]
       name: AnalyzerTestCasePerformanceTest
       fullName: AnalyzerTestRunner.AnalyzerTestCasePerformanceTest
       resultStatus: 0
@@ -1665,9 +1665,9 @@ MonoBehaviour:
       categories:
       - Performance
       parentId: 1001
-      parentUniqueId: EditrModeTestAssembly.dll/[EditrModeTestAssembly][AnalyzerTestRunner][suite]
+      parentUniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][AnalyzerTestRunner][suite]
     - id: 1007
-      uniqueId: EditrModeTestAssembly.dll/AnalyzerTestRunner/AnalyzerTestCasePerformanceTest/[EditrModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCasePerformanceTest(RequiresStaticMethodImplementationAttributeAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/RequiresStaticMethodTestCase")]
+      uniqueId: EditModeTestAssembly.dll/AnalyzerTestRunner/AnalyzerTestCasePerformanceTest/[EditModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCasePerformanceTest(RequiresStaticMethodImplementationAttributeAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/RequiresStaticMethodTestCase")]
       name: AnalyzerTestCasePerformanceTest(RequiresStaticMethodImplementationAttributeAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/RequiresStaticMethodTestCase")
       fullName: AnalyzerTestRunner.AnalyzerTestCasePerformanceTest(RequiresStaticMethodImplementationAttributeAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/RequiresStaticMethodTestCase")
       resultStatus: 0
@@ -1682,9 +1682,9 @@ MonoBehaviour:
       categories:
       - Performance
       parentId: 1011
-      parentUniqueId: EditrModeTestAssembly.dll/AnalyzerTestRunner/[EditrModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCasePerformanceTest][suite]
+      parentUniqueId: EditModeTestAssembly.dll/AnalyzerTestRunner/[EditModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCasePerformanceTest][suite]
     - id: 1008
-      uniqueId: EditrModeTestAssembly.dll/AnalyzerTestRunner/AnalyzerTestCasePerformanceTest/[EditrModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCasePerformanceTest(RequiresAttributeImplementationAttributeAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/RequiresAttributeTestCase")]
+      uniqueId: EditModeTestAssembly.dll/AnalyzerTestRunner/AnalyzerTestCasePerformanceTest/[EditModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCasePerformanceTest(RequiresAttributeImplementationAttributeAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/RequiresAttributeTestCase")]
       name: AnalyzerTestCasePerformanceTest(RequiresAttributeImplementationAttributeAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/RequiresAttributeTestCase")
       fullName: AnalyzerTestRunner.AnalyzerTestCasePerformanceTest(RequiresAttributeImplementationAttributeAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/RequiresAttributeTestCase")
       resultStatus: 0
@@ -1699,9 +1699,9 @@ MonoBehaviour:
       categories:
       - Performance
       parentId: 1011
-      parentUniqueId: EditrModeTestAssembly.dll/AnalyzerTestRunner/[EditrModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCasePerformanceTest][suite]
+      parentUniqueId: EditModeTestAssembly.dll/AnalyzerTestRunner/[EditModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCasePerformanceTest][suite]
     - id: 1009
-      uniqueId: EditrModeTestAssembly.dll/AnalyzerTestRunner/AnalyzerTestCasePerformanceTest/[EditrModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCasePerformanceTest(BuilderAttributeVerifyAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/BuilderAttributeVerifyAnalyzerTestCase")]
+      uniqueId: EditModeTestAssembly.dll/AnalyzerTestRunner/AnalyzerTestCasePerformanceTest/[EditModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCasePerformanceTest(BuilderAttributeVerifyAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/BuilderAttributeVerifyAnalyzerTestCase")]
       name: AnalyzerTestCasePerformanceTest(BuilderAttributeVerifyAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/BuilderAttributeVerifyAnalyzerTestCase")
       fullName: AnalyzerTestRunner.AnalyzerTestCasePerformanceTest(BuilderAttributeVerifyAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/BuilderAttributeVerifyAnalyzerTestCase")
       resultStatus: 0
@@ -1716,9 +1716,9 @@ MonoBehaviour:
       categories:
       - Performance
       parentId: 1011
-      parentUniqueId: EditrModeTestAssembly.dll/AnalyzerTestRunner/[EditrModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCasePerformanceTest][suite]
+      parentUniqueId: EditModeTestAssembly.dll/AnalyzerTestRunner/[EditModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCasePerformanceTest][suite]
     - id: 1010
-      uniqueId: EditrModeTestAssembly.dll/AnalyzerTestRunner/AnalyzerTestCasePerformanceTest/[EditrModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCasePerformanceTest(AttributeAbstractAndInterfaceConstraintsAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/AttributeAbstractAndInterfaceConstraintsAnalyzerTestCase")]
+      uniqueId: EditModeTestAssembly.dll/AnalyzerTestRunner/AnalyzerTestCasePerformanceTest/[EditModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCasePerformanceTest(AttributeAbstractAndInterfaceConstraintsAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/AttributeAbstractAndInterfaceConstraintsAnalyzerTestCase")]
       name: AnalyzerTestCasePerformanceTest(AttributeAbstractAndInterfaceConstraintsAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/AttributeAbstractAndInterfaceConstraintsAnalyzerTestCase")
       fullName: AnalyzerTestRunner.AnalyzerTestCasePerformanceTest(AttributeAbstractAndInterfaceConstraintsAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/AttributeAbstractAndInterfaceConstraintsAnalyzerTestCase")
       resultStatus: 0
@@ -1733,9 +1733,9 @@ MonoBehaviour:
       categories:
       - Performance
       parentId: 1011
-      parentUniqueId: EditrModeTestAssembly.dll/AnalyzerTestRunner/[EditrModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCasePerformanceTest][suite]
+      parentUniqueId: EditModeTestAssembly.dll/AnalyzerTestRunner/[EditModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCasePerformanceTest][suite]
     - id: 1006
-      uniqueId: EditrModeTestAssembly.dll/AnalyzerTestRunner/[EditrModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCaseTest][suite]
+      uniqueId: EditModeTestAssembly.dll/AnalyzerTestRunner/[EditModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCaseTest][suite]
       name: AnalyzerTestCaseTest
       fullName: AnalyzerTestRunner.AnalyzerTestCaseTest
       resultStatus: 0
@@ -1749,9 +1749,9 @@ MonoBehaviour:
       isSuite: 1
       categories: []
       parentId: 1001
-      parentUniqueId: EditrModeTestAssembly.dll/[EditrModeTestAssembly][AnalyzerTestRunner][suite]
+      parentUniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][AnalyzerTestRunner][suite]
     - id: 1002
-      uniqueId: EditrModeTestAssembly.dll/AnalyzerTestRunner/AnalyzerTestCaseTest/[EditrModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCaseTest(RequiresStaticMethodImplementationAttributeAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/RequiresStaticMethodTestCase")]
+      uniqueId: EditModeTestAssembly.dll/AnalyzerTestRunner/AnalyzerTestCaseTest/[EditModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCaseTest(RequiresStaticMethodImplementationAttributeAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/RequiresStaticMethodTestCase")]
       name: AnalyzerTestCaseTest(RequiresStaticMethodImplementationAttributeAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/RequiresStaticMethodTestCase")
       fullName: AnalyzerTestRunner.AnalyzerTestCaseTest(RequiresStaticMethodImplementationAttributeAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/RequiresStaticMethodTestCase")
       resultStatus: 0
@@ -1766,9 +1766,9 @@ MonoBehaviour:
       categories:
       - Uncategorized
       parentId: 1006
-      parentUniqueId: EditrModeTestAssembly.dll/AnalyzerTestRunner/[EditrModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCaseTest][suite]
+      parentUniqueId: EditModeTestAssembly.dll/AnalyzerTestRunner/[EditModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCaseTest][suite]
     - id: 1003
-      uniqueId: EditrModeTestAssembly.dll/AnalyzerTestRunner/AnalyzerTestCaseTest/[EditrModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCaseTest(RequiresAttributeImplementationAttributeAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/RequiresAttributeTestCase")]
+      uniqueId: EditModeTestAssembly.dll/AnalyzerTestRunner/AnalyzerTestCaseTest/[EditModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCaseTest(RequiresAttributeImplementationAttributeAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/RequiresAttributeTestCase")]
       name: AnalyzerTestCaseTest(RequiresAttributeImplementationAttributeAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/RequiresAttributeTestCase")
       fullName: AnalyzerTestRunner.AnalyzerTestCaseTest(RequiresAttributeImplementationAttributeAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/RequiresAttributeTestCase")
       resultStatus: 0
@@ -1783,9 +1783,9 @@ MonoBehaviour:
       categories:
       - Uncategorized
       parentId: 1006
-      parentUniqueId: EditrModeTestAssembly.dll/AnalyzerTestRunner/[EditrModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCaseTest][suite]
+      parentUniqueId: EditModeTestAssembly.dll/AnalyzerTestRunner/[EditModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCaseTest][suite]
     - id: 1004
-      uniqueId: EditrModeTestAssembly.dll/AnalyzerTestRunner/AnalyzerTestCaseTest/[EditrModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCaseTest(BuilderAttributeVerifyAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/BuilderAttributeVerifyAnalyzerTestCase")]
+      uniqueId: EditModeTestAssembly.dll/AnalyzerTestRunner/AnalyzerTestCaseTest/[EditModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCaseTest(BuilderAttributeVerifyAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/BuilderAttributeVerifyAnalyzerTestCase")]
       name: AnalyzerTestCaseTest(BuilderAttributeVerifyAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/BuilderAttributeVerifyAnalyzerTestCase")
       fullName: AnalyzerTestRunner.AnalyzerTestCaseTest(BuilderAttributeVerifyAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/BuilderAttributeVerifyAnalyzerTestCase")
       resultStatus: 0
@@ -1800,9 +1800,9 @@ MonoBehaviour:
       categories:
       - Uncategorized
       parentId: 1006
-      parentUniqueId: EditrModeTestAssembly.dll/AnalyzerTestRunner/[EditrModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCaseTest][suite]
+      parentUniqueId: EditModeTestAssembly.dll/AnalyzerTestRunner/[EditModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCaseTest][suite]
     - id: 1005
-      uniqueId: EditrModeTestAssembly.dll/AnalyzerTestRunner/AnalyzerTestCaseTest/[EditrModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCaseTest(AttributeAbstractAndInterfaceConstraintsAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/AttributeAbstractAndInterfaceConstraintsAnalyzerTestCase")]
+      uniqueId: EditModeTestAssembly.dll/AnalyzerTestRunner/AnalyzerTestCaseTest/[EditModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCaseTest(AttributeAbstractAndInterfaceConstraintsAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/AttributeAbstractAndInterfaceConstraintsAnalyzerTestCase")]
       name: AnalyzerTestCaseTest(AttributeAbstractAndInterfaceConstraintsAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/AttributeAbstractAndInterfaceConstraintsAnalyzerTestCase")
       fullName: AnalyzerTestRunner.AnalyzerTestCaseTest(AttributeAbstractAndInterfaceConstraintsAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/AttributeAbstractAndInterfaceConstraintsAnalyzerTestCase")
       resultStatus: 0
@@ -1817,9 +1817,9 @@ MonoBehaviour:
       categories:
       - Uncategorized
       parentId: 1006
-      parentUniqueId: EditrModeTestAssembly.dll/AnalyzerTestRunner/[EditrModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCaseTest][suite]
+      parentUniqueId: EditModeTestAssembly.dll/AnalyzerTestRunner/[EditModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCaseTest][suite]
     - id: 1012
-      uniqueId: EditrModeTestAssembly.dll/[EditrModeTestAssembly][DBTestRunner][suite]
+      uniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][DBTestRunner][suite]
       name: DBTestRunner
       fullName: DBTestRunner
       resultStatus: 0
@@ -1832,10 +1832,10 @@ MonoBehaviour:
       description: 
       isSuite: 1
       categories: []
-      parentId: 1039
-      parentUniqueId: '[EditrModeTestAssembly][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/EditrModeTestAssembly.dll][suite]'
+      parentId: 1038
+      parentUniqueId: '[EditModeTestAssembly][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/EditModeTestAssembly.dll][suite]'
     - id: 1013
-      uniqueId: EditrModeTestAssembly.dll/DBTestRunner/[EditrModeTestAssembly][DBTestRunner.InMemoryDatabaseTest]
+      uniqueId: EditModeTestAssembly.dll/DBTestRunner/[EditModeTestAssembly][DBTestRunner.InMemoryDatabaseTest]
       name: InMemoryDatabaseTest
       fullName: DBTestRunner.InMemoryDatabaseTest
       resultStatus: 0
@@ -1850,9 +1850,9 @@ MonoBehaviour:
       categories:
       - Uncategorized
       parentId: 1012
-      parentUniqueId: EditrModeTestAssembly.dll/[EditrModeTestAssembly][DBTestRunner][suite]
+      parentUniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][DBTestRunner][suite]
     - id: 1014
-      uniqueId: EditrModeTestAssembly.dll/[EditrModeTestAssembly][EditModeTestRunner][suite]
+      uniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][EditModeTestRunner][suite]
       name: EditModeTestRunner
       fullName: EditModeTestRunner
       resultStatus: 0
@@ -1865,10 +1865,10 @@ MonoBehaviour:
       description: 
       isSuite: 1
       categories: []
-      parentId: 1039
-      parentUniqueId: '[EditrModeTestAssembly][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/EditrModeTestAssembly.dll][suite]'
+      parentId: 1038
+      parentUniqueId: '[EditModeTestAssembly][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/EditModeTestAssembly.dll][suite]'
     - id: 1018
-      uniqueId: EditrModeTestAssembly.dll/EditModeTestRunner/[EditrModeTestAssembly][EditModeTestRunner.EnumCastPerformanceTest]
+      uniqueId: EditModeTestAssembly.dll/EditModeTestRunner/[EditModeTestAssembly][EditModeTestRunner.EnumCastPerformanceTest]
       name: EnumCastPerformanceTest
       fullName: EditModeTestRunner.EnumCastPerformanceTest
       resultStatus: 0
@@ -1883,9 +1883,9 @@ MonoBehaviour:
       categories:
       - Performance
       parentId: 1014
-      parentUniqueId: EditrModeTestAssembly.dll/[EditrModeTestAssembly][EditModeTestRunner][suite]
+      parentUniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][EditModeTestRunner][suite]
     - id: 1017
-      uniqueId: EditrModeTestAssembly.dll/EditModeTestRunner/[EditrModeTestAssembly][EditModeTestRunner.EnumParsePerformanceTest]
+      uniqueId: EditModeTestAssembly.dll/EditModeTestRunner/[EditModeTestAssembly][EditModeTestRunner.EnumParsePerformanceTest]
       name: EnumParsePerformanceTest
       fullName: EditModeTestRunner.EnumParsePerformanceTest
       resultStatus: 0
@@ -1900,9 +1900,9 @@ MonoBehaviour:
       categories:
       - Performance
       parentId: 1014
-      parentUniqueId: EditrModeTestAssembly.dll/[EditrModeTestAssembly][EditModeTestRunner][suite]
+      parentUniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][EditModeTestRunner][suite]
     - id: 1023
-      uniqueId: EditrModeTestAssembly.dll/EditModeTestRunner/[EditrModeTestAssembly][EditModeTestRunner.IntMarshalTest]
+      uniqueId: EditModeTestAssembly.dll/EditModeTestRunner/[EditModeTestAssembly][EditModeTestRunner.IntMarshalTest]
       name: IntMarshalTest
       fullName: EditModeTestRunner.IntMarshalTest
       resultStatus: 0
@@ -1917,9 +1917,9 @@ MonoBehaviour:
       categories:
       - Uncategorized
       parentId: 1014
-      parentUniqueId: EditrModeTestAssembly.dll/[EditrModeTestAssembly][EditModeTestRunner][suite]
+      parentUniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][EditModeTestRunner][suite]
     - id: 1020
-      uniqueId: EditrModeTestAssembly.dll/EditModeTestRunner/[EditrModeTestAssembly][EditModeTestRunner.JsonPerformanceTest][suite]
+      uniqueId: EditModeTestAssembly.dll/EditModeTestRunner/[EditModeTestAssembly][EditModeTestRunner.JsonPerformanceTest][suite]
       name: JsonPerformanceTest
       fullName: EditModeTestRunner.JsonPerformanceTest
       resultStatus: 0
@@ -1934,9 +1934,9 @@ MonoBehaviour:
       categories:
       - Performance
       parentId: 1014
-      parentUniqueId: EditrModeTestAssembly.dll/[EditrModeTestAssembly][EditModeTestRunner][suite]
+      parentUniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][EditModeTestRunner][suite]
     - id: 1019
-      uniqueId: EditrModeTestAssembly.dll/EditModeTestRunner/JsonPerformanceTest/[EditrModeTestAssembly][EditModeTestRunner.JsonPerformanceTest(2500)]
+      uniqueId: EditModeTestAssembly.dll/EditModeTestRunner/JsonPerformanceTest/[EditModeTestAssembly][EditModeTestRunner.JsonPerformanceTest(2500)]
       name: JsonPerformanceTest(2500)
       fullName: EditModeTestRunner.JsonPerformanceTest(2500)
       resultStatus: 0
@@ -1951,9 +1951,9 @@ MonoBehaviour:
       categories:
       - Performance
       parentId: 1020
-      parentUniqueId: EditrModeTestAssembly.dll/EditModeTestRunner/[EditrModeTestAssembly][EditModeTestRunner.JsonPerformanceTest][suite]
+      parentUniqueId: EditModeTestAssembly.dll/EditModeTestRunner/[EditModeTestAssembly][EditModeTestRunner.JsonPerformanceTest][suite]
     - id: 1024
-      uniqueId: EditrModeTestAssembly.dll/EditModeTestRunner/[EditrModeTestAssembly][EditModeTestRunner.StringMarshalTest]
+      uniqueId: EditModeTestAssembly.dll/EditModeTestRunner/[EditModeTestAssembly][EditModeTestRunner.StringMarshalTest]
       name: StringMarshalTest
       fullName: EditModeTestRunner.StringMarshalTest
       resultStatus: 0
@@ -1968,9 +1968,9 @@ MonoBehaviour:
       categories:
       - Uncategorized
       parentId: 1014
-      parentUniqueId: EditrModeTestAssembly.dll/[EditrModeTestAssembly][EditModeTestRunner][suite]
+      parentUniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][EditModeTestRunner][suite]
     - id: 1016
-      uniqueId: EditrModeTestAssembly.dll/EditModeTestRunner/[EditrModeTestAssembly][EditModeTestRunner.TempPerformanceTest]
+      uniqueId: EditModeTestAssembly.dll/EditModeTestRunner/[EditModeTestAssembly][EditModeTestRunner.TempPerformanceTest]
       name: TempPerformanceTest
       fullName: EditModeTestRunner.TempPerformanceTest
       resultStatus: 0
@@ -1985,9 +1985,9 @@ MonoBehaviour:
       categories:
       - Performance
       parentId: 1014
-      parentUniqueId: EditrModeTestAssembly.dll/[EditrModeTestAssembly][EditModeTestRunner][suite]
+      parentUniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][EditModeTestRunner][suite]
     - id: 1015
-      uniqueId: EditrModeTestAssembly.dll/EditModeTestRunner/[EditrModeTestAssembly][EditModeTestRunner.TempTest]
+      uniqueId: EditModeTestAssembly.dll/EditModeTestRunner/[EditModeTestAssembly][EditModeTestRunner.TempTest]
       name: TempTest
       fullName: EditModeTestRunner.TempTest
       resultStatus: 0
@@ -2002,9 +2002,9 @@ MonoBehaviour:
       categories:
       - Uncategorized
       parentId: 1014
-      parentUniqueId: EditrModeTestAssembly.dll/[EditrModeTestAssembly][EditModeTestRunner][suite]
+      parentUniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][EditModeTestRunner][suite]
     - id: 1021
-      uniqueId: EditrModeTestAssembly.dll/EditModeTestRunner/[EditrModeTestAssembly][EditModeTestRunner.UnsafePerformanceTest]
+      uniqueId: EditModeTestAssembly.dll/EditModeTestRunner/[EditModeTestAssembly][EditModeTestRunner.UnsafePerformanceTest]
       name: UnsafePerformanceTest
       fullName: EditModeTestRunner.UnsafePerformanceTest
       resultStatus: 0
@@ -2019,9 +2019,9 @@ MonoBehaviour:
       categories:
       - Performance
       parentId: 1014
-      parentUniqueId: EditrModeTestAssembly.dll/[EditrModeTestAssembly][EditModeTestRunner][suite]
+      parentUniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][EditModeTestRunner][suite]
     - id: 1022
-      uniqueId: EditrModeTestAssembly.dll/EditModeTestRunner/[EditrModeTestAssembly][EditModeTestRunner.UnsafeTest]
+      uniqueId: EditModeTestAssembly.dll/EditModeTestRunner/[EditModeTestAssembly][EditModeTestRunner.UnsafeTest]
       name: UnsafeTest
       fullName: EditModeTestRunner.UnsafeTest
       resultStatus: 0
@@ -2036,9 +2036,9 @@ MonoBehaviour:
       categories:
       - Uncategorized
       parentId: 1014
-      parentUniqueId: EditrModeTestAssembly.dll/[EditrModeTestAssembly][EditModeTestRunner][suite]
+      parentUniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][EditModeTestRunner][suite]
     - id: 1025
-      uniqueId: EditrModeTestAssembly.dll/[EditrModeTestAssembly][GameDBTestRunner][suite]
+      uniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][GameDBTestRunner][suite]
       name: GameDBTestRunner
       fullName: GameDBTestRunner
       resultStatus: 0
@@ -2051,10 +2051,10 @@ MonoBehaviour:
       description: 
       isSuite: 1
       categories: []
-      parentId: 1039
-      parentUniqueId: '[EditrModeTestAssembly][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/EditrModeTestAssembly.dll][suite]'
+      parentId: 1038
+      parentUniqueId: '[EditModeTestAssembly][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/EditModeTestAssembly.dll][suite]'
     - id: 1029
-      uniqueId: EditrModeTestAssembly.dll/GameDBTestRunner/[EditrModeTestAssembly][GameDBTestRunner.StartTest][suite]
+      uniqueId: EditModeTestAssembly.dll/GameDBTestRunner/[EditModeTestAssembly][GameDBTestRunner.StartTest][suite]
       name: StartTest
       fullName: GameDBTestRunner.StartTest
       resultStatus: 0
@@ -2068,9 +2068,9 @@ MonoBehaviour:
       isSuite: 1
       categories: []
       parentId: 1025
-      parentUniqueId: EditrModeTestAssembly.dll/[EditrModeTestAssembly][GameDBTestRunner][suite]
+      parentUniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][GameDBTestRunner][suite]
     - id: 1026
-      uniqueId: EditrModeTestAssembly.dll/GameDBTestRunner/StartTest/[EditrModeTestAssembly][GameDBTestRunner.StartTest(GameDBTestRunner+JsonTestRunner)]
+      uniqueId: EditModeTestAssembly.dll/GameDBTestRunner/StartTest/[EditModeTestAssembly][GameDBTestRunner.StartTest(GameDBTestRunner+JsonTestRunner)]
       name: StartTest(GameDBTestRunner+JsonTestRunner)
       fullName: GameDBTestRunner.StartTest(GameDBTestRunner+JsonTestRunner)
       resultStatus: 0
@@ -2085,9 +2085,9 @@ MonoBehaviour:
       categories:
       - Uncategorized
       parentId: 1029
-      parentUniqueId: EditrModeTestAssembly.dll/GameDBTestRunner/[EditrModeTestAssembly][GameDBTestRunner.StartTest][suite]
+      parentUniqueId: EditModeTestAssembly.dll/GameDBTestRunner/[EditModeTestAssembly][GameDBTestRunner.StartTest][suite]
     - id: 1027
-      uniqueId: EditrModeTestAssembly.dll/GameDBTestRunner/StartTest/[EditrModeTestAssembly][GameDBTestRunner.StartTest(GameDBTestRunner+XmlTestRunner)]
+      uniqueId: EditModeTestAssembly.dll/GameDBTestRunner/StartTest/[EditModeTestAssembly][GameDBTestRunner.StartTest(GameDBTestRunner+XmlTestRunner)]
       name: StartTest(GameDBTestRunner+XmlTestRunner)
       fullName: GameDBTestRunner.StartTest(GameDBTestRunner+XmlTestRunner)
       resultStatus: 0
@@ -2102,9 +2102,9 @@ MonoBehaviour:
       categories:
       - Uncategorized
       parentId: 1029
-      parentUniqueId: EditrModeTestAssembly.dll/GameDBTestRunner/[EditrModeTestAssembly][GameDBTestRunner.StartTest][suite]
+      parentUniqueId: EditModeTestAssembly.dll/GameDBTestRunner/[EditModeTestAssembly][GameDBTestRunner.StartTest][suite]
     - id: 1028
-      uniqueId: EditrModeTestAssembly.dll/GameDBTestRunner/StartTest/[EditrModeTestAssembly][GameDBTestRunner.StartTest(GameDBTestRunner+CsvTestRunner)]
+      uniqueId: EditModeTestAssembly.dll/GameDBTestRunner/StartTest/[EditModeTestAssembly][GameDBTestRunner.StartTest(GameDBTestRunner+CsvTestRunner)]
       name: StartTest(GameDBTestRunner+CsvTestRunner)
       fullName: GameDBTestRunner.StartTest(GameDBTestRunner+CsvTestRunner)
       resultStatus: 0
@@ -2119,14 +2119,73 @@ MonoBehaviour:
       categories:
       - Uncategorized
       parentId: 1029
-      parentUniqueId: EditrModeTestAssembly.dll/GameDBTestRunner/[EditrModeTestAssembly][GameDBTestRunner.StartTest][suite]
+      parentUniqueId: EditModeTestAssembly.dll/GameDBTestRunner/[EditModeTestAssembly][GameDBTestRunner.StartTest][suite]
     - id: 1030
-      uniqueId: EditrModeTestAssembly.dll/[EditrModeTestAssembly][TcpServerTestRunner][suite]
+      uniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][GlobalEnumTestRunner][suite]
+      name: GlobalEnumTestRunner
+      fullName: GlobalEnumTestRunner
+      resultStatus: 1
+      duration: 0.3802694
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1038
+      parentUniqueId: '[EditModeTestAssembly][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/EditModeTestAssembly.dll][suite]'
+    - id: 1031
+      uniqueId: EditModeTestAssembly.dll/GlobalEnumTestRunner/[EditModeTestAssembly][GlobalEnumTestRunner.StartTest]
+      name: StartTest
+      fullName: GlobalEnumTestRunner.StartTest
+      resultStatus: 1
+      duration: 0.3387186
+      messages: 
+      output: '
+
+        IgnoreFailingMessages:true
+
+        [GlobalEnumTestRunner.StartTest]
+        Pass Basic Test
+
+        [GlobalEnumTestRunner.StartTest] Pass Count Test
+
+        [GlobalEnumTestRunner.StartTest]
+        Pass int Interaction Test
+
+        [GlobalEnumTestRunner.StartTest] Pass
+        Type Interaction Test
+
+        [GlobalEnumTestRunner.StartTest] Pass Property
+        Get Set Test
+
+        [GlobalEnumTestRunner.StartTest] Pass Method Get Test
+
+        [GlobalEnumTestRunner.StartTest]
+        Pass Method Set Test
+
+        [GlobalEnumTestRunner.StartTest] Pass Contains
+        Test
+
+'
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1030
+      parentUniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][GlobalEnumTestRunner][suite]
+    - id: 1032
+      uniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][TcpServerTestRunner][suite]
       name: TcpServerTestRunner
       fullName: TcpServerTestRunner
-      resultStatus: 2
-      duration: 1.2946072
-      messages: One or more child tests had errors
+      resultStatus: 0
+      duration: 0
+      messages: 
       output: 
       stacktrace: 
       notRunnable: 0
@@ -2134,21 +2193,16 @@ MonoBehaviour:
       description: 
       isSuite: 1
       categories: []
-      parentId: 1039
-      parentUniqueId: '[EditrModeTestAssembly][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/EditrModeTestAssembly.dll][suite]'
-    - id: 1031
-      uniqueId: EditrModeTestAssembly.dll/TcpServerTestRunner/[EditrModeTestAssembly][TcpServerTestRunner.Clear]
+      parentId: 1038
+      parentUniqueId: '[EditModeTestAssembly][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/EditModeTestAssembly.dll][suite]'
+    - id: 1033
+      uniqueId: EditModeTestAssembly.dll/TcpServerTestRunner/[EditModeTestAssembly][TcpServerTestRunner.Clear]
       name: Clear
       fullName: TcpServerTestRunner.Clear
-      resultStatus: 1
-      duration: 0.0344168
+      resultStatus: 0
+      duration: 0
       messages: 
-      output: '<color=#FFEB04>[SimpleTcpServer.Stop] SimpleTcpServer is already stopped</color>
-
-        <color=#FFEB04>[SimpleTcpServer.Stop]
-        SimpleTcpServer is already stopped</color>
-
-'
+      output: 
       stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
@@ -2156,15 +2210,15 @@ MonoBehaviour:
       isSuite: 0
       categories:
       - Uncategorized
-      parentId: 1030
-      parentUniqueId: EditrModeTestAssembly.dll/[EditrModeTestAssembly][TcpServerTestRunner][suite]
-    - id: 1038
-      uniqueId: EditrModeTestAssembly.dll/TcpServerTestRunner/[EditrModeTestAssembly][TcpServerTestRunner.TcpClientTestAsync][suite]
+      parentId: 1032
+      parentUniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][TcpServerTestRunner][suite]
+    - id: 1037
+      uniqueId: EditModeTestAssembly.dll/TcpServerTestRunner/[EditModeTestAssembly][TcpServerTestRunner.TcpClientTestAsync][suite]
       name: TcpClientTestAsync
       fullName: TcpServerTestRunner.TcpClientTestAsync
-      resultStatus: 2
-      duration: 1.2902063
-      messages: One or more child tests had errors
+      resultStatus: 0
+      duration: 0
+      messages: 
       output: 
       stacktrace: 
       notRunnable: 0
@@ -2172,24 +2226,16 @@ MonoBehaviour:
       description: 
       isSuite: 1
       categories: []
-      parentId: 1030
-      parentUniqueId: EditrModeTestAssembly.dll/[EditrModeTestAssembly][TcpServerTestRunner][suite]
+      parentId: 1032
+      parentUniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][TcpServerTestRunner][suite]
     - id: 1035
-      uniqueId: EditrModeTestAssembly.dll/TcpServerTestRunner/TcpClientTestAsync/[EditrModeTestAssembly][TcpServerTestRunner.TcpClientTestAsync(TcpJsonServeModule,TestTcpJsonClient)]
+      uniqueId: EditModeTestAssembly.dll/TcpServerTestRunner/TcpClientTestAsync/[EditModeTestAssembly][TcpServerTestRunner.TcpClientTestAsync(TcpJsonServeModule,TestTcpJsonClient)]
       name: TcpClientTestAsync(TcpJsonServeModule,TestTcpJsonClient)
       fullName: TcpServerTestRunner.TcpClientTestAsync(TcpJsonServeModule,TestTcpJsonClient)
-      resultStatus: 1
-      duration: 6.5568585
+      resultStatus: 0
+      duration: 0
       messages: 
-      output: '<color=#00FF00>[SimpleTcpServer.Start] SimpleTcpServer Start || 0.0.0.0:8890</color>
-
-        <color=#00FF00>[<Start>d__13.MoveNext]
-        Connected Session || 1836922624 || 127.0.0.1</color>
-
-        <color=#FF0000>[SimpleTcpServer.Stop]
-        SimpleTcpServer Stop</color>
-
-'
+      output: 
       stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
@@ -2197,24 +2243,16 @@ MonoBehaviour:
       isSuite: 0
       categories:
       - Uncategorized
-      parentId: 1038
-      parentUniqueId: EditrModeTestAssembly.dll/TcpServerTestRunner/[EditrModeTestAssembly][TcpServerTestRunner.TcpClientTestAsync][suite]
+      parentId: 1037
+      parentUniqueId: EditModeTestAssembly.dll/TcpServerTestRunner/[EditModeTestAssembly][TcpServerTestRunner.TcpClientTestAsync][suite]
     - id: 1036
-      uniqueId: EditrModeTestAssembly.dll/TcpServerTestRunner/TcpClientTestAsync/[EditrModeTestAssembly][TcpServerTestRunner.TcpClientTestAsync(TcpStructServeModule,TestTcpStructClient)]
+      uniqueId: EditModeTestAssembly.dll/TcpServerTestRunner/TcpClientTestAsync/[EditModeTestAssembly][TcpServerTestRunner.TcpClientTestAsync(TcpStructServeModule,TestTcpStructClient)]
       name: TcpClientTestAsync(TcpStructServeModule,TestTcpStructClient)
       fullName: TcpServerTestRunner.TcpClientTestAsync(TcpStructServeModule,TestTcpStructClient)
-      resultStatus: 1
-      duration: 6.358348
+      resultStatus: 0
+      duration: 0
       messages: 
-      output: '<color=#00FF00>[SimpleTcpServer.Start] SimpleTcpServer Start || 0.0.0.0:8890</color>
-
-        <color=#00FF00>[<Start>d__13.MoveNext]
-        Connected Session || 869959562 || 127.0.0.1</color>
-
-        <color=#FF0000>[SimpleTcpServer.Stop]
-        SimpleTcpServer Stop</color>
-
-'
+      output: 
       stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
@@ -2222,10 +2260,10 @@ MonoBehaviour:
       isSuite: 0
       categories:
       - Uncategorized
-      parentId: 1038
-      parentUniqueId: EditrModeTestAssembly.dll/TcpServerTestRunner/[EditrModeTestAssembly][TcpServerTestRunner.TcpClientTestAsync][suite]
-    - id: 1033
-      uniqueId: EditrModeTestAssembly.dll/TcpServerTestRunner/[EditrModeTestAssembly][TcpServerTestRunner.TcpJsonHandlerPerformanceTest]
+      parentId: 1037
+      parentUniqueId: EditModeTestAssembly.dll/TcpServerTestRunner/[EditModeTestAssembly][TcpServerTestRunner.TcpClientTestAsync][suite]
+    - id: 1034
+      uniqueId: EditModeTestAssembly.dll/TcpServerTestRunner/[EditModeTestAssembly][TcpServerTestRunner.TcpJsonHandlerPerformanceTest]
       name: TcpJsonHandlerPerformanceTest
       fullName: TcpServerTestRunner.TcpJsonHandlerPerformanceTest
       resultStatus: 0
@@ -2239,59 +2277,41 @@ MonoBehaviour:
       isSuite: 0
       categories:
       - Performance
-      parentId: 1030
-      parentUniqueId: EditrModeTestAssembly.dll/[EditrModeTestAssembly][TcpServerTestRunner][suite]
-    m_ResultText: "TcpClientTestAsync(TcpStructServeModule,TestTcpStructWrapperClient)
-      (1.285s)\n---\nUnhandled log message: '[Error] [TcpHandlerProvider`1.GetHandler]
-      TcpStructWrapperPacket`1 is invalid handler generic type'. Use UnityEngine.TestTools.LogAssert.Expect\r\nTearDown
-      : Unhandled log message: '[Error] [<TcpClientTestAsync>d__11.MoveNext] System.Threading.Tasks.TaskCanceledException:
-      A task was canceled.\r\n  at TcpServerTestRunner.TcpClientTestAsync (System.Type
-      moduleType, System.Type clientType) [0x0024e] in C:\\Project\\Unity\\CustomUtils\\Assets\\Test\\EditMode\\NetworkTest\\TcpServerTestRunner.cs:98
-      '. Use UnityEngine.TestTools.LogAssert.Expect\n---\nLogger:Error (string) (at
-      Assets/CustomUtils/Common/Logger/Logger.cs:37)\r\nLogger:TraceError (object)
-      (at Assets/CustomUtils/Common/Logger/Logger.cs:129)\r\nTcpServerTestRunner/<TcpClientTestAsync>d__11:MoveNext
-      () (at Assets/Test/EditMode/NetworkTest/TcpServerTestRunner.cs:100)\r\nSystem.Threading.CancellationTokenSource:Cancel
-      ()\r\nTcpServerTestRunner:TearDownTestRunner () (at Assets/Test/EditMode/NetworkTest/TcpServerTestRunner.cs:34)\r\nSystem.Reflection.MethodBase:Invoke
-      (object,object[])\r\nNUnit.Framework.Internal.Reflect:InvokeMethod (System.Reflection.MethodInfo,object,object[])\r\nNUnit.Framework.Internal.Reflect:InvokeMethod
-      (System.Reflection.MethodInfo,object)\r\nUnityEditor.EditorApplication:Internal_CallUpdateFunctions
-      ()\n---\n<color=#00FF00>[SimpleTcpServer.Start] SimpleTcpServer Start || 0.0.0.0:8890</color>\r\n<color=#00FF00>[<Start>d__13.MoveNext]
-      Connected Session || 630857417 || 127.0.0.1</color>\r\n[<TcpClientTestAsync>d__11.MoveNext]
-      System.Threading.Tasks.TaskCanceledException: A task was canceled.\r\n  at
-      TcpServerTestRunner.TcpClientTestAsync (System.Type moduleType, System.Type
-      clientType) [0x0024e] in C:\\Project\\Unity\\CustomUtils\\Assets\\Test\\EditMode\\NetworkTest\\TcpServerTestRunner.cs:98
-      \r\n<color=#FF0000>[SimpleTcpServer.Stop] SimpleTcpServer Stop</color>"
-    m_ResultStacktrace: 'Logger:Error (string) (at Assets/CustomUtils/Common/Logger/Logger.cs:37)
+      parentId: 1032
+      parentUniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][TcpServerTestRunner][suite]
+    m_ResultText: 'StartTest (0.339s)
 
-      Logger:TraceError
-      (object) (at Assets/CustomUtils/Common/Logger/Logger.cs:129)
+      ---
 
-      TcpServerTestRunner/<TcpClientTestAsync>d__11:MoveNext
-      () (at Assets/Test/EditMode/NetworkTest/TcpServerTestRunner.cs:100)
+      IgnoreFailingMessages:true
 
-      System.Threading.CancellationTokenSource:Cancel
-      ()
+      [GlobalEnumTestRunner.StartTest]
+      Pass Basic Test
 
-      TcpServerTestRunner:TearDownTestRunner () (at Assets/Test/EditMode/NetworkTest/TcpServerTestRunner.cs:34)
+      [GlobalEnumTestRunner.StartTest] Pass Count Test
 
-      System.Reflection.MethodBase:Invoke
-      (object,object[])
+      [GlobalEnumTestRunner.StartTest]
+      Pass int Interaction Test
 
-      NUnit.Framework.Internal.Reflect:InvokeMethod (System.Reflection.MethodInfo,object,object[])
+      [GlobalEnumTestRunner.StartTest] Pass Type
+      Interaction Test
 
-      NUnit.Framework.Internal.Reflect:InvokeMethod
-      (System.Reflection.MethodInfo,object)
+      [GlobalEnumTestRunner.StartTest] Pass Property Get
+      Set Test
 
-      UnityEditor.EditorApplication:Internal_CallUpdateFunctions
-      ()
+      [GlobalEnumTestRunner.StartTest] Pass Method Get Test
 
-      
+      [GlobalEnumTestRunner.StartTest]
+      Pass Method Set Test
 
-'
+      [GlobalEnumTestRunner.StartTest] Pass Contains
+      Test'
+    m_ResultStacktrace: 
     m_TestListState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 8ba9f181
-      m_LastClickedID: -2114868853
-      m_ExpandedIDs: 5408f8a42c5c4ec2416d28c537575fcc53f7ced709d9cedca4da07e1502e7e0d732940267a14c82ac29f393322524b3a9dda8a41045add4d5d4c09542cae4f5b88e2b55c739d6464db1cfa6616b81e6cd585a773ffffff7f
+      m_SelectedIDs: aa9062d9
+      m_LastClickedID: -647851862
+      m_ExpandedIDs: 5408f8a42c5c4ec2416d28c537575fcc53f7ced709d9cedca4da07e1502e7e0dedaa9c1607dc1a20732940267a14c82ac29f393322524b3a9dda8a41045add4d5d4c09542cae4f5b88e2b55c739d64642f226d64db1cfa6616b81e6cffffff7f
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 

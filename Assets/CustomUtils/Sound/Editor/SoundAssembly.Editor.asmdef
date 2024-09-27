@@ -1,0 +1,22 @@
+{
+    "name": "SoundAssembly.Editor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:cfb6063ef43c4c4da20a2093012689dc",
+        "GUID:6b5494e695d3e884cbc61e80bf23aa9c",
+        "GUID:ea27ae67f135c614bad369d138ede907",
+        "GUID:ce21289fe7e94027b208340ccfaef1db",
+        "GUID:58ff89a327244297bbbf8488d92be179"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

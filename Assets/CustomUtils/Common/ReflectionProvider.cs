@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 public static class ReflectionProvider {
@@ -88,20 +89,18 @@ public static class ReflectionProvider {
 
     
     #region [Enum]
-
+    
+    public static bool TryGetAttributeEnumTypes<T>(out IEnumerable<Type> type) where T : Attribute => (type = GetAttributeEnumTypes<T>())?.Any() ?? false;
     public static IEnumerable<Type> GetAttributeEnumTypes<T>() where T : Attribute => Cache.CachedEnums.Where(type => type.IsDefined(typeof(T), false));
+    
+    public static bool TryGetAttributeEnumTypes(Type type, out IEnumerable<Type> enumerable) => (enumerable = GetAttributeEnumTypes(type))?.Any() ?? false;
+    public static IEnumerable<Type> GetAttributeEnumTypes(Type type) => Cache.CachedEnums.Where(enumType => enumType.IsDefined(type, false));
 
-    public static bool TryGetAttributeEnumTypes<T>(out IEnumerable<Type> type) where T : Attribute {
-        type = GetAttributeEnumTypes<T>();
-        return type?.Any() ?? false;
-    }
-
+    public static bool TryGetAttributeEnumInfos<T>(out IEnumerable<(T attribute, Type enumType)> infos) where T : Attribute => (infos = GetAttributeEnumInfos<T>())?.Any() ?? false;
     public static IEnumerable<(T attribute, Type enumType)> GetAttributeEnumInfos<T>() where T : Attribute => Cache.CachedEnums.Where(type => type.IsDefined(typeof(T), false)).Select(type => (type.GetCustomAttribute<T>(false), type));
 
-    public static bool TryGetAttributeEnumInfos<T>(out IEnumerable<(T attribute, Type enumType)> infos) where T : Attribute {
-        infos = GetAttributeEnumInfos<T>();
-        return infos != null && infos.Any();
-    }
-
+    public static bool TryGetAttributeEnumInfos<T>(Type type, out IEnumerable<(T attribute, Type type)> enumerable) where T : Attribute => (enumerable = GetAttributeEnumInfos<T>(type))?.Any() ?? false; 
+    public static IEnumerable<(T attribute, Type type)> GetAttributeEnumInfos<T>(Type type) where T : Attribute => Cache.CachedEnums.Where(enumType => enumType.IsEnumDefined(type)).Select(enumType => (enumType.GetCustomAttribute(type) as T, enumType));
+    
     #endregion
 }

@@ -1,17 +1,16 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using UniRx;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "SoundTrack", menuName = "Sound/Create Track")]
-public class SoundTrack : ScriptableObject {
-
-    public TRACK_TYPE type;
-    public int limitPlayCount = 0;
+[CreateAssetMenu(fileName = "SoundTrackExtension", menuName = "Sound/Create Extension Track")]
+public class SoundTrackEx : ScriptableObject {
+    
+    public GlobalEnum<SoundTrackEnumAttribute> trackType = new();
     public SoundTrackEvent[] eventList;
 
-    private static List<IDisposable> _disposableList = new(); 
+    private static List<IDisposable> _disposableList = new();
     
     public virtual void PreviewPlay(AudioSource audioSource) {
         if (audioSource == null) {
@@ -33,7 +32,7 @@ public class SoundTrack : ScriptableObject {
             PreviewStop();
         }
         
-        switch (type) {
+        switch (trackType.Value) {
             case TRACK_TYPE.OVERLAP:
                 eventList.ForEach(x => {
                     Logger.TraceLog($"Play || {name} || {x.clip.name}", Color.cyan);
@@ -111,39 +110,22 @@ public class SoundTrack : ScriptableObject {
     public virtual bool IsValid() => eventList is { Length: > 0 } && eventList.Any(x => x != null && x.IsValidClip() && x.clip.loadState != AudioDataLoadState.Failed);
 }
 
-[SoundTrackEnum]
-public enum TRACK_TYPE {
-    DEFAULT,
-    OVERLAP,
-    RANDOM,
-    LIMIT_PLAY,
+public class SoundTrackEnumAttribute : PriorityAttribute { }
+
+public enum TEST_SOUND_TRACK_TYPE {
+    TEST_PLAY
 }
 
-public enum SOUND_TRACK_ERROR {
-    NONE,
-    EVENT_NULL,
-    EVENT_EXCEPTION,
-    
-    EVENT_LIST_NULL,
-    EVENT_LIST_EMPTY,
-    
-    CLIP_INVALID,
-    CLIP_LOAD_FAILED,
+[SoundTrackEnum(priority = 25)]
+public enum TEST_GLOBAL_ENUM_01 {
+    TEST_01,
+    TEST_02,
+    TEST_03,
 }
 
-public static class SoundTrackErrorExtension {
-    public static string GetDescription(this SOUND_TRACK_ERROR type) {
-        switch (type) {
-            case SOUND_TRACK_ERROR.EVENT_LIST_NULL:
-                return $"{nameof(SoundTrack.eventList)} is Null. Fatal Issue";
-            case SOUND_TRACK_ERROR.EVENT_LIST_EMPTY:
-                return $"{nameof(SoundTrack.eventList)} is Empty.";
-            case SOUND_TRACK_ERROR.EVENT_EXCEPTION:
-                return $"{nameof(SoundTrack.eventList)} is Exception Catch";
-            case SOUND_TRACK_ERROR.CLIP_LOAD_FAILED:
-                return $"{nameof(SoundTrack.eventList)} is Invalid. Some ${nameof(AudioClip)} was Invalid {nameof(AudioClip.loadState)}.";
-            default:
-                return string.Empty;
-        }
-    }
+[SoundTrackEnum(priority = 10)]
+public enum TEST_GLOBAL_ENUM_02 {
+    TEST_01,
+    TEST_02,
+    TEST_03,
 }

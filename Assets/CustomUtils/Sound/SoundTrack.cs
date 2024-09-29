@@ -1,28 +1,28 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using UniRx;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "SoundTrack", menuName = "Sound/Create Track")]
+[CreateAssetMenu(fileName = "SoundTrackExtension", menuName = "Sound/Create Extension Track")]
 public class SoundTrack : ScriptableObject {
-
-    public TRACK_TYPE type;
-    public int limitPlayCount = 0;
+    
+    public GlobalEnum<SoundTrackEnumAttribute> trackType = new();
     public SoundTrackEvent[] eventList;
 
-    private static List<IDisposable> _disposableList = new(); 
+#if UNITY_EDITOR
+    
+    private static List<IDisposable> _disposableList = new();
     
     public virtual void PreviewPlay(AudioSource audioSource) {
         if (audioSource == null) {
-            Logger.TraceError($"{nameof(audioSource)} is Null");
+            Logger.TraceError($"{nameof(audioSource)} is null");
             return;
         }
         
         PlayPreviewSoundEvent(audioSource);
     }
 
-    // 런타임에 아래 코드 사용 시 싱크 문제가 발생할 수 있음.
     protected virtual void PlayPreviewSoundEvent(AudioSource audioSource) {
         if (Application.isEditor == false || Application.isPlaying) {
             Logger.TraceError("Do not use this method outside of the editor or during runtime.");
@@ -32,30 +32,29 @@ public class SoundTrack : ScriptableObject {
         if (audioSource.isPlaying) {
             PreviewStop();
         }
-        
-        switch (type) {
+
+        audioSource.time = 0;
+        switch (trackType.Value) {
             case TRACK_TYPE.OVERLAP:
-                eventList.ForEach(x => {
-                    Logger.TraceLog($"Play || {name} || {x.clip.name}", Color.cyan);
-                    audioSource.PlayOneShot(x.clip);
-                });
+                foreach (var trackEvent in eventList) {
+                    Logger.TraceLog($"Play || {name} || {trackEvent.clip.name}", Color.cyan);
+                    audioSource.PlayOneShot(trackEvent);
+                }
                 break;
             case TRACK_TYPE.RANDOM:
                 if (eventList.TryGetRandom(out var randomEvent)) {
                     Logger.TraceLog($"Play || {name} || {randomEvent.clip.name}", Color.cyan);
-                    audioSource.PlayOneShot(randomEvent.clip);
+                    audioSource.Play(randomEvent);
                 }
                 break;
             default:
                 var startTime = 0f;
-                foreach (var soundEvent in eventList) {
+                foreach (var trackEvent in eventList) {
                     _disposableList.Add(Observable.EveryUpdate().Delay(TimeSpan.FromSeconds(startTime - 0.1f)).First().Subscribe(_ => {
-                        Logger.TraceLog($"Play || {name} || {soundEvent.clip.name}", Color.cyan);
-                        audioSource.clip = soundEvent.clip;
-                        audioSource.loop = soundEvent.loop;
-                        audioSource.Play();
+                        Logger.TraceLog($"Play || {name} || {trackEvent.clip.name}", Color.cyan);
+                        audioSource.Play(trackEvent);
                     }));
-                    startTime += soundEvent.clip.length;
+                    startTime += trackEvent.clip.length;
                 }
                 break;
         }
@@ -69,33 +68,53 @@ public class SoundTrack : ScriptableObject {
         _disposableList.Clear();
     }
     
+#endif
+    
     public virtual void UnloadAudioClip() => eventList?.ForEach(x => x.Unload());
 
+    protected virtual bool IsValidEventList(out SOUND_TRACK_ERROR error) {
+        if (eventList == null) {
+            error = SOUND_TRACK_ERROR.EVENT_LIST_NULL;
+            return false;
+        } 
+        
+        if (eventList.Length <= 0) {
+            error = SOUND_TRACK_ERROR.EVENT_LIST_EMPTY;
+            return false;
+        }
+
+        error = default;
+        return true;
+    }
+
+    protected virtual bool IsValidSoundTrackEvent(SoundTrackEvent eventTrack, out SOUND_TRACK_ERROR error) {
+        if (eventTrack == null) {
+            error = SOUND_TRACK_ERROR.EVENT_NULL;
+            return false;
+        }
+
+        if (eventTrack.IsValidClip() == false) {
+            error = SOUND_TRACK_ERROR.CLIP_INVALID;
+            return false;
+        }
+
+        if (eventTrack.clip.loadState == AudioDataLoadState.Failed) {
+            error = SOUND_TRACK_ERROR.CLIP_LOAD_FAILED;
+            return false;
+        }
+
+        error = default;
+        return true;
+    }
+    
     public virtual bool IsValid(out SOUND_TRACK_ERROR error) {
         try {
-            if (eventList == null) {
-                error = SOUND_TRACK_ERROR.EVENT_LIST_NULL;
-                return false;
-            }
-            
-            if (eventList.Length <= 0) {
-                error = SOUND_TRACK_ERROR.EVENT_LIST_EMPTY;
+            if (IsValidEventList(out error) == false) {
                 return false;
             }
             
             foreach (var track in eventList) {
-                if (track == null) {
-                    error = SOUND_TRACK_ERROR.EVENT_NULL;
-                    return false;
-                }
-
-                if (track.IsValidClip() == false) {
-                    error = SOUND_TRACK_ERROR.CLIP_INVALID;
-                    return false;
-                }
-
-                if (track.clip.loadState == AudioDataLoadState.Failed) {
-                    error = SOUND_TRACK_ERROR.CLIP_LOAD_FAILED;
+                if (IsValidSoundTrackEvent(track, out error) == false) {
                     return false;
                 }
             }
@@ -108,7 +127,14 @@ public class SoundTrack : ScriptableObject {
         return true;
     }
     
-    public virtual bool IsValid() => eventList is { Length: > 0 } && eventList.Any(x => x != null && x.IsValidClip() && x.clip.loadState != AudioDataLoadState.Failed);
+    public virtual bool IsValid() => IsValidEventList(out _) && eventList.All(x => IsValidSoundTrackEvent(x, out _));
+}
+
+public class SoundTrackEnumAttribute : PriorityAttribute { }
+
+[SoundTrackEnum(priority = 1)]
+public enum TEST_SOUND_TRACK_TYPE {
+    TEST_PLAY
 }
 
 [SoundTrackEnum]
@@ -129,21 +155,4 @@ public enum SOUND_TRACK_ERROR {
     
     CLIP_INVALID,
     CLIP_LOAD_FAILED,
-}
-
-public static class SoundTrackErrorExtension {
-    public static string GetDescription(this SOUND_TRACK_ERROR type) {
-        switch (type) {
-            case SOUND_TRACK_ERROR.EVENT_LIST_NULL:
-                return $"{nameof(SoundTrack.eventList)} is Null. Fatal Issue";
-            case SOUND_TRACK_ERROR.EVENT_LIST_EMPTY:
-                return $"{nameof(SoundTrack.eventList)} is Empty.";
-            case SOUND_TRACK_ERROR.EVENT_EXCEPTION:
-                return $"{nameof(SoundTrack.eventList)} is Exception Catch";
-            case SOUND_TRACK_ERROR.CLIP_LOAD_FAILED:
-                return $"{nameof(SoundTrack.eventList)} is Invalid. Some ${nameof(AudioClip)} was Invalid {nameof(AudioClip.loadState)}.";
-            default:
-                return string.Empty;
-        }
-    }
 }

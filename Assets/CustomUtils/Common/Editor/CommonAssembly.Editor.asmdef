@@ -1,5 +1,5 @@
 {
-    "name": "CommonEditorAssembly",
+    "name": "CommonAssembly.Editor",
     "rootNamespace": "",
     "references": [
         "GUID:cfb6063ef43c4c4da20a2093012689dc",

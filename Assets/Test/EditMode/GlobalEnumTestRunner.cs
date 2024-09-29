@@ -79,3 +79,17 @@ public class GlobalEnumTestRunner {
         Logger.TraceLog("Pass Contains Test");
     }
 }
+
+[SoundTrackEnum(priority = 25)]
+public enum TEST_GLOBAL_ENUM_01 {
+    TEST_01,
+    TEST_02,
+    TEST_03,
+}
+
+[SoundTrackEnum(priority = 10)]
+public enum TEST_GLOBAL_ENUM_02 {
+    TEST_01,
+    TEST_02,
+    TEST_03,
+}

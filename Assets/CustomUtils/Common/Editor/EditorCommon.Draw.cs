@@ -5,7 +5,7 @@ using UnityEditor;
 using UnityEngine;
 
 public static partial class EditorCommon {
-        
+    
     private static readonly Dictionary<string, GUILayoutOption> _widthCacheDic = new ();
 
     public static void ShowCheckDialogue(string title, string message, string okText = "확인", string cancelText = "취소", Action ok = null, Action cancel = null) {
@@ -375,6 +375,34 @@ public static partial class EditorCommon {
         }
         
         return cursor;
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void DrawInteractionProgressBar(string text, float value, float maxValue, Action<EventType, float> onEvent = null) {
+        using (new EditorGUILayout.HorizontalScope()) {
+            var position = EditorGUILayout.GetControlRect(false, 50f);
+            EditorGUI.DrawRect(position, Color.gray);
+
+            var progress = value / maxValue;
+            var innerPosition = position;
+            innerPosition.width = Mathf.Lerp(0, position.width, progress);
+            EditorGUI.DrawRect(innerPosition, Constants.Colors.INNER_PROGRESS_BAR);
+
+            EditorGUI.LabelField(position, text, Constants.Draw.BOLD_CENTER_LABEL);
+
+            if (position.Contains(Event.current.mousePosition) && Event.current.type.IsProcessableEvent()) {
+                switch (Event.current.type) {
+                    case EventType.MouseDown:
+                    case EventType.MouseDrag:
+                        progress = Mathf.InverseLerp(position.x, position.xMax, Event.current.mousePosition.x);
+                        innerPosition.width = Mathf.Lerp(0, position.width, progress);
+                        EditorGUI.DrawRect(innerPosition, Constants.Colors.INNER_PROGRESS_BAR);
+                        break;
+                }
+
+                onEvent?.Invoke(Event.current.type, progress);
+            }
+        }
     }
     
     #region [Fit]

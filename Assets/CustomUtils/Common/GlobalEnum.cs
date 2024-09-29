@@ -7,7 +7,7 @@ using System.Linq;
 [Serializable]
 public sealed class GlobalEnum<TAttribute> : IEnumerable<Enum> where TAttribute : PriorityAttribute {
 
-    private static readonly ImmutableDictionary<Type, ImmutableHashSet<Enum>> _enumSetDic;
+    private static readonly ImmutableSortedDictionary<Type, ImmutableHashSet<Enum>> _enumSetDic;
     private static readonly ImmutableDictionary<int, Enum> _intToEnumDic;
     private static readonly ImmutableDictionary<Enum, int> _enumToIntDic;
 
@@ -30,15 +30,14 @@ public sealed class GlobalEnum<TAttribute> : IEnumerable<Enum> where TAttribute 
 
     static GlobalEnum() {
         if (ReflectionProvider.TryGetAttributeEnumInfos<TAttribute>(out var enumerable)) {
-            _enumSetDic = enumerable.OrderBy(info => info.attribute?.priority ?? 99999)
-                .ToImmutableDictionary(info => info.enumType, info => info.enumType.GetEnumValues().OfType<Enum>().ToImmutableHashSet());
+            _enumSetDic = enumerable.ToImmutableSortedDictionary(info => info.enumType, info => info.enumType.GetEnumValues().OfType<Enum>().ToImmutableHashSet(), new GlobalEnumPriorityComparer());
 
             var index = 0;
             _intToEnumDic = _enumSetDic.Values.SelectMany(enumSet => enumSet).ToImmutableDictionary(_ => index++, enumValue => enumValue);
             _enumToIntDic = _intToEnumDic.ToImmutableDictionary(pair => pair.Value, pair => pair.Key);
         }
     }
-
+    
     public GlobalEnum() => Count = _enumToIntDic.Count;
     public TEnum Get<TEnum>() where TEnum : struct, Enum => Value.Convert<TEnum>();
     public void Set<TEnum>(TEnum enumValue) where TEnum : struct, Enum => Value = enumValue;
@@ -46,4 +45,19 @@ public sealed class GlobalEnum<TAttribute> : IEnumerable<Enum> where TAttribute 
     
     public IEnumerator<Enum> GetEnumerator() => _intToEnumDic.Values.GetEnumerator();
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+    private class GlobalEnumPriorityComparer : IComparer<Type> {
+
+        public int Compare(Type x, Type y) {
+            if (x == null || y == null) {
+                return 0;
+            }
+
+            if (x.TryGetCustomInheritedAttribute<PriorityAttribute>(out var xAttribute) && y.TryGetCustomInheritedAttribute<PriorityAttribute>(out var yAttribute)) {
+                return xAttribute.priority.CompareTo(yAttribute.priority);
+            }
+            
+            return 0;
+        }
+    }
 }

@@ -144,7 +144,7 @@ public class Sample_SoundBgm : SoundBase {
             return;
         }
 
-        switch (track.type) {
+        switch (track.trackType.Value) {
             case TRACK_TYPE.OVERLAP:
                 if (TryGetAudioSource(SAMPLE_BGM_CONTROL_TYPE.TYPE_2, out var audioSource)) {
                     track.eventList.ForEach(x => audioSource.PlayOneShot(x.clip));

@@ -5,15 +5,15 @@ using System.Linq.Expressions;
 
 public static class LambdaExpressionProvider {
     
-    public static Func<TEnum, int> GetEnumToIntFun<TEnum>() where TEnum : struct, Enum => StaticLambdaCache<TEnum>.EnumToIntFunc;
-    public static Func<int, TEnum> GetIntToEnumFunc<TEnum>() where TEnum : struct, Enum => StaticLambdaCache<TEnum>.IntToEnumFunc;
-
-    private static class StaticLambdaCache<TEnum> where TEnum : struct, Enum {
+    public static Func<TEnum, int> GetEnumToIntFun<TEnum>() where TEnum : struct, Enum => StaticEnumLambdaCache<TEnum>.EnumToIntFunc;
+    public static Func<int, TEnum> GetIntToEnumFunc<TEnum>() where TEnum : struct, Enum => StaticEnumLambdaCache<TEnum>.IntToEnumFunc;
+    
+    private static class StaticEnumLambdaCache<TEnum> where TEnum : struct, Enum {
         
         public static Func<TEnum, int> EnumToIntFunc;
         public static Func<int, TEnum> IntToEnumFunc;
 
-        static StaticLambdaCache() {
+        static StaticEnumLambdaCache() {
             var parameter = Expression.Parameter(typeof(TEnum));
             var body = Expression.Convert(parameter, typeof(int));
             var func = Expression.Lambda<Func<TEnum, int>>(body, parameter);

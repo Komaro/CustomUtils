@@ -89,7 +89,8 @@ public static partial class Constants {
     }
 
     public static class Colors {
-        
+
+        public static readonly Color INNER_PROGRESS_BAR = new Color(0.0f, 1f, 1f, 0.4f);
     }
 
     public static class Separator {

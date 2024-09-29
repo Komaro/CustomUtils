@@ -7,7 +7,7 @@ using UnityEngine;
 
 public abstract class EditorDrawer {
     
-    protected EditorWindow window;
+    protected readonly EditorWindow window;
 
     public EditorDrawer(EditorWindow window) => this.window = window;
 

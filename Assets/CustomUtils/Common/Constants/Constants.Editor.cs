@@ -15,6 +15,7 @@ public static partial class Constants {
         public static readonly GUIStyle BOLD_CENTER_LABEL = new(BOLD_LABEL) { alignment = TextAnchor.MiddleCenter };
         
         public static readonly GUIStyle TEXT_FIELD = new(GUI.skin.textField) { richText = true };
+        public static readonly GUIStyle CENTER_TEXT_FIELD = new(TEXT_FIELD) { alignment = TextAnchor.MiddleCenter };
         public static readonly GUIStyle BOLD_TEXT_FIELD = new(TEXT_FIELD) { fontStyle = FontStyle.Bold };
         
         public static readonly GUIStyle TEXT_AREA = new(GUI.skin.textArea) { richText = true };

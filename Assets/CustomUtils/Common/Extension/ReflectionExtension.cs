@@ -12,25 +12,13 @@ public static class ReflectionExtension {
         type.GetFields(bindingFlags).ConvertTo(info => (info.Name, info.GetValue(ob)))
         .Concat(type.GetProperties(bindingFlags).Where(info => info.GetIndexParameters().Length <= 0).ConvertTo(info => (info.Name, info.GetValue(ob))));
 
-    public static bool TryGetField(this Type type, string name, out FieldInfo info, BindingFlags bindingFlags = BindingFlags.Default) {
-        info = type.GetField(name, bindingFlags);
-        return info != null;
-    }
-
-    public static bool TryGetMethod(this Type type, string name, out MethodInfo info, BindingFlags bindingFlags = BindingFlags.Default) {
-        info = type.GetMethod(name, bindingFlags);
-        return info != null;
-    }
-
-    public static bool TryGetProperty(this Type type, string name, out PropertyInfo info, BindingFlags bindingFlags = BindingFlags.GetProperty | BindingFlags.SetProperty) {
-        info = type.GetProperty(name, bindingFlags);
-        return info != null;
-    }
+    public static bool TryGetField(this Type type, string name, out FieldInfo info, BindingFlags bindingFlags = BindingFlags.Default) => (info = type.GetField(name, bindingFlags)) != null;
+    public static bool TryGetMethod(this Type type, string name, out MethodInfo info, BindingFlags bindingFlags = BindingFlags.Default) => (info = type.GetMethod(name, bindingFlags)) != null;
+    public static bool TryGetProperty(this Type type, string name, out PropertyInfo info, BindingFlags bindingFlags = BindingFlags.GetProperty | BindingFlags.SetProperty) => (info = type.GetProperty(name, bindingFlags)) != null;
 
     public static bool TryGetPropertyValue<T>(this Type type, object target, string name, out T value, BindingFlags bindingFlags = BindingFlags.GetProperty | BindingFlags.SetProperty) where T : class {
         if (type.TryGetProperty(name, out var info, bindingFlags)) {
-            value = info.GetValue(target) as T;
-            return value != null;
+            return (value = info.GetValue(target) as T) != null;
         }
 
         value = null;
@@ -40,28 +28,13 @@ public static class ReflectionExtension {
     public static bool IsDefined<T>(this MemberInfo info) where T : Attribute => info.IsDefined(typeof(T));
     public static bool IsDefined<T>(this Type type) where T : Attribute => type.IsDefined(typeof(T));
 
-    public static bool TryGetCustomAttributeList(this MemberInfo info, out List<Attribute> attributeList) {
-        attributeList = info.GetCustomAttributes().ToList();
-        return attributeList is { Count: > 0};
-    }
-
     public static bool TryGetCustomAttribute<TAttribute>(this Type type, out TAttribute attribute) where TAttribute : Attribute => (attribute = type.GetCustomAttribute<TAttribute>()) != null;
     public static bool TryGetCustomAttribute<TAttribute>(this Type type, Type attributeType, out TAttribute attribute) where TAttribute : Attribute => (attribute = type.GetCustomAttribute(attributeType) as TAttribute) != null;
+    public static bool TryGetCustomInheritedAttribute<TBaseAttribute>(this Type type, out TBaseAttribute attribute) where TBaseAttribute : Attribute => (attribute = type.GetCustomAttributes().FirstOrDefault(attribute => attribute.GetType().IsSubclassOf(typeof(TBaseAttribute))) as TBaseAttribute) != null;
+    public static bool TryGetCustomAttributeList<T>(this Type type, out List<T> attributeList) where T : Attribute => (attributeList = type.GetCustomAttributes<T>().ToList()) is { Count: > 0 };
 
-    public static bool TryGetCustomAttribute<T>(this MemberInfo info, out T attribute) where T : Attribute {
-        attribute = info.GetCustomAttribute<T>();
-        return attribute != null;
-    }
-
-    public static bool TryGetCustomAttributeList<T>(this Type type, out List<T> attributeList) where T : Attribute {
-        attributeList = type.GetCustomAttributes<T>().ToList();
-        return attributeList is { Count: > 0 };
-    }
-
-    public static bool TryGetCustomAttributeList<T>(this MemberInfo info, out List<T> attributeList) where T : Attribute {
-        attributeList = info.GetCustomAttributes<T>().ToList();
-        return attributeList is { Count: > 0 };
-    }
+    public static bool TryGetCustomAttributeList<T>(this MemberInfo info, out List<T> attributeList) where T : Attribute => (attributeList = info.GetCustomAttributes<T>().ToList()) is { Count: > 0 };
+    public static bool TryGetCustomAttribute<TAttribute>(this MemberInfo info, out TAttribute attribute) where TAttribute : Attribute => (attribute = info.GetCustomAttribute<TAttribute>()) != null;
     
     public static bool IsGenericCollectionType(this Type type) {
         if (type.IsGenericType == false) {

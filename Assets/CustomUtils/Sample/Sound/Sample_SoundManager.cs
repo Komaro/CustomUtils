@@ -124,7 +124,7 @@ public sealed class Sample_SoundManager : Singleton<Sample_SoundManager> {
     public void PlayOneShot(Enum type, SoundTrack track) {
         if (track != null && track.IsValid() && TryGetMatchSoundExList(out var soundList, type)) {
             var sound = soundList.First();
-            switch (track.type) {
+            switch (track.trackType.Value) {
                 case TRACK_TYPE.OVERLAP:
                     track.eventList.ForEach(x => sound.PlayOneShot(x.clip));
                     break;

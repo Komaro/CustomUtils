@@ -1,5 +1,5 @@
 {
-    "name": "CustomUtilsEditorAssembly",
+    "name": "CustomUtilsAssembly.Editor",
     "rootNamespace": "",
     "references": [
         "GUID:ea27ae67f135c614bad369d138ede907",

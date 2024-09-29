@@ -27,14 +27,14 @@ public class EditorCustomAnalyzerService : EditorService {
     private static ActivateAssemblyTreeView _activateAssemblyTreeView;
     private static AnalyzerImplementTreeView _activateAnalyzerTreeView;
     
-    private static Dictionary<Type, AnalyzerImplementInfo> _implementInfoDic = new();
+    private static readonly Dictionary<Type, AnalyzerImplementInfo> _implementInfoDic = new();
     
     private static HashSet<Assembly> _activateAssemblySet = new();
-    private static Dictionary<Type, AnalyzerImplementInfo> _activateInfoDic = new();
+    private static readonly Dictionary<Type, AnalyzerImplementInfo> _activateInfoDic = new();
 
     private Vector2 _windowScrollViewPosition;
     
-    private AnimBool _activateAssemblyTreeViewFold = new();
+    private readonly AnimBool _activateAssemblyTreeViewFold = new();
     private Vector2 _activateAssemblyScrollViewPosition;
     
     private static bool _isRefreshing;
@@ -302,6 +302,7 @@ internal class AnalyzerImplementTreeView : EditorServiceTreeView {
     
     public AnalyzerImplementTreeView() : base(COLUMNS) { }
     public AnalyzerImplementTreeView(MultiColumnHeaderState.Column[] columns) : base(columns) { }
+    
     public override void Draw() {
         searchString = searchField.OnToolbarGUI(searchString);
         OnGUI(EditorGUILayout.GetControlRect(GUILayout.ExpandWidth(true), GUILayout.ExpandHeight(true), GUILayout.MinHeight(100f)));
@@ -364,7 +365,6 @@ internal class AnalyzerImplementTreeView : EditorServiceTreeView {
             depth = 0;
         }
     }
-    
 }
 
 internal enum SORT_TYPE {

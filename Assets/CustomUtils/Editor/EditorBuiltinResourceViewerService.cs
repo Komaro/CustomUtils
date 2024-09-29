@@ -6,6 +6,7 @@ using UnityEditor.Callbacks;
 using UnityEditor.IMGUI.Controls;
 using UnityEngine;
 
+// TODO. Need Optimization (TreeView)
 public class EditorBuiltinResourceViewerService : EditorWindow {
 
     private static EditorWindow _window;

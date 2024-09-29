@@ -6,8 +6,12 @@ public class SoundTestRunner {
     [SetUp]
     public void SetUp() => Service.StartService<ResourceService>();
 
+    public void SoundPlayTest() {
+        
+    }
+
     [Test]
-    public void Test() {
+    public void SoundManagerTest() {
         var soundManager = SampleSoundManager.inst;
         Assert.IsNotNull(soundManager);
 

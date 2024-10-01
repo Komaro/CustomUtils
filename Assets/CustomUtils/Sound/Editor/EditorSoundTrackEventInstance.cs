@@ -7,7 +7,6 @@ public class EditorSoundTrackEventInstance : PropertyDrawer {
     public override float GetPropertyHeight(SerializedProperty property, GUIContent label) => (EditorGUIUtility.singleLineHeight + 2) * 2;
 
     public override void OnGUI(Rect position, SerializedProperty property, GUIContent label) {
-        
         EditorGUI.BeginProperty(position, label, property);
         
         EditorGUI.PropertyField(new Rect(position.x, position.y, position.width, EditorGUIUtility.singleLineHeight), property.FindPropertyRelative(nameof(SoundTrackEvent.clip)), GUIContent.none);

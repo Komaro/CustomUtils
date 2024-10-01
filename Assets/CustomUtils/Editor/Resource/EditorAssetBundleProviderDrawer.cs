@@ -24,12 +24,12 @@ public partial class EditorAssetBundleProviderDrawer : EditorAutoConfigResourceD
     private Vector2 _buildOptionScrollViewPosition;
     private Vector2 _buildInfoMemoScrollViewPosition;
     
-    private readonly List<BuildAssetBundleOptions> BUILD_OPTION_LIST;
+    private readonly List<BuildAssetBundleOptions> BUILD_OPTION_LIST = EnumUtil.GetValueList<BuildAssetBundleOptions>(true, true);
 
     protected override string CONFIG_NAME => $"{nameof(AssetBundleProviderConfig)}{Constants.Extension.JSON}";
-
-    public EditorAssetBundleProviderDrawer(EditorWindow window) : base(window) => BUILD_OPTION_LIST = EnumUtil.GetValueList<BuildAssetBundleOptions>(true, true).ToList();
-
+    
+    public EditorAssetBundleProviderDrawer(EditorWindow window) : base(window) { }
+    
     public sealed override void CacheRefresh() {
         Service.GetService<SystemWatcherService>().Start(order);
         if (JsonUtil.TryLoadJson(CONFIG_PATH, out config)) {

@@ -8,10 +8,6 @@ public class SoundTrackEvent {
     public bool loop = false;
     public float startTime = 0;
 
-#if UNITY_EDITOR
-    private float _cursor;
-#endif
-    
     public void Unload() {
         if (clip != null && clip.loadState == AudioDataLoadState.Loaded) {
             clip.UnloadAudioData();

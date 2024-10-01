@@ -4,7 +4,7 @@ using System.Linq;
 using UniRx;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "SoundTrackExtension", menuName = "Sound/Create Extension Track")]
+[CreateAssetMenu(fileName = "SoundTrack", menuName = "Sound/Create SoundTrack")]
 public class SoundTrack : ScriptableObject {
     
     public GlobalEnum<SoundTrackEnumAttribute> trackType = new();

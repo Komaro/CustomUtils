@@ -12,8 +12,8 @@ public static class ReflectionExtension {
         type.GetFields(bindingFlags).ConvertTo(info => (info.Name, info.GetValue(ob)))
         .Concat(type.GetProperties(bindingFlags).Where(info => info.GetIndexParameters().Length <= 0).ConvertTo(info => (info.Name, info.GetValue(ob))));
 
-    public static bool TryGetField(this Type type, string name, out FieldInfo info, BindingFlags bindingFlags = BindingFlags.Default) => (info = type.GetField(name, bindingFlags)) != null;
-    public static bool TryGetMethod(this Type type, string name, out MethodInfo info, BindingFlags bindingFlags = BindingFlags.Default) => (info = type.GetMethod(name, bindingFlags)) != null;
+    public static bool TryGetField(this Type type, string name, out FieldInfo info, BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public) => (info = type.GetField(name, bindingFlags)) != null;
+    public static bool TryGetMethod(this Type type, string name, out MethodInfo info, BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public) => (info = type.GetMethod(name, bindingFlags)) != null;
     public static bool TryGetProperty(this Type type, string name, out PropertyInfo info, BindingFlags bindingFlags = BindingFlags.GetProperty | BindingFlags.SetProperty) => (info = type.GetProperty(name, bindingFlags)) != null;
 
     public static bool TryGetPropertyValue<T>(this Type type, object target, string name, out T value, BindingFlags bindingFlags = BindingFlags.GetProperty | BindingFlags.SetProperty) where T : class {

@@ -5,6 +5,7 @@ using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.Audio;
 
+// TODO. AudiosSource에 대한 컨트롤 처리 고도화 필요
 [RequiresAttributeImplementation(typeof(MasterSoundAttribute))]
 [RequiresAttributeImplementation(typeof(ControlSoundAttribute))]
 public abstract class SoundBase {

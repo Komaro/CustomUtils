@@ -57,8 +57,7 @@ public class EditorSoundTrackInstance : Editor {
                             Repaint();
                         }
                     }
-
-
+                    
                     if (GUILayout.Button("Stop")) {
                         _previewSource.Stop();
                         track.PreviewStop();

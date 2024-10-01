@@ -21,13 +21,15 @@ public sealed class GlobalEnum<TAttribute> : IEnumerable<Enum> where TAttribute 
             }
         }
     }
-
+    
     public int Count { get; }
     public IEnumerable<Enum> Values => this;
 
     public Enum this[int index] => _intToEnumDic.TryGetValue(index, out var enumValue) ? enumValue : null;
     public ImmutableHashSet<Enum> this[Type type] => _enumSetDic.TryGetValue(type, out var enumSet) ? enumSet : ImmutableHashSet<Enum>.Empty;
 
+    public static explicit operator Enum(GlobalEnum<TAttribute> globalEnum) => globalEnum.Value;
+    
     static GlobalEnum() {
         if (ReflectionProvider.TryGetAttributeEnumInfos<TAttribute>(out var enumerable)) {
             _enumSetDic = enumerable.ToImmutableSortedDictionary(info => info.enumType, info => info.enumType.GetEnumValues().OfType<Enum>().ToImmutableHashSet(), new GlobalEnumPriorityComparer());
@@ -48,12 +50,12 @@ public sealed class GlobalEnum<TAttribute> : IEnumerable<Enum> where TAttribute 
 
     private class GlobalEnumPriorityComparer : IComparer<Type> {
 
-        public int Compare(Type x, Type y) {
-            if (x == null || y == null) {
+        public int Compare(Type xType, Type yType) {
+            if (xType == null || yType == null) {
                 return 0;
             }
 
-            if (x.TryGetCustomInheritedAttribute<PriorityAttribute>(out var xAttribute) && y.TryGetCustomInheritedAttribute<PriorityAttribute>(out var yAttribute)) {
+            if (xType.TryGetCustomInheritedAttribute<PriorityAttribute>(out var xAttribute) && yType.TryGetCustomInheritedAttribute<PriorityAttribute>(out var yAttribute)) {
                 return xAttribute.priority.CompareTo(yAttribute.priority);
             }
             

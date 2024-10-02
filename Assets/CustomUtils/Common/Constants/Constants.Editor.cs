@@ -47,6 +47,9 @@ public static partial class Constants {
         public static readonly GUIContent FOLDER_OPEN_ICON = new(string.Empty, EditorGUIUtility.IconContent("d_FolderOpened Icon").image, "바로가기");
         public static readonly GUIContent REFRESH_ICON = new(string.Empty, EditorGUIUtility.IconContent("d_Refresh").image, "새로고침");
         
+        public static readonly GUIContent PROGRESS_BACK = EditorGUIUtility.IconContent("progress back");
+        public static readonly GUIContent PROGRESS_FRONT = EditorGUIUtility.IconContent("progress front@2x");
+        
         public static readonly GUILayoutOption DEFAULT_LAYOUT = GUILayout.Width(300f);
     
         static Draw() {

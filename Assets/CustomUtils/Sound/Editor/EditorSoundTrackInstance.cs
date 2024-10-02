@@ -66,10 +66,7 @@ public class EditorSoundTrackInstance : Editor {
                 }
                 
                 if (_previewSource.IsValidClip()) {
-                    using (new EditorGUILayout.HorizontalScope()) {
-                        EditorCommon.DrawInteractionProgressBar($"{_previewSource.time:F} / {_previewSource.clip.length:F}", _previewSource.time, _previewSource.clip.length, OnProgressBarEvent);
-                    }
-                    
+                    EditorCommon.DrawInteractionProgressBar($"{_previewSource.time:F} / {_previewSource.clip.length:F}", _previewSource.time, _previewSource.clip.length, OnProgressBarEvent);
                     if (_previewSource.isPlaying) {
                         Repaint();
                     }
@@ -88,6 +85,8 @@ public class EditorSoundTrackInstance : Editor {
                 }
 
                 _previewSource.time = Mathf.Lerp(0, _previewSource.clip.length, progress);
+                
+                Repaint();
                 Event.current.Use();
                 break;
             case EventType.MouseUp:
@@ -99,12 +98,15 @@ public class EditorSoundTrackInstance : Editor {
                         _previewSource.UnPause();
                     }
                 }
+                
+                Repaint();
                 Event.current.Use();
                 break;
             case EventType.MouseDrag:
                 _previewSource.time = Mathf.Lerp(0, _previewSource.clip.length, progress);
+                
+                Repaint();
                 Event.current.Use();
                 break;
         }
     }
-}

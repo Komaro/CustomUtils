@@ -386,22 +386,23 @@ public static partial class EditorCommon {
             var progress = value / maxValue;
             var innerPosition = position;
             innerPosition.width = Mathf.Lerp(0, position.width, progress);
-            EditorGUI.DrawRect(innerPosition, Constants.Colors.INNER_PROGRESS_BAR);
-
-            EditorGUI.LabelField(position, text, Constants.Draw.BOLD_CENTER_LABEL);
-
             if (position.Contains(Event.current.mousePosition) && Event.current.type.IsProcessableEvent()) {
                 switch (Event.current.type) {
                     case EventType.MouseDown:
                     case EventType.MouseDrag:
+                    case EventType.MouseUp:
                         progress = Mathf.InverseLerp(position.x, position.xMax, Event.current.mousePosition.x);
                         innerPosition.width = Mathf.Lerp(0, position.width, progress);
-                        EditorGUI.DrawRect(innerPosition, Constants.Colors.INNER_PROGRESS_BAR);
+                        EditorGUI.DrawTextureTransparent(innerPosition, Constants.Draw.PROGRESS_FRONT.image);
                         break;
                 }
 
                 onEvent?.Invoke(Event.current.type, progress);
+            } else {
+                EditorGUI.DrawTextureTransparent(innerPosition, Constants.Draw.PROGRESS_FRONT.image);
             }
+            
+            EditorGUI.LabelField(position, text, Constants.Draw.BOLD_CENTER_LABEL);
         }
     }
     

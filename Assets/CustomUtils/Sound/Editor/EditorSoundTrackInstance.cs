@@ -6,15 +6,15 @@ using Object = UnityEngine.Object;
 
 [CustomEditor(typeof(SoundTrack), true)]
 public class EditorSoundTrackInstance : Editor {
-    
+
     private AudioSource _previewSource;
     private static Object _audioMixer;
-    
+
     private static int _groupIndex;
     private static string[] _groups;
 
     private bool _isInitialize;
-    
+
     public void OnEnable() {
         if (_isInitialize == false) {
             _previewSource = EditorUtility.CreateGameObjectWithHideFlags("Audio Preview", HideFlags.HideAndDontSave, typeof(AudioSource)).GetComponent<AudioSource>();
@@ -36,9 +36,9 @@ public class EditorSoundTrackInstance : Editor {
                     }
                 }
             }
-            
+
             EditorGUI.BeginDisabledGroup(serializedObject.isEditingMultipleObjects);
-            
+
             using (new EditorGUILayout.VerticalScope(Constants.Draw.BOX)) {
                 using (new EditorGUILayout.HorizontalScope()) {
                     if (GUILayout.Button("Preview")) {
@@ -57,22 +57,23 @@ public class EditorSoundTrackInstance : Editor {
                             Repaint();
                         }
                     }
-                    
+
                     if (GUILayout.Button("Stop")) {
                         _previewSource.Stop();
                         track.PreviewStop();
                         Repaint();
                     }
                 }
-                
+
                 if (_previewSource.IsValidClip()) {
-                    EditorCommon.DrawInteractionProgressBar($"{_previewSource.time:F} / {_previewSource.clip.length:F}", _previewSource.time, _previewSource.clip.length, OnProgressBarEvent);
+                    EditorCommon.DrawInteractionProgressBar($"{_previewSource.time:F} / {_previewSource.clip.length:F}", _previewSource.time, _previewSource.clip.length,
+                        OnProgressBarEvent);
                     if (_previewSource.isPlaying) {
                         Repaint();
                     }
                 }
             }
-            
+
             EditorGUI.EndDisabledGroup();
         }
     }
@@ -85,7 +86,7 @@ public class EditorSoundTrackInstance : Editor {
                 }
 
                 _previewSource.time = Mathf.Lerp(0, _previewSource.clip.length, progress);
-                
+
                 Repaint();
                 Event.current.Use();
                 break;
@@ -98,15 +99,16 @@ public class EditorSoundTrackInstance : Editor {
                         _previewSource.UnPause();
                     }
                 }
-                
+
                 Repaint();
                 Event.current.Use();
                 break;
             case EventType.MouseDrag:
                 _previewSource.time = Mathf.Lerp(0, _previewSource.clip.length, progress);
-                
+
                 Repaint();
                 Event.current.Use();
                 break;
         }
     }
+}

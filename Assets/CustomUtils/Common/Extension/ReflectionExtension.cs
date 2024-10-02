@@ -5,19 +5,19 @@ using System.Reflection;
 
 public static class ReflectionExtension {
 
-    public static string GetAlias(this Type type) => type.TryGetCustomAttribute<AliasAttribute>(out var attribute) ? attribute.alias : type.Name;
-    public static string GetAlias(this MethodInfo info) => info.TryGetCustomAttribute<AliasAttribute>(out var attribute) ? attribute.alias : info.Name;
+    public static string GetAlias(this Type type, string defaultAlias = "") => type.TryGetCustomAttribute<AliasAttribute>(out var attribute) ? attribute.alias : string.IsNullOrEmpty(defaultAlias) ? type.Name : defaultAlias;
+    public static string GetAlias(this MethodInfo info, string defaultAlias = "") => info.TryGetCustomAttribute<AliasAttribute>(out var attribute) ? attribute.alias : string.IsNullOrEmpty(defaultAlias) ? info.Name : defaultAlias;
 
     public static IEnumerable<(string name, object value)> GetAllDataMemberNameWithValue(this Type type, object ob, BindingFlags bindingFlags = default) => 
         type.GetFields(bindingFlags).ConvertTo(info => (info.Name, info.GetValue(ob)))
         .Concat(type.GetProperties(bindingFlags).Where(info => info.GetIndexParameters().Length <= 0).ConvertTo(info => (info.Name, info.GetValue(ob))));
 
-    public static bool TryGetField(this Type type, string name, out FieldInfo info, BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public) => (info = type.GetField(name, bindingFlags)) != null;
-    public static bool TryGetMethod(this Type type, string name, out MethodInfo info, BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public) => (info = type.GetMethod(name, bindingFlags)) != null;
-    public static bool TryGetProperty(this Type type, string name, out PropertyInfo info, BindingFlags bindingFlags = BindingFlags.GetProperty | BindingFlags.SetProperty) => (info = type.GetProperty(name, bindingFlags)) != null;
+    public static bool TryGetField(this Type type, out FieldInfo info, string name, BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public) => (info = type.GetField(name, bindingFlags)) != null;
+    public static bool TryGetMethod(this Type type, out MethodInfo info, string name, BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public) => (info = type.GetMethod(name, bindingFlags)) != null;
+    public static bool TryGetProperty(this Type type, out PropertyInfo info, string name, BindingFlags bindingFlags = BindingFlags.GetProperty | BindingFlags.SetProperty) => (info = type.GetProperty(name, bindingFlags)) != null;
 
-    public static bool TryGetPropertyValue<T>(this Type type, object target, string name, out T value, BindingFlags bindingFlags = BindingFlags.GetProperty | BindingFlags.SetProperty) where T : class {
-        if (type.TryGetProperty(name, out var info, bindingFlags)) {
+    public static bool TryGetPropertyValue<T>(this Type type, out T value, object target, string name, BindingFlags bindingFlags = BindingFlags.GetProperty | BindingFlags.SetProperty) where T : class {
+        if (type.TryGetProperty(out var info, name, bindingFlags)) {
             return (value = info.GetValue(target) as T) != null;
         }
 

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using UnityEditor;
 using UnityEditor.Callbacks;
@@ -10,7 +11,7 @@ public class EditorCachingService : EditorService {
     private static EditorWindow Window => _window == null ? _window = GetWindow<EditorCachingService>("CachingService") : _window;
 
     private static CachingService _service;
-    private static List<Cache> _cacheList = new();
+    private static ImmutableList<Cache> _cacheList;
 
     private string _createDirectoryName;
     
@@ -27,8 +28,8 @@ public class EditorCachingService : EditorService {
 
     [DidReloadScripts(99999)]
     private static void CacheRefresh() {
-        if (Service.TryGetService(out _service)) {
-            _cacheList = _service.GetAllCacheList();
+        if (HasOpenInstances<EditorCachingService>() && Service.TryGetService(out _service)) {
+            _cacheList = _service.GetAllCacheList().ToImmutableList();
         }
     }
 
@@ -36,14 +37,16 @@ public class EditorCachingService : EditorService {
         GUILayout.Space(10);
         EditorCommon.DrawLabelTextField("현재 활성화된 Cache", Caching.currentCacheForWriting.path, 180f);
         EditorCommon.DrawSeparator();
-        if (_cacheList.Any()) {
+        if (_cacheList?.Any() ?? false) {
             GUILayout.BeginVertical("box");
             _cachingScrollViewPosition = EditorGUILayout.BeginScrollView(_cachingScrollViewPosition, false, false, GUILayout.MaxHeight(300));
-            Cache? removeCache = null;
             foreach (var cache in _cacheList) {
                 using (new GUILayout.HorizontalScope()) {
                     if (GUILayout.Button("X", GUILayout.MaxWidth(30), GUILayout.MinWidth(30))) {
-                        removeCache = cache;
+                        _cacheList = _cacheList.Remove(cache);
+                        _service.Remove(cache);
+                        Event.current.Use();
+                        continue;
                     }
                     
                     if (GUILayout.Button("열기", GUILayout.MaxWidth(45), GUILayout.MinWidth(45))) {
@@ -60,11 +63,6 @@ public class EditorCachingService : EditorService {
                 }
             }
 
-            if (removeCache.HasValue) {
-                _service.Remove(removeCache.Value);
-                CacheRefresh();
-            }
-            
             EditorGUILayout.EndScrollView();
             GUILayout.EndVertical();
         }

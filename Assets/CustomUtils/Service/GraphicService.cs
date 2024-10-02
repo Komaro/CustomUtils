@@ -143,7 +143,7 @@ public abstract class RendererFeatureHandler {
 
         if (GraphicsSettings.currentRenderPipeline is UniversalRenderPipelineAsset universalPipelineAsset) {
             var renderer = universalPipelineAsset.scriptableRenderer;
-            if (renderer != null && renderer.GetType().TryGetPropertyValue(renderer, TARGET_PROPERTY_NAME, out List<ScriptableRendererFeature> list, BindingFlags.GetProperty | BindingFlags.NonPublic)) {
+            if (renderer != null && renderer.GetType().TryGetPropertyValue(out List<ScriptableRendererFeature> list, renderer, TARGET_PROPERTY_NAME, BindingFlags.GetProperty | BindingFlags.NonPublic)) {
                 foreach (var feature in list) {
                     if (feature.GetType() == type) {
                         return feature;

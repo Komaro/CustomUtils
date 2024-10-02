@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.IO;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 using Newtonsoft.Json;
@@ -12,9 +13,9 @@ using UnityEngine;
 
 [TestFixture]
 public class EditModeTestRunner {
-    
+
     [Test]
-    public void TempTest() {
+    public void TempTest_01() {
         Logger.TraceLog($"IsMainThread? || {Service.GetService<UnityMainThreadDispatcherService>().IsMainThread()}");
         var progress = new Progress<float>(progress => Logger.TraceLog($"{Service.GetService<UnityMainThreadDispatcherService>().IsMainThread()} || {(progress / 2).ToPercent()}"));
         EditorCoroutineUtility.StartCoroutine(StartCoroutine(Constants.Resource.RESOURCE_LIST, progress), this);
@@ -454,5 +455,4 @@ public class EditModeTestRunner {
     }
     
     #endregion
-
 }

@@ -11,7 +11,7 @@ public interface IResourceProvider : IImplementNullable {
 
     void Init();
     void Clear();
-    void ExecuteOrder(ResourceOrder order);
+    TOrder ExecuteOrder<TOrder>(TOrder order) where TOrder : ResourceOrder;
     void Load(ResourceOrder order);
     void Unload(ResourceOrder order);
     Object Get(string name);
@@ -67,36 +67,37 @@ public class ResourceService : IService {
     }
 
     void IService.Start() {
+        if (_isActiveExtraProvider) {
+            _extraProviderDic.Values.ForEach(module => module.Init());
+        }
+        
         if (_isActiveSubProvider) {
             _subProvider.Init();
         }
         
         _mainProvider.Init();
 
-        if (_isActiveExtraProvider) {
-            _extraProviderDic.Values.ForEach(module => module.Init());
-        }
-        
         _isServing = true;
     }
 
     void IService.Stop() { }
 
     void IService.Remove() {
+        if (_isActiveExtraProvider) {
+            _extraProviderDic.SafeClear(module => module.Clear());
+        }
+        
         if (_isActiveSubProvider) {
             _subProvider.Clear();
         }
         
         _mainProvider.Clear();
-
-        if (_isActiveExtraProvider) {
-            _extraProviderDic.SafeClear(module => module.Clear());
-        }
-
+        
         _isServing = false;
     }
     
     public void ExecuteOrder(ResourceOrder order) => GetSwitchProvider(order).ExecuteOrder(order);
+    public TOrder ExecuteOrder<TOrder>(TOrder order) where TOrder : ResourceOrder => GetSwitchProvider(order).ExecuteOrder(order);
     public void Load(ResourceOrder order) => GetSwitchProvider(order).Load(order);
     public void Unload(ResourceOrder order) => GetSwitchProvider(order).Unload(order);
 

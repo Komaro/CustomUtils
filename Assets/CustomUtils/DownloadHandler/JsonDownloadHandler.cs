@@ -1,6 +1,4 @@
-﻿using System.Net.Http;
-using Newtonsoft.Json;
-using UnityEngine.Networking;
+﻿using Newtonsoft.Json;
 
 public class JsonDownloadHandler<TReturn> : DownloadHandlerModule<TReturn> where TReturn : class{
 

@@ -31,7 +31,8 @@ public class ResourcesProvider : IResourceProvider {
         Resources.UnloadUnusedAssets();
     }
 
-    public void ExecuteOrder(ResourceOrder order) { }
+    public TOrder ExecuteOrder<TOrder>(TOrder order) where TOrder : ResourceOrder => order;
+
     public void Load(ResourceOrder order) { }
 
     public void Unload(ResourceOrder order) {

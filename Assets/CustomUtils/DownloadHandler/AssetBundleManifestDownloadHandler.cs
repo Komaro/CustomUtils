@@ -1,6 +1,4 @@
-﻿using System.Net.Http;
-using UnityEngine;
-using UnityEngine.Networking;
+﻿using UnityEngine;
 
 public class AssetBundleManifestDownloadHandler : DownloadHandlerModule<AssetBundleManifest> {
 

@@ -132,11 +132,6 @@ public class SoundTrack : ScriptableObject {
 
 public class SoundTrackEnumAttribute : PriorityAttribute { }
 
-[SoundTrackEnum(priority = 1)]
-public enum TEST_SOUND_TRACK_TYPE {
-    TEST_PLAY
-}
-
 [SoundTrackEnum]
 public enum TRACK_TYPE {
     DEFAULT,

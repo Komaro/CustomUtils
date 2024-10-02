@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Net;
 using System.Net.Http;
 using Unity.Collections;
 using UnityEngine;
@@ -46,7 +45,6 @@ public abstract class DownloadHandlerModule<TReturn> : DownloadHandlerScript, ID
 
     protected override void ReceiveContentLengthHeader(ulong contentLength) {
         if (buffer.IsCreated) {
-            Logger.TraceLog("catch");
             buffer.Dispose();
         }
 
@@ -65,7 +63,6 @@ public abstract class DownloadHandlerModule<TReturn> : DownloadHandlerScript, ID
     }
 
     protected override NativeArray<byte> GetNativeData() => buffer.IsCreated ? buffer : new NativeArray<byte>();
-
     protected override float GetProgress() => (float)_index / buffer.Length;
 
     public abstract bool TryGetContent(out TReturn content);

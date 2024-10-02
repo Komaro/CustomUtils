@@ -7,6 +7,7 @@ using System.Linq;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
+// Temp Provider
 [ResourceProvider(1)]
 public class AssetBundleProvider : IResourceProvider {
 
@@ -16,6 +17,7 @@ public class AssetBundleProvider : IResourceProvider {
 
     private const string UNITY_3D_EXTENSION = ".unity3d";
     
+    // Temp Get
     public void Init() {
         if (Service.GetService<ResourceService>().TryGet<TextAsset>("AssetBundleChecksumInfo", out var asset) && asset.dataSize > 0 && asset.text.TryToJson(out _checksumInfo)) {
             if (_checksumInfo.crcDic.TryGetValue(_checksumInfo.target, out var crc)) {
@@ -42,9 +44,7 @@ public class AssetBundleProvider : IResourceProvider {
         _assetToBundleDic.Clear();
     }
 
-    public void ExecuteOrder(ResourceOrder order) {
-        
-    }
+    public TOrder ExecuteOrder<TOrder>(TOrder order) where TOrder : ResourceOrder => order;
 
     public void Load(ResourceOrder order) {
         switch (order) {
@@ -144,6 +144,7 @@ public abstract class AssetBundleWrapperBase {
     }
 }
 
+// Temp Wrapper
 internal class AssetBundleWrapper {
 
     public readonly string name;
@@ -180,7 +181,7 @@ internal class AssetBundleWrapper {
     public AssetBundleCreateRequest LoadAsync() {
         if (assetBundle == null && string.IsNullOrEmpty(name) == false) {
             var request = AssetBundle.LoadFromFileAsync($"{Constants.Path.PROJECT_PATH}/AssetBundle/{_checksumInfo.target}/{name}");
-            request.completed += operation => {
+            request.completed += _ => {
                 if (request.assetBundle == null) {
                     Logger.TraceError($"{nameof(assetBundle)} is null");
                     return;

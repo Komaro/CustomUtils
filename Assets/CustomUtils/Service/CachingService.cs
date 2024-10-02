@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 public class CachingService : IService {
@@ -9,7 +10,7 @@ public class CachingService : IService {
 
     public Cache Add(string directoryName) {
         try {
-            var path = $"{Application.persistentDataPath}/{directoryName}";
+            var path = Path.Combine(Application.persistentDataPath, directoryName);
             var cache = Caching.GetCacheByPath(path);
             if (cache.valid) {
                 Logger.TraceLog($"Already {nameof(Caching)} path || {path}", Color.yellow);
@@ -29,7 +30,7 @@ public class CachingService : IService {
     public void Remove(string directoryName) {
         try {
             if (Caching.ready) {
-                var cache = Caching.GetCacheByPath($"{Application.persistentDataPath}/{directoryName}");
+                var cache = Caching.GetCacheByPath(Path.Combine(Application.persistentDataPath, directoryName));
                 Remove(cache);
             }
         } catch (Exception ex) {
@@ -49,7 +50,7 @@ public class CachingService : IService {
 
     public Cache Get(string directoryName, bool isCreate = true) {
         try {
-            var cache = Caching.GetCacheByPath($"{Application.persistentDataPath}/{directoryName}");
+            var cache = Caching.GetCacheByPath(Path.Combine(Application.persistentDataPath, directoryName));
             if (cache.valid == false && isCreate) {
                 cache = Add(directoryName);
             }

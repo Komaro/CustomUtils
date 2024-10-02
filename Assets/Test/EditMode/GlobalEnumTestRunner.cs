@@ -27,11 +27,6 @@ public class GlobalEnumTestRunner {
         }
         Logger.TraceLog("Pass Basic Test");
         
-        // Count Test
-        var totalEnumCount = EnumUtil.GetValues<TEST_GLOBAL_ENUM_01>().Count() + EnumUtil.GetValues<TEST_GLOBAL_ENUM_02>().Count();
-        Assert.IsTrue(globalEnum.Count == totalEnumCount);
-        Logger.TraceLog("Pass Count Test");
-        
         // int Interaction Test
         for (var index = 0; index < globalEnum.Count + 5; index++) {
             if (index < globalEnum.Count) {

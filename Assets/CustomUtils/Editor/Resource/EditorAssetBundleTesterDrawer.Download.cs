@@ -288,6 +288,23 @@ public partial class EditorAssetBundleTesterDrawer {
     
     #region [Progress]
     
+    private abstract record AsyncProgressOperation : IDisposable {
+
+        private readonly string _target;
+
+        public AsyncProgressOperation(string target) => _target = target;
+        
+        ~AsyncProgressOperation() => Dispose();
+        
+        public abstract void Dispose();
+        public abstract float GetProgress();
+        public abstract string GetDisplayProgress();
+        public abstract bool IsDone();
+        public abstract bool IsValid();
+        
+        public virtual string GetName() => _target;
+    }
+    
     private record AssetBundleDownloadOperation : AsyncProgressOperation {
 
         private readonly UnityWebRequest _request;
@@ -316,22 +333,5 @@ public partial class EditorAssetBundleTesterDrawer {
         public override bool IsValid() => _request != null;
     }
 
-    private abstract record AsyncProgressOperation : IDisposable {
-
-        private readonly string _target;
-
-        public AsyncProgressOperation(string target) => _target = target;
-        
-        ~AsyncProgressOperation() => Dispose();
-        
-        public abstract void Dispose();
-        public abstract float GetProgress();
-        public abstract string GetDisplayProgress();
-        public abstract bool IsDone();
-        public abstract bool IsValid();
-        
-        public virtual string GetName() => _target;
-    }
-    
     #endregion
 }

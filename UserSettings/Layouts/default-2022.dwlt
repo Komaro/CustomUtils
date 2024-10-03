@@ -8,30 +8,6 @@ MonoBehaviour:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 12004, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_PixelRect:
-    serializedVersion: 2
-    x: 356.80002
-    y: 64
-    width: 690.4
-    height: 628
-  m_ShowMode: 0
-  m_Title: CachingService
-  m_RootView: {fileID: 4}
-  m_MinSize: {x: 100, y: 121}
-  m_MaxSize: {x: 4000, y: 4021}
-  m_Maximized: 0
---- !u!114 &2
-MonoBehaviour:
-  m_ObjectHideFlags: 52
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
   m_EditorHideFlags: 1
   m_Script: {fileID: 12004, guid: 0000000000000000e000000000000000, type: 0}
   m_Name: 
@@ -43,63 +19,12 @@ MonoBehaviour:
     width: 1536
     height: 780.8
   m_ShowMode: 4
-  m_Title: Console
-  m_RootView: {fileID: 5}
+  m_Title: Inspector
+  m_RootView: {fileID: 2}
   m_MinSize: {x: 875, y: 350}
   m_MaxSize: {x: 10000, y: 10000}
   m_Maximized: 1
---- !u!114 &3
-MonoBehaviour:
-  m_ObjectHideFlags: 52
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: EditorCachingService
-  m_EditorClassIdentifier: 
-  m_Children: []
-  m_Position:
-    serializedVersion: 2
-    x: 0
-    y: 0
-    width: 690.4
-    height: 628
-  m_MinSize: {x: 100, y: 121}
-  m_MaxSize: {x: 4000, y: 4021}
-  m_ActualView: {fileID: 17}
-  m_Panes:
-  - {fileID: 17}
-  m_Selected: 0
-  m_LastSelected: 0
---- !u!114 &4
-MonoBehaviour:
-  m_ObjectHideFlags: 52
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 12010, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Children:
-  - {fileID: 3}
-  m_Position:
-    serializedVersion: 2
-    x: 0
-    y: 0
-    width: 690.4
-    height: 628
-  m_MinSize: {x: 100, y: 121}
-  m_MaxSize: {x: 4000, y: 4021}
-  vertical: 0
-  controlID: 2486
-  draggingID: 0
---- !u!114 &5
+--- !u!114 &2
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -112,9 +37,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Children:
-  - {fileID: 6}
-  - {fileID: 8}
-  - {fileID: 7}
+  - {fileID: 3}
+  - {fileID: 5}
+  - {fileID: 4}
   m_Position:
     serializedVersion: 2
     x: 0
@@ -127,7 +52,7 @@ MonoBehaviour:
   m_TopViewHeight: 30
   m_UseBottomView: 1
   m_BottomViewHeight: 20
---- !u!114 &6
+--- !u!114 &3
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -149,7 +74,7 @@ MonoBehaviour:
   m_MinSize: {x: 0, y: 0}
   m_MaxSize: {x: 0, y: 0}
   m_LastLoadedLayoutName: 
---- !u!114 &7
+--- !u!114 &4
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -170,7 +95,7 @@ MonoBehaviour:
     height: 20
   m_MinSize: {x: 0, y: 0}
   m_MaxSize: {x: 0, y: 0}
---- !u!114 &8
+--- !u!114 &5
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -183,8 +108,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Children:
-  - {fileID: 9}
-  - {fileID: 16}
+  - {fileID: 6}
+  - {fileID: 13}
   m_Position:
     serializedVersion: 2
     x: 0
@@ -194,9 +119,9 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 100}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 118
+  controlID: 143
   draggingID: 0
---- !u!114 &9
+--- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -209,8 +134,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Children:
+  - {fileID: 7}
   - {fileID: 10}
-  - {fileID: 13}
   m_Position:
     serializedVersion: 2
     x: 0
@@ -220,9 +145,9 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 1
-  controlID: 119
+  controlID: 112
   draggingID: 0
---- !u!114 &10
+--- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -235,8 +160,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Children:
-  - {fileID: 11}
-  - {fileID: 12}
+  - {fileID: 8}
+  - {fileID: 9}
   m_Position:
     serializedVersion: 2
     x: 0
@@ -246,9 +171,9 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 50}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 41
+  controlID: 66
   draggingID: 0
---- !u!114 &11
+--- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -267,15 +192,15 @@ MonoBehaviour:
     y: 0
     width: 513.6
     height: 381.6
-  m_MinSize: {x: 200, y: 200}
-  m_MaxSize: {x: 4000, y: 4000}
-  m_ActualView: {fileID: 19}
+  m_MinSize: {x: 201, y: 221}
+  m_MaxSize: {x: 4001, y: 4021}
+  m_ActualView: {fileID: 15}
   m_Panes:
+  - {fileID: 15}
   - {fileID: 19}
-  - {fileID: 23}
   m_Selected: 0
   m_LastSelected: 0
---- !u!114 &12
+--- !u!114 &9
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -294,14 +219,14 @@ MonoBehaviour:
     y: 0
     width: 553.6
     height: 381.6
-  m_MinSize: {x: 202, y: 221}
-  m_MaxSize: {x: 4002, y: 4021}
-  m_ActualView: {fileID: 20}
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
+  m_ActualView: {fileID: 16}
   m_Panes:
-  - {fileID: 20}
+  - {fileID: 16}
   m_Selected: 0
   m_LastSelected: 0
---- !u!114 &13
+--- !u!114 &10
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -314,8 +239,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Children:
-  - {fileID: 14}
-  - {fileID: 15}
+  - {fileID: 11}
+  - {fileID: 12}
   m_Position:
     serializedVersion: 2
     x: 0
@@ -325,9 +250,9 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 50}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 120
+  controlID: 113
   draggingID: 0
---- !u!114 &14
+--- !u!114 &11
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -348,13 +273,13 @@ MonoBehaviour:
     height: 349.19998
   m_MinSize: {x: 101, y: 121}
   m_MaxSize: {x: 4001, y: 4021}
-  m_ActualView: {fileID: 22}
+  m_ActualView: {fileID: 18}
   m_Panes:
-  - {fileID: 21}
-  - {fileID: 22}
+  - {fileID: 17}
+  - {fileID: 18}
   m_Selected: 1
   m_LastSelected: 0
---- !u!114 &15
+--- !u!114 &12
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -373,14 +298,14 @@ MonoBehaviour:
     y: 0
     width: 290.39996
     height: 349.19998
-  m_MinSize: {x: 200, y: 200}
-  m_MaxSize: {x: 4000, y: 4000}
-  m_ActualView: {fileID: 18}
+  m_MinSize: {x: 202, y: 221}
+  m_MaxSize: {x: 4002, y: 4021}
+  m_ActualView: {fileID: 14}
   m_Panes:
-  - {fileID: 18}
+  - {fileID: 14}
   m_Selected: 0
   m_LastSelected: 0
---- !u!114 &16
+--- !u!114 &13
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -401,47 +326,13 @@ MonoBehaviour:
     height: 730.8
   m_MinSize: {x: 275, y: 50}
   m_MaxSize: {x: 4000, y: 4000}
-  m_ActualView: {fileID: 24}
+  m_ActualView: {fileID: 20}
   m_Panes:
-  - {fileID: 24}
-  - {fileID: 25}
+  - {fileID: 20}
+  - {fileID: 21}
   m_Selected: 0
-  m_LastSelected: 0
---- !u!114 &17
-MonoBehaviour:
-  m_ObjectHideFlags: 52
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e029cf10310e49d093993a497effb240, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_MinSize: {x: 100, y: 100}
-  m_MaxSize: {x: 4000, y: 4000}
-  m_TitleContent:
-    m_Text: CachingService
-    m_Image: {fileID: 0}
-    m_Tooltip: 
-  m_Pos:
-    serializedVersion: 2
-    x: 356.80002
-    y: 64
-    width: 690.4
-    height: 607
-  m_SerializedDataModeController:
-    m_DataMode: 0
-    m_PreferredDataMode: 0
-    m_SupportedDataModes: 
-    isAutomatic: 1
-  m_ViewDataDictionary: {fileID: 0}
-  m_OverlayCanvas:
-    m_LastAppliedPresetName: Default
-    m_SaveData: []
-    m_OverlaysVisible: 1
---- !u!114 &18
+  m_LastSelected: 1
+--- !u!114 &14
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -540,7 +431,7 @@ MonoBehaviour:
   m_LowResolutionForAspectRatios: 01000000000000000000
   m_XRRenderMode: 0
   m_RenderTexture: {fileID: 0}
---- !u!114 &19
+--- !u!114 &15
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -578,9 +469,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 
+      m_SelectedIDs: f0690000
       m_LastClickedID: 0
-      m_ExpandedIDs: 52faffff
+      m_ExpandedIDs: 88ebffffcaebffffd8ecffff1aedffff24eeffff66eeffff74efffffb6efffffb4f0fffff6f0ffff54f1ffff94f1ffff9af2ffffdcf2ffff1cf4ffff5ef4ffff60f5ffffa2f5ffffb4f6fffff6f6ffff3af7ffff7cf7ffffbcf7ffff06f8ffff48f8ffff8af8ffff58f9ffff0cfaffff14fbffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -604,7 +495,7 @@ MonoBehaviour:
       m_IsLocked: 0
     m_CurrentSortingName: TransformSorting
   m_WindowGUID: 37b0836aa8b4bd74696073f7347c8c8a
---- !u!114 &20
+--- !u!114 &16
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1040,7 +931,7 @@ MonoBehaviour:
   m_SceneVisActive: 1
   m_LastLockedObject: {fileID: 0}
   m_ViewIsLockedToObject: 0
---- !u!114 &21
+--- !u!114 &17
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1100,10 +991,10 @@ MonoBehaviour:
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 806c0000
-    m_LastClickedID: 27776
-    m_ExpandedIDs: 000000006e6a0000fe6b00000c6c00000e6c0000106c00007a6c000000ca9a3b
+    scrollPos: {x: 0, y: 59.80002}
+    m_SelectedIDs: 126c0000
+    m_LastClickedID: 27666
+    m_ExpandedIDs: 00000000486a00004a6a00004c6a00004e6a0000066c0000086c0000146c000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1119,7 +1010,7 @@ MonoBehaviour:
       m_IsRenaming: 0
       m_OriginalEventType: 11
       m_IsRenamingFilename: 1
-      m_ClientGUIView: {fileID: 14}
+      m_ClientGUIView: {fileID: 11}
     m_SearchString: 
     m_CreateAssetUtility:
       m_EndAction: {fileID: 0}
@@ -1131,7 +1022,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 000000006e6a0000
+    m_ExpandedIDs: 00000000486a00004a6a00004c6a00004e6a0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1156,9 +1047,9 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: e2690000
-    m_LastClickedInstanceID: 27106
-    m_HadKeyboardFocusLastEvent: 1
+    m_SelectedInstanceIDs: f0690000
+    m_LastClickedInstanceID: 27120
+    m_HadKeyboardFocusLastEvent: 0
     m_ExpandedInstanceIDs: c6230000ac060000fc56000092f6ffff2a6600000267000000000000ce690000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -1175,7 +1066,7 @@ MonoBehaviour:
       m_IsRenaming: 0
       m_OriginalEventType: 11
       m_IsRenamingFilename: 1
-      m_ClientGUIView: {fileID: 14}
+      m_ClientGUIView: {fileID: 11}
     m_CreateAssetUtility:
       m_EndAction: {fileID: 0}
       m_InstanceID: 0
@@ -1187,7 +1078,7 @@ MonoBehaviour:
     m_GridSize: 16
   m_SkipHiddenPackages: 0
   m_DirectoriesAreaWidth: 253
---- !u!114 &22
+--- !u!114 &18
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1222,7 +1113,7 @@ MonoBehaviour:
     m_LastAppliedPresetName: Default
     m_SaveData: []
     m_OverlaysVisible: 1
---- !u!114 &23
+--- !u!114 &19
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1277,7 +1168,7 @@ MonoBehaviour:
       m_IsRenaming: 0
       m_OriginalEventType: 11
       m_IsRenamingFilename: 0
-      m_ClientGUIView: {fileID: 11}
+      m_ClientGUIView: {fileID: 8}
     m_SearchString: 
     m_CreateAssetUtility:
       m_EndAction: {fileID: 0}
@@ -1405,7 +1296,7 @@ MonoBehaviour:
   m_ShowReferencedBuses: 1
   m_ShowBusConnections: 0
   m_ShowBusConnectionsOfSelection: 0
---- !u!114 &24
+--- !u!114 &20
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1453,7 +1344,7 @@ MonoBehaviour:
   m_LockTracker:
     m_IsLocked: 0
   m_PreviewWindow: {fileID: 0}
---- !u!114 &25
+--- !u!114 &21
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1488,7 +1379,7 @@ MonoBehaviour:
     m_SaveData: []
     m_OverlaysVisible: 1
   m_Spl:
-    ID: 374
+    ID: 177
     splitterInitialOffset: 290.8
     currentActiveSplitter: -1
     realSizes:
@@ -1511,9 +1402,9 @@ MonoBehaviour:
     oldMinSizes: 
     oldMaxSizes: 
     oldSplitSize: 0
-  m_TestTypeToolbarIndex: 0
+  m_TestTypeToolbarIndex: 1
   m_PlayModeTestListGUI:
-    m_Window: {fileID: 25}
+    m_Window: {fileID: 21}
     m_NewResultList:
     - id: 1004
       uniqueId: '[CustomUtils][suite]'
@@ -1892,14 +1783,14 @@ MonoBehaviour:
       - Uncategorized
     m_SelectedOption: 0
   m_EditModeTestListGUI:
-    m_Window: {fileID: 25}
+    m_Window: {fileID: 21}
     m_NewResultList:
     - id: 1000
       uniqueId: '[CustomUtils][suite]'
       name: CustomUtils
       fullName: CustomUtils
       resultStatus: 1
-      duration: 0.4133566
+      duration: 0.0465285
       messages: 
       output: 
       stacktrace: 
@@ -1915,7 +1806,7 @@ MonoBehaviour:
       name: EditModeTestAssembly.dll
       fullName: C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/EditModeTestAssembly.dll
       resultStatus: 1
-      duration: 0.3858056
+      duration: 0.0337308
       messages: 
       output: 
       stacktrace: 
@@ -2148,8 +2039,8 @@ MonoBehaviour:
       uniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][EditModeTestRunner][suite]
       name: EditModeTestRunner
       fullName: EditModeTestRunner
-      resultStatus: 0
-      duration: 0
+      resultStatus: 1
+      duration: 0.0309568
       messages: 
       output: 
       stacktrace: 
@@ -2280,13 +2171,39 @@ MonoBehaviour:
       parentId: 1014
       parentUniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][EditModeTestRunner][suite]
     - id: 1015
-      uniqueId: EditModeTestAssembly.dll/EditModeTestRunner/[EditModeTestAssembly][EditModeTestRunner.TempTest]
-      name: TempTest
-      fullName: EditModeTestRunner.TempTest
-      resultStatus: 0
-      duration: 0
+      uniqueId: EditModeTestAssembly.dll/EditModeTestRunner/[EditModeTestAssembly][EditModeTestRunner.TempTest_01]
+      name: TempTest_01
+      fullName: EditModeTestRunner.TempTest_01
+      resultStatus: 1
+      duration: 0.0151069
       messages: 
-      output: 
+      output: '[EditModeTestRunner.TempTest_01] Alias Test
+
+'
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1014
+      parentUniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][EditModeTestRunner][suite]
+    - id: 1016
+      uniqueId: EditModeTestAssembly.dll/EditModeTestRunner/[EditModeTestAssembly][EditModeTestRunner.TempTest_02]
+      name: TempTest_02
+      fullName: EditModeTestRunner.TempTest_02
+      resultStatus: 1
+      duration: 0.0091467
+      messages: 
+      output: '<color=#00FFFF>[Service.StartService] Service Start || UnityMainThreadDispatcherService</color>
+
+        [EditModeTestRunner.TempTest_02]
+        IsMainThread? || True
+
+        [EditModeTestRunner.TempTest_02] Success
+
+'
       stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
@@ -2417,9 +2334,9 @@ MonoBehaviour:
       uniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][GlobalEnumTestRunner][suite]
       name: GlobalEnumTestRunner
       fullName: GlobalEnumTestRunner
-      resultStatus: 1
-      duration: 0.3802694
-      messages: 
+      resultStatus: 2
+      duration: 0.0068363
+      messages: One or more child tests had errors
       output: 
       stacktrace: 
       notRunnable: 0
@@ -2433,9 +2350,9 @@ MonoBehaviour:
       uniqueId: EditModeTestAssembly.dll/GlobalEnumTestRunner/[EditModeTestAssembly][GlobalEnumTestRunner.StartTest]
       name: StartTest
       fullName: GlobalEnumTestRunner.StartTest
-      resultStatus: 1
-      duration: 0.3387186
-      messages: 
+      resultStatus: 2
+      duration: 0.0024007
+      messages: "  Expected: True\r\n  But was:  False\r\n"
       output: '
 
         IgnoreFailingMessages:true
@@ -2443,27 +2360,10 @@ MonoBehaviour:
         [GlobalEnumTestRunner.StartTest]
         Pass Basic Test
 
-        [GlobalEnumTestRunner.StartTest] Pass Count Test
-
-        [GlobalEnumTestRunner.StartTest]
-        Pass int Interaction Test
-
-        [GlobalEnumTestRunner.StartTest] Pass
-        Type Interaction Test
-
-        [GlobalEnumTestRunner.StartTest] Pass Property
-        Get Set Test
-
-        [GlobalEnumTestRunner.StartTest] Pass Method Get Test
-
-        [GlobalEnumTestRunner.StartTest]
-        Pass Method Set Test
-
-        [GlobalEnumTestRunner.StartTest] Pass Contains
-        Test
+'
+      stacktrace: 'at GlobalEnumTestRunner.StartTest () [0x00075] in C:\Project\Unity\CustomUtils\Assets\Test\EditMode\GlobalEnumTestRunner.cs:32
 
 '
-      stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
       description: 
@@ -2572,39 +2472,18 @@ MonoBehaviour:
       - Performance
       parentId: 1032
       parentUniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][TcpServerTestRunner][suite]
-    m_ResultText: 'StartTest (0.339s)
+    m_ResultText: 'TempTest_01 (0.015s)
 
       ---
 
-      IgnoreFailingMessages:true
-
-      [GlobalEnumTestRunner.StartTest]
-      Pass Basic Test
-
-      [GlobalEnumTestRunner.StartTest] Pass Count Test
-
-      [GlobalEnumTestRunner.StartTest]
-      Pass int Interaction Test
-
-      [GlobalEnumTestRunner.StartTest] Pass Type
-      Interaction Test
-
-      [GlobalEnumTestRunner.StartTest] Pass Property Get
-      Set Test
-
-      [GlobalEnumTestRunner.StartTest] Pass Method Get Test
-
-      [GlobalEnumTestRunner.StartTest]
-      Pass Method Set Test
-
-      [GlobalEnumTestRunner.StartTest] Pass Contains
-      Test'
+      [EditModeTestRunner.TempTest_01]
+      Alias Test'
     m_ResultStacktrace: 
     m_TestListState:
-      scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: aa9062d9
-      m_LastClickedID: -647851862
-      m_ExpandedIDs: 5408f8a42c5c4ec2416d28c537575fcc53f7ced709d9cedca4da07e1502e7e0dedaa9c1607dc1a20732940267a14c82ac29f393322524b3a9dda8a41045add4d5d4c09542cae4f5b88e2b55c739d64642f226d64db1cfa6616b81e6cffffff7f
+      scrollPos: {x: 0, y: 89}
+      m_SelectedIDs: dafb4259
+      m_LastClickedID: 1497562074
+      m_ExpandedIDs: 5408f8a42c5c4ec2416d28c537575fcc53f7ced709d9cedca4da07e1502e7e0dedaa9c1607dc1a20732940267a14c82ac29f393322524b3a9dda8a41045add4d5d4c09542cae4f5b88e2b55c739d64642f226d64db1cfa6616b81e6cd4580079ffffff7f
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 

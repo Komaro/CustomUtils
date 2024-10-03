@@ -10,10 +10,7 @@ using UnityEngine.Networking;
 using Result = UnityEngine.Networking.UnityWebRequest.Result;
 
 public class DownloadService : IService {
-
-    private UnityMainThreadDispatcherService _threadDispatcherService;
-
-    void IService.Init() => _threadDispatcherService = Service.GetService<UnityMainThreadDispatcherService>();
+    
     void IService.Start() { }
     void IService.Stop() { }
 
@@ -32,7 +29,7 @@ public class DownloadService : IService {
         };
     }
 
-    public UnityWebRequestAsyncOperation DownloadHeader(string url, [CanBeNull] Action<Result, UnityWebRequest> callback = null) {
+    public UnityWebRequestAsyncOperation DownloadHeader(string url, Action<Result, UnityWebRequest> callback = null) {
         var operation = UnityWebRequest.Head(url).SendWebRequest();
         operation.completed += _ => {
             var request = operation.webRequest;
@@ -49,13 +46,7 @@ public class DownloadService : IService {
     public UnityWebRequestAsyncOperation Download(string url, Action<Result, byte[]> callback) => Download<DownloadHandler>(CreateGet(url), (result, handler) => callback?.Invoke(result, result != Result.Success ? Array.Empty<byte>() : handler.data));
     
     public UnityWebRequestAsyncOperation Download<THandler>(THandler handler, Action<Result, THandler> callback) where THandler : DownloadHandler, IDownloadHandlerModule => Download(handler.CreateWebRequest(), callback);
-    
-    public UnityWebRequestAsyncOperation Download<THandler, TReturn>(THandler handler, Action<Result, TReturn> callback) where THandler : DownloadHandlerModule<TReturn> => Download<THandler>(handler.CreateWebRequest(), (result, requestHandler) => {
-        if (result == Result.Success) {
-            callback?.Invoke(result, requestHandler.GetContent());
-        }
-    });
-
+    public UnityWebRequestAsyncOperation Download<THandler, TReturn>(THandler handler, Action<Result, TReturn> callback) where THandler : DownloadHandlerModule<TReturn> => Download<THandler>(handler.CreateWebRequest(), (result, requestHandler) => callback?.Invoke(result, requestHandler.GetContent()));
     public UnityWebRequestAsyncOperation Download<THandler>(string url, THandler handler, Action<Result, THandler> callback) where THandler : DownloadHandler => Download(CreateGet(url, handler), callback);
 
     public UnityWebRequestAsyncOperation Download<THandler>(UnityWebRequest request, Action<Result, THandler> callback) where THandler : DownloadHandler {

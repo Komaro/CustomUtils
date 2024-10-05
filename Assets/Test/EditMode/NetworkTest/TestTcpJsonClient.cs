@@ -95,7 +95,18 @@ internal class TestTcpJsonClient : SimpleTcpClient<TcpHeader, TcpJsonPacket>, IT
             };
 
             await SendDataPublishAsync(session, data);
-            Logger.TraceLog($"Send {nameof(data)} || {data.sessionId} || {data.requestText}", Color.magenta);
+
+            await Task.Delay(500, token);
+
+            data.requestText = "Server to Client test";
+            TcpServerTestRunner.server.Send(session, data);
+
+            await Task.Delay(500, token);
+            
+            await SendDataPublishAsync(session, new TcpJsonDisconnectRequest {
+                sessionId = session.ID,
+                delaySeconds = 3,
+            });
         }
     }
 }

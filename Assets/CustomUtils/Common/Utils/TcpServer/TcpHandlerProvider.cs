@@ -82,7 +82,7 @@ public class TcpHandlerProvider<TEnum> where TEnum : struct, Enum {
             return handler;
         } 
         
-        Logger.TraceError($"{nameof(enumValue)} is an invalid enum value");
+        Logger.TraceError($"{enumValue} is an invalid enum value");
         return null;
     }
     

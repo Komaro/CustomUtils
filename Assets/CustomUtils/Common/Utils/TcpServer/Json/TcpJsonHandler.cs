@@ -68,7 +68,7 @@ public class JsonResponseSession : TcpJsonHandler<TcpJsonSessionConnectResponse>
 public class JsonRequestTest : TcpJsonHandler<TcpJsonTestRequest> {
 
     public override async Task<TcpJsonTestRequest> ReceiveDataAsync(TcpSession session, TcpJsonTestRequest data, CancellationToken token) {
-        Logger.TraceLog($"Response || {data.sessionId} || {data.requestText}");
+        Logger.TraceLog($"{nameof(JsonRequestTest)} || {data.sessionId} || {data.requestText}");
         if (session.Connected && session.ID == data.sessionId && TcpJsonHandlerProvider.inst.TryGetSendHandler<TcpJsonTestResponse>(out var handler)) {
             var responseData = new TcpJsonTestResponse {
                 sessionId = session.ID,
@@ -86,8 +86,21 @@ public class JsonRequestTest : TcpJsonHandler<TcpJsonTestRequest> {
 public class JsonResponseTest : TcpJsonHandler<TcpJsonTestResponse> {
 
     public override async Task<TcpJsonTestResponse> ReceiveDataAsync(TcpSession session, TcpJsonTestResponse data, CancellationToken token) {
-        Logger.TraceLog($"Response || {data.sessionId} || {data.responseText}");
+        Logger.TraceLog($"{nameof(JsonResponseTest)} || {data.sessionId} || {data.responseText}");
         await Task.CompletedTask;
         return data;
+    }
+}
+
+[TcpHandler(TCP_BODY.DISCONNECT)]
+public class JsonRequestDisconnect : TcpJsonHandler<TcpJsonDisconnectRequest> {
+
+    public override async Task<TcpJsonDisconnectRequest> ReceiveDataAsync(TcpSession session, TcpJsonDisconnectRequest data, CancellationToken token) {
+        Logger.TraceLog($"{nameof(JsonRequestDisconnect)} || {data.delaySeconds}");
+        if (data.delaySeconds > 0) {
+            await Task.Delay(data.delaySeconds * 1000, token);
+        }
+        
+        throw new DisconnectSessionException(session);
     }
 }

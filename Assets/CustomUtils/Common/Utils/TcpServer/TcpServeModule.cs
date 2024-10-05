@@ -150,14 +150,31 @@ public abstract class TcpServeModule<THeader, TData> : ITcpServeModule, ITcpRece
         return false;
     }
 
+    public void Disconnect(TcpSession session) => Disconnect(session.ID);
+
+    public void Disconnect(uint sessionId) {
+        if (sessionDic.TryRemove(sessionId, out var session) && session.IsValid()) {
+            Logger.TraceLog($"{nameof(Disconnect)} {nameof(TcpSession)} || {session.ID}", Color.Red);
+            session.Close();
+        }
+    }
+
     protected virtual async Task ReceiveAsync(TcpSession session, CancellationToken token) {
         Logger.TraceLog($"Start {nameof(ReceiveAsync)} {nameof(Task)}", Color.LightGreen);
         while (session.Connected && token.IsCancellationRequested == false) {
-            var header = await ReceiveHeaderAsync(session, token);
-            token.ThrowIfCancellationRequested();
-            
-            await ReceiveDataAsync(session, header, token);
-            token.ThrowIfCancellationRequested();
+            try {
+                var header = await ReceiveHeaderAsync(session, token);
+                token.ThrowIfCancellationRequested();
+
+                await ReceiveDataAsync(session, header, token);
+                token.ThrowIfCancellationRequested();
+            } catch (DisconnectSessionException) {
+                Disconnect(session.ID);
+            } catch (SocketException) {
+                Disconnect(session.ID);
+            } catch (Exception ex) {
+                Logger.TraceLog(ex.Message);
+            }
         }
     }
     

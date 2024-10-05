@@ -5,13 +5,20 @@ using System.Threading;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using Unity.PerformanceTesting;
+using UnityEngine;
+using UnityEngine.TestTools;
 
 public class TcpServerTestRunner {
     
-    private static SimpleTcpServer _server;
+    public static SimpleTcpServer server;
     private static ITcpClient _tcpClient;
     private static CancellationTokenSource tokenSource;
 
+    [SetUp]
+    public void SetUp() {
+        LogAssert.ignoreFailingMessages = true;
+    }
+    
     [SetUp]
     public void SetUpCancellationToken() {
         tokenSource?.Cancel();
@@ -25,22 +32,27 @@ public class TcpServerTestRunner {
     
     [SetUp]
     public void SetUpSimpleTcpServer() {
-        _server?.Dispose();
-        _server = new SimpleTcpServer(IPAddress.Any, 8890);
+        server?.Dispose();
+        server = new SimpleTcpServer(IPAddress.Any, 8890);
     }
     
     [TearDown]
     public void TearDownTestRunner() {
         tokenSource?.Cancel();
-        _server?.Stop();
+        server?.Stop();
         _tcpClient?.Close();
+    }
+
+    [TearDown]
+    public void TearDown() {
+        LogAssert.ignoreFailingMessages = false;
     }
 
     [Test]
     public void Clear() {
         tokenSource?.Cancel();
         _tcpClient?.Close();
-        _server?.Stop();
+        server?.Stop();
     }
 
     [Test]
@@ -65,8 +77,8 @@ public class TcpServerTestRunner {
                 Assert.Fail($"The {moduleType.Name} class does not implement the {nameof(ITcpServeModule)} interface");
             }
 
-            _server.ChangeServeModule(module);
-            _server.Start();
+            server.ChangeServeModule(module);
+            server.Start();
             
             await Task.Delay(1000, tokenSource.Token);
 
@@ -77,10 +89,10 @@ public class TcpServerTestRunner {
 
             await _tcpClient.Start();
             if (_tcpClient is ITestHandler testHandler) {
-                _ = Task.Run(() => testHandler.StartTest(tokenSource.Token), tokenSource.Token);
+                await Task.Run(() => testHandler.StartTest(tokenSource.Token), tokenSource.Token);
             }
 
-            await Task.Delay(5000, tokenSource.Token);
+            await Task.Delay(6000, tokenSource.Token);
         } catch (Exception ex) {
             Logger.TraceError(ex);
         } finally {

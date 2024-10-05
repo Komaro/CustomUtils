@@ -44,6 +44,8 @@ public enum TCP_BODY {
     TEST_REQUEST = 10000,
     TEST_RESPONSE,
     
+    DISCONNECT = 50000,
+    
     // Binary
     STRING = 90000,
 }

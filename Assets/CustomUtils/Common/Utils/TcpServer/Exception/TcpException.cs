@@ -49,9 +49,11 @@ public class SessionConnectFail : Exception {
 
 public class InvalidHeaderException : Exception {
 
-    public InvalidHeaderException() : base("Invalid type header received") { }
-    public InvalidHeaderException(string message) : base(message) { }
-    public InvalidHeaderException(ITcpPacket header) : base($"Invalid type header received || {header.GetType().FullName}") { }
+    private const string INVALID_RECEIVED_MESSAGE = "Invalid type header received";
+    
+    public InvalidHeaderException() : base(INVALID_RECEIVED_MESSAGE) { }
+    public InvalidHeaderException(string message) : base($"{INVALID_RECEIVED_MESSAGE} || {message}") { }
+    public InvalidHeaderException(ITcpPacket header) : base($"{INVALID_RECEIVED_MESSAGE} || {header.GetType().FullName}") { }
 }
 
 public class NotImplementHandlerException : Exception {

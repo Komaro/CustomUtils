@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 1536
     height: 780.8
   m_ShowMode: 4
-  m_Title: Inspector
+  m_Title: Console
   m_RootView: {fileID: 2}
   m_MinSize: {x: 875, y: 350}
   m_MaxSize: {x: 10000, y: 10000}
@@ -119,7 +119,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 100}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 143
+  controlID: 39
   draggingID: 0
 --- !u!114 &6
 MonoBehaviour:
@@ -145,7 +145,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 1
-  controlID: 112
+  controlID: 40
   draggingID: 0
 --- !u!114 &7
 MonoBehaviour:
@@ -171,7 +171,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 50}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 66
+  controlID: 41
   draggingID: 0
 --- !u!114 &8
 MonoBehaviour:
@@ -192,8 +192,8 @@ MonoBehaviour:
     y: 0
     width: 513.6
     height: 381.6
-  m_MinSize: {x: 201, y: 221}
-  m_MaxSize: {x: 4001, y: 4021}
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 15}
   m_Panes:
   - {fileID: 15}
@@ -250,7 +250,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 50}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 113
+  controlID: 88
   draggingID: 0
 --- !u!114 &11
 MonoBehaviour:
@@ -298,8 +298,8 @@ MonoBehaviour:
     y: 0
     width: 290.39996
     height: 349.19998
-  m_MinSize: {x: 202, y: 221}
-  m_MaxSize: {x: 4002, y: 4021}
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 14}
   m_Panes:
   - {fileID: 14}
@@ -315,7 +315,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 1
   m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: InspectorWindow
+  m_Name: TestRunnerWindow
   m_EditorClassIdentifier: 
   m_Children: []
   m_Position:
@@ -324,14 +324,14 @@ MonoBehaviour:
     y: 0
     width: 468.80005
     height: 730.8
-  m_MinSize: {x: 275, y: 50}
+  m_MinSize: {x: 100, y: 100}
   m_MaxSize: {x: 4000, y: 4000}
-  m_ActualView: {fileID: 20}
+  m_ActualView: {fileID: 21}
   m_Panes:
   - {fileID: 20}
   - {fileID: 21}
-  m_Selected: 0
-  m_LastSelected: 1
+  m_Selected: 1
+  m_LastSelected: 0
 --- !u!114 &14
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -469,9 +469,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: f0690000
+      m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: 88ebffffcaebffffd8ecffff1aedffff24eeffff66eeffff74efffffb6efffffb4f0fffff6f0ffff54f1ffff94f1ffff9af2ffffdcf2ffff1cf4ffff5ef4ffff60f5ffffa2f5ffffb4f6fffff6f6ffff3af7ffff7cf7ffffbcf7ffff06f8ffff48f8ffff8af8ffff58f9ffff0cfaffff14fbffff
+      m_ExpandedIDs: ced8ffff10d9ffff54d9ffff96d9ffffdad9ffff1cdaffff28dbffff6adbffff6cdcffffb0dcffffb2ddfffff4ddffff38deffff7adeffffc4deffff08dfffff4edfffff90dfffff96e0ffffd8e0ffff20e1ffff62e1ffffaee1fffff2e1ffff3ce2ffff86e2ffffcce2ffff14e3ffff20e4ffff62e4ffffa8e4ffffeae4ffff34e5ffff76e5ffffbce5fffffee5ffff42e6ffff84e6ffffc8e6ffff0ae7ffff0ae8ffff4ce8ffffa0e8ffffe2e8ffff30e9ffff72e9ffffc2e9ffff06eaffff08ebffff4cebffff9cebffffe0ebffff2aecffff6cecffffc6ecffff08edffffceedffff44eeffff8aeeffffcceeffff14efffff56efffff9cefffffdeefffff22f0ffff64f0ffffaaf0ffffecf0ffff30f1ffff72f1ffff7af2ffffbcf2ffff08f3ffff4af3ffff8ef3ffffd0f3ffff16f4ffff5af4ffffa0f4ffffe6f4ffff2cf5ffff6ef5ffffb8f5fffffaf5ffff3cf6ffff7ef6ffffc4f6ffff06f7ffff4af7ffff8cf7ffffd0f7ffff12f8ffff56f8ffff98f8ffffecf8ffff3ef9ffff80f9ffffc4f9ffff08faffff02fbffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -991,10 +991,10 @@ MonoBehaviour:
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 59.80002}
-    m_SelectedIDs: 126c0000
-    m_LastClickedID: 27666
-    m_ExpandedIDs: 00000000486a00004a6a00004c6a00004e6a0000066c0000086c0000146c000000ca9a3b
+    scrollPos: {x: 0, y: 0}
+    m_SelectedIDs: e66b0000
+    m_LastClickedID: 27622
+    m_ExpandedIDs: 00000000426a0000446a0000466a0000486a0000da6b0000e86b000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1022,7 +1022,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000486a00004a6a00004c6a00004e6a0000
+    m_ExpandedIDs: 00000000426a0000446a0000466a0000486a0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1047,8 +1047,8 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: f0690000
-    m_LastClickedInstanceID: 27120
+    m_SelectedInstanceIDs: 
+    m_LastClickedInstanceID: 0
     m_HadKeyboardFocusLastEvent: 0
     m_ExpandedInstanceIDs: c6230000ac060000fc56000092f6ffff2a6600000267000000000000ce690000
     m_RenameOverlay:
@@ -1379,7 +1379,7 @@ MonoBehaviour:
     m_SaveData: []
     m_OverlaysVisible: 1
   m_Spl:
-    ID: 177
+    ID: 210
     splitterInitialOffset: 290.8
     currentActiveSplitter: -1
     realSizes:
@@ -1790,7 +1790,7 @@ MonoBehaviour:
       name: CustomUtils
       fullName: CustomUtils
       resultStatus: 1
-      duration: 0.0465285
+      duration: 11.483042
       messages: 
       output: 
       stacktrace: 
@@ -1806,7 +1806,7 @@ MonoBehaviour:
       name: EditModeTestAssembly.dll
       fullName: C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/EditModeTestAssembly.dll
       resultStatus: 1
-      duration: 0.0337308
+      duration: 11.47742
       messages: 
       output: 
       stacktrace: 
@@ -2189,30 +2189,6 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1014
       parentUniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][EditModeTestRunner][suite]
-    - id: 1016
-      uniqueId: EditModeTestAssembly.dll/EditModeTestRunner/[EditModeTestAssembly][EditModeTestRunner.TempTest_02]
-      name: TempTest_02
-      fullName: EditModeTestRunner.TempTest_02
-      resultStatus: 1
-      duration: 0.0091467
-      messages: 
-      output: '<color=#00FFFF>[Service.StartService] Service Start || UnityMainThreadDispatcherService</color>
-
-        [EditModeTestRunner.TempTest_02]
-        IsMainThread? || True
-
-        [EditModeTestRunner.TempTest_02] Success
-
-'
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1014
-      parentUniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][EditModeTestRunner][suite]
     - id: 1021
       uniqueId: EditModeTestAssembly.dll/EditModeTestRunner/[EditModeTestAssembly][EditModeTestRunner.UnsafePerformanceTest]
       name: UnsafePerformanceTest
@@ -2376,8 +2352,8 @@ MonoBehaviour:
       uniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][TcpServerTestRunner][suite]
       name: TcpServerTestRunner
       fullName: TcpServerTestRunner
-      resultStatus: 0
-      duration: 0
+      resultStatus: 1
+      duration: 11.472412
       messages: 
       output: 
       stacktrace: 
@@ -2392,10 +2368,15 @@ MonoBehaviour:
       uniqueId: EditModeTestAssembly.dll/TcpServerTestRunner/[EditModeTestAssembly][TcpServerTestRunner.Clear]
       name: Clear
       fullName: TcpServerTestRunner.Clear
-      resultStatus: 0
-      duration: 0
+      resultStatus: 1
+      duration: 0.0089558
       messages: 
-      output: 
+      output: '<color=#FFEB04>[SimpleTcpServer.Stop] SimpleTcpServer is already stopped</color>
+
+        <color=#FFEB04>[SimpleTcpServer.Stop]
+        SimpleTcpServer is already stopped</color>
+
+'
       stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
@@ -2409,8 +2390,8 @@ MonoBehaviour:
       uniqueId: EditModeTestAssembly.dll/TcpServerTestRunner/[EditModeTestAssembly][TcpServerTestRunner.TcpClientTestAsync][suite]
       name: TcpClientTestAsync
       fullName: TcpServerTestRunner.TcpClientTestAsync
-      resultStatus: 0
-      duration: 0
+      resultStatus: 1
+      duration: 11.469124
       messages: 
       output: 
       stacktrace: 
@@ -2425,10 +2406,18 @@ MonoBehaviour:
       uniqueId: EditModeTestAssembly.dll/TcpServerTestRunner/TcpClientTestAsync/[EditModeTestAssembly][TcpServerTestRunner.TcpClientTestAsync(TcpJsonServeModule,TestTcpJsonClient)]
       name: TcpClientTestAsync(TcpJsonServeModule,TestTcpJsonClient)
       fullName: TcpServerTestRunner.TcpClientTestAsync(TcpJsonServeModule,TestTcpJsonClient)
-      resultStatus: 0
-      duration: 0
+      resultStatus: 1
+      duration: 11.464617
       messages: 
-      output: 
+      output: '<color=#00FF00>[SimpleTcpServer.Start] SimpleTcpServer Start || 0.0.0.0:8890</color>
+
+        <color=#00FF00>[<Start>d__13.MoveNext]
+        Connected Session || 1133840824 || 127.0.0.1</color>
+
+        <color=#FF0000>[SimpleTcpServer.Stop]
+        SimpleTcpServer Stop</color>
+
+'
       stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
@@ -2442,10 +2431,18 @@ MonoBehaviour:
       uniqueId: EditModeTestAssembly.dll/TcpServerTestRunner/TcpClientTestAsync/[EditModeTestAssembly][TcpServerTestRunner.TcpClientTestAsync(TcpStructServeModule,TestTcpStructClient)]
       name: TcpClientTestAsync(TcpStructServeModule,TestTcpStructClient)
       fullName: TcpServerTestRunner.TcpClientTestAsync(TcpStructServeModule,TestTcpStructClient)
-      resultStatus: 0
-      duration: 0
+      resultStatus: 1
+      duration: 9.650744
       messages: 
-      output: 
+      output: '<color=#00FF00>[SimpleTcpServer.Start] SimpleTcpServer Start || 0.0.0.0:8890</color>
+
+        <color=#00FF00>[<Start>d__13.MoveNext]
+        Connected Session || 768357491 || 127.0.0.1</color>
+
+        <color=#FF0000>[SimpleTcpServer.Stop]
+        SimpleTcpServer Stop</color>
+
+'
       stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
@@ -2472,18 +2469,24 @@ MonoBehaviour:
       - Performance
       parentId: 1032
       parentUniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][TcpServerTestRunner][suite]
-    m_ResultText: 'TempTest_01 (0.015s)
+    m_ResultText: 'TcpClientTestAsync(TcpJsonServeModule,TestTcpJsonClient) (11.465s)
 
       ---
 
-      [EditModeTestRunner.TempTest_01]
-      Alias Test'
+      <color=#00FF00>[SimpleTcpServer.Start]
+      SimpleTcpServer Start || 0.0.0.0:8890</color>
+
+      <color=#00FF00>[<Start>d__13.MoveNext]
+      Connected Session || 1133840824 || 127.0.0.1</color>
+
+      <color=#FF0000>[SimpleTcpServer.Stop]
+      SimpleTcpServer Stop</color>'
     m_ResultStacktrace: 
     m_TestListState:
-      scrollPos: {x: 0, y: 89}
-      m_SelectedIDs: dafb4259
-      m_LastClickedID: 1497562074
-      m_ExpandedIDs: 5408f8a42c5c4ec2416d28c537575fcc53f7ced709d9cedca4da07e1502e7e0dedaa9c1607dc1a20732940267a14c82ac29f393322524b3a9dda8a41045add4d5d4c09542cae4f5b88e2b55c739d64642f226d64db1cfa6616b81e6cd4580079ffffff7f
+      scrollPos: {x: 0, y: 0}
+      m_SelectedIDs: 56dc40d2
+      m_LastClickedID: -767501226
+      m_ExpandedIDs: 5408f8a42c5c4ec2416d28c537575fcc53f7ced709d9cedca4da07e1104a3ceffd8e07fe502e7e0dedaa9c1607dc1a20732940267a14c82ac29f393322524b3a9dda8a41045add4d5d4c09542cae4f5b88e2b55c739d64642f226d64db1cfa6616b81e6cffffff7f
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 

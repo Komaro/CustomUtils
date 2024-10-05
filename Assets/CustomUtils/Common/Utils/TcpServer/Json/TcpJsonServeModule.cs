@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.IO;
 using System.Net.Sockets;
 using System.Runtime.InteropServices;
@@ -61,16 +62,16 @@ public class TcpJsonServeModule : TcpServeModule<TcpHeader, TcpJsonPacket> {
     }
 
     public override async Task ReceiveDataAsync(TcpSession session, TcpHeader header, CancellationToken token) {
-        if (header.IsValid()) {
+        if (header.IsValid() == false) {
             throw new InvalidHeaderException(header.ToStringAllFields());
         }
-    
+
         if (TcpJsonHandlerProvider.inst.TryGetHandler(header.body, out var handler)) {
             var bytes = await ReadBytesAsync(session, header.length, token);
             await handler.ReceiveAsync(session, bytes, token);
+        } else {
+            throw new NotImplementHandlerException<TCP_BODY>(header.body);
         }
-
-        throw new NotImplementHandlerException<TCP_BODY>(header.body);
     }
 
     public override async Task<bool> SendAsync<TData>(TcpSession session, TData data, CancellationToken token) {

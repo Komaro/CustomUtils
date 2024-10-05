@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Buffers;
+using System.Drawing;
 using System.IO;
 using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Channels;
 using System.Threading.Tasks;
-using UnityEngine;
 
 public abstract class SimpleTcpClient<THeader, TData> : ITcpClient where THeader : ITcpPacket {
 
@@ -31,11 +31,13 @@ public abstract class SimpleTcpClient<THeader, TData> : ITcpClient where THeader
         }
 
         public void Dispose() => Close();
-
-
+        
         public virtual void Close() {
-            if (session?.IsValid() ?? false) {
+            if ((session?.IsValid() ?? false) && session.Connected) {
                 session.Close();
+                Logger.TraceLog($"{nameof(Close)} {nameof(TcpSession)}", Color.Red);
+            } else {
+                Logger.TraceLog($"{nameof(TcpSession)} is no longer valid", Color.Yellow);
             }
         }
 
@@ -50,7 +52,7 @@ public abstract class SimpleTcpClient<THeader, TData> : ITcpClient where THeader
             if (await ConnectAsync(client)) {
                 session = await ConnectSessionAsync(client, token);
                 if (session.IsValid()) {
-                    Logger.TraceLog($"Connected Session || {session.ID} || {session.Client.GetIpAddress()}", Color.green);
+                    Logger.TraceLog($"Connected Session || {session.ID} || {session.Client.GetIpAddress()}", Color.Green);
                     _ = Task.Run(() => ReceiveDataAsync(session, token), token);
                     _ = Task.Run(() => ReadSendChannelAsync(token), token);
                 }
@@ -68,12 +70,18 @@ public abstract class SimpleTcpClient<THeader, TData> : ITcpClient where THeader
         public abstract Task<TcpSession> ConnectSessionAsync(TcpClient client, CancellationToken token);
         
         protected async Task ReceiveDataAsync(TcpSession session, CancellationToken token) {
-            while (session.Connected && token.IsCancellationRequested == false) {
-                token.ThrowIfCancellationRequested();
-                var header = await ReceiveHeaderAsync(session, token);
-                
-                token.ThrowIfCancellationRequested();
-                await ReceiveDataAsync(session, header, token);
+            try {
+                while (session.Connected && token.IsCancellationRequested == false) {
+                    token.ThrowIfCancellationRequested();
+                    var header = await ReceiveHeaderAsync(session, token);
+
+                    token.ThrowIfCancellationRequested();
+                    await ReceiveDataAsync(session, header, token);
+                }
+            } catch (DisconnectSessionException) {
+                Close();
+            } catch (Exception ex) {
+                Logger.TraceLog(ex.Message);
             }
         }
 

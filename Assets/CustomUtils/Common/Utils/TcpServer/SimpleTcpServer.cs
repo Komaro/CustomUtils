@@ -55,8 +55,7 @@ public class SimpleTcpServer : IDisposable {
             } else {
                 throw new InvalidServeModuleException();
             }
-        } catch (DisconnectSessionException) { }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             Logger.TraceError(ex);
             Stop();
         }

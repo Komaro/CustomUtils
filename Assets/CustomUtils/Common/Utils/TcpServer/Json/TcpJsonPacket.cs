@@ -50,3 +50,11 @@ public record TcpJsonTestResponse : TcpJsonPacket {
 
     public override bool IsValid() => true;
 }
+
+public record TcpJsonDisconnectRequest : TcpJsonPacket {
+
+    [JsonProperty("ds")]
+    public int delaySeconds;
+
+    public override bool IsValid() => true;
+}

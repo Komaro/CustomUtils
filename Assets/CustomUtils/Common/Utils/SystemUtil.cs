@@ -61,8 +61,10 @@ public static class SystemUtil {
         
         startInfo.ArgumentList.Add("/c");
         startInfo.ArgumentList.Add(batchPath);
-        startInfo.ArgumentList.AddRange(args);
-        
+        foreach (var arg in args) {
+            startInfo.ArgumentList.Add(arg);
+        }
+
         ExecuteProcess(startInfo);
     }
 
@@ -79,7 +81,9 @@ public static class SystemUtil {
             RedirectStandardOutput = true,
         };
         
-        startInfo.ArgumentList.AddRange(args);
+        foreach (var arg in args) {
+            startInfo.ArgumentList.Add(arg);
+        }
         
         ExecuteProcess(startInfo);
     }

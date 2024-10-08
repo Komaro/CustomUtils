@@ -13,7 +13,7 @@ public abstract class HttpServeModule {
     public virtual void Close() { }
 }
 
-public class AssetBundleServeModule : HttpServeModule {
+public class AssetBundleDistributionServeModule : HttpServeModule {
 
     private const int bufferSize = 1024 * 32;
     

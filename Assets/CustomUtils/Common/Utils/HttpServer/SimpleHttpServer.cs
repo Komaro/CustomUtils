@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
-using UnityEngine;
 
 public class SimpleHttpServer : IDisposable {
     
@@ -34,7 +34,7 @@ public class SimpleHttpServer : IDisposable {
     
     public void Start() {
         if (IsRunning()) {
-            Logger.TraceLog($"{nameof(_listener)} is Already Listening", Color.yellow);
+            Logger.TraceLog($"{nameof(_listener)} is Already Listening", Color.Yellow);
             return;
         }
         
@@ -42,7 +42,7 @@ public class SimpleHttpServer : IDisposable {
         try {
             _listenerCancelToken = new CancellationTokenSource();
             _ = Task.Run(() => Run(_listenerCancelToken.Token), _listenerCancelToken.Token);
-            Logger.TraceLog($"{nameof(SimpleHttpServer)} {nameof(Start)} || {_listener.Prefixes.ToStringCollection(", ")}", Color.green);
+            Logger.TraceLog($"{nameof(SimpleHttpServer)} {nameof(Start)} || {_listener.Prefixes.ToStringCollection(", ")}", Color.GreenYellow);
         } catch (Exception ex) {
             Logger.TraceError(ex);
         }
@@ -60,7 +60,7 @@ public class SimpleHttpServer : IDisposable {
         }
 
         _listener.Stop();
-        Logger.TraceLog($"{nameof(SimpleHttpServer)} {nameof(Stop)}", Color.yellow);
+        Logger.TraceLog($"{nameof(SimpleHttpServer)} {nameof(Stop)}", Color.Yellow);
     }
 
     public void Close() {
@@ -69,7 +69,7 @@ public class SimpleHttpServer : IDisposable {
         }
         
         _listener.Close();
-        Logger.TraceLog($"{nameof(SimpleHttpServer)} {nameof(Close)}", Color.red);
+        Logger.TraceLog($"{nameof(SimpleHttpServer)} {nameof(Close)}", Color.Red);
     }
 
     private async void Run(CancellationToken token) {
@@ -79,14 +79,14 @@ public class SimpleHttpServer : IDisposable {
                     var task = _listener.GetContextAsync();
                     task.Wait(token);
                     if (token.IsCancellationRequested) {
-                        Logger.TraceLog($"Receive Cancellation Request", Color.red);
+                        Logger.TraceLog($"Receive Cancellation Request", Color.Red);
                         break;
                     }
 
                     var content = await task;
                     _ = Task.Run(() => Serve(content, token), token);
                 } catch (OperationCanceledException) {
-                    Logger.TraceLog(nameof(OperationCanceledException), Color.red);
+                    Logger.TraceLog(nameof(OperationCanceledException), Color.Red);
                     break;
                 } catch (HttpListenerException ex) {
                     Logger.TraceError(ex);
@@ -102,7 +102,7 @@ public class SimpleHttpServer : IDisposable {
             if (_listener.IsListening) {
                 _listener.Stop();
                 _listener.Close();
-                Logger.TraceLog($"{nameof(SimpleHttpServer)} {nameof(Exception)} {nameof(Close)}", Color.red);
+                Logger.TraceLog($"{nameof(SimpleHttpServer)} {nameof(Exception)} {nameof(Close)}", Color.Red);
             }
         }
     }
@@ -139,14 +139,14 @@ public class SimpleHttpServer : IDisposable {
         }
         
         if (_serveModuleDic.ContainsKey(type)) {
-            Logger.TraceLog($"Already {nameof(HttpServeModule)}. {nameof(type)} : {nameof(type.Name)}", Color.yellow);
+            Logger.TraceLog($"Already {nameof(HttpServeModule)}. {nameof(type)} : {nameof(type.Name)}", Color.Yellow);
             return;
         }
         
         if (Activator.CreateInstance(type) is HttpServeModule module) {
             module.AddServer(this);
             _serveModuleDic.Add(type, module);
-            Logger.TraceLog($"Add {type.Name}", Color.cyan);
+            Logger.TraceLog($"Add {type.Name}", Color.Cyan);
         }
     }
 
@@ -158,13 +158,13 @@ public class SimpleHttpServer : IDisposable {
         
         var type = module.GetType();
         if (_serveModuleDic.ContainsKey(type)) {
-            Logger.TraceLog($"Already {nameof(HttpServeModule)}. {nameof(module)} : {nameof(type.Name)}", Color.yellow);
+            Logger.TraceLog($"Already {nameof(HttpServeModule)}. {nameof(module)} : {nameof(type.Name)}", Color.Yellow);
             return;
         }
         
         module.AddServer(this);
         _serveModuleDic.Add(type, module);
-        Logger.TraceLog($"Add {type.Name}", Color.cyan);
+        Logger.TraceLog($"Add {type.Name}", Color.Cyan);
     }
 
     public void RemoveServeModule<T>() where T : HttpServeModule => RemoveServeModule(typeof(T));
@@ -173,13 +173,13 @@ public class SimpleHttpServer : IDisposable {
         if (_serveModuleDic.TryGetValue(type, out var module)) {
             module.Close();
             _serveModuleDic.AutoRemove(type);
-            Logger.TraceLog($"Remove {type.Name}", Color.red);
+            Logger.TraceLog($"Remove {type.Name}", Color.Red);
         }
     }
 
     public void ClearServeModule() {
         _serveModuleDic.SafeClear(module => module.Close());
-        Logger.TraceLog("Clear Serve Module", Color.red);
+        Logger.TraceLog("Clear Serve Module", Color.Red);
     }
 
     public string GetURL() => _listener?.Prefixes.FirstOrDefault() ?? string.Empty;

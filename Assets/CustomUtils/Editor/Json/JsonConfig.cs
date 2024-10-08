@@ -114,10 +114,9 @@ public abstract class JsonAutoConfig : JsonConfig, IDisposable {
         intervalDisposable?.Dispose();
     }
 
-    public virtual void Dispose() => StopAutoSave();
-
     ~JsonAutoConfig() => Dispose();
-
+    public virtual void Dispose() => StopAutoSave();
+    
     public virtual bool IsAutoSaving() => disposableList.Any();
 
     private class ArrayComparer : IEqualityComparer<Array> {

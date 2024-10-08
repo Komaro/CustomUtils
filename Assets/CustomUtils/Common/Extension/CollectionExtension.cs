@@ -497,12 +497,6 @@ public static class CollectionExtension {
         }
     }
 
-    public static void AddRange(this IList list, IEnumerable enumerable) {
-        foreach (var item in enumerable) {
-            list.Add(item);
-        }
-    }
-
     public static bool TryFind<T>(this List<T> baseList, out T value, int index) {
         if (index + 1 > baseList.Count || index < 0) {
             value = default;

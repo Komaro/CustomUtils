@@ -1,8 +1,8 @@
 ﻿using System;
+using System.Drawing;
 using System.IO;
 using System.Net;
 using System.Net.Http;
-using UnityEngine;
 
 public abstract class HttpServeModule {
 
@@ -18,29 +18,27 @@ public class AssetBundleDistributionServeModule : HttpServeModule {
     private const int bufferSize = 1024 * 32;
     
     public override bool Serve(HttpListenerContext context) {
-        var response = context.Response;
         var path = Path.Combine(server.GetTargetDirectory(), context.Request.RawUrl.TrimStart('/'));
         if (File.Exists(path)) {
-            Logger.TraceLog($"Serve || {context.Request.HttpMethod} || {path}", Color.magenta);
+            Logger.TraceLog($"Serve || {context.Request.HttpMethod} || {path}", Color.Magenta);
             using (var fileStream = new FileStream(path, FileMode.Open, FileAccess.Read)) {
-                response.ContentLength64 = fileStream.Length;
+                context.Response.ContentLength64 = fileStream.Length;
                 if (context.Request.HttpMethod == HttpMethod.Head.Method) {
-                    return true;
+                    return false;
                 }
                 
                 Span<byte> buffer = new byte[bufferSize];
-                using (var outputStream = response.OutputStream) {
+                using (var outputStream = context.Response.OutputStream) {
                     var bytesLength = 0;
                     while ((bytesLength = fileStream.Read(buffer)) > 0) {
                         outputStream.Write(buffer[..bytesLength]);
                     }
                 }
             }
-        } else {
-            Logger.TraceLog($"Not Exists {nameof(path)} || {path}", Color.red);
-            return false;
+            return true;
         }
-
-        return true;
+        
+        Logger.TraceLog($"Not Exists {nameof(path)} || {path}", Color.Red);
+        return false;
     }
 }

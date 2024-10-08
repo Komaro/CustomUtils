@@ -42,8 +42,6 @@ public abstract class TcpServeModule<THeader, TData> : ITcpServeModule, ITcpRece
     protected readonly ConcurrentDictionary<uint, TcpSession> sessionDic = new();
 
     protected readonly Channel<(TcpClient, CancellationToken)> connectChannel = Channel.CreateBounded<(TcpClient, CancellationToken)>(new BoundedChannelOptions(5));
-    
-    // TODO. 심각한 결함. TData 형태로 처리하는 경우 Handler를 통한 정상처리가 불가능함.
     protected readonly Channel<(TcpSession, TData)> sendChannel = Channel.CreateBounded<(TcpSession, TData)>(new BoundedChannelOptions(50));
     
     protected CancellationTokenSource cancelToken;

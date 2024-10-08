@@ -1,8 +1,8 @@
 ﻿using System;
+using System.Drawing;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
-using UnityEngine;
 
 public class SimpleTcpServer : IDisposable {
 
@@ -51,7 +51,7 @@ public class SimpleTcpServer : IDisposable {
         try {
             _listenerCancelToken = new CancellationTokenSource();
             if (_serveModule.Start(_listener, _listenerCancelToken.Token)) {
-                Logger.TraceLog($"{nameof(SimpleTcpServer)} {nameof(Start)} || {_listener.LocalEndpoint}", Color.green);
+                Logger.TraceLog($"{nameof(SimpleTcpServer)} {nameof(Start)} || {_listener.LocalEndpoint}", Color.GreenYellow);
             } else {
                 throw new InvalidServeModuleException();
             }
@@ -68,12 +68,12 @@ public class SimpleTcpServer : IDisposable {
                 _listenerCancelToken.Cancel();
                 _serveModule.Stop();
                 _listener.Stop();
-                Logger.TraceLog($"{nameof(SimpleTcpServer)} {nameof(Stop)}", Color.red);
+                Logger.TraceLog($"{nameof(SimpleTcpServer)} {nameof(Stop)}", Color.Red);
             } catch (Exception ex) {
                 Logger.TraceError(ex);
             }
         } else {
-            Logger.TraceLog($"{nameof(SimpleTcpServer)} is already stopped", Color.yellow);
+            Logger.TraceLog($"{nameof(SimpleTcpServer)} is already stopped", Color.Yellow);
         }
     }
 
@@ -123,7 +123,6 @@ public class TcpSession : IDisposable {
     public bool IsValid() => Client != null;
     public bool VerifySession(uint id) => ID == id;
 }
-
 
 public enum TCP_ERROR {
     NONE = 0,

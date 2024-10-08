@@ -46,6 +46,13 @@ public class EditModeTestRunner {
     
     private ResourceRequest LoadAsync(string target) => Resources.LoadAsync<TextAsset>(target);
 
+    [Test]
+    public void TempTest_02() {
+        var server = new SimpleHttpServer(); // Default local host
+        server.AddServeModule<AssetBundleDistributionServeModule>();
+        server.Start();
+        // Start Any http request
+    }
 
     [Test]
     [Performance]

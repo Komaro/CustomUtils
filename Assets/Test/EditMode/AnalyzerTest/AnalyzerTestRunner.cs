@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.IO;
@@ -14,18 +13,7 @@ using Unity.PerformanceTesting;
 using UnityEngine;
 
 public class AnalyzerTestRunner {
-    
-    // public static IEnumerable RequiresUnityEditorAttributeRepeatProvider {
-    //     get {
-    //         for (var i = 0; i < 10; i++) {public abstract claclass TestAAbastractA {}ClasTestAClassA
-    //             yield return new TestCaseData(typeof(RequiresUnityEditorAttributeAnalyzer), "Test/EditMode/AnalyzerTestCaseCode/UnityEditorAnalyzerTestCase");
-    //         }
-    //     }
-    // }
-    
-    // [TestCaseSource(nameof(RequiresUnityEditorAttributeRepeatProvider))]
-    // public async Task RequiresUnityEditorAttributeAnalyzerRepeatTest(Type type, string testCaseCodeFolder) => await AnalyzerRunner.AnalyzerTest(type, testCaseCodeFolder);
-    
+
     [TestCase(typeof(RequiresStaticMethodImplementationAttributeAnalyzer), "Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/RequiresStaticMethodTestCase")]
     [TestCase(typeof(RequiresAttributeImplementationAttributeAnalyzer), "Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/RequiresAttributeTestCase")]
     [TestCase(typeof(BuilderAttributeVerifyAnalyzer), "Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/BuilderAttributeVerifyAnalyzerTestCase")]
@@ -39,12 +27,6 @@ public class AnalyzerTestRunner {
     [TestCase(typeof(AttributeAbstractAndInterfaceConstraintsAnalyzer), "Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/AttributeAbstractAndInterfaceConstraintsAnalyzerTestCase")]
     public void AnalyzerTestCasePerformanceTest(Type type, string testCaseCodeFolder) {
         var analyzerPerformanceTestGroup = new SampleGroup("PerformanceGroup");
-        
-        var taskList = AnalyzerRunner.GetTestCaseTaskList(type, Path.Combine(Application.dataPath, testCaseCodeFolder));
-        async void Action() {
-            await Task.WhenAll(taskList);
-        }
-        
         Measure.Method(Action)
             .WarmupCount(1)
             .MeasurementCount(10)
@@ -52,6 +34,10 @@ public class AnalyzerTestRunner {
             .SampleGroup(analyzerPerformanceTestGroup)
             .GC()
             .Run();
+        
+        async void Action() {
+            await Task.WhenAll(AnalyzerRunner.GetTestCaseTaskList(type, Path.Combine(Application.dataPath, testCaseCodeFolder)));
+        }
     }
 }
 

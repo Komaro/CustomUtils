@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 1536
     height: 780.8
   m_ShowMode: 4
-  m_Title: Inspector
+  m_Title: Test Runner
   m_RootView: {fileID: 2}
   m_MinSize: {x: 875, y: 350}
   m_MaxSize: {x: 10000, y: 10000}
@@ -119,7 +119,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 100}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 133
+  controlID: 125
   draggingID: 0
 --- !u!114 &6
 MonoBehaviour:
@@ -145,7 +145,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 1
-  controlID: 38
+  controlID: 88
   draggingID: 0
 --- !u!114 &7
 MonoBehaviour:
@@ -171,7 +171,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 50}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 39
+  controlID: 42
   draggingID: 0
 --- !u!114 &8
 MonoBehaviour:
@@ -194,9 +194,9 @@ MonoBehaviour:
     height: 382.4
   m_MinSize: {x: 201, y: 221}
   m_MaxSize: {x: 4001, y: 4021}
-  m_ActualView: {fileID: 15}
+  m_ActualView: {fileID: 16}
   m_Panes:
-  - {fileID: 15}
+  - {fileID: 16}
   m_Selected: 0
   m_LastSelected: 0
 --- !u!114 &9
@@ -220,9 +220,9 @@ MonoBehaviour:
     height: 382.4
   m_MinSize: {x: 202, y: 221}
   m_MaxSize: {x: 4002, y: 4021}
-  m_ActualView: {fileID: 16}
+  m_ActualView: {fileID: 17}
   m_Panes:
-  - {fileID: 16}
+  - {fileID: 17}
   m_Selected: 0
   m_LastSelected: 0
 --- !u!114 &10
@@ -249,7 +249,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 50}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 97
+  controlID: 89
   draggingID: 0
 --- !u!114 &11
 MonoBehaviour:
@@ -272,10 +272,10 @@ MonoBehaviour:
     height: 348.4
   m_MinSize: {x: 101, y: 121}
   m_MaxSize: {x: 4001, y: 4021}
-  m_ActualView: {fileID: 18}
+  m_ActualView: {fileID: 19}
   m_Panes:
-  - {fileID: 17}
   - {fileID: 18}
+  - {fileID: 19}
   m_Selected: 1
   m_LastSelected: 0
 --- !u!114 &12
@@ -297,11 +297,11 @@ MonoBehaviour:
     y: 0
     width: 238.40002
     height: 348.4
-  m_MinSize: {x: 200, y: 200}
-  m_MaxSize: {x: 4000, y: 4000}
-  m_ActualView: {fileID: 14}
+  m_MinSize: {x: 202, y: 221}
+  m_MaxSize: {x: 4002, y: 4021}
+  m_ActualView: {fileID: 15}
   m_Panes:
-  - {fileID: 14}
+  - {fileID: 15}
   m_Selected: 0
   m_LastSelected: 0
 --- !u!114 &13
@@ -314,7 +314,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 1
   m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: InspectorWindow
+  m_Name: TestRunnerWindow
   m_EditorClassIdentifier: 
   m_Children: []
   m_Position:
@@ -323,15 +323,1824 @@ MonoBehaviour:
     y: 0
     width: 660.8
     height: 730.8
-  m_MinSize: {x: 276, y: 71}
+  m_MinSize: {x: 101, y: 121}
   m_MaxSize: {x: 4001, y: 4021}
-  m_ActualView: {fileID: 19}
+  m_ActualView: {fileID: 14}
   m_Panes:
-  - {fileID: 19}
   - {fileID: 20}
-  m_Selected: 0
-  m_LastSelected: 1
+  - {fileID: 14}
+  m_Selected: 1
+  m_LastSelected: 0
 --- !u!114 &14
+MonoBehaviour:
+  m_ObjectHideFlags: 52
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 13401, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_MinSize: {x: 100, y: 100}
+  m_MaxSize: {x: 4000, y: 4000}
+  m_TitleContent:
+    m_Text: Test Runner
+    m_Image: {fileID: 0}
+    m_Tooltip: 
+  m_Pos:
+    serializedVersion: 2
+    x: 875.2
+    y: 73.6
+    width: 659.8
+    height: 709.8
+  m_SerializedDataModeController:
+    m_DataMode: 0
+    m_PreferredDataMode: 0
+    m_SupportedDataModes: 
+    isAutomatic: 1
+  m_ViewDataDictionary: {fileID: 0}
+  m_OverlayCanvas:
+    m_LastAppliedPresetName: Default
+    m_SaveData: []
+    m_OverlaysVisible: 1
+  m_Spl:
+    ID: 1445
+    splitterInitialOffset: 257.6
+    currentActiveSplitter: -1
+    realSizes:
+    - 188.00003
+    - 451.99997
+    relativeSizes:
+    - 0.29375005
+    - 0.70624995
+    minSizes:
+    - 32
+    - 32
+    maxSizes:
+    - 0
+    - 0
+    lastTotalSize: 640
+    splitSize: 6
+    xOffset: 0
+    m_Version: 1
+    oldRealSizes: 
+    oldMinSizes: 
+    oldMaxSizes: 
+    oldSplitSize: 0
+  m_TestTypeToolbarIndex: 0
+  m_PlayModeTestListGUI:
+    m_Window: {fileID: 14}
+    m_NewResultList:
+    - id: 1044
+      uniqueId: '[CustomUtils][suite]'
+      name: CustomUtils
+      fullName: CustomUtils
+      resultStatus: 1
+      duration: 1.001712
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 
+      parentUniqueId: 
+    - id: 1055
+      uniqueId: '[PlayModeTestAssembly][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/PlayModeTestAssembly.dll][suite]'
+      name: PlayModeTestAssembly.dll
+      fullName: C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/PlayModeTestAssembly.dll
+      resultStatus: 1
+      duration: 0.9582033
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1044
+      parentUniqueId: '[CustomUtils][suite]'
+    - id: 1045
+      uniqueId: PlayModeTestAssembly.dll/[PlayModeTestAssembly][ObjectPoolServiceTestRunner][suite]
+      name: ObjectPoolServiceTestRunner
+      fullName: ObjectPoolServiceTestRunner
+      resultStatus: 1
+      duration: 0.9407461
+      messages: 
+      output: '<color=#00FFFF>[ResourceService.GetValidProvider] Activate provider
+        || ResourcesProvider</color>
+
+        <color=#00FFFF>[ResourceService.GetValidProvider]
+        Activate provider || AssetBundleProvider</color>
+
+        <color=#00FFFF>[Service.StartService]
+        Service Start || ResourceService</color>
+
+        <color=#00FFFF>[Service.StartService]
+        Service Start || ObjectPoolService</color>
+
+'
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1055
+      parentUniqueId: '[PlayModeTestAssembly][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/PlayModeTestAssembly.dll][suite]'
+    - id: 1007
+      uniqueId: PlayModeTestAssembly.dll/ObjectPoolServiceTestRunner/[PlayModeTestAssembly][ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest][suite]
+      name: ObjectPoolServiceMaximumTest
+      fullName: ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest
+      resultStatus: 1
+      duration: 0.5275159
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1001
+      parentUniqueId: PlayModeTestAssembly.dll/[PlayModeTestAssembly][ObjectPoolServiceTestRunner][suite]
+    - id: 1006
+      uniqueId: PlayModeTestAssembly.dll/ObjectPoolServiceTestRunner/ObjectPoolServiceMaximumTest/[PlayModeTestAssembly][ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest(60)]
+      name: ObjectPoolServiceMaximumTest(60)
+      fullName: ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest(60)
+      resultStatus: 1
+      duration: 0.4749067
+      messages: 
+      output: '[ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest] 1 || 1
+        || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        2 || 2 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        3 || 3 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        4 || 4 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        5 || 5 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        6 || 6 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        7 || 7 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        8 || 8 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        9 || 9 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        10 || 10 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        11 || 11 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        12 || 12 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        13 || 13 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        14 || 14 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        15 || 15 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        16 || 16 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        17 || 17 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        18 || 18 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        19 || 19 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        20 || 20 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        21 || 21 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        22 || 22 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        23 || 23 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        24 || 24 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        25 || 25 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        26 || 26 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        27 || 27 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        28 || 28 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        29 || 29 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        30 || 30 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        31 || 31 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        32 || 32 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        33 || 33 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        34 || 34 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        35 || 35 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        36 || 36 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        37 || 37 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        38 || 38 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        39 || 39 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        40 || 40 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        41 || 41 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        42 || 42 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        43 || 43 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        44 || 44 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        45 || 45 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        46 || 46 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        47 || 47 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        48 || 48 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        49 || 49 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        50 || 50 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        51 || 51 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        52 || 52 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        53 || 53 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        54 || 54 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        55 || 55 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        56 || 56 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        57 || 57 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        58 || 58 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        59 || 59 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        60 || 60 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        Success Get Test
+
+        
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        60 || 59 || 1
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        60 || 58 || 2
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        60 || 57 || 3
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        60 || 56 || 4
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        60 || 55 || 5
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        60 || 54 || 6
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        60 || 53 || 7
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        60 || 52 || 8
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        60 || 51 || 9
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        60 || 50 || 10
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        60 || 49 || 11
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        60 || 48 || 12
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        60 || 47 || 13
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        60 || 46 || 14
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        60 || 45 || 15
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        60 || 44 || 16
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        60 || 43 || 17
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        60 || 42 || 18
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        60 || 41 || 19
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        60 || 40 || 20
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        60 || 39 || 21
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        60 || 38 || 22
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        60 || 37 || 23
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        60 || 36 || 24
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        60 || 35 || 25
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        60 || 34 || 26
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        60 || 33 || 27
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        60 || 32 || 28
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        60 || 31 || 29
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        60 || 30 || 30
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        60 || 29 || 31
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        60 || 28 || 32
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        60 || 27 || 33
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        60 || 26 || 34
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        60 || 25 || 35
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        60 || 24 || 36
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        60 || 23 || 37
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        60 || 22 || 38
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        60 || 21 || 39
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        60 || 20 || 40
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        60 || 19 || 41
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        60 || 18 || 42
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        60 || 17 || 43
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        60 || 16 || 44
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        60 || 15 || 45
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        60 || 14 || 46
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        60 || 13 || 47
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        60 || 12 || 48
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        60 || 11 || 49
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        60 || 10 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        59 || 9 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        58 || 8 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        57 || 7 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        56 || 6 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        55 || 5 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        54 || 4 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        53 || 3 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        52 || 2 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        51 || 1 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        50 || 0 || 50
+
+'
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1007
+      parentUniqueId: PlayModeTestAssembly.dll/ObjectPoolServiceTestRunner/[PlayModeTestAssembly][ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest][suite]
+    - id: 1049
+      uniqueId: PlayModeTestAssembly.dll/ObjectPoolServiceTestRunner/[PlayModeTestAssembly][ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest][suite]
+      name: ObjectPoolServiceRepeatTest
+      fullName: ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest
+      resultStatus: 1
+      duration: 13.537771
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1045
+      parentUniqueId: PlayModeTestAssembly.dll/[PlayModeTestAssembly][ObjectPoolServiceTestRunner][suite]
+    - id: 1047
+      uniqueId: PlayModeTestAssembly.dll/ObjectPoolServiceTestRunner/ObjectPoolServiceRepeatTest/[PlayModeTestAssembly][ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest(10)]
+      name: ObjectPoolServiceRepeatTest(10)
+      fullName: ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest(10)
+      resultStatus: 1
+      duration: 13.48502
+      messages: 
+      output: "[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest] TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_002, TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_003, TestPrefab(Clone)_002, TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_004, TestPrefab(Clone)_003, TestPrefab(Clone)_002, TestPrefab(Clone)_001,
+        TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_005, TestPrefab(Clone)_004, TestPrefab(Clone)_003, TestPrefab(Clone)_002,
+        TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_006, TestPrefab(Clone)_005, TestPrefab(Clone)_004, TestPrefab(Clone)_003,
+        TestPrefab(Clone)_002, TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_007, TestPrefab(Clone)_006, TestPrefab(Clone)_005, TestPrefab(Clone)_004,
+        TestPrefab(Clone)_003, TestPrefab(Clone)_002, TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_008, TestPrefab(Clone)_007, TestPrefab(Clone)_006, TestPrefab(Clone)_005,
+        TestPrefab(Clone)_004, TestPrefab(Clone)_003, TestPrefab(Clone)_002, TestPrefab(Clone)_001,
+        TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_009, TestPrefab(Clone)_008, TestPrefab(Clone)_007, TestPrefab(Clone)_006,
+        TestPrefab(Clone)_005, TestPrefab(Clone)_004, TestPrefab(Clone)_003, TestPrefab(Clone)_002,
+        TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_008, TestPrefab(Clone)_007, TestPrefab(Clone)_006, TestPrefab(Clone)_005,
+        TestPrefab(Clone)_004, TestPrefab(Clone)_003, TestPrefab(Clone)_002, TestPrefab(Clone)_001,
+        TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_007, TestPrefab(Clone)_006, TestPrefab(Clone)_005, TestPrefab(Clone)_004,
+        TestPrefab(Clone)_003, TestPrefab(Clone)_002, TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_006, TestPrefab(Clone)_005, TestPrefab(Clone)_004, TestPrefab(Clone)_003,
+        TestPrefab(Clone)_002, TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_005, TestPrefab(Clone)_004, TestPrefab(Clone)_003, TestPrefab(Clone)_002,
+        TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_004, TestPrefab(Clone)_003, TestPrefab(Clone)_002, TestPrefab(Clone)_001,
+        TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_003, TestPrefab(Clone)_002, TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_002, TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        \r\n"
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1049
+      parentUniqueId: PlayModeTestAssembly.dll/ObjectPoolServiceTestRunner/[PlayModeTestAssembly][ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest][suite]
+    - id: 1048
+      uniqueId: PlayModeTestAssembly.dll/ObjectPoolServiceTestRunner/ObjectPoolServiceRepeatTest/[PlayModeTestAssembly][ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest(20)]
+      name: ObjectPoolServiceRepeatTest(20)
+      fullName: ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest(20)
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1049
+      parentUniqueId: PlayModeTestAssembly.dll/ObjectPoolServiceTestRunner/[PlayModeTestAssembly][ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest][suite]
+    - id: 1046
+      uniqueId: PlayModeTestAssembly.dll/ObjectPoolServiceTestRunner/[PlayModeTestAssembly][ObjectPoolServiceTestRunner.ObjectPoolServiceTest]
+      name: ObjectPoolServiceTest
+      fullName: ObjectPoolServiceTestRunner.ObjectPoolServiceTest
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1045
+      parentUniqueId: PlayModeTestAssembly.dll/[PlayModeTestAssembly][ObjectPoolServiceTestRunner][suite]
+    - id: 1050
+      uniqueId: PlayModeTestAssembly.dll/[PlayModeTestAssembly][ResourceServiceTestRunner][suite]
+      name: ResourceServiceTestRunner
+      fullName: ResourceServiceTestRunner
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1055
+      parentUniqueId: '[PlayModeTestAssembly][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/PlayModeTestAssembly.dll][suite]'
+    - id: 1052
+      uniqueId: PlayModeTestAssembly.dll/ResourceServiceTestRunner/[PlayModeTestAssembly][ResourceServiceTestRunner.ResourceServiceMemoryProfilerTest]
+      name: ResourceServiceMemoryProfilerTest
+      fullName: ResourceServiceTestRunner.ResourceServiceMemoryProfilerTest
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1050
+      parentUniqueId: PlayModeTestAssembly.dll/[PlayModeTestAssembly][ResourceServiceTestRunner][suite]
+    - id: 1051
+      uniqueId: PlayModeTestAssembly.dll/ResourceServiceTestRunner/[PlayModeTestAssembly][ResourceServiceTestRunner.ResourceServiceTest]
+      name: ResourceServiceTest
+      fullName: ResourceServiceTestRunner.ResourceServiceTest
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1050
+      parentUniqueId: PlayModeTestAssembly.dll/[PlayModeTestAssembly][ResourceServiceTestRunner][suite]
+    - id: 1053
+      uniqueId: PlayModeTestAssembly.dll/[PlayModeTestAssembly][SoundTestRunner][suite]
+      name: SoundTestRunner
+      fullName: SoundTestRunner
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1055
+      parentUniqueId: '[PlayModeTestAssembly][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/PlayModeTestAssembly.dll][suite]'
+    - id: 1054
+      uniqueId: PlayModeTestAssembly.dll/SoundTestRunner/[PlayModeTestAssembly][SoundTestRunner.SoundManagerTest]
+      name: SoundManagerTest
+      fullName: SoundTestRunner.SoundManagerTest
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1053
+      parentUniqueId: PlayModeTestAssembly.dll/[PlayModeTestAssembly][SoundTestRunner][suite]
+    m_ResultText: 'ObjectPoolServiceMaximumTest(60) (0.475s)
+
+      ---
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      1 || 1 || 0
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      2 || 2 || 0
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      3 || 3 || 0
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      4 || 4 || 0
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      5 || 5 || 0
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      6 || 6 || 0
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      7 || 7 || 0
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      8 || 8 || 0
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      9 || 9 || 0
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      10 || 10 || 0
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      11 || 11 || 0
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      12 || 12 || 0
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      13 || 13 || 0
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      14 || 14 || 0
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      15 || 15 || 0
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      16 || 16 || 0
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      17 || 17 || 0
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      18 || 18 || 0
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      19 || 19 || 0
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      20 || 20 || 0
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      21 || 21 || 0
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      22 || 22 || 0
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      23 || 23 || 0
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      24 || 24 || 0
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      25 || 25 || 0
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      26 || 26 || 0
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      27 || 27 || 0
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      28 || 28 || 0
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      29 || 29 || 0
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      30 || 30 || 0
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      31 || 31 || 0
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      32 || 32 || 0
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      33 || 33 || 0
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      34 || 34 || 0
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      35 || 35 || 0
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      36 || 36 || 0
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      37 || 37 || 0
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      38 || 38 || 0
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      39 || 39 || 0
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      40 || 40 || 0
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      41 || 41 || 0
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      42 || 42 || 0
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      43 || 43 || 0
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      44 || 44 || 0
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      45 || 45 || 0
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      46 || 46 || 0
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      47 || 47 || 0
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      48 || 48 || 0
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      49 || 49 || 0
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      50 || 50 || 0
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      51 || 51 || 0
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      52 || 52 || 0
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      53 || 53 || 0
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      54 || 54 || 0
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      55 || 55 || 0
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      56 || 56 || 0
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      57 || 57 || 0
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      58 || 58 || 0
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      59 || 59 || 0
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      60 || 60 || 0
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      Success Get Test
+
+      
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      60 || 59 || 1
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      60 || 58 || 2
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      60 || 57 || 3
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      60 || 56 || 4
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      60 || 55 || 5
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      60 || 54 || 6
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      60 || 53 || 7
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      60 || 52 || 8
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      60 || 51 || 9
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      60 || 50 || 10
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      60 || 49 || 11
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      60 || 48 || 12
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      60 || 47 || 13
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      60 || 46 || 14
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      60 || 45 || 15
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      60 || 44 || 16
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      60 || 43 || 17
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      60 || 42 || 18
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      60 || 41 || 19
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      60 || 40 || 20
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      60 || 39 || 21
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      60 || 38 || 22
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      60 || 37 || 23
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      60 || 36 || 24
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      60 || 35 || 25
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      60 || 34 || 26
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      60 || 33 || 27
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      60 || 32 || 28
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      60 || 31 || 29
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      60 || 30 || 30
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      60 || 29 || 31
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      60 || 28 || 32
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      60 || 27 || 33
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      60 || 26 || 34
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      60 || 25 || 35
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      60 || 24 || 36
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      60 || 23 || 37
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      60 || 22 || 38
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      60 || 21 || 39
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      60 || 20 || 40
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      60 || 19 || 41
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      60 || 18 || 42
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      60 || 17 || 43
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      60 || 16 || 44
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      60 || 15 || 45
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      60 || 14 || 46
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      60 || 13 || 47
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      60 || 12 || 48
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      60 || 11 || 49
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      60 || 10 || 50
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      59 || 9 || 50
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      58 || 8 || 50
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      57 || 7 || 50
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      56 || 6 || 50
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      55 || 5 || 50
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      54 || 4 || 50
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      53 || 3 || 50
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      52 || 2 || 50
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      51 || 1 || 50
+
+      [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+      50 || 0 || 50'
+    m_ResultStacktrace: 
+    m_TestListState:
+      scrollPos: {x: 0, y: 0}
+      m_SelectedIDs: 62617ae5
+      m_LastClickedID: -444964510
+      m_ExpandedIDs: adb59dfa933ad906de6ef2132694d324c29f3933712b6564ffffff7f
+      m_RenameOverlay:
+        m_UserAcceptedRename: 0
+        m_Name: 
+        m_OriginalName: 
+        m_EditFieldRect:
+          serializedVersion: 2
+          x: 0
+          y: 0
+          width: 0
+          height: 0
+        m_UserData: 0
+        m_IsWaitingForDelay: 0
+        m_IsRenaming: 0
+        m_OriginalEventType: 11
+        m_IsRenamingFilename: 0
+        m_ClientGUIView: {fileID: 0}
+      m_SearchString: 
+    m_TestRunnerUIFilter:
+      PassedHidden: 0
+      FailedHidden: 0
+      NotRunHidden: 0
+      m_SearchString: 
+      selectedCategoryMask: 0
+      availableCategories:
+      - Performance
+      - Uncategorized
+    m_SelectedOption: 0
+  m_EditModeTestListGUI:
+    m_Window: {fileID: 14}
+    m_NewResultList:
+    - id: 1000
+      uniqueId: '[CustomUtils][suite]'
+      name: CustomUtils
+      fullName: CustomUtils
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 
+      parentUniqueId: 
+    - id: 1039
+      uniqueId: '[EditModeTestAssembly][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/EditModeTestAssembly.dll][suite]'
+      name: EditModeTestAssembly.dll
+      fullName: C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/EditModeTestAssembly.dll
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1000
+      parentUniqueId: '[CustomUtils][suite]'
+    - id: 1001
+      uniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][AnalyzerTestRunner][suite]
+      name: AnalyzerTestRunner
+      fullName: AnalyzerTestRunner
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1039
+      parentUniqueId: '[EditModeTestAssembly][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/EditModeTestAssembly.dll][suite]'
+    - id: 1011
+      uniqueId: EditModeTestAssembly.dll/AnalyzerTestRunner/[EditModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCasePerformanceTest][suite]
+      name: AnalyzerTestCasePerformanceTest
+      fullName: AnalyzerTestRunner.AnalyzerTestCasePerformanceTest
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories:
+      - Performance
+      parentId: 1001
+      parentUniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][AnalyzerTestRunner][suite]
+    - id: 1007
+      uniqueId: EditModeTestAssembly.dll/AnalyzerTestRunner/AnalyzerTestCasePerformanceTest/[EditModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCasePerformanceTest(RequiresStaticMethodImplementationAttributeAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/RequiresStaticMethodTestCase")]
+      name: AnalyzerTestCasePerformanceTest(RequiresStaticMethodImplementationAttributeAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/RequiresStaticMethodTestCase")
+      fullName: AnalyzerTestRunner.AnalyzerTestCasePerformanceTest(RequiresStaticMethodImplementationAttributeAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/RequiresStaticMethodTestCase")
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1011
+      parentUniqueId: EditModeTestAssembly.dll/AnalyzerTestRunner/[EditModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCasePerformanceTest][suite]
+    - id: 1008
+      uniqueId: EditModeTestAssembly.dll/AnalyzerTestRunner/AnalyzerTestCasePerformanceTest/[EditModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCasePerformanceTest(RequiresAttributeImplementationAttributeAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/RequiresAttributeTestCase")]
+      name: AnalyzerTestCasePerformanceTest(RequiresAttributeImplementationAttributeAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/RequiresAttributeTestCase")
+      fullName: AnalyzerTestRunner.AnalyzerTestCasePerformanceTest(RequiresAttributeImplementationAttributeAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/RequiresAttributeTestCase")
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1011
+      parentUniqueId: EditModeTestAssembly.dll/AnalyzerTestRunner/[EditModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCasePerformanceTest][suite]
+    - id: 1009
+      uniqueId: EditModeTestAssembly.dll/AnalyzerTestRunner/AnalyzerTestCasePerformanceTest/[EditModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCasePerformanceTest(BuilderAttributeVerifyAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/BuilderAttributeVerifyAnalyzerTestCase")]
+      name: AnalyzerTestCasePerformanceTest(BuilderAttributeVerifyAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/BuilderAttributeVerifyAnalyzerTestCase")
+      fullName: AnalyzerTestRunner.AnalyzerTestCasePerformanceTest(BuilderAttributeVerifyAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/BuilderAttributeVerifyAnalyzerTestCase")
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1011
+      parentUniqueId: EditModeTestAssembly.dll/AnalyzerTestRunner/[EditModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCasePerformanceTest][suite]
+    - id: 1010
+      uniqueId: EditModeTestAssembly.dll/AnalyzerTestRunner/AnalyzerTestCasePerformanceTest/[EditModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCasePerformanceTest(AttributeAbstractAndInterfaceConstraintsAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/AttributeAbstractAndInterfaceConstraintsAnalyzerTestCase")]
+      name: AnalyzerTestCasePerformanceTest(AttributeAbstractAndInterfaceConstraintsAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/AttributeAbstractAndInterfaceConstraintsAnalyzerTestCase")
+      fullName: AnalyzerTestRunner.AnalyzerTestCasePerformanceTest(AttributeAbstractAndInterfaceConstraintsAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/AttributeAbstractAndInterfaceConstraintsAnalyzerTestCase")
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1011
+      parentUniqueId: EditModeTestAssembly.dll/AnalyzerTestRunner/[EditModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCasePerformanceTest][suite]
+    - id: 1006
+      uniqueId: EditModeTestAssembly.dll/AnalyzerTestRunner/[EditModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCaseTest][suite]
+      name: AnalyzerTestCaseTest
+      fullName: AnalyzerTestRunner.AnalyzerTestCaseTest
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1001
+      parentUniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][AnalyzerTestRunner][suite]
+    - id: 1002
+      uniqueId: EditModeTestAssembly.dll/AnalyzerTestRunner/AnalyzerTestCaseTest/[EditModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCaseTest(RequiresStaticMethodImplementationAttributeAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/RequiresStaticMethodTestCase")]
+      name: AnalyzerTestCaseTest(RequiresStaticMethodImplementationAttributeAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/RequiresStaticMethodTestCase")
+      fullName: AnalyzerTestRunner.AnalyzerTestCaseTest(RequiresStaticMethodImplementationAttributeAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/RequiresStaticMethodTestCase")
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1006
+      parentUniqueId: EditModeTestAssembly.dll/AnalyzerTestRunner/[EditModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCaseTest][suite]
+    - id: 1003
+      uniqueId: EditModeTestAssembly.dll/AnalyzerTestRunner/AnalyzerTestCaseTest/[EditModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCaseTest(RequiresAttributeImplementationAttributeAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/RequiresAttributeTestCase")]
+      name: AnalyzerTestCaseTest(RequiresAttributeImplementationAttributeAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/RequiresAttributeTestCase")
+      fullName: AnalyzerTestRunner.AnalyzerTestCaseTest(RequiresAttributeImplementationAttributeAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/RequiresAttributeTestCase")
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1006
+      parentUniqueId: EditModeTestAssembly.dll/AnalyzerTestRunner/[EditModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCaseTest][suite]
+    - id: 1004
+      uniqueId: EditModeTestAssembly.dll/AnalyzerTestRunner/AnalyzerTestCaseTest/[EditModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCaseTest(BuilderAttributeVerifyAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/BuilderAttributeVerifyAnalyzerTestCase")]
+      name: AnalyzerTestCaseTest(BuilderAttributeVerifyAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/BuilderAttributeVerifyAnalyzerTestCase")
+      fullName: AnalyzerTestRunner.AnalyzerTestCaseTest(BuilderAttributeVerifyAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/BuilderAttributeVerifyAnalyzerTestCase")
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1006
+      parentUniqueId: EditModeTestAssembly.dll/AnalyzerTestRunner/[EditModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCaseTest][suite]
+    - id: 1005
+      uniqueId: EditModeTestAssembly.dll/AnalyzerTestRunner/AnalyzerTestCaseTest/[EditModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCaseTest(AttributeAbstractAndInterfaceConstraintsAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/AttributeAbstractAndInterfaceConstraintsAnalyzerTestCase")]
+      name: AnalyzerTestCaseTest(AttributeAbstractAndInterfaceConstraintsAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/AttributeAbstractAndInterfaceConstraintsAnalyzerTestCase")
+      fullName: AnalyzerTestRunner.AnalyzerTestCaseTest(AttributeAbstractAndInterfaceConstraintsAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/AttributeAbstractAndInterfaceConstraintsAnalyzerTestCase")
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1006
+      parentUniqueId: EditModeTestAssembly.dll/AnalyzerTestRunner/[EditModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCaseTest][suite]
+    - id: 1012
+      uniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][DBTestRunner][suite]
+      name: DBTestRunner
+      fullName: DBTestRunner
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1039
+      parentUniqueId: '[EditModeTestAssembly][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/EditModeTestAssembly.dll][suite]'
+    - id: 1013
+      uniqueId: EditModeTestAssembly.dll/DBTestRunner/[EditModeTestAssembly][DBTestRunner.InMemoryDatabaseTest]
+      name: InMemoryDatabaseTest
+      fullName: DBTestRunner.InMemoryDatabaseTest
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1012
+      parentUniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][DBTestRunner][suite]
+    - id: 1014
+      uniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][EditModeTestRunner][suite]
+      name: EditModeTestRunner
+      fullName: EditModeTestRunner
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1039
+      parentUniqueId: '[EditModeTestAssembly][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/EditModeTestAssembly.dll][suite]'
+    - id: 1019
+      uniqueId: EditModeTestAssembly.dll/EditModeTestRunner/[EditModeTestAssembly][EditModeTestRunner.EnumCastPerformanceTest]
+      name: EnumCastPerformanceTest
+      fullName: EditModeTestRunner.EnumCastPerformanceTest
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1014
+      parentUniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][EditModeTestRunner][suite]
+    - id: 1018
+      uniqueId: EditModeTestAssembly.dll/EditModeTestRunner/[EditModeTestAssembly][EditModeTestRunner.EnumParsePerformanceTest]
+      name: EnumParsePerformanceTest
+      fullName: EditModeTestRunner.EnumParsePerformanceTest
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1014
+      parentUniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][EditModeTestRunner][suite]
+    - id: 1024
+      uniqueId: EditModeTestAssembly.dll/EditModeTestRunner/[EditModeTestAssembly][EditModeTestRunner.IntMarshalTest]
+      name: IntMarshalTest
+      fullName: EditModeTestRunner.IntMarshalTest
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1014
+      parentUniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][EditModeTestRunner][suite]
+    - id: 1021
+      uniqueId: EditModeTestAssembly.dll/EditModeTestRunner/[EditModeTestAssembly][EditModeTestRunner.JsonPerformanceTest][suite]
+      name: JsonPerformanceTest
+      fullName: EditModeTestRunner.JsonPerformanceTest
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories:
+      - Performance
+      parentId: 1014
+      parentUniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][EditModeTestRunner][suite]
+    - id: 1020
+      uniqueId: EditModeTestAssembly.dll/EditModeTestRunner/JsonPerformanceTest/[EditModeTestAssembly][EditModeTestRunner.JsonPerformanceTest(2500)]
+      name: JsonPerformanceTest(2500)
+      fullName: EditModeTestRunner.JsonPerformanceTest(2500)
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1021
+      parentUniqueId: EditModeTestAssembly.dll/EditModeTestRunner/[EditModeTestAssembly][EditModeTestRunner.JsonPerformanceTest][suite]
+    - id: 1025
+      uniqueId: EditModeTestAssembly.dll/EditModeTestRunner/[EditModeTestAssembly][EditModeTestRunner.StringMarshalTest]
+      name: StringMarshalTest
+      fullName: EditModeTestRunner.StringMarshalTest
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1014
+      parentUniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][EditModeTestRunner][suite]
+    - id: 1017
+      uniqueId: EditModeTestAssembly.dll/EditModeTestRunner/[EditModeTestAssembly][EditModeTestRunner.TempPerformanceTest]
+      name: TempPerformanceTest
+      fullName: EditModeTestRunner.TempPerformanceTest
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1014
+      parentUniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][EditModeTestRunner][suite]
+    - id: 1015
+      uniqueId: EditModeTestAssembly.dll/EditModeTestRunner/[EditModeTestAssembly][EditModeTestRunner.TempTest_01]
+      name: TempTest_01
+      fullName: EditModeTestRunner.TempTest_01
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1014
+      parentUniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][EditModeTestRunner][suite]
+    - id: 1016
+      uniqueId: EditModeTestAssembly.dll/EditModeTestRunner/[EditModeTestAssembly][EditModeTestRunner.TempTest_02]
+      name: TempTest_02
+      fullName: EditModeTestRunner.TempTest_02
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1014
+      parentUniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][EditModeTestRunner][suite]
+    - id: 1022
+      uniqueId: EditModeTestAssembly.dll/EditModeTestRunner/[EditModeTestAssembly][EditModeTestRunner.UnsafePerformanceTest]
+      name: UnsafePerformanceTest
+      fullName: EditModeTestRunner.UnsafePerformanceTest
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1014
+      parentUniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][EditModeTestRunner][suite]
+    - id: 1023
+      uniqueId: EditModeTestAssembly.dll/EditModeTestRunner/[EditModeTestAssembly][EditModeTestRunner.UnsafeTest]
+      name: UnsafeTest
+      fullName: EditModeTestRunner.UnsafeTest
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1014
+      parentUniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][EditModeTestRunner][suite]
+    - id: 1026
+      uniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][GameDBTestRunner][suite]
+      name: GameDBTestRunner
+      fullName: GameDBTestRunner
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1039
+      parentUniqueId: '[EditModeTestAssembly][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/EditModeTestAssembly.dll][suite]'
+    - id: 1030
+      uniqueId: EditModeTestAssembly.dll/GameDBTestRunner/[EditModeTestAssembly][GameDBTestRunner.StartTest][suite]
+      name: StartTest
+      fullName: GameDBTestRunner.StartTest
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1026
+      parentUniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][GameDBTestRunner][suite]
+    - id: 1027
+      uniqueId: EditModeTestAssembly.dll/GameDBTestRunner/StartTest/[EditModeTestAssembly][GameDBTestRunner.StartTest(GameDBTestRunner+JsonTestRunner)]
+      name: StartTest(GameDBTestRunner+JsonTestRunner)
+      fullName: GameDBTestRunner.StartTest(GameDBTestRunner+JsonTestRunner)
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1030
+      parentUniqueId: EditModeTestAssembly.dll/GameDBTestRunner/[EditModeTestAssembly][GameDBTestRunner.StartTest][suite]
+    - id: 1028
+      uniqueId: EditModeTestAssembly.dll/GameDBTestRunner/StartTest/[EditModeTestAssembly][GameDBTestRunner.StartTest(GameDBTestRunner+XmlTestRunner)]
+      name: StartTest(GameDBTestRunner+XmlTestRunner)
+      fullName: GameDBTestRunner.StartTest(GameDBTestRunner+XmlTestRunner)
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1030
+      parentUniqueId: EditModeTestAssembly.dll/GameDBTestRunner/[EditModeTestAssembly][GameDBTestRunner.StartTest][suite]
+    - id: 1029
+      uniqueId: EditModeTestAssembly.dll/GameDBTestRunner/StartTest/[EditModeTestAssembly][GameDBTestRunner.StartTest(GameDBTestRunner+CsvTestRunner)]
+      name: StartTest(GameDBTestRunner+CsvTestRunner)
+      fullName: GameDBTestRunner.StartTest(GameDBTestRunner+CsvTestRunner)
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1030
+      parentUniqueId: EditModeTestAssembly.dll/GameDBTestRunner/[EditModeTestAssembly][GameDBTestRunner.StartTest][suite]
+    - id: 1031
+      uniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][GlobalEnumTestRunner][suite]
+      name: GlobalEnumTestRunner
+      fullName: GlobalEnumTestRunner
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1039
+      parentUniqueId: '[EditModeTestAssembly][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/EditModeTestAssembly.dll][suite]'
+    - id: 1032
+      uniqueId: EditModeTestAssembly.dll/GlobalEnumTestRunner/[EditModeTestAssembly][GlobalEnumTestRunner.StartTest]
+      name: StartTest
+      fullName: GlobalEnumTestRunner.StartTest
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1031
+      parentUniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][GlobalEnumTestRunner][suite]
+    - id: 1033
+      uniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][TcpServerTestRunner][suite]
+      name: TcpServerTestRunner
+      fullName: TcpServerTestRunner
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1039
+      parentUniqueId: '[EditModeTestAssembly][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/EditModeTestAssembly.dll][suite]'
+    - id: 1034
+      uniqueId: EditModeTestAssembly.dll/TcpServerTestRunner/[EditModeTestAssembly][TcpServerTestRunner.Clear]
+      name: Clear
+      fullName: TcpServerTestRunner.Clear
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1033
+      parentUniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][TcpServerTestRunner][suite]
+    - id: 1038
+      uniqueId: EditModeTestAssembly.dll/TcpServerTestRunner/[EditModeTestAssembly][TcpServerTestRunner.TcpClientTestAsync][suite]
+      name: TcpClientTestAsync
+      fullName: TcpServerTestRunner.TcpClientTestAsync
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1033
+      parentUniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][TcpServerTestRunner][suite]
+    - id: 1036
+      uniqueId: EditModeTestAssembly.dll/TcpServerTestRunner/TcpClientTestAsync/[EditModeTestAssembly][TcpServerTestRunner.TcpClientTestAsync(TcpJsonServeModule,TestTcpJsonClient)]
+      name: TcpClientTestAsync(TcpJsonServeModule,TestTcpJsonClient)
+      fullName: TcpServerTestRunner.TcpClientTestAsync(TcpJsonServeModule,TestTcpJsonClient)
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1038
+      parentUniqueId: EditModeTestAssembly.dll/TcpServerTestRunner/[EditModeTestAssembly][TcpServerTestRunner.TcpClientTestAsync][suite]
+    - id: 1037
+      uniqueId: EditModeTestAssembly.dll/TcpServerTestRunner/TcpClientTestAsync/[EditModeTestAssembly][TcpServerTestRunner.TcpClientTestAsync(TcpStructServeModule,TestTcpStructClient)]
+      name: TcpClientTestAsync(TcpStructServeModule,TestTcpStructClient)
+      fullName: TcpServerTestRunner.TcpClientTestAsync(TcpStructServeModule,TestTcpStructClient)
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1038
+      parentUniqueId: EditModeTestAssembly.dll/TcpServerTestRunner/[EditModeTestAssembly][TcpServerTestRunner.TcpClientTestAsync][suite]
+    - id: 1035
+      uniqueId: EditModeTestAssembly.dll/TcpServerTestRunner/[EditModeTestAssembly][TcpServerTestRunner.TcpJsonHandlerPerformanceTest]
+      name: TcpJsonHandlerPerformanceTest
+      fullName: TcpServerTestRunner.TcpJsonHandlerPerformanceTest
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1033
+      parentUniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][TcpServerTestRunner][suite]
+    m_ResultText: 
+    m_ResultStacktrace: 
+    m_TestListState:
+      scrollPos: {x: 0, y: 0}
+      m_SelectedIDs: 
+      m_LastClickedID: 0
+      m_ExpandedIDs: ebefd1a10d341dcc888b4ed0104a3ceffd8e07feedaa9c161cabb11e343c3f29c29f39337db3e95608aaf5582f226d64d4580079ffffff7f
+      m_RenameOverlay:
+        m_UserAcceptedRename: 0
+        m_Name: 
+        m_OriginalName: 
+        m_EditFieldRect:
+          serializedVersion: 2
+          x: 0
+          y: 0
+          width: 0
+          height: 0
+        m_UserData: 0
+        m_IsWaitingForDelay: 0
+        m_IsRenaming: 0
+        m_OriginalEventType: 11
+        m_IsRenamingFilename: 0
+        m_ClientGUIView: {fileID: 0}
+      m_SearchString: 
+    m_TestRunnerUIFilter:
+      PassedHidden: 0
+      FailedHidden: 0
+      NotRunHidden: 0
+      m_SearchString: 
+      selectedCategoryMask: 0
+      availableCategories:
+      - Performance
+      - Uncategorized
+--- !u!114 &15
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -430,7 +2239,7 @@ MonoBehaviour:
   m_LowResolutionForAspectRatios: 01000000000000000000
   m_XRRenderMode: 0
   m_RenderTexture: {fileID: 0}
---- !u!114 &15
+--- !u!114 &16
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -468,9 +2277,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 0edbfeff
+      m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: ae11ffff262affff3e2affff4e2bffffe82bffff522fffffcc30ffff6631fffffa34ffffae35ffff4836ffff5a3affff0841ffffa241ffffb445ffffc446ffff5e47ffff704bffffac4dffff464effff6452ffff8853ffff2254ffff4458ffff4c5bffffe65bfffff85fffff2e68ffffc868ffffea6cffff5471ffffee71ffff4876ffffde78ffff7079ffff8a7dffff907fffff2280ffffc083ffffc685ffff5886fffff689ffff7e8affff108bffffaa8effff308fffffca8fffffa093ffff8297ffff1c98ffff1ca2ffff34a9ffffc4a9ffff70b3ffff34b5ffffc4b5ffffc0beffff48bfffffd8bfffffc6c8ffffc6caffff56cbffff78ceffff72d0ffff02d1ffff24d4ffffb2d4ffff42d5ffff64d8ffffbadcffff4addffff6ce0ffff6ee2fffffee2ffff0ee6ffff92e6ffff22e7ffff32eaffff38ecffffc8ecffffdcefffff12f7fffff4ffffff1a800000
+      m_ExpandedIDs: b4b9fffff4b9ffffaabfffffacc0ffffecc0ffffa2c6ffffaac7ffffeac7ffffa2cdffffd6cdffff16ceffffccd3ffff04d4ffff44d4fffffad9fffff4daffff34dbffff66ddffffe6deffff26dfffff64e1ffff9ce1ffffdce1ffff0ee4ffff42e4ffff82e4ffffb4e6ffffe8e6ffff28e7ffff5ce9ffff14fbffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -494,7 +2303,7 @@ MonoBehaviour:
       m_IsLocked: 0
     m_CurrentSortingName: TransformSorting
   m_WindowGUID: 37b0836aa8b4bd74696073f7347c8c8a
---- !u!114 &16
+--- !u!114 &17
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -923,14 +2732,14 @@ MonoBehaviour:
     m_FarClip: 10000
     m_DynamicClip: 1
     m_OcclusionCulling: 0
-  m_LastSceneViewRotation: {x: -0.27184528, y: -0.33629343, z: 0.10204472, w: -0.89587885}
+  m_LastSceneViewRotation: {x: -0.08717229, y: 0.89959055, z: -0.21045254, w: -0.3726226}
   m_LastSceneViewOrtho: 0
   m_ReplacementShader: {fileID: 0}
   m_ReplacementString: 
   m_SceneVisActive: 1
   m_LastLockedObject: {fileID: 0}
   m_ViewIsLockedToObject: 0
---- !u!114 &17
+--- !u!114 &18
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -976,7 +2785,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Packages/com.unity.render-pipelines.core/Runtime/Debugging
+    - Assets/CustomUtils/Sound
     m_Globs: []
     m_OriginalText: 
     m_ImportLogFlags: 0
@@ -984,16 +2793,16 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 16
   m_LastFolders:
-  - Packages/com.unity.render-pipelines.core/Runtime/Debugging
+  - Assets/CustomUtils/Sound
   m_LastFoldersGridSize: 16
   m_LastProjectPath: C:\Project\Unity\CustomUtils
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 604.6}
-    m_SelectedIDs: 42830000
-    m_LastClickedID: 33602
-    m_ExpandedIDs: 00000000c46b0000c66b0000c86b0000ca6b0000cc6b0000ce6b0000d06b0000d26b0000d46b0000448300004683000000ca9a3bffffff7f
+    scrollPos: {x: 0, y: 320.6}
+    m_SelectedIDs: 126c0000
+    m_LastClickedID: 27666
+    m_ExpandedIDs: 00000000506a0000526a0000546a0000566a0000586a00005a6a00005c6a00005e6a0000606a0000626a000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1021,7 +2830,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000c46b0000c66b0000c86b0000ca6b0000cc6b0000ce6b0000d06b0000d26b0000d46b0000d66b0000
+    m_ExpandedIDs: 00000000506a0000526a0000546a0000566a0000586a00005a6a00005c6a00005e6a0000606a0000626a0000646a0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1052,18 +2861,18 @@ MonoBehaviour:
     m_ExpandedInstanceIDs: c6230000ac060000fc56000092f6ffff2a66000002670000ce6900006cd8ffffbe69000000000000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: TestPrefab
-      m_OriginalName: TestPrefab
+      m_Name: 
+      m_OriginalName: 
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 0
         height: 0
-      m_UserData: 27880
+      m_UserData: 0
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
-      m_OriginalEventType: 0
+      m_OriginalEventType: 11
       m_IsRenamingFilename: 1
       m_ClientGUIView: {fileID: 11}
     m_CreateAssetUtility:
@@ -1073,11 +2882,11 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
     m_NewAssetIndexInList: -1
-    m_ScrollPosition: {x: 0, y: 115.8}
+    m_ScrollPosition: {x: 0, y: 0}
     m_GridSize: 16
   m_SkipHiddenPackages: 0
   m_DirectoriesAreaWidth: 253
---- !u!114 &18
+--- !u!114 &19
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1112,7 +2921,7 @@ MonoBehaviour:
     m_LastAppliedPresetName: Default
     m_SaveData: []
     m_OverlaysVisible: 1
---- !u!114 &19
+--- !u!114 &20
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1160,1279 +2969,3 @@ MonoBehaviour:
   m_LockTracker:
     m_IsLocked: 0
   m_PreviewWindow: {fileID: 0}
---- !u!114 &20
-MonoBehaviour:
-  m_ObjectHideFlags: 52
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 13401, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_MinSize: {x: 100, y: 100}
-  m_MaxSize: {x: 4000, y: 4000}
-  m_TitleContent:
-    m_Text: Test Runner
-    m_Image: {fileID: 0}
-    m_Tooltip: 
-  m_Pos:
-    serializedVersion: 2
-    x: 875.2
-    y: 73.6
-    width: 659.8
-    height: 709.8
-  m_SerializedDataModeController:
-    m_DataMode: 0
-    m_PreferredDataMode: 0
-    m_SupportedDataModes: 
-    isAutomatic: 1
-  m_ViewDataDictionary: {fileID: 0}
-  m_OverlayCanvas:
-    m_LastAppliedPresetName: Default
-    m_SaveData: []
-    m_OverlaysVisible: 1
-  m_Spl:
-    ID: 559
-    splitterInitialOffset: 290.8
-    currentActiveSplitter: -1
-    realSizes:
-    - 219.6
-    - 420.4
-    relativeSizes:
-    - 0.34312502
-    - 0.656875
-    minSizes:
-    - 32
-    - 32
-    maxSizes:
-    - 0
-    - 0
-    lastTotalSize: 640
-    splitSize: 6
-    xOffset: 0
-    m_Version: 1
-    oldRealSizes: 
-    oldMinSizes: 
-    oldMaxSizes: 
-    oldSplitSize: 0
-  m_TestTypeToolbarIndex: 1
-  m_PlayModeTestListGUI:
-    m_Window: {fileID: 20}
-    m_NewResultList:
-    - id: 1004
-      uniqueId: '[CustomUtils][suite]'
-      name: CustomUtils
-      fullName: CustomUtils
-      resultStatus: 2
-      duration: 0.4647877
-      messages: One or more child tests had errors
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 1
-      categories: []
-      parentId: 
-      parentUniqueId: 
-    - id: 1015
-      uniqueId: '[PlayModeTestAssembly][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/PlayModeTestAssembly.dll][suite]'
-      name: PlayModeTestAssembly.dll
-      fullName: C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/PlayModeTestAssembly.dll
-      resultStatus: 2
-      duration: 0.4440355
-      messages: One or more child tests had errors
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 1
-      categories: []
-      parentId: 1010
-      parentUniqueId: '[CustomUtils][suite]'
-    - id: 1001
-      uniqueId: PlayModeTestAssembly.dll/[PlayModeTestAssembly][ObjectPoolServiceTestRunner][suite]
-      name: ObjectPoolServiceTestRunner
-      fullName: ObjectPoolServiceTestRunner
-      resultStatus: 1
-      duration: 0.7049863
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 1
-      categories: []
-      parentId: 1008
-      parentUniqueId: '[PlayModeTestAssembly][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/PlayModeTestAssembly.dll][suite]'
-    - id: 1002
-      uniqueId: PlayModeTestAssembly.dll/ObjectPoolServiceTestRunner/[PlayModeTestAssembly][ObjectPoolServiceTestRunner.ObjectPoolServiceTest]
-      name: ObjectPoolServiceTest
-      fullName: ObjectPoolServiceTestRunner.ObjectPoolServiceTest
-      resultStatus: 1
-      duration: 0.6739914
-      messages: 
-      output: "<color=#00FFFF>[ResourceService.GetValidProvider] Activate provider
-        || ResourcesProvider</color>\r\n<color=#00FFFF>[ResourceService.GetValidProvider]
-        Activate provider || AssetBundleProvider</color>\r\n<color=#00FFFF>[Service.StartService]
-        Service Start || ResourceService</color>\r\n<color=#00FFFF>[Service.StartService]
-        Service Start || ObjectPoolService</color>\r\n[<>c.<ObjectPoolServiceTest>b__6_0]
-        TestPrefab\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab TestPrefab_1\r\n[<>c.<ObjectPoolServiceTest>b__6_0]
-        TestPrefab TestPrefab_1 TestPrefab_2\r\n[<>c.<ObjectPoolServiceTest>b__6_0]
-        TestPrefab_1 TestPrefab_2\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab_2\r\n[<>c.<ObjectPoolServiceTest>b__6_0]
-        \n\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab\r\n[<>c.<ObjectPoolServiceTest>b__6_0]
-        TestPrefab TestPrefab_1\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab
-        TestPrefab_1 TestPrefab_2\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab_1
-        TestPrefab_2\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab_2\r\n[<>c.<ObjectPoolServiceTest>b__6_0]
-        \n\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab\r\n[<>c.<ObjectPoolServiceTest>b__6_0]
-        TestPrefab TestPrefab_1\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab
-        TestPrefab_1 TestPrefab_2\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab_1
-        TestPrefab_2\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab_2\r\n[<>c.<ObjectPoolServiceTest>b__6_0]
-        \n\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab\r\n[<>c.<ObjectPoolServiceTest>b__6_0]
-        TestPrefab TestPrefab_1\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab
-        TestPrefab_1 TestPrefab_2\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab_1
-        TestPrefab_2\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab_2\r\n[<>c.<ObjectPoolServiceTest>b__6_0]
-        \n\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab\r\n[<>c.<ObjectPoolServiceTest>b__6_0]
-        TestPrefab TestPrefab_1\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab
-        TestPrefab_1 TestPrefab_2\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab_1
-        TestPrefab_2\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab_2\r\n[<>c.<ObjectPoolServiceTest>b__6_0]
-        \n\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab\r\n[<>c.<ObjectPoolServiceTest>b__6_0]
-        TestPrefab TestPrefab_1\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab
-        TestPrefab_1 TestPrefab_2\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab_1
-        TestPrefab_2\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab_2\r\n[<>c.<ObjectPoolServiceTest>b__6_0]
-        \n\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab\r\n[<>c.<ObjectPoolServiceTest>b__6_0]
-        TestPrefab TestPrefab_1\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab
-        TestPrefab_1 TestPrefab_2\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab_1
-        TestPrefab_2\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab_2\r\n[<>c.<ObjectPoolServiceTest>b__6_0]
-        \n\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab\r\n[<>c.<ObjectPoolServiceTest>b__6_0]
-        TestPrefab TestPrefab_1\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab
-        TestPrefab_1 TestPrefab_2\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab_1
-        TestPrefab_2\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab_2\r\n[<>c.<ObjectPoolServiceTest>b__6_0]
-        \n\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab\r\n[<>c.<ObjectPoolServiceTest>b__6_0]
-        TestPrefab TestPrefab_1\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab
-        TestPrefab_1 TestPrefab_2\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab_1
-        TestPrefab_2\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab_2\r\n[<>c.<ObjectPoolServiceTest>b__6_0]
-        \n\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab\r\n[<>c.<ObjectPoolServiceTest>b__6_0]
-        TestPrefab TestPrefab_1\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab
-        TestPrefab_1 TestPrefab_2\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab_1
-        TestPrefab_2\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab_2\r\n[<>c.<ObjectPoolServiceTest>b__6_0]
-        \n\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab\r\n[<>c.<ObjectPoolServiceTest>b__6_0]
-        TestPrefab TestPrefab_1\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab
-        TestPrefab_1 TestPrefab_2\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab_1
-        TestPrefab_2\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab_2\r\n[<>c.<ObjectPoolServiceTest>b__6_0]
-        \n\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab\r\n[<>c.<ObjectPoolServiceTest>b__6_0]
-        TestPrefab TestPrefab_1\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab
-        TestPrefab_1 TestPrefab_2\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab_1
-        TestPrefab_2\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab_2\r\n[<>c.<ObjectPoolServiceTest>b__6_0]
-        \n\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab\r\n[<>c.<ObjectPoolServiceTest>b__6_0]
-        TestPrefab TestPrefab_1\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab
-        TestPrefab_1 TestPrefab_2\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab_1
-        TestPrefab_2\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab_2\r\n[<>c.<ObjectPoolServiceTest>b__6_0]
-        \n\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab\r\n[<>c.<ObjectPoolServiceTest>b__6_0]
-        TestPrefab TestPrefab_1\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab
-        TestPrefab_1 TestPrefab_2\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab_1
-        TestPrefab_2\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab_2\r\n[<>c.<ObjectPoolServiceTest>b__6_0]
-        \n\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab\r\n[<>c.<ObjectPoolServiceTest>b__6_0]
-        TestPrefab TestPrefab_1\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab
-        TestPrefab_1 TestPrefab_2\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab_1
-        TestPrefab_2\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab_2\r\n[<>c.<ObjectPoolServiceTest>b__6_0]
-        \n\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab\r\n[<>c.<ObjectPoolServiceTest>b__6_0]
-        TestPrefab TestPrefab_1\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab
-        TestPrefab_1 TestPrefab_2\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab_1
-        TestPrefab_2\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab_2\r\n[<>c.<ObjectPoolServiceTest>b__6_0]
-        \n\r\nObjectPoolServiceTest.GC() in Undefineds\nMin:\t\t429.00 \nMedian:\t\t429.50
-        \nMax:\t\t1480.00 \nAvg:\t\t495.50 \nStdDev:\t\t254.20 \nSampleCount:\t16\nSum:\t\t7928.00
-        \r\nFirst samples:\t\u2588\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\r\nHistogram:\t\u2588\u2581\u2581\u2581\r\n\r\nObjectPoolServiceTest
-        in Milliseconds\nMin:\t\t7.12 ms\nMedian:\t\t7.92 ms\nMax:\t\t8.31 ms\nAvg:\t\t7.85
-        ms\nStdDev:\t\t0.34 ms\nSampleCount:\t15\nSum:\t\t117.69 ms\r\nFirst samples:\t\u2588\u2586\u2588\u2585\u2587\u2581\u2587\u2585\u2586\u2586\u2585\u2586\u2581\u2584\u2585\r\nHistogram:\t\u2588\u2584\u2583\u2581\r\n\r\n\r\n##performancetestresult2:{\"Name\":\"ObjectPoolServiceTestRunner.ObjectPoolServiceTest\",\"ClassName\":\"ObjectPoolServiceTestRunner\",\"MethodName\":\"ObjectPoolServiceTest\",\"Version\":\"1\",\"Categories\":[\"Performance\"],\"SampleGroups\":[{\"Name\":\"ObjectPoolServiceTest.GC()\",\"Unit\":8,\"IncreaseIsBetter\":false,\"Samples\":[1480.0,432.0,431.0,431.0,430.0,430.0,429.0,429.0,431.0,429.0,431.0,429.0,429.0,429.0,429.0,429.0],\"Min\":429.0,\"Max\":1480.0,\"Median\":429.5,\"Average\":495.5,\"StandardDeviation\":254.19874114558474,\"Sum\":7928.0},{\"Name\":\"ObjectPoolServiceTest\",\"Unit\":2,\"IncreaseIsBetter\":false,\"Samples\":[8.311999999999998,7.917600000000007,8.309099999999987,7.884299999999996,8.093999999999994,7.124600000000015,8.116500000000002,7.740499999999997,8.015800000000013,7.920400000000029,7.750999999999976,7.9325000000000049,7.117600000000039,7.658799999999985,7.797300000000007],\"Min\":7.117600000000039,\"Max\":8.311999999999998,\"Median\":7.917600000000007,\"Average\":7.846133333333337,\"StandardDeviation\":0.33894837299439958,\"Sum\":117.69200000000005}]}\r\n##performancetestruninfo2:{\"TestSuite\":\"Playmode\",\"Date\":1728712644449,\"Player\":{\"Development\":true,\"ScreenWidth\":1920,\"ScreenHeight\":1080,\"ScreenRefreshRate\":60,\"Fullscreen\":false,\"Vsync\":1,\"AntiAliasing\":0,\"Batchmode\":false,\"RenderThreadingMode\":\"MultiThreaded\",\"GpuSkinning\":false,\"Platform\":\"WindowsEditor\",\"ColorSpace\":\"Gamma\",\"AnisotropicFiltering\":\"Disable\",\"BlendWeights\":\"FourBones\",\"GraphicsApi\":\"Direct3D11\",\"ScriptingBackend\":\"Mono2x\",\"AndroidTargetSdkVersion\":\"AndroidApiLevelAuto\",\"AndroidBuildSystem\":\"Gradle\",\"BuildTarget\":\"StandaloneWindows64\",\"StereoRenderingPath\":\"MultiPass\"},\"Hardware\":{\"OperatingSystem\":\"Windows
-        10  (10.0.19045) 64bit\",\"DeviceModel\":\"82R4 (LENOVO)\",\"DeviceName\":\"DESKTOP-55T0R54\",\"ProcessorType\":\"AMD
-        Ryzen 5 5500U with Radeon Graphics \",\"ProcessorCount\":12,\"GraphicsDeviceName\":\"AMD
-        Radeon(TM) Graphics\",\"SystemMemorySizeMB\":14181},\"Editor\":{\"Version\":\"2022.3.46f1\",\"Branch\":\"2022.3/staging\",\"Changeset\":\"8e9b8558c41a\",\"Date\":1725396290},\"Dependencies\":[\"com.cysharp.unitask@2.5.5\",\"com.unity.2d.animation@9.1.1\",\"com.unity.2d.pixel-perfect@5.0.3\",\"com.unity.2d.psdimporter@8.0.5\",\"com.unity.2d.sprite@1.0.0\",\"com.unity.2d.spriteshape@9.0.4\",\"com.unity.2d.tilemap@1.0.0\",\"com.unity.ai.navigation@1.1.5\",\"com.unity.assetbundlebrowser@1.7.0\",\"com.unity.collab-proxy@2.4.4\",\"com.unity.editorcoroutines@1.0.0\",\"com.unity.ide.rider@3.0.31\",\"com.unity.ide.vscode@1.2.5\",\"com.unity.memoryprofiler@1.1.0\",\"com.unity.mobile.android-logcat@1.4.2\",\"com.unity.performance.profile-analyzer@1.2.2\",\"com.unity.profiling.core@1.0.2\",\"com.unity.render-pipelines.universal@14.0.11\",\"com.unity.test-framework@1.3.9\",\"com.unity.test-framework.performance@3.0.3\",\"com.unity.textmeshpro@3.0.9\",\"com.unity.timeline@1.7.6\",\"com.unity.ugui@1.0.0\",\"com.unity.modules.ai@1.0.0\",\"com.unity.modules.androidjni@1.0.0\",\"com.unity.modules.animation@1.0.0\",\"com.unity.modules.assetbundle@1.0.0\",\"com.unity.modules.audio@1.0.0\",\"com.unity.modules.cloth@1.0.0\",\"com.unity.modules.director@1.0.0\",\"com.unity.modules.imageconversion@1.0.0\",\"com.unity.modules.imgui@1.0.0\",\"com.unity.modules.jsonserialize@1.0.0\",\"com.unity.modules.particlesystem@1.0.0\",\"com.unity.modules.physics@1.0.0\",\"com.unity.modules.physics2d@1.0.0\",\"com.unity.modules.screencapture@1.0.0\",\"com.unity.modules.terrain@1.0.0\",\"com.unity.modules.terrainphysics@1.0.0\",\"com.unity.modules.tilemap@1.0.0\",\"com.unity.modules.ui@1.0.0\",\"com.unity.modules.uielements@1.0.0\",\"com.unity.modules.umbra@1.0.0\",\"com.unity.modules.unityanalytics@1.0.0\",\"com.unity.modules.unitywebrequest@1.0.0\",\"com.unity.modules.unitywebrequestassetbundle@1.0.0\",\"com.unity.modules.unitywebrequestaudio@1.0.0\",\"com.unity.modules.unitywebrequesttexture@1.0.0\",\"com.unity.modules.unitywebrequestwww@1.0.0\",\"com.unity.modules.vehicles@1.0.0\",\"com.unity.modules.video@1.0.0\",\"com.unity.modules.vr@1.0.0\",\"com.unity.modules.wind@1.0.0\",\"com.unity.modules.xr@1.0.0\",\"com.unity.modules.subsystems@1.0.0\",\"com.unity.ext.nunit@2.0.3\",\"com.unity.mathematics@1.2.6\",\"com.unity.burst@1.8.17\",\"com.unity.render-pipelines.core@14.0.11\",\"com.unity.shadergraph@14.0.11\",\"com.unity.render-pipelines.universal-config@14.0.10\",\"com.unity.2d.common@8.0.3\",\"com.unity.collections@1.2.4\",\"com.unity.searcher@4.9.2\"],\"Results\":[]}\r\n"
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Performance
-      parentId: 1001
-      parentUniqueId: PlayModeTestAssembly.dll/[PlayModeTestAssembly][ObjectPoolServiceTestRunner][suite]
-    - id: 1001
-      uniqueId: PlayModeTestAssembly.dll/[PlayModeTestAssembly][ResourceServiceTestRunner][suite]
-      name: ResourceServiceTestRunner
-      fullName: ResourceServiceTestRunner
-      resultStatus: 1
-      duration: 5.792234
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 1
-      categories: []
-      parentId: 1006
-      parentUniqueId: '[PlayModeTestAssembly][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/PlayModeTestAssembly.dll][suite]'
-    - id: 1003
-      uniqueId: PlayModeTestAssembly.dll/ResourceServiceTestRunner/[PlayModeTestAssembly][ResourceServiceTestRunner.ResourceServiceMemoryProfilerTest]
-      name: ResourceServiceMemoryProfilerTest
-      fullName: ResourceServiceTestRunner.ResourceServiceMemoryProfilerTest
-      resultStatus: 1
-      duration: 7.1558785
-      messages: 
-      output: '<color=#00FFFF>[ResourceService.GetValidModule] Activate module ||
-        ResourcesModule</color>
-
-        <color=#00FFFF>[ResourceService.GetValidModule]
-        Activate module || AssetBundleStandaloneModule</color>
-
-        <color=#00FFFF>[Service.StartService]
-        Service Start || ResourceService</color>
-
-        [ResourceServiceTestRunner.ResourceServiceMemoryProfilerTest]
-        TestPrefab
-
-        [ResourceServiceTestRunner.ResourceServiceMemoryProfilerTest]
-        TestPrefab_1
-
-        [ResourceServiceTestRunner.ResourceServiceMemoryProfilerTest]
-        TestPrefab_2
-
-        [ResourceServiceTestRunner.ResourceServiceMemoryProfilerTest]
-        TestPrefab_3
-
-        [ResourceServiceTestRunner.ResourceServiceMemoryProfilerTest]
-        Get || FreeSampleSFX
-
-        [<>c__DisplayClass1_0.<TearDownAsync>b__0]
-        Operation Done
-
-'
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1001
-      parentUniqueId: PlayModeTestAssembly.dll/[PlayModeTestAssembly][ResourceServiceTestRunner][suite]
-    - id: 1002
-      uniqueId: PlayModeTestAssembly.dll/ResourceServiceTestRunner/[PlayModeTestAssembly][ResourceServiceTestRunner.ResourceServiceTest]
-      name: ResourceServiceTest
-      fullName: ResourceServiceTestRunner.ResourceServiceTest
-      resultStatus: 1
-      duration: 5.760419
-      messages: 
-      output: "<color=#00FFFF>[ResourceService.GetValidProvider] Activate provider
-        || ResourcesProvider</color>\r\n<color=#00FFFF>[ResourceService.GetValidProvider]
-        Activate provider || AssetBundleProvider</color>\r\n<color=#00FFFF>[Service.StartService]
-        Service Start || ResourceService</color>\r\n[<>c.<ResourceServiceTest>b__2_0]
-        TestPrefab\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab_1\r\n[<>c.<ResourceServiceTest>b__2_0]
-        TestPrefab_2\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab_3\r\n[<>c.<ResourceServiceTest>b__2_0]
-        Get || FreeSampleSFX\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab\r\n[<>c.<ResourceServiceTest>b__2_0]
-        TestPrefab_1\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab_2\r\n[<>c.<ResourceServiceTest>b__2_0]
-        TestPrefab_3\r\n[<>c.<ResourceServiceTest>b__2_0] Get || FreeSampleSFX\r\n[<>c.<ResourceServiceTest>b__2_0]
-        TestPrefab\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab_1\r\n[<>c.<ResourceServiceTest>b__2_0]
-        TestPrefab_2\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab_3\r\n[<>c.<ResourceServiceTest>b__2_0]
-        Get || FreeSampleSFX\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab\r\n[<>c.<ResourceServiceTest>b__2_0]
-        TestPrefab_1\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab_2\r\n[<>c.<ResourceServiceTest>b__2_0]
-        TestPrefab_3\r\n[<>c.<ResourceServiceTest>b__2_0] Get || FreeSampleSFX\r\n[<>c.<ResourceServiceTest>b__2_0]
-        TestPrefab\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab_1\r\n[<>c.<ResourceServiceTest>b__2_0]
-        TestPrefab_2\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab_3\r\n[<>c.<ResourceServiceTest>b__2_0]
-        Get || FreeSampleSFX\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab\r\n[<>c.<ResourceServiceTest>b__2_0]
-        TestPrefab_1\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab_2\r\n[<>c.<ResourceServiceTest>b__2_0]
-        TestPrefab_3\r\n[<>c.<ResourceServiceTest>b__2_0] Get || FreeSampleSFX\r\n[<>c.<ResourceServiceTest>b__2_0]
-        TestPrefab\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab_1\r\n[<>c.<ResourceServiceTest>b__2_0]
-        TestPrefab_2\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab_3\r\n[<>c.<ResourceServiceTest>b__2_0]
-        Get || FreeSampleSFX\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab\r\n[<>c.<ResourceServiceTest>b__2_0]
-        TestPrefab_1\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab_2\r\n[<>c.<ResourceServiceTest>b__2_0]
-        TestPrefab_3\r\n[<>c.<ResourceServiceTest>b__2_0] Get || FreeSampleSFX\r\n[<>c.<ResourceServiceTest>b__2_0]
-        TestPrefab\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab_1\r\n[<>c.<ResourceServiceTest>b__2_0]
-        TestPrefab_2\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab_3\r\n[<>c.<ResourceServiceTest>b__2_0]
-        Get || FreeSampleSFX\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab\r\n[<>c.<ResourceServiceTest>b__2_0]
-        TestPrefab_1\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab_2\r\n[<>c.<ResourceServiceTest>b__2_0]
-        TestPrefab_3\r\n[<>c.<ResourceServiceTest>b__2_0] Get || FreeSampleSFX\r\n[<>c.<ResourceServiceTest>b__2_0]
-        TestPrefab\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab_1\r\n[<>c.<ResourceServiceTest>b__2_0]
-        TestPrefab_2\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab_3\r\n[<>c.<ResourceServiceTest>b__2_0]
-        Get || FreeSampleSFX\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab\r\n[<>c.<ResourceServiceTest>b__2_0]
-        TestPrefab_1\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab_2\r\n[<>c.<ResourceServiceTest>b__2_0]
-        TestPrefab_3\r\n[<>c.<ResourceServiceTest>b__2_0] Get || FreeSampleSFX\r\n[<>c.<ResourceServiceTest>b__2_0]
-        TestPrefab\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab_1\r\n[<>c.<ResourceServiceTest>b__2_0]
-        TestPrefab_2\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab_3\r\n[<>c.<ResourceServiceTest>b__2_0]
-        Get || FreeSampleSFX\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab\r\n[<>c.<ResourceServiceTest>b__2_0]
-        TestPrefab_1\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab_2\r\n[<>c.<ResourceServiceTest>b__2_0]
-        TestPrefab_3\r\n[<>c.<ResourceServiceTest>b__2_0] Get || FreeSampleSFX\r\n[<>c.<ResourceServiceTest>b__2_0]
-        TestPrefab\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab_1\r\n[<>c.<ResourceServiceTest>b__2_0]
-        TestPrefab_2\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab_3\r\n[<>c.<ResourceServiceTest>b__2_0]
-        Get || FreeSampleSFX\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab\r\n[<>c.<ResourceServiceTest>b__2_0]
-        TestPrefab_1\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab_2\r\n[<>c.<ResourceServiceTest>b__2_0]
-        TestPrefab_3\r\n[<>c.<ResourceServiceTest>b__2_0] Get || FreeSampleSFX\r\n[<>c.<ResourceServiceTest>b__2_0]
-        TestPrefab\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab_1\r\n[<>c.<ResourceServiceTest>b__2_0]
-        TestPrefab_2\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab_3\r\n[<>c.<ResourceServiceTest>b__2_0]
-        Get || FreeSampleSFX\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab\r\n[<>c.<ResourceServiceTest>b__2_0]
-        TestPrefab_1\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab_2\r\n[<>c.<ResourceServiceTest>b__2_0]
-        TestPrefab_3\r\n[<>c.<ResourceServiceTest>b__2_0] Get || FreeSampleSFX\r\n[<>c.<ResourceServiceTest>b__2_0]
-        TestPrefab\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab_1\r\n[<>c.<ResourceServiceTest>b__2_0]
-        TestPrefab_2\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab_3\r\n[<>c.<ResourceServiceTest>b__2_0]
-        Get || FreeSampleSFX\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab\r\n[<>c.<ResourceServiceTest>b__2_0]
-        TestPrefab_1\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab_2\r\n[<>c.<ResourceServiceTest>b__2_0]
-        TestPrefab_3\r\n[<>c.<ResourceServiceTest>b__2_0] Get || FreeSampleSFX\r\n[<>c.<ResourceServiceTest>b__2_0]
-        TestPrefab\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab_1\r\n[<>c.<ResourceServiceTest>b__2_0]
-        TestPrefab_2\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab_3\r\n[<>c.<ResourceServiceTest>b__2_0]
-        Get || FreeSampleSFX\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab\r\n[<>c.<ResourceServiceTest>b__2_0]
-        TestPrefab_1\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab_2\r\n[<>c.<ResourceServiceTest>b__2_0]
-        TestPrefab_3\r\n[<>c.<ResourceServiceTest>b__2_0] Get || FreeSampleSFX\r\n[<>c.<ResourceServiceTest>b__2_0]
-        TestPrefab\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab_1\r\n[<>c.<ResourceServiceTest>b__2_0]
-        TestPrefab_2\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab_3\r\n[<>c.<ResourceServiceTest>b__2_0]
-        Get || FreeSampleSFX\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab\r\n[<>c.<ResourceServiceTest>b__2_0]
-        TestPrefab_1\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab_2\r\n[<>c.<ResourceServiceTest>b__2_0]
-        TestPrefab_3\r\n[<>c.<ResourceServiceTest>b__2_0] Get || FreeSampleSFX\r\n[<>c.<ResourceServiceTest>b__2_0]
-        TestPrefab\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab_1\r\n[<>c.<ResourceServiceTest>b__2_0]
-        TestPrefab_2\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab_3\r\n[<>c.<ResourceServiceTest>b__2_0]
-        Get || FreeSampleSFX\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab\r\n[<>c.<ResourceServiceTest>b__2_0]
-        TestPrefab_1\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab_2\r\n[<>c.<ResourceServiceTest>b__2_0]
-        TestPrefab_3\r\n[<>c.<ResourceServiceTest>b__2_0] Get || FreeSampleSFX\r\n[<>c.<ResourceServiceTest>b__2_0]
-        TestPrefab\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab_1\r\n[<>c.<ResourceServiceTest>b__2_0]
-        TestPrefab_2\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab_3\r\n[<>c.<ResourceServiceTest>b__2_0]
-        Get || FreeSampleSFX\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab\r\n[<>c.<ResourceServiceTest>b__2_0]
-        TestPrefab_1\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab_2\r\n[<>c.<ResourceServiceTest>b__2_0]
-        TestPrefab_3\r\n[<>c.<ResourceServiceTest>b__2_0] Get || FreeSampleSFX\r\n[<>c.<ResourceServiceTest>b__2_0]
-        TestPrefab\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab_1\r\n[<>c.<ResourceServiceTest>b__2_0]
-        TestPrefab_2\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab_3\r\n[<>c.<ResourceServiceTest>b__2_0]
-        Get || FreeSampleSFX\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab\r\n[<>c.<ResourceServiceTest>b__2_0]
-        TestPrefab_1\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab_2\r\n[<>c.<ResourceServiceTest>b__2_0]
-        TestPrefab_3\r\n[<>c.<ResourceServiceTest>b__2_0] Get || FreeSampleSFX\r\n[<>c.<ResourceServiceTest>b__2_0]
-        TestPrefab\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab_1\r\n[<>c.<ResourceServiceTest>b__2_0]
-        TestPrefab_2\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab_3\r\n[<>c.<ResourceServiceTest>b__2_0]
-        Get || FreeSampleSFX\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab\r\n[<>c.<ResourceServiceTest>b__2_0]
-        TestPrefab_1\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab_2\r\n[<>c.<ResourceServiceTest>b__2_0]
-        TestPrefab_3\r\n[<>c.<ResourceServiceTest>b__2_0] Get || FreeSampleSFX\r\n[<>c.<ResourceServiceTest>b__2_0]
-        TestPrefab\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab_1\r\n[<>c.<ResourceServiceTest>b__2_0]
-        TestPrefab_2\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab_3\r\n[<>c.<ResourceServiceTest>b__2_0]
-        Get || FreeSampleSFX\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab\r\n[<>c.<ResourceServiceTest>b__2_0]
-        TestPrefab_1\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab_2\r\n[<>c.<ResourceServiceTest>b__2_0]
-        TestPrefab_3\r\n[<>c.<ResourceServiceTest>b__2_0] Get || FreeSampleSFX\r\n[<>c.<ResourceServiceTest>b__2_0]
-        TestPrefab\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab_1\r\n[<>c.<ResourceServiceTest>b__2_0]
-        TestPrefab_2\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab_3\r\n[<>c.<ResourceServiceTest>b__2_0]
-        Get || FreeSampleSFX\r\nGroup_01.GC() in Undefineds\nMin:\t\t431.40 \nMedian:\t\t431.80
-        \nMax:\t\t982.60 \nAvg:\t\t510.49 \nStdDev:\t\t192.74 \nSampleCount:\t7\nSum:\t\t3573.40
-        \r\nFirst samples:\t\u2588\u2581\u2581\u2581\u2581\u2581\u2581\r\n(not enough
-        samples for histogram)\n\r\nGroup_01 in Milliseconds\nMin:\t\t25.75 ms\nMedian:\t\t27.72
-        ms\nMax:\t\t29.66 ms\nAvg:\t\t27.49 ms\nStdDev:\t\t1.34 ms\nSampleCount:\t5\nSum:\t\t137.43
-        ms\r\nFirst samples:\t\u2588\u2582\u2585\u2585\u2581\r\n(not enough samples
-        for histogram)\n\r\n\r\n##performancetestresult2:{\"Name\":\"ResourceServiceTestRunner.ResourceServiceTest\",\"ClassName\":\"ResourceServiceTestRunner\",\"MethodName\":\"ResourceServiceTest\",\"Version\":\"1\",\"Categories\":[\"Performance\"],\"SampleGroups\":[{\"Name\":\"Group_01.GC()\",\"Unit\":8,\"IncreaseIsBetter\":false,\"Samples\":[982.6,432.2,432.2,431.4,431.8,431.8,431.4],\"Min\":431.4,\"Max\":982.6,\"Median\":431.8,\"Average\":510.4857142857144,\"StandardDeviation\":192.74008722756614,\"Sum\":3573.4000000000005},{\"Name\":\"Group_01\",\"Unit\":2,\"IncreaseIsBetter\":false,\"Samples\":[29.65730000000002,26.446199999999977,27.72320000000002,27.851400000000014,25.75029999999998],\"Min\":25.75029999999998,\"Max\":29.65730000000002,\"Median\":27.72320000000002,\"Average\":27.485680000000003,\"StandardDeviation\":1.3415038358499183,\"Sum\":137.4284}]}\r\n##performancetestruninfo2:{\"TestSuite\":\"Playmode\",\"Date\":1728712672446,\"Player\":{\"Development\":true,\"ScreenWidth\":1920,\"ScreenHeight\":1080,\"ScreenRefreshRate\":60,\"Fullscreen\":false,\"Vsync\":1,\"AntiAliasing\":0,\"Batchmode\":false,\"RenderThreadingMode\":\"MultiThreaded\",\"GpuSkinning\":false,\"Platform\":\"WindowsEditor\",\"ColorSpace\":\"Gamma\",\"AnisotropicFiltering\":\"Disable\",\"BlendWeights\":\"FourBones\",\"GraphicsApi\":\"Direct3D11\",\"ScriptingBackend\":\"Mono2x\",\"AndroidTargetSdkVersion\":\"AndroidApiLevelAuto\",\"AndroidBuildSystem\":\"Gradle\",\"BuildTarget\":\"StandaloneWindows64\",\"StereoRenderingPath\":\"MultiPass\"},\"Hardware\":{\"OperatingSystem\":\"Windows
-        10  (10.0.19045) 64bit\",\"DeviceModel\":\"82R4 (LENOVO)\",\"DeviceName\":\"DESKTOP-55T0R54\",\"ProcessorType\":\"AMD
-        Ryzen 5 5500U with Radeon Graphics \",\"ProcessorCount\":12,\"GraphicsDeviceName\":\"AMD
-        Radeon(TM) Graphics\",\"SystemMemorySizeMB\":14181},\"Editor\":{\"Version\":\"2022.3.46f1\",\"Branch\":\"2022.3/staging\",\"Changeset\":\"8e9b8558c41a\",\"Date\":1725396290},\"Dependencies\":[\"com.cysharp.unitask@2.5.5\",\"com.unity.2d.animation@9.1.1\",\"com.unity.2d.pixel-perfect@5.0.3\",\"com.unity.2d.psdimporter@8.0.5\",\"com.unity.2d.sprite@1.0.0\",\"com.unity.2d.spriteshape@9.0.4\",\"com.unity.2d.tilemap@1.0.0\",\"com.unity.ai.navigation@1.1.5\",\"com.unity.assetbundlebrowser@1.7.0\",\"com.unity.collab-proxy@2.4.4\",\"com.unity.editorcoroutines@1.0.0\",\"com.unity.ide.rider@3.0.31\",\"com.unity.ide.vscode@1.2.5\",\"com.unity.memoryprofiler@1.1.0\",\"com.unity.mobile.android-logcat@1.4.2\",\"com.unity.performance.profile-analyzer@1.2.2\",\"com.unity.profiling.core@1.0.2\",\"com.unity.render-pipelines.universal@14.0.11\",\"com.unity.test-framework@1.3.9\",\"com.unity.test-framework.performance@3.0.3\",\"com.unity.textmeshpro@3.0.9\",\"com.unity.timeline@1.7.6\",\"com.unity.ugui@1.0.0\",\"com.unity.modules.ai@1.0.0\",\"com.unity.modules.androidjni@1.0.0\",\"com.unity.modules.animation@1.0.0\",\"com.unity.modules.assetbundle@1.0.0\",\"com.unity.modules.audio@1.0.0\",\"com.unity.modules.cloth@1.0.0\",\"com.unity.modules.director@1.0.0\",\"com.unity.modules.imageconversion@1.0.0\",\"com.unity.modules.imgui@1.0.0\",\"com.unity.modules.jsonserialize@1.0.0\",\"com.unity.modules.particlesystem@1.0.0\",\"com.unity.modules.physics@1.0.0\",\"com.unity.modules.physics2d@1.0.0\",\"com.unity.modules.screencapture@1.0.0\",\"com.unity.modules.terrain@1.0.0\",\"com.unity.modules.terrainphysics@1.0.0\",\"com.unity.modules.tilemap@1.0.0\",\"com.unity.modules.ui@1.0.0\",\"com.unity.modules.uielements@1.0.0\",\"com.unity.modules.umbra@1.0.0\",\"com.unity.modules.unityanalytics@1.0.0\",\"com.unity.modules.unitywebrequest@1.0.0\",\"com.unity.modules.unitywebrequestassetbundle@1.0.0\",\"com.unity.modules.unitywebrequestaudio@1.0.0\",\"com.unity.modules.unitywebrequesttexture@1.0.0\",\"com.unity.modules.unitywebrequestwww@1.0.0\",\"com.unity.modules.vehicles@1.0.0\",\"com.unity.modules.video@1.0.0\",\"com.unity.modules.vr@1.0.0\",\"com.unity.modules.wind@1.0.0\",\"com.unity.modules.xr@1.0.0\",\"com.unity.modules.subsystems@1.0.0\",\"com.unity.ext.nunit@2.0.3\",\"com.unity.mathematics@1.2.6\",\"com.unity.burst@1.8.17\",\"com.unity.render-pipelines.core@14.0.11\",\"com.unity.shadergraph@14.0.11\",\"com.unity.render-pipelines.universal-config@14.0.10\",\"com.unity.2d.common@8.0.3\",\"com.unity.collections@1.2.4\",\"com.unity.searcher@4.9.2\"],\"Results\":[]}\r\n"
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Performance
-      parentId: 1001
-      parentUniqueId: PlayModeTestAssembly.dll/[PlayModeTestAssembly][ResourceServiceTestRunner][suite]
-    - id: 1003
-      uniqueId: PlayModeTestAssembly.dll/[PlayModeTestAssembly][SoundTestRunner][suite]
-      name: SoundTestRunner
-      fullName: SoundTestRunner
-      resultStatus: 2
-      duration: 0.4339054
-      messages: One or more child tests had errors
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 1
-      categories: []
-      parentId: 1005
-      parentUniqueId: '[PlayModeTestAssembly][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/PlayModeTestAssembly.dll][suite]'
-    - id: 1005
-      uniqueId: PlayModeTestAssembly.dll/SoundTestRunner/[PlayModeTestAssembly][SoundTestRunner.SoundManagerTest]
-      name: SoundManagerTest
-      fullName: SoundTestRunner.SoundManagerTest
-      resultStatus: 2
-      duration: 0.401048
-      messages: 'System.NullReferenceException : Object reference not set to an instance
-        of an object'
-      output: '<color=#00FFFF>[ResourceService.GetValidProvider] Activate provider
-        || ResourcesProvider</color>
-
-        <color=#00FFFF>[ResourceService.GetValidProvider]
-        Activate provider || AssetBundleProvider</color>
-
-        <color=#00FFFF>[Service.StartService]
-        Service Start || ResourceService</color>
-
-        <color=#00FFFF>[SampleSoundManager..ctor]
-        SoundCoreBase Activate</color>
-
-        <color=#00FFFF>[SampleSoundManager.InitSound]
-        SampleSound Activate</color>
-
-        Exposed name does not exist: TYPE_1
-
-        <color=#00FFFF>[SampleSoundManager.InitSound]
-        Sample_SoundBgm Activate</color>
-
-'
-      stacktrace: "  at CommonExtension.ToStringAllFields (System.Object ob, System.String
-        prefix, System.Reflection.BindingFlags bindingFlags) [0x000a3] in C:\\Project\\Unity\\CustomUtils\\Assets\\CustomUtils\\Common\\Extension\\CommonExtension.cs:34
-        \r\n  at SoundTestRunner.SoundManagerTest () [0x0002b] in C:\\Project\\Unity\\CustomUtils\\Assets\\Test\\PlayMode\\SooundTest\\SoundTestRunner.cs:20
-        \r\n  at (wrapper managed-to-native) System.Reflection.RuntimeMethodInfo.InternalInvoke(System.Reflection.RuntimeMethodInfo,object,object[],System.Exception&)\r\n 
-        at System.Reflection.RuntimeMethodInfo.Invoke (System.Object obj, System.Reflection.BindingFlags
-        invokeAttr, System.Reflection.Binder binder, System.Object[] parameters,
-        System.Globalization.CultureInfo culture) [0x0006a] in <8ce0bd04a7a04b4b9395538239d3fdd8>:0 "
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1004
-      parentUniqueId: PlayModeTestAssembly.dll/[PlayModeTestAssembly][SoundTestRunner][suite]
-    m_ResultText: "SoundManagerTest (0.401s)\n---\nSystem.NullReferenceException
-      : Object reference not set to an instance of an object\n---\nat CommonExtension.ToStringAllFields
-      (System.Object ob, System.String prefix, System.Reflection.BindingFlags bindingFlags)
-      [0x000a3] in C:\\Project\\Unity\\CustomUtils\\Assets\\CustomUtils\\Common\\Extension\\CommonExtension.cs:34
-      \r\n  at SoundTestRunner.SoundManagerTest () [0x0002b] in C:\\Project\\Unity\\CustomUtils\\Assets\\Test\\PlayMode\\SooundTest\\SoundTestRunner.cs:20
-      \r\n  at (wrapper managed-to-native) System.Reflection.RuntimeMethodInfo.InternalInvoke(System.Reflection.RuntimeMethodInfo,object,object[],System.Exception&)\r\n 
-      at System.Reflection.RuntimeMethodInfo.Invoke (System.Object obj, System.Reflection.BindingFlags
-      invokeAttr, System.Reflection.Binder binder, System.Object[] parameters, System.Globalization.CultureInfo
-      culture) [0x0006a] in <8ce0bd04a7a04b4b9395538239d3fdd8>:0\n---\n<color=#00FFFF>[ResourceService.GetValidProvider]
-      Activate provider || ResourcesProvider</color>\r\n<color=#00FFFF>[ResourceService.GetValidProvider]
-      Activate provider || AssetBundleProvider</color>\r\n<color=#00FFFF>[Service.StartService]
-      Service Start || ResourceService</color>\r\n<color=#00FFFF>[SampleSoundManager..ctor]
-      SoundCoreBase Activate</color>\r\n<color=#00FFFF>[SampleSoundManager.InitSound]
-      SampleSound Activate</color>\r\nExposed name does not exist: TYPE_1\r\n<color=#00FFFF>[SampleSoundManager.InitSound]
-      Sample_SoundBgm Activate</color>"
-    m_ResultStacktrace: "  at CommonExtension.ToStringAllFields (System.Object ob,
-      System.String prefix, System.Reflection.BindingFlags bindingFlags) [0x000a3]
-      in C:\\Project\\Unity\\CustomUtils\\Assets\\CustomUtils\\Common\\Extension\\CommonExtension.cs:34
-      \r\n  at SoundTestRunner.SoundManagerTest () [0x0002b] in C:\\Project\\Unity\\CustomUtils\\Assets\\Test\\PlayMode\\SooundTest\\SoundTestRunner.cs:20
-      \r\n  at (wrapper managed-to-native) System.Reflection.RuntimeMethodInfo.InternalInvoke(System.Reflection.RuntimeMethodInfo,object,object[],System.Exception&)\r\n 
-      at System.Reflection.RuntimeMethodInfo.Invoke (System.Object obj, System.Reflection.BindingFlags
-      invokeAttr, System.Reflection.Binder binder, System.Object[] parameters, System.Globalization.CultureInfo
-      culture) [0x0006a] in <8ce0bd04a7a04b4b9395538239d3fdd8>:0 "
-    m_TestListState:
-      scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 02532fb0
-      m_LastClickedID: -1339075838
-      m_ExpandedIDs: 2d87f388f83257dbadb59dfa933ad9065bc6d62ec29f3933fcd7303c72cb9f48ffffff7f
-      m_RenameOverlay:
-        m_UserAcceptedRename: 0
-        m_Name: 
-        m_OriginalName: 
-        m_EditFieldRect:
-          serializedVersion: 2
-          x: 0
-          y: 0
-          width: 0
-          height: 0
-        m_UserData: 0
-        m_IsWaitingForDelay: 0
-        m_IsRenaming: 0
-        m_OriginalEventType: 11
-        m_IsRenamingFilename: 0
-        m_ClientGUIView: {fileID: 0}
-      m_SearchString: 
-    m_TestRunnerUIFilter:
-      PassedHidden: 0
-      FailedHidden: 0
-      NotRunHidden: 0
-      m_SearchString: 
-      selectedCategoryMask: 0
-      availableCategories:
-      - Performance
-      - Uncategorized
-    m_SelectedOption: 0
-  m_EditModeTestListGUI:
-    m_Window: {fileID: 20}
-    m_NewResultList:
-    - id: 1000
-      uniqueId: '[CustomUtils][suite]'
-      name: CustomUtils
-      fullName: CustomUtils
-      resultStatus: 1
-      duration: 0.0571099
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 1
-      categories: []
-      parentId: 
-      parentUniqueId: 
-    - id: 1038
-      uniqueId: '[EditModeTestAssembly][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/EditModeTestAssembly.dll][suite]'
-      name: EditModeTestAssembly.dll
-      fullName: C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/EditModeTestAssembly.dll
-      resultStatus: 1
-      duration: 0.0455664
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 1
-      categories: []
-      parentId: 1000
-      parentUniqueId: '[CustomUtils][suite]'
-    - id: 1001
-      uniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][AnalyzerTestRunner][suite]
-      name: AnalyzerTestRunner
-      fullName: AnalyzerTestRunner
-      resultStatus: 0
-      duration: 0
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 1
-      categories: []
-      parentId: 1038
-      parentUniqueId: '[EditModeTestAssembly][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/EditModeTestAssembly.dll][suite]'
-    - id: 1011
-      uniqueId: EditModeTestAssembly.dll/AnalyzerTestRunner/[EditModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCasePerformanceTest][suite]
-      name: AnalyzerTestCasePerformanceTest
-      fullName: AnalyzerTestRunner.AnalyzerTestCasePerformanceTest
-      resultStatus: 0
-      duration: 0
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 1
-      categories:
-      - Performance
-      parentId: 1001
-      parentUniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][AnalyzerTestRunner][suite]
-    - id: 1007
-      uniqueId: EditModeTestAssembly.dll/AnalyzerTestRunner/AnalyzerTestCasePerformanceTest/[EditModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCasePerformanceTest(RequiresStaticMethodImplementationAttributeAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/RequiresStaticMethodTestCase")]
-      name: AnalyzerTestCasePerformanceTest(RequiresStaticMethodImplementationAttributeAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/RequiresStaticMethodTestCase")
-      fullName: AnalyzerTestRunner.AnalyzerTestCasePerformanceTest(RequiresStaticMethodImplementationAttributeAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/RequiresStaticMethodTestCase")
-      resultStatus: 0
-      duration: 0
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Performance
-      parentId: 1011
-      parentUniqueId: EditModeTestAssembly.dll/AnalyzerTestRunner/[EditModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCasePerformanceTest][suite]
-    - id: 1008
-      uniqueId: EditModeTestAssembly.dll/AnalyzerTestRunner/AnalyzerTestCasePerformanceTest/[EditModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCasePerformanceTest(RequiresAttributeImplementationAttributeAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/RequiresAttributeTestCase")]
-      name: AnalyzerTestCasePerformanceTest(RequiresAttributeImplementationAttributeAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/RequiresAttributeTestCase")
-      fullName: AnalyzerTestRunner.AnalyzerTestCasePerformanceTest(RequiresAttributeImplementationAttributeAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/RequiresAttributeTestCase")
-      resultStatus: 0
-      duration: 0
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Performance
-      parentId: 1011
-      parentUniqueId: EditModeTestAssembly.dll/AnalyzerTestRunner/[EditModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCasePerformanceTest][suite]
-    - id: 1009
-      uniqueId: EditModeTestAssembly.dll/AnalyzerTestRunner/AnalyzerTestCasePerformanceTest/[EditModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCasePerformanceTest(BuilderAttributeVerifyAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/BuilderAttributeVerifyAnalyzerTestCase")]
-      name: AnalyzerTestCasePerformanceTest(BuilderAttributeVerifyAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/BuilderAttributeVerifyAnalyzerTestCase")
-      fullName: AnalyzerTestRunner.AnalyzerTestCasePerformanceTest(BuilderAttributeVerifyAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/BuilderAttributeVerifyAnalyzerTestCase")
-      resultStatus: 0
-      duration: 0
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Performance
-      parentId: 1011
-      parentUniqueId: EditModeTestAssembly.dll/AnalyzerTestRunner/[EditModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCasePerformanceTest][suite]
-    - id: 1010
-      uniqueId: EditModeTestAssembly.dll/AnalyzerTestRunner/AnalyzerTestCasePerformanceTest/[EditModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCasePerformanceTest(AttributeAbstractAndInterfaceConstraintsAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/AttributeAbstractAndInterfaceConstraintsAnalyzerTestCase")]
-      name: AnalyzerTestCasePerformanceTest(AttributeAbstractAndInterfaceConstraintsAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/AttributeAbstractAndInterfaceConstraintsAnalyzerTestCase")
-      fullName: AnalyzerTestRunner.AnalyzerTestCasePerformanceTest(AttributeAbstractAndInterfaceConstraintsAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/AttributeAbstractAndInterfaceConstraintsAnalyzerTestCase")
-      resultStatus: 0
-      duration: 0
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Performance
-      parentId: 1011
-      parentUniqueId: EditModeTestAssembly.dll/AnalyzerTestRunner/[EditModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCasePerformanceTest][suite]
-    - id: 1006
-      uniqueId: EditModeTestAssembly.dll/AnalyzerTestRunner/[EditModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCaseTest][suite]
-      name: AnalyzerTestCaseTest
-      fullName: AnalyzerTestRunner.AnalyzerTestCaseTest
-      resultStatus: 0
-      duration: 0
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 1
-      categories: []
-      parentId: 1001
-      parentUniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][AnalyzerTestRunner][suite]
-    - id: 1002
-      uniqueId: EditModeTestAssembly.dll/AnalyzerTestRunner/AnalyzerTestCaseTest/[EditModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCaseTest(RequiresStaticMethodImplementationAttributeAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/RequiresStaticMethodTestCase")]
-      name: AnalyzerTestCaseTest(RequiresStaticMethodImplementationAttributeAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/RequiresStaticMethodTestCase")
-      fullName: AnalyzerTestRunner.AnalyzerTestCaseTest(RequiresStaticMethodImplementationAttributeAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/RequiresStaticMethodTestCase")
-      resultStatus: 0
-      duration: 0
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1006
-      parentUniqueId: EditModeTestAssembly.dll/AnalyzerTestRunner/[EditModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCaseTest][suite]
-    - id: 1003
-      uniqueId: EditModeTestAssembly.dll/AnalyzerTestRunner/AnalyzerTestCaseTest/[EditModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCaseTest(RequiresAttributeImplementationAttributeAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/RequiresAttributeTestCase")]
-      name: AnalyzerTestCaseTest(RequiresAttributeImplementationAttributeAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/RequiresAttributeTestCase")
-      fullName: AnalyzerTestRunner.AnalyzerTestCaseTest(RequiresAttributeImplementationAttributeAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/RequiresAttributeTestCase")
-      resultStatus: 0
-      duration: 0
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1006
-      parentUniqueId: EditModeTestAssembly.dll/AnalyzerTestRunner/[EditModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCaseTest][suite]
-    - id: 1004
-      uniqueId: EditModeTestAssembly.dll/AnalyzerTestRunner/AnalyzerTestCaseTest/[EditModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCaseTest(BuilderAttributeVerifyAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/BuilderAttributeVerifyAnalyzerTestCase")]
-      name: AnalyzerTestCaseTest(BuilderAttributeVerifyAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/BuilderAttributeVerifyAnalyzerTestCase")
-      fullName: AnalyzerTestRunner.AnalyzerTestCaseTest(BuilderAttributeVerifyAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/BuilderAttributeVerifyAnalyzerTestCase")
-      resultStatus: 0
-      duration: 0
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1006
-      parentUniqueId: EditModeTestAssembly.dll/AnalyzerTestRunner/[EditModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCaseTest][suite]
-    - id: 1005
-      uniqueId: EditModeTestAssembly.dll/AnalyzerTestRunner/AnalyzerTestCaseTest/[EditModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCaseTest(AttributeAbstractAndInterfaceConstraintsAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/AttributeAbstractAndInterfaceConstraintsAnalyzerTestCase")]
-      name: AnalyzerTestCaseTest(AttributeAbstractAndInterfaceConstraintsAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/AttributeAbstractAndInterfaceConstraintsAnalyzerTestCase")
-      fullName: AnalyzerTestRunner.AnalyzerTestCaseTest(AttributeAbstractAndInterfaceConstraintsAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/AttributeAbstractAndInterfaceConstraintsAnalyzerTestCase")
-      resultStatus: 0
-      duration: 0
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1006
-      parentUniqueId: EditModeTestAssembly.dll/AnalyzerTestRunner/[EditModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCaseTest][suite]
-    - id: 1012
-      uniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][DBTestRunner][suite]
-      name: DBTestRunner
-      fullName: DBTestRunner
-      resultStatus: 0
-      duration: 0
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 1
-      categories: []
-      parentId: 1038
-      parentUniqueId: '[EditModeTestAssembly][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/EditModeTestAssembly.dll][suite]'
-    - id: 1013
-      uniqueId: EditModeTestAssembly.dll/DBTestRunner/[EditModeTestAssembly][DBTestRunner.InMemoryDatabaseTest]
-      name: InMemoryDatabaseTest
-      fullName: DBTestRunner.InMemoryDatabaseTest
-      resultStatus: 0
-      duration: 0
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1012
-      parentUniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][DBTestRunner][suite]
-    - id: 1014
-      uniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][EditModeTestRunner][suite]
-      name: EditModeTestRunner
-      fullName: EditModeTestRunner
-      resultStatus: 1
-      duration: 0.0309568
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 1
-      categories: []
-      parentId: 1038
-      parentUniqueId: '[EditModeTestAssembly][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/EditModeTestAssembly.dll][suite]'
-    - id: 1018
-      uniqueId: EditModeTestAssembly.dll/EditModeTestRunner/[EditModeTestAssembly][EditModeTestRunner.EnumCastPerformanceTest]
-      name: EnumCastPerformanceTest
-      fullName: EditModeTestRunner.EnumCastPerformanceTest
-      resultStatus: 0
-      duration: 0
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Performance
-      parentId: 1014
-      parentUniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][EditModeTestRunner][suite]
-    - id: 1017
-      uniqueId: EditModeTestAssembly.dll/EditModeTestRunner/[EditModeTestAssembly][EditModeTestRunner.EnumParsePerformanceTest]
-      name: EnumParsePerformanceTest
-      fullName: EditModeTestRunner.EnumParsePerformanceTest
-      resultStatus: 0
-      duration: 0
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Performance
-      parentId: 1014
-      parentUniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][EditModeTestRunner][suite]
-    - id: 1023
-      uniqueId: EditModeTestAssembly.dll/EditModeTestRunner/[EditModeTestAssembly][EditModeTestRunner.IntMarshalTest]
-      name: IntMarshalTest
-      fullName: EditModeTestRunner.IntMarshalTest
-      resultStatus: 0
-      duration: 0
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1014
-      parentUniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][EditModeTestRunner][suite]
-    - id: 1020
-      uniqueId: EditModeTestAssembly.dll/EditModeTestRunner/[EditModeTestAssembly][EditModeTestRunner.JsonPerformanceTest][suite]
-      name: JsonPerformanceTest
-      fullName: EditModeTestRunner.JsonPerformanceTest
-      resultStatus: 0
-      duration: 0
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 1
-      categories:
-      - Performance
-      parentId: 1014
-      parentUniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][EditModeTestRunner][suite]
-    - id: 1019
-      uniqueId: EditModeTestAssembly.dll/EditModeTestRunner/JsonPerformanceTest/[EditModeTestAssembly][EditModeTestRunner.JsonPerformanceTest(2500)]
-      name: JsonPerformanceTest(2500)
-      fullName: EditModeTestRunner.JsonPerformanceTest(2500)
-      resultStatus: 0
-      duration: 0
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Performance
-      parentId: 1020
-      parentUniqueId: EditModeTestAssembly.dll/EditModeTestRunner/[EditModeTestAssembly][EditModeTestRunner.JsonPerformanceTest][suite]
-    - id: 1024
-      uniqueId: EditModeTestAssembly.dll/EditModeTestRunner/[EditModeTestAssembly][EditModeTestRunner.StringMarshalTest]
-      name: StringMarshalTest
-      fullName: EditModeTestRunner.StringMarshalTest
-      resultStatus: 0
-      duration: 0
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1014
-      parentUniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][EditModeTestRunner][suite]
-    - id: 1016
-      uniqueId: EditModeTestAssembly.dll/EditModeTestRunner/[EditModeTestAssembly][EditModeTestRunner.TempPerformanceTest]
-      name: TempPerformanceTest
-      fullName: EditModeTestRunner.TempPerformanceTest
-      resultStatus: 0
-      duration: 0
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Performance
-      parentId: 1014
-      parentUniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][EditModeTestRunner][suite]
-    - id: 1015
-      uniqueId: EditModeTestAssembly.dll/EditModeTestRunner/[EditModeTestAssembly][EditModeTestRunner.TempTest_01]
-      name: TempTest_01
-      fullName: EditModeTestRunner.TempTest_01
-      resultStatus: 1
-      duration: 0.0151069
-      messages: 
-      output: '[EditModeTestRunner.TempTest_01] Alias Test
-
-'
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1014
-      parentUniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][EditModeTestRunner][suite]
-    - id: 1016
-      uniqueId: EditModeTestAssembly.dll/EditModeTestRunner/[EditModeTestAssembly][EditModeTestRunner.TempTest_02]
-      name: TempTest_02
-      fullName: EditModeTestRunner.TempTest_02
-      resultStatus: 0
-      duration: 0
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1014
-      parentUniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][EditModeTestRunner][suite]
-    - id: 1021
-      uniqueId: EditModeTestAssembly.dll/EditModeTestRunner/[EditModeTestAssembly][EditModeTestRunner.UnsafePerformanceTest]
-      name: UnsafePerformanceTest
-      fullName: EditModeTestRunner.UnsafePerformanceTest
-      resultStatus: 0
-      duration: 0
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Performance
-      parentId: 1014
-      parentUniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][EditModeTestRunner][suite]
-    - id: 1022
-      uniqueId: EditModeTestAssembly.dll/EditModeTestRunner/[EditModeTestAssembly][EditModeTestRunner.UnsafeTest]
-      name: UnsafeTest
-      fullName: EditModeTestRunner.UnsafeTest
-      resultStatus: 0
-      duration: 0
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1014
-      parentUniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][EditModeTestRunner][suite]
-    - id: 1025
-      uniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][GameDBTestRunner][suite]
-      name: GameDBTestRunner
-      fullName: GameDBTestRunner
-      resultStatus: 0
-      duration: 0
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 1
-      categories: []
-      parentId: 1038
-      parentUniqueId: '[EditModeTestAssembly][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/EditModeTestAssembly.dll][suite]'
-    - id: 1029
-      uniqueId: EditModeTestAssembly.dll/GameDBTestRunner/[EditModeTestAssembly][GameDBTestRunner.StartTest][suite]
-      name: StartTest
-      fullName: GameDBTestRunner.StartTest
-      resultStatus: 0
-      duration: 0
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 1
-      categories: []
-      parentId: 1025
-      parentUniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][GameDBTestRunner][suite]
-    - id: 1026
-      uniqueId: EditModeTestAssembly.dll/GameDBTestRunner/StartTest/[EditModeTestAssembly][GameDBTestRunner.StartTest(GameDBTestRunner+JsonTestRunner)]
-      name: StartTest(GameDBTestRunner+JsonTestRunner)
-      fullName: GameDBTestRunner.StartTest(GameDBTestRunner+JsonTestRunner)
-      resultStatus: 0
-      duration: 0
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1029
-      parentUniqueId: EditModeTestAssembly.dll/GameDBTestRunner/[EditModeTestAssembly][GameDBTestRunner.StartTest][suite]
-    - id: 1027
-      uniqueId: EditModeTestAssembly.dll/GameDBTestRunner/StartTest/[EditModeTestAssembly][GameDBTestRunner.StartTest(GameDBTestRunner+XmlTestRunner)]
-      name: StartTest(GameDBTestRunner+XmlTestRunner)
-      fullName: GameDBTestRunner.StartTest(GameDBTestRunner+XmlTestRunner)
-      resultStatus: 0
-      duration: 0
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1029
-      parentUniqueId: EditModeTestAssembly.dll/GameDBTestRunner/[EditModeTestAssembly][GameDBTestRunner.StartTest][suite]
-    - id: 1028
-      uniqueId: EditModeTestAssembly.dll/GameDBTestRunner/StartTest/[EditModeTestAssembly][GameDBTestRunner.StartTest(GameDBTestRunner+CsvTestRunner)]
-      name: StartTest(GameDBTestRunner+CsvTestRunner)
-      fullName: GameDBTestRunner.StartTest(GameDBTestRunner+CsvTestRunner)
-      resultStatus: 0
-      duration: 0
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1029
-      parentUniqueId: EditModeTestAssembly.dll/GameDBTestRunner/[EditModeTestAssembly][GameDBTestRunner.StartTest][suite]
-    - id: 1030
-      uniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][GlobalEnumTestRunner][suite]
-      name: GlobalEnumTestRunner
-      fullName: GlobalEnumTestRunner
-      resultStatus: 1
-      duration: 0.0415103
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 1
-      categories: []
-      parentId: 1038
-      parentUniqueId: '[EditModeTestAssembly][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/EditModeTestAssembly.dll][suite]'
-    - id: 1031
-      uniqueId: EditModeTestAssembly.dll/GlobalEnumTestRunner/[EditModeTestAssembly][GlobalEnumTestRunner.StartTest]
-      name: StartTest
-      fullName: GlobalEnumTestRunner.StartTest
-      resultStatus: 1
-      duration: 0.0375745
-      messages: 
-      output: '
-
-        IgnoreFailingMessages:true
-
-        [GlobalEnumTestRunner.StartTest]
-        Pass Basic Test
-
-        [GlobalEnumTestRunner.StartTest] Pass int Interaction
-        Test
-
-        [GlobalEnumTestRunner.StartTest] Pass Type Interaction Test
-
-        [GlobalEnumTestRunner.StartTest]
-        Pass Property Get Set Test
-
-        [GlobalEnumTestRunner.StartTest] Pass
-        Method Get Test
-
-        [GlobalEnumTestRunner.StartTest] Pass Method Set
-        Test
-
-        [GlobalEnumTestRunner.StartTest] Pass Contains Test
-
-'
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1030
-      parentUniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][GlobalEnumTestRunner][suite]
-    - id: 1032
-      uniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][TcpServerTestRunner][suite]
-      name: TcpServerTestRunner
-      fullName: TcpServerTestRunner
-      resultStatus: 1
-      duration: 7.514008
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 1
-      categories: []
-      parentId: 1038
-      parentUniqueId: '[EditModeTestAssembly][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/EditModeTestAssembly.dll][suite]'
-    - id: 1033
-      uniqueId: EditModeTestAssembly.dll/TcpServerTestRunner/[EditModeTestAssembly][TcpServerTestRunner.Clear]
-      name: Clear
-      fullName: TcpServerTestRunner.Clear
-      resultStatus: 1
-      duration: 0.0089558
-      messages: 
-      output: '<color=#FFEB04>[SimpleTcpServer.Stop] SimpleTcpServer is already stopped</color>
-
-        <color=#FFEB04>[SimpleTcpServer.Stop]
-        SimpleTcpServer is already stopped</color>
-
-'
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1032
-      parentUniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][TcpServerTestRunner][suite]
-    - id: 1037
-      uniqueId: EditModeTestAssembly.dll/TcpServerTestRunner/[EditModeTestAssembly][TcpServerTestRunner.TcpClientTestAsync][suite]
-      name: TcpClientTestAsync
-      fullName: TcpServerTestRunner.TcpClientTestAsync
-      resultStatus: 1
-      duration: 7.507684
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 1
-      categories: []
-      parentId: 1032
-      parentUniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][TcpServerTestRunner][suite]
-    - id: 1035
-      uniqueId: EditModeTestAssembly.dll/TcpServerTestRunner/TcpClientTestAsync/[EditModeTestAssembly][TcpServerTestRunner.TcpClientTestAsync(TcpJsonServeModule,TestTcpJsonClient)]
-      name: TcpClientTestAsync(TcpJsonServeModule,TestTcpJsonClient)
-      fullName: TcpServerTestRunner.TcpClientTestAsync(TcpJsonServeModule,TestTcpJsonClient)
-      resultStatus: 1
-      duration: 7.49337
-      messages: 
-      output: '
-
-        IgnoreFailingMessages:true
-
-        <color=#00FF00>[SimpleTcpServer.Start]
-        SimpleTcpServer Start || 0.0.0.0:8890</color>
-
-        <color=#008000>[<Start>d__13.MoveNext]
-        Connected Session || 492850191 || 127.0.0.1</color>
-
-        <color=#FF0000>[SimpleTcpServer.Stop]
-        SimpleTcpServer Stop</color>
-
-        <color=#FFFF00>[SimpleTcpClient`2.Close]
-        TcpSession is no longer valid</color>
-
-'
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1037
-      parentUniqueId: EditModeTestAssembly.dll/TcpServerTestRunner/[EditModeTestAssembly][TcpServerTestRunner.TcpClientTestAsync][suite]
-    - id: 1036
-      uniqueId: EditModeTestAssembly.dll/TcpServerTestRunner/TcpClientTestAsync/[EditModeTestAssembly][TcpServerTestRunner.TcpClientTestAsync(TcpStructServeModule,TestTcpStructClient)]
-      name: TcpClientTestAsync(TcpStructServeModule,TestTcpStructClient)
-      fullName: TcpServerTestRunner.TcpClientTestAsync(TcpStructServeModule,TestTcpStructClient)
-      resultStatus: 1
-      duration: 9.650744
-      messages: 
-      output: '<color=#00FF00>[SimpleTcpServer.Start] SimpleTcpServer Start || 0.0.0.0:8890</color>
-
-        <color=#00FF00>[<Start>d__13.MoveNext]
-        Connected Session || 768357491 || 127.0.0.1</color>
-
-        <color=#FF0000>[SimpleTcpServer.Stop]
-        SimpleTcpServer Stop</color>
-
-'
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1037
-      parentUniqueId: EditModeTestAssembly.dll/TcpServerTestRunner/[EditModeTestAssembly][TcpServerTestRunner.TcpClientTestAsync][suite]
-    - id: 1034
-      uniqueId: EditModeTestAssembly.dll/TcpServerTestRunner/[EditModeTestAssembly][TcpServerTestRunner.TcpJsonHandlerPerformanceTest]
-      name: TcpJsonHandlerPerformanceTest
-      fullName: TcpServerTestRunner.TcpJsonHandlerPerformanceTest
-      resultStatus: 0
-      duration: 0
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Performance
-      parentId: 1032
-      parentUniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][TcpServerTestRunner][suite]
-    m_ResultText: 'StartTest (0.038s)
-
-      ---
-
-      IgnoreFailingMessages:true
-
-      [GlobalEnumTestRunner.StartTest]
-      Pass Basic Test
-
-      [GlobalEnumTestRunner.StartTest] Pass int Interaction
-      Test
-
-      [GlobalEnumTestRunner.StartTest] Pass Type Interaction Test
-
-      [GlobalEnumTestRunner.StartTest]
-      Pass Property Get Set Test
-
-      [GlobalEnumTestRunner.StartTest] Pass Method
-      Get Test
-
-      [GlobalEnumTestRunner.StartTest] Pass Method Set Test
-
-      [GlobalEnumTestRunner.StartTest]
-      Pass Contains Test'
-    m_ResultStacktrace: 
-    m_TestListState:
-      scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: aa9062d9
-      m_LastClickedID: -647851862
-      m_ExpandedIDs: 5408f8a42c5c4ec2416d28c537575fcc53f7ced709d9cedca4da07e1fd8e07fe502e7e0dedaa9c1607dc1a20732940267a14c82ac29f393322524b3a9dda8a41045add4d5d4c09542cae4f5b88e2b55c739d64642f226d64db1cfa6616b81e6cffffff7f
-      m_RenameOverlay:
-        m_UserAcceptedRename: 0
-        m_Name: 
-        m_OriginalName: 
-        m_EditFieldRect:
-          serializedVersion: 2
-          x: 0
-          y: 0
-          width: 0
-          height: 0
-        m_UserData: 0
-        m_IsWaitingForDelay: 0
-        m_IsRenaming: 0
-        m_OriginalEventType: 11
-        m_IsRenamingFilename: 0
-        m_ClientGUIView: {fileID: 0}
-      m_SearchString: 
-    m_TestRunnerUIFilter:
-      PassedHidden: 0
-      FailedHidden: 0
-      NotRunHidden: 0
-      m_SearchString: 
-      selectedCategoryMask: 0
-      availableCategories:
-      - Performance
-      - Uncategorized

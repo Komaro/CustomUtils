@@ -15,6 +15,10 @@ public class TestScene : MonoBehaviour {
     }
 
     public void Start() {
+        if (_copyCamera == null) {
+            return;
+        }
+        
         if (_copyCamera.activeTexture == null) {
             var renderTexture = new RenderTexture(Screen.width, Screen.height, 50) {
                 enableRandomWrite = true

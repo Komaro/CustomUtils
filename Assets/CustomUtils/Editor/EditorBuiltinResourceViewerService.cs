@@ -27,51 +27,53 @@ public class EditorBuiltinResourceViewerService : EditorWindow {
 
     [DidReloadScripts(99999)]
     private static void CacheRefresh() {
-        _header = new MultiColumnHeader(new MultiColumnHeaderState(new[] {
-            new MultiColumnHeaderState.Column {
-                headerContent = EditorGUIUtility.IconContent("FilterByType"),
-                autoResize = false,
-                minWidth = 40f,
-                width = 40f,
-                headerTextAlignment = TextAlignment.Center,
-                allowToggleVisibility = false,
-                canSort = false,
-            },
-            new MultiColumnHeaderState.Column {
-                headerContent = new GUIContent("Content"),
-                width = 300f,
-                minWidth = 300f,
-                allowToggleVisibility = false,
-                canSort = true,
-            }
-        }));
+        if (HasOpenInstances<EditorBuiltinResourceViewerService>()) {
+            _header = new MultiColumnHeader(new MultiColumnHeaderState(new[] {
+                new MultiColumnHeaderState.Column {
+                    headerContent = EditorGUIUtility.IconContent("FilterByType"),
+                    autoResize = false,
+                    minWidth = 40f,
+                    width = 40f,
+                    headerTextAlignment = TextAlignment.Center,
+                    allowToggleVisibility = false,
+                    canSort = false,
+                },
+                new MultiColumnHeaderState.Column {
+                    headerContent = new GUIContent("Content"),
+                    width = 300f,
+                    minWidth = 300f,
+                    allowToggleVisibility = false,
+                    canSort = true,
+                }
+            }));
 
-        _searchField ??= new SearchField();
-        _treeView ??= new BuiltinResourceTreeView(new TreeViewState(), _header);
-        
-        if (_textureCacheDic.Any()) {
+            _searchField ??= new SearchField();
+            _treeView ??= new BuiltinResourceTreeView(new TreeViewState(), _header);
+            
+            if (_textureCacheDic.Any()) {
+                _treeView.Reload();
+                return;
+            }
+            
+            _textureCacheDic.Clear();
+            Debug.unityLogger.logEnabled = false;
+            var list = Resources.FindObjectsOfTypeAll<Texture2D>();
+            foreach (var texture in list) {
+                if (TryGetGUIContent(texture, out var content)) {
+                    _textureCacheDic.AutoAdd(content.GetHashCode(), texture);
+                }
+            }
+            Debug.unityLogger.logEnabled = true;
+            
+            foreach (var pair in _textureCacheDic) {
+                _treeView.Add(new TreeViewItem(pair.Key, 0, pair.Value.name) { icon = pair.Value });
+            }
+            
             _treeView.Reload();
-            return;
-        }
-        
-        _textureCacheDic.Clear();
-        Debug.unityLogger.logEnabled = false;
-        var list = Resources.FindObjectsOfTypeAll<Texture2D>();
-        foreach (var texture in list) {
-            if (TryGetGUIContent(texture, out var content)) {
-                _textureCacheDic.AutoAdd(content.GetHashCode(), texture);
-            }
-        }
-        Debug.unityLogger.logEnabled = true;
-        
-        foreach (var pair in _textureCacheDic) {
-            _treeView.Add(new TreeViewItem(pair.Key, 0, pair.Value.name) { icon = pair.Value });
-        }
-        
-        _treeView.Reload();
 
-        Resources.UnloadUnusedAssets();
-        GC.Collect();
+            Resources.UnloadUnusedAssets();
+            GC.Collect();
+        }
     }
 
     private void OnGUI() {

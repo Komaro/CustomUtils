@@ -153,7 +153,7 @@ public class ResourceService : IService {
     #endregion
 
     #region [Instantiate]
-    
+
     public TComponent Instantiate<TComponent>(string name, GameObject parent, bool isAddComponent = false) where TComponent : Component => Instantiate<TComponent>(name, parent.transform, isAddComponent);
     
     public TComponent Instantiate<TComponent>(string name, Transform parent, bool isAddComponent = false) where TComponent : Component {
@@ -187,6 +187,24 @@ public class ResourceService : IService {
             return null;
         }
         
+        return instant;
+    }
+
+    public bool TryInstantiate(string name, out GameObject go) => (go = Instantiate(name)) != null;
+
+    public GameObject Instantiate(string name) {
+        var ob = GetObject(name);
+        if (ob == null) {
+            Logger.TraceError($"{nameof(ob)} is null");
+            return null;
+        }
+
+        var instant = Object.Instantiate(ob) as GameObject;
+        if (instant == null) {
+            Logger.TraceError($"{nameof(instant)} is null");
+            return null;
+        }
+
         return instant;
     }
 

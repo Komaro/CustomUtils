@@ -31,7 +31,7 @@ public class EditorBuildService : EditorService {
         Window.Focus();
     }
     
-    [DidReloadScripts]
+    [DidReloadScripts(99999)]
     public static void CacheRefresh() {
         if (HasOpenInstances<EditorBuildService>()) {
             _builderTypes = ReflectionProvider.GetSubClassTypes<Builder>().OrderBy(type => type.TryGetCustomAttribute<PriorityAttribute>(out var attribute) ? attribute.priority : 99999).ToArray();

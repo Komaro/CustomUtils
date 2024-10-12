@@ -14,7 +14,7 @@ public class EditorHttpWebServerService : EditorService {
 
     private static SimpleHttpServer _httpServer;
     
-    private static Config _config = new Config.NullConfig();
+    private static Config _config;
 
     private static List<Type> _serveModuleList = new();
     
@@ -41,15 +41,17 @@ public class EditorHttpWebServerService : EditorService {
 
     [DidReloadScripts(99999)]
     private static void CacheRefresh() {
-        if (JsonUtil.TryLoadJson(CONFIG_PATH, out _config)) {
-            _config.StartAutoSave(CONFIG_PATH);
-        } else {
-            if (_config == null || _config.IsNull() == false) {
-                _config = new Config.NullConfig();
+        if (HasOpenInstances<EditorHttpWebServerService>()) {
+            if (JsonUtil.TryLoadJson(CONFIG_PATH, out _config)) {
+                _config.StartAutoSave(CONFIG_PATH);
+            } else {
+                if (_config == null || _config.IsNull() == false) {
+                    _config = new Config.NullConfig();
+                }
             }
+            
+            _serveModuleList = ReflectionProvider.GetSubClassTypes<HttpServeModule>().ToList();
         }
-        
-        _serveModuleList = ReflectionProvider.GetSubClassTypes<HttpServeModule>().ToList();
     }
     
     private void OnGUI() {

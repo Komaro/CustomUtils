@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 1536
     height: 780.8
   m_ShowMode: 4
-  m_Title: Test Runner
+  m_Title: Inspector
   m_RootView: {fileID: 2}
   m_MinSize: {x: 875, y: 350}
   m_MaxSize: {x: 10000, y: 10000}
@@ -119,7 +119,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 100}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 116
+  controlID: 133
   draggingID: 0
 --- !u!114 &6
 MonoBehaviour:
@@ -145,7 +145,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 1
-  controlID: 40
+  controlID: 38
   draggingID: 0
 --- !u!114 &7
 MonoBehaviour:
@@ -167,11 +167,11 @@ MonoBehaviour:
     x: 0
     y: 0
     width: 875.2
-    height: 381.6
+    height: 382.4
   m_MinSize: {x: 200, y: 50}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 41
+  controlID: 39
   draggingID: 0
 --- !u!114 &8
 MonoBehaviour:
@@ -191,13 +191,12 @@ MonoBehaviour:
     x: 0
     y: 0
     width: 232.8
-    height: 381.6
+    height: 382.4
   m_MinSize: {x: 201, y: 221}
   m_MaxSize: {x: 4001, y: 4021}
   m_ActualView: {fileID: 15}
   m_Panes:
   - {fileID: 15}
-  - {fileID: 19}
   m_Selected: 0
   m_LastSelected: 0
 --- !u!114 &9
@@ -218,7 +217,7 @@ MonoBehaviour:
     x: 232.8
     y: 0
     width: 642.4
-    height: 381.6
+    height: 382.4
   m_MinSize: {x: 202, y: 221}
   m_MaxSize: {x: 4002, y: 4021}
   m_ActualView: {fileID: 16}
@@ -244,13 +243,13 @@ MonoBehaviour:
   m_Position:
     serializedVersion: 2
     x: 0
-    y: 381.6
+    y: 382.4
     width: 875.2
-    height: 349.19998
+    height: 348.4
   m_MinSize: {x: 200, y: 50}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 197
+  controlID: 97
   draggingID: 0
 --- !u!114 &11
 MonoBehaviour:
@@ -262,7 +261,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 1
   m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: ProjectBrowser
+  m_Name: ConsoleWindow
   m_EditorClassIdentifier: 
   m_Children: []
   m_Position:
@@ -270,15 +269,15 @@ MonoBehaviour:
     x: 0
     y: 0
     width: 636.8
-    height: 349.19998
-  m_MinSize: {x: 231, y: 271}
-  m_MaxSize: {x: 10001, y: 10021}
-  m_ActualView: {fileID: 17}
+    height: 348.4
+  m_MinSize: {x: 101, y: 121}
+  m_MaxSize: {x: 4001, y: 4021}
+  m_ActualView: {fileID: 18}
   m_Panes:
   - {fileID: 17}
   - {fileID: 18}
-  m_Selected: 0
-  m_LastSelected: 1
+  m_Selected: 1
+  m_LastSelected: 0
 --- !u!114 &12
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -297,7 +296,7 @@ MonoBehaviour:
     x: 636.8
     y: 0
     width: 238.40002
-    height: 349.19998
+    height: 348.4
   m_MinSize: {x: 200, y: 200}
   m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 14}
@@ -315,7 +314,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 1
   m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: TestRunnerWindow
+  m_Name: InspectorWindow
   m_EditorClassIdentifier: 
   m_Children: []
   m_Position:
@@ -324,14 +323,14 @@ MonoBehaviour:
     y: 0
     width: 660.8
     height: 730.8
-  m_MinSize: {x: 100, y: 100}
-  m_MaxSize: {x: 4000, y: 4000}
-  m_ActualView: {fileID: 21}
+  m_MinSize: {x: 276, y: 71}
+  m_MaxSize: {x: 4001, y: 4021}
+  m_ActualView: {fileID: 19}
   m_Panes:
+  - {fileID: 19}
   - {fileID: 20}
-  - {fileID: 21}
-  m_Selected: 1
-  m_LastSelected: 0
+  m_Selected: 0
+  m_LastSelected: 1
 --- !u!114 &14
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -354,9 +353,9 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 636.8
-    y: 455.2
+    y: 456
     width: 236.40002
-    height: 328.19998
+    height: 327.4
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -373,7 +372,7 @@ MonoBehaviour:
   m_ShowGizmos: 0
   m_TargetDisplay: 0
   m_ClearColor: {r: 0, g: 0, b: 0, a: 0}
-  m_TargetSize: {x: 236.40002, y: 307.19998}
+  m_TargetSize: {x: 236.40002, y: 306.4}
   m_TextureFilterMode: 0
   m_TextureHideFlags: 61
   m_RenderIMGUI: 1
@@ -390,14 +389,14 @@ MonoBehaviour:
     vZoomLockedByDefault: 0
     m_HBaseRangeMin: -94.56001
     m_HBaseRangeMax: 94.56001
-    m_VBaseRangeMin: -122.88
-    m_VBaseRangeMax: 122.88
+    m_VBaseRangeMin: -122.56
+    m_VBaseRangeMax: 122.56
     m_HAllowExceedBaseRangeMin: 1
     m_HAllowExceedBaseRangeMax: 1
     m_VAllowExceedBaseRangeMin: 1
     m_VAllowExceedBaseRangeMax: 1
     m_ScaleWithWindow: 0
-    m_HSlider: 0
+    m_HSlider: 1
     m_VSlider: 1
     m_IgnoreScrollWheelUntilClicked: 0
     m_EnableMouseInput: 1
@@ -410,22 +409,22 @@ MonoBehaviour:
       x: 0
       y: 21
       width: 236.40002
-      height: 307.19998
-    m_Scale: {x: 1.25, y: 1.25}
-    m_Translation: {x: 118.20001, y: 153.59998}
+      height: 306.4
+    m_Scale: {x: 1.2874999, y: 1.2874999}
+    m_Translation: {x: 118.89001, y: 153.32597}
     m_MarginLeft: 0
     m_MarginRight: 0
     m_MarginTop: 0
     m_MarginBottom: 0
     m_LastShownAreaInsideMargins:
       serializedVersion: 2
-      x: -94.56001
-      y: -122.87998
-      width: 189.12003
-      height: 245.75998
+      x: -92.34176
+      y: -119.08814
+      width: 183.61168
+      height: 237.98059
     m_MinimalGUI: 1
   m_defaultScale: 1
-  m_LastWindowPixelSize: {x: 295.50003, y: 410.24997}
+  m_LastWindowPixelSize: {x: 295.50003, y: 409.25}
   m_ClearInEditMode: 1
   m_NoCameraWarning: 1
   m_LowResolutionForAspectRatios: 01000000000000000000
@@ -455,7 +454,7 @@ MonoBehaviour:
     x: 0
     y: 73.6
     width: 231.8
-    height: 360.6
+    height: 361.4
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -469,9 +468,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 1c6d0000
+      m_SelectedIDs: 0edbfeff
       m_LastClickedID: 0
-      m_ExpandedIDs: 14fbffff
+      m_ExpandedIDs: ae11ffff262affff3e2affff4e2bffffe82bffff522fffffcc30ffff6631fffffa34ffffae35ffff4836ffff5a3affff0841ffffa241ffffb445ffffc446ffff5e47ffff704bffffac4dffff464effff6452ffff8853ffff2254ffff4458ffff4c5bffffe65bfffff85fffff2e68ffffc868ffffea6cffff5471ffffee71ffff4876ffffde78ffff7079ffff8a7dffff907fffff2280ffffc083ffffc685ffff5886fffff689ffff7e8affff108bffffaa8effff308fffffca8fffffa093ffff8297ffff1c98ffff1ca2ffff34a9ffffc4a9ffff70b3ffff34b5ffffc4b5ffffc0beffff48bfffffd8bfffffc6c8ffffc6caffff56cbffff78ceffff72d0ffff02d1ffff24d4ffffb2d4ffff42d5ffff64d8ffffbadcffff4addffff6ce0ffff6ee2fffffee2ffff0ee6ffff92e6ffff22e7ffff32eaffff38ecffffc8ecffffdcefffff12f7fffff4ffffff1a800000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -487,7 +486,7 @@ MonoBehaviour:
         m_IsRenaming: 0
         m_OriginalEventType: 11
         m_IsRenamingFilename: 0
-        m_ClientGUIView: {fileID: 0}
+        m_ClientGUIView: {fileID: 8}
       m_SearchString: 
     m_ExpandedScenes: []
     m_CurrenRootInstanceID: 0
@@ -519,7 +518,7 @@ MonoBehaviour:
     x: 232.8
     y: 73.6
     width: 640.4
-    height: 360.6
+    height: 361.4
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -534,8 +533,8 @@ MonoBehaviour:
       floating: 0
       collapsed: 0
       displayed: 1
-      snapOffset: {x: -101, y: -26}
-      snapOffsetDelta: {x: -73.399994, y: -0.3999939}
+      snapOffset: {x: -174.4, y: -26.399994}
+      snapOffsetDelta: {x: 0, y: 0}
       snapCorner: 3
       id: Tool Settings
       index: 0
@@ -621,15 +620,15 @@ MonoBehaviour:
       size: {x: 0, y: 0}
       sizeOverriden: 0
     - dockPosition: 0
-      containerId: overlay-container--right
-      floating: 0
+      containerId: Floating
+      floating: 1
       collapsed: 0
       displayed: 1
-      snapOffset: {x: -112.00006, y: 169.20001}
+      snapOffset: {x: -112, y: -124}
       snapOffsetDelta: {x: 0, y: 0}
-      snapCorner: 1
+      snapCorner: 3
       id: Orientation
-      index: 0
+      index: 1
       layout: 4
       size: {x: 0, y: 0}
       sizeOverriden: 0
@@ -833,9 +832,9 @@ MonoBehaviour:
       floating: 0
       collapsed: 0
       displayed: 1
-      snapOffset: {x: 48, y: 48}
+      snapOffset: {x: -244.79999, y: -351.19998}
       snapOffsetDelta: {x: 0, y: 0}
-      snapCorner: 0
+      snapCorner: 3
       id: UnityEditor.SceneViewCameraOverlay
       index: 10
       layout: 4
@@ -847,14 +846,14 @@ MonoBehaviour:
   m_OverrideSceneCullingMask: 6917529027641081856
   m_SceneIsLit: 1
   m_SceneLighting: 1
-  m_2DMode: 1
+  m_2DMode: 0
   m_isRotationLocked: 0
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 0.96889913, y: -0.47368398, z: -0.00900003}
+    m_Target: {x: 251.08485, y: 189.20483, z: -9.11584}
     speed: 2
-    m_Value: {x: 0.96889913, y: -0.47368398, z: -0.00900003}
+    m_Value: {x: 251.08485, y: 189.20483, z: -9.11584}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -882,17 +881,17 @@ MonoBehaviour:
       m_Size: {x: 0, y: 0}
     yGrid:
       m_Fade:
-        m_Target: 0
+        m_Target: 1
         speed: 2
-        m_Value: 0
+        m_Value: 1
       m_Color: {r: 0.5, g: 0.5, b: 0.5, a: 0.4}
       m_Pivot: {x: 0, y: 0, z: 0}
       m_Size: {x: 1, y: 1}
     zGrid:
       m_Fade:
-        m_Target: 1
+        m_Target: 0
         speed: 2
-        m_Value: 1
+        m_Value: 0
       m_Color: {r: 0.5, g: 0.5, b: 0.5, a: 0.4}
       m_Pivot: {x: 0, y: 0, z: 0}
       m_Size: {x: 1, y: 1}
@@ -900,17 +899,17 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: 0, y: 0, z: 0, w: 1}
+    m_Target: {x: -0.27184528, y: -0.33629343, z: 0.10204472, w: -0.89587885}
     speed: 2
-    m_Value: {x: 0, y: 0, z: 0, w: 1}
+    m_Value: {x: -0.2718446, y: -0.3362926, z: 0.10204446, w: -0.8958766}
   m_Size:
-    m_Target: 10.9
+    m_Target: 16.788857
     speed: 2
-    m_Value: 10.9
+    m_Value: 16.788857
   m_Ortho:
-    m_Target: 1
+    m_Target: 0
     speed: 2
-    m_Value: 1
+    m_Value: 0
   m_CameraSettings:
     m_Speed: 1
     m_SpeedNormalized: 0.5
@@ -924,7 +923,7 @@ MonoBehaviour:
     m_FarClip: 10000
     m_DynamicClip: 1
     m_OcclusionCulling: 0
-  m_LastSceneViewRotation: {x: -0.08717229, y: 0.89959055, z: -0.21045254, w: -0.3726226}
+  m_LastSceneViewRotation: {x: -0.27184528, y: -0.33629343, z: 0.10204472, w: -0.89587885}
   m_LastSceneViewOrtho: 0
   m_ReplacementShader: {fileID: 0}
   m_ReplacementString: 
@@ -953,9 +952,9 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 0
-    y: 455.2
+    y: 456
     width: 635.8
-    height: 328.19998
+    height: 327.4
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -977,7 +976,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/CustomUtils/Service
+    - Packages/com.unity.render-pipelines.core/Runtime/Debugging
     m_Globs: []
     m_OriginalText: 
     m_ImportLogFlags: 0
@@ -985,16 +984,16 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 16
   m_LastFolders:
-  - Assets/CustomUtils/Service
+  - Packages/com.unity.render-pipelines.core/Runtime/Debugging
   m_LastFoldersGridSize: 16
   m_LastProjectPath: C:\Project\Unity\CustomUtils
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 315.80002}
-    m_SelectedIDs: 1a6c0000
-    m_LastClickedID: 27674
-    m_ExpandedIDs: 00000000406a0000426a0000446a0000466a0000d66b0000d86b0000de6b0000e46b0000086c00001a6c00001c6c000000ca9a3b
+    scrollPos: {x: 0, y: 604.6}
+    m_SelectedIDs: 42830000
+    m_LastClickedID: 33602
+    m_ExpandedIDs: 00000000c46b0000c66b0000c86b0000ca6b0000cc6b0000ce6b0000d06b0000d26b0000d46b0000448300004683000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1022,7 +1021,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000406a0000426a0000446a0000466a0000
+    m_ExpandedIDs: 00000000c46b0000c66b0000c86b0000ca6b0000cc6b0000ce6b0000d06b0000d26b0000d46b0000d66b0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1049,22 +1048,22 @@ MonoBehaviour:
   m_ListAreaState:
     m_SelectedInstanceIDs: 
     m_LastClickedInstanceID: 0
-    m_HadKeyboardFocusLastEvent: 1
-    m_ExpandedInstanceIDs: c6230000ac060000fc56000092f6ffff2a6600000267000000000000ce690000
+    m_HadKeyboardFocusLastEvent: 0
+    m_ExpandedInstanceIDs: c6230000ac060000fc56000092f6ffff2a66000002670000ce6900006cd8ffffbe69000000000000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: 
-      m_OriginalName: 
+      m_Name: TestPrefab
+      m_OriginalName: TestPrefab
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 0
         height: 0
-      m_UserData: 0
+      m_UserData: 27880
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
-      m_OriginalEventType: 11
+      m_OriginalEventType: 0
       m_IsRenamingFilename: 1
       m_ClientGUIView: {fileID: 11}
     m_CreateAssetUtility:
@@ -1074,7 +1073,7 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
     m_NewAssetIndexInList: -1
-    m_ScrollPosition: {x: 0, y: 0}
+    m_ScrollPosition: {x: 0, y: 115.8}
     m_GridSize: 16
   m_SkipHiddenPackages: 0
   m_DirectoriesAreaWidth: 253
@@ -1100,9 +1099,9 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 0
-    y: 455.2
+    y: 456
     width: 635.8
-    height: 328.19998
+    height: 327.4
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -1114,189 +1113,6 @@ MonoBehaviour:
     m_SaveData: []
     m_OverlaysVisible: 1
 --- !u!114 &19
-MonoBehaviour:
-  m_ObjectHideFlags: 52
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 12373, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_MinSize: {x: 100, y: 100}
-  m_MaxSize: {x: 4000, y: 4000}
-  m_TitleContent:
-    m_Text: Audio Mixer
-    m_Image: {fileID: -3283902137440876849, guid: 0000000000000000d000000000000000,
-      type: 0}
-    m_Tooltip: 
-  m_Pos:
-    serializedVersion: 2
-    x: 0
-    y: 73.6
-    width: 413.4
-    height: 360.6
-  m_SerializedDataModeController:
-    m_DataMode: 0
-    m_PreferredDataMode: 0
-    m_SupportedDataModes: 
-    isAutomatic: 1
-  m_ViewDataDictionary: {fileID: 0}
-  m_OverlayCanvas:
-    m_LastAppliedPresetName: Default
-    m_SaveData: []
-    m_OverlaysVisible: 1
-  m_MixersTreeState:
-    scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 
-    m_LastClickedID: 27086
-    m_ExpandedIDs: 12eb343c
-    m_RenameOverlay:
-      m_UserAcceptedRename: 0
-      m_Name: 
-      m_OriginalName: 
-      m_EditFieldRect:
-        serializedVersion: 2
-        x: 0
-        y: 0
-        width: 0
-        height: 0
-      m_UserData: 0
-      m_IsWaitingForDelay: 0
-      m_IsRenaming: 0
-      m_OriginalEventType: 11
-      m_IsRenamingFilename: 0
-      m_ClientGUIView: {fileID: 8}
-    m_SearchString: 
-    m_CreateAssetUtility:
-      m_EndAction: {fileID: 0}
-      m_InstanceID: 0
-      m_Path: 
-      m_Icon: {fileID: 0}
-      m_ResourceFile: 
-  m_LayoutStripsOnTop:
-    m_VerticalSplitter:
-      ID: 0
-      splitterInitialOffset: 0
-      currentActiveSplitter: -1
-      realSizes:
-      - 65
-      - 35
-      relativeSizes:
-      - 0.65
-      - 0.35000002
-      minSizes:
-      - 85
-      - 105
-      maxSizes:
-      - 0
-      - 0
-      lastTotalSize: 0
-      splitSize: 6
-      xOffset: 0
-      m_Version: 1
-      oldRealSizes: 
-      oldMinSizes: 
-      oldMaxSizes: 
-      oldSplitSize: 0
-    m_HorizontalSplitter:
-      ID: 0
-      splitterInitialOffset: 0
-      currentActiveSplitter: -1
-      realSizes:
-      - 60
-      - 60
-      - 60
-      - 60
-      relativeSizes:
-      - 0.25
-      - 0.25
-      - 0.25
-      - 0.25
-      minSizes:
-      - 85
-      - 85
-      - 85
-      - 85
-      maxSizes:
-      - 0
-      - 0
-      - 0
-      - 0
-      lastTotalSize: 0
-      splitSize: 6
-      xOffset: 0
-      m_Version: 1
-      oldRealSizes: 
-      oldMinSizes: 
-      oldMaxSizes: 
-      oldSplitSize: 0
-  m_LayoutStripsOnRight:
-    m_VerticalSplitter:
-      ID: 0
-      splitterInitialOffset: 0
-      currentActiveSplitter: -1
-      realSizes:
-      - 60
-      - 60
-      - 60
-      - 60
-      relativeSizes:
-      - 0.25
-      - 0.25
-      - 0.25
-      - 0.25
-      minSizes:
-      - 100
-      - 85
-      - 85
-      - 85
-      maxSizes:
-      - 0
-      - 0
-      - 0
-      - 0
-      lastTotalSize: 0
-      splitSize: 6
-      xOffset: 0
-      m_Version: 1
-      oldRealSizes: 
-      oldMinSizes: 
-      oldMaxSizes: 
-      oldSplitSize: 0
-    m_HorizontalSplitter:
-      ID: 24
-      splitterInitialOffset: 0
-      currentActiveSplitter: -1
-      realSizes:
-      - 160
-      - 253.6
-      relativeSizes:
-      - 0.3
-      - 0.7
-      minSizes:
-      - 160
-      - 160
-      maxSizes:
-      - 0
-      - 0
-      lastTotalSize: 413.6
-      splitSize: 6
-      xOffset: 0
-      m_Version: 1
-      oldRealSizes: 
-      oldMinSizes: 
-      oldMaxSizes: 
-      oldSplitSize: 0
-  m_SectionOrder: 00000000030000000100000002000000
-  m_LayoutMode: 1
-  m_SortGroupsAlphabetically: 0
-  m_ShowReferencedBuses: 1
-  m_ShowBusConnections: 0
-  m_ShowBusConnectionsOfSelection: 0
---- !u!114 &20
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1317,9 +1133,9 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 1067.2001
+    x: 875.2
     y: 73.6
-    width: 467.80005
+    width: 659.8
     height: 709.8
   m_SerializedDataModeController:
     m_DataMode: 0
@@ -1344,7 +1160,7 @@ MonoBehaviour:
   m_LockTracker:
     m_IsLocked: 0
   m_PreviewWindow: {fileID: 0}
---- !u!114 &21
+--- !u!114 &20
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1379,7 +1195,7 @@ MonoBehaviour:
     m_SaveData: []
     m_OverlaysVisible: 1
   m_Spl:
-    ID: 147
+    ID: 559
     splitterInitialOffset: 290.8
     currentActiveSplitter: -1
     realSizes:
@@ -1404,15 +1220,15 @@ MonoBehaviour:
     oldSplitSize: 0
   m_TestTypeToolbarIndex: 1
   m_PlayModeTestListGUI:
-    m_Window: {fileID: 21}
+    m_Window: {fileID: 20}
     m_NewResultList:
     - id: 1004
       uniqueId: '[CustomUtils][suite]'
       name: CustomUtils
       fullName: CustomUtils
-      resultStatus: 1
-      duration: 5.748584
-      messages: 
+      resultStatus: 2
+      duration: 0.4647877
+      messages: One or more child tests had errors
       output: 
       stacktrace: 
       notRunnable: 0
@@ -1426,9 +1242,9 @@ MonoBehaviour:
       uniqueId: '[PlayModeTestAssembly][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/PlayModeTestAssembly.dll][suite]'
       name: PlayModeTestAssembly.dll
       fullName: C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/PlayModeTestAssembly.dll
-      resultStatus: 1
-      duration: 5.7296367
-      messages: 
+      resultStatus: 2
+      duration: 0.4440355
+      messages: One or more child tests had errors
       output: 
       stacktrace: 
       notRunnable: 0
@@ -1439,11 +1255,119 @@ MonoBehaviour:
       parentId: 1010
       parentUniqueId: '[CustomUtils][suite]'
     - id: 1001
+      uniqueId: PlayModeTestAssembly.dll/[PlayModeTestAssembly][ObjectPoolServiceTestRunner][suite]
+      name: ObjectPoolServiceTestRunner
+      fullName: ObjectPoolServiceTestRunner
+      resultStatus: 1
+      duration: 0.7049863
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1008
+      parentUniqueId: '[PlayModeTestAssembly][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/PlayModeTestAssembly.dll][suite]'
+    - id: 1002
+      uniqueId: PlayModeTestAssembly.dll/ObjectPoolServiceTestRunner/[PlayModeTestAssembly][ObjectPoolServiceTestRunner.ObjectPoolServiceTest]
+      name: ObjectPoolServiceTest
+      fullName: ObjectPoolServiceTestRunner.ObjectPoolServiceTest
+      resultStatus: 1
+      duration: 0.6739914
+      messages: 
+      output: "<color=#00FFFF>[ResourceService.GetValidProvider] Activate provider
+        || ResourcesProvider</color>\r\n<color=#00FFFF>[ResourceService.GetValidProvider]
+        Activate provider || AssetBundleProvider</color>\r\n<color=#00FFFF>[Service.StartService]
+        Service Start || ResourceService</color>\r\n<color=#00FFFF>[Service.StartService]
+        Service Start || ObjectPoolService</color>\r\n[<>c.<ObjectPoolServiceTest>b__6_0]
+        TestPrefab\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab TestPrefab_1\r\n[<>c.<ObjectPoolServiceTest>b__6_0]
+        TestPrefab TestPrefab_1 TestPrefab_2\r\n[<>c.<ObjectPoolServiceTest>b__6_0]
+        TestPrefab_1 TestPrefab_2\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab_2\r\n[<>c.<ObjectPoolServiceTest>b__6_0]
+        \n\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab\r\n[<>c.<ObjectPoolServiceTest>b__6_0]
+        TestPrefab TestPrefab_1\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab
+        TestPrefab_1 TestPrefab_2\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab_1
+        TestPrefab_2\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab_2\r\n[<>c.<ObjectPoolServiceTest>b__6_0]
+        \n\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab\r\n[<>c.<ObjectPoolServiceTest>b__6_0]
+        TestPrefab TestPrefab_1\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab
+        TestPrefab_1 TestPrefab_2\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab_1
+        TestPrefab_2\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab_2\r\n[<>c.<ObjectPoolServiceTest>b__6_0]
+        \n\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab\r\n[<>c.<ObjectPoolServiceTest>b__6_0]
+        TestPrefab TestPrefab_1\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab
+        TestPrefab_1 TestPrefab_2\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab_1
+        TestPrefab_2\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab_2\r\n[<>c.<ObjectPoolServiceTest>b__6_0]
+        \n\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab\r\n[<>c.<ObjectPoolServiceTest>b__6_0]
+        TestPrefab TestPrefab_1\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab
+        TestPrefab_1 TestPrefab_2\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab_1
+        TestPrefab_2\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab_2\r\n[<>c.<ObjectPoolServiceTest>b__6_0]
+        \n\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab\r\n[<>c.<ObjectPoolServiceTest>b__6_0]
+        TestPrefab TestPrefab_1\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab
+        TestPrefab_1 TestPrefab_2\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab_1
+        TestPrefab_2\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab_2\r\n[<>c.<ObjectPoolServiceTest>b__6_0]
+        \n\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab\r\n[<>c.<ObjectPoolServiceTest>b__6_0]
+        TestPrefab TestPrefab_1\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab
+        TestPrefab_1 TestPrefab_2\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab_1
+        TestPrefab_2\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab_2\r\n[<>c.<ObjectPoolServiceTest>b__6_0]
+        \n\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab\r\n[<>c.<ObjectPoolServiceTest>b__6_0]
+        TestPrefab TestPrefab_1\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab
+        TestPrefab_1 TestPrefab_2\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab_1
+        TestPrefab_2\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab_2\r\n[<>c.<ObjectPoolServiceTest>b__6_0]
+        \n\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab\r\n[<>c.<ObjectPoolServiceTest>b__6_0]
+        TestPrefab TestPrefab_1\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab
+        TestPrefab_1 TestPrefab_2\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab_1
+        TestPrefab_2\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab_2\r\n[<>c.<ObjectPoolServiceTest>b__6_0]
+        \n\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab\r\n[<>c.<ObjectPoolServiceTest>b__6_0]
+        TestPrefab TestPrefab_1\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab
+        TestPrefab_1 TestPrefab_2\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab_1
+        TestPrefab_2\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab_2\r\n[<>c.<ObjectPoolServiceTest>b__6_0]
+        \n\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab\r\n[<>c.<ObjectPoolServiceTest>b__6_0]
+        TestPrefab TestPrefab_1\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab
+        TestPrefab_1 TestPrefab_2\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab_1
+        TestPrefab_2\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab_2\r\n[<>c.<ObjectPoolServiceTest>b__6_0]
+        \n\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab\r\n[<>c.<ObjectPoolServiceTest>b__6_0]
+        TestPrefab TestPrefab_1\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab
+        TestPrefab_1 TestPrefab_2\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab_1
+        TestPrefab_2\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab_2\r\n[<>c.<ObjectPoolServiceTest>b__6_0]
+        \n\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab\r\n[<>c.<ObjectPoolServiceTest>b__6_0]
+        TestPrefab TestPrefab_1\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab
+        TestPrefab_1 TestPrefab_2\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab_1
+        TestPrefab_2\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab_2\r\n[<>c.<ObjectPoolServiceTest>b__6_0]
+        \n\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab\r\n[<>c.<ObjectPoolServiceTest>b__6_0]
+        TestPrefab TestPrefab_1\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab
+        TestPrefab_1 TestPrefab_2\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab_1
+        TestPrefab_2\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab_2\r\n[<>c.<ObjectPoolServiceTest>b__6_0]
+        \n\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab\r\n[<>c.<ObjectPoolServiceTest>b__6_0]
+        TestPrefab TestPrefab_1\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab
+        TestPrefab_1 TestPrefab_2\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab_1
+        TestPrefab_2\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab_2\r\n[<>c.<ObjectPoolServiceTest>b__6_0]
+        \n\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab\r\n[<>c.<ObjectPoolServiceTest>b__6_0]
+        TestPrefab TestPrefab_1\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab
+        TestPrefab_1 TestPrefab_2\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab_1
+        TestPrefab_2\r\n[<>c.<ObjectPoolServiceTest>b__6_0] TestPrefab_2\r\n[<>c.<ObjectPoolServiceTest>b__6_0]
+        \n\r\nObjectPoolServiceTest.GC() in Undefineds\nMin:\t\t429.00 \nMedian:\t\t429.50
+        \nMax:\t\t1480.00 \nAvg:\t\t495.50 \nStdDev:\t\t254.20 \nSampleCount:\t16\nSum:\t\t7928.00
+        \r\nFirst samples:\t\u2588\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\r\nHistogram:\t\u2588\u2581\u2581\u2581\r\n\r\nObjectPoolServiceTest
+        in Milliseconds\nMin:\t\t7.12 ms\nMedian:\t\t7.92 ms\nMax:\t\t8.31 ms\nAvg:\t\t7.85
+        ms\nStdDev:\t\t0.34 ms\nSampleCount:\t15\nSum:\t\t117.69 ms\r\nFirst samples:\t\u2588\u2586\u2588\u2585\u2587\u2581\u2587\u2585\u2586\u2586\u2585\u2586\u2581\u2584\u2585\r\nHistogram:\t\u2588\u2584\u2583\u2581\r\n\r\n\r\n##performancetestresult2:{\"Name\":\"ObjectPoolServiceTestRunner.ObjectPoolServiceTest\",\"ClassName\":\"ObjectPoolServiceTestRunner\",\"MethodName\":\"ObjectPoolServiceTest\",\"Version\":\"1\",\"Categories\":[\"Performance\"],\"SampleGroups\":[{\"Name\":\"ObjectPoolServiceTest.GC()\",\"Unit\":8,\"IncreaseIsBetter\":false,\"Samples\":[1480.0,432.0,431.0,431.0,430.0,430.0,429.0,429.0,431.0,429.0,431.0,429.0,429.0,429.0,429.0,429.0],\"Min\":429.0,\"Max\":1480.0,\"Median\":429.5,\"Average\":495.5,\"StandardDeviation\":254.19874114558474,\"Sum\":7928.0},{\"Name\":\"ObjectPoolServiceTest\",\"Unit\":2,\"IncreaseIsBetter\":false,\"Samples\":[8.311999999999998,7.917600000000007,8.309099999999987,7.884299999999996,8.093999999999994,7.124600000000015,8.116500000000002,7.740499999999997,8.015800000000013,7.920400000000029,7.750999999999976,7.9325000000000049,7.117600000000039,7.658799999999985,7.797300000000007],\"Min\":7.117600000000039,\"Max\":8.311999999999998,\"Median\":7.917600000000007,\"Average\":7.846133333333337,\"StandardDeviation\":0.33894837299439958,\"Sum\":117.69200000000005}]}\r\n##performancetestruninfo2:{\"TestSuite\":\"Playmode\",\"Date\":1728712644449,\"Player\":{\"Development\":true,\"ScreenWidth\":1920,\"ScreenHeight\":1080,\"ScreenRefreshRate\":60,\"Fullscreen\":false,\"Vsync\":1,\"AntiAliasing\":0,\"Batchmode\":false,\"RenderThreadingMode\":\"MultiThreaded\",\"GpuSkinning\":false,\"Platform\":\"WindowsEditor\",\"ColorSpace\":\"Gamma\",\"AnisotropicFiltering\":\"Disable\",\"BlendWeights\":\"FourBones\",\"GraphicsApi\":\"Direct3D11\",\"ScriptingBackend\":\"Mono2x\",\"AndroidTargetSdkVersion\":\"AndroidApiLevelAuto\",\"AndroidBuildSystem\":\"Gradle\",\"BuildTarget\":\"StandaloneWindows64\",\"StereoRenderingPath\":\"MultiPass\"},\"Hardware\":{\"OperatingSystem\":\"Windows
+        10  (10.0.19045) 64bit\",\"DeviceModel\":\"82R4 (LENOVO)\",\"DeviceName\":\"DESKTOP-55T0R54\",\"ProcessorType\":\"AMD
+        Ryzen 5 5500U with Radeon Graphics \",\"ProcessorCount\":12,\"GraphicsDeviceName\":\"AMD
+        Radeon(TM) Graphics\",\"SystemMemorySizeMB\":14181},\"Editor\":{\"Version\":\"2022.3.46f1\",\"Branch\":\"2022.3/staging\",\"Changeset\":\"8e9b8558c41a\",\"Date\":1725396290},\"Dependencies\":[\"com.cysharp.unitask@2.5.5\",\"com.unity.2d.animation@9.1.1\",\"com.unity.2d.pixel-perfect@5.0.3\",\"com.unity.2d.psdimporter@8.0.5\",\"com.unity.2d.sprite@1.0.0\",\"com.unity.2d.spriteshape@9.0.4\",\"com.unity.2d.tilemap@1.0.0\",\"com.unity.ai.navigation@1.1.5\",\"com.unity.assetbundlebrowser@1.7.0\",\"com.unity.collab-proxy@2.4.4\",\"com.unity.editorcoroutines@1.0.0\",\"com.unity.ide.rider@3.0.31\",\"com.unity.ide.vscode@1.2.5\",\"com.unity.memoryprofiler@1.1.0\",\"com.unity.mobile.android-logcat@1.4.2\",\"com.unity.performance.profile-analyzer@1.2.2\",\"com.unity.profiling.core@1.0.2\",\"com.unity.render-pipelines.universal@14.0.11\",\"com.unity.test-framework@1.3.9\",\"com.unity.test-framework.performance@3.0.3\",\"com.unity.textmeshpro@3.0.9\",\"com.unity.timeline@1.7.6\",\"com.unity.ugui@1.0.0\",\"com.unity.modules.ai@1.0.0\",\"com.unity.modules.androidjni@1.0.0\",\"com.unity.modules.animation@1.0.0\",\"com.unity.modules.assetbundle@1.0.0\",\"com.unity.modules.audio@1.0.0\",\"com.unity.modules.cloth@1.0.0\",\"com.unity.modules.director@1.0.0\",\"com.unity.modules.imageconversion@1.0.0\",\"com.unity.modules.imgui@1.0.0\",\"com.unity.modules.jsonserialize@1.0.0\",\"com.unity.modules.particlesystem@1.0.0\",\"com.unity.modules.physics@1.0.0\",\"com.unity.modules.physics2d@1.0.0\",\"com.unity.modules.screencapture@1.0.0\",\"com.unity.modules.terrain@1.0.0\",\"com.unity.modules.terrainphysics@1.0.0\",\"com.unity.modules.tilemap@1.0.0\",\"com.unity.modules.ui@1.0.0\",\"com.unity.modules.uielements@1.0.0\",\"com.unity.modules.umbra@1.0.0\",\"com.unity.modules.unityanalytics@1.0.0\",\"com.unity.modules.unitywebrequest@1.0.0\",\"com.unity.modules.unitywebrequestassetbundle@1.0.0\",\"com.unity.modules.unitywebrequestaudio@1.0.0\",\"com.unity.modules.unitywebrequesttexture@1.0.0\",\"com.unity.modules.unitywebrequestwww@1.0.0\",\"com.unity.modules.vehicles@1.0.0\",\"com.unity.modules.video@1.0.0\",\"com.unity.modules.vr@1.0.0\",\"com.unity.modules.wind@1.0.0\",\"com.unity.modules.xr@1.0.0\",\"com.unity.modules.subsystems@1.0.0\",\"com.unity.ext.nunit@2.0.3\",\"com.unity.mathematics@1.2.6\",\"com.unity.burst@1.8.17\",\"com.unity.render-pipelines.core@14.0.11\",\"com.unity.shadergraph@14.0.11\",\"com.unity.render-pipelines.universal-config@14.0.10\",\"com.unity.2d.common@8.0.3\",\"com.unity.collections@1.2.4\",\"com.unity.searcher@4.9.2\"],\"Results\":[]}\r\n"
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1001
+      parentUniqueId: PlayModeTestAssembly.dll/[PlayModeTestAssembly][ObjectPoolServiceTestRunner][suite]
+    - id: 1001
       uniqueId: PlayModeTestAssembly.dll/[PlayModeTestAssembly][ResourceServiceTestRunner][suite]
       name: ResourceServiceTestRunner
       fullName: ResourceServiceTestRunner
       resultStatus: 1
-      duration: 5.7145996
+      duration: 5.792234
       messages: 
       output: 
       stacktrace: 
@@ -1503,7 +1427,7 @@ MonoBehaviour:
       name: ResourceServiceTest
       fullName: ResourceServiceTestRunner.ResourceServiceTest
       resultStatus: 1
-      duration: 5.6840854
+      duration: 5.760419
       messages: 
       output: "<color=#00FFFF>[ResourceService.GetValidProvider] Activate provider
         || ResourcesProvider</color>\r\n<color=#00FFFF>[ResourceService.GetValidProvider]
@@ -1597,12 +1521,12 @@ MonoBehaviour:
         TestPrefab\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab_1\r\n[<>c.<ResourceServiceTest>b__2_0]
         TestPrefab_2\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab_3\r\n[<>c.<ResourceServiceTest>b__2_0]
         Get || FreeSampleSFX\r\nGroup_01.GC() in Undefineds\nMin:\t\t431.40 \nMedian:\t\t431.80
-        \nMax:\t\t1068.20 \nAvg:\t\t522.69 \nStdDev:\t\t222.71 \nSampleCount:\t7\nSum:\t\t3658.80
+        \nMax:\t\t982.60 \nAvg:\t\t510.49 \nStdDev:\t\t192.74 \nSampleCount:\t7\nSum:\t\t3573.40
         \r\nFirst samples:\t\u2588\u2581\u2581\u2581\u2581\u2581\u2581\r\n(not enough
-        samples for histogram)\n\r\nGroup_01 in Milliseconds\nMin:\t\t26.04 ms\nMedian:\t\t27.16
-        ms\nMax:\t\t28.10 ms\nAvg:\t\t27.02 ms\nStdDev:\t\t0.71 ms\nSampleCount:\t5\nSum:\t\t135.08
-        ms\r\nFirst samples:\t\u2583\u2585\u2585\u2581\u2588\r\n(not enough samples
-        for histogram)\n\r\n\r\n##performancetestresult2:{\"Name\":\"ResourceServiceTestRunner.ResourceServiceTest\",\"ClassName\":\"ResourceServiceTestRunner\",\"MethodName\":\"ResourceServiceTest\",\"Version\":\"1\",\"Categories\":[\"Performance\"],\"SampleGroups\":[{\"Name\":\"Group_01.GC()\",\"Unit\":8,\"IncreaseIsBetter\":false,\"Samples\":[1068.2,432.2,432.2,431.4,431.8,431.6,431.4],\"Min\":431.4,\"Max\":1068.2,\"Median\":431.8,\"Average\":522.6857142857143,\"StandardDeviation\":222.70549052550119,\"Sum\":3658.8},{\"Name\":\"Group_01\",\"Unit\":2,\"IncreaseIsBetter\":false,\"Samples\":[26.48060000000001,27.305000000000008,27.15900000000005,26.03860000000003,28.100099999999999],\"Min\":26.03860000000003,\"Max\":28.100099999999999,\"Median\":27.15900000000005,\"Average\":27.01666000000002,\"StandardDeviation\":0.7100992257424228,\"Sum\":135.0833000000001}]}\r\n##performancetestruninfo2:{\"TestSuite\":\"Playmode\",\"Date\":1727585113509,\"Player\":{\"Development\":true,\"ScreenWidth\":1920,\"ScreenHeight\":1080,\"ScreenRefreshRate\":60,\"Fullscreen\":false,\"Vsync\":1,\"AntiAliasing\":0,\"Batchmode\":false,\"RenderThreadingMode\":\"MultiThreaded\",\"GpuSkinning\":false,\"Platform\":\"WindowsEditor\",\"ColorSpace\":\"Gamma\",\"AnisotropicFiltering\":\"Disable\",\"BlendWeights\":\"FourBones\",\"GraphicsApi\":\"Direct3D11\",\"ScriptingBackend\":\"Mono2x\",\"AndroidTargetSdkVersion\":\"AndroidApiLevelAuto\",\"AndroidBuildSystem\":\"Gradle\",\"BuildTarget\":\"StandaloneWindows64\",\"StereoRenderingPath\":\"MultiPass\"},\"Hardware\":{\"OperatingSystem\":\"Windows
+        samples for histogram)\n\r\nGroup_01 in Milliseconds\nMin:\t\t25.75 ms\nMedian:\t\t27.72
+        ms\nMax:\t\t29.66 ms\nAvg:\t\t27.49 ms\nStdDev:\t\t1.34 ms\nSampleCount:\t5\nSum:\t\t137.43
+        ms\r\nFirst samples:\t\u2588\u2582\u2585\u2585\u2581\r\n(not enough samples
+        for histogram)\n\r\n\r\n##performancetestresult2:{\"Name\":\"ResourceServiceTestRunner.ResourceServiceTest\",\"ClassName\":\"ResourceServiceTestRunner\",\"MethodName\":\"ResourceServiceTest\",\"Version\":\"1\",\"Categories\":[\"Performance\"],\"SampleGroups\":[{\"Name\":\"Group_01.GC()\",\"Unit\":8,\"IncreaseIsBetter\":false,\"Samples\":[982.6,432.2,432.2,431.4,431.8,431.8,431.4],\"Min\":431.4,\"Max\":982.6,\"Median\":431.8,\"Average\":510.4857142857144,\"StandardDeviation\":192.74008722756614,\"Sum\":3573.4000000000005},{\"Name\":\"Group_01\",\"Unit\":2,\"IncreaseIsBetter\":false,\"Samples\":[29.65730000000002,26.446199999999977,27.72320000000002,27.851400000000014,25.75029999999998],\"Min\":25.75029999999998,\"Max\":29.65730000000002,\"Median\":27.72320000000002,\"Average\":27.485680000000003,\"StandardDeviation\":1.3415038358499183,\"Sum\":137.4284}]}\r\n##performancetestruninfo2:{\"TestSuite\":\"Playmode\",\"Date\":1728712672446,\"Player\":{\"Development\":true,\"ScreenWidth\":1920,\"ScreenHeight\":1080,\"ScreenRefreshRate\":60,\"Fullscreen\":false,\"Vsync\":1,\"AntiAliasing\":0,\"Batchmode\":false,\"RenderThreadingMode\":\"MultiThreaded\",\"GpuSkinning\":false,\"Platform\":\"WindowsEditor\",\"ColorSpace\":\"Gamma\",\"AnisotropicFiltering\":\"Disable\",\"BlendWeights\":\"FourBones\",\"GraphicsApi\":\"Direct3D11\",\"ScriptingBackend\":\"Mono2x\",\"AndroidTargetSdkVersion\":\"AndroidApiLevelAuto\",\"AndroidBuildSystem\":\"Gradle\",\"BuildTarget\":\"StandaloneWindows64\",\"StereoRenderingPath\":\"MultiPass\"},\"Hardware\":{\"OperatingSystem\":\"Windows
         10  (10.0.19045) 64bit\",\"DeviceModel\":\"82R4 (LENOVO)\",\"DeviceName\":\"DESKTOP-55T0R54\",\"ProcessorType\":\"AMD
         Ryzen 5 5500U with Radeon Graphics \",\"ProcessorCount\":12,\"GraphicsDeviceName\":\"AMD
         Radeon(TM) Graphics\",\"SystemMemorySizeMB\":14181},\"Editor\":{\"Version\":\"2022.3.46f1\",\"Branch\":\"2022.3/staging\",\"Changeset\":\"8e9b8558c41a\",\"Date\":1725396290},\"Dependencies\":[\"com.cysharp.unitask@2.5.5\",\"com.unity.2d.animation@9.1.1\",\"com.unity.2d.pixel-perfect@5.0.3\",\"com.unity.2d.psdimporter@8.0.5\",\"com.unity.2d.sprite@1.0.0\",\"com.unity.2d.spriteshape@9.0.4\",\"com.unity.2d.tilemap@1.0.0\",\"com.unity.ai.navigation@1.1.5\",\"com.unity.assetbundlebrowser@1.7.0\",\"com.unity.collab-proxy@2.4.4\",\"com.unity.editorcoroutines@1.0.0\",\"com.unity.ide.rider@3.0.31\",\"com.unity.ide.vscode@1.2.5\",\"com.unity.memoryprofiler@1.1.0\",\"com.unity.mobile.android-logcat@1.4.2\",\"com.unity.performance.profile-analyzer@1.2.2\",\"com.unity.profiling.core@1.0.2\",\"com.unity.render-pipelines.universal@14.0.11\",\"com.unity.test-framework@1.3.9\",\"com.unity.test-framework.performance@3.0.3\",\"com.unity.textmeshpro@3.0.9\",\"com.unity.timeline@1.7.6\",\"com.unity.ugui@1.0.0\",\"com.unity.modules.ai@1.0.0\",\"com.unity.modules.androidjni@1.0.0\",\"com.unity.modules.animation@1.0.0\",\"com.unity.modules.assetbundle@1.0.0\",\"com.unity.modules.audio@1.0.0\",\"com.unity.modules.cloth@1.0.0\",\"com.unity.modules.director@1.0.0\",\"com.unity.modules.imageconversion@1.0.0\",\"com.unity.modules.imgui@1.0.0\",\"com.unity.modules.jsonserialize@1.0.0\",\"com.unity.modules.particlesystem@1.0.0\",\"com.unity.modules.physics@1.0.0\",\"com.unity.modules.physics2d@1.0.0\",\"com.unity.modules.screencapture@1.0.0\",\"com.unity.modules.terrain@1.0.0\",\"com.unity.modules.terrainphysics@1.0.0\",\"com.unity.modules.tilemap@1.0.0\",\"com.unity.modules.ui@1.0.0\",\"com.unity.modules.uielements@1.0.0\",\"com.unity.modules.umbra@1.0.0\",\"com.unity.modules.unityanalytics@1.0.0\",\"com.unity.modules.unitywebrequest@1.0.0\",\"com.unity.modules.unitywebrequestassetbundle@1.0.0\",\"com.unity.modules.unitywebrequestaudio@1.0.0\",\"com.unity.modules.unitywebrequesttexture@1.0.0\",\"com.unity.modules.unitywebrequestwww@1.0.0\",\"com.unity.modules.vehicles@1.0.0\",\"com.unity.modules.video@1.0.0\",\"com.unity.modules.vr@1.0.0\",\"com.unity.modules.wind@1.0.0\",\"com.unity.modules.xr@1.0.0\",\"com.unity.modules.subsystems@1.0.0\",\"com.unity.ext.nunit@2.0.3\",\"com.unity.mathematics@1.2.6\",\"com.unity.burst@1.8.17\",\"com.unity.render-pipelines.core@14.0.11\",\"com.unity.shadergraph@14.0.11\",\"com.unity.render-pipelines.universal-config@14.0.10\",\"com.unity.2d.common@8.0.3\",\"com.unity.collections@1.2.4\",\"com.unity.searcher@4.9.2\"],\"Results\":[]}\r\n"
@@ -1619,9 +1543,9 @@ MonoBehaviour:
       uniqueId: PlayModeTestAssembly.dll/[PlayModeTestAssembly][SoundTestRunner][suite]
       name: SoundTestRunner
       fullName: SoundTestRunner
-      resultStatus: 0
-      duration: 0
-      messages: 
+      resultStatus: 2
+      duration: 0.4339054
+      messages: One or more child tests had errors
       output: 
       stacktrace: 
       notRunnable: 0
@@ -1635,11 +1559,38 @@ MonoBehaviour:
       uniqueId: PlayModeTestAssembly.dll/SoundTestRunner/[PlayModeTestAssembly][SoundTestRunner.SoundManagerTest]
       name: SoundManagerTest
       fullName: SoundTestRunner.SoundManagerTest
-      resultStatus: 0
-      duration: 0
-      messages: 
-      output: 
-      stacktrace: 
+      resultStatus: 2
+      duration: 0.401048
+      messages: 'System.NullReferenceException : Object reference not set to an instance
+        of an object'
+      output: '<color=#00FFFF>[ResourceService.GetValidProvider] Activate provider
+        || ResourcesProvider</color>
+
+        <color=#00FFFF>[ResourceService.GetValidProvider]
+        Activate provider || AssetBundleProvider</color>
+
+        <color=#00FFFF>[Service.StartService]
+        Service Start || ResourceService</color>
+
+        <color=#00FFFF>[SampleSoundManager..ctor]
+        SoundCoreBase Activate</color>
+
+        <color=#00FFFF>[SampleSoundManager.InitSound]
+        SampleSound Activate</color>
+
+        Exposed name does not exist: TYPE_1
+
+        <color=#00FFFF>[SampleSoundManager.InitSound]
+        Sample_SoundBgm Activate</color>
+
+'
+      stacktrace: "  at CommonExtension.ToStringAllFields (System.Object ob, System.String
+        prefix, System.Reflection.BindingFlags bindingFlags) [0x000a3] in C:\\Project\\Unity\\CustomUtils\\Assets\\CustomUtils\\Common\\Extension\\CommonExtension.cs:34
+        \r\n  at SoundTestRunner.SoundManagerTest () [0x0002b] in C:\\Project\\Unity\\CustomUtils\\Assets\\Test\\PlayMode\\SooundTest\\SoundTestRunner.cs:20
+        \r\n  at (wrapper managed-to-native) System.Reflection.RuntimeMethodInfo.InternalInvoke(System.Reflection.RuntimeMethodInfo,object,object[],System.Exception&)\r\n 
+        at System.Reflection.RuntimeMethodInfo.Invoke (System.Object obj, System.Reflection.BindingFlags
+        invokeAttr, System.Reflection.Binder binder, System.Object[] parameters,
+        System.Globalization.CultureInfo culture) [0x0006a] in <8ce0bd04a7a04b4b9395538239d3fdd8>:0 "
       notRunnable: 0
       ignoredOrSkipped: 0
       description: 
@@ -1648,113 +1599,34 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1004
       parentUniqueId: PlayModeTestAssembly.dll/[PlayModeTestAssembly][SoundTestRunner][suite]
-    m_ResultText: "ResourceServiceTest (5.684s)\n---\n<color=#00FFFF>[ResourceService.GetValidProvider]
+    m_ResultText: "SoundManagerTest (0.401s)\n---\nSystem.NullReferenceException
+      : Object reference not set to an instance of an object\n---\nat CommonExtension.ToStringAllFields
+      (System.Object ob, System.String prefix, System.Reflection.BindingFlags bindingFlags)
+      [0x000a3] in C:\\Project\\Unity\\CustomUtils\\Assets\\CustomUtils\\Common\\Extension\\CommonExtension.cs:34
+      \r\n  at SoundTestRunner.SoundManagerTest () [0x0002b] in C:\\Project\\Unity\\CustomUtils\\Assets\\Test\\PlayMode\\SooundTest\\SoundTestRunner.cs:20
+      \r\n  at (wrapper managed-to-native) System.Reflection.RuntimeMethodInfo.InternalInvoke(System.Reflection.RuntimeMethodInfo,object,object[],System.Exception&)\r\n 
+      at System.Reflection.RuntimeMethodInfo.Invoke (System.Object obj, System.Reflection.BindingFlags
+      invokeAttr, System.Reflection.Binder binder, System.Object[] parameters, System.Globalization.CultureInfo
+      culture) [0x0006a] in <8ce0bd04a7a04b4b9395538239d3fdd8>:0\n---\n<color=#00FFFF>[ResourceService.GetValidProvider]
       Activate provider || ResourcesProvider</color>\r\n<color=#00FFFF>[ResourceService.GetValidProvider]
       Activate provider || AssetBundleProvider</color>\r\n<color=#00FFFF>[Service.StartService]
-      Service Start || ResourceService</color>\r\n[<>c.<ResourceServiceTest>b__2_0]
-      TestPrefab\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab_1\r\n[<>c.<ResourceServiceTest>b__2_0]
-      TestPrefab_2\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab_3\r\n[<>c.<ResourceServiceTest>b__2_0]
-      Get || FreeSampleSFX\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab\r\n[<>c.<ResourceServiceTest>b__2_0]
-      TestPrefab_1\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab_2\r\n[<>c.<ResourceServiceTest>b__2_0]
-      TestPrefab_3\r\n[<>c.<ResourceServiceTest>b__2_0] Get || FreeSampleSFX\r\n[<>c.<ResourceServiceTest>b__2_0]
-      TestPrefab\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab_1\r\n[<>c.<ResourceServiceTest>b__2_0]
-      TestPrefab_2\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab_3\r\n[<>c.<ResourceServiceTest>b__2_0]
-      Get || FreeSampleSFX\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab\r\n[<>c.<ResourceServiceTest>b__2_0]
-      TestPrefab_1\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab_2\r\n[<>c.<ResourceServiceTest>b__2_0]
-      TestPrefab_3\r\n[<>c.<ResourceServiceTest>b__2_0] Get || FreeSampleSFX\r\n[<>c.<ResourceServiceTest>b__2_0]
-      TestPrefab\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab_1\r\n[<>c.<ResourceServiceTest>b__2_0]
-      TestPrefab_2\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab_3\r\n[<>c.<ResourceServiceTest>b__2_0]
-      Get || FreeSampleSFX\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab\r\n[<>c.<ResourceServiceTest>b__2_0]
-      TestPrefab_1\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab_2\r\n[<>c.<ResourceServiceTest>b__2_0]
-      TestPrefab_3\r\n[<>c.<ResourceServiceTest>b__2_0] Get || FreeSampleSFX\r\n[<>c.<ResourceServiceTest>b__2_0]
-      TestPrefab\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab_1\r\n[<>c.<ResourceServiceTest>b__2_0]
-      TestPrefab_2\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab_3\r\n[<>c.<ResourceServiceTest>b__2_0]
-      Get || FreeSampleSFX\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab\r\n[<>c.<ResourceServiceTest>b__2_0]
-      TestPrefab_1\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab_2\r\n[<>c.<ResourceServiceTest>b__2_0]
-      TestPrefab_3\r\n[<>c.<ResourceServiceTest>b__2_0] Get || FreeSampleSFX\r\n[<>c.<ResourceServiceTest>b__2_0]
-      TestPrefab\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab_1\r\n[<>c.<ResourceServiceTest>b__2_0]
-      TestPrefab_2\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab_3\r\n[<>c.<ResourceServiceTest>b__2_0]
-      Get || FreeSampleSFX\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab\r\n[<>c.<ResourceServiceTest>b__2_0]
-      TestPrefab_1\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab_2\r\n[<>c.<ResourceServiceTest>b__2_0]
-      TestPrefab_3\r\n[<>c.<ResourceServiceTest>b__2_0] Get || FreeSampleSFX\r\n[<>c.<ResourceServiceTest>b__2_0]
-      TestPrefab\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab_1\r\n[<>c.<ResourceServiceTest>b__2_0]
-      TestPrefab_2\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab_3\r\n[<>c.<ResourceServiceTest>b__2_0]
-      Get || FreeSampleSFX\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab\r\n[<>c.<ResourceServiceTest>b__2_0]
-      TestPrefab_1\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab_2\r\n[<>c.<ResourceServiceTest>b__2_0]
-      TestPrefab_3\r\n[<>c.<ResourceServiceTest>b__2_0] Get || FreeSampleSFX\r\n[<>c.<ResourceServiceTest>b__2_0]
-      TestPrefab\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab_1\r\n[<>c.<ResourceServiceTest>b__2_0]
-      TestPrefab_2\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab_3\r\n[<>c.<ResourceServiceTest>b__2_0]
-      Get || FreeSampleSFX\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab\r\n[<>c.<ResourceServiceTest>b__2_0]
-      TestPrefab_1\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab_2\r\n[<>c.<ResourceServiceTest>b__2_0]
-      TestPrefab_3\r\n[<>c.<ResourceServiceTest>b__2_0] Get || FreeSampleSFX\r\n[<>c.<ResourceServiceTest>b__2_0]
-      TestPrefab\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab_1\r\n[<>c.<ResourceServiceTest>b__2_0]
-      TestPrefab_2\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab_3\r\n[<>c.<ResourceServiceTest>b__2_0]
-      Get || FreeSampleSFX\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab\r\n[<>c.<ResourceServiceTest>b__2_0]
-      TestPrefab_1\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab_2\r\n[<>c.<ResourceServiceTest>b__2_0]
-      TestPrefab_3\r\n[<>c.<ResourceServiceTest>b__2_0] Get || FreeSampleSFX\r\n[<>c.<ResourceServiceTest>b__2_0]
-      TestPrefab\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab_1\r\n[<>c.<ResourceServiceTest>b__2_0]
-      TestPrefab_2\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab_3\r\n[<>c.<ResourceServiceTest>b__2_0]
-      Get || FreeSampleSFX\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab\r\n[<>c.<ResourceServiceTest>b__2_0]
-      TestPrefab_1\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab_2\r\n[<>c.<ResourceServiceTest>b__2_0]
-      TestPrefab_3\r\n[<>c.<ResourceServiceTest>b__2_0] Get || FreeSampleSFX\r\n[<>c.<ResourceServiceTest>b__2_0]
-      TestPrefab\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab_1\r\n[<>c.<ResourceServiceTest>b__2_0]
-      TestPrefab_2\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab_3\r\n[<>c.<ResourceServiceTest>b__2_0]
-      Get || FreeSampleSFX\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab\r\n[<>c.<ResourceServiceTest>b__2_0]
-      TestPrefab_1\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab_2\r\n[<>c.<ResourceServiceTest>b__2_0]
-      TestPrefab_3\r\n[<>c.<ResourceServiceTest>b__2_0] Get || FreeSampleSFX\r\n[<>c.<ResourceServiceTest>b__2_0]
-      TestPrefab\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab_1\r\n[<>c.<ResourceServiceTest>b__2_0]
-      TestPrefab_2\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab_3\r\n[<>c.<ResourceServiceTest>b__2_0]
-      Get || FreeSampleSFX\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab\r\n[<>c.<ResourceServiceTest>b__2_0]
-      TestPrefab_1\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab_2\r\n[<>c.<ResourceServiceTest>b__2_0]
-      TestPrefab_3\r\n[<>c.<ResourceServiceTest>b__2_0] Get || FreeSampleSFX\r\n[<>c.<ResourceServiceTest>b__2_0]
-      TestPrefab\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab_1\r\n[<>c.<ResourceServiceTest>b__2_0]
-      TestPrefab_2\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab_3\r\n[<>c.<ResourceServiceTest>b__2_0]
-      Get || FreeSampleSFX\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab\r\n[<>c.<ResourceServiceTest>b__2_0]
-      TestPrefab_1\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab_2\r\n[<>c.<ResourceServiceTest>b__2_0]
-      TestPrefab_3\r\n[<>c.<ResourceServiceTest>b__2_0] Get || FreeSampleSFX\r\n[<>c.<ResourceServiceTest>b__2_0]
-      TestPrefab\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab_1\r\n[<>c.<ResourceServiceTest>b__2_0]
-      TestPrefab_2\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab_3\r\n[<>c.<ResourceServiceTest>b__2_0]
-      Get || FreeSampleSFX\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab\r\n[<>c.<ResourceServiceTest>b__2_0]
-      TestPrefab_1\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab_2\r\n[<>c.<ResourceServiceTest>b__2_0]
-      TestPrefab_3\r\n[<>c.<ResourceServiceTest>b__2_0] Get || FreeSampleSFX\r\n[<>c.<ResourceServiceTest>b__2_0]
-      TestPrefab\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab_1\r\n[<>c.<ResourceServiceTest>b__2_0]
-      TestPrefab_2\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab_3\r\n[<>c.<ResourceServiceTest>b__2_0]
-      Get || FreeSampleSFX\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab\r\n[<>c.<ResourceServiceTest>b__2_0]
-      TestPrefab_1\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab_2\r\n[<>c.<ResourceServiceTest>b__2_0]
-      TestPrefab_3\r\n[<>c.<ResourceServiceTest>b__2_0] Get || FreeSampleSFX\r\n[<>c.<ResourceServiceTest>b__2_0]
-      TestPrefab\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab_1\r\n[<>c.<ResourceServiceTest>b__2_0]
-      TestPrefab_2\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab_3\r\n[<>c.<ResourceServiceTest>b__2_0]
-      Get || FreeSampleSFX\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab\r\n[<>c.<ResourceServiceTest>b__2_0]
-      TestPrefab_1\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab_2\r\n[<>c.<ResourceServiceTest>b__2_0]
-      TestPrefab_3\r\n[<>c.<ResourceServiceTest>b__2_0] Get || FreeSampleSFX\r\n[<>c.<ResourceServiceTest>b__2_0]
-      TestPrefab\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab_1\r\n[<>c.<ResourceServiceTest>b__2_0]
-      TestPrefab_2\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab_3\r\n[<>c.<ResourceServiceTest>b__2_0]
-      Get || FreeSampleSFX\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab\r\n[<>c.<ResourceServiceTest>b__2_0]
-      TestPrefab_1\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab_2\r\n[<>c.<ResourceServiceTest>b__2_0]
-      TestPrefab_3\r\n[<>c.<ResourceServiceTest>b__2_0] Get || FreeSampleSFX\r\n[<>c.<ResourceServiceTest>b__2_0]
-      TestPrefab\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab_1\r\n[<>c.<ResourceServiceTest>b__2_0]
-      TestPrefab_2\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab_3\r\n[<>c.<ResourceServiceTest>b__2_0]
-      Get || FreeSampleSFX\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab\r\n[<>c.<ResourceServiceTest>b__2_0]
-      TestPrefab_1\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab_2\r\n[<>c.<ResourceServiceTest>b__2_0]
-      TestPrefab_3\r\n[<>c.<ResourceServiceTest>b__2_0] Get || FreeSampleSFX\r\n[<>c.<ResourceServiceTest>b__2_0]
-      TestPrefab\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab_1\r\n[<>c.<ResourceServiceTest>b__2_0]
-      TestPrefab_2\r\n[<>c.<ResourceServiceTest>b__2_0] TestPrefab_3\r\n[<>c.<ResourceServiceTest>b__2_0]
-      Get || FreeSampleSFX\r\nGroup_01.GC() in Undefineds\nMin:\t\t431.40 \nMedian:\t\t431.80
-      \nMax:\t\t1068.20 \nAvg:\t\t522.69 \nStdDev:\t\t222.71 \nSampleCount:\t7\nSum:\t\t3658.80
-      \r\nFirst samples:\t\u2588\u2581\u2581\u2581\u2581\u2581\u2581\r\n(not enough
-      samples for histogram)\n\r\nGroup_01 in Milliseconds\nMin:\t\t26.04 ms\nMedian:\t\t27.16
-      ms\nMax:\t\t28.10 ms\nAvg:\t\t27.02 ms\nStdDev:\t\t0.71 ms\nSampleCount:\t5\nSum:\t\t135.08
-      ms\r\nFirst samples:\t\u2583\u2585\u2585\u2581\u2588\r\n(not enough samples
-      for histogram)\n\r\n\r\n##performancetestresult2:{\"Name\":\"ResourceServiceTestRunner.ResourceServiceTest\",\"ClassName\":\"ResourceServiceTestRunner\",\"MethodName\":\"ResourceServiceTest\",\"Version\":\"1\",\"Categories\":[\"Performance\"],\"SampleGroups\":[{\"Name\":\"Group_01.GC()\",\"Unit\":8,\"IncreaseIsBetter\":false,\"Samples\":[1068.2,432.2,432.2,431.4,431.8,431.6,431.4],\"Min\":431.4,\"Max\":1068.2,\"Median\":431.8,\"Average\":522.6857142857143,\"StandardDeviation\":222.70549052550119,\"Sum\":3658.8},{\"Name\":\"Group_01\",\"Unit\":2,\"IncreaseIsBetter\":false,\"Samples\":[26.48060000000001,27.305000000000008,27.15900000000005,26.03860000000003,28.100099999999999],\"Min\":26.03860000000003,\"Max\":28.100099999999999,\"Median\":27.15900000000005,\"Average\":27.01666000000002,\"StandardDeviation\":0.7100992257424228,\"Sum\":135.0833000000001}]}\r\n##performancetestruninfo2:{\"TestSuite\":\"Playmode\",\"Date\":1727585113509,\"Player\":{\"Development\":true,\"ScreenWidth\":1920,\"ScreenHeight\":1080,\"ScreenRefreshRate\":60,\"Fullscreen\":false,\"Vsync\":1,\"AntiAliasing\":0,\"Batchmode\":false,\"RenderThreadingMode\":\"MultiThreaded\",\"GpuSkinning\":false,\"Platform\":\"WindowsEditor\",\"ColorSpace\":\"Gamma\",\"AnisotropicFiltering\":\"Disable\",\"BlendWeights\":\"FourBones\",\"GraphicsApi\":\"Direct3D11\",\"ScriptingBackend\":\"Mono2x\",\"AndroidTargetSdkVersion\":\"AndroidApiLevelAuto\",\"AndroidBuildSystem\":\"Gradle\",\"BuildTarget\":\"StandaloneWindows64\",\"StereoRenderingPath\":\"MultiPass\"},\"Hardware\":{\"OperatingSystem\":\"Windows
-      10  (10.0.19045) 64bit\",\"DeviceModel\":\"82R4 (LENOVO)\",\"DeviceName\":\"DESKTOP-55T0R54\",\"ProcessorType\":\"AMD
-      Ryzen 5 5500U with Radeon Graphics \",\"ProcessorCount\":12,\"GraphicsDeviceName\":\"AMD
-      Radeon(TM) Graphics\",\"SystemMemorySizeMB\":14181},\"Editor\":{\"Version\":\"2022.3.46f1\",\"Branch\":\"2022.3/staging\",\"Changeset\":\"8e9b8558c41a\",\"Date\":1725396290},\"Dependencies\":[\"com.cysharp.unitask@2.5.5\",\"com.unity.2d.animation@9.1.1\",\"com.unity.2d.pixel-perfect@5.0.3\",\"com.unity.2d.psdimporter@8.0.5\",\"com.unity.2d.sprite@1.0.0\",\"com.unity.2d.spriteshape@9.0.4\",\"com.unity.2d.tilemap@1.0.0\",\"com.unity.ai.navigation@1.1.5\",\"com.unity.assetbundlebrowser@1.7.0\",\"com.unity.collab-proxy@2.4.4\",\"com.unity.editorcoroutines@1.0.0\",\"com.unity.ide.rider@3.0.31\",\"com.unity.ide.vscode@1.2.5\",\"com.unity.memoryprofiler@1.1.0\",\"com.unity.mobile.android-logcat@1.4.2\",\"com.unity.performance.profile-analyzer@1.2.2\",\"com.unity.profiling.core@1.0.2\",\"com.unity.render-pipelines.universal@14.0.11\",\"com.unity.test-framework@1.3.9\",\"com.unity.test-framework.performance@3.0.3\",\"com.unity.textmeshpro@3.0.9\",\"com.unity.timeline@1.7.6\",\"com.unity.ugui@1.0.0\",\"com.unity.modules.ai@1.0.0\",\"com.unity.modules.androidjni@1.0.0\",\"com.unity.modules.animation@1.0.0\",\"com.unity.modules.assetbundle@1.0.0\",\"com.unity.modules.audio@1.0.0\",\"com.unity.modules.cloth@1.0.0\",\"com.unity.modules.director@1.0.0\",\"com.unity.modules.imageconversion@1.0.0\",\"com.unity.modules.imgui@1.0.0\",\"com.unity.modules.jsonserialize@1.0.0\",\"com.unity.modules.particlesystem@1.0.0\",\"com.unity.modules.physics@1.0.0\",\"com.unity.modules.physics2d@1.0.0\",\"com.unity.modules.screencapture@1.0.0\",\"com.unity.modules.terrain@1.0.0\",\"com.unity.modules.terrainphysics@1.0.0\",\"com.unity.modules.tilemap@1.0.0\",\"com.unity.modules.ui@1.0.0\",\"com.unity.modules.uielements@1.0.0\",\"com.unity.modules.umbra@1.0.0\",\"com.unity.modules.unityanalytics@1.0.0\",\"com.unity.modules.unitywebrequest@1.0.0\",\"com.unity.modules.unitywebrequestassetbundle@1.0.0\",\"com.unity.modules.unitywebrequestaudio@1.0.0\",\"com.unity.modules.unitywebrequesttexture@1.0.0\",\"com.unity.modules.unitywebrequestwww@1.0.0\",\"com.unity.modules.vehicles@1.0.0\",\"com.unity.modules.video@1.0.0\",\"com.unity.modules.vr@1.0.0\",\"com.unity.modules.wind@1.0.0\",\"com.unity.modules.xr@1.0.0\",\"com.unity.modules.subsystems@1.0.0\",\"com.unity.ext.nunit@2.0.3\",\"com.unity.mathematics@1.2.6\",\"com.unity.burst@1.8.17\",\"com.unity.render-pipelines.core@14.0.11\",\"com.unity.shadergraph@14.0.11\",\"com.unity.render-pipelines.universal-config@14.0.10\",\"com.unity.2d.common@8.0.3\",\"com.unity.collections@1.2.4\",\"com.unity.searcher@4.9.2\"],\"Results\":[]}"
-    m_ResultStacktrace: 
+      Service Start || ResourceService</color>\r\n<color=#00FFFF>[SampleSoundManager..ctor]
+      SoundCoreBase Activate</color>\r\n<color=#00FFFF>[SampleSoundManager.InitSound]
+      SampleSound Activate</color>\r\nExposed name does not exist: TYPE_1\r\n<color=#00FFFF>[SampleSoundManager.InitSound]
+      Sample_SoundBgm Activate</color>"
+    m_ResultStacktrace: "  at CommonExtension.ToStringAllFields (System.Object ob,
+      System.String prefix, System.Reflection.BindingFlags bindingFlags) [0x000a3]
+      in C:\\Project\\Unity\\CustomUtils\\Assets\\CustomUtils\\Common\\Extension\\CommonExtension.cs:34
+      \r\n  at SoundTestRunner.SoundManagerTest () [0x0002b] in C:\\Project\\Unity\\CustomUtils\\Assets\\Test\\PlayMode\\SooundTest\\SoundTestRunner.cs:20
+      \r\n  at (wrapper managed-to-native) System.Reflection.RuntimeMethodInfo.InternalInvoke(System.Reflection.RuntimeMethodInfo,object,object[],System.Exception&)\r\n 
+      at System.Reflection.RuntimeMethodInfo.Invoke (System.Object obj, System.Reflection.BindingFlags
+      invokeAttr, System.Reflection.Binder binder, System.Object[] parameters, System.Globalization.CultureInfo
+      culture) [0x0006a] in <8ce0bd04a7a04b4b9395538239d3fdd8>:0 "
     m_TestListState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 396ed58e
-      m_LastClickedID: -1898615239
-      m_ExpandedIDs: 2d87f388f83257dbadb59dfa5bc6d62ec29f3933fcd7303c72cb9f48ffffff7f
+      m_SelectedIDs: 02532fb0
+      m_LastClickedID: -1339075838
+      m_ExpandedIDs: 2d87f388f83257dbadb59dfa933ad9065bc6d62ec29f3933fcd7303c72cb9f48ffffff7f
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -1783,14 +1655,14 @@ MonoBehaviour:
       - Uncategorized
     m_SelectedOption: 0
   m_EditModeTestListGUI:
-    m_Window: {fileID: 21}
+    m_Window: {fileID: 20}
     m_NewResultList:
     - id: 1000
       uniqueId: '[CustomUtils][suite]'
       name: CustomUtils
       fullName: CustomUtils
       resultStatus: 1
-      duration: 7.5267057
+      duration: 0.0571099
       messages: 
       output: 
       stacktrace: 
@@ -1806,7 +1678,7 @@ MonoBehaviour:
       name: EditModeTestAssembly.dll
       fullName: C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/EditModeTestAssembly.dll
       resultStatus: 1
-      duration: 7.5154457
+      duration: 0.0455664
       messages: 
       output: 
       stacktrace: 
@@ -2327,9 +2199,9 @@ MonoBehaviour:
       uniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][GlobalEnumTestRunner][suite]
       name: GlobalEnumTestRunner
       fullName: GlobalEnumTestRunner
-      resultStatus: 2
-      duration: 0.0068363
-      messages: One or more child tests had errors
+      resultStatus: 1
+      duration: 0.0415103
+      messages: 
       output: 
       stacktrace: 
       notRunnable: 0
@@ -2343,9 +2215,9 @@ MonoBehaviour:
       uniqueId: EditModeTestAssembly.dll/GlobalEnumTestRunner/[EditModeTestAssembly][GlobalEnumTestRunner.StartTest]
       name: StartTest
       fullName: GlobalEnumTestRunner.StartTest
-      resultStatus: 2
-      duration: 0.0024007
-      messages: "  Expected: True\r\n  But was:  False\r\n"
+      resultStatus: 1
+      duration: 0.0375745
+      messages: 
       output: '
 
         IgnoreFailingMessages:true
@@ -2353,10 +2225,24 @@ MonoBehaviour:
         [GlobalEnumTestRunner.StartTest]
         Pass Basic Test
 
-'
-      stacktrace: 'at GlobalEnumTestRunner.StartTest () [0x00075] in C:\Project\Unity\CustomUtils\Assets\Test\EditMode\GlobalEnumTestRunner.cs:32
+        [GlobalEnumTestRunner.StartTest] Pass int Interaction
+        Test
+
+        [GlobalEnumTestRunner.StartTest] Pass Type Interaction Test
+
+        [GlobalEnumTestRunner.StartTest]
+        Pass Property Get Set Test
+
+        [GlobalEnumTestRunner.StartTest] Pass
+        Method Get Test
+
+        [GlobalEnumTestRunner.StartTest] Pass Method Set
+        Test
+
+        [GlobalEnumTestRunner.StartTest] Pass Contains Test
 
 '
+      stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
       description: 
@@ -2494,29 +2380,36 @@ MonoBehaviour:
       - Performance
       parentId: 1032
       parentUniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][TcpServerTestRunner][suite]
-    m_ResultText: 'TcpClientTestAsync(TcpJsonServeModule,TestTcpJsonClient) (7.493s)
+    m_ResultText: 'StartTest (0.038s)
 
       ---
 
       IgnoreFailingMessages:true
 
-      <color=#00FF00>[SimpleTcpServer.Start]
-      SimpleTcpServer Start || 0.0.0.0:8890</color>
+      [GlobalEnumTestRunner.StartTest]
+      Pass Basic Test
 
-      <color=#008000>[<Start>d__13.MoveNext]
-      Connected Session || 492850191 || 127.0.0.1</color>
+      [GlobalEnumTestRunner.StartTest] Pass int Interaction
+      Test
 
-      <color=#FF0000>[SimpleTcpServer.Stop]
-      SimpleTcpServer Stop</color>
+      [GlobalEnumTestRunner.StartTest] Pass Type Interaction Test
 
-      <color=#FFFF00>[SimpleTcpClient`2.Close]
-      TcpSession is no longer valid</color>'
+      [GlobalEnumTestRunner.StartTest]
+      Pass Property Get Set Test
+
+      [GlobalEnumTestRunner.StartTest] Pass Method
+      Get Test
+
+      [GlobalEnumTestRunner.StartTest] Pass Method Set Test
+
+      [GlobalEnumTestRunner.StartTest]
+      Pass Contains Test'
     m_ResultStacktrace: 
     m_TestListState:
-      scrollPos: {x: 0, y: 9}
-      m_SelectedIDs: 56dc40d2
-      m_LastClickedID: -767501226
-      m_ExpandedIDs: 5408f8a42c5c4ec2416d28c537575fcc53f7ced709d9cedca4da07e1104a3ceffd8e07fe502e7e0dedaa9c1607dc1a20732940267a14c82ac29f393322524b3a9dda8a41045add4d5d4c09542cae4f5b88e2b55c739d64642f226d64db1cfa6616b81e6cffffff7f
+      scrollPos: {x: 0, y: 0}
+      m_SelectedIDs: aa9062d9
+      m_LastClickedID: -647851862
+      m_ExpandedIDs: 5408f8a42c5c4ec2416d28c537575fcc53f7ced709d9cedca4da07e1fd8e07fe502e7e0dedaa9c1607dc1a20732940267a14c82ac29f393322524b3a9dda8a41045add4d5d4c09542cae4f5b88e2b55c739d64642f226d64db1cfa6616b81e6cffffff7f
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 

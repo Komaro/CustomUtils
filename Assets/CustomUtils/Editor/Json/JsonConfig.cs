@@ -59,6 +59,7 @@ public abstract class JsonConfig {
     public abstract bool IsNull();
 }
 
+// static 필드에서 new()로 생성하지 말 것.
 public abstract class JsonAutoConfig : JsonConfig, IDisposable {
     
     [JsonIgnore] protected List<IDisposable> disposableList = new();
@@ -115,8 +116,13 @@ public abstract class JsonAutoConfig : JsonConfig, IDisposable {
     }
 
     ~JsonAutoConfig() => Dispose();
-    public virtual void Dispose() => StopAutoSave();
     
+    public virtual void Dispose() {
+        if (IsNull() == false) {
+            StopAutoSave();
+        }
+    }
+
     public virtual bool IsAutoSaving() => disposableList.Any();
 
     private class ArrayComparer : IEqualityComparer<Array> {

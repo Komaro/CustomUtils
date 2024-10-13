@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
 using Object = UnityEngine.Object;
@@ -29,7 +30,6 @@ public class ObjectPoolService : IService {
 
     void IService.Remove() {
         _poolDic.SafeClear(pool => pool.Dispose());
-
         if (_poolRoot.activeInHierarchy) {
             Object.Destroy(_poolRoot);
         }
@@ -38,8 +38,13 @@ public class ObjectPoolService : IService {
     public void Preload(string name, int count) {
         var pool = _poolDic.GetOrAdd(name, CreatePool);
         if (pool != null) {
+            var stack = new Stack<GameObject>();
             for (var i = 0; i < count; i++) {
-                pool.Release(pool.Get());
+                stack.Push(pool.Get());
+            }
+
+            while (stack.TryPop(out var go)) {
+                pool.Release(go);
             }
         }
     }
@@ -63,6 +68,12 @@ public class ObjectPoolService : IService {
         }
         
         pool.Release(go);
+    }
+
+    public void Clear(string name) {
+        if (_poolDic.TryGetValue(name, out var pool)) {
+            pool.Clear();
+        }
     }
 
     private ObjectPoolBag CreatePool(string name) => new(_poolRoot, name, 50);
@@ -112,7 +123,9 @@ public record ObjectPoolBag : IDisposable {
     }
 
     public GameObject Get() => _pool?.Get();
+
     public void Release(GameObject go) => _pool?.Release(go);
+    public void Clear() => _pool?.Clear();
 
     public bool IsValid() => _prefab != null && _prefab.TryGetComponent<ObjectPool>(out _);
     

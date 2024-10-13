@@ -15,10 +15,19 @@ public class ObjectPoolServiceTestRunner {
         Service.StartService<ObjectPoolService>();
     }
 
+    [SetUp]
+    public void SetUp() {
+        if (Service.TryGetService<ObjectPoolService>(out var service)) {
+            service.Clear(TEST_PREFAB);
+            service.Clear(TEST_PREFAB_1);
+            service.Clear(TEST_PREFAB_2);
+        }
+    }
+
     [Test]
     [Performance]
-    public void ObjectPoolServiceTest() {
-        var group = new SampleGroup(nameof(ObjectPoolServiceTest));
+    public void ObjectPoolServicePerformanceTest() {
+        var group = new SampleGroup(nameof(ObjectPoolServicePerformanceTest));
         Measure.Method(() => {
             var root = new GameObject("TempRoot");
             if (Service.TryGetService<ResourceService>(out var resourceService) && Service.TryGetService<ObjectPoolService>(out var poolService)) {
@@ -51,49 +60,85 @@ public class ObjectPoolServiceTestRunner {
             }
             
             Object.Destroy(root);
+            Logger.TraceLog("Pass Performance Test");
         }).WarmupCount(1).MeasurementCount(15).IterationsPerMeasurement(1).SampleGroup(group).GC().Run();
     }
 
     [TestCase(10)]
     [TestCase(20)]
+    [TestCase(30)]
+    [TestCase(40)]
     public void ObjectPoolServiceRepeatTest(int repeatCount) {
-        if (Service.TryGetService<ObjectPoolService>(out var poolService)) {
+        if (Service.TryGetService<ObjectPoolService>(out var service)) {
             var stack = new Stack<GameObject>();
             for (var count = 0; count < repeatCount; count++) {
-                stack.Push(poolService.Get(TEST_PREFAB));
+                stack.Push(service.Get(TEST_PREFAB));
                 Logger.TraceLog(stack.ToStringCollection(x => x.name, ", "));
             }
+            
+            Assert.IsTrue(service.GetCountActive(TEST_PREFAB) == repeatCount);
+            Assert.IsTrue(service.GetCountActive(TEST_PREFAB) == stack.Count);
+            Logger.TraceLog("Pass Get Test");
 
             while (stack.TryPop(out var go)) {
-                poolService.Release(go);
+                service.Release(go);
                 Logger.TraceLog(stack.ToStringCollection(x => x.name, ", "));
             }
+            
+            Assert.IsTrue(service.GetCountActive(TEST_PREFAB) == 0);
+            Assert.IsTrue(service.GetCountInactive(TEST_PREFAB) == repeatCount);
+            Logger.TraceLog("Pass Release Test");
         }
     }
 
     [TestCase(60)]
+    [TestCase(120)]
+    [TestCase(180)]
     public void ObjectPoolServiceMaximumTest(int repeatCount) {
-        if (Service.TryGetService<ObjectPoolService>(out var poolService)) {
+        if (Service.TryGetService<ObjectPoolService>(out var service)) {
             var stack = new Stack<GameObject>();
             for (var count = 0; count < repeatCount; count++) {
-                var go = poolService.Get(TEST_PREFAB);
+                var go = service.Get(TEST_PREFAB);
                 if (go != null) {
                     stack.Push(go);
                 }
                 
-                Logger.TraceLog($"{poolService.GetCountAll(TEST_PREFAB)} || {poolService.GetCountActive(TEST_PREFAB)} || {poolService.GetCountInactive(TEST_PREFAB)}");
+                Logger.TraceLog($"{service.GetCountAll(TEST_PREFAB)} || {service.GetCountActive(TEST_PREFAB)} || {service.GetCountInactive(TEST_PREFAB)}");
             }
             
-            Assert.IsTrue(poolService.GetCountAll(TEST_PREFAB) == repeatCount);
-            Logger.TraceLog("Success Get Test\n");
+            Assert.IsTrue(service.GetCountAll(TEST_PREFAB) == repeatCount);
+            Logger.TraceLog("Pass Get Test\n");
             
             while (stack.TryPop(out var go)) {
-                poolService.Release(go);
-                Logger.TraceLog($"{poolService.GetCountAll(TEST_PREFAB)} || {poolService.GetCountActive(TEST_PREFAB)} || {poolService.GetCountInactive(TEST_PREFAB)}");
+                service.Release(go);
+                Logger.TraceLog($"{service.GetCountAll(TEST_PREFAB)} || {service.GetCountActive(TEST_PREFAB)} || {service.GetCountInactive(TEST_PREFAB)}");
             }
             
-            Assert.IsTrue(poolService.GetCountInactive(TEST_PREFAB) != repeatCount);
-            Assert.IsTrue(poolService.GetCountAll(TEST_PREFAB) == poolService.GetCountInactive(TEST_PREFAB));
+            Assert.IsTrue(service.GetCountInactive(TEST_PREFAB) != repeatCount);
+            Assert.IsTrue(service.GetCountAll(TEST_PREFAB) == service.GetCountInactive(TEST_PREFAB));
+        }
+    }
+
+    [TestCase(10)]
+    [TestCase(20)]
+    [TestCase(30)]
+    [TestCase(40)]
+    [TestCase(50)]
+    public void ObjectPoolServicePreloadTest(int preloadCount) {
+        if (Service.TryGetService<ObjectPoolService>(out var service)) {
+            service.Preload(TEST_PREFAB, preloadCount);
+            Logger.TraceLog($"{service.GetCountAll(TEST_PREFAB)} || {service.GetCountActive(TEST_PREFAB)} || {service.GetCountInactive(TEST_PREFAB)}");
+            Assert.IsTrue(service.GetCountAll(TEST_PREFAB) == preloadCount);
+            Assert.IsTrue(service.GetCountActive(TEST_PREFAB) == 0);
+            Assert.IsTrue(service.GetCountInactive(TEST_PREFAB) == preloadCount);
+            Logger.TraceLog("Pass Preload Test");
+            
+            service.Clear(TEST_PREFAB);
+            Logger.TraceLog($"{service.GetCountAll(TEST_PREFAB)} || {service.GetCountActive(TEST_PREFAB)} || {service.GetCountInactive(TEST_PREFAB)}");
+            Assert.IsTrue(service.GetCountAll(TEST_PREFAB) == 0);
+            Assert.IsTrue(service.GetCountActive(TEST_PREFAB) == 0);
+            Assert.IsTrue(service.GetCountInactive(TEST_PREFAB) == 0);
+            Logger.TraceLog("Pass Clear Test");
         }
     }
 }

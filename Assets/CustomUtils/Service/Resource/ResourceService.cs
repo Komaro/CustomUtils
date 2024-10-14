@@ -154,6 +154,8 @@ public class ResourceService : IService {
 
     #region [Instantiate]
 
+    public bool TryInstantiate<TComponent>(out TComponent component, string name, GameObject parent, bool isAddComponent = false) where TComponent : Component => (component = Instantiate<TComponent>(name, parent, isAddComponent)) != null;
+
     public TComponent Instantiate<TComponent>(string name, GameObject parent, bool isAddComponent = false) where TComponent : Component => Instantiate<TComponent>(name, parent.transform, isAddComponent);
     
     public TComponent Instantiate<TComponent>(string name, Transform parent, bool isAddComponent = false) where TComponent : Component {

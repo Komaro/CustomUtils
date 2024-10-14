@@ -16,6 +16,9 @@ public static class ReflectionExtension {
     public static bool TryGetMethod(this Type type, out MethodInfo info, string name, BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public) => (info = type.GetMethod(name, bindingFlags)) != null;
     public static bool TryGetProperty(this Type type, out PropertyInfo info, string name, BindingFlags bindingFlags = BindingFlags.GetProperty | BindingFlags.SetProperty) => (info = type.GetProperty(name, bindingFlags)) != null;
 
+    public static bool TryGetFieldValue<TValue>(this Type type, out TValue value, object obj, string name, BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public) => (value = type.GetFieldValue<TValue>(obj, name, bindingFlags)) != null;
+    public static TValue GetFieldValue<TValue>(this Type type, object obj, string name, BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public) => type.TryGetField(out var fieldInfo, name, bindingFlags) && fieldInfo.GetValue(obj) is TValue value ? value : default;
+
     public static bool TryGetPropertyValue<T>(this Type type, out T value, object target, string name, BindingFlags bindingFlags = BindingFlags.GetProperty | BindingFlags.SetProperty) where T : class {
         if (type.TryGetProperty(out var info, name, bindingFlags)) {
             return (value = info.GetValue(target) as T) != null;

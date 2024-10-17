@@ -5,12 +5,12 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.TestTools;
 
-public class UIManagerTestRunner {
+public class UITestRunner {
 
     private const int TEST_COUNT_001 = 48853;
     
     [UnityTest]
-    public IEnumerator UIViewModelTest() {
+    public IEnumerator RxUIViewModelTest() {
         var root = new GameObject("Root");
         if (Service.GetService<ResourceService>().TryInstantiate<TestUIView>(out var ui, "TestUI", root)) {
             var uiType = ui.GetType();
@@ -44,6 +44,15 @@ public class UIManagerTestRunner {
                 Assert.IsTrue(count == TEST_COUNT_001 + 10);
                 Logger.TraceLog("Pass InputField Test\n");
             }
+        }
+    }
+
+    [UnityTest]
+    public IEnumerator SimpleUIViewModelTest() {
+        var root = new GameObject("Root");
+        if (Service.GetService<ResourceService>().TryInstantiate<TestUIView>(out var ui, "some", root)) {
+            // TODO. TEST SimpleUIViewModel
+            yield return null;
         }
     }
 }

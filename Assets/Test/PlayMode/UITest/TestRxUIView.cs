@@ -27,10 +27,7 @@ public class TestUIView : UIView<TestUIView.TestUIViewModel> {
         model.count.Subscribe(OnChangeCount);
     }
 
-    public void OnClickButton() {
-        Logger.TraceLog(nameof(OnClickButton));
-        model.count.Value += 10;
-    }
+    public void OnClickButton() => model.count.Value += 10;
 
     public void OnChangeCount(int count) {
         var countText = count.ToString();

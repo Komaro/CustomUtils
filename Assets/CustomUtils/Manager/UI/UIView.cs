@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 
-public abstract class UIView<TModel> : MonoBehaviour where TModel : new() {
+public abstract class UIView<TViewModel> : MonoBehaviour where TViewModel : new() {
 
-    protected TModel model = new();
+    protected TViewModel model = new();
 
-    public virtual void ChangeModel(TModel model) => this.model = model;
+    public virtual void ChangeModel(TViewModel model) => this.model = model;
 }

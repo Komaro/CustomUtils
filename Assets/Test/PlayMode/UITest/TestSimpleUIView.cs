@@ -1,4 +1,4 @@
-﻿using System.Collections.Specialized;
+﻿using System.Runtime.CompilerServices;
 using TMPro;
 using UnityEngine.UI;
 
@@ -14,51 +14,69 @@ public class TestSimpleUIView : UIView<TestSimpleUIViewModel> {
     private Button _decreaseCountButton;
     
     private void Awake() {
-        gameObject.TryFindComponent("", out _titleText);
-        gameObject.TryFindComponent("", out _countText);
+        gameObject.TryFindComponent("TitleText", out _titleText);
+        gameObject.TryFindComponent("CountText", out _countText);
         
-        gameObject.TryFindComponent("", out _collectionText);
-        gameObject.TryFindComponent("", out _dictionaryText);
+        gameObject.TryFindComponent("CollectionText", out _collectionText);
+        gameObject.TryFindComponent("DictionaryText", out _dictionaryText);
         
-        gameObject.TryFindComponent("", out _increaseCountButton);
-        gameObject.TryFindComponent("", out _decreaseCountButton);
+        gameObject.TryFindComponent("IncreaseButton", out _increaseCountButton);
+        gameObject.TryFindComponent("DecreaseButton", out _decreaseCountButton);
         
         _increaseCountButton.onClick.AddListener(OnClickIncreaseCountButton);
         _decreaseCountButton.onClick.AddListener(OnClickDecreaseCountButton);
     }
 
-    private void OnEnable() {
-        model.OnNotifyProperty += OnNotifyPropertyChanged;
-        model.OnNotifyCollection += OnNotifyCollectionChanged;
-        model.OnNotifyDictionary += OnNotifyDictionaryChanged;
-    }
-
-    private void OnNotifyPropertyChanged(string propertyName) {
-        switch (propertyName) {
-            case nameof(model.Title):
-                _titleText.text = model.Title;
+    protected override void OnNotifyModelChanged(string fieldName, NotifyFieldChangedEventArgs args) {
+        switch (args) {
+            case NotifyCollectionChangedEventArgs listArgs:
+                OnNotifyListChanged(fieldName, listArgs);
                 break;
-            case nameof(model.Count):
-                _countText.text = model.Count.ToString();
+            default:
+                OnNotifyPropertyChanged(fieldName);
                 break;
         }
     }
 
-    private void OnNotifyCollectionChanged(string collectionName, NotifyCollectionChangedEventArgs args) {
-        switch (collectionName) {
-            case nameof(model.Collection):
-                _collectionText.text = model.Collection.ToStringCollection(", ");
+    private void OnNotifyPropertyChanged(string name) {
+        switch (name) {
+            case nameof(model.Title):
+                UpdateTitle();
+                break;
+            case nameof(model.Count):
+                UpdateCount();
                 break;
         }
     }
     
-    private void OnNotifyDictionaryChanged(string dictionaryName, NotifyCollectionChangedEventArgs args) {
-        switch (dictionaryName) {
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private void UpdateTitle() => _titleText.text = model.Title;
+    
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private void UpdateCount() => _countText.text = model.Count.ToString();
+    
+    private void OnNotifyListChanged(string name, NotifyCollectionChangedEventArgs args) {
+        switch (name) {
+            case nameof(model.Collection):
+                UpdateCollection(args);
+                break;
+            case nameof(model.List):
+                UpdateList(args);
+                break;
             case nameof(model.Dictionary):
-                _dictionaryText.text = model.Dictionary.ToStringCollection(", ");
+                UpdateDictionary(args);
                 break;
         }
     }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private void UpdateCollection(NotifyCollectionChangedEventArgs args) => _collectionText.text = model.Collection.ToStringCollection(", ");
+    
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private void UpdateList(NotifyCollectionChangedEventArgs args) => _collectionText.text = model.List.ToStringCollection(", ");
+    
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private void UpdateDictionary(NotifyCollectionChangedEventArgs args) => _collectionText.text = model.Dictionary.ToStringCollection(x => x.ToStringPair(), ", ");
 
     private void OnClickIncreaseCountButton() => model.IncreaseCount(10);
     private void OnClickDecreaseCountButton() => model.DecreaseCount(10);

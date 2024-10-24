@@ -26,6 +26,23 @@ public static class CollectionExtension {
     
     public static HashSet<T> ToHashSetWithDistinct<T>(this IEnumerable<T> enumerable) => enumerable.Distinct().ToHashSet();
 
+    public static bool TryFirst<T>(this IEnumerable<T> enumerable, out T matchItem, Predicate<T> match = null) {
+        if (match == null) {
+            matchItem = enumerable.First();
+            return matchItem != null;
+        }
+
+        foreach (var item in enumerable) {
+            if (match?.Invoke(item) ?? false) {
+                matchItem = item;
+                return true;
+            }
+        }
+
+        matchItem = default;
+        return false;
+    }
+    
     public static void ForEach<T>(this IEnumerable<T> enumerable, Action<T> action) {
         if (enumerable != null) {
             foreach (var item in enumerable) {
@@ -497,7 +514,7 @@ public static class CollectionExtension {
         }
     }
 
-    public static bool TryFind<T>(this List<T> baseList, out T value, int index) {
+    public static bool TryFirst<T>(this List<T> baseList, out T value, int index) {
         if (index + 1 > baseList.Count || index < 0) {
             value = default;
             return false;
@@ -507,7 +524,7 @@ public static class CollectionExtension {
         return true;
     }
 
-    public static bool TryFind<T>(this List<T> list, out T value, Predicate<T> match) {
+    public static bool TryFirst<T>(this List<T> list, out T value, Predicate<T> match) {
         value = list.Find(match);
         return value != null;
     }

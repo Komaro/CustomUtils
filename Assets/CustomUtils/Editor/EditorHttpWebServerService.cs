@@ -42,18 +42,18 @@ public class EditorHttpWebServerService : EditorService {
     [DidReloadScripts(99999)]
     private static void CacheRefresh() {
         if (HasOpenInstances<EditorHttpWebServerService>()) {
-            if (JsonUtil.TryLoadJson(CONFIG_PATH, out _config)) {
+            if (JsonUtil.TryLoadJson(CONFIG_PATH, out _config) && (_config?.IsAutoSaving() ?? false)) {
                 _config.StartAutoSave(CONFIG_PATH);
             } else {
                 if (_config == null || _config.IsNull() == false) {
                     _config = new Config.NullConfig();
                 }
             }
-            
+
             _serveModuleList = ReflectionProvider.GetSubClassTypes<HttpServeModule>().ToList();
         }
     }
-    
+
     private void OnGUI() {
         if (_config?.IsNull() ?? true) {
             EditorGUILayout.HelpBox($"{CONFIG_NAME} 파일이 존재하지 않습니다. 선택한 서버 설정이 저장되지 않으며 일부 기능을 사용할 수 없습니다.", MessageType.Warning);
@@ -121,7 +121,7 @@ public class EditorHttpWebServerService : EditorService {
                     if (GUILayout.Button(moduleTextContent, heightOption)) {
                         StartHttpWebServer();
                         foreach (var moduleName in modulePreset.moduleNameList) {
-                            if (_serveModuleList.TryFind(out var type, x => x.Name == moduleName)) {
+                            if (_serveModuleList.TryFirst(out var type, x => x.Name == moduleName)) {
                                 _httpServer.AddServeModule(type);
                             }
                         }

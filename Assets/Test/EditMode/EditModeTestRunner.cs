@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -56,7 +58,7 @@ public class EditModeTestRunner {
 
     [Test]
     [Performance]
-    public void TempPerformanceTest() {
+    public void TempPerformanceTest_01() {
         var group_01 = new SampleGroup("Group_01");
         var group_02 = new SampleGroup("Group_02");
         var group_03 = new SampleGroup("Group_03");
@@ -77,6 +79,28 @@ public class EditModeTestRunner {
                 var test = sample.GetFileNameFast();
             }
         }).WarmupCount(5).MeasurementCount(10).IterationsPerMeasurement(1000).GC().SampleGroup(group_03).Run();
+    }
+    
+    [TestCase(100)]
+    [TestCase(1000)]
+    [TestCase(10000)]
+    [TestCase(100000)]
+    [TestCase(1000000)]
+    [Performance]
+    public void TempPerformanceTest_02(int randomCount) {
+        var group_Func = new SampleGroup("Group_Func");
+        var group_Predicate = new SampleGroup("Group_Predicate");
+
+        var list = new List<int>();
+        for (var i = 0; i < randomCount; i++) {
+            list.Add(RandomUtil.GetRandom(int.MinValue, int.MaxValue));
+        }
+        
+        Measure.Method(() => {
+            if (list.TryFirst(out var matchValue, value => value == randomCount)) {
+                Logger.TraceLog(matchValue.ToString());
+            }
+        }).WarmupCount(1).MeasurementCount(10).IterationsPerMeasurement(2).SampleGroup(group_Predicate).Run();
     }
     
     #region [Enum]

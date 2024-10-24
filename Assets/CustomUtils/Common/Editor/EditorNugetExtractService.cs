@@ -9,7 +9,6 @@ using UnityEditor;
 using UnityEditor.Callbacks;
 using UnityEditor.IMGUI.Controls;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class EditorNugetExtractService : EditorService {
 

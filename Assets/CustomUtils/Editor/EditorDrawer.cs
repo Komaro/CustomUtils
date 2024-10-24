@@ -4,7 +4,6 @@ using Unity.EditorCoroutines.Editor;
 using UnityEditor;
 using UnityEngine;
 
-
 public abstract class EditorDrawer {
     
     protected readonly EditorWindow window;

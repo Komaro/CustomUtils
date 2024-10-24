@@ -1,6 +1,7 @@
 
 using System;
 using System.Linq;
+using UnityEngine;
 
 public struct SafeDelegate<T> where T : Delegate {
         
@@ -37,6 +38,28 @@ public struct SafeDelegate<T> where T : Delegate {
         return safeDelegate;
     }
     
+    public static SafeDelegate<T> operator +(SafeDelegate<T> safeDelegate, object obj) {
+        switch (obj) {
+            case T addEvent:
+                safeDelegate += addEvent;
+                break;
+            case Delegate addDelegate:
+                safeDelegate += addDelegate;
+                break;
+            case Delegate[] addEvents:
+                safeDelegate += addEvents;
+                break;
+            case SafeDelegate<T> addSafeDelegate:
+                safeDelegate += addSafeDelegate;
+                break;
+            default:
+                Logger.TraceLog($"The {nameof(obj)} type is invalid. It must be either a {nameof(Delegate)} or {nameof(SafeDelegate<T>)} type", Color.yellow);
+                break;
+        }
+
+        return safeDelegate;
+    }
+
     public static SafeDelegate<T> operator +(SafeDelegate<T> safeDelegate, Delegate addEvent) {
         if (addEvent is T) {
             if (safeDelegate.handler == null || safeDelegate.handler.GetInvocationList().Contains(addEvent) == false) {
@@ -58,7 +81,7 @@ public struct SafeDelegate<T> where T : Delegate {
         
         return safeDelegate;
     }
-
+    
     public static SafeDelegate<T> operator +(SafeDelegate<T> safeDelegate, SafeDelegate<T> addSafeDelegate) {
         safeDelegate += addSafeDelegate.GetInvocationList();
         return safeDelegate;

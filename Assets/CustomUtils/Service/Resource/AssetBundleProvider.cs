@@ -12,25 +12,24 @@ using Object = UnityEngine.Object;
 public class AssetBundleProvider : IResourceProvider {
 
     private AssetBundleChecksumInfo _checksumInfo;
-    private ConcurrentDictionary<string, AssetBundleWrapper> _bundleDic = new();
+    private ConcurrentDictionary<string, AssetBundleWrapperBase> _bundleDic = new();
     private ConcurrentDictionary<string, string> _assetToBundleDic = new();
 
     private const string UNITY_3D_EXTENSION = ".unity3d";
     
-    // Temp Get
+    // Temp Init
     public void Init() {
         if (Service.GetService<ResourceService>().TryGet<TextAsset>("AssetBundleChecksumInfo", out var asset) && asset.dataSize > 0 && asset.text.TryToJson(out _checksumInfo)) {
-            if (_checksumInfo.crcDic.TryGetValue(_checksumInfo.target, out var crc)) {
-                var assetBundle = AssetBundle.LoadFromFile($"{Constants.Path.PROJECT_PATH}/AssetBundle/{_checksumInfo.target}/{_checksumInfo.target}", crc);
-                if (assetBundle != null && assetBundle.TryFindManifest(out var manifest)) {
-                    foreach (var name in manifest.GetAllAssetBundles().Where(name => string.IsNullOrEmpty(name) == false)) {
-                        if (_checksumInfo.TryGetChecksum(name, out var info)) {
-                            // TODO. AssetBundleWrapper dynamic instantiate
-                            var wrapper = new AssetBundleWrapper(name, _checksumInfo);
+            if (_checksumInfo.crcDic.TryGetValue(_checksumInfo.target, out var crc) && AssetBundleUtil.TryLoadManifestFromFile(out var manifest, $"{Constants.Path.PROJECT_PATH}/AssetBundle/{_checksumInfo.target}/{_checksumInfo.target}", crc)) {
+                foreach (var name in manifest.GetAllAssetBundles().Where(name => string.IsNullOrEmpty(name) == false)) {
+                    foreach (var type in ReflectionProvider.GetSubClassTypes<AssetBundleWrapperBase>().OrderBy(type => type.GetOrderByPriority())) {
+                        if (type.IsDefined<OnlyEditorEnvironmentAttribute>() && Application.isEditor == false) {
+                            continue;
+                        }
+
+                        if (SystemUtil.TryCreateInstance<AssetBundleWrapperBase>(out var wrapper, type, name, _checksumInfo) && wrapper.IsReady()) {
                             _bundleDic.TryAdd(name, wrapper);
-                            foreach (var key in wrapper.GetAssetKeys()) {
-                                _assetToBundleDic.TryAdd(key, name);
-                            }
+                            break;
                         }
                     }
                 }
@@ -55,6 +54,9 @@ public class AssetBundleProvider : IResourceProvider {
                 foreach (var name in loadOrder.assetBundles) {
                     if (_bundleDic.TryGetValue(name.AutoSwitchExtension(UNITY_3D_EXTENSION).ToLower(), out var wrapper)) {
                         wrapper.Load();
+                        foreach (var key in wrapper.GetAssetKeys()) {
+                            _assetToBundleDic.TryAdd(key, wrapper.name);
+                        }
                     }
                 }
                 break;
@@ -132,41 +134,54 @@ public class AssetBundleProvider : IResourceProvider {
     public bool IsNull() => false;
 }
 
-// TODO. Wrapper to module
+[RequiresAttributeImplementation(typeof(PriorityAttribute))]
 public abstract class AssetBundleWrapperBase {
     
     public readonly string name;
-    private readonly AssetBundleChecksumInfo _checksumInfo;
+    protected readonly AssetBundleChecksumInfo checksumInfo;
 
     public AssetBundleWrapperBase(string name, AssetBundleChecksumInfo checksumInfo) {
         this.name = name;
-        _checksumInfo = checksumInfo;
+        this.checksumInfo = checksumInfo;
     }
+
+    public abstract void Clear();
+    
+    public abstract void Load();
+    public abstract AssetBundleCreateRequest LoadAsync();
+    
+    public abstract void Unload();
+    public abstract AssetBundleUnloadOperation UnloadAsync();
+
+    public abstract Object Get(string assetName);
+    public abstract string GetPath(string assetName);
+
+    protected abstract void RefreshPath();
+
+    public abstract IEnumerable<string> GetAssetKeys();
+    
+    public abstract bool IsReady();
+    public abstract bool IsValid();
 }
 
-// Temp Wrapper
-internal class AssetBundleWrapper {
-
-    public readonly string name;
-    private readonly AssetBundleChecksumInfo _checksumInfo;
+[Priority(0)]
+[OnlyEditorEnvironment]
+public class AssetBundleWrapper : AssetBundleWrapperBase {
     
     private AssetBundle assetBundle;
     private readonly ConcurrentDictionary<string, string> _assetPathDic = new();
     private readonly ConcurrentDictionary<string, Object> _assetCacheDic = new();
 
-    public AssetBundleWrapper(string name, AssetBundleChecksumInfo checksumInfo) {
-        this.name = name;
-        _checksumInfo = checksumInfo;
-    }
+    public AssetBundleWrapper(string name, AssetBundleChecksumInfo checksumInfo) : base(name, checksumInfo) { }
 
-    public void Clear() {
+    public override void Clear() {
         Unload();
         _assetPathDic.Clear();
     }
 
-    public void Load() {
+    public override void Load() {
         if (assetBundle == null && string.IsNullOrEmpty(name) == false) {
-            assetBundle = AssetBundle.LoadFromFile($"{Constants.Path.PROJECT_PATH}/AssetBundle/{_checksumInfo.target}/{name}");
+            assetBundle = AssetBundle.LoadFromFile($"{Constants.Path.PROJECT_PATH}/AssetBundle/{checksumInfo.target}/{name}");
             if (assetBundle == null) {
                 Logger.TraceError($"{nameof(assetBundle)} is null");
                 return;
@@ -178,9 +193,9 @@ internal class AssetBundleWrapper {
         }
     }
 
-    public AssetBundleCreateRequest LoadAsync() {
+    public override AssetBundleCreateRequest LoadAsync() {
         if (assetBundle == null && string.IsNullOrEmpty(name) == false) {
-            var request = AssetBundle.LoadFromFileAsync($"{Constants.Path.PROJECT_PATH}/AssetBundle/{_checksumInfo.target}/{name}");
+            var request = AssetBundle.LoadFromFileAsync($"{Constants.Path.PROJECT_PATH}/AssetBundle/{checksumInfo.target}/{name}");
             request.completed += _ => {
                 if (request.assetBundle == null) {
                     Logger.TraceError($"{nameof(assetBundle)} is null");
@@ -198,14 +213,14 @@ internal class AssetBundleWrapper {
         return null;
     }
 
-    public void Unload() {
+    public override void Unload() {
         if (assetBundle != null) {
             _assetCacheDic.Clear();
             assetBundle.Unload(true);
         }
     }
 
-    public AssetBundleUnloadOperation UnloadAsync() {
+    public override AssetBundleUnloadOperation UnloadAsync() {
         if (assetBundle != null) {
             _assetCacheDic.Clear();
             return assetBundle.UnloadAsync(true);
@@ -214,7 +229,7 @@ internal class AssetBundleWrapper {
         return null;
     }
 
-    public Object Get(string assetName) {
+    public override Object Get(string assetName) {
         if (assetBundle == null) {
             Logger.TraceError($"{name} {nameof(AssetBundle)} is null");
             return null;
@@ -235,9 +250,9 @@ internal class AssetBundleWrapper {
         return null;
     }
 
-    public string GetPath(string assetName) => _assetPathDic.TryGetValue(assetName, out var path) ? path : string.Empty;
+    public override string GetPath(string assetName) => _assetPathDic.TryGetValue(assetName, out var path) ? path : string.Empty;
 
-    private void RefreshPath() {
+    protected override void RefreshPath() {
         if (assetBundle == null) {
             Logger.TraceError($"{nameof(assetBundle)} is null");
             return;
@@ -248,10 +263,11 @@ internal class AssetBundleWrapper {
             _assetPathDic.TryAdd(assetName, fullPath);
         }
     }
+    
+    public override IEnumerable<string> GetAssetKeys() => _assetPathDic.Keys;
 
-    public IEnumerable<string> GetAssetKeys() => _assetPathDic.Keys;
-
-    public bool IsValid() => assetBundle != null;
+    public override bool IsReady() => string.IsNullOrEmpty(name) == false && checksumInfo != null;
+    public override bool IsValid() => assetBundle != null;
 }
 
 

@@ -13,7 +13,7 @@ internal static class EnumBag<TEnum> where TEnum : struct, Enum {
         var enumType = typeof(TEnum);
         if (Enum.GetValues(enumType) is TEnum[] enumValues) {
             _values = enumValues;
-            _ignoreObsoleteValues = _values.Where(enumValue => enumType.TryGetField(out var info, enumValue.ToString()) && info.IsDefined<ObsoleteAttribute>() == false).ToArray();
+            _ignoreObsoleteValues = _values.Where(enumValue => enumType.TryGetFieldInfo(out var info, enumValue.ToString()) && info.IsDefined<ObsoleteAttribute>() == false).ToArray();
             foreach (var enumValue in _values) {
                 _stringToEnumDic.TryAdd(enumValue.ToString(), enumValue);
             }

@@ -3,10 +3,21 @@ using NUnit.Framework;
 using Unity.PerformanceTesting;
 using Unity.Profiling.Memory;
 using UnityEngine;
+using UnityEngine.TestTools;
 
 [TestFixture]
 public class ResourceServiceTestRunner {
-    
+
+    [OneTimeSetUp]
+    public void OneTimeSetUp() {
+        LogAssert.ignoreFailingMessages = true;
+    }
+
+    [OneTimeTearDown]
+    public void OneTimeTearDown() {
+        LogAssert.ignoreFailingMessages = false;
+    }
+
     [SetUp]
     public void SetUp() {
         if (Service.TryGetService<ResourceService>(out var service)) {
@@ -83,7 +94,7 @@ public class ResourceServiceTestRunner {
             var track = service.Get<SoundTrack>("FreeSampleSFX");
             Assert.IsNotNull(track);
             Logger.TraceLog($"Get || {track.name}");
-                
+            
             MemoryProfiler.TakeSnapshot($"{Constants.Path.MEMORY_CAPTURES_PATH}/TestSnap_01.snap", null);
         }
     }

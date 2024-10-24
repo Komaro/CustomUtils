@@ -82,6 +82,7 @@ public abstract class JsonAutoConfig : JsonConfig, IDisposable {
         return base.Clone(type);
     }
 
+    // TODO. PlayMode 전환 시 EditorWindow가 열려 있는 경우 exception 발생 ex) EditorHttpWebServerService.CacheRefresh()
     public virtual void StartAutoSave(string path) {
         if (IsAutoSaving()) {
             StopAutoSave();

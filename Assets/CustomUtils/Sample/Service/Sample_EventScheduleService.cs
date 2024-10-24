@@ -98,14 +98,14 @@ public class Sample_EventScheduleService : IService {
 
     void IService.Refresh() {
         foreach (var info in _sampleEventInfoList) {
-            if (_eventSchedulerList.TryFind(out var scheduler, x => x.IsMatch(info))) {
+            if (_eventSchedulerList.TryFirst(out var scheduler, x => x.IsMatch(info))) {
                 scheduler.Refresh(info);
             }
         }
     }
 
     public void StartEvent(Sample_EventInfo info) {
-        if (_eventSchedulerList.TryFind(out var scheduler, x => x.IsMatch(info))) {
+        if (_eventSchedulerList.TryFirst(out var scheduler, x => x.IsMatch(info))) {
             scheduler.Refresh(info);
         } else {
             scheduler = CreateScheduler(info);
@@ -184,7 +184,7 @@ public class Sample_EventScheduleService : IService {
     public void AddDummyEvent(Sample_EventInfo info) => StartEvent(info);
 
     public void ChangeEventEndTime(int eventId, int days, int hours, int minutes, int seconds) {
-        if (_eventSchedulerList.TryFind(out var scheduler, x => x.IsMatch(eventId))) {
+        if (_eventSchedulerList.TryFirst(out var scheduler, x => x.IsMatch(eventId))) {
             if (_cacheResetEndTimeDic.TryGetValue(eventId, out var time)) {
                 if (time == DateTime.MinValue)
                     _cacheResetEndTimeDic[eventId] = scheduler.GetInfo().shopEndDate;
@@ -198,7 +198,7 @@ public class Sample_EventScheduleService : IService {
     
     public void ResetEventEndTime() {
         foreach (var pair in _cacheResetEndTimeDic) {
-            if (_eventSchedulerList.TryFind(out var scheduler, x => x.IsMatch(pair.Key)) && pair.Value != DateTime.MinValue) {
+            if (_eventSchedulerList.TryFirst(out var scheduler, x => x.IsMatch(pair.Key)) && pair.Value != DateTime.MinValue) {
                 scheduler.GetInfo().shopEndDate = pair.Value;
                 scheduler.Refresh();
             }

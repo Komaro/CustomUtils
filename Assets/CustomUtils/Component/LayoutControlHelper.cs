@@ -177,7 +177,7 @@ public class LayoutControlHelper : MonoBehaviour, ILayoutRecursive {
         }
         
         index = GetCollectionIndex(index);
-        if (_itemList.TryFind(out var item, index) && index > 0 && index < _infoList.Count) {
+        if (_itemList.TryFirst(out var item, index) && index > 0 && index < _infoList.Count) {
             item.SetData(info);
             _infoList[index] = info;
         }
@@ -189,7 +189,7 @@ public class LayoutControlHelper : MonoBehaviour, ILayoutRecursive {
         }
         
         index = GetCollectionIndex(index);
-        if (_itemList.TryFind(out var item, index) && index >= 0 && index < _infoList.Count && _infoList[index] is TInfo info) {
+        if (_itemList.TryFirst(out var item, index) && index >= 0 && index < _infoList.Count && _infoList[index] is TInfo info) {
             _infoList[index] = updateFunc.Invoke(info);
             item.SetData(_infoList[index]);
         }
@@ -201,7 +201,7 @@ public class LayoutControlHelper : MonoBehaviour, ILayoutRecursive {
 	    }
         
 	    index = GetCollectionIndex(index);
-	    if (_itemList.TryFind(out var item, index) && index >= 0 && index < _infoList.Count && _infoList[index] is TInfo info) {
+	    if (_itemList.TryFirst(out var item, index) && index >= 0 && index < _infoList.Count && _infoList[index] is TInfo info) {
 		    updateAction?.Invoke(info);
 		    item.SetData(info);
 	    }

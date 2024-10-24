@@ -12,15 +12,15 @@ public static class ReflectionExtension {
         type.GetFields(bindingFlags).ConvertTo(info => (info.Name, info.GetValue(ob)))
         .Concat(type.GetProperties(bindingFlags).Where(info => info.GetIndexParameters().Length <= 0).ConvertTo(info => (info.Name, info.GetValue(ob))));
 
-    public static bool TryGetField(this Type type, out FieldInfo info, string name, BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public) => (info = type.GetField(name, bindingFlags)) != null;
-    public static bool TryGetMethod(this Type type, out MethodInfo info, string name, BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public) => (info = type.GetMethod(name, bindingFlags)) != null;
-    public static bool TryGetProperty(this Type type, out PropertyInfo info, string name, BindingFlags bindingFlags = BindingFlags.GetProperty | BindingFlags.SetProperty) => (info = type.GetProperty(name, bindingFlags)) != null;
+    public static bool TryGetFieldInfo(this Type type, out FieldInfo info, string name, BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public) => (info = type.GetField(name, bindingFlags)) != null;
+    public static bool TryGetMethodInfo(this Type type, out MethodInfo info, string name, BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public) => (info = type.GetMethod(name, bindingFlags)) != null;
+    public static bool TryGetPropertyInfo(this Type type, out PropertyInfo info, string name, BindingFlags bindingFlags = BindingFlags.GetProperty | BindingFlags.SetProperty) => (info = type.GetProperty(name, bindingFlags)) != null;
 
     public static bool TryGetFieldValue<TValue>(this Type type, out TValue value, object obj, string name, BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public) => (value = type.GetFieldValue<TValue>(obj, name, bindingFlags)) != null;
-    public static TValue GetFieldValue<TValue>(this Type type, object obj, string name, BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public) => type.TryGetField(out var fieldInfo, name, bindingFlags) && fieldInfo.GetValue(obj) is TValue value ? value : default;
+    public static TValue GetFieldValue<TValue>(this Type type, object obj, string name, BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public) => type.TryGetFieldInfo(out var fieldInfo, name, bindingFlags) && fieldInfo.GetValue(obj) is TValue value ? value : default;
 
     public static bool TryGetPropertyValue<T>(this Type type, out T value, object target, string name, BindingFlags bindingFlags = BindingFlags.GetProperty | BindingFlags.SetProperty) where T : class {
-        if (type.TryGetProperty(out var info, name, bindingFlags)) {
+        if (type.TryGetPropertyInfo(out var info, name, bindingFlags)) {
             return (value = info.GetValue(target) as T) != null;
         }
 
@@ -52,6 +52,26 @@ public static class ReflectionExtension {
 
         return false;
     }
-    
+
+    public static IEnumerable<Type> GetBaseTypes(this Type type) {
+        while ((type = type.BaseType) != null) {
+            yield return type;
+        }
+    }
+
     public static bool IsStruct(this Type type) => type.IsValueType && type.IsPrimitive == false;
+    public static bool IsDelegate(this Type type) => type.IsSubclassOf(typeof(Delegate));
+
+
+    #region PriorityExtension
+    
+    public static uint GetOrderByPriority(this Type type) {
+        if (type.TryGetCustomInheritedAttribute<PriorityAttribute>(out var attribute)) {
+            return attribute.priority;
+        }
+
+        return 99999;
+    }
+    
+    #endregion
 }

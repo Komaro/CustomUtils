@@ -161,9 +161,9 @@ public static class SystemUtil {
                 path = Directory.GetParent(path)?.FullName ?? path;
             }
 
-            if (Directory.Exists(path) == false) {
-                Logger.TraceLog($"Create Directory || {path}", Color.green);
+            if (string.IsNullOrEmpty(path) == false && Directory.Exists(path) == false) {
                 Directory.CreateDirectory(path);
+                Logger.TraceLog($"Create Directory || {path}", Color.green);
             }
         } catch (Exception ex) {
             Logger.TraceError(ex);
@@ -244,7 +244,7 @@ public static class SystemUtil {
         }
         
         try {
-            EnsureDirectoryExists(path);
+            EnsureDirectoryExists(Directory.GetParent(path)?.FullName);
             File.WriteAllBytes(path, bytes);
             return new FileInfo(path);
         } catch (Exception ex) {

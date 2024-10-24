@@ -50,7 +50,7 @@ public abstract class EditorBuildDrawer<TConfig, TNullConfig> : EditorAutoConfig
             var configDefineSymbolSet = config.defineSymbols.Split(Constants.Separator.DEFINE_SYMBOL).ToHashSet();
             defineSymbols = types.SelectMany(type => Enum.GetValues(type).Cast<Enum>().Select(enumValue => {
                 var name = enumValue.ToString();
-                return type.TryGetField(out var info, name) && info.TryGetCustomAttribute<EnumValueAttribute>(out var attribute)
+                return type.TryGetFieldInfo(out var info, name) && info.TryGetCustomAttribute<EnumValueAttribute>(out var attribute)
                     ? new ToggleDraw(name, configDefineSymbolSet.Contains(name), attribute.header)
                     : new ToggleDraw(name, configDefineSymbolSet.Contains(name));
             })).ToArray();

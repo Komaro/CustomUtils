@@ -49,6 +49,7 @@ public static partial class Constants {
     }
 
     public static class Path {
+        
         public static readonly string PROJECT_PATH = Directory.GetParent(Application.dataPath)?.FullName;
         public static readonly string SOLUTION_PATH = Directory.GetFiles(PROJECT_PATH, Extension.SOLUTION_FILTER).FirstOrDefault();
         

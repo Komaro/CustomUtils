@@ -32,13 +32,14 @@ public static class ReflectionProvider {
     /// T를 SubClass(상속 관계) 로 가지는 ClassType
     /// </summary>
     public static IEnumerable<Type> GetSubClassTypes<T>() where T : class => GetSubClassTypes(typeof(T));
+    
     /// <summary>
-    /// subClassType을 SubClass(상속 관계) 로 가지는 ClassType
+    /// subClassType을 SubClass(상속 관계)로 가지는 ClassType
     /// </summary>
     public static IEnumerable<Type> GetSubClassTypes(Type subClassType) => Cache.CachedClasses.Where(type => type.IsSubclassOf(subClassType));
     
     /// <summary>
-    /// subClassTypeDefinition을 SubClass(상속 관계) 로 가지는 ClassType
+    /// typeDefinition을 SubClass(상속 관계)로 가지는 ClassType
     /// </summary>
     public static IEnumerable<Type> GetSubClassTypeDefinitions(Type typeDefinition) => Cache.CachedClasses.Where(type => {
         if (type.IsAbstract) {
@@ -75,7 +76,6 @@ public static class ReflectionProvider {
     public static IEnumerable<(T attribute, Type type)> GetAttributeTypeInfos<T>() where T : Attribute => Cache.CachedClasses.Where(type => type.IsDefined<T>()).Where(type => type.IsDefined<T>()).Select(type => (type.GetCustomAttribute<T>(), type));
     
     #endregion
-
     
     #region [Attribute]
 
@@ -86,7 +86,6 @@ public static class ReflectionProvider {
     public static IEnumerable<T> GetAttributes<T>() where T : Attribute => GetAttributeTypes<T>().SelectMany(type => type.GetCustomAttributes<T>(false));
     
     #endregion
-
     
     #region [Enum]
     

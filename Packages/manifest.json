@@ -18,7 +18,7 @@
     "com.unity.performance.profile-analyzer": "1.2.2",
     "com.unity.profiling.core": "1.0.2",
     "com.unity.render-pipelines.universal": "14.0.11",
-    "com.unity.test-framework": "1.3.9",
+    "com.unity.test-framework": "1.4.5",
     "com.unity.test-framework.performance": "https://github.com/needle-mirror/com.unity.test-framework.performance.git",
     "com.unity.testtools.codecoverage": "1.2.6",
     "com.unity.textmeshpro": "3.0.9",

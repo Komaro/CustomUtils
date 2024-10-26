@@ -124,7 +124,6 @@ public abstract class JsonAutoConfig : JsonConfig, IDisposable {
     
     public virtual void Dispose() {
         if (IsNull() == false) {
-            Logger.TraceLog(nameof(Dispose) + GetType().FullName);
             StopAutoSave();
         }
     }

@@ -5,8 +5,7 @@ public delegate void NotifyFieldChangedHandler(NotifyFieldChangedEventArgs args)
 
 public class NotifyFieldChangedEventArgs : EventArgs {
 
-    private static readonly NotifyFieldChangedEventArgs _empty = new();
-    public static NotifyFieldChangedEventArgs Empty => _empty;
+    public new static NotifyFieldChangedEventArgs Empty { get; } = new();
 }
 
 public class NotifyCollectionChangedEventArgs : NotifyFieldChangedEventArgs {

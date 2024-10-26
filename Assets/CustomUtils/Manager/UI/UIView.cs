@@ -1,37 +1,35 @@
 ﻿using System;
-using System.Collections.Immutable;
 using UnityEngine;
 
+// todo. service 처리용
 public interface IUIView {
 
-    public void ChangeModel(UIViewModel viewModel);
+    public void ChangeViewModel(UIViewModel viewModel);
 }
 
-public abstract class UIView<TViewModel> : MonoBehaviour, IUIView where TViewModel : UIViewModel, new() {
+public abstract class UIView<TViewModel> : MonoBehaviour, IUIView where TViewModel : UIViewModel {
 
-    protected TViewModel model = new();
+    protected TViewModel model;
 
-
-    protected virtual void OnEnable() => Attach();
-
-    public virtual void ChangeModel(UIViewModel viewModel) => model = (TViewModel) viewModel;
-    protected virtual void Attach() => model.OnModelChanged += OnNotifyModelChanged;
-
-    protected abstract void OnNotifyModelChanged(string fieldName, NotifyFieldChangedEventArgs args);
-}
-
-public abstract class UIViewModel {
-
-    private static readonly ImmutableHashSet<Type> NOTIFY_TYPE_SET = ReflectionProvider.GetSubClassTypes(typeof(NotifyField)).ToImmutableHashSet();
-
-    public delegate void NotifyModelChangeHandler(string fieldName, NotifyFieldChangedEventArgs args);
-    public SafeDelegate<NotifyModelChangeHandler> OnModelChanged;
-
-    public UIViewModel() {
-        foreach (var fieldInfo in GetType().GetFields()) {
-            if (NOTIFY_TYPE_SET.Contains(fieldInfo.FieldType.GetGenericTypeDefinition()) && fieldInfo.GetValue(this) is NotifyField notifyField) {
-                notifyField.OnChanged += args => OnModelChanged.handler?.Invoke(fieldInfo.Name, args);
-            }
+    protected virtual void OnEnable() {
+        if (model != null) {
+            AttachModelChangedCallback();
         }
     }
+
+    protected virtual void AttachModelChangedCallback() {
+        if (model.IsAlreadyOnChanged()) {
+            model.Clear();
+        }
+        
+        model.OnModelChanged += OnNotifyModelChanged;
+    }
+
+    public virtual void ChangeViewModel(UIViewModel viewModel) {
+        model?.Dispose();
+        model = (TViewModel) viewModel;
+        AttachModelChangedCallback();
+    }
+
+    protected abstract void OnNotifyModelChanged(string fieldName, NotifyFieldChangedEventArgs args);
 }

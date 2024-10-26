@@ -70,13 +70,22 @@ public class TestSimpleUIView : UIView<TestSimpleUIViewModel> {
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private void UpdateCollection(NotifyCollectionChangedEventArgs args) => _collectionText.text = model.Collection.ToStringCollection(", ");
-    
+    private void UpdateCollection(NotifyCollectionChangedEventArgs args) {
+        Logger.TraceLog(args.action);
+        _collectionText.text = model.Collection.ToStringCollection(", ");
+    }
+
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private void UpdateList(NotifyCollectionChangedEventArgs args) => _collectionText.text = model.List.ToStringCollection(", ");
-    
+    private void UpdateList(NotifyCollectionChangedEventArgs args) {
+        Logger.TraceLog(args.action);
+        _collectionText.text = model.List.ToStringCollection(", ");
+    }
+
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private void UpdateDictionary(NotifyCollectionChangedEventArgs args) => _collectionText.text = model.Dictionary.ToStringCollection(x => x.ToStringPair(), ", ");
+    private void UpdateDictionary(NotifyCollectionChangedEventArgs args) {
+        Logger.TraceLog(args.action);
+        _dictionaryText.text = model.Dictionary.ToStringCollection(x => x.ToStringPair(), ", ");
+    }
 
     private void OnClickIncreaseCountButton() => model.IncreaseCount(10);
     private void OnClickDecreaseCountButton() => model.DecreaseCount(10);

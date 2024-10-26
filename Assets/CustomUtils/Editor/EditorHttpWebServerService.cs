@@ -42,7 +42,7 @@ public class EditorHttpWebServerService : EditorService {
     [DidReloadScripts(99999)]
     private static void CacheRefresh() {
         if (HasOpenInstances<EditorHttpWebServerService>()) {
-            if (JsonUtil.TryLoadJson(CONFIG_PATH, out _config) && (_config?.IsAutoSaving() ?? false)) {
+            if (JsonUtil.TryLoadJson(CONFIG_PATH, out _config)) {
                 _config.StartAutoSave(CONFIG_PATH);
             } else {
                 if (_config == null || _config.IsNull() == false) {

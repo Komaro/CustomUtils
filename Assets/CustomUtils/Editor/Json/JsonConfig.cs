@@ -62,16 +62,14 @@ public abstract class JsonConfig {
 // static 필드에서 new()로 생성하지 말 것.
 public abstract class JsonAutoConfig : JsonConfig, IDisposable {
     
-    [JsonIgnore] protected List<IDisposable> disposableList = new();
-    [JsonIgnore] protected IConnectableObservable<long> intervalObservable;
+    [JsonIgnore] protected string savePath;
+    [JsonIgnore] protected readonly List<IDisposable> disposableList = new();
     [JsonIgnore] protected IDisposable intervalDisposable;
     [JsonIgnore] protected bool saveFlag;
 
     [JsonIgnore] private readonly ArrayComparer ARRAY_COMPARER = new();
     [JsonIgnore] private readonly CollectionComparer COLLECTION_COMPARER = new();
     
-    protected JsonAutoConfig() => intervalObservable = Observable.Interval(TimeSpan.FromSeconds(5f)).Publish();
-
     public override T Clone<T>() {
         Dispose();
         return base.Clone<T>();
@@ -82,12 +80,18 @@ public abstract class JsonAutoConfig : JsonConfig, IDisposable {
         return base.Clone(type);
     }
 
-    // TODO. PlayMode 전환 시 EditorWindow가 열려 있는 경우 exception 발생 ex) EditorHttpWebServerService.CacheRefresh()
-    public virtual void StartAutoSave(string path) {
+    public virtual void StartAutoSave(string savePath) {
         if (IsAutoSaving()) {
             StopAutoSave();
         }
-        
+
+        this.savePath = savePath;
+        if (EditorApplication.isPlayingOrWillChangePlaymode) {
+            EditorApplication.playModeStateChanged += OnPlayModeStateChanged;
+            return;
+        }
+
+        var intervalObservable = Observable.Interval(TimeSpan.FromSeconds(5f)).Publish();
         intervalDisposable = intervalObservable.Connect();
         foreach (var info in GetType().GetFields(BindingFlags.Public | BindingFlags.Instance).Where(x => x.IsDefined<JsonIgnoreAttribute>() == false)) {
             if (info.FieldType.IsArray) {
@@ -106,7 +110,7 @@ public abstract class JsonAutoConfig : JsonConfig, IDisposable {
         disposableList.Add(Observable.Interval(TimeSpan.FromSeconds(5f)).Subscribe(_ => {
             if (saveFlag) {
                 saveFlag = false;
-                Save(path);
+                Save(this.savePath);
             }
         }));
     }
@@ -120,12 +124,21 @@ public abstract class JsonAutoConfig : JsonConfig, IDisposable {
     
     public virtual void Dispose() {
         if (IsNull() == false) {
+            Logger.TraceLog(nameof(Dispose) + GetType().FullName);
             StopAutoSave();
         }
     }
 
     public virtual bool IsAutoSaving() => disposableList.Any();
-
+    
+    protected virtual void OnPlayModeStateChanged(PlayModeStateChange state) {
+        if (state == PlayModeStateChange.EnteredPlayMode || state == PlayModeStateChange.EnteredEditMode) {
+            EditorApplication.playModeStateChanged -= OnPlayModeStateChanged;
+            Logger.TraceLog(savePath);
+            StartAutoSave(savePath);
+        }
+    }
+    
     private class ArrayComparer : IEqualityComparer<Array> {
 
         public bool Equals(Array x, Array y) {
@@ -148,12 +161,17 @@ public abstract class JsonAutoConfig : JsonConfig, IDisposable {
             
             x.Reset();
             y.Reset();
-            
-            while (x.MoveNext() && y.MoveNext()) {
+
+            // Check count zero
+            if (x.MoveNext() == false || y.MoveNext() == false) {
+                return false;
+            }
+
+            do {
                 if (x.Current?.Equals(y.Current) == false) {
                     return false;
                 }
-            }
+            } while (x.MoveNext() && y.MoveNext());
 
             return true;
         }

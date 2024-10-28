@@ -12,12 +12,6 @@ public class UIViewModelTestRunner {
     }
 
     [Test]
-    public void Test<T>() {
-        
-    }
-
-    // TODO. Need Coverage Test
-    [Test]
     public void ViewModelTest() {
         var viewModel = new TestSimpleUIViewModel {
             Title = { Value = "TestViewModel" },

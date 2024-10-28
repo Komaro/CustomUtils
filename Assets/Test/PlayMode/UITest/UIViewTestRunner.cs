@@ -1,15 +1,15 @@
 ﻿using System.Collections;
 using System.Reflection;
-using NUnit.Framework;
 using TMPro;
 using UnityEngine;
 using UnityEngine.TestTools;
 
 public class UIViewTestRunner {
 
-    [OneTimeSetUp]
-    public void OneTimeSetUp() {
+    [UnitySetUp]
+    public IEnumerator OneTimeSetUp() {
         TestUtil.EvaluateCodeCoverageResult();
+        yield return null;
     }
 
     [UnityTest]

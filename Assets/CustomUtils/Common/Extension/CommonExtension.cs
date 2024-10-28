@@ -16,14 +16,17 @@ public static class CommonExtension {
 
     private static readonly ObjectPool<StringBuilder> _stringBuilderPool = new(() => new StringBuilder(), builder => builder.Clear());
 
-    public static string ToStringAllFields(this object ob, string prefix = "", BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.Public) {
+    public static string ToStringAllFields(this object ob, string prefix = "", bool ignoreRootName = false, BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.Public) {
         if (_stringBuilderPool == null) {
             return string.Empty;
         }
 
         var stringBuilder = _stringBuilderPool.Get();
         var type = ob.GetType();
-        stringBuilder.Append($"{type.Name}");
+        if (ignoreRootName == false) {
+            stringBuilder.Append(type.GetNameWithGenericArguments());
+        }
+        
         if (type.IsClass) {
             stringBuilder.AppendLine(" (Class)");
         } else if (type.IsStruct()) {
@@ -31,21 +34,29 @@ public static class CommonExtension {
         }
 
         foreach (var (name, value) in type.GetAllDataMemberNameWithValue(ob, bindingFlags)) {
+            if (value == null) {
+                stringBuilder.AppendLine($"{prefix} [{name}] null");
+                continue;
+            }
+            
             var memberType = value.GetType();
-            stringBuilder.Append($"{prefix} [{memberType.Name}] ");
+            stringBuilder.Append($"{prefix} [{memberType.GetNameWithGenericArguments()}] ");
             if (memberType.IsArray && value is Array array) {
                 stringBuilder.AppendLine($"{name} || {array.Cast<object>()?.ToStringCollection(", ")}");
             } else if (memberType.IsGenericCollectionType() && value is ICollection collection) {
                 stringBuilder.AppendLine($"{name} || {collection.Cast<object>().ToStringCollection(", ")}");
             } else if (memberType.IsEnum == false && memberType.IsStruct()) {
-                stringBuilder.AppendLine($"{value.ToStringAllFields("\t", bindingFlags)}");
+                stringBuilder.AppendLine($"{name} {value.ToStringAllFields("\t", true, bindingFlags)}");
             } else {
                 stringBuilder.AppendLine($"{name} || {value}");
             }
         }
-
+        
+        _stringBuilderPool.Release(stringBuilder);
         return stringBuilder.ToString();
     }
+
+    private static string GetNameWithGenericArguments(this Type type) => type.IsGenericType ? $"{type.Name}<{type.GenericTypeArguments.ToStringCollection(genericType => genericType.Name, ", ")}>" : type.Name;
 
     public static string GetString(this Memory<byte> memory, ENCODING_FORMAT format = ENCODING_FORMAT.UTF_8) => format switch {
         ENCODING_FORMAT.UTF_32 => Encoding.UTF32.GetString(memory.Span),

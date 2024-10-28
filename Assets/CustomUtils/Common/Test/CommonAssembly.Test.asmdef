@@ -8,7 +8,8 @@
         "GUID:0acc523941302664db1f4e527237feb3",
         "GUID:e9745f6a32442194c8dc5a43e9ab86f9",
         "GUID:7c04f0dfa9243c04681a55d90d3ff3fc",
-        "GUID:37180d43aa4b85c4b9076e2ef48a3b2a"
+        "GUID:37180d43aa4b85c4b9076e2ef48a3b2a",
+        "GUID:19c3df1967929405fba735480b3da9a7"
     ],
     "includePlatforms": [
         "Editor"
@@ -16,7 +17,9 @@
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,
-    "precompiledReferences": [],
+    "precompiledReferences": [
+        ""
+    ],
     "autoReferenced": true,
     "defineConstraints": [
         "UNITY_EDITOR",

@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 1536
     height: 780.8
   m_ShowMode: 4
-  m_Title: Code Coverage
+  m_Title: Test Runner
   m_RootView: {fileID: 2}
   m_MinSize: {x: 875, y: 350}
   m_MaxSize: {x: 10000, y: 10000}
@@ -119,7 +119,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 100}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 1530
+  controlID: 111
   draggingID: 0
 --- !u!114 &6
 MonoBehaviour:
@@ -140,12 +140,12 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 875.2
+    width: 818.4
     height: 730.8
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 1
-  controlID: 1507
+  controlID: 88
   draggingID: 0
 --- !u!114 &7
 MonoBehaviour:
@@ -166,12 +166,12 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 875.2
-    height: 382.4
+    width: 818.4
+    height: 385.6
   m_MinSize: {x: 200, y: 50}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 1463
+  controlID: 42
   draggingID: 0
 --- !u!114 &8
 MonoBehaviour:
@@ -190,8 +190,8 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 364.8
-    height: 382.4
+    width: 334.4
+    height: 385.6
   m_MinSize: {x: 201, y: 221}
   m_MaxSize: {x: 4001, y: 4021}
   m_ActualView: {fileID: 15}
@@ -215,10 +215,10 @@ MonoBehaviour:
   m_Children: []
   m_Position:
     serializedVersion: 2
-    x: 364.8
+    x: 334.4
     y: 0
-    width: 510.40002
-    height: 382.4
+    width: 484.00003
+    height: 385.6
   m_MinSize: {x: 202, y: 221}
   m_MaxSize: {x: 4002, y: 4021}
   m_ActualView: {fileID: 17}
@@ -244,13 +244,13 @@ MonoBehaviour:
   m_Position:
     serializedVersion: 2
     x: 0
-    y: 382.4
-    width: 875.2
-    height: 348.4
+    y: 385.6
+    width: 818.4
+    height: 345.19998
   m_MinSize: {x: 200, y: 50}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 1508
+  controlID: 89
   draggingID: 0
 --- !u!114 &11
 MonoBehaviour:
@@ -262,23 +262,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 1
   m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: ConsoleWindow
+  m_Name: ProjectBrowser
   m_EditorClassIdentifier: 
   m_Children: []
   m_Position:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 543.2
-    height: 348.4
-  m_MinSize: {x: 101, y: 121}
-  m_MaxSize: {x: 4001, y: 4021}
-  m_ActualView: {fileID: 19}
+    width: 504.8
+    height: 345.19998
+  m_MinSize: {x: 231, y: 271}
+  m_MaxSize: {x: 10001, y: 10021}
+  m_ActualView: {fileID: 18}
   m_Panes:
   - {fileID: 18}
   - {fileID: 19}
-  m_Selected: 1
-  m_LastSelected: 0
+  m_Selected: 0
+  m_LastSelected: 1
 --- !u!114 &12
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -294,10 +294,10 @@ MonoBehaviour:
   m_Children: []
   m_Position:
     serializedVersion: 2
-    x: 543.2
+    x: 504.8
     y: 0
-    width: 332
-    height: 348.4
+    width: 313.60004
+    height: 345.19998
   m_MinSize: {x: 202, y: 221}
   m_MaxSize: {x: 4002, y: 4021}
   m_ActualView: {fileID: 20}
@@ -315,23 +315,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 1
   m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: CodeCoverageWindow
+  m_Name: TestRunnerWindow
   m_EditorClassIdentifier: 
   m_Children: []
   m_Position:
     serializedVersion: 2
-    x: 875.2
+    x: 818.4
     y: 0
-    width: 660.8
+    width: 717.6
     height: 730.8
-  m_MinSize: {x: 446, y: 86}
+  m_MinSize: {x: 101, y: 121}
   m_MaxSize: {x: 4001, y: 4021}
-  m_ActualView: {fileID: 22}
+  m_ActualView: {fileID: 14}
   m_Panes:
   - {fileID: 21}
   - {fileID: 14}
-  - {fileID: 22}
-  m_Selected: 2
+  m_Selected: 1
   m_LastSelected: 1
 --- !u!114 &14
 MonoBehaviour:
@@ -354,9 +353,9 @@ MonoBehaviour:
       Part of the com.unity.test-framework package.
   m_Pos:
     serializedVersion: 2
-    x: 875.2
+    x: 818.4
     y: 73.6
-    width: 659.8
+    width: 716.6
     height: 709.8
   m_SerializedDataModeController:
     m_DataMode: 0
@@ -369,15 +368,15 @@ MonoBehaviour:
     m_SaveData: []
     m_OverlaysVisible: 1
   m_Spl:
-    ID: 1544
-    splitterInitialOffset: 328.8
+    ID: 248
+    splitterInitialOffset: 284.8
     currentActiveSplitter: -1
     realSizes:
-    - 283.2
-    - 356.8
+    - 235.2
+    - 404.8
     relativeSizes:
-    - 0.4425216
-    - 0.5574784
+    - 0.3675
+    - 0.6325
     minSizes:
     - 32
     - 32
@@ -392,11 +391,11 @@ MonoBehaviour:
     oldMinSizes: 
     oldMaxSizes: 
     oldSplitSize: 0
-  m_TestTypeToolbarIndex: 1
+  m_TestTypeToolbarIndex: 0
   m_TestListGUIs:
   - m_Window: {fileID: 14}
     runProgress:
-      RunGuid: 5d799f24-22f3-439f-a7db-e75b1fb92fa2
+      RunGuid: 7af07ad6-7b00-4f78-a579-50c5ae9eb564
       ExecutionSettings:
         m_TargetPlatform: 0
         m_HasTargetPlatform: 0
@@ -407,9 +406,9 @@ MonoBehaviour:
           categoryNames: []
           assemblyNames: []
         filters:
-        - testMode: 2
+        - testMode: 1
           testNames:
-          - UIViewTestRunner.SimpleUIViewModelTest
+          - NotifyFieldTestRunner.NotifyCsvConvertTest
           groupNames: []
           categoryNames: []
           assemblyNames: []
@@ -432,7 +431,7 @@ MonoBehaviour:
       uniqueId: '[CustomUtils][suite]'
       name: CustomUtils
       fullName: CustomUtils
-      resultStatus: 0
+      resultStatus: 2
       duration: 0
       messages: 
       output: 
@@ -444,11 +443,11 @@ MonoBehaviour:
       categories: []
       parentId: 
       parentUniqueId: 
-    - id: 1052
+    - id: 1056
       uniqueId: '[EditModeTestAssembly][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/EditModeTestAssembly.dll][suite]'
       name: EditModeTestAssembly.dll
       fullName: C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/EditModeTestAssembly.dll
-      resultStatus: 0
+      resultStatus: 2
       duration: 0
       messages: 
       output: 
@@ -458,9 +457,9 @@ MonoBehaviour:
       description: 
       isSuite: 1
       categories: []
-      parentId: 1000
+      parentId: 1062
       parentUniqueId: '[CustomUtils][suite]'
-    - id: 1001
+    - id: 1002
       uniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][AnalyzerTestRunner][suite]
       name: AnalyzerTestRunner
       fullName: AnalyzerTestRunner
@@ -474,9 +473,9 @@ MonoBehaviour:
       description: 
       isSuite: 1
       categories: []
-      parentId: 1052
+      parentId: 1056
       parentUniqueId: '[EditModeTestAssembly][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/EditModeTestAssembly.dll][suite]'
-    - id: 1011
+    - id: 1012
       uniqueId: EditModeTestAssembly.dll/AnalyzerTestRunner/[EditModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCasePerformanceTest][suite]
       name: AnalyzerTestCasePerformanceTest
       fullName: AnalyzerTestRunner.AnalyzerTestCasePerformanceTest
@@ -491,7 +490,7 @@ MonoBehaviour:
       isSuite: 1
       categories:
       - Performance
-      parentId: 1001
+      parentId: 1002
       parentUniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][AnalyzerTestRunner][suite]
     - id: 1007
       uniqueId: EditModeTestAssembly.dll/AnalyzerTestRunner/AnalyzerTestCasePerformanceTest/[EditModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCasePerformanceTest(RequiresStaticMethodImplementationAttributeAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/RequiresStaticMethodTestCase")]
@@ -561,7 +560,7 @@ MonoBehaviour:
       - Performance
       parentId: 1011
       parentUniqueId: EditModeTestAssembly.dll/AnalyzerTestRunner/[EditModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCasePerformanceTest][suite]
-    - id: 1006
+    - id: 1007
       uniqueId: EditModeTestAssembly.dll/AnalyzerTestRunner/[EditModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCaseTest][suite]
       name: AnalyzerTestCaseTest
       fullName: AnalyzerTestRunner.AnalyzerTestCaseTest
@@ -575,7 +574,7 @@ MonoBehaviour:
       description: 
       isSuite: 1
       categories: []
-      parentId: 1001
+      parentId: 1002
       parentUniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][AnalyzerTestRunner][suite]
     - id: 1002
       uniqueId: EditModeTestAssembly.dll/AnalyzerTestRunner/AnalyzerTestCaseTest/[EditModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCaseTest(RequiresStaticMethodImplementationAttributeAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/RequiresStaticMethodTestCase")]
@@ -645,7 +644,7 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1006
       parentUniqueId: EditModeTestAssembly.dll/AnalyzerTestRunner/[EditModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCaseTest][suite]
-    - id: 1012
+    - id: 1013
       uniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][DBTestRunner][suite]
       name: DBTestRunner
       fullName: DBTestRunner
@@ -659,7 +658,7 @@ MonoBehaviour:
       description: 
       isSuite: 1
       categories: []
-      parentId: 1052
+      parentId: 1056
       parentUniqueId: '[EditModeTestAssembly][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/EditModeTestAssembly.dll][suite]'
     - id: 1013
       uniqueId: EditModeTestAssembly.dll/DBTestRunner/[EditModeTestAssembly][DBTestRunner.InMemoryDatabaseTest]
@@ -678,7 +677,7 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1012
       parentUniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][DBTestRunner][suite]
-    - id: 1014
+    - id: 1015
       uniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][EditModeTestRunner][suite]
       name: EditModeTestRunner
       fullName: EditModeTestRunner
@@ -692,7 +691,7 @@ MonoBehaviour:
       description: 
       isSuite: 1
       categories: []
-      parentId: 1052
+      parentId: 1056
       parentUniqueId: '[EditModeTestAssembly][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/EditModeTestAssembly.dll][suite]'
     - id: 1025
       uniqueId: EditModeTestAssembly.dll/EditModeTestRunner/[EditModeTestAssembly][EditModeTestRunner.EnumCastPerformanceTest]
@@ -745,7 +744,7 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1014
       parentUniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][EditModeTestRunner][suite]
-    - id: 1027
+    - id: 1028
       uniqueId: EditModeTestAssembly.dll/EditModeTestRunner/[EditModeTestAssembly][EditModeTestRunner.JsonPerformanceTest][suite]
       name: JsonPerformanceTest
       fullName: EditModeTestRunner.JsonPerformanceTest
@@ -760,7 +759,7 @@ MonoBehaviour:
       isSuite: 1
       categories:
       - Performance
-      parentId: 1014
+      parentId: 1015
       parentUniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][EditModeTestRunner][suite]
     - id: 1026
       uniqueId: EditModeTestAssembly.dll/EditModeTestRunner/JsonPerformanceTest/[EditModeTestAssembly][EditModeTestRunner.JsonPerformanceTest(2500)]
@@ -813,7 +812,7 @@ MonoBehaviour:
       - Performance
       parentId: 1014
       parentUniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][EditModeTestRunner][suite]
-    - id: 1023
+    - id: 1024
       uniqueId: EditModeTestAssembly.dll/EditModeTestRunner/[EditModeTestAssembly][EditModeTestRunner.TempPerformanceTest_02][suite]
       name: TempPerformanceTest_02
       fullName: EditModeTestRunner.TempPerformanceTest_02
@@ -828,7 +827,7 @@ MonoBehaviour:
       isSuite: 1
       categories:
       - Performance
-      parentId: 1014
+      parentId: 1015
       parentUniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][EditModeTestRunner][suite]
     - id: 1018
       uniqueId: EditModeTestAssembly.dll/EditModeTestRunner/TempPerformanceTest_02/[EditModeTestAssembly][EditModeTestRunner.TempPerformanceTest_02(100)]
@@ -983,7 +982,7 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1014
       parentUniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][EditModeTestRunner][suite]
-    - id: 1032
+    - id: 1033
       uniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][GameDBTestRunner][suite]
       name: GameDBTestRunner
       fullName: GameDBTestRunner
@@ -997,9 +996,9 @@ MonoBehaviour:
       description: 
       isSuite: 1
       categories: []
-      parentId: 1052
+      parentId: 1056
       parentUniqueId: '[EditModeTestAssembly][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/EditModeTestAssembly.dll][suite]'
-    - id: 1036
+    - id: 1037
       uniqueId: EditModeTestAssembly.dll/GameDBTestRunner/[EditModeTestAssembly][GameDBTestRunner.StartTest][suite]
       name: StartTest
       fullName: GameDBTestRunner.StartTest
@@ -1013,7 +1012,7 @@ MonoBehaviour:
       description: 
       isSuite: 1
       categories: []
-      parentId: 1032
+      parentId: 1033
       parentUniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][GameDBTestRunner][suite]
     - id: 1033
       uniqueId: EditModeTestAssembly.dll/GameDBTestRunner/StartTest/[EditModeTestAssembly][GameDBTestRunner.StartTest(GameDBTestRunner+JsonTestRunner)]
@@ -1066,11 +1065,11 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1036
       parentUniqueId: EditModeTestAssembly.dll/GameDBTestRunner/[EditModeTestAssembly][GameDBTestRunner.StartTest][suite]
-    - id: 1037
+    - id: 1038
       uniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][GlobalEnumTestRunner][suite]
       name: GlobalEnumTestRunner
       fullName: GlobalEnumTestRunner
-      resultStatus: 0
+      resultStatus: 1
       duration: 0
       messages: 
       output: 
@@ -1080,16 +1079,39 @@ MonoBehaviour:
       description: 
       isSuite: 1
       categories: []
-      parentId: 1052
+      parentId: 1056
       parentUniqueId: '[EditModeTestAssembly][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/EditModeTestAssembly.dll][suite]'
     - id: 1038
       uniqueId: EditModeTestAssembly.dll/GlobalEnumTestRunner/[EditModeTestAssembly][GlobalEnumTestRunner.StartTest]
       name: StartTest
       fullName: GlobalEnumTestRunner.StartTest
-      resultStatus: 0
-      duration: 0
+      resultStatus: 1
+      duration: 0.6132339
       messages: 
-      output: 
+      output: '
+
+        IgnoreFailingMessages:true
+
+        [GlobalEnumTestRunner.StartTest]
+        Pass Basic Test
+
+        [GlobalEnumTestRunner.StartTest] Pass int Interaction
+        Test
+
+        [GlobalEnumTestRunner.StartTest] Pass Type Interaction Test
+
+        [GlobalEnumTestRunner.StartTest]
+        Pass Property Get Set Test
+
+        [GlobalEnumTestRunner.StartTest] Pass
+        Method Get Test
+
+        [GlobalEnumTestRunner.StartTest] Pass Method Set
+        Test
+
+        [GlobalEnumTestRunner.StartTest] Pass Contains Test
+
+'
       stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
@@ -1099,7 +1121,150 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1037
       parentUniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][GlobalEnumTestRunner][suite]
-    - id: 1039
+    - id: 1046
+      uniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][NotifyFieldTestRunner][suite]
+      name: NotifyFieldTestRunner
+      fullName: NotifyFieldTestRunner
+      resultStatus: 2
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1056
+      parentUniqueId: '[EditModeTestAssembly][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/EditModeTestAssembly.dll][suite]'
+    - id: 1049
+      uniqueId: EditModeTestAssembly.dll/NotifyFieldTestRunner/[EditModeTestAssembly][NotifyFieldTestRunner.NotifyCsvConvertTest]
+      name: NotifyCsvConvertTest
+      fullName: NotifyFieldTestRunner.NotifyCsvConvertTest
+      resultStatus: 2
+      duration: 0.536161
+      messages: "CsvHelper.TypeConversion.TypeConverterException : The conversion
+        cannot be performed.\r\n    Text: '50'\r\n    MemberName: intProperty\r\n   
+        MemberType: NotifyProperty`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089]]\r\n    TypeConverter: 'CsvHelper.TypeConversion.DefaultTypeConverter'\r\nIReader
+        state:\r\n   ColumnCount: 4\r\n   CurrentIndex: 0\r\n   HeaderRecord:\r\n[\"Int\",\"Float\",\"String\",\"Inner\"]\r\nIParser
+        state:\r\n   ByteCount: 0\r\n   CharCount: 127\r\n   Row: 2\r\n   RawRow:
+        2\r\n   Count: 4\r\n   RawRecord:\r\n50,3.55,TestProperty,\"NotifyConvertTestInnerSample
+        { intField = 4455, stringField = TestInnerField }\"\r\n\r\n"
+      output: "[NotifyFieldTestRunner.NotifyCsvConvertTest] Value\r\n4533\r\n[NotifyFieldTestRunner.NotifyCsvConvertTest]
+        Pass field csv serialize\r\n[NotifyFieldTestRunner.EvaluateNotifyProperty]
+        Pass property null check\r\n[NotifyFieldTestRunner.EvaluateNotifyProperty]
+        Pass property reference check\r\n[NotifyFieldTestRunner.EvaluateNotifyProperty]
+        Pass property value check\r\n[NotifyFieldTestRunner.NotifyCsvConvertTest]
+        Pass NotifyField csv convert test\n\r\n[NotifyFieldTestRunner.NotifyCsvConvertTest]
+        NotifyProperty`1<Int32> (Class)\r\n [Int32] _value || 4533\r\n [SafeDelegate`1<NotifyFieldChangedHandler>]
+        OnChanged  (Struct)\r\n\t [handler] null\r\n\t [Int32] Count || 0\r\n\r\n
+        [Boolean] isDisposed || False\r\n [Int32] Value || 4533\n\r\n[NotifyFieldTestRunner.NotifyCsvConvertTest]
+        Int,Float,String,Inner\r\n50,3.55,TestProperty,\"NotifyConvertTestInnerSample
+        { intField = 4455, stringField = TestInnerField }\"\r\n[NotifyFieldTestRunner.NotifyCsvConvertTest]
+        Pass sample csv serialize\r\n"
+      stacktrace: "  at CsvHelper.TypeConversion.DefaultTypeConverter.ConvertFromString
+        (System.String text, CsvHelper.IReaderRow row, CsvHelper.Configuration.MemberMapData
+        memberMapData) [0x00120] in <d82cfa146ac9455fba33d52233350941>:0 \r\n  at
+        (wrapper dynamic-method) System.Object.lambda_method(System.Runtime.CompilerServices.Closure)\r\n 
+        at CsvHelper.CsvReader+<GetRecords>d__87`1[T].MoveNext () [0x000e8] in <d82cfa146ac9455fba33d52233350941>:0
+        \r\n  at System.Linq.Enumerable.TryGetFirst[TSource] (System.Collections.Generic.IEnumerable`1[T]
+        source, System.Boolean& found) [0x00045] in <a314714511a14f84b853c03efd8682b8>:0
+        \r\n  at System.Linq.Enumerable.First[TSource] (System.Collections.Generic.IEnumerable`1[T]
+        source) [0x00000] in <a314714511a14f84b853c03efd8682b8>:0 \r\n  at NotifyFieldTestRunner.NotifyCsvConvertTest
+        () [0x000c8] in C:\\Project\\Unity\\CustomUtils\\Assets\\Test\\EditMode\\NotifyFieldTestRunner.cs:92
+        \r\n  at (wrapper managed-to-native) System.Reflection.RuntimeMethodInfo.InternalInvoke(System.Reflection.RuntimeMethodInfo,object,object[],System.Exception&)\r\n 
+        at System.Reflection.RuntimeMethodInfo.Invoke (System.Object obj, System.Reflection.BindingFlags
+        invokeAttr, System.Reflection.Binder binder, System.Object[] parameters,
+        System.Globalization.CultureInfo culture) [0x0006a] in <8ce0bd04a7a04b4b9395538239d3fdd8>:0 "
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: Notify Csv Convert Test
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1046
+      parentUniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][NotifyFieldTestRunner][suite]
+    - id: 1047
+      uniqueId: EditModeTestAssembly.dll/NotifyFieldTestRunner/[EditModeTestAssembly][NotifyFieldTestRunner.NotifyJsonConvertTest]
+      name: NotifyJsonConvertTest
+      fullName: NotifyFieldTestRunner.NotifyJsonConvertTest
+      resultStatus: 1
+      duration: 0.1128189
+      messages: 
+      output: "[NotifyFieldTestRunner.NotifyJsonConvertTest] {\"Value\":4533}\r\n[NotifyFieldTestRunner.NotifyJsonConvertTest]
+        Pass field json serialize\r\n[NotifyFieldTestRunner.EvaluateNotifyProperty]
+        Pass property null check\r\n[NotifyFieldTestRunner.EvaluateNotifyProperty]
+        Pass property reference check\r\n[NotifyFieldTestRunner.EvaluateNotifyProperty]
+        Pass property value check\r\n[NotifyFieldTestRunner.NotifyJsonConvertTest]
+        Pass NotifyField json convert test\n\r\n[NotifyFieldTestRunner.NotifyJsonConvertTest]
+        NotifyProperty`1<Int32> (Class)\r\n [Int32] _value || 4533\r\n [SafeDelegate`1<NotifyFieldChangedHandler>]
+        OnChanged  (Struct)\r\n\t [handler] null\r\n\t [Int32] Count || 0\r\n\r\n
+        [Boolean] isDisposed || False\r\n [Int32] Value || 4533\n\r\n[NotifyFieldTestRunner.NotifyJsonConvertTest]
+        {\"intProperty\":{\"Value\":50},\"floatProperty\":{\"Value\":3.55},\"stringProperty\":{\"Value\":\"TestProperty\"},\"innerSampleProperty\":{\"Value\":{\"intField\":4455,\"stringField\":\"TestInnerField\"}}}\r\n[NotifyFieldTestRunner.NotifyJsonConvertTest]
+        Pass sample json serialize\r\n[NotifyFieldTestRunner.EvaluateNotifyConvertTestSample]
+        Pass testSample null check\r\n[NotifyFieldTestRunner.EvaluateNotifyConvertTestSample]
+        Pass testSample reference check\r\n[NotifyFieldTestRunner.EvaluateNotifyConvertTestSample]
+        Pass testSample value check\r\n[NotifyFieldTestRunner.NotifyJsonConvertTest]
+        Pass NotifyConvertTestSample json convert test\n\r\n[NotifyFieldTestRunner.NotifyJsonConvertTest]
+        NotifyConvertTestSample (Class)\r\n [NotifyProperty`1<Int32>] intProperty
+        || 50\r\n [NotifyProperty`1<Single>] floatProperty || 3.55\r\n [NotifyProperty`1<String>]
+        stringProperty || TestProperty\r\n [NotifyProperty`1<NotifyConvertTestInnerSample>]
+        innerSampleProperty || NotifyConvertTestInnerSample { intField = 4455, stringField
+        = TestInnerField }\r\n\n\r\n"
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: Notify Json Convert Test
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1046
+      parentUniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][NotifyFieldTestRunner][suite]
+    - id: 1048
+      uniqueId: EditModeTestAssembly.dll/NotifyFieldTestRunner/[EditModeTestAssembly][NotifyFieldTestRunner.NotifyXmlConvertTest]
+      name: NotifyXmlConvertTest
+      fullName: NotifyFieldTestRunner.NotifyXmlConvertTest
+      resultStatus: 1
+      duration: 0.0336897
+      messages: 
+      output: "[NotifyFieldTestRunner.NotifyXmlConvertTest] <?xml version=\"1.0\"
+        encoding=\"utf-16\"?>\r\n<NotifyPropertyOfInt32 xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"
+        xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Value>4533</Value>\r\n</NotifyPropertyOfInt32>\r\n[NotifyFieldTestRunner.NotifyXmlConvertTest]
+        Pass field xml serialize\r\n[NotifyFieldTestRunner.EvaluateNotifyProperty]
+        Pass property null check\r\n[NotifyFieldTestRunner.EvaluateNotifyProperty]
+        Pass property reference check\r\n[NotifyFieldTestRunner.EvaluateNotifyProperty]
+        Pass property value check\r\n[NotifyFieldTestRunner.NotifyXmlConvertTest]
+        Pass NotifyField xml convert test\n\r\n[NotifyFieldTestRunner.NotifyXmlConvertTest]
+        NotifyProperty`1<Int32> (Class)\r\n [Int32] _value || 4533\r\n [SafeDelegate`1<NotifyFieldChangedHandler>]
+        OnChanged  (Struct)\r\n\t [handler] null\r\n\t [Int32] Count || 0\r\n\r\n
+        [Boolean] isDisposed || False\r\n [Int32] Value || 4533\n\r\n[NotifyFieldTestRunner.NotifyXmlConvertTest]
+        <?xml version=\"1.0\" encoding=\"utf-16\"?>\r\n<NotifyConvertTestSample xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"
+        xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <intProperty>\r\n   
+        <Value>50</Value>\r\n  </intProperty>\r\n  <floatProperty>\r\n    <Value>3.55</Value>\r\n 
+        </floatProperty>\r\n  <stringProperty>\r\n    <Value>TestProperty</Value>\r\n 
+        </stringProperty>\r\n  <innerSampleProperty>\r\n    <Value>\r\n      <intField>4455</intField>\r\n     
+        <stringField>TestInnerField</stringField>\r\n    </Value>\r\n  </innerSampleProperty>\r\n</NotifyConvertTestSample>\r\n[NotifyFieldTestRunner.NotifyXmlConvertTest]
+        Pass sample xml serialize\r\n[NotifyFieldTestRunner.EvaluateNotifyConvertTestSample]
+        Pass testSample null check\r\n[NotifyFieldTestRunner.EvaluateNotifyConvertTestSample]
+        Pass testSample reference check\r\n[NotifyFieldTestRunner.EvaluateNotifyConvertTestSample]
+        Pass testSample value check\r\n[NotifyFieldTestRunner.NotifyXmlConvertTest]
+        Pass NotifyConvertTestSample xml convert test\n\r\n[NotifyFieldTestRunner.NotifyXmlConvertTest]
+        NotifyConvertTestSample (Class)\r\n [NotifyProperty`1<Int32>] intProperty
+        || 50\r\n [NotifyProperty`1<Single>] floatProperty || 3.55\r\n [NotifyProperty`1<String>]
+        stringProperty || TestProperty\r\n [NotifyProperty`1<NotifyConvertTestInnerSample>]
+        innerSampleProperty || NotifyConvertTestInnerSample { intField = 4455, stringField
+        = TestInnerField }\r\n\n\r\n"
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: Notify Xml Convert Test
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1046
+      parentUniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][NotifyFieldTestRunner][suite]
+    - id: 1040
       uniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][TcpServerTestRunner][suite]
       name: TcpServerTestRunner
       fullName: TcpServerTestRunner
@@ -1113,7 +1278,7 @@ MonoBehaviour:
       description: 
       isSuite: 1
       categories: []
-      parentId: 1052
+      parentId: 1056
       parentUniqueId: '[EditModeTestAssembly][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/EditModeTestAssembly.dll][suite]'
     - id: 1040
       uniqueId: EditModeTestAssembly.dll/TcpServerTestRunner/[EditModeTestAssembly][TcpServerTestRunner.Clear]
@@ -1132,7 +1297,7 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1039
       parentUniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][TcpServerTestRunner][suite]
-    - id: 1044
+    - id: 1045
       uniqueId: EditModeTestAssembly.dll/TcpServerTestRunner/[EditModeTestAssembly][TcpServerTestRunner.TcpClientTestAsync][suite]
       name: TcpClientTestAsync
       fullName: TcpServerTestRunner.TcpClientTestAsync
@@ -1146,7 +1311,7 @@ MonoBehaviour:
       description: 
       isSuite: 1
       categories: []
-      parentId: 1039
+      parentId: 1040
       parentUniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][TcpServerTestRunner][suite]
     - id: 1042
       uniqueId: EditModeTestAssembly.dll/TcpServerTestRunner/TcpClientTestAsync/[EditModeTestAssembly][TcpServerTestRunner.TcpClientTestAsync(TcpJsonServeModule,TestTcpJsonClient)]
@@ -1199,7 +1364,7 @@ MonoBehaviour:
       - Performance
       parentId: 1039
       parentUniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][TcpServerTestRunner][suite]
-    - id: 1045
+    - id: 1050
       uniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][UIViewModelTestRunner][suite]
       name: UIViewModelTestRunner
       fullName: UIViewModelTestRunner
@@ -1213,30 +1378,13 @@ MonoBehaviour:
       description: 
       isSuite: 1
       categories: []
-      parentId: 1052
+      parentId: 1056
       parentUniqueId: '[EditModeTestAssembly][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/EditModeTestAssembly.dll][suite]'
-    - id: 1046
-      uniqueId: EditModeTestAssembly.dll/UIViewModelTestRunner/[EditModeTestAssembly][UIViewModelTestRunner.Test<T>]
-      name: Test<T>
-      fullName: UIViewModelTestRunner.Test<T>
-      resultStatus: 0
-      duration: 0
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1045
-      parentUniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][UIViewModelTestRunner][suite]
-    - id: 1051
+    - id: 1055
       uniqueId: EditModeTestAssembly.dll/UIViewModelTestRunner/[EditModeTestAssembly][UIViewModelTestRunner.ViewModelPerformanceTest][suite]
       name: ViewModelPerformanceTest
       fullName: UIViewModelTestRunner.ViewModelPerformanceTest
-      resultStatus: 0
+      resultStatus: 1
       duration: 0
       messages: 
       output: 
@@ -1247,16 +1395,27 @@ MonoBehaviour:
       isSuite: 1
       categories:
       - Performance
-      parentId: 1045
+      parentId: 1050
       parentUniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][UIViewModelTestRunner][suite]
     - id: 1048
       uniqueId: EditModeTestAssembly.dll/UIViewModelTestRunner/ViewModelPerformanceTest/[EditModeTestAssembly][UIViewModelTestRunner.ViewModelPerformanceTest(100)]
       name: ViewModelPerformanceTest(100)
       fullName: UIViewModelTestRunner.ViewModelPerformanceTest(100)
-      resultStatus: 0
-      duration: 0
+      resultStatus: 1
+      duration: 0.8626667
       messages: 
-      output: 
+      output: "Test Group.GC() in Undefineds\nMin:\t\t23.02 \nMedian:\t\t23.03 \nMax:\t\t23.10
+        \nAvg:\t\t23.03 \nStdDev:\t\t0.02 \nSampleCount:\t15\nSum:\t\t345.51 \r\nFirst
+        samples:\t\u2582\u2582\u2582\u2582\u2582\u2582\u2582\u2588\u2582\u2582\u2582\u2582\u2582\u2582\u2581\r\nHistogram:\t\u2588\u2582\u2583\r\n\r\nTest
+        Group in Milliseconds\nMin:\t\t3.49 ms\nMedian:\t\t3.59 ms\nMax:\t\t4.31
+        ms\nAvg:\t\t3.68 ms\nStdDev:\t\t0.24 ms\nSampleCount:\t10\nSum:\t\t36.81
+        ms\r\nFirst samples:\t\u2582\u2581\u2582\u2588\u2582\u2582\u2585\u2582\u2582\u2581\r\n(not
+        enough samples for histogram)\n\r\n\r\n##performancetestresult2:{\"Name\":\"UIViewModelTestRunner.ViewModelPerformanceTest(100)\",\"ClassName\":\"UIViewModelTestRunner\",\"MethodName\":\"ViewModelPerformanceTest\",\"Version\":\"1\",\"Categories\":[\"Performance\"],\"SampleGroups\":[{\"Name\":\"Test
+        Group.GC()\",\"Unit\":8,\"IncreaseIsBetter\":false,\"Samples\":[23.03,23.03,23.03,23.03,23.03,23.03,23.03,23.1,23.03,23.03,23.03,23.03,23.03,23.03,23.02],\"Min\":23.02,\"Max\":23.1,\"Median\":23.03,\"Average\":23.034,\"StandardDeviation\":0.017813852287850004,\"Sum\":345.51},{\"Name\":\"Test
+        Group\",\"Unit\":2,\"IncreaseIsBetter\":false,\"Samples\":[3.629799999999989,3.497199999999964,3.580799999999954,4.311300000000017,3.6410000000000197,3.578800000000001,3.9144999999999756,3.5898999999999434,3.5702,3.4927000000000136],\"Min\":3.4927000000000136,\"Max\":4.311300000000017,\"Median\":3.5853499999999487,\"Average\":3.680619999999988,\"StandardDeviation\":0.23797487178272354,\"Sum\":36.806199999999879}]}\r\n##performancetestruninfo2:{\"TestSuite\":\"Editmode\",\"Date\":1730006756664,\"Player\":{\"Development\":true,\"ScreenWidth\":1920,\"ScreenHeight\":1080,\"ScreenRefreshRate\":60,\"Fullscreen\":false,\"Vsync\":1,\"AntiAliasing\":0,\"Batchmode\":false,\"RenderThreadingMode\":\"MultiThreaded\",\"GpuSkinning\":false,\"Platform\":\"WindowsEditor\",\"ColorSpace\":\"Gamma\",\"AnisotropicFiltering\":\"Disable\",\"BlendWeights\":\"FourBones\",\"GraphicsApi\":\"Direct3D11\",\"ScriptingBackend\":\"Mono2x\",\"AndroidTargetSdkVersion\":\"AndroidApiLevelAuto\",\"AndroidBuildSystem\":\"Gradle\",\"BuildTarget\":\"StandaloneWindows64\",\"StereoRenderingPath\":\"MultiPass\"},\"Hardware\":{\"OperatingSystem\":\"Windows
+        10  (10.0.19045) 64bit\",\"DeviceModel\":\"82R4 (LENOVO)\",\"DeviceName\":\"DESKTOP-55T0R54\",\"ProcessorType\":\"AMD
+        Ryzen 5 5500U with Radeon Graphics \",\"ProcessorCount\":12,\"GraphicsDeviceName\":\"AMD
+        Radeon(TM) Graphics\",\"SystemMemorySizeMB\":14181},\"Editor\":{\"Version\":\"2022.3.46f1\",\"Branch\":\"2022.3/staging\",\"Changeset\":\"8e9b8558c41a\",\"Date\":1725396290},\"Dependencies\":[\"com.cysharp.unitask@2.5.5\",\"com.unity.2d.animation@9.1.1\",\"com.unity.2d.pixel-perfect@5.0.3\",\"com.unity.2d.psdimporter@8.0.5\",\"com.unity.2d.sprite@1.0.0\",\"com.unity.2d.spriteshape@9.0.4\",\"com.unity.2d.tilemap@1.0.0\",\"com.unity.ai.navigation@1.1.5\",\"com.unity.assetbundlebrowser@1.7.0\",\"com.unity.collab-proxy@2.4.4\",\"com.unity.editorcoroutines@1.0.0\",\"com.unity.ide.rider@3.0.31\",\"com.unity.ide.vscode@1.2.5\",\"com.unity.memoryprofiler@1.1.0\",\"com.unity.mobile.android-logcat@1.4.2\",\"com.unity.performance.profile-analyzer@1.2.2\",\"com.unity.profiling.core@1.0.2\",\"com.unity.render-pipelines.universal@14.0.11\",\"com.unity.test-framework@1.4.5\",\"com.unity.test-framework.performance@3.0.3\",\"com.unity.testtools.codecoverage@1.2.6\",\"com.unity.textmeshpro@3.0.9\",\"com.unity.timeline@1.7.6\",\"com.unity.ugui@1.0.0\",\"com.unity.modules.ai@1.0.0\",\"com.unity.modules.androidjni@1.0.0\",\"com.unity.modules.animation@1.0.0\",\"com.unity.modules.assetbundle@1.0.0\",\"com.unity.modules.audio@1.0.0\",\"com.unity.modules.cloth@1.0.0\",\"com.unity.modules.director@1.0.0\",\"com.unity.modules.imageconversion@1.0.0\",\"com.unity.modules.imgui@1.0.0\",\"com.unity.modules.jsonserialize@1.0.0\",\"com.unity.modules.particlesystem@1.0.0\",\"com.unity.modules.physics@1.0.0\",\"com.unity.modules.physics2d@1.0.0\",\"com.unity.modules.screencapture@1.0.0\",\"com.unity.modules.terrain@1.0.0\",\"com.unity.modules.terrainphysics@1.0.0\",\"com.unity.modules.tilemap@1.0.0\",\"com.unity.modules.ui@1.0.0\",\"com.unity.modules.uielements@1.0.0\",\"com.unity.modules.umbra@1.0.0\",\"com.unity.modules.unityanalytics@1.0.0\",\"com.unity.modules.unitywebrequest@1.0.0\",\"com.unity.modules.unitywebrequestassetbundle@1.0.0\",\"com.unity.modules.unitywebrequestaudio@1.0.0\",\"com.unity.modules.unitywebrequesttexture@1.0.0\",\"com.unity.modules.unitywebrequestwww@1.0.0\",\"com.unity.modules.vehicles@1.0.0\",\"com.unity.modules.video@1.0.0\",\"com.unity.modules.vr@1.0.0\",\"com.unity.modules.wind@1.0.0\",\"com.unity.modules.xr@1.0.0\",\"com.unity.modules.subsystems@1.0.0\",\"com.unity.settings-manager@2.0.1\",\"com.unity.ext.nunit@2.0.3\",\"com.unity.mathematics@1.2.6\",\"com.unity.burst@1.8.17\",\"com.unity.render-pipelines.core@14.0.11\",\"com.unity.shadergraph@14.0.11\",\"com.unity.render-pipelines.universal-config@14.0.10\",\"com.unity.2d.common@8.0.3\",\"com.unity.collections@1.2.4\",\"com.unity.searcher@4.9.2\"],\"Results\":[]}\r\n"
       stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
@@ -1270,10 +1429,18 @@ MonoBehaviour:
       uniqueId: EditModeTestAssembly.dll/UIViewModelTestRunner/ViewModelPerformanceTest/[EditModeTestAssembly][UIViewModelTestRunner.ViewModelPerformanceTest(1000)]
       name: ViewModelPerformanceTest(1000)
       fullName: UIViewModelTestRunner.ViewModelPerformanceTest(1000)
-      resultStatus: 0
-      duration: 0
+      resultStatus: 1
+      duration: 1.2454457
       messages: 
-      output: 
+      output: "Test Group.GC() in Undefineds\nMin:\t\t23.00 \nMedian:\t\t23.00 \nMax:\t\t23.01
+        \nAvg:\t\t23.00 \nStdDev:\t\t0.00 \nSampleCount:\t15\nSum:\t\t345.07 \r\nFirst
+        samples:\t\u2588\u2581\u2581\u2581\u2581\u2581\u2588\u2581\u2581\u2581\u2581\u2581\u2581\u2588\u2581\r\nHistogram:\t\u2588\u2582\u2583\r\n\r\nTest
+        Group in Milliseconds\nMin:\t\t33.65 ms\nMedian:\t\t36.04 ms\nMax:\t\t46.40
+        ms\nAvg:\t\t36.89 ms\nStdDev:\t\t3.60 ms\nSampleCount:\t10\nSum:\t\t368.86
+        ms\r\nFirst samples:\t\u2581\u2588\u2581\u2583\u2582\u2582\u2583\u2584\u2583\u2581\r\n(not
+        enough samples for histogram)\n\r\n\r\n##performancetestresult2:{\"Name\":\"UIViewModelTestRunner.ViewModelPerformanceTest(1000)\",\"ClassName\":\"UIViewModelTestRunner\",\"MethodName\":\"ViewModelPerformanceTest\",\"Version\":\"1\",\"Categories\":[\"Performance\"],\"SampleGroups\":[{\"Name\":\"Test
+        Group.GC()\",\"Unit\":8,\"IncreaseIsBetter\":false,\"Samples\":[23.01,23.003,23.003,23.003,23.003,23.003,23.01,23.003,23.003,23.003,23.003,23.003,23.003,23.01,23.003],\"Min\":23.003,\"Max\":23.01,\"Median\":23.003,\"Average\":23.004399999999995,\"StandardDeviation\":0.0028000000000005804,\"Sum\":345.0659999999999},{\"Name\":\"Test
+        Group\",\"Unit\":2,\"IncreaseIsBetter\":false,\"Samples\":[33.648300000000009,46.402700000000098,33.81330000000003,36.5625,35.70519999999999,35.1108999999999,38.00420000000008,39.132999999999928,36.384000000000018,34.09259999999995],\"Min\":33.648300000000009,\"Max\":46.402700000000098,\"Median\":36.0446,\"Average\":36.88567,\"StandardDeviation\":3.5985573926366958,\"Sum\":368.8567}]}\r\n"
       stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
@@ -1287,10 +1454,18 @@ MonoBehaviour:
       uniqueId: EditModeTestAssembly.dll/UIViewModelTestRunner/ViewModelPerformanceTest/[EditModeTestAssembly][UIViewModelTestRunner.ViewModelPerformanceTest(10000)]
       name: ViewModelPerformanceTest(10000)
       fullName: UIViewModelTestRunner.ViewModelPerformanceTest(10000)
-      resultStatus: 0
-      duration: 0
+      resultStatus: 1
+      duration: 6.8703084
       messages: 
-      output: 
+      output: "Test Group.GC() in Undefineds\nMin:\t\t23.00 \nMedian:\t\t23.00 \nMax:\t\t23.00
+        \nAvg:\t\t23.00 \nStdDev:\t\t0.00 \nSampleCount:\t15\nSum:\t\t345.01 \r\nFirst
+        samples:\t\u2588\u2588\u2588\u2581\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2581\u2588\u2588\r\nHistogram:\t\u2588\u2582\u2583\r\n\r\nTest
+        Group in Milliseconds\nMin:\t\t392.81 ms\nMedian:\t\t400.55 ms\nMax:\t\t404.52
+        ms\nAvg:\t\t399.61 ms\nStdDev:\t\t3.36 ms\nSampleCount:\t10\nSum:\t\t3996.05
+        ms\r\nFirst samples:\t\u2586\u2588\u2586\u2586\u2585\u2583\u2581\u2584\u2584\u2587\r\n(not
+        enough samples for histogram)\n\r\n\r\n##performancetestresult2:{\"Name\":\"UIViewModelTestRunner.ViewModelPerformanceTest(10000)\",\"ClassName\":\"UIViewModelTestRunner\",\"MethodName\":\"ViewModelPerformanceTest\",\"Version\":\"1\",\"Categories\":[\"Performance\"],\"SampleGroups\":[{\"Name\":\"Test
+        Group.GC()\",\"Unit\":8,\"IncreaseIsBetter\":false,\"Samples\":[23.001,23.001,23.001,23.0003,23.001,23.001,23.001,23.001,23.001,23.001,23.001,23.001,23.0003,23.001,23.001],\"Min\":23.0003,\"Max\":23.001,\"Median\":23.001,\"Average\":23.000906666666663,\"StandardDeviation\":0.0002379542439683164,\"Sum\":345.01359999999996},{\"Name\":\"Test
+        Group\",\"Unit\":2,\"IncreaseIsBetter\":false,\"Samples\":[401.68650000000027,404.51940000000016,400.9474,401.6944000000003,400.1619999999998,395.35109999999988,392.8092000000006,397.66559999999938,398.59049999999936,402.6242999999995],\"Min\":392.8092000000006,\"Max\":404.51940000000016,\"Median\":400.5546999999999,\"Average\":399.6050399999999,\"StandardDeviation\":3.3637340362162599,\"Sum\":3996.050399999999}]}\r\n"
       stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
@@ -1317,13 +1492,59 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1045
       parentUniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][UIViewModelTestRunner][suite]
-    m_ResultText: 
-    m_ResultStacktrace: 
+    m_ResultText: "NotifyCsvConvertTest (0.536s)\nNotify Csv Convert Test\n---\nCsvHelper.TypeConversion.TypeConverterException
+      : The conversion cannot be performed.\r\n    Text: '50'\r\n    MemberName:
+      intProperty\r\n    MemberType: NotifyProperty`1[[System.Int32, mscorlib, Version=4.0.0.0,
+      Culture=neutral, PublicKeyToken=b77a5c561934e089]]\r\n    TypeConverter: 'CsvHelper.TypeConversion.DefaultTypeConverter'\r\nIReader
+      state:\r\n   ColumnCount: 4\r\n   CurrentIndex: 0\r\n   HeaderRecord:\r\n[\"Int\",\"Float\",\"String\",\"Inner\"]\r\nIParser
+      state:\r\n   ByteCount: 0\r\n   CharCount: 127\r\n   Row: 2\r\n   RawRow: 2\r\n  
+      Count: 4\r\n   RawRecord:\r\n50,3.55,TestProperty,\"NotifyConvertTestInnerSample
+      { intField = 4455, stringField = TestInnerField }\"\r\n\r\n\n---\n  at CsvHelper.TypeConversion.DefaultTypeConverter.ConvertFromString
+      (System.String text, CsvHelper.IReaderRow row, CsvHelper.Configuration.MemberMapData
+      memberMapData) [0x00120] in <d82cfa146ac9455fba33d52233350941>:0 \r\n  at (wrapper
+      dynamic-method) System.Object.lambda_method(System.Runtime.CompilerServices.Closure)\r\n 
+      at CsvHelper.CsvReader+<GetRecords>d__87`1[T].MoveNext () [0x000e8] in <d82cfa146ac9455fba33d52233350941>:0
+      \r\n  at System.Linq.Enumerable.TryGetFirst[TSource] (System.Collections.Generic.IEnumerable`1[T]
+      source, System.Boolean& found) [0x00045] in <a314714511a14f84b853c03efd8682b8>:0
+      \r\n  at System.Linq.Enumerable.First[TSource] (System.Collections.Generic.IEnumerable`1[T]
+      source) [0x00000] in <a314714511a14f84b853c03efd8682b8>:0 \r\n  at NotifyFieldTestRunner.NotifyCsvConvertTest
+      () [0x000c8] in <color=#40a0ff><a href=\"C:\\Project\\Unity\\CustomUtils\\Assets\\Test\\EditMode\\NotifyFieldTestRunner.cs\"
+      line=\"92 \r\">Assets\\Test\\EditMode\\NotifyFieldTestRunner.cs:92 \r</a></color>\n 
+      at (wrapper managed-to-native) System.Reflection.RuntimeMethodInfo.InternalInvoke(System.Reflection.RuntimeMethodInfo,object,object[],System.Exception&)\r\n 
+      at System.Reflection.RuntimeMethodInfo.Invoke (System.Object obj, System.Reflection.BindingFlags
+      invokeAttr, System.Reflection.Binder binder, System.Object[] parameters, System.Globalization.CultureInfo
+      culture) [0x0006a] in <8ce0bd04a7a04b4b9395538239d3fdd8>:0 \n---\n[NotifyFieldTestRunner.NotifyCsvConvertTest]
+      Value\r\n4533\r\n[NotifyFieldTestRunner.NotifyCsvConvertTest] Pass field csv
+      serialize\r\n[NotifyFieldTestRunner.EvaluateNotifyProperty] Pass property null
+      check\r\n[NotifyFieldTestRunner.EvaluateNotifyProperty] Pass property reference
+      check\r\n[NotifyFieldTestRunner.EvaluateNotifyProperty] Pass property value
+      check\r\n[NotifyFieldTestRunner.NotifyCsvConvertTest] Pass NotifyField csv
+      convert test\n\r\n[NotifyFieldTestRunner.NotifyCsvConvertTest] NotifyProperty`1<Int32>
+      (Class)\r\n [Int32] _value || 4533\r\n [SafeDelegate`1<NotifyFieldChangedHandler>]
+      OnChanged  (Struct)\r\n\t [handler] null\r\n\t [Int32] Count || 0\r\n\r\n [Boolean]
+      isDisposed || False\r\n [Int32] Value || 4533\n\r\n[NotifyFieldTestRunner.NotifyCsvConvertTest]
+      Int,Float,String,Inner\r\n50,3.55,TestProperty,\"NotifyConvertTestInnerSample
+      { intField = 4455, stringField = TestInnerField }\"\r\n[NotifyFieldTestRunner.NotifyCsvConvertTest]
+      Pass sample csv serialize"
+    m_ResultStacktrace: "  at CsvHelper.TypeConversion.DefaultTypeConverter.ConvertFromString
+      (System.String text, CsvHelper.IReaderRow row, CsvHelper.Configuration.MemberMapData
+      memberMapData) [0x00120] in <d82cfa146ac9455fba33d52233350941>:0 \r\n  at (wrapper
+      dynamic-method) System.Object.lambda_method(System.Runtime.CompilerServices.Closure)\r\n 
+      at CsvHelper.CsvReader+<GetRecords>d__87`1[T].MoveNext () [0x000e8] in <d82cfa146ac9455fba33d52233350941>:0
+      \r\n  at System.Linq.Enumerable.TryGetFirst[TSource] (System.Collections.Generic.IEnumerable`1[T]
+      source, System.Boolean& found) [0x00045] in <a314714511a14f84b853c03efd8682b8>:0
+      \r\n  at System.Linq.Enumerable.First[TSource] (System.Collections.Generic.IEnumerable`1[T]
+      source) [0x00000] in <a314714511a14f84b853c03efd8682b8>:0 \r\n  at NotifyFieldTestRunner.NotifyCsvConvertTest
+      () [0x000c8] in C:\\Project\\Unity\\CustomUtils\\Assets\\Test\\EditMode\\NotifyFieldTestRunner.cs:92
+      \r\n  at (wrapper managed-to-native) System.Reflection.RuntimeMethodInfo.InternalInvoke(System.Reflection.RuntimeMethodInfo,object,object[],System.Exception&)\r\n 
+      at System.Reflection.RuntimeMethodInfo.Invoke (System.Object obj, System.Reflection.BindingFlags
+      invokeAttr, System.Reflection.Binder binder, System.Object[] parameters, System.Globalization.CultureInfo
+      culture) [0x0006a] in <8ce0bd04a7a04b4b9395538239d3fdd8>:0 "
     m_TestListState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 
-      m_LastClickedID: 0
-      m_ExpandedIDs: edaa9c16c29f3933ffffff7f
+      m_SelectedIDs: fe1c1f9e
+      m_LastClickedID: -1642128130
+      m_ExpandedIDs: 7c91a5c348d8a103edaa9c16c29f3933ffffff7f
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -1353,7 +1574,7 @@ MonoBehaviour:
     m_SelectedOption: 0
   - m_Window: {fileID: 14}
     runProgress:
-      RunGuid: 5d799f24-22f3-439f-a7db-e75b1fb92fa2
+      RunGuid: 7af07ad6-7b00-4f78-a579-50c5ae9eb564
       ExecutionSettings:
         m_TargetPlatform: 0
         m_HasTargetPlatform: 0
@@ -1364,9 +1585,9 @@ MonoBehaviour:
           categoryNames: []
           assemblyNames: []
         filters:
-        - testMode: 2
+        - testMode: 1
           testNames:
-          - UIViewTestRunner.SimpleUIViewModelTest
+          - NotifyFieldTestRunner.NotifyCsvConvertTest
           groupNames: []
           categoryNames: []
           assemblyNames: []
@@ -1385,12 +1606,12 @@ MonoBehaviour:
       CurrentStepName: Unlock Reload Assemblies
       CurrentStageName: 
     m_NewResultList:
-    - id: 1000
+    - id: 1029
       uniqueId: '[CustomUtils][suite]'
       name: CustomUtils
       fullName: CustomUtils
-      resultStatus: 0
-      duration: 0
+      resultStatus: 1
+      duration: 1.1552898
       messages: 
       output: 
       stacktrace: 
@@ -1405,8 +1626,8 @@ MonoBehaviour:
       uniqueId: '[PlayModeTestAssembly][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/PlayModeTestAssembly.dll][suite]'
       name: PlayModeTestAssembly.dll
       fullName: C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/PlayModeTestAssembly.dll
-      resultStatus: 0
-      duration: 0
+      resultStatus: 1
+      duration: 1.121343
       messages: 
       output: 
       stacktrace: 
@@ -1415,7 +1636,7 @@ MonoBehaviour:
       description: 
       isSuite: 1
       categories: []
-      parentId: 1000
+      parentId: 1029
       parentUniqueId: '[CustomUtils][suite]'
     - id: 1001
       uniqueId: PlayModeTestAssembly.dll/[PlayModeTestAssembly][ObjectPoolServiceTestRunner][suite]
@@ -1890,7 +2111,7 @@ MonoBehaviour:
       name: UIViewTestRunner
       fullName: UIViewTestRunner
       resultStatus: 1
-      duration: 0
+      duration: 1.096783
       messages: 
       output: 
       stacktrace: 
@@ -1906,7 +2127,7 @@ MonoBehaviour:
       name: SimpleUIViewModelTest
       fullName: UIViewTestRunner.SimpleUIViewModelTest
       resultStatus: 1
-      duration: 0.7535832
+      duration: 0.9292868
       messages: 
       output: '<color=#00FFFF>[ResourceService.GetValidProvider] Activate provider
         || ResourcesProvider</color>
@@ -1946,7 +2167,7 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1023
       parentUniqueId: PlayModeTestAssembly.dll/[PlayModeTestAssembly][UIViewTestRunner][suite]
-    m_ResultText: 'SimpleUIViewModelTest (0.754s)
+    m_ResultText: 'SimpleUIViewModelTest (0.929s)
 
       ---
 
@@ -2012,7 +2233,7 @@ MonoBehaviour:
     m_SelectedOption: 0
   - m_Window: {fileID: 14}
     runProgress:
-      RunGuid: 5d799f24-22f3-439f-a7db-e75b1fb92fa2
+      RunGuid: 7af07ad6-7b00-4f78-a579-50c5ae9eb564
       ExecutionSettings:
         m_TargetPlatform: 0
         m_HasTargetPlatform: 0
@@ -2023,9 +2244,9 @@ MonoBehaviour:
           categoryNames: []
           assemblyNames: []
         filters:
-        - testMode: 2
+        - testMode: 1
           testNames:
-          - UIViewTestRunner.SimpleUIViewModelTest
+          - NotifyFieldTestRunner.NotifyCsvConvertTest
           groupNames: []
           categoryNames: []
           assemblyNames: []
@@ -2628,8 +2849,8 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 73.6
-    width: 363.8
-    height: 361.4
+    width: 333.4
+    height: 364.6
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -2645,7 +2866,7 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: f80affff4a0fffffc213ffff0218ffff641cffffa420ffffbe46ffff0a4bffff5a4fffffb453ffff8459ffffc25dffffc666ffff0c6bffff506fffff2675ffff7c79ffffcc7dffff588affff748effff7492ffff2898ffff929cffff0aa2fffff8a5fffff4a9ffff0cabffffeaadffff62b5ffff6cb9ffff8ac3ffff8cc7ffff84cbffff94cfffffb6d3ffffb6d7ffff56ddffff6ee1ffff84e5ffff4ee9fffff4ffffff
+      m_ExpandedIDs: 22d8feff88dcfeff6edffeffd6e0feff40e2feffa8e3feff14e5fefff2e7feff5ae9feff40ecfeffaaedfeff1aeffeff1af2feff0cf5feff76f6feffe0f7feffc4fafeff2efcfeff98fdfeff7e00ffffe801ffff5003ffff3406ffff1609fffffc0bffff640dffffba15ffff2217ffff8c18fffff619ffff5e1bffffcc1cffff341effff1621ffff0624ffffec26ffff462bffff2c2effff1831ffff9232fffffe33ffff9e35ffff8238ffffea39ffffce3cffffb23fffff9c42ffff9e45ffff8648ffffee4cffff4051ffff3654ffff1a57ffff8458ffff6a5bffff525effffba5fffff2461ffff8e62fffffa63ffff6465ffffcc66ffff3868ffffa669ffff9a6cffff3271ffff9a72ffff0474ffff6c75ffffd476ffff3c78ffff207bffff8a7cfffff47dffffda80ffffdc83ffffc286ffffa689ffffa48cffff1891ffff5497ffff3a9affff289dffff80a1ffff7ea4ffff64a7ffff50aaffff8aaeffff82b1ffff76b4ffffd6b6ffffbcb9ffffaabcffff94bfffff7cc2ffffecc3ffffdcc6ffffc6c9ffffb4ceffff9ed1ffff86d4ffffeed8ffffdadbffffc2deffff2ee0ffffa0e1ffff86e4fffff4e5ffff6ae7ffffd8e8ffff3aedffff90f1fffffaf2ffffd4f5ffff44f7fffff6faffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -2724,10 +2945,10 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 364.80002
+    x: 334.4
     y: 73.6
-    width: 508.40002
-    height: 361.4
+    width: 482.00003
+    height: 364.6
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -3092,7 +3313,7 @@ MonoBehaviour:
       m_Fade:
         m_Target: 0
         speed: 2
-        m_Value: 0.000095784664
+        m_Value: 0
       m_Color: {r: 0.5, g: 0.5, b: 0.5, a: 0.4}
       m_Pivot: {x: 0, y: 0, z: 0}
       m_Size: {x: 1, y: 1}
@@ -3100,7 +3321,7 @@ MonoBehaviour:
       m_Fade:
         m_Target: 1
         speed: 2
-        m_Value: 0.9999043
+        m_Value: 1
       m_Color: {r: 0.5, g: 0.5, b: 0.5, a: 0.4}
       m_Pivot: {x: 0, y: 0, z: 0}
       m_Size: {x: 1, y: 1}
@@ -3132,7 +3353,7 @@ MonoBehaviour:
     m_FarClip: 10000
     m_DynamicClip: 1
     m_OcclusionCulling: 0
-  m_LastSceneViewRotation: {x: -0.27184528, y: -0.33629343, z: 0.10204472, w: -0.89587885}
+  m_LastSceneViewRotation: {x: -0.08717229, y: 0.89959055, z: -0.21045254, w: -0.3726226}
   m_LastSceneViewOrtho: 0
   m_ReplacementShader: {fileID: 0}
   m_ReplacementString: 
@@ -3161,9 +3382,9 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 0
-    y: 456
-    width: 542.2
-    height: 327.4
+    y: 459.2
+    width: 503.8
+    height: 324.19998
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -3185,7 +3406,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/CustomUtils/Common/Test
+    - Assets
     m_Globs: []
     m_OriginalText: 
     m_ImportLogFlags: 0
@@ -3193,16 +3414,16 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 16
   m_LastFolders:
-  - Assets/CustomUtils/Common/Test
+  - Assets/CSVSerializer
   m_LastFoldersGridSize: 16
   m_LastProjectPath: C:\Project\Unity\CustomUtils
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 60}
-    m_SelectedIDs: 5e8b0000
-    m_LastClickedID: 35678
-    m_ExpandedIDs: 00000000e8710000ea710000ec710000ee710000f0710000f2710000f47100007c810000808100008a8100001c8b000000ca9a3b
+    scrollPos: {x: 0, y: 0}
+    m_SelectedIDs: 506e0000
+    m_LastClickedID: 28240
+    m_ExpandedIDs: 00000000506e0000526e0000546e0000566e0000586e00005a6e00005c6e0000606e0000626e0000646e0000666e0000686e00006a6e00006c6e00006e6e0000a06e000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -3230,7 +3451,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000e8710000ea710000ec710000ee710000f0710000f2710000f4710000
+    m_ExpandedIDs: 00000000506e0000526e0000546e0000566e0000586e00005a6e00005c6e00005e6e0000606e0000626e0000646e0000666e0000686e00006a6e00006c6e00006e6e0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -3257,22 +3478,22 @@ MonoBehaviour:
   m_ListAreaState:
     m_SelectedInstanceIDs: 
     m_LastClickedInstanceID: 0
-    m_HadKeyboardFocusLastEvent: 1
+    m_HadKeyboardFocusLastEvent: 0
     m_ExpandedInstanceIDs: c6230000ac060000fc56000092f6ffff2a66000002670000ce6900006cd8ffffbe69000000000000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: 
-      m_OriginalName: 
+      m_Name: Readme
+      m_OriginalName: Readme
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 0
         height: 0
-      m_UserData: 0
+      m_UserData: 40102
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
-      m_OriginalEventType: 11
+      m_OriginalEventType: 0
       m_IsRenamingFilename: 1
       m_ClientGUIView: {fileID: 11}
     m_CreateAssetUtility:
@@ -3308,9 +3529,9 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 0
-    y: 456
-    width: 542.2
-    height: 327.4
+    y: 459.2
+    width: 503
+    height: 324.19998
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -3342,10 +3563,10 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 543.2
-    y: 456
-    width: 330
-    height: 327.4
+    x: 504.80002
+    y: 459.2
+    width: 311.60004
+    height: 324.19998
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -3362,7 +3583,7 @@ MonoBehaviour:
   m_ShowGizmos: 0
   m_TargetDisplay: 0
   m_ClearColor: {r: 0, g: 0, b: 0, a: 0}
-  m_TargetSize: {x: 330, y: 306.4}
+  m_TargetSize: {x: 311.60004, y: 303.19998}
   m_TextureFilterMode: 0
   m_TextureHideFlags: 61
   m_RenderIMGUI: 1
@@ -3377,10 +3598,10 @@ MonoBehaviour:
     m_VRangeLocked: 0
     hZoomLockedByDefault: 0
     vZoomLockedByDefault: 0
-    m_HBaseRangeMin: -132
-    m_HBaseRangeMax: 132
-    m_VBaseRangeMin: -122.56
-    m_VBaseRangeMax: 122.56
+    m_HBaseRangeMin: -124.640015
+    m_HBaseRangeMax: 124.640015
+    m_VBaseRangeMin: -121.27999
+    m_VBaseRangeMax: 121.27999
     m_HAllowExceedBaseRangeMin: 1
     m_HAllowExceedBaseRangeMax: 1
     m_VAllowExceedBaseRangeMin: 1
@@ -3398,23 +3619,23 @@ MonoBehaviour:
       serializedVersion: 2
       x: 0
       y: 21
-      width: 330
-      height: 306.4
+      width: 311.60004
+      height: 303.19998
     m_Scale: {x: 1.25, y: 1.25}
-    m_Translation: {x: 165, y: 153.2}
+    m_Translation: {x: 155.80002, y: 151.59999}
     m_MarginLeft: 0
     m_MarginRight: 0
     m_MarginTop: 0
     m_MarginBottom: 0
     m_LastShownAreaInsideMargins:
       serializedVersion: 2
-      x: -132
-      y: -122.56
-      width: 264
-      height: 245.12
+      x: -124.640015
+      y: -121.27999
+      width: 249.28003
+      height: 242.55998
     m_MinimalGUI: 1
   m_defaultScale: 1
-  m_LastWindowPixelSize: {x: 412.5, y: 409.25}
+  m_LastWindowPixelSize: {x: 389.50006, y: 405.24997}
   m_ClearInEditMode: 1
   m_NoCameraWarning: 1
   m_LowResolutionForAspectRatios: 01000000000000000000
@@ -3468,37 +3689,3 @@ MonoBehaviour:
   m_LockTracker:
     m_IsLocked: 0
   m_PreviewWindow: {fileID: 0}
---- !u!114 &22
-MonoBehaviour:
-  m_ObjectHideFlags: 52
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b5115ff20f1ea204dac14fa49c0e8f69, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_MinSize: {x: 445, y: 65}
-  m_MaxSize: {x: 4000, y: 4000}
-  m_TitleContent:
-    m_Text: Code Coverage
-    m_Image: {fileID: 2800000, guid: 48e45b7f100ee4b48a02e05135e6cece, type: 3}
-    m_Tooltip: 
-  m_Pos:
-    serializedVersion: 2
-    x: 875.2
-    y: 73.6
-    width: 659.8
-    height: 709.8
-  m_SerializedDataModeController:
-    m_DataMode: 0
-    m_PreferredDataMode: 0
-    m_SupportedDataModes: 
-    isAutomatic: 1
-  m_ViewDataDictionary: {fileID: 0}
-  m_OverlayCanvas:
-    m_LastAppliedPresetName: Default
-    m_SaveData: []
-    m_OverlaysVisible: 1

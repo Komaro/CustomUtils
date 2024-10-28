@@ -133,7 +133,6 @@ public abstract class JsonAutoConfig : JsonConfig, IDisposable {
     protected virtual void OnPlayModeStateChanged(PlayModeStateChange state) {
         if (state == PlayModeStateChange.EnteredPlayMode || state == PlayModeStateChange.EnteredEditMode) {
             EditorApplication.playModeStateChanged -= OnPlayModeStateChanged;
-            Logger.TraceLog(savePath);
             StartAutoSave(savePath);
         }
     }

@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using CsvHelper;
+using CsvHelper.Configuration;
 
 public static class CsvUtil {
     
@@ -74,9 +75,26 @@ public static class CsvUtil {
         return string.Empty;
     }
 
+    public static string Serialize<TClassMap>(IEnumerable records) where TClassMap : ClassMap {
+        using (var stringWriter = new StringWriter(new StringBuilder())) 
+        using (var csvWriter = new CsvWriter(stringWriter, CultureInfo.InvariantCulture)) {
+            csvWriter.Context.RegisterClassMap(typeof(TClassMap));
+            csvWriter.WriteRecords(records);
+            return stringWriter.ToString();
+        }
+    }
+
     #endregion
 
     #region [Deserialize]
+
+    public static bool TryDeserializeFromText<T>(string text, out IEnumerable<T> csv) => (csv = DeserializeFromText<T>(text))?.Any() ?? false;
+    
+    public static IEnumerable<T> DeserializeFromText<T>(string text) {
+        using (var reader = new StringReader(text)) {
+            return DeserializeFromReader<T>(reader);
+        }
+    }
 
     public static async Task<IEnumerable<T>> DeserializeFromFileAsync<T>(string path, CancellationToken token = default) {
         using (var reader = new StreamReader(path)) {
@@ -155,7 +173,6 @@ public static class CsvUtil {
         
         return Enumerable.Empty<object>();
     }
-
     
     #endregion
 }

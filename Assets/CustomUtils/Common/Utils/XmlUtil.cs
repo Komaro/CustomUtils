@@ -43,7 +43,48 @@ public static class XmlUtil {
     #endregion
 
     #region [Deserialize]
+
+    public static bool DeserializeAsStructFromText<TStruct>(string text, out TStruct xml) where TStruct : struct {
+        var nullableStruct = DeserializeAsStructFromText<TStruct>(text);
+        if (nullableStruct.HasValue) {
+            xml = nullableStruct.Value;
+            return true;
+        }
+
+        xml = default;
+        return false;
+    }
+
+    public static TStruct? DeserializeAsStructFromText<TStruct>(string text) where TStruct : struct {
+        using (var reader = new StringReader(text)) {
+            return DeserializeFromReader(typeof(TStruct), reader) as TStruct?;
+        }
+    }
     
+    public static bool TryDeserializeAsClassFromText<TClass>(string text, out TClass xml) where TClass : class => (xml = DeserializeAsClassFromText<TClass>(text)) != null;
+
+    public static TClass DeserializeAsClassFromText<TClass>(string text) where TClass : class {
+        using (var reader = new StringReader(text)) {
+            return DeserializeFromReader(typeof(TClass), reader) as TClass;
+        }
+    }
+    
+    public static bool TryDeserializeFromText<T>(string text, out object xml) => (xml = DeserializeFromText<T>(text)) != null;
+
+    public static object DeserializeFromText<T>(string text) {
+        using (var reader = new StringReader(text)) {
+            return DeserializeFromReader(typeof(T), reader);
+        }
+    }
+
+    public static bool TryDeserializeFromText(string text, Type type, out object xml) => (xml = DeserializeFromText(text, type)) != null;
+
+    public static object DeserializeFromText(string text, Type type) {
+        using (var reader = new StringReader(text)) {
+            return DeserializeFromReader(type, reader);
+        }
+    }
+
     public static bool TryDeserializeAsStructFromFile<TStruct>(string path, out TStruct xml) where TStruct : struct {
         var nullableStruct = DeserializeAsStructFromFile<TStruct>(path);
         if (nullableStruct.HasValue) {
@@ -69,23 +110,15 @@ public static class XmlUtil {
         }
     }
 
-    public static bool TryDeserializeFromFile<T>(string path, out object xml) {
-        using (var stream = new FileStream(path, FileMode.Open, FileAccess.Read)) {
-            return (xml = DeserializeFromStream(typeof(T), stream)) != null;
-        }
-    }
-    
+    public static bool TryDeserializeFromFile<T>(string path, out object xml) => (xml = DeserializeFromFile<T>(path)) != null;
+
     public static object DeserializeFromFile<T>(string path) {
         using (var stream = new FileStream(path, FileMode.Open, FileAccess.Read)) {
             return DeserializeFromStream(typeof(T), stream);
         }
     }
 
-    public static bool TryDeserializeFromFile(string path, Type type, out object xml) {
-        using (var stream = new FileStream(path, FileMode.Open, FileAccess.Read)) {
-            return (xml = DeserializeFromStream(type, stream)) != null;
-        }
-    }
+    public static bool TryDeserializeFromFile(string path, Type type, out object xml) => (xml = DeserializeFromFile(path, type)) != null;
 
     public static object DeserializeFromFile(string path, Type type) {
         using (var stream = new FileStream(path, FileMode.Open, FileAccess.Read)) {
@@ -106,6 +139,8 @@ public static class XmlUtil {
         return null;
     }
 
+    public static object DeserializeFromReader<T>(TextReader reader) => DeserializeFromReader(typeof(T), reader);
+    
     public static object DeserializeFromReader(Type type, TextReader reader) {
         try {
             var serializer = new XmlSerializer(type);

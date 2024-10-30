@@ -9,7 +9,7 @@ public abstract class NotifyCollection<TCollection, TValue> : NotifyField, IColl
     protected readonly TCollection collection = new();
     
     public int Count => collection.Count;
-    public bool IsReadOnly => ((ICollection<TValue>) collection).IsReadOnly;
+    public bool IsReadOnly => collection.IsReadOnly;
 
     public override void Dispose() {
         if (typeof(IDisposable).IsAssignableFrom(typeof(TValue))) {

@@ -95,6 +95,14 @@ public static class CsvUtil {
             return DeserializeFromReader<T>(reader);
         }
     }
+    
+    public static bool TryDeserializeFromText<T, TClassMap>(string text, out IEnumerable<T> csv) where TClassMap : ClassMap => (csv = DeserializeFromText<T>(text))?.Any() ?? false;
+    
+    public static IEnumerable<T> DeserializeFromText<T, TClassMap>(string text) where TClassMap : ClassMap {
+        using (var reader = new StringReader(text)) {
+            return DeserializeFromReader<T, TClassMap>(reader);
+        }
+    }
 
     public static async Task<IEnumerable<T>> DeserializeFromFileAsync<T>(string path, CancellationToken token = default) {
         using (var reader = new StreamReader(path)) {
@@ -160,8 +168,21 @@ public static class CsvUtil {
         }
         
         return Enumerable.Empty<T>();
-    } 
-    
+    }
+
+    public static IEnumerable<T> DeserializeFromReader<T, TClassMap>(TextReader reader) where TClassMap : ClassMap {
+        try {
+            using (var csvReader = new CsvReader(reader, CultureInfo.InvariantCulture)) {
+                csvReader.Context.RegisterClassMap<TClassMap>();
+                return csvReader.GetRecords<T>().ToImmutableArray();
+            }
+        } catch (Exception ex) {
+            Logger.TraceError(ex);
+        }
+
+        return Enumerable.Empty<T>();
+    }
+
     public static IEnumerable<object> DeserializeFromReader(TextReader reader, Type type) {
         try {
             using (var csvReader = new CsvReader(reader, CultureInfo.InvariantCulture)) {
@@ -174,5 +195,18 @@ public static class CsvUtil {
         return Enumerable.Empty<object>();
     }
     
+    public static IEnumerable<object> DeserializeFromReader<TClassMap>(TextReader reader, Type type) where TClassMap : ClassMap {
+        try {
+            using (var csvReader = new CsvReader(reader, CultureInfo.InvariantCulture)) {
+                csvReader.Context.RegisterClassMap<TClassMap>();
+                return csvReader.GetRecords(type).ToImmutableArray();
+            }
+        } catch (Exception ex) {
+            Logger.TraceError(ex);
+        }
+        
+        return Enumerable.Empty<object>();
+    }
+
     #endregion
 }

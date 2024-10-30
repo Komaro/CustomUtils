@@ -1,10 +1,8 @@
-﻿
-
-using System;
+﻿using System;
 using System.Linq.Expressions;
 
 public static class LambdaExpressionProvider {
-    
+
     public static Func<TEnum, int> GetEnumToIntFun<TEnum>() where TEnum : struct, Enum => StaticEnumLambdaCache<TEnum>.EnumToIntFunc;
     public static Func<int, TEnum> GetIntToEnumFunc<TEnum>() where TEnum : struct, Enum => StaticEnumLambdaCache<TEnum>.IntToEnumFunc;
     

@@ -1,12 +1,9 @@
-﻿using System.Globalization;
-using System.IO;
-using System.Linq;
+﻿using System.Linq;
 using System.Reflection;
-using CsvHelper;
-using CsvHelper.Configuration;
 using Newtonsoft.Json;
 using NUnit.Framework;
 
+// TODO. NotifyCollection, NotifyList, NotifyDictionary 테스트 필요(CSV 제외)
 public class NotifyFieldTestRunner {
 
     private static readonly NotifyProperty<int> TEST_FIELD = new() { Value = 4533 };
@@ -15,10 +12,6 @@ public class NotifyFieldTestRunner {
         intProperty = { Value = 50 },
         floatProperty = { Value = 3.55f },
         stringProperty = { Value = "TestProperty" },
-        innerSampleProperty = { Value = new NotifyConvertTestInnerSample {
-            intField = 4455,
-            stringField = "TestInnerField"
-        } }
     };
 
     [Test(Description = "Notify Json Convert Test")]
@@ -71,7 +64,7 @@ public class NotifyFieldTestRunner {
     public void NotifyCsvConvertTest() {
         var text = CsvUtil.Serialize(new[] { TEST_FIELD });
         Assert.IsNotNull(text);
-        Logger.TraceLog(text.TrimEnd());
+        Logger.TraceLog($"\n{text.TrimEnd()}");
         Logger.TraceLog("Pass field csv serialize");
 
         var deserializeIntField = CsvUtil.DeserializeFromText<NotifyProperty<int>>(text).First();
@@ -79,9 +72,15 @@ public class NotifyFieldTestRunner {
         Logger.TraceLog($"Pass {nameof(NotifyField)} csv convert test\n");
         Logger.TraceLog($"{deserializeIntField.ToStringAllFields(bindingFlags: BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic).TrimEnd()}\n");
 
-        text = CsvUtil.Serialize(new[] { TEST_SAMPLE });
+        text = CsvUtil.Serialize<NotifyPropertyClassMap<NotifyConvertTestSample>>(new[] { TEST_SAMPLE });
         Assert.IsNotEmpty(text);
-        // TODO. ClassMap 확장 없이 처리 불가능
+        Logger.TraceLog($"\n{text.TrimEnd()}");
+        
+        var deserializeSample = CsvUtil.DeserializeFromText<NotifyConvertTestSample, NotifyPropertyClassMap<NotifyConvertTestSample>>(text).First();
+        Assert.IsNotNull(deserializeSample);
+        EvaluateNotifyConvertTestSample(deserializeSample);
+        Logger.TraceLog($"Pass {nameof(NotifyConvertTestSample)} csv convert test");
+        Logger.TraceLog($"{deserializeSample.ToStringAllFields(bindingFlags: BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic).TrimEnd()}\n");
     }
 
     private void EvaluateNotifyProperty(NotifyProperty<int> property) {
@@ -112,11 +111,4 @@ public record NotifyConvertTestSample {
     public NotifyProperty<int> intProperty = new();
     public NotifyProperty<float> floatProperty = new();
     public NotifyProperty<string> stringProperty = new();
-    public NotifyProperty<NotifyConvertTestInnerSample> innerSampleProperty = new();
-}
-
-public record NotifyConvertTestInnerSample {
-        
-    public int intField { get; set; }
-    public string stringField { get; set; }
 }

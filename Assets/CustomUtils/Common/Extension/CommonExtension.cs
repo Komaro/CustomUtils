@@ -13,51 +13,45 @@ using UnityEngine.Networking;
 using UnityEngine.Pool;
 
 public static class CommonExtension {
-
-    private static readonly ObjectPool<StringBuilder> _stringBuilderPool = new(() => new StringBuilder(), builder => builder.Clear());
-
+    
     public static string ToStringAllFields(this object ob, string prefix = "", bool ignoreRootName = false, BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.Public) {
-        if (_stringBuilderPool == null) {
-            return string.Empty;
-        }
-
-        var stringBuilder = _stringBuilderPool.Get();
+        StringUtil.StringBuilderPool.Get(out var builder);
         var type = ob.GetType();
         if (ignoreRootName == false) {
-            stringBuilder.Append(type.GetNameWithGenericArguments());
+            builder.Append(type.GetNameWithGenericArguments());
         }
         
         if (type.IsClass) {
-            stringBuilder.AppendLine(" (Class)");
+            builder.AppendLine(" (Class)");
         } else if (type.IsStruct()) {
-            stringBuilder.AppendLine(" (Struct)");
+            builder.AppendLine(" (Struct)");
         }
 
         foreach (var (name, value) in type.GetAllDataMemberNameWithValue(ob, bindingFlags)) {
             if (value == null) {
-                stringBuilder.AppendLine($"{prefix} [{name}] null");
+                builder.AppendLine($"{prefix} [{name}] null");
                 continue;
             }
             
             var memberType = value.GetType();
-            stringBuilder.Append($"{prefix} [{memberType.GetNameWithGenericArguments()}] ");
+            builder.Append($"{prefix} [{memberType.GetNameWithGenericArguments()}] ");
             if (memberType.IsArray && value is Array array) {
-                stringBuilder.AppendLine($"{name} || {array.Cast<object>()?.ToStringCollection(", ")}");
+                builder.AppendLine($"{name} || {array.Cast<object>()?.ToStringCollection(", ")}");
             } else if (memberType.IsGenericCollectionType() && value is ICollection collection) {
-                stringBuilder.AppendLine($"{name} || {collection.Cast<object>().ToStringCollection(", ")}");
+                builder.AppendLine($"{name} || {collection.Cast<object>().ToStringCollection(", ")}");
             } else if (memberType.IsEnum == false && memberType.IsStruct()) {
-                stringBuilder.AppendLine($"{name} {value.ToStringAllFields("\t", true, bindingFlags)}");
+                builder.AppendLine($"{name} {value.ToStringAllFields("\t", true, bindingFlags)}");
             } else {
-                stringBuilder.AppendLine($"{name} || {value}");
+                builder.AppendLine($"{name} || {value}");
             }
         }
         
-        _stringBuilderPool.Release(stringBuilder);
-        return stringBuilder.ToString();
+        StringUtil.StringBuilderPool.Release(builder);
+        return builder.ToString();
     }
 
     private static string GetNameWithGenericArguments(this Type type) => type.IsGenericType ? $"{type.Name}<{type.GenericTypeArguments.ToStringCollection(genericType => genericType.Name, ", ")}>" : type.Name;
-
+    
     public static string GetString(this Memory<byte> memory, ENCODING_FORMAT format = ENCODING_FORMAT.UTF_8) => format switch {
         ENCODING_FORMAT.UTF_32 => Encoding.UTF32.GetString(memory.Span),
         ENCODING_FORMAT.UNICODE => Encoding.Unicode.GetString(memory.Span),

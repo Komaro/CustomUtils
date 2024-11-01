@@ -89,28 +89,31 @@ public static class SystemUtil {
     }
 
     public static void ExecuteProcess(ProcessStartInfo startInfo) {
+        StringUtil.StringBuilderPool.Get(out var stdOutBuilder);
+        StringUtil.StringBuilderPool.Get(out var stdErrorBuilder);
         try {
-            using var process = new Process{ StartInfo = startInfo };
+            using var process = new Process { StartInfo = startInfo };
             process.Start();
-        
-            var stdOutBuilder = new StringBuilder();
+
             while (process.StandardOutput.EndOfStream == false) {
                 stdOutBuilder.AppendLine(process.StandardOutput.ReadLine());
             }
-        
-            var stdErrorBuilder = new StringBuilder();
+
             while (process.StandardError.EndOfStream == false) {
                 stdErrorBuilder.AppendLine(process.StandardError.ReadLine());
             }
-        
+
             process.WaitForExit();
-        
+
             Logger.TraceLog(stdOutBuilder);
             if (stdErrorBuilder.Length > 0) {
                 Logger.TraceWarning(stdErrorBuilder);
             }
         } catch (Exception ex) {
             Logger.TraceError(ex);
+        } finally {
+            StringUtil.StringBuilderPool.Release(stdOutBuilder);
+            StringUtil.StringBuilderPool.Release(stdErrorBuilder);
         }
     }
     

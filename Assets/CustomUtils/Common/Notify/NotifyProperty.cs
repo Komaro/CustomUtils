@@ -6,14 +6,14 @@ using System.Runtime.Serialization;
 using CsvHelper.Configuration;
 
 [Serializable, DataContract]
-public class NotifyProperty<T> : NotifyField, IEqualityComparer<NotifyProperty<T>> {
+public class NotifyProperty<TValue> : NotifyField, IEqualityComparer<NotifyProperty<TValue>> {
+    
+    private static readonly IEqualityComparer<TValue> OnEqualityComparer = EqualityComparer<TValue>.Default;
 
-    private static readonly IEqualityComparer<T> OnEqualityComparer = EqualityComparer<T>.Default;
-
-    private T _value;
+    private TValue _value;
     
     [DataMember]
-    public T Value {
+    public TValue Value {
         get => _value;
         set {
             if (OnEqualityComparer.Equals(_value, value) == false) {
@@ -23,8 +23,11 @@ public class NotifyProperty<T> : NotifyField, IEqualityComparer<NotifyProperty<T
         }
     }
 
-    public static bool operator ==(NotifyProperty<T> x, NotifyProperty<T> y) {
-        if (ReferenceEquals(x, null) && ReferenceEquals(y, null)) {
+    public NotifyProperty() { }
+    public NotifyProperty(TValue value) => _value = value;
+
+    public static bool operator ==(NotifyProperty<TValue> x, NotifyProperty<TValue> y) {
+        if (ReferenceEquals(x, y)) {
             return true;
         }
 
@@ -35,8 +38,8 @@ public class NotifyProperty<T> : NotifyField, IEqualityComparer<NotifyProperty<T
         return OnEqualityComparer.Equals(x.Value, y.Value);
     }
 
-    public static bool operator !=(NotifyProperty<T> x, NotifyProperty<T> y) {
-        if (ReferenceEquals(x, null) && ReferenceEquals(y, null)) {
+    public static bool operator !=(NotifyProperty<TValue> x, NotifyProperty<TValue> y) {
+        if (ReferenceEquals(x, y)) {
             return false;
         }
 
@@ -47,17 +50,17 @@ public class NotifyProperty<T> : NotifyField, IEqualityComparer<NotifyProperty<T
         return OnEqualityComparer.Equals(x.Value, y.Value) == false;
     }
 
-    public static implicit operator T(NotifyProperty<T> property) => property.Value;
+    public static implicit operator TValue(NotifyProperty<TValue> property) => property.Value;
     public override string ToString() => Value != null ? Value.ToString() : base.ToString();
 
-    public bool Equals(NotifyProperty<T> x, NotifyProperty<T> y) => x != null && y != null && OnEqualityComparer.Equals(x.Value, y.Value);
-    public int GetHashCode(NotifyProperty<T> obj) => obj.Value.GetHashCode();
+    public bool Equals(NotifyProperty<TValue> x, NotifyProperty<TValue> y) => x != null && y != null && OnEqualityComparer.Equals(x.Value, y.Value);
+    public int GetHashCode(NotifyProperty<TValue> obj) => obj.Value.GetHashCode();
 
-    public override bool Equals(object obj) => obj is NotifyProperty<T> property && Equals(this, property);
-    public override int GetHashCode() => Value.GetHashCode();
+    public override bool Equals(object obj) => obj is NotifyProperty<TValue> property && Equals(this, property);
+    public override int GetHashCode() => GetHashCode(this);
 }
 
-# region CSV ClassMap
+#region [CSV ClassMap]
 
 public sealed class NotifyPropertyClassMap<T> : ClassMap<T> {
 

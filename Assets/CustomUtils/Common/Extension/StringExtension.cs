@@ -8,7 +8,6 @@ using UnityEngine;
 
 public static class StringExtension {
 
-    private static readonly StringBuilder _builder = new();
     private static readonly TextInfo _textInfo = new CultureInfo("en-US", false).TextInfo;
 
     public static bool TryGetBetween(this string content, string startMatch, string endMatch, out string betweenText, StringComparison comp = StringComparison.Ordinal) {

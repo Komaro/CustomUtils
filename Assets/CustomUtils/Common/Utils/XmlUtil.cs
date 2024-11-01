@@ -7,30 +7,31 @@ public static class XmlUtil {
 
     #region [Serialize]
 
-    public static void SerializeToFile(string path, Type type, object ob) {
+    public static void SerializeToFile(string path, Type type, object obj) {
         using (var stream = new FileStream(path.AutoSwitchExtension(Constants.Extension.XML), FileMode.OpenOrCreate, FileAccess.ReadWrite)) {
-            SerializeToStream(stream, type, ob);
+            SerializeToStream(stream, type, obj);
         }
     }
     
-    public static void SerializeToStream<T>(object ob, Stream stream) => SerializeToStream(stream, typeof(T), ob);
+    public static void SerializeToStream<T>(object obj, Stream stream) => SerializeToStream(stream, typeof(T), obj);
     
-    public static void SerializeToStream(Stream stream, Type type, object ob) {
+    public static void SerializeToStream(Stream stream, Type type, object obj) {
         try {
             var serializer = new XmlSerializer(type);
-            serializer.Serialize(stream, ob);
+            serializer.Serialize(stream, obj);
         } catch (Exception ex) {
             Logger.TraceError(ex);
         }
     }
 
-    public static string Serialize<T>(object ob) => Serialize(typeof(T), ob);
+    public static string Serialize<T>(object obj) => Serialize(typeof(T), obj);
+    public static string Serialize<T>(T obj) => Serialize(typeof(T), obj);
 
-    public static string Serialize(Type type, object ob) {
+    public static string Serialize(Type type, object obj) {
         try {
             var serializer = new XmlSerializer(type);
             using (var writer = new StringWriter(new StringBuilder())) {
-                serializer.Serialize(writer, ob);
+                serializer.Serialize(writer, obj);
                 return writer.ToString();
             }
         } catch (Exception ex) {

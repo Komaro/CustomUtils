@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 using NUnit.Framework;
+using UnityEngine.TestTools;
 
 [Category("Notify")]
 public class NotifyCoverageTestRunner {
@@ -11,16 +13,31 @@ public class NotifyCoverageTestRunner {
     [Test]
     public void NotifyPropertyCoverageTest() {
         const int FIRST_VALUE = 15; 
-        const int SECOND_VALUE = 30; 
+        const int SECOND_VALUE = 30;
+        var equalityComparer = new TestIntEqualityComparer();
         var notifyProperty = new NotifyProperty<int>();
+        Assert.AreSame(notifyProperty.EqualityComparer, EqualityComparer<int>.Default);
+        
+        notifyProperty = new NotifyProperty<int>(FIRST_VALUE, equalityComparer);
+        Assert.AreSame(notifyProperty.EqualityComparer, equalityComparer);
+        
+        notifyProperty = new NotifyProperty<int>(equalityComparer);
+        Assert.AreSame(notifyProperty.EqualityComparer, equalityComparer);
+        
         notifyProperty = new NotifyProperty<int>(FIRST_VALUE);
+        Assert.AreSame(notifyProperty.EqualityComparer, EqualityComparer<int>.Default);
 
+        notifyProperty.EqualityComparer = equalityComparer;
+        Assert.AreSame(notifyProperty.EqualityComparer, equalityComparer);
+
+        notifyProperty.EqualityComparer = EqualityComparer<int>.Default;
+        Assert.AreSame(notifyProperty.EqualityComparer, EqualityComparer<int>.Default);
+        
         var getValue = notifyProperty.Value;
         getValue = notifyProperty;
         Assert.IsTrue(getValue == FIRST_VALUE);
         notifyProperty.Value = FIRST_VALUE;
         notifyProperty.Value = SECOND_VALUE;
-        Logger.TraceLog("Pass get, set test");
         
         Assert.IsTrue(notifyProperty == SECOND_VALUE);
         Assert.IsFalse(notifyProperty == FIRST_VALUE);
@@ -40,11 +57,63 @@ public class NotifyCoverageTestRunner {
         Assert.IsTrue(notifyProperty == notifyProperty);
         Assert.IsFalse(notifyProperty != notifyProperty);
 
-        Logger.TraceLog("Pass operator test");
-
         Assert.IsNotEmpty(notifyProperty.ToString());
         Assert.IsTrue(notifyProperty.Equals(new NotifyProperty<int>(SECOND_VALUE)));
         Assert.IsTrue(notifyProperty.GetHashCode() == SECOND_VALUE.GetHashCode());
+        
+        Logger.TraceLog($"Pass {typeof(NotifyProperty<>).Name} test");
+    }
+
+    private sealed class TestIntEqualityComparer : EqualityComparer<int> {
+
+        public override bool Equals(int x, int y) => x.Equals(y);
+        public override int GetHashCode(int obj) => obj.GetHashCode();
+    }
+
+    [Test]
+    public void NotifyCollectionCoverageTest() {
+        var intList = RandomUtil.GetRandoms(20).ToList();
+        var collection = new NotifyCollection<int>();
+        collection = new NotifyCollection<int>(intList);
+        collection = new NotifyCollection<int>(intList.AsEnumerable());
+        collection = new NotifyCollection<int>(intList.ToArray());
+
+        var randomIndex = RandomUtil.GetRandom(0, intList.Count);
+        var randomItem = intList[randomIndex];
+        Assert.AreEqual(randomIndex, collection.IndexOf(randomItem));
+
+        var evaluateValue = 4533;
+        collection.Insert(collection.Count, evaluateValue);
+        Assert.AreEqual(collection[^1], evaluateValue);
+        
+        collection.RemoveAt(collection.Count - 1);
+        Assert.AreNotEqual(collection[^1], evaluateValue);
+
+        evaluateValue = 999999999;
+        collection.Add(evaluateValue);
+        Assert.AreEqual(collection.Last(), evaluateValue);
+
+        collection.Remove(evaluateValue);
+        Assert.AreNotEqual(collection.Last(), evaluateValue);
+        
+        collection.Clear();
+        Assert.IsTrue(collection.Count == 0);
+
+        // Exception Test
+        var nullableIntList = intList.ConvertAll(value => (int?) value);
+        var nullableCollection = new NotifyCollection<int?>(nullableIntList);
+        Assert.Throws<NullReferenceException>( () => nullableCollection.Add(null));
+        Assert.Throws<NullReferenceException>(() => _ = nullableCollection.IndexOf(null));
+        Assert.Throws<NullReferenceException>(() => nullableCollection.Insert(0, null));
+
+        Assert.Throws<InvalidCastException>(() => nullableCollection.CopyTo(new float[10], 5));
+
+        Assert.Throws<ArgumentOutOfRangeException>(() => nullableCollection.Insert(999999, null));
+        Assert.Throws<ArgumentOutOfRangeException>(() => nullableCollection.Insert(-999999, null));
+        Assert.Throws<ArgumentOutOfRangeException>(() => nullableCollection.RemoveAt(99999));
+        Assert.Throws<ArgumentOutOfRangeException>(() => nullableCollection.RemoveAt(-99999));
+        
+        Logger.TraceLog($"Pass {typeof(NotifyCollection<>).Name} test");
     }
 }
 
@@ -213,7 +282,7 @@ public class NotifySerializeTestRunner {
     [Test(Description = "Notify Xml Convert Test")]
     public void NotifyXmlConvertTest() {
         var text = XmlUtil.Serialize(_field);
-        Assert.IsNotNull(text);
+        Assert.IsNotEmpty(text);
         Logger.TraceLog(text);
         Logger.TraceLog("Pass field xml serialize");
         

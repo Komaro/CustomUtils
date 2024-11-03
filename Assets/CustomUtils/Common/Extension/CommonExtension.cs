@@ -15,38 +15,48 @@ using UnityEngine.Pool;
 public static class CommonExtension {
     
     public static string ToStringAllFields(this object ob, string prefix = "", bool ignoreRootName = false, BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.Public) {
-        StringUtil.StringBuilderPool.Get(out var builder);
-        var type = ob.GetType();
-        if (ignoreRootName == false) {
-            builder.Append(type.GetNameWithGenericArguments());
-        }
-        
-        if (type.IsClass) {
-            builder.AppendLine(" (Class)");
-        } else if (type.IsStruct()) {
-            builder.AppendLine(" (Struct)");
+        if (ob == null) {
+            return $"{nameof(ob)} is null";
         }
 
-        foreach (var (name, value) in type.GetAllDataMemberNameWithValue(ob, bindingFlags)) {
-            if (value == null) {
-                builder.AppendLine($"{prefix} [{name}] null");
-                continue;
+        StringUtil.StringBuilderPool.Get(out var builder);
+        try {
+            var type = ob.GetType();
+            if (ignoreRootName == false) {
+                builder.Append(type.GetNameWithGenericArguments());
             }
-            
-            var memberType = value.GetType();
-            builder.Append($"{prefix} [{memberType.GetNameWithGenericArguments()}] ");
-            if (memberType.IsArray && value is Array array) {
-                builder.AppendLine($"{name} || {array.Cast<object>()?.ToStringCollection(", ")}");
-            } else if (memberType.IsGenericCollectionType() && value is ICollection collection) {
-                builder.AppendLine($"{name} || {collection.Cast<object>().ToStringCollection(", ")}");
-            } else if (memberType.IsEnum == false && memberType.IsStruct()) {
-                builder.AppendLine($"{name} {value.ToStringAllFields("\t", true, bindingFlags)}");
-            } else {
-                builder.AppendLine($"{name} || {value}");
-            }
-        }
         
-        StringUtil.StringBuilderPool.Release(builder);
+            if (type.IsClass) {
+                builder.AppendLine(" (Class)");
+            } else if (type.IsStruct()) {
+                builder.AppendLine(" (Struct)");
+            }
+
+            foreach (var (name, value) in type.GetAllDataMemberNameWithValue(ob, bindingFlags)) {
+                if (value == null) {
+                    builder.AppendLine($"{prefix} [{name}] null");
+                    continue;
+                }
+            
+                var memberType = value.GetType();
+                builder.Append($"{prefix} [{memberType.GetNameWithGenericArguments()}] ");
+                if (memberType.IsArray && value is Array array) {
+                    builder.AppendLine($"{name} || {array.Cast<object>()?.ToStringCollection(", ")}");
+                } else if (memberType.IsGenericCollectionType() && value is ICollection collection) {
+                    builder.AppendLine($"{name} || {collection.Cast<object>().ToStringCollection(", ")}");
+                } else if (memberType.IsEnum == false && memberType.IsStruct()) {
+                    builder.AppendLine($"{name} {value.ToStringAllFields("\t", true, bindingFlags)}");
+                } else {
+                    builder.AppendLine($"{name} || {value}");
+                }
+            }
+        
+        } catch (Exception ex) {
+            Logger.TraceLog(ex);
+        } finally {
+            StringUtil.StringBuilderPool.Release(builder);
+        }
+
         return builder.ToString();
     }
 

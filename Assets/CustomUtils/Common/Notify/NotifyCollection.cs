@@ -142,15 +142,23 @@ public class NotifyCollection<TValue> : NotifyCollection<Collection<TValue>, TVa
     }
 
     public void Insert(int index, TValue item) {
+        if (index >= Count || index < 0) {
+            throw new ArgumentOutOfRangeException(nameof(index));
+        }
+
         if (item == null) {
             throw new NullReferenceException($"{nameof(item)} is null");
         }
-        
+
         collection.Insert(index, item);
         OnChanged.handler?.Invoke(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add));
     }
 
     public void RemoveAt(int index) {
+        if (index >= Count) {
+            throw new ArgumentOutOfRangeException(nameof(index));
+        }
+        
         collection.RemoveAt(index);
         OnChanged.handler?.Invoke(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove));
     }

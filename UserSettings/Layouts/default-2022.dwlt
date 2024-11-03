@@ -119,7 +119,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 100}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 109
+  controlID: 117
   draggingID: 0
 --- !u!114 &6
 MonoBehaviour:
@@ -140,12 +140,12 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 837.6
+    width: 806.4
     height: 730.8
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 1
-  controlID: 86
+  controlID: 88
   draggingID: 0
 --- !u!114 &7
 MonoBehaviour:
@@ -166,12 +166,12 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 837.6
+    width: 806.4
     height: 385.6
   m_MinSize: {x: 200, y: 50}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 40
+  controlID: 42
   draggingID: 0
 --- !u!114 &8
 MonoBehaviour:
@@ -190,14 +190,14 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 341.6
+    width: 328
     height: 385.6
   m_MinSize: {x: 201, y: 221}
   m_MaxSize: {x: 4001, y: 4021}
-  m_ActualView: {fileID: 15}
+  m_ActualView: {fileID: 16}
   m_Panes:
-  - {fileID: 15}
   - {fileID: 16}
+  - {fileID: 17}
   m_Selected: 0
   m_LastSelected: 1
 --- !u!114 &9
@@ -215,15 +215,15 @@ MonoBehaviour:
   m_Children: []
   m_Position:
     serializedVersion: 2
-    x: 341.6
+    x: 328
     y: 0
-    width: 495.99997
+    width: 478.40002
     height: 385.6
   m_MinSize: {x: 202, y: 221}
   m_MaxSize: {x: 4002, y: 4021}
-  m_ActualView: {fileID: 17}
+  m_ActualView: {fileID: 18}
   m_Panes:
-  - {fileID: 17}
+  - {fileID: 18}
   m_Selected: 0
   m_LastSelected: 0
 --- !u!114 &10
@@ -245,12 +245,12 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 385.6
-    width: 837.6
+    width: 806.4
     height: 345.19998
   m_MinSize: {x: 200, y: 50}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 87
+  controlID: 89
   draggingID: 0
 --- !u!114 &11
 MonoBehaviour:
@@ -269,14 +269,14 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 517.6
+    width: 498.4
     height: 345.19998
   m_MinSize: {x: 101, y: 121}
   m_MaxSize: {x: 4001, y: 4021}
-  m_ActualView: {fileID: 19}
+  m_ActualView: {fileID: 20}
   m_Panes:
-  - {fileID: 18}
   - {fileID: 19}
+  - {fileID: 20}
   m_Selected: 1
   m_LastSelected: 0
 --- !u!114 &12
@@ -294,15 +294,15 @@ MonoBehaviour:
   m_Children: []
   m_Position:
     serializedVersion: 2
-    x: 517.6
+    x: 498.4
     y: 0
-    width: 320
+    width: 308.00003
     height: 345.19998
   m_MinSize: {x: 202, y: 221}
   m_MaxSize: {x: 4002, y: 4021}
-  m_ActualView: {fileID: 20}
+  m_ActualView: {fileID: 21}
   m_Panes:
-  - {fileID: 20}
+  - {fileID: 21}
   m_Selected: 0
   m_LastSelected: 0
 --- !u!114 &13
@@ -320,19 +320,54 @@ MonoBehaviour:
   m_Children: []
   m_Position:
     serializedVersion: 2
-    x: 837.6
+    x: 806.4
     y: 0
-    width: 698.4
+    width: 729.6
     height: 730.8
   m_MinSize: {x: 101, y: 121}
   m_MaxSize: {x: 4001, y: 4021}
-  m_ActualView: {fileID: 14}
+  m_ActualView: {fileID: 15}
   m_Panes:
-  - {fileID: 21}
+  - {fileID: 22}
+  - {fileID: 15}
   - {fileID: 14}
   m_Selected: 1
-  m_LastSelected: 1
+  m_LastSelected: 2
 --- !u!114 &14
+MonoBehaviour:
+  m_ObjectHideFlags: 52
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5115ff20f1ea204dac14fa49c0e8f69, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_MinSize: {x: 445, y: 65}
+  m_MaxSize: {x: 4000, y: 4000}
+  m_TitleContent:
+    m_Text: Code Coverage
+    m_Image: {fileID: 2800000, guid: 48e45b7f100ee4b48a02e05135e6cece, type: 3}
+    m_Tooltip: 
+  m_Pos:
+    serializedVersion: 2
+    x: 806.4
+    y: 73.6
+    width: 728.6
+    height: 709.8
+  m_SerializedDataModeController:
+    m_DataMode: 0
+    m_PreferredDataMode: 0
+    m_SupportedDataModes: 
+    isAutomatic: 1
+  m_ViewDataDictionary: {fileID: 0}
+  m_OverlayCanvas:
+    m_LastAppliedPresetName: Default
+    m_SaveData: []
+    m_OverlaysVisible: 1
+--- !u!114 &15
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -353,9 +388,9 @@ MonoBehaviour:
       Part of the com.unity.test-framework package.
   m_Pos:
     serializedVersion: 2
-    x: 837.60004
+    x: 806.4
     y: 73.6
-    width: 697.4
+    width: 728.6
     height: 709.8
   m_SerializedDataModeController:
     m_DataMode: 0
@@ -368,7 +403,7 @@ MonoBehaviour:
     m_SaveData: []
     m_OverlaysVisible: 1
   m_Spl:
-    ID: 143
+    ID: 199
     splitterInitialOffset: 284.8
     currentActiveSplitter: -1
     realSizes:
@@ -393,9 +428,9 @@ MonoBehaviour:
     oldSplitSize: 0
   m_TestTypeToolbarIndex: 0
   m_TestListGUIs:
-  - m_Window: {fileID: 14}
+  - m_Window: {fileID: 15}
     runProgress:
-      RunGuid: 7e21b740-dd8b-4217-aba8-296d863f2409
+      RunGuid: ca7d4722-b601-4f12-b7b3-87f9ef902973
       ExecutionSettings:
         m_TargetPlatform: 0
         m_HasTargetPlatform: 0
@@ -408,7 +443,7 @@ MonoBehaviour:
         filters:
         - testMode: 1
           testNames:
-          - NotifyFieldTestRunner.NotifyXmlConvertTest
+          - NotifyCoverageTestRunner.NotifyCollectionCoverageTest
           groupNames: []
           categoryNames: []
           assemblyNames: []
@@ -431,7 +466,7 @@ MonoBehaviour:
       uniqueId: '[CustomUtils][suite]'
       name: CustomUtils
       fullName: CustomUtils
-      resultStatus: 2
+      resultStatus: 1
       duration: 0
       messages: 
       output: 
@@ -443,11 +478,11 @@ MonoBehaviour:
       categories: []
       parentId: 
       parentUniqueId: 
-    - id: 1056
+    - id: 1063
       uniqueId: '[EditModeTestAssembly][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/EditModeTestAssembly.dll][suite]'
       name: EditModeTestAssembly.dll
       fullName: C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/EditModeTestAssembly.dll
-      resultStatus: 2
+      resultStatus: 1
       duration: 0
       messages: 
       output: 
@@ -457,7 +492,7 @@ MonoBehaviour:
       description: 
       isSuite: 1
       categories: []
-      parentId: 1067
+      parentId: 1069
       parentUniqueId: '[CustomUtils][suite]'
     - id: 1002
       uniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][AnalyzerTestRunner][suite]
@@ -473,7 +508,7 @@ MonoBehaviour:
       description: 
       isSuite: 1
       categories: []
-      parentId: 1056
+      parentId: 1063
       parentUniqueId: '[EditModeTestAssembly][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/EditModeTestAssembly.dll][suite]'
     - id: 1012
       uniqueId: EditModeTestAssembly.dll/AnalyzerTestRunner/[EditModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCasePerformanceTest][suite]
@@ -658,7 +693,7 @@ MonoBehaviour:
       description: 
       isSuite: 1
       categories: []
-      parentId: 1056
+      parentId: 1063
       parentUniqueId: '[EditModeTestAssembly][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/EditModeTestAssembly.dll][suite]'
     - id: 1013
       uniqueId: EditModeTestAssembly.dll/DBTestRunner/[EditModeTestAssembly][DBTestRunner.InMemoryDatabaseTest]
@@ -691,7 +726,7 @@ MonoBehaviour:
       description: 
       isSuite: 1
       categories: []
-      parentId: 1056
+      parentId: 1063
       parentUniqueId: '[EditModeTestAssembly][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/EditModeTestAssembly.dll][suite]'
     - id: 1025
       uniqueId: EditModeTestAssembly.dll/EditModeTestRunner/[EditModeTestAssembly][EditModeTestRunner.EnumCastPerformanceTest]
@@ -996,7 +1031,7 @@ MonoBehaviour:
       description: 
       isSuite: 1
       categories: []
-      parentId: 1056
+      parentId: 1063
       parentUniqueId: '[EditModeTestAssembly][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/EditModeTestAssembly.dll][suite]'
     - id: 1037
       uniqueId: EditModeTestAssembly.dll/GameDBTestRunner/[EditModeTestAssembly][GameDBTestRunner.StartTest][suite]
@@ -1069,7 +1104,7 @@ MonoBehaviour:
       uniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][GlobalEnumTestRunner][suite]
       name: GlobalEnumTestRunner
       fullName: GlobalEnumTestRunner
-      resultStatus: 1
+      resultStatus: 0
       duration: 0
       messages: 
       output: 
@@ -1079,7 +1114,7 @@ MonoBehaviour:
       description: 
       isSuite: 1
       categories: []
-      parentId: 1056
+      parentId: 1063
       parentUniqueId: '[EditModeTestAssembly][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/EditModeTestAssembly.dll][suite]'
     - id: 1038
       uniqueId: EditModeTestAssembly.dll/GlobalEnumTestRunner/[EditModeTestAssembly][GlobalEnumTestRunner.StartTest]
@@ -1121,11 +1156,11 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1037
       parentUniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][GlobalEnumTestRunner][suite]
-    - id: 1046
-      uniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][NotifyFieldTestRunner][suite]
-      name: NotifyFieldTestRunner
-      fullName: NotifyFieldTestRunner
-      resultStatus: 2
+    - id: 1049
+      uniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][NotifyConstructorTestRunner][suite]
+      name: NotifyConstructorTestRunner
+      fullName: NotifyConstructorTestRunner
+      resultStatus: 1
       duration: 0
       messages: 
       output: 
@@ -1134,86 +1169,271 @@ MonoBehaviour:
       ignoredOrSkipped: 0
       description: 
       isSuite: 1
-      categories: []
-      parentId: 1056
+      categories:
+      - Notify
+      parentId: 1063
       parentUniqueId: '[EditModeTestAssembly][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/EditModeTestAssembly.dll][suite]'
     - id: 1049
-      uniqueId: EditModeTestAssembly.dll/NotifyFieldTestRunner/[EditModeTestAssembly][NotifyFieldTestRunner.NotifyCsvConvertTest]
-      name: NotifyCsvConvertTest
-      fullName: NotifyFieldTestRunner.NotifyCsvConvertTest
-      resultStatus: 2
-      duration: 0.1883929
-      messages: "  \nNotifyConvertTestSample (Class)\r\n [NotifyProperty`1<Int32>]
-        intProperty || 9307\r\n [NotifyProperty`1<Single>] floatProperty || 4326\r\n
-        [NotifyProperty`1<String>] stringProperty || Yiid\\XuTUXHOJ]EITM`Q\r\n [intCollection]
-        null\r\n [stringList] null\r\n [recordDictionary] null\r\n [RuntimeType]
-        EqualityContract || NotifyConvertTestSample\r\n  Expected: True\r\n  But
-        was:  False\r\n"
-      output: "[NotifyFieldTestRunner.NotifyCsvConvertTest] \nValue\r\n4533\r\n[NotifyFieldTestRunner.NotifyCsvConvertTest]
-        Pass field csv serialize\r\n[NotifyFieldTestRunner.EvaluateNotifyProperty]
-        Pass property null check\r\n[NotifyFieldTestRunner.EvaluateNotifyProperty]
-        Pass property reference check\r\n[NotifyFieldTestRunner.EvaluateNotifyProperty]
-        Pass property value check\r\n[NotifyFieldTestRunner.NotifyCsvConvertTest]
-        Pass NotifyField csv convert test\n\r\n[NotifyFieldTestRunner.NotifyCsvConvertTest]
-        \nNotifyProperty`1<Int32> (Class)\r\n [Int32] _value || 4533\r\n [SafeDelegate`1<NotifyFieldChangedHandler>]
-        OnChanged  (Struct)\r\n\t [handler] null\r\n\t [Int32] Count || 0\r\n\r\n
-        [Boolean] isDisposed || False\r\n [Int32] Value || 4533\n\r\n[NotifyFieldTestRunner.NotifyCsvConvertTest]
-        \nintProperty,floatProperty,stringProperty\r\n9307,4326,Yiid\\XuTUXHOJ]EITM`Q\r\n[NotifyFieldTestRunner.EvaluateNotifyConvertTestSample]
-        Pass testSample null check\r\n[NotifyFieldTestRunner.EvaluateNotifyConvertTestSample]
-        Pass testSample reference check\r\n"
-      stacktrace: 'at NotifyFieldTestRunner.EvaluateNotifyConvertTestSample (NotifyConvertTestSample
-        testSample) [0x00074] in C:\Project\Unity\CustomUtils\Assets\Test\EditMode\NotifyFieldTestRunner.cs:124
-
-        at
-        NotifyFieldTestRunner.NotifyCsvConvertTest () [0x000ca] in C:\Project\Unity\CustomUtils\Assets\Test\EditMode\NotifyFieldTestRunner.cs:101
+      uniqueId: EditModeTestAssembly.dll/NotifyConstructorTestRunner/[EditModeTestAssembly][NotifyConstructorTestRunner.NotifyCollectionAllConstructorTest]
+      name: NotifyCollectionAllConstructorTest
+      fullName: NotifyConstructorTestRunner.NotifyCollectionAllConstructorTest
+      resultStatus: 1
+      duration: 0.0886663
+      messages: 
+      output: "[NotifyConstructorTestRunner.PrintPassResult] Pass NotifyCollection`1
+        constructor test\r\n[NotifyConstructorTestRunner.PrintPassResult] \n8890,
+        9580, 9648, 9392, 1342, 1133, 8921, 1134, 2318, 9904\n8890, 9580, 9648, 9392,
+        1342, 1133, 8921, 1134, 2318, 9904\n\r\n[NotifyConstructorTestRunner.PrintPassResult]
+        Pass NotifyRecordCollection`1 constructor test\r\n[NotifyConstructorTestRunner.PrintPassResult]
+        \n3078, 586, 526, 6341, 7186, 5860, 8852, 2809, 8391, 1000\n3078, 586, 526,
+        6341, 7186, 5860, 8852, 2809, 8391, 1000\n\r\n"
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: NotifyCollection constructor test
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1048
+      parentUniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][NotifyConstructorTestRunner][suite]
+    - id: 1051
+      uniqueId: EditModeTestAssembly.dll/NotifyConstructorTestRunner/[EditModeTestAssembly][NotifyConstructorTestRunner.NotifyDictionaryConstructorTest]
+      name: NotifyDictionaryConstructorTest
+      fullName: NotifyConstructorTestRunner.NotifyDictionaryConstructorTest
+      resultStatus: 1
+      duration: 0.0943608
+      messages: 
+      output: "[NotifyConstructorTestRunner.PrintPassResult] Pass NotifyDictionary`2
+        constructor test\r\n[NotifyConstructorTestRunner.PrintPassResult] \n[0, 5644],
+        [1, 9671], [2, 9262], [3, 9963], [4, 9231], [5, 4271], [6, 8619], [7, 6090],
+        [8, 2503], [9, 7184]\n[0, 5644], [1, 9671], [2, 9262], [3, 9963], [4, 9231],
+        [5, 4271], [6, 8619], [7, 6090], [8, 2503], [9, 7184]\n\r\n[NotifyConstructorTestRunner.PrintPassResult]
+        Pass NotifySortedDictionary`2 constructor test\r\n[NotifyConstructorTestRunner.PrintPassResult]
+        \n[0, 5644], [1, 9671], [2, 9262], [3, 9963], [4, 9231], [5, 4271], [6, 8619],
+        [7, 6090], [8, 2503], [9, 7184]\n[0, 5644], [1, 9671], [2, 9262], [3, 9963],
+        [4, 9231], [5, 4271], [6, 8619], [7, 6090], [8, 2503], [9, 7184]\n\r\n[NotifyConstructorTestRunner.PrintPassResult]
+        Pass NotifyConcurrentDictionary`2 constructor test\r\n[NotifyConstructorTestRunner.PrintPassResult]
+        \n[0, 5644], [1, 9671], [2, 9262], [3, 9963], [4, 9231], [5, 4271], [6, 8619],
+        [7, 6090], [8, 2503], [9, 7184]\n[0, 5644], [1, 9671], [2, 9262], [3, 9963],
+        [4, 9231], [5, 4271], [6, 8619], [7, 6090], [8, 2503], [9, 7184]\n\r\n[NotifyConstructorTestRunner.PrintPassResult]
+        Pass NotifyRecordDictionary`2 constructor test\r\n[NotifyConstructorTestRunner.PrintPassResult]
+        \n[0, 5644], [1, 9671], [2, 9262], [3, 9963], [4, 9231], [5, 4271], [6, 8619],
+        [7, 6090], [8, 2503], [9, 7184]\n[0, 5644], [1, 9671], [2, 9262], [3, 9963],
+        [4, 9231], [5, 4271], [6, 8619], [7, 6090], [8, 2503], [9, 7184]\n\r\n"
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: NotifyDictionary constructor test
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1048
+      parentUniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][NotifyConstructorTestRunner][suite]
+    - id: 1050
+      uniqueId: EditModeTestAssembly.dll/NotifyConstructorTestRunner/[EditModeTestAssembly][NotifyConstructorTestRunner.NotifyListAllConstructorTest]
+      name: NotifyListAllConstructorTest
+      fullName: NotifyConstructorTestRunner.NotifyListAllConstructorTest
+      resultStatus: 1
+      duration: 0.0187264
+      messages: 
+      output: "[NotifyConstructorTestRunner.PrintPassResult] Pass NotifyList`1 constructor
+        test\r\n[NotifyConstructorTestRunner.PrintPassResult] \n4180, 4939, 4672,
+        6247, 1401, 2639, 4919, 2397, 7519, 6294\n4180, 4939, 4672, 6247, 1401, 2639,
+        4919, 2397, 7519, 6294\n\r\n[NotifyConstructorTestRunner.PrintPassResult]
+        Pass NotifyRecordList`1 constructor test\r\n[NotifyConstructorTestRunner.PrintPassResult]
+        \n4180, 4939, 4672, 6247, 1401, 2639, 4919, 2397, 7519, 6294\n4180, 4939,
+        4672, 6247, 1401, 2639, 4919, 2397, 7519, 6294\n\r\n"
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: NotifyList constructor test
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1048
+      parentUniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][NotifyConstructorTestRunner][suite]
+    - id: 1046
+      uniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][NotifyCoverageTestRunner][suite]
+      name: NotifyCoverageTestRunner
+      fullName: NotifyCoverageTestRunner
+      resultStatus: 1
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories:
+      - Notify
+      parentId: 1063
+      parentUniqueId: '[EditModeTestAssembly][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/EditModeTestAssembly.dll][suite]'
+    - id: 1048
+      uniqueId: EditModeTestAssembly.dll/NotifyCoverageTestRunner/[EditModeTestAssembly][NotifyCoverageTestRunner.NotifyCollectionCoverageTest]
+      name: NotifyCollectionCoverageTest
+      fullName: NotifyCoverageTestRunner.NotifyCollectionCoverageTest
+      resultStatus: 1
+      duration: 0.1097155
+      messages: 
+      output: '[NotifyCoverageTestRunner.NotifyCollectionCoverageTest] Pass NotifyCollection`1
+        test
 
 '
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Notify
+      parentId: 1046
+      parentUniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][NotifyCoverageTestRunner][suite]
+    - id: 1047
+      uniqueId: EditModeTestAssembly.dll/NotifyCoverageTestRunner/[EditModeTestAssembly][NotifyCoverageTestRunner.NotifyPropertyCoverageTest]
+      name: NotifyPropertyCoverageTest
+      fullName: NotifyCoverageTestRunner.NotifyPropertyCoverageTest
+      resultStatus: 1
+      duration: 0.0623497
+      messages: 
+      output: '[NotifyCoverageTestRunner.NotifyPropertyCoverageTest] Pass equality
+        test
+
+        [NotifyCoverageTestRunner.NotifyPropertyCoverageTest] Pass
+        get, set test
+
+        [NotifyCoverageTestRunner.NotifyPropertyCoverageTest]
+        Pass operator test
+
+        [NotifyCoverageTestRunner.NotifyPropertyCoverageTest]
+        Pass method test
+
+'
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1046
+      parentUniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][NotifyCoverageTestRunner][suite]
+    - id: 1053
+      uniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][NotifySerializeTestRunner][suite]
+      name: NotifySerializeTestRunner
+      fullName: NotifySerializeTestRunner
+      resultStatus: 1
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories:
+      - Notify
+      parentId: 1063
+      parentUniqueId: '[EditModeTestAssembly][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/EditModeTestAssembly.dll][suite]'
+    - id: 1053
+      uniqueId: EditModeTestAssembly.dll/NotifySerializeTestRunner/[EditModeTestAssembly][NotifySerializeTestRunner.NotifyCsvConvertTest]
+      name: NotifyCsvConvertTest
+      fullName: NotifySerializeTestRunner.NotifyCsvConvertTest
+      resultStatus: 1
+      duration: 0.2489682
+      messages: 
+      output: "[NotifySerializeTestRunner.NotifyCsvConvertTest] \nValue\r\n4533\r\n[NotifySerializeTestRunner.NotifyCsvConvertTest]
+        Pass field csv serialize\r\n[NotifySerializeTestRunner.EvaluateNotifyProperty]
+        Pass property null check\r\n[NotifySerializeTestRunner.EvaluateNotifyProperty]
+        Pass property reference check\r\n[NotifySerializeTestRunner.EvaluateNotifyProperty]
+        Pass property value check\r\n[NotifySerializeTestRunner.NotifyCsvConvertTest]
+        Pass NotifyField csv convert test\n\r\n[NotifySerializeTestRunner.NotifyCsvConvertTest]
+        \nNotifyProperty`1<Int32> (Class)\r\n [GenericEqualityComparer`1<Int32>]
+        _equalityComparer || System.Collections.Generic.GenericEqualityComparer`1[System.Int32]\r\n
+        [Int32] _value || 4533\r\n [SafeDelegate`1<NotifyFieldChangedHandler>] OnChanged 
+        (Struct)\r\n\t [handler] null\r\n\t [Int32] Count || 0\r\n\r\n [Boolean]
+        isDisposed || False\r\n [GenericEqualityComparer`1<Int32>] EqualityComparer
+        || System.Collections.Generic.GenericEqualityComparer`1[System.Int32]\r\n
+        [Int32] Value || 4533\n\r\n[NotifySerializeTestRunner.NotifyCsvConvertTest]
+        \nintProperty,floatProperty,stringProperty\r\n3644,4545,UpNUtKUSlsqmbpcS^xGY\r\n[NotifySerializeTestRunner.EvaluateNotifyConvertTestSample]
+        Pass evaluateSample null check\r\n[NotifySerializeTestRunner.EvaluateNotifyConvertTestSample]
+        Pass evaluateSample reference check\r\n[NotifySerializeTestRunner.EvaluateNotifyConvertTestSample]
+        Pass evaluateSample value check\r\n[NotifySerializeTestRunner.NotifyCsvConvertTest]
+        Pass NotifyConvertTestSample csv convert test\r\n[NotifySerializeTestRunner.NotifyCsvConvertTest]
+        \nNotifyConvertTestSample (Class)\r\n [NotifyProperty`1<Int32>] intProperty
+        || 3644\r\n [NotifyProperty`1<Single>] floatProperty || 4545\r\n [NotifyProperty`1<String>]
+        stringProperty || UpNUtKUSlsqmbpcS^xGY\r\n [RuntimeType] EqualityContract
+        || NotifySerializeTestRunner+NotifyConvertTestSample\n\r\n"
+      stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
       description: Notify Csv Convert Test
       isSuite: 0
       categories:
       - Uncategorized
-      parentId: 1046
-      parentUniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][NotifyFieldTestRunner][suite]
-    - id: 1047
-      uniqueId: EditModeTestAssembly.dll/NotifyFieldTestRunner/[EditModeTestAssembly][NotifyFieldTestRunner.NotifyJsonConvertTest]
+      parentId: 1052
+      parentUniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][NotifySerializeTestRunner][suite]
+    - id: 1054
+      uniqueId: EditModeTestAssembly.dll/NotifySerializeTestRunner/[EditModeTestAssembly][NotifySerializeTestRunner.NotifyJsonConvertTest]
       name: NotifyJsonConvertTest
-      fullName: NotifyFieldTestRunner.NotifyJsonConvertTest
+      fullName: NotifySerializeTestRunner.NotifyJsonConvertTest
       resultStatus: 1
-      duration: 0.1222673
+      duration: 0.1620063
       messages: 
-      output: "[NotifyFieldTestRunner.NotifyJsonConvertTest] {\r\n  \"Value\": 4533\r\n}\r\n[NotifyFieldTestRunner.NotifyJsonConvertTest]
-        Pass field json serialize\r\n[NotifyFieldTestRunner.EvaluateNotifyProperty]
-        Pass property null check\r\n[NotifyFieldTestRunner.EvaluateNotifyProperty]
-        Pass property reference check\r\n[NotifyFieldTestRunner.EvaluateNotifyProperty]
-        Pass property value check\r\n[NotifyFieldTestRunner.NotifyJsonConvertTest]
-        Pass NotifyField json convert test\n\r\n[NotifyFieldTestRunner.NotifyJsonConvertTest]
-        NotifyProperty`1<Int32> (Class)\r\n [Int32] _value || 4533\r\n [SafeDelegate`1<NotifyFieldChangedHandler>]
-        OnChanged  (Struct)\r\n\t [handler] null\r\n\t [Int32] Count || 0\r\n\r\n
-        [Boolean] isDisposed || False\r\n [Int32] Value || 4533\n\r\n[NotifyFieldTestRunner.NotifyJsonConvertTest]
-        {\r\n  \"intProperty\": {\r\n    \"Value\": 6602\r\n  },\r\n  \"floatProperty\":
-        {\r\n    \"Value\": 4759.0\r\n  },\r\n  \"stringProperty\": {\r\n    \"Value\":
-        \"nps]U_^dmK`RbcdIPYTX\"\r\n  },\r\n  \"intCollection\": [\r\n    3088,\r\n   
-        3081,\r\n    7556,\r\n    7437,\r\n    1677\r\n  ],\r\n  \"stringList\":
-        [\r\n    125,\r\n    144,\r\n    97,\r\n    238,\r\n    121,\r\n    159,\r\n   
-        191,\r\n    217,\r\n    108,\r\n    169\r\n  ],\r\n  \"recordDictionary\":
-        {\r\n    \"0.0084821190724531752\": 69.3693161,\r\n    \"0.40122223245036892\":
-        138.576263,\r\n    \"0.44372848861093095\": 288.44516,\r\n    \"0.050264296145301451\":
-        732.3891,\r\n    \"0.21345145870626506\": 836.4384\r\n  }\r\n}\r\n[NotifyFieldTestRunner.NotifyJsonConvertTest]
-        Pass sample json serialize\r\n[NotifyFieldTestRunner.EvaluateNotifyConvertTestSample]
-        Pass testSample null check\r\n[NotifyFieldTestRunner.EvaluateNotifyConvertTestSample]
-        Pass testSample reference check\r\n[NotifyFieldTestRunner.EvaluateNotifyConvertTestSample]
-        Pass testSample value check\r\n[NotifyFieldTestRunner.NotifyJsonConvertTest]
-        Pass NotifyConvertTestSample json convert test\n\r\n[NotifyFieldTestRunner.NotifyJsonConvertTest]
-        NotifyConvertTestSample (Class)\r\n [NotifyProperty`1<Int32>] intProperty
-        || 6602\r\n [NotifyProperty`1<Single>] floatProperty || 4759\r\n [NotifyProperty`1<String>]
-        stringProperty || nps]U_^dmK`RbcdIPYTX\r\n [NotifyRecordCollection`1<Int32>]
-        intCollection || 3088, 3081, 7556, 7437, 1677\r\n [NotifyRecordList`1<Byte>]
-        stringList || 125, 144, 97, 238, 121, 159, 191, 217, 108, 169\r\n [NotifyRecordDictionary`2<Double,
-        Single>] recordDictionary || [0.00848211907245318, 69.36932], [0.401222232450369,
-        138.5763], [0.443728488610931, 288.4452], [0.0502642961453015, 732.3891],
-        [0.213451458706265, 836.4384]\r\n\n\r\n"
+      output: "[NotifySerializeTestRunner.NotifyJsonConvertTest] {\r\n  \"Value\":
+        4533\r\n}\r\n[NotifySerializeTestRunner.NotifyJsonConvertTest] Pass field
+        json serialize\r\n[NotifySerializeTestRunner.EvaluateNotifyProperty] Pass
+        property null check\r\n[NotifySerializeTestRunner.EvaluateNotifyProperty]
+        Pass property reference check\r\n[NotifySerializeTestRunner.EvaluateNotifyProperty]
+        Pass property value check\r\n[NotifySerializeTestRunner.NotifyJsonConvertTest]
+        Pass NotifyField json convert test\n\r\n[NotifySerializeTestRunner.NotifyJsonConvertTest]
+        NotifyProperty`1<Int32> (Class)\r\n [GenericEqualityComparer`1<Int32>] _equalityComparer
+        || System.Collections.Generic.GenericEqualityComparer`1[System.Int32]\r\n
+        [Int32] _value || 4533\r\n [SafeDelegate`1<NotifyFieldChangedHandler>] OnChanged 
+        (Struct)\r\n\t [handler] null\r\n\t [Int32] Count || 0\r\n\r\n [Boolean]
+        isDisposed || False\r\n [GenericEqualityComparer`1<Int32>] EqualityComparer
+        || System.Collections.Generic.GenericEqualityComparer`1[System.Int32]\r\n
+        [Int32] Value || 4533\n\r\n[NotifySerializeTestRunner.NotifyJsonConvertTest]
+        {\r\n  \"intCollection\": [\r\n    2332,\r\n    3989,\r\n    7009,\r\n   
+        4917,\r\n    5859\r\n  ],\r\n  \"stringList\": [\r\n    \"eqdXRVvbUb\",\r\n   
+        \"j^TehYZJ_a\",\r\n    \"xq^ZtQFrQm\",\r\n    \"qoTxsnPtXv\",\r\n    \"PBd]IFSVqH\",\r\n   
+        \"mNIucnSK^A\",\r\n    \"PDRbktKVkt\",\r\n    \"J_kcQwNBRn\",\r\n    \"xjAIycfYVF\",\r\n   
+        \"\\\\EVWgLjBkN\"\r\n  ],\r\n  \"recordDictionary\": {\r\n    \"0\": 870.606445,\r\n   
+        \"1\": 327.3762,\r\n    \"2\": 603.6385,\r\n    \"3\": 198.996429,\r\n   
+        \"4\": 405.05368,\r\n    \"5\": 481.031,\r\n    \"6\": 289.766144,\r\n   
+        \"7\": 590.1426,\r\n    \"8\": 224.617,\r\n    \"9\": 985.244141\r\n  },\r\n 
+        \"structDictionary\": {\r\n    \"0\": {\r\n      \"text\": \"uwdwxO\\\\`de`RrjC_DIcH\"\r\n   
+        },\r\n    \"1\": {\r\n      \"text\": \"OkAeXEIUuFNMPErAGCKk\"\r\n    },\r\n   
+        \"2\": {\r\n      \"text\": \"HFnj`JMfUIIaYdxJwx_s\"\r\n    },\r\n    \"3\":
+        {\r\n      \"text\": \"FHe_XTBnqBYAxrAIvQFO\"\r\n    },\r\n    \"4\": {\r\n     
+        \"text\": \"r]ymvfmeFhDH]Qey[PRM\"\r\n    },\r\n    \"5\": {\r\n      \"text\":
+        \"HYnSiHcadoMgsQBbHqbk\"\r\n    },\r\n    \"6\": {\r\n      \"text\": \"`VhIxR^gMAhgxsGZhgEo\"\r\n   
+        },\r\n    \"7\": {\r\n      \"text\": \"DMBQ[WNLPDrdhaflkeUX\"\r\n    },\r\n   
+        \"8\": {\r\n      \"text\": \"dvUcH`hAKbtZmlhTUWga\"\r\n    },\r\n    \"9\":
+        {\r\n      \"text\": \"DRXJIExXMTiCSgLGrXIu\"\r\n    }\r\n  },\r\n  \"classDictionary\":
+        {},\r\n  \"intProperty\": {\r\n    \"Value\": 8640\r\n  },\r\n  \"floatProperty\":
+        {\r\n    \"Value\": 68.0\r\n  },\r\n  \"stringProperty\": {\r\n    \"Value\":
+        \"O^pa_ftSjRMcxErdgA`a\"\r\n  }\r\n}\r\n[NotifySerializeTestRunner.NotifyJsonConvertTest]
+        Pass sample json serialize\r\n[NotifySerializeTestRunner.EvaluateNotifyConvertTestSample]
+        Pass evaluateSample null check\r\n[NotifySerializeTestRunner.EvaluateNotifyConvertTestSample]
+        Pass evaluateSample reference check\r\n[NotifySerializeTestRunner.EvaluateNotifyConvertTestSample]
+        Pass evaluateSample value check\r\n[NotifySerializeTestRunner.NotifyJsonConvertTest]
+        Pass NotifyComplexConvertTestSample json convert test\n\r\n[NotifySerializeTestRunner.NotifyJsonConvertTest]
+        NotifyComplexConvertTestSample (Class)\r\n [NotifyRecordCollection`1<Int32>]
+        intCollection || 2332, 3989, 7009, 4917, 5859\r\n [NotifyRecordList`1<String>]
+        stringList || eqdXRVvbUb, j^TehYZJ_a, xq^ZtQFrQm, qoTxsnPtXv, PBd]IFSVqH,
+        mNIucnSK^A, PDRbktKVkt, J_kcQwNBRn, xjAIycfYVF, \\EVWgLjBkN\r\n [NotifyRecordDictionary`2<Int32,
+        Single>] recordDictionary || [0, 870.6064], [1, 327.3762], [2, 603.6385],
+        [3, 198.9964], [4, 405.0537], [5, 481.031], [6, 289.7661], [7, 590.1426],
+        [8, 224.617], [9, 985.2441]\r\n [NotifyRecordDictionary`2<Int32, TestStruct>]
+        structDictionary || [0, NotifySerializeTestRunner+TestStruct], [1, NotifySerializeTestRunner+TestStruct],
+        [2, NotifySerializeTestRunner+TestStruct], [3, NotifySerializeTestRunner+TestStruct],
+        [4, NotifySerializeTestRunner+TestStruct], [5, NotifySerializeTestRunner+TestStruct],
+        [6, NotifySerializeTestRunner+TestStruct], [7, NotifySerializeTestRunner+TestStruct],
+        [8, NotifySerializeTestRunner+TestStruct], [9, NotifySerializeTestRunner+TestStruct]\r\n
+        [NotifyRecordDictionary`2<Int32, TestClass>] classDictionary || \r\n [NotifyProperty`1<Int32>]
+        intProperty || 8640\r\n [NotifyProperty`1<Single>] floatProperty || 68\r\n
+        [NotifyProperty`1<String>] stringProperty || O^pa_ftSjRMcxErdgA`a\r\n\n\r\n"
       stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
@@ -1221,50 +1441,115 @@ MonoBehaviour:
       isSuite: 0
       categories:
       - Uncategorized
-      parentId: 1046
-      parentUniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][NotifyFieldTestRunner][suite]
-    - id: 1048
-      uniqueId: EditModeTestAssembly.dll/NotifyFieldTestRunner/[EditModeTestAssembly][NotifyFieldTestRunner.NotifyXmlConvertTest]
+      parentId: 1052
+      parentUniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][NotifySerializeTestRunner][suite]
+    - id: 1055
+      uniqueId: EditModeTestAssembly.dll/NotifySerializeTestRunner/[EditModeTestAssembly][NotifySerializeTestRunner.NotifyXmlConvertTest]
       name: NotifyXmlConvertTest
-      fullName: NotifyFieldTestRunner.NotifyXmlConvertTest
-      resultStatus: 2
-      duration: 1.2726114
-      messages: "  Expected: True\r\n  But was:  False\r\n"
-      output: "[NotifyFieldTestRunner.NotifyXmlConvertTest] <?xml version=\"1.0\"
+      fullName: NotifySerializeTestRunner.NotifyXmlConvertTest
+      resultStatus: 1
+      duration: 0.0421713
+      messages: 
+      output: "[NotifySerializeTestRunner.NotifyXmlConvertTest] <?xml version=\"1.0\"
         encoding=\"utf-16\"?>\r\n<NotifyPropertyOfInt32 xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"
-        xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Value>4533</Value>\r\n</NotifyPropertyOfInt32>\r\n[NotifyFieldTestRunner.NotifyXmlConvertTest]
-        Pass field xml serialize\r\n[NotifyFieldTestRunner.EvaluateNotifyProperty]
-        Pass property null check\r\n[NotifyFieldTestRunner.EvaluateNotifyProperty]
-        Pass property reference check\r\n[NotifyFieldTestRunner.EvaluateNotifyProperty]
-        Pass property value check\r\n[NotifyFieldTestRunner.NotifyXmlConvertTest]
-        Pass NotifyField xml convert test\n\r\n[NotifyFieldTestRunner.NotifyXmlConvertTest]
-        NotifyProperty`1<Int32> (Class)\r\n [Int32] _value || 4533\r\n [SafeDelegate`1<NotifyFieldChangedHandler>]
-        OnChanged  (Struct)\r\n\t [handler] null\r\n\t [Int32] Count || 0\r\n\r\n
-        [Boolean] isDisposed || False\r\n [Int32] Value || 4533\n\r\n[NotifyFieldTestRunner.NotifyXmlConvertTest]
-        <?xml version=\"1.0\" encoding=\"utf-16\"?>\r\n<NotifyConvertTestSample xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"
-        xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <intProperty>\r\n   
-        <Value>50</Value>\r\n  </intProperty>\r\n  <floatProperty>\r\n    <Value>3.55</Value>\r\n 
-        </floatProperty>\r\n  <stringProperty>\r\n    <Value>TestProperty</Value>\r\n 
-        </stringProperty>\r\n  <dictionary>\r\n    <KeyValuePairOfInt32Int32 />\r\n 
-        </dictionary>\r\n</NotifyConvertTestSample>\r\n[NotifyFieldTestRunner.NotifyXmlConvertTest]
-        Pass sample xml serialize\r\n[NotifyFieldTestRunner.EvaluateNotifyConvertTestSample]
-        Pass testSample null check\r\n[NotifyFieldTestRunner.EvaluateNotifyConvertTestSample]
-        Pass testSample reference check\r\n"
-      stacktrace: 'at NotifyFieldTestRunner.EvaluateNotifyConvertTestSample (NotifyConvertTestSample
-        testSample) [0x0002f] in C:\Project\Unity\CustomUtils\Assets\Test\EditMode\NotifyFieldTestRunner.cs:106
-
-        at
-        NotifyFieldTestRunner.NotifyXmlConvertTest () [0x0008d] in C:\Project\Unity\CustomUtils\Assets\Test\EditMode\NotifyFieldTestRunner.cs:60
-
-'
+        xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Value>4533</Value>\r\n</NotifyPropertyOfInt32>\r\n[NotifySerializeTestRunner.NotifyXmlConvertTest]
+        Pass field xml serialize\r\n[NotifySerializeTestRunner.EvaluateNotifyProperty]
+        Pass property null check\r\n[NotifySerializeTestRunner.EvaluateNotifyProperty]
+        Pass property reference check\r\n[NotifySerializeTestRunner.EvaluateNotifyProperty]
+        Pass property value check\r\n[NotifySerializeTestRunner.NotifyXmlConvertTest]
+        Pass NotifyField xml convert test\n\r\n[NotifySerializeTestRunner.NotifyXmlConvertTest]
+        NotifyProperty`1<Int32> (Class)\r\n [GenericEqualityComparer`1<Int32>] _equalityComparer
+        || System.Collections.Generic.GenericEqualityComparer`1[System.Int32]\r\n
+        [Int32] _value || 4533\r\n [SafeDelegate`1<NotifyFieldChangedHandler>] OnChanged 
+        (Struct)\r\n\t [handler] null\r\n\t [Int32] Count || 0\r\n\r\n [Boolean]
+        isDisposed || False\r\n [GenericEqualityComparer`1<Int32>] EqualityComparer
+        || System.Collections.Generic.GenericEqualityComparer`1[System.Int32]\r\n
+        [Int32] Value || 4533\n\r\n[NotifySerializeTestRunner.NotifyXmlConvertTest]
+        <?xml version=\"1.0\" encoding=\"utf-16\"?>\r\n<NotifyComplexConvertTestSample
+        xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n 
+        <intProperty>\r\n    <Value>8640</Value>\r\n  </intProperty>\r\n  <floatProperty>\r\n   
+        <Value>68</Value>\r\n  </floatProperty>\r\n  <stringProperty>\r\n    <Value>O^pa_ftSjRMcxErdgA`a</Value>\r\n 
+        </stringProperty>\r\n  <intCollection>\r\n    <int>2332</int>\r\n    <int>3989</int>\r\n   
+        <int>7009</int>\r\n    <int>4917</int>\r\n    <int>5859</int>\r\n  </intCollection>\r\n 
+        <stringList>\r\n    <string>eqdXRVvbUb</string>\r\n    <string>j^TehYZJ_a</string>\r\n   
+        <string>xq^ZtQFrQm</string>\r\n    <string>qoTxsnPtXv</string>\r\n    <string>PBd]IFSVqH</string>\r\n   
+        <string>mNIucnSK^A</string>\r\n    <string>PDRbktKVkt</string>\r\n    <string>J_kcQwNBRn</string>\r\n   
+        <string>xjAIycfYVF</string>\r\n    <string>\\EVWgLjBkN</string>\r\n  </stringList>\r\n 
+        <recordDictionary>\r\n    <item>\r\n      <key>\r\n        <int>0</int>\r\n     
+        </key>\r\n      <value>\r\n        <float>870.606445</float>\r\n      </value>\r\n   
+        </item>\r\n    <item>\r\n      <key>\r\n        <int>1</int>\r\n      </key>\r\n     
+        <value>\r\n        <float>327.3762</float>\r\n      </value>\r\n    </item>\r\n   
+        <item>\r\n      <key>\r\n        <int>2</int>\r\n      </key>\r\n      <value>\r\n       
+        <float>603.6385</float>\r\n      </value>\r\n    </item>\r\n    <item>\r\n     
+        <key>\r\n        <int>3</int>\r\n      </key>\r\n      <value>\r\n       
+        <float>198.996429</float>\r\n      </value>\r\n    </item>\r\n    <item>\r\n     
+        <key>\r\n        <int>4</int>\r\n      </key>\r\n      <value>\r\n       
+        <float>405.05368</float>\r\n      </value>\r\n    </item>\r\n    <item>\r\n     
+        <key>\r\n        <int>5</int>\r\n      </key>\r\n      <value>\r\n       
+        <float>481.031</float>\r\n      </value>\r\n    </item>\r\n    <item>\r\n     
+        <key>\r\n        <int>6</int>\r\n      </key>\r\n      <value>\r\n       
+        <float>289.766144</float>\r\n      </value>\r\n    </item>\r\n    <item>\r\n     
+        <key>\r\n        <int>7</int>\r\n      </key>\r\n      <value>\r\n       
+        <float>590.1426</float>\r\n      </value>\r\n    </item>\r\n    <item>\r\n     
+        <key>\r\n        <int>8</int>\r\n      </key>\r\n      <value>\r\n       
+        <float>224.617</float>\r\n      </value>\r\n    </item>\r\n    <item>\r\n     
+        <key>\r\n        <int>9</int>\r\n      </key>\r\n      <value>\r\n       
+        <float>985.244141</float>\r\n      </value>\r\n    </item>\r\n  </recordDictionary>\r\n 
+        <structDictionary>\r\n    <item>\r\n      <key>\r\n        <int>0</int>\r\n     
+        </key>\r\n      <value>\r\n        <TestStruct>\r\n          <text>uwdwxO\\`de`RrjC_DIcH</text>\r\n       
+        </TestStruct>\r\n      </value>\r\n    </item>\r\n    <item>\r\n      <key>\r\n       
+        <int>1</int>\r\n      </key>\r\n      <value>\r\n        <TestStruct>\r\n         
+        <text>OkAeXEIUuFNMPErAGCKk</text>\r\n        </TestStruct>\r\n      </value>\r\n   
+        </item>\r\n    <item>\r\n      <key>\r\n        <int>2</int>\r\n      </key>\r\n     
+        <value>\r\n        <TestStruct>\r\n          <text>HFnj`JMfUIIaYdxJwx_s</text>\r\n       
+        </TestStruct>\r\n      </value>\r\n    </item>\r\n    <item>\r\n      <key>\r\n       
+        <int>3</int>\r\n      </key>\r\n      <value>\r\n        <TestStruct>\r\n         
+        <text>FHe_XTBnqBYAxrAIvQFO</text>\r\n        </TestStruct>\r\n      </value>\r\n   
+        </item>\r\n    <item>\r\n      <key>\r\n        <int>4</int>\r\n      </key>\r\n     
+        <value>\r\n        <TestStruct>\r\n          <text>r]ymvfmeFhDH]Qey[PRM</text>\r\n       
+        </TestStruct>\r\n      </value>\r\n    </item>\r\n    <item>\r\n      <key>\r\n       
+        <int>5</int>\r\n      </key>\r\n      <value>\r\n        <TestStruct>\r\n         
+        <text>HYnSiHcadoMgsQBbHqbk</text>\r\n        </TestStruct>\r\n      </value>\r\n   
+        </item>\r\n    <item>\r\n      <key>\r\n        <int>6</int>\r\n      </key>\r\n     
+        <value>\r\n        <TestStruct>\r\n          <text>`VhIxR^gMAhgxsGZhgEo</text>\r\n       
+        </TestStruct>\r\n      </value>\r\n    </item>\r\n    <item>\r\n      <key>\r\n       
+        <int>7</int>\r\n      </key>\r\n      <value>\r\n        <TestStruct>\r\n         
+        <text>DMBQ[WNLPDrdhaflkeUX</text>\r\n        </TestStruct>\r\n      </value>\r\n   
+        </item>\r\n    <item>\r\n      <key>\r\n        <int>8</int>\r\n      </key>\r\n     
+        <value>\r\n        <TestStruct>\r\n          <text>dvUcH`hAKbtZmlhTUWga</text>\r\n       
+        </TestStruct>\r\n      </value>\r\n    </item>\r\n    <item>\r\n      <key>\r\n       
+        <int>9</int>\r\n      </key>\r\n      <value>\r\n        <TestStruct>\r\n         
+        <text>DRXJIExXMTiCSgLGrXIu</text>\r\n        </TestStruct>\r\n      </value>\r\n   
+        </item>\r\n  </structDictionary>\r\n  <classDictionary />\r\n</NotifyComplexConvertTestSample>\r\n[NotifySerializeTestRunner.NotifyXmlConvertTest]
+        Pass sample xml serialize\r\n[NotifySerializeTestRunner.EvaluateNotifyConvertTestSample]
+        Pass evaluateSample null check\r\n[NotifySerializeTestRunner.EvaluateNotifyConvertTestSample]
+        Pass evaluateSample reference check\r\n[NotifySerializeTestRunner.EvaluateNotifyConvertTestSample]
+        Pass evaluateSample value check\r\n[NotifySerializeTestRunner.NotifyXmlConvertTest]
+        Pass NotifyComplexConvertTestSample xml convert test\n\r\n[NotifySerializeTestRunner.NotifyXmlConvertTest]
+        NotifyComplexConvertTestSample (Class)\r\n [NotifyRecordCollection`1<Int32>]
+        intCollection || 2332, 3989, 7009, 4917, 5859\r\n [NotifyRecordList`1<String>]
+        stringList || eqdXRVvbUb, j^TehYZJ_a, xq^ZtQFrQm, qoTxsnPtXv, PBd]IFSVqH,
+        mNIucnSK^A, PDRbktKVkt, J_kcQwNBRn, xjAIycfYVF, \\EVWgLjBkN\r\n [NotifyRecordDictionary`2<Int32,
+        Single>] recordDictionary || [0, 870.6064], [1, 327.3762], [2, 603.6385],
+        [3, 198.9964], [4, 405.0537], [5, 481.031], [6, 289.7661], [7, 590.1426],
+        [8, 224.617], [9, 985.2441]\r\n [NotifyRecordDictionary`2<Int32, TestStruct>]
+        structDictionary || [0, NotifySerializeTestRunner+TestStruct], [1, NotifySerializeTestRunner+TestStruct],
+        [2, NotifySerializeTestRunner+TestStruct], [3, NotifySerializeTestRunner+TestStruct],
+        [4, NotifySerializeTestRunner+TestStruct], [5, NotifySerializeTestRunner+TestStruct],
+        [6, NotifySerializeTestRunner+TestStruct], [7, NotifySerializeTestRunner+TestStruct],
+        [8, NotifySerializeTestRunner+TestStruct], [9, NotifySerializeTestRunner+TestStruct]\r\n
+        [NotifyRecordDictionary`2<Int32, TestClass>] classDictionary || \r\n [NotifyProperty`1<Int32>]
+        intProperty || 8640\r\n [NotifyProperty`1<Single>] floatProperty || 68\r\n
+        [NotifyProperty`1<String>] stringProperty || O^pa_ftSjRMcxErdgA`a\r\n\n\r\n"
+      stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
       description: Notify Xml Convert Test
       isSuite: 0
       categories:
       - Uncategorized
-      parentId: 1046
-      parentUniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][NotifyFieldTestRunner][suite]
+      parentId: 1052
+      parentUniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][NotifySerializeTestRunner][suite]
     - id: 1040
       uniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][TcpServerTestRunner][suite]
       name: TcpServerTestRunner
@@ -1279,7 +1564,7 @@ MonoBehaviour:
       description: 
       isSuite: 1
       categories: []
-      parentId: 1056
+      parentId: 1063
       parentUniqueId: '[EditModeTestAssembly][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/EditModeTestAssembly.dll][suite]'
     - id: 1040
       uniqueId: EditModeTestAssembly.dll/TcpServerTestRunner/[EditModeTestAssembly][TcpServerTestRunner.Clear]
@@ -1365,7 +1650,7 @@ MonoBehaviour:
       - Performance
       parentId: 1039
       parentUniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][TcpServerTestRunner][suite]
-    - id: 1050
+    - id: 1057
       uniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][UIViewModelTestRunner][suite]
       name: UIViewModelTestRunner
       fullName: UIViewModelTestRunner
@@ -1379,13 +1664,13 @@ MonoBehaviour:
       description: 
       isSuite: 1
       categories: []
-      parentId: 1056
+      parentId: 1063
       parentUniqueId: '[EditModeTestAssembly][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/EditModeTestAssembly.dll][suite]'
-    - id: 1055
+    - id: 1062
       uniqueId: EditModeTestAssembly.dll/UIViewModelTestRunner/[EditModeTestAssembly][UIViewModelTestRunner.ViewModelPerformanceTest][suite]
       name: ViewModelPerformanceTest
       fullName: UIViewModelTestRunner.ViewModelPerformanceTest
-      resultStatus: 1
+      resultStatus: 0
       duration: 0
       messages: 
       output: 
@@ -1396,7 +1681,7 @@ MonoBehaviour:
       isSuite: 1
       categories:
       - Performance
-      parentId: 1050
+      parentId: 1057
       parentUniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][UIViewModelTestRunner][suite]
     - id: 1048
       uniqueId: EditModeTestAssembly.dll/UIViewModelTestRunner/ViewModelPerformanceTest/[EditModeTestAssembly][UIViewModelTestRunner.ViewModelPerformanceTest(100)]
@@ -1493,44 +1778,18 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1045
       parentUniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][UIViewModelTestRunner][suite]
-    m_ResultText: "NotifyXmlConvertTest (1.273s)\nNotify Xml Convert Test\n---\n 
-      Expected: True\r\n  But was:  False\r\n\n---\nat NotifyFieldTestRunner.EvaluateNotifyConvertTestSample
-      (NotifyConvertTestSample testSample) [0x0002f] in <color=#40a0ff><a href=\"C:\\Project\\Unity\\CustomUtils\\Assets\\Test\\EditMode\\NotifyFieldTestRunner.cs\"
-      line=\"106\r\">Assets\\Test\\EditMode\\NotifyFieldTestRunner.cs:106\r</a></color>\nat
-      NotifyFieldTestRunner.NotifyXmlConvertTest () [0x0008d] in <color=#40a0ff><a
-      href=\"C:\\Project\\Unity\\CustomUtils\\Assets\\Test\\EditMode\\NotifyFieldTestRunner.cs\"
-      line=\"60\r\">Assets\\Test\\EditMode\\NotifyFieldTestRunner.cs:60\r</a></color>\n\n---\n[NotifyFieldTestRunner.NotifyXmlConvertTest]
-      <?xml version=\"1.0\" encoding=\"utf-16\"?>\r\n<NotifyPropertyOfInt32 xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"
-      xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Value>4533</Value>\r\n</NotifyPropertyOfInt32>\r\n[NotifyFieldTestRunner.NotifyXmlConvertTest]
-      Pass field xml serialize\r\n[NotifyFieldTestRunner.EvaluateNotifyProperty]
-      Pass property null check\r\n[NotifyFieldTestRunner.EvaluateNotifyProperty]
-      Pass property reference check\r\n[NotifyFieldTestRunner.EvaluateNotifyProperty]
-      Pass property value check\r\n[NotifyFieldTestRunner.NotifyXmlConvertTest] Pass
-      NotifyField xml convert test\n\r\n[NotifyFieldTestRunner.NotifyXmlConvertTest]
-      NotifyProperty`1<Int32> (Class)\r\n [Int32] _value || 4533\r\n [SafeDelegate`1<NotifyFieldChangedHandler>]
-      OnChanged  (Struct)\r\n\t [handler] null\r\n\t [Int32] Count || 0\r\n\r\n [Boolean]
-      isDisposed || False\r\n [Int32] Value || 4533\n\r\n[NotifyFieldTestRunner.NotifyXmlConvertTest]
-      <?xml version=\"1.0\" encoding=\"utf-16\"?>\r\n<NotifyConvertTestSample xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"
-      xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <intProperty>\r\n   
-      <Value>50</Value>\r\n  </intProperty>\r\n  <floatProperty>\r\n    <Value>3.55</Value>\r\n 
-      </floatProperty>\r\n  <stringProperty>\r\n    <Value>TestProperty</Value>\r\n 
-      </stringProperty>\r\n  <dictionary>\r\n    <KeyValuePairOfInt32Int32 />\r\n 
-      </dictionary>\r\n</NotifyConvertTestSample>\r\n[NotifyFieldTestRunner.NotifyXmlConvertTest]
-      Pass sample xml serialize\r\n[NotifyFieldTestRunner.EvaluateNotifyConvertTestSample]
-      Pass testSample null check\r\n[NotifyFieldTestRunner.EvaluateNotifyConvertTestSample]
-      Pass testSample reference check"
-    m_ResultStacktrace: 'at NotifyFieldTestRunner.EvaluateNotifyConvertTestSample
-      (NotifyConvertTestSample testSample) [0x0002f] in C:\Project\Unity\CustomUtils\Assets\Test\EditMode\NotifyFieldTestRunner.cs:106
+    m_ResultText: 'NotifyCollectionCoverageTest (0.110s)
 
-      at
-      NotifyFieldTestRunner.NotifyXmlConvertTest () [0x0008d] in C:\Project\Unity\CustomUtils\Assets\Test\EditMode\NotifyFieldTestRunner.cs:60
+      ---
 
-'
+      [NotifyCoverageTestRunner.NotifyCollectionCoverageTest]
+      Pass NotifyCollection`1 test'
+    m_ResultStacktrace: 
     m_TestListState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: cb2c89b4
-      m_LastClickedID: -1266078517
-      m_ExpandedIDs: 7c91a5c348d8a103edaa9c16c29f3933ffffff7f
+      m_SelectedIDs: ad3a554d
+      m_LastClickedID: 1297431213
+      m_ExpandedIDs: 7c91a5c3dedcfefe48d8a103edaa9c16c29f3933446d5b39f221606cffffff7f
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -1553,14 +1812,16 @@ MonoBehaviour:
       FailedHidden: 0
       NotRunHidden: 0
       m_SearchString: 
-      selectedCategories: []
+      selectedCategories:
+      - Notify
       availableCategories:
+      - Notify
       - Performance
       - Uncategorized
     m_SelectedOption: 0
-  - m_Window: {fileID: 14}
+  - m_Window: {fileID: 15}
     runProgress:
-      RunGuid: 7e21b740-dd8b-4217-aba8-296d863f2409
+      RunGuid: ca7d4722-b601-4f12-b7b3-87f9ef902973
       ExecutionSettings:
         m_TargetPlatform: 0
         m_HasTargetPlatform: 0
@@ -1573,7 +1834,7 @@ MonoBehaviour:
         filters:
         - testMode: 1
           testNames:
-          - NotifyFieldTestRunner.NotifyXmlConvertTest
+          - NotifyCoverageTestRunner.NotifyCollectionCoverageTest
           groupNames: []
           categoryNames: []
           assemblyNames: []
@@ -2217,9 +2478,9 @@ MonoBehaviour:
       - Performance
       - Uncategorized
     m_SelectedOption: 0
-  - m_Window: {fileID: 14}
+  - m_Window: {fileID: 15}
     runProgress:
-      RunGuid: 7e21b740-dd8b-4217-aba8-296d863f2409
+      RunGuid: ca7d4722-b601-4f12-b7b3-87f9ef902973
       ExecutionSettings:
         m_TargetPlatform: 0
         m_HasTargetPlatform: 0
@@ -2232,7 +2493,7 @@ MonoBehaviour:
         filters:
         - testMode: 1
           testNames:
-          - NotifyFieldTestRunner.NotifyXmlConvertTest
+          - NotifyCoverageTestRunner.NotifyCollectionCoverageTest
           groupNames: []
           categoryNames: []
           assemblyNames: []
@@ -2812,7 +3073,7 @@ MonoBehaviour:
       - Performance
       - Uncategorized
     m_SelectedOption: 0
---- !u!114 &15
+--- !u!114 &16
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2835,7 +3096,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 73.6
-    width: 340.6
+    width: 327
     height: 364.6
   m_SerializedDataModeController:
     m_DataMode: 0
@@ -2852,7 +3113,7 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: 164fffff7e50ffffea51ffff5453ffffbe54ffff2a56ffff1459ffffea5cffff3861ffff3664ffff1e67ffff046affff2e6dffff1470ffff7e71ffffec72ffff1e76ffff5e79ffff487cffff3e7fffffa880ffff9283fffffc84ffff6686ffff2488ffff9289ffff7c8cffff6e8fffff9e92ffff0694ffff6e95ffffd696ffffd299ffffde9cffffdc9ffffff4a2ffff5ea4ffffc6a5ffff2ea7ffff96a8fffffea9ffff68abffffd2acffff3caeffff22b1ffff06b4ffff70b5ffff66b8ffff5abbffffaebfffff18c1ffff08c4ffff72c5ffffdac6ffff44c8ffffaec9ffff18cbffff84ccffff6ccfffffd4d0ffffbcd3ffffa4d6ffffd8d9fffff2dcffffd6dfffffc0e2ffff28e4ffff0ee7ffff84e8ffffe4ebffffcceeffff36f0ffffa2f1ffff0ef3ffff7ef7ffff02fbffff
+      m_ExpandedIDs: 14adfffffaafffffe2b2ffffe0b5ffffcab8ffffb6bbffffa0beffff1cc0ffff84c4ffff6ec7ffff6ccaffffd8cbffffd6ceffffbed1ffff2cd3ffff16d6ffff02d9ffff6edaffffd6dbffffdadeffff58e3ffff50e6ffff38e9ffff96edffff00efffff6af0ffff56f3ffffc0f4ffff38f6fffffefaffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -2876,7 +3137,7 @@ MonoBehaviour:
       m_IsLocked: 0
     m_CurrentSortingName: TransformSorting
   m_WindowGUID: 37b0836aa8b4bd74696073f7347c8c8a
---- !u!114 &16
+--- !u!114 &17
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2910,7 +3171,7 @@ MonoBehaviour:
     m_LastAppliedPresetName: Default
     m_SaveData: []
     m_OverlaysVisible: 1
---- !u!114 &17
+--- !u!114 &18
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2931,9 +3192,9 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 341.6
+    x: 328
     y: 73.6
-    width: 493.99997
+    width: 476.40002
     height: 364.6
   m_SerializedDataModeController:
     m_DataMode: 0
@@ -3346,7 +3607,7 @@ MonoBehaviour:
   m_SceneVisActive: 1
   m_LastLockedObject: {fileID: 0}
   m_ViewIsLockedToObject: 0
---- !u!114 &18
+--- !u!114 &19
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3369,7 +3630,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 459.2
-    width: 487.8
+    width: 516.6
     height: 324.19998
   m_SerializedDataModeController:
     m_DataMode: 0
@@ -3407,9 +3668,9 @@ MonoBehaviour:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 846e0000
-    m_LastClickedID: 28292
-    m_ExpandedIDs: 000000004a6e00004c6e00004e6e0000506e0000526e0000546e0000566e0000586e00005a6e00005c6e00005e6e0000606e0000626e0000646e0000666e0000686e000000ca9a3b
+    m_SelectedIDs: 946e0000
+    m_LastClickedID: 28308
+    m_ExpandedIDs: 00000000546e0000566e0000586e00005a6e00005c6e00005e6e0000606e0000626e0000646e0000666e0000686e00006a6e00006c6e00006e6e0000706e0000726e0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -3437,7 +3698,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 000000004a6e00004c6e00004e6e0000506e0000526e0000546e0000566e0000586e00005a6e00005c6e00005e6e0000606e0000626e0000646e0000666e0000686e0000
+    m_ExpandedIDs: 00000000546e0000566e0000586e00005a6e00005c6e00005e6e0000606e0000626e0000646e0000666e0000686e00006a6e00006c6e00006e6e0000706e0000726e0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -3493,7 +3754,7 @@ MonoBehaviour:
     m_GridSize: 16
   m_SkipHiddenPackages: 0
   m_DirectoriesAreaWidth: 253
---- !u!114 &19
+--- !u!114 &20
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3516,7 +3777,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 459.2
-    width: 516.6
+    width: 497.4
     height: 324.19998
   m_SerializedDataModeController:
     m_DataMode: 0
@@ -3528,7 +3789,7 @@ MonoBehaviour:
     m_LastAppliedPresetName: Default
     m_SaveData: []
     m_OverlaysVisible: 1
---- !u!114 &20
+--- !u!114 &21
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3549,9 +3810,9 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 517.60004
+    x: 498.4
     y: 459.2
-    width: 318
+    width: 306.00003
     height: 324.19998
   m_SerializedDataModeController:
     m_DataMode: 0
@@ -3569,7 +3830,7 @@ MonoBehaviour:
   m_ShowGizmos: 0
   m_TargetDisplay: 0
   m_ClearColor: {r: 0, g: 0, b: 0, a: 0}
-  m_TargetSize: {x: 318, y: 303.19998}
+  m_TargetSize: {x: 306.00003, y: 303.19998}
   m_TextureFilterMode: 0
   m_TextureHideFlags: 61
   m_RenderIMGUI: 1
@@ -3584,8 +3845,8 @@ MonoBehaviour:
     m_VRangeLocked: 0
     hZoomLockedByDefault: 0
     vZoomLockedByDefault: 0
-    m_HBaseRangeMin: -127.200005
-    m_HBaseRangeMax: 127.200005
+    m_HBaseRangeMin: -122.40002
+    m_HBaseRangeMax: 122.40002
     m_VBaseRangeMin: -121.27999
     m_VBaseRangeMax: 121.27999
     m_HAllowExceedBaseRangeMin: 1
@@ -3605,29 +3866,29 @@ MonoBehaviour:
       serializedVersion: 2
       x: 0
       y: 21
-      width: 318
+      width: 306.00003
       height: 303.19998
     m_Scale: {x: 1.25, y: 1.25}
-    m_Translation: {x: 159, y: 151.59999}
+    m_Translation: {x: 153.00002, y: 151.59999}
     m_MarginLeft: 0
     m_MarginRight: 0
     m_MarginTop: 0
     m_MarginBottom: 0
     m_LastShownAreaInsideMargins:
       serializedVersion: 2
-      x: -127.2
+      x: -122.40001
       y: -121.27999
-      width: 254.4
+      width: 244.80002
       height: 242.55998
     m_MinimalGUI: 1
   m_defaultScale: 1
-  m_LastWindowPixelSize: {x: 397.5, y: 405.24997}
+  m_LastWindowPixelSize: {x: 382.50003, y: 405.24997}
   m_ClearInEditMode: 1
   m_NoCameraWarning: 1
   m_LowResolutionForAspectRatios: 01000000000000000000
   m_XRRenderMode: 0
   m_RenderTexture: {fileID: 0}
---- !u!114 &21
+--- !u!114 &22
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3648,9 +3909,9 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 875.2
+    x: 806.4
     y: 73.6
-    width: 659.8
+    width: 728.6
     height: 709.8
   m_SerializedDataModeController:
     m_DataMode: 0

@@ -61,7 +61,7 @@ public abstract class NotifyDictionary<TDictionary, TKey, TValue> : NotifyCollec
         if (reader.IsEmptyElement) {
             return;
         }
-        
+
         var keySerializer = new XmlSerializer(typeof(TKey));
         var valueSerializer = new XmlSerializer(typeof(TValue));
         reader.Read();

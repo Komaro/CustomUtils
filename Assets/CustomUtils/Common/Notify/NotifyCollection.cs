@@ -142,7 +142,7 @@ public class NotifyCollection<TValue> : NotifyCollection<Collection<TValue>, TVa
     }
 
     public void Insert(int index, TValue item) {
-        if (index >= Count || index < 0) {
+        if (index > Count || index < 0) {
             throw new ArgumentOutOfRangeException(nameof(index));
         }
 

@@ -359,38 +359,10 @@ public static class CollectionExtension {
 
     #endregion
 
-    #region [List]
+    #region [IList]
     
-    public static void Sync<T>(this List<T> list, int maxCount, Func<T> createFunc) {
-        if (createFunc == null) {
-            return;
-        }
-
-        while (list.Count < maxCount) {
-            list.Add(createFunc.Invoke());
-        }
-        
-        if (list.Count > maxCount) {
-            list.RemoveRange(maxCount, list.Count - maxCount);
-        }
-    }
-
-    public static void Sync<TBase, TWork>(this List<TBase> workList, List<TWork> sourceList, Func<TBase> createFunc) => ISync(workList, sourceList, createFunc);
-
     public static void ISync<T>(this List<T> workList, IList sourceList, Func<T> createFunc) {
         if (workList.Count < sourceList.Count) {
-            var syncCount = sourceList.Count - workList.Count;
-            for (var i = 0; i < syncCount; i++) {
-                var item = createFunc.Invoke();
-                if (item != null) {
-                    workList.Add(item);
-                }
-            }
-        }
-    }
-
-    public static void ISync<T>(this List<T> workList, IDictionary sourceList, Func<T> createFunc) {
-        if (workList.Count > sourceList.Count) {
             var syncCount = sourceList.Count - workList.Count;
             for (var i = 0; i < syncCount; i++) {
                 var item = createFunc.Invoke();
@@ -413,44 +385,9 @@ public static class CollectionExtension {
         }
     }
 
-    public static void Sync<TBase, TWork>(this List<TBase> sourceList, List<TWork> workList, Func<TWork> createFunc, Action<TWork> removeAction) => ISync(sourceList, workList, createFunc, removeAction);
-
-    public static void ISync<TBase, TWork>(this List<TBase> sourceList, IList workList, Func<TWork> createFunc, Action<TWork> removeAction) {
-        var count = sourceList.Count - workList.Count;
-        while (count++ < 0) {
-            if (workList[0] is TWork item)
-                removeAction?.Invoke(item);
-
-            workList.RemoveAt(0);
-        }
-
-        while (count-- > 0) {
-            workList.Add(createFunc.Invoke());
-        }
-    }
-
     public static void IndexForEach<TBase>(this IList<TBase> workList, Action<TBase, int> action) {
         for (var i = 0; i < workList.Count; i++) {
             action?.Invoke(workList[i], i);
-        }
-    }
-
-    public static void SyncForEach<TBase, TWork>(this List<TBase> sourceList, List<TWork> workList, Action<TBase, TWork> dataAction, Action<TWork> clearAction = null) {
-        if (workList == null) {
-            Logger.TraceError($"{nameof(workList)} is Null");
-            return;
-        }
-    
-        for (var i = 0; i < workList.Count; i++) {
-            if (i >= sourceList.Count) {
-                for (var j = i; j < workList.Count; j++) {
-                    clearAction?.Invoke(workList[j]);
-                }
-    
-                return;
-            }
-    
-            dataAction?.Invoke(sourceList[i], workList[i]);
         }
     }
 
@@ -494,6 +431,77 @@ public static class CollectionExtension {
                 return;
             }
 
+            dataAction?.Invoke(sourceList[i], workList[i]);
+        }
+    }
+
+    public static void RemoveLast<TValue>(this IList<TValue> list) {
+        if (list.Count > 0) {
+            list.RemoveAt(list.Count - 1);
+        }
+    }
+    
+    #endregion
+    
+    #region [List]
+    
+    public static void Sync<T>(this List<T> list, int maxCount, Func<T> createFunc) {
+        if (createFunc == null) {
+            return;
+        }
+
+        while (list.Count < maxCount) {
+            list.Add(createFunc.Invoke());
+        }
+        
+        if (list.Count > maxCount) {
+            list.RemoveRange(maxCount, list.Count - maxCount);
+        }
+    }
+
+    public static void Sync<TBase, TWork>(this List<TBase> workList, List<TWork> sourceList, Func<TBase> createFunc) => ISync(workList, sourceList, createFunc);
+
+    public static void ISync<T>(this List<T> workList, IDictionary sourceList, Func<T> createFunc) {
+        if (workList.Count > sourceList.Count) {
+            var syncCount = sourceList.Count - workList.Count;
+            for (var i = 0; i < syncCount; i++) {
+                var item = createFunc.Invoke();
+                if (item != null) {
+                    workList.Add(item);
+                }
+            }
+        }
+    }
+
+    public static void Sync<TBase, TWork>(this List<TBase> sourceList, List<TWork> workList, Func<TWork> createFunc, Action<TWork> removeAction) => ISync(sourceList, workList, createFunc, removeAction);
+
+    public static void ISync<TBase, TWork>(this List<TBase> sourceList, List<TWork> workList, Func<TWork> createFunc, Action<TWork> removeAction) {
+        var count = sourceList.Count - workList.Count;
+        while (count++ < 0) {
+            removeAction?.Invoke(workList[0]);
+            workList.RemoveAt(0);
+        }
+
+        while (count-- > 0) {
+            workList.Add(createFunc.Invoke());
+        }
+    }
+
+    public static void SyncForEach<TBase, TWork>(this List<TBase> sourceList, List<TWork> workList, Action<TBase, TWork> dataAction, Action<TWork> clearAction = null) {
+        if (workList == null) {
+            Logger.TraceError($"{nameof(workList)} is Null");
+            return;
+        }
+    
+        for (var i = 0; i < workList.Count; i++) {
+            if (i >= sourceList.Count) {
+                for (var j = i; j < workList.Count; j++) {
+                    clearAction?.Invoke(workList[j]);
+                }
+    
+                return;
+            }
+    
             dataAction?.Invoke(sourceList[i], workList[i]);
         }
     }

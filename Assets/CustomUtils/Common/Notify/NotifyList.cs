@@ -13,15 +13,19 @@ public class NotifyList<TValue> : NotifyCollection<List<TValue>, TValue>, IList<
 
     public int IndexOf(TValue item) {
         if (item == null) {
-            throw new NullReferenceException();
+            throw new NullReferenceException($"${nameof(item)} is null");
         }
 
         return collection.IndexOf(item);
     }
 
     public void Insert(int index, TValue item) {
+        if (index > Count || index < 0) {
+            throw new ArgumentOutOfRangeException(nameof(item));
+        }
+        
         if (item == null) {
-            throw new NullReferenceException();
+            throw new NullReferenceException($"{nameof(item)} is null");
         }
         
         collection.Insert(index, item);
@@ -29,16 +33,30 @@ public class NotifyList<TValue> : NotifyCollection<List<TValue>, TValue>, IList<
     }
 
     public void RemoveAt(int index) {
+        if (index >= Count) {
+            throw new ArgumentOutOfRangeException(nameof(index));
+        }
+        
         collection.RemoveAt(index);
         OnChanged.handler?.Invoke(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove));
     }
-
+    
     public TValue this[int index] {
         get => collection[index];
-        set {
-            collection[index] = value;
-            OnChanged.handler?.Invoke(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Replace));
+        set => Replace(index, value);
+    }
+
+    public void Replace(int index, TValue value) {
+        if (index < 0 || index >= Count) {
+            throw new ArgumentOutOfRangeException(nameof(index));
         }
+
+        if (value == null) {
+            throw new NullReferenceException($"{nameof(value)} is null");
+        }
+
+        collection[index] = value;
+        OnChanged.handler?.Invoke(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Replace));
     }
 }
 

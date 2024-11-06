@@ -2,6 +2,7 @@
 using TMPro;
 using UnityEngine.UI;
 
+[UIView("TestViewModel")]
 public class TestSimpleUIView : UIView<TestSimpleUIViewModel> {
 
     private TextMeshProUGUI _titleText;

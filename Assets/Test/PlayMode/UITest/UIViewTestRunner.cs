@@ -1,9 +1,11 @@
 ﻿using System.Collections;
 using System.Reflection;
+using NUnit.Framework;
 using TMPro;
 using UnityEngine;
 using UnityEngine.TestTools;
 
+[Category(TestConstants.Category.UI)]
 public class UIViewTestRunner {
 
     [UnitySetUp]

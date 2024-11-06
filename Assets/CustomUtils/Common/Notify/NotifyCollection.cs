@@ -130,7 +130,6 @@ public class NotifyCollection<TValue> : NotifyCollection<Collection<TValue>, TVa
         }
     }
 
-    public NotifyCollection(IList<TValue> list) : this((IEnumerable<TValue>)list) { }
     public NotifyCollection(params TValue[] values) : this((IEnumerable<TValue>)values) { }
     
     public int IndexOf(TValue item) {

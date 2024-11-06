@@ -34,9 +34,9 @@ public static class ReflectionExtension {
     public static bool TryGetCustomAttribute<TAttribute>(this Type type, out TAttribute attribute) where TAttribute : Attribute => (attribute = type.GetCustomAttribute<TAttribute>()) != null;
     public static bool TryGetCustomAttribute<TAttribute>(this Type type, Type attributeType, out TAttribute attribute) where TAttribute : Attribute => (attribute = type.GetCustomAttribute(attributeType) as TAttribute) != null;
     public static bool TryGetCustomInheritedAttribute<TBaseAttribute>(this Type type, out TBaseAttribute attribute) where TBaseAttribute : Attribute => (attribute = type.GetCustomAttributes().FirstOrDefault(attribute => attribute.GetType().IsSubclassOf(typeof(TBaseAttribute))) as TBaseAttribute) != null;
-    public static bool TryGetCustomAttributeList<T>(this Type type, out List<T> attributeList) where T : Attribute => (attributeList = type.GetCustomAttributes<T>().ToList()) is { Count: > 0 };
+    public static bool TryGetCustomAttributeList<TAttribute>(this Type type, out List<TAttribute> attributeList) where TAttribute : Attribute => (attributeList = type.GetCustomAttributes<TAttribute>().ToList()) is { Count: > 0 };
 
-    public static bool TryGetCustomAttributeList<T>(this MemberInfo info, out List<T> attributeList) where T : Attribute => (attributeList = info.GetCustomAttributes<T>().ToList()) is { Count: > 0 };
+    public static bool TryGetCustomAttributeList<TAttribute>(this MemberInfo info, out List<TAttribute> attributeList) where TAttribute : Attribute => (attributeList = info.GetCustomAttributes<TAttribute>().ToList()) is { Count: > 0 };
     public static bool TryGetCustomAttribute<TAttribute>(this MemberInfo info, out TAttribute attribute) where TAttribute : Attribute => (attribute = info.GetCustomAttribute<TAttribute>()) != null;
     
     public static bool IsGenericCollectionType(this Type type) {
@@ -58,6 +58,26 @@ public static class ReflectionExtension {
             yield return type;
         }
     }
+
+    public static IEnumerable<Type> GetGenericArguments(this Type type, Type baseDefinitionType) {
+        if (baseDefinitionType.IsGenericType == false) {
+            Logger.TraceError($"{baseDefinitionType.Name} is not generic {nameof(Type)}");
+            return Enumerable.Empty<Type>();
+        }
+        
+        foreach (var baseType in type.GetBaseTypes()) {
+            if (baseType.IsGenericType == false) {
+                continue;
+            }
+            
+            if (baseType.GetGenericTypeDefinition() == baseDefinitionType) {
+                return baseType.GetGenericArguments();
+            }
+        }
+        
+        return Enumerable.Empty<Type>();
+    }
+    
 
     public static bool IsStruct(this Type type) => type.IsValueType && type.IsPrimitive == false;
     public static bool IsDelegate(this Type type) => type.IsSubclassOf(typeof(Delegate));

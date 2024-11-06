@@ -2,6 +2,16 @@ using UnityEngine;
 
 public static class TransformExtension {
 
+    public static int GetHierarchyDepth(this Transform transform) {
+        var depth = 0;
+        while (transform.parent != null) {
+            depth++;
+            transform = transform.parent;
+        }
+
+        return depth;
+    }
+    
     public static float GetCollectionScale(this RectTransform rect) {
         var collectionScale = rect.GetCollectionScaleVector();
         return Mathf.Min(collectionScale.x, collectionScale.y);

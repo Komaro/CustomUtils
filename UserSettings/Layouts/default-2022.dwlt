@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 1536
     height: 780.8
   m_ShowMode: 4
-  m_Title: Test Runner
+  m_Title: Project
   m_RootView: {fileID: 2}
   m_MinSize: {x: 875, y: 350}
   m_MaxSize: {x: 10000, y: 10000}
@@ -192,8 +192,8 @@ MonoBehaviour:
     y: 0
     width: 328
     height: 385.6
-  m_MinSize: {x: 201, y: 221}
-  m_MaxSize: {x: 4001, y: 4021}
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 16}
   m_Panes:
   - {fileID: 16}
@@ -219,8 +219,8 @@ MonoBehaviour:
     y: 0
     width: 478.40002
     height: 385.6
-  m_MinSize: {x: 202, y: 221}
-  m_MaxSize: {x: 4002, y: 4021}
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 18}
   m_Panes:
   - {fileID: 18}
@@ -262,7 +262,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 1
   m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: ConsoleWindow
+  m_Name: ProjectBrowser
   m_EditorClassIdentifier: 
   m_Children: []
   m_Position:
@@ -271,14 +271,14 @@ MonoBehaviour:
     y: 0
     width: 498.4
     height: 345.19998
-  m_MinSize: {x: 101, y: 121}
-  m_MaxSize: {x: 4001, y: 4021}
-  m_ActualView: {fileID: 20}
+  m_MinSize: {x: 231, y: 271}
+  m_MaxSize: {x: 10001, y: 10021}
+  m_ActualView: {fileID: 19}
   m_Panes:
   - {fileID: 19}
   - {fileID: 20}
-  m_Selected: 1
-  m_LastSelected: 0
+  m_Selected: 0
+  m_LastSelected: 1
 --- !u!114 &12
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -298,8 +298,8 @@ MonoBehaviour:
     y: 0
     width: 308.00003
     height: 345.19998
-  m_MinSize: {x: 202, y: 221}
-  m_MaxSize: {x: 4002, y: 4021}
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 21}
   m_Panes:
   - {fileID: 21}
@@ -324,15 +324,15 @@ MonoBehaviour:
     y: 0
     width: 729.6
     height: 730.8
-  m_MinSize: {x: 101, y: 121}
-  m_MaxSize: {x: 4001, y: 4021}
+  m_MinSize: {x: 100, y: 100}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 15}
   m_Panes:
   - {fileID: 22}
   - {fileID: 15}
   - {fileID: 14}
   m_Selected: 1
-  m_LastSelected: 2
+  m_LastSelected: 0
 --- !u!114 &14
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -403,7 +403,7 @@ MonoBehaviour:
     m_SaveData: []
     m_OverlaysVisible: 1
   m_Spl:
-    ID: 199
+    ID: 198
     splitterInitialOffset: 284.8
     currentActiveSplitter: -1
     realSizes:
@@ -426,11 +426,11 @@ MonoBehaviour:
     oldMinSizes: 
     oldMaxSizes: 
     oldSplitSize: 0
-  m_TestTypeToolbarIndex: 0
+  m_TestTypeToolbarIndex: 1
   m_TestListGUIs:
   - m_Window: {fileID: 15}
     runProgress:
-      RunGuid: ca7d4722-b601-4f12-b7b3-87f9ef902973
+      RunGuid: 498bb223-f43c-4008-93d0-c3822d03963e
       ExecutionSettings:
         m_TargetPlatform: 0
         m_HasTargetPlatform: 0
@@ -441,9 +441,9 @@ MonoBehaviour:
           categoryNames: []
           assemblyNames: []
         filters:
-        - testMode: 1
+        - testMode: 2
           testNames:
-          - NotifyCoverageTestRunner.NotifyCollectionCoverageTest
+          - UIServiceTestRunner.UIServiceTest
           groupNames: []
           categoryNames: []
           assemblyNames: []
@@ -466,7 +466,7 @@ MonoBehaviour:
       uniqueId: '[CustomUtils][suite]'
       name: CustomUtils
       fullName: CustomUtils
-      resultStatus: 1
+      resultStatus: 0
       duration: 0
       messages: 
       output: 
@@ -478,11 +478,11 @@ MonoBehaviour:
       categories: []
       parentId: 
       parentUniqueId: 
-    - id: 1063
+    - id: 1070
       uniqueId: '[EditModeTestAssembly][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/EditModeTestAssembly.dll][suite]'
       name: EditModeTestAssembly.dll
       fullName: C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/EditModeTestAssembly.dll
-      resultStatus: 1
+      resultStatus: 0
       duration: 0
       messages: 
       output: 
@@ -492,7 +492,7 @@ MonoBehaviour:
       description: 
       isSuite: 1
       categories: []
-      parentId: 1069
+      parentId: 1000
       parentUniqueId: '[CustomUtils][suite]'
     - id: 1002
       uniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][AnalyzerTestRunner][suite]
@@ -508,7 +508,7 @@ MonoBehaviour:
       description: 
       isSuite: 1
       categories: []
-      parentId: 1063
+      parentId: 1070
       parentUniqueId: '[EditModeTestAssembly][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/EditModeTestAssembly.dll][suite]'
     - id: 1012
       uniqueId: EditModeTestAssembly.dll/AnalyzerTestRunner/[EditModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCasePerformanceTest][suite]
@@ -693,7 +693,7 @@ MonoBehaviour:
       description: 
       isSuite: 1
       categories: []
-      parentId: 1063
+      parentId: 1070
       parentUniqueId: '[EditModeTestAssembly][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/EditModeTestAssembly.dll][suite]'
     - id: 1013
       uniqueId: EditModeTestAssembly.dll/DBTestRunner/[EditModeTestAssembly][DBTestRunner.InMemoryDatabaseTest]
@@ -726,7 +726,7 @@ MonoBehaviour:
       description: 
       isSuite: 1
       categories: []
-      parentId: 1063
+      parentId: 1070
       parentUniqueId: '[EditModeTestAssembly][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/EditModeTestAssembly.dll][suite]'
     - id: 1025
       uniqueId: EditModeTestAssembly.dll/EditModeTestRunner/[EditModeTestAssembly][EditModeTestRunner.EnumCastPerformanceTest]
@@ -1031,7 +1031,7 @@ MonoBehaviour:
       description: 
       isSuite: 1
       categories: []
-      parentId: 1063
+      parentId: 1070
       parentUniqueId: '[EditModeTestAssembly][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/EditModeTestAssembly.dll][suite]'
     - id: 1037
       uniqueId: EditModeTestAssembly.dll/GameDBTestRunner/[EditModeTestAssembly][GameDBTestRunner.StartTest][suite]
@@ -1104,7 +1104,7 @@ MonoBehaviour:
       uniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][GlobalEnumTestRunner][suite]
       name: GlobalEnumTestRunner
       fullName: GlobalEnumTestRunner
-      resultStatus: 0
+      resultStatus: 1
       duration: 0
       messages: 
       output: 
@@ -1114,7 +1114,7 @@ MonoBehaviour:
       description: 
       isSuite: 1
       categories: []
-      parentId: 1063
+      parentId: 1070
       parentUniqueId: '[EditModeTestAssembly][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/EditModeTestAssembly.dll][suite]'
     - id: 1038
       uniqueId: EditModeTestAssembly.dll/GlobalEnumTestRunner/[EditModeTestAssembly][GlobalEnumTestRunner.StartTest]
@@ -1156,7 +1156,7 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1037
       parentUniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][GlobalEnumTestRunner][suite]
-    - id: 1049
+    - id: 1046
       uniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][NotifyConstructorTestRunner][suite]
       name: NotifyConstructorTestRunner
       fullName: NotifyConstructorTestRunner
@@ -1171,22 +1171,22 @@ MonoBehaviour:
       isSuite: 1
       categories:
       - Notify
-      parentId: 1063
+      parentId: 1070
       parentUniqueId: '[EditModeTestAssembly][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/EditModeTestAssembly.dll][suite]'
     - id: 1049
       uniqueId: EditModeTestAssembly.dll/NotifyConstructorTestRunner/[EditModeTestAssembly][NotifyConstructorTestRunner.NotifyCollectionAllConstructorTest]
       name: NotifyCollectionAllConstructorTest
       fullName: NotifyConstructorTestRunner.NotifyCollectionAllConstructorTest
       resultStatus: 1
-      duration: 0.0886663
+      duration: 0.0073928
       messages: 
       output: "[NotifyConstructorTestRunner.PrintPassResult] Pass NotifyCollection`1
-        constructor test\r\n[NotifyConstructorTestRunner.PrintPassResult] \n8890,
-        9580, 9648, 9392, 1342, 1133, 8921, 1134, 2318, 9904\n8890, 9580, 9648, 9392,
-        1342, 1133, 8921, 1134, 2318, 9904\n\r\n[NotifyConstructorTestRunner.PrintPassResult]
+        constructor test\r\n[NotifyConstructorTestRunner.PrintPassResult] \n693,
+        5577, 2978, 8636, 4964, 7800, 5540, 4936, 8188, 7817\n693, 5577, 2978, 8636,
+        4964, 7800, 5540, 4936, 8188, 7817\n\r\n[NotifyConstructorTestRunner.PrintPassResult]
         Pass NotifyRecordCollection`1 constructor test\r\n[NotifyConstructorTestRunner.PrintPassResult]
-        \n3078, 586, 526, 6341, 7186, 5860, 8852, 2809, 8391, 1000\n3078, 586, 526,
-        6341, 7186, 5860, 8852, 2809, 8391, 1000\n\r\n"
+        \n9731, 5492, 6021, 6399, 872, 8599, 1519, 8231, 3696, 4001\n9731, 5492,
+        6021, 6399, 872, 8599, 1519, 8231, 3696, 4001\n\r\n"
       stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
@@ -1201,25 +1201,25 @@ MonoBehaviour:
       name: NotifyDictionaryConstructorTest
       fullName: NotifyConstructorTestRunner.NotifyDictionaryConstructorTest
       resultStatus: 1
-      duration: 0.0943608
+      duration: 0.0184151
       messages: 
       output: "[NotifyConstructorTestRunner.PrintPassResult] Pass NotifyDictionary`2
-        constructor test\r\n[NotifyConstructorTestRunner.PrintPassResult] \n[0, 5644],
-        [1, 9671], [2, 9262], [3, 9963], [4, 9231], [5, 4271], [6, 8619], [7, 6090],
-        [8, 2503], [9, 7184]\n[0, 5644], [1, 9671], [2, 9262], [3, 9963], [4, 9231],
-        [5, 4271], [6, 8619], [7, 6090], [8, 2503], [9, 7184]\n\r\n[NotifyConstructorTestRunner.PrintPassResult]
+        constructor test\r\n[NotifyConstructorTestRunner.PrintPassResult] \n[0, 778],
+        [1, 3892], [2, 5724], [3, 6385], [4, 4391], [5, 2792], [6, 3479], [7, 1755],
+        [8, 8306], [9, 1511]\n[0, 778], [1, 3892], [2, 5724], [3, 6385], [4, 4391],
+        [5, 2792], [6, 3479], [7, 1755], [8, 8306], [9, 1511]\n\r\n[NotifyConstructorTestRunner.PrintPassResult]
         Pass NotifySortedDictionary`2 constructor test\r\n[NotifyConstructorTestRunner.PrintPassResult]
-        \n[0, 5644], [1, 9671], [2, 9262], [3, 9963], [4, 9231], [5, 4271], [6, 8619],
-        [7, 6090], [8, 2503], [9, 7184]\n[0, 5644], [1, 9671], [2, 9262], [3, 9963],
-        [4, 9231], [5, 4271], [6, 8619], [7, 6090], [8, 2503], [9, 7184]\n\r\n[NotifyConstructorTestRunner.PrintPassResult]
+        \n[0, 778], [1, 3892], [2, 5724], [3, 6385], [4, 4391], [5, 2792], [6, 3479],
+        [7, 1755], [8, 8306], [9, 1511]\n[0, 778], [1, 3892], [2, 5724], [3, 6385],
+        [4, 4391], [5, 2792], [6, 3479], [7, 1755], [8, 8306], [9, 1511]\n\r\n[NotifyConstructorTestRunner.PrintPassResult]
         Pass NotifyConcurrentDictionary`2 constructor test\r\n[NotifyConstructorTestRunner.PrintPassResult]
-        \n[0, 5644], [1, 9671], [2, 9262], [3, 9963], [4, 9231], [5, 4271], [6, 8619],
-        [7, 6090], [8, 2503], [9, 7184]\n[0, 5644], [1, 9671], [2, 9262], [3, 9963],
-        [4, 9231], [5, 4271], [6, 8619], [7, 6090], [8, 2503], [9, 7184]\n\r\n[NotifyConstructorTestRunner.PrintPassResult]
+        \n[0, 778], [1, 3892], [2, 5724], [3, 6385], [4, 4391], [5, 2792], [6, 3479],
+        [7, 1755], [8, 8306], [9, 1511]\n[0, 778], [1, 3892], [2, 5724], [3, 6385],
+        [4, 4391], [5, 2792], [6, 3479], [7, 1755], [8, 8306], [9, 1511]\n\r\n[NotifyConstructorTestRunner.PrintPassResult]
         Pass NotifyRecordDictionary`2 constructor test\r\n[NotifyConstructorTestRunner.PrintPassResult]
-        \n[0, 5644], [1, 9671], [2, 9262], [3, 9963], [4, 9231], [5, 4271], [6, 8619],
-        [7, 6090], [8, 2503], [9, 7184]\n[0, 5644], [1, 9671], [2, 9262], [3, 9963],
-        [4, 9231], [5, 4271], [6, 8619], [7, 6090], [8, 2503], [9, 7184]\n\r\n"
+        \n[0, 778], [1, 3892], [2, 5724], [3, 6385], [4, 4391], [5, 2792], [6, 3479],
+        [7, 1755], [8, 8306], [9, 1511]\n[0, 778], [1, 3892], [2, 5724], [3, 6385],
+        [4, 4391], [5, 2792], [6, 3479], [7, 1755], [8, 8306], [9, 1511]\n\r\n"
       stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
@@ -1234,15 +1234,15 @@ MonoBehaviour:
       name: NotifyListAllConstructorTest
       fullName: NotifyConstructorTestRunner.NotifyListAllConstructorTest
       resultStatus: 1
-      duration: 0.0187264
+      duration: 0.0065391
       messages: 
       output: "[NotifyConstructorTestRunner.PrintPassResult] Pass NotifyList`1 constructor
-        test\r\n[NotifyConstructorTestRunner.PrintPassResult] \n4180, 4939, 4672,
-        6247, 1401, 2639, 4919, 2397, 7519, 6294\n4180, 4939, 4672, 6247, 1401, 2639,
-        4919, 2397, 7519, 6294\n\r\n[NotifyConstructorTestRunner.PrintPassResult]
+        test\r\n[NotifyConstructorTestRunner.PrintPassResult] \n2743, 1009, 7311,
+        2500, 8835, 710, 7141, 8490, 1637, 4580\n2743, 1009, 7311, 2500, 8835, 710,
+        7141, 8490, 1637, 4580\n\r\n[NotifyConstructorTestRunner.PrintPassResult]
         Pass NotifyRecordList`1 constructor test\r\n[NotifyConstructorTestRunner.PrintPassResult]
-        \n4180, 4939, 4672, 6247, 1401, 2639, 4919, 2397, 7519, 6294\n4180, 4939,
-        4672, 6247, 1401, 2639, 4919, 2397, 7519, 6294\n\r\n"
+        \n2743, 1009, 7311, 2500, 8835, 710, 7141, 8490, 1637, 4580\n2743, 1009,
+        7311, 2500, 8835, 710, 7141, 8490, 1637, 4580\n\r\n"
       stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
@@ -1252,7 +1252,7 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1048
       parentUniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][NotifyConstructorTestRunner][suite]
-    - id: 1046
+    - id: 1050
       uniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][NotifyCoverageTestRunner][suite]
       name: NotifyCoverageTestRunner
       fullName: NotifyCoverageTestRunner
@@ -1267,17 +1267,18 @@ MonoBehaviour:
       isSuite: 1
       categories:
       - Notify
-      parentId: 1063
+      - Coverage
+      parentId: 1070
       parentUniqueId: '[EditModeTestAssembly][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/EditModeTestAssembly.dll][suite]'
-    - id: 1048
+    - id: 1052
       uniqueId: EditModeTestAssembly.dll/NotifyCoverageTestRunner/[EditModeTestAssembly][NotifyCoverageTestRunner.NotifyCollectionCoverageTest]
       name: NotifyCollectionCoverageTest
       fullName: NotifyCoverageTestRunner.NotifyCollectionCoverageTest
       resultStatus: 1
-      duration: 0.1097155
+      duration: 0.0017703
       messages: 
       output: '[NotifyCoverageTestRunner.NotifyCollectionCoverageTest] Pass NotifyCollection`1
-        test
+        coverage test
 
 '
       stacktrace: 
@@ -1287,26 +1288,81 @@ MonoBehaviour:
       isSuite: 0
       categories:
       - Notify
-      parentId: 1046
+      - Coverage
+      parentId: 1050
+      parentUniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][NotifyCoverageTestRunner][suite]
+    - id: 1058
+      uniqueId: EditModeTestAssembly.dll/NotifyCoverageTestRunner/[EditModeTestAssembly][NotifyCoverageTestRunner.NotifyConcurrentDictionaryTest]
+      name: NotifyConcurrentDictionaryTest
+      fullName: NotifyCoverageTestRunner.NotifyConcurrentDictionaryTest
+      resultStatus: 1
+      duration: 0.0015555
+      messages: 
+      output: '[NotifyCoverageTestRunner.NotifyConcurrentDictionaryTest] Pass NotifyConcurrentDictionary`2[TKey,TValue]
+        coverage test
+
+'
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Notify
+      - Coverage
+      parentId: 1050
+      parentUniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][NotifyCoverageTestRunner][suite]
+    - id: 1056
+      uniqueId: EditModeTestAssembly.dll/NotifyCoverageTestRunner/[EditModeTestAssembly][NotifyCoverageTestRunner.NotifyDictionaryTest]
+      name: NotifyDictionaryTest
+      fullName: NotifyCoverageTestRunner.NotifyDictionaryTest
+      resultStatus: 1
+      duration: 0.0032019
+      messages: 
+      output: '[NotifyCoverageTestRunner.NotifyDictionaryTest] Pass NotifyDictionary`2
+        coverage test
+
+'
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Notify
+      - Coverage
+      parentId: 1050
+      parentUniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][NotifyCoverageTestRunner][suite]
+    - id: 1054
+      uniqueId: EditModeTestAssembly.dll/NotifyCoverageTestRunner/[EditModeTestAssembly][NotifyCoverageTestRunner.NotifyListCoverageTest]
+      name: NotifyListCoverageTest
+      fullName: NotifyCoverageTestRunner.NotifyListCoverageTest
+      resultStatus: 1
+      duration: 0.0017662
+      messages: 
+      output: '[NotifyCoverageTestRunner.NotifyListCoverageTest] Pass NotifyList`1
+        coverage test
+
+'
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Notify
+      - Coverage
+      parentId: 1050
       parentUniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][NotifyCoverageTestRunner][suite]
     - id: 1047
       uniqueId: EditModeTestAssembly.dll/NotifyCoverageTestRunner/[EditModeTestAssembly][NotifyCoverageTestRunner.NotifyPropertyCoverageTest]
       name: NotifyPropertyCoverageTest
       fullName: NotifyCoverageTestRunner.NotifyPropertyCoverageTest
       resultStatus: 1
-      duration: 0.0623497
+      duration: 0.0016108
       messages: 
-      output: '[NotifyCoverageTestRunner.NotifyPropertyCoverageTest] Pass equality
-        test
-
-        [NotifyCoverageTestRunner.NotifyPropertyCoverageTest] Pass
-        get, set test
-
-        [NotifyCoverageTestRunner.NotifyPropertyCoverageTest]
-        Pass operator test
-
-        [NotifyCoverageTestRunner.NotifyPropertyCoverageTest]
-        Pass method test
+      output: '[NotifyCoverageTestRunner.NotifyPropertyCoverageTest] Pass NotifyProperty`1
+        coverage test
 
 '
       stacktrace: 
@@ -1318,7 +1374,91 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1046
       parentUniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][NotifyCoverageTestRunner][suite]
-    - id: 1053
+    - id: 1049
+      uniqueId: EditModeTestAssembly.dll/NotifyCoverageTestRunner/[EditModeTestAssembly][NotifyCoverageTestRunner.NotifyRecordCollectionCoverageTest]
+      name: NotifyRecordCollectionCoverageTest
+      fullName: NotifyCoverageTestRunner.NotifyRecordCollectionCoverageTest
+      resultStatus: 1
+      duration: 0.0016554
+      messages: 
+      output: '[NotifyCoverageTestRunner.NotifyRecordCollectionCoverageTest] Pass
+        NotifyRecordCollection`1 coverage test
+
+'
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Notify
+      - Coverage
+      parentId: 1046
+      parentUniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][NotifyCoverageTestRunner][suite]
+    - id: 1059
+      uniqueId: EditModeTestAssembly.dll/NotifyCoverageTestRunner/[EditModeTestAssembly][NotifyCoverageTestRunner.NotifyRecordDictionaryTest]
+      name: NotifyRecordDictionaryTest
+      fullName: NotifyCoverageTestRunner.NotifyRecordDictionaryTest
+      resultStatus: 1
+      duration: 0.0016695
+      messages: 
+      output: '[NotifyCoverageTestRunner.NotifyRecordDictionaryTest] Pass NotifyRecordDictionary`2[TKey,TValue]
+        coverage test
+
+'
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Notify
+      - Coverage
+      parentId: 1050
+      parentUniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][NotifyCoverageTestRunner][suite]
+    - id: 1055
+      uniqueId: EditModeTestAssembly.dll/NotifyCoverageTestRunner/[EditModeTestAssembly][NotifyCoverageTestRunner.NotifyRecordListTest]
+      name: NotifyRecordListTest
+      fullName: NotifyCoverageTestRunner.NotifyRecordListTest
+      resultStatus: 1
+      duration: 0.0016415
+      messages: 
+      output: '[NotifyCoverageTestRunner.NotifyRecordListTest] Pass NotifyRecordList`1
+        coverage test
+
+'
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Notify
+      - Coverage
+      parentId: 1050
+      parentUniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][NotifyCoverageTestRunner][suite]
+    - id: 1057
+      uniqueId: EditModeTestAssembly.dll/NotifyCoverageTestRunner/[EditModeTestAssembly][NotifyCoverageTestRunner.NotifySortedDictionaryTest]
+      name: NotifySortedDictionaryTest
+      fullName: NotifyCoverageTestRunner.NotifySortedDictionaryTest
+      resultStatus: 1
+      duration: 0.001566
+      messages: 
+      output: '[NotifyCoverageTestRunner.NotifySortedDictionaryTest] Pass NotifySortedDictionary`2[TKey,TValue]
+        coverage test
+
+'
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Notify
+      - Coverage
+      parentId: 1050
+      parentUniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][NotifyCoverageTestRunner][suite]
+    - id: 1060
       uniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][NotifySerializeTestRunner][suite]
       name: NotifySerializeTestRunner
       fullName: NotifySerializeTestRunner
@@ -1333,14 +1473,14 @@ MonoBehaviour:
       isSuite: 1
       categories:
       - Notify
-      parentId: 1063
+      parentId: 1070
       parentUniqueId: '[EditModeTestAssembly][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/EditModeTestAssembly.dll][suite]'
     - id: 1053
       uniqueId: EditModeTestAssembly.dll/NotifySerializeTestRunner/[EditModeTestAssembly][NotifySerializeTestRunner.NotifyCsvConvertTest]
       name: NotifyCsvConvertTest
       fullName: NotifySerializeTestRunner.NotifyCsvConvertTest
       resultStatus: 1
-      duration: 0.2489682
+      duration: 0.112721
       messages: 
       output: "[NotifySerializeTestRunner.NotifyCsvConvertTest] \nValue\r\n4533\r\n[NotifySerializeTestRunner.NotifyCsvConvertTest]
         Pass field csv serialize\r\n[NotifySerializeTestRunner.EvaluateNotifyProperty]
@@ -1355,14 +1495,14 @@ MonoBehaviour:
         isDisposed || False\r\n [GenericEqualityComparer`1<Int32>] EqualityComparer
         || System.Collections.Generic.GenericEqualityComparer`1[System.Int32]\r\n
         [Int32] Value || 4533\n\r\n[NotifySerializeTestRunner.NotifyCsvConvertTest]
-        \nintProperty,floatProperty,stringProperty\r\n3644,4545,UpNUtKUSlsqmbpcS^xGY\r\n[NotifySerializeTestRunner.EvaluateNotifyConvertTestSample]
+        \nintProperty,floatProperty,stringProperty\r\n2166,6951,peNjKktAw\\qUYDRwH`EH\r\n[NotifySerializeTestRunner.EvaluateNotifyConvertTestSample]
         Pass evaluateSample null check\r\n[NotifySerializeTestRunner.EvaluateNotifyConvertTestSample]
         Pass evaluateSample reference check\r\n[NotifySerializeTestRunner.EvaluateNotifyConvertTestSample]
         Pass evaluateSample value check\r\n[NotifySerializeTestRunner.NotifyCsvConvertTest]
         Pass NotifyConvertTestSample csv convert test\r\n[NotifySerializeTestRunner.NotifyCsvConvertTest]
         \nNotifyConvertTestSample (Class)\r\n [NotifyProperty`1<Int32>] intProperty
-        || 3644\r\n [NotifyProperty`1<Single>] floatProperty || 4545\r\n [NotifyProperty`1<String>]
-        stringProperty || UpNUtKUSlsqmbpcS^xGY\r\n [RuntimeType] EqualityContract
+        || 2166\r\n [NotifyProperty`1<Single>] floatProperty || 6951\r\n [NotifyProperty`1<String>]
+        stringProperty || peNjKktAw\\qUYDRwH`EH\r\n [RuntimeType] EqualityContract
         || NotifySerializeTestRunner+NotifyConvertTestSample\n\r\n"
       stacktrace: 
       notRunnable: 0
@@ -1378,7 +1518,7 @@ MonoBehaviour:
       name: NotifyJsonConvertTest
       fullName: NotifySerializeTestRunner.NotifyJsonConvertTest
       resultStatus: 1
-      duration: 0.1620063
+      duration: 0.0729452
       messages: 
       output: "[NotifySerializeTestRunner.NotifyJsonConvertTest] {\r\n  \"Value\":
         4533\r\n}\r\n[NotifySerializeTestRunner.NotifyJsonConvertTest] Pass field
@@ -1394,46 +1534,44 @@ MonoBehaviour:
         isDisposed || False\r\n [GenericEqualityComparer`1<Int32>] EqualityComparer
         || System.Collections.Generic.GenericEqualityComparer`1[System.Int32]\r\n
         [Int32] Value || 4533\n\r\n[NotifySerializeTestRunner.NotifyJsonConvertTest]
-        {\r\n  \"intCollection\": [\r\n    2332,\r\n    3989,\r\n    7009,\r\n   
-        4917,\r\n    5859\r\n  ],\r\n  \"stringList\": [\r\n    \"eqdXRVvbUb\",\r\n   
-        \"j^TehYZJ_a\",\r\n    \"xq^ZtQFrQm\",\r\n    \"qoTxsnPtXv\",\r\n    \"PBd]IFSVqH\",\r\n   
-        \"mNIucnSK^A\",\r\n    \"PDRbktKVkt\",\r\n    \"J_kcQwNBRn\",\r\n    \"xjAIycfYVF\",\r\n   
-        \"\\\\EVWgLjBkN\"\r\n  ],\r\n  \"recordDictionary\": {\r\n    \"0\": 870.606445,\r\n   
-        \"1\": 327.3762,\r\n    \"2\": 603.6385,\r\n    \"3\": 198.996429,\r\n   
-        \"4\": 405.05368,\r\n    \"5\": 481.031,\r\n    \"6\": 289.766144,\r\n   
-        \"7\": 590.1426,\r\n    \"8\": 224.617,\r\n    \"9\": 985.244141\r\n  },\r\n 
-        \"structDictionary\": {\r\n    \"0\": {\r\n      \"text\": \"uwdwxO\\\\`de`RrjC_DIcH\"\r\n   
-        },\r\n    \"1\": {\r\n      \"text\": \"OkAeXEIUuFNMPErAGCKk\"\r\n    },\r\n   
-        \"2\": {\r\n      \"text\": \"HFnj`JMfUIIaYdxJwx_s\"\r\n    },\r\n    \"3\":
-        {\r\n      \"text\": \"FHe_XTBnqBYAxrAIvQFO\"\r\n    },\r\n    \"4\": {\r\n     
-        \"text\": \"r]ymvfmeFhDH]Qey[PRM\"\r\n    },\r\n    \"5\": {\r\n      \"text\":
-        \"HYnSiHcadoMgsQBbHqbk\"\r\n    },\r\n    \"6\": {\r\n      \"text\": \"`VhIxR^gMAhgxsGZhgEo\"\r\n   
-        },\r\n    \"7\": {\r\n      \"text\": \"DMBQ[WNLPDrdhaflkeUX\"\r\n    },\r\n   
-        \"8\": {\r\n      \"text\": \"dvUcH`hAKbtZmlhTUWga\"\r\n    },\r\n    \"9\":
-        {\r\n      \"text\": \"DRXJIExXMTiCSgLGrXIu\"\r\n    }\r\n  },\r\n  \"classDictionary\":
-        {},\r\n  \"intProperty\": {\r\n    \"Value\": 8640\r\n  },\r\n  \"floatProperty\":
-        {\r\n    \"Value\": 68.0\r\n  },\r\n  \"stringProperty\": {\r\n    \"Value\":
-        \"O^pa_ftSjRMcxErdgA`a\"\r\n  }\r\n}\r\n[NotifySerializeTestRunner.NotifyJsonConvertTest]
+        {\r\n  \"intCollection\": [\r\n    5620,\r\n    7556,\r\n    285,\r\n   
+        5710,\r\n    9939\r\n  ],\r\n  \"stringList\": [\r\n    \"YNdApwEhff\",\r\n   
+        \"SGZqYHVInT\",\r\n    \"[DCTT^OuWc\",\r\n    \"MsCj\\\\OOa\\\\F\",\r\n   
+        \"vQTcQgbyn\\\\\",\r\n    \"KcMN_UKPfS\",\r\n    \"hJQDZYDiUK\",\r\n    \"rnghWKjYDg\",\r\n   
+        \"uPGuXdfoLG\",\r\n    \"DxtJXmyPJq\"\r\n  ],\r\n  \"recordDictionary\":
+        {\r\n    \"0\": 483.0299,\r\n    \"1\": 788.0802,\r\n    \"2\": 687.9041,\r\n   
+        \"3\": 957.4003,\r\n    \"4\": 629.1009,\r\n    \"5\": 747.107239,\r\n   
+        \"6\": 773.359558,\r\n    \"7\": 420.726,\r\n    \"8\": 528.7798,\r\n   
+        \"9\": 847.2345\r\n  },\r\n  \"structDictionary\": {\r\n    \"0\": {\r\n     
+        \"text\": \"crddcWu_pUelMyWXCVeo\"\r\n    },\r\n    \"1\": {\r\n      \"text\":
+        \"lO^OGtt]QcKZOLDDf]SB\"\r\n    },\r\n    \"2\": {\r\n      \"text\": \"hHxq[QlulykddUFUUU]h\"\r\n   
+        },\r\n    \"3\": {\r\n      \"text\": \"\\\\XNMJK^BuSl_DdHdPgmp\"\r\n   
+        },\r\n    \"4\": {\r\n      \"text\": \"IxkRraotFhiQAd_PtkgP\"\r\n    },\r\n   
+        \"5\": {\r\n      \"text\": \"ljyZMLaAM[Fgbf`^guUc\"\r\n    },\r\n    \"6\":
+        {\r\n      \"text\": \"VduMd\\\\_YEqj^y]EXyRFf\"\r\n    },\r\n    \"7\":
+        {\r\n      \"text\": \"AogecBhTDBbxWEtHolok\"\r\n    },\r\n    \"8\": {\r\n     
+        \"text\": \"gHuVkahFbI_Vpib`wQdb\"\r\n    },\r\n    \"9\": {\r\n      \"text\":
+        \"fr\\\\xTyx_FS`G^F\\\\UKDwE\"\r\n    }\r\n  },\r\n  \"classDictionary\":
+        {},\r\n  \"intProperty\": {\r\n    \"Value\": 57\r\n  },\r\n  \"floatProperty\":
+        {\r\n    \"Value\": 1649.0\r\n  },\r\n  \"stringProperty\": {\r\n    \"Value\":
+        \"xudjt\\\\saSCBxyPcmCpMc\"\r\n  }\r\n}\r\n[NotifySerializeTestRunner.NotifyJsonConvertTest]
         Pass sample json serialize\r\n[NotifySerializeTestRunner.EvaluateNotifyConvertTestSample]
         Pass evaluateSample null check\r\n[NotifySerializeTestRunner.EvaluateNotifyConvertTestSample]
         Pass evaluateSample reference check\r\n[NotifySerializeTestRunner.EvaluateNotifyConvertTestSample]
         Pass evaluateSample value check\r\n[NotifySerializeTestRunner.NotifyJsonConvertTest]
         Pass NotifyComplexConvertTestSample json convert test\n\r\n[NotifySerializeTestRunner.NotifyJsonConvertTest]
         NotifyComplexConvertTestSample (Class)\r\n [NotifyRecordCollection`1<Int32>]
-        intCollection || 2332, 3989, 7009, 4917, 5859\r\n [NotifyRecordList`1<String>]
-        stringList || eqdXRVvbUb, j^TehYZJ_a, xq^ZtQFrQm, qoTxsnPtXv, PBd]IFSVqH,
-        mNIucnSK^A, PDRbktKVkt, J_kcQwNBRn, xjAIycfYVF, \\EVWgLjBkN\r\n [NotifyRecordDictionary`2<Int32,
-        Single>] recordDictionary || [0, 870.6064], [1, 327.3762], [2, 603.6385],
-        [3, 198.9964], [4, 405.0537], [5, 481.031], [6, 289.7661], [7, 590.1426],
-        [8, 224.617], [9, 985.2441]\r\n [NotifyRecordDictionary`2<Int32, TestStruct>]
-        structDictionary || [0, NotifySerializeTestRunner+TestStruct], [1, NotifySerializeTestRunner+TestStruct],
-        [2, NotifySerializeTestRunner+TestStruct], [3, NotifySerializeTestRunner+TestStruct],
-        [4, NotifySerializeTestRunner+TestStruct], [5, NotifySerializeTestRunner+TestStruct],
-        [6, NotifySerializeTestRunner+TestStruct], [7, NotifySerializeTestRunner+TestStruct],
-        [8, NotifySerializeTestRunner+TestStruct], [9, NotifySerializeTestRunner+TestStruct]\r\n
-        [NotifyRecordDictionary`2<Int32, TestClass>] classDictionary || \r\n [NotifyProperty`1<Int32>]
-        intProperty || 8640\r\n [NotifyProperty`1<Single>] floatProperty || 68\r\n
-        [NotifyProperty`1<String>] stringProperty || O^pa_ftSjRMcxErdgA`a\r\n\n\r\n"
+        intCollection || 5620, 7556, 285, 5710, 9939\r\n [NotifyRecordList`1<String>]
+        stringList || YNdApwEhff, SGZqYHVInT, [DCTT^OuWc, MsCj\\OOa\\F, vQTcQgbyn\\,
+        KcMN_UKPfS, hJQDZYDiUK, rnghWKjYDg, uPGuXdfoLG, DxtJXmyPJq\r\n [NotifyRecordDictionary`2<Int32,
+        Single>] recordDictionary || [0, 483.0299], [1, 788.0802], [2, 687.9041],
+        [3, 957.4003], [4, 629.1009], [5, 747.1072], [6, 773.3596], [7, 420.726],
+        [8, 528.7798], [9, 847.2345]\r\n [NotifyRecordDictionary`2<Int32, TestStruct>]
+        structDictionary || [0, TestStruct], [1, TestStruct], [2, TestStruct], [3,
+        TestStruct], [4, TestStruct], [5, TestStruct], [6, TestStruct], [7, TestStruct],
+        [8, TestStruct], [9, TestStruct]\r\n [NotifyRecordDictionary`2<Int32, TestClass>]
+        classDictionary || \r\n [NotifyProperty`1<Int32>] intProperty || 57\r\n [NotifyProperty`1<Single>]
+        floatProperty || 1649\r\n [NotifyProperty`1<String>] stringProperty || xudjt\\saSCBxyPcmCpMc\r\n\n\r\n"
       stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
@@ -1448,7 +1586,7 @@ MonoBehaviour:
       name: NotifyXmlConvertTest
       fullName: NotifySerializeTestRunner.NotifyXmlConvertTest
       resultStatus: 1
-      duration: 0.0421713
+      duration: 0.0919607
       messages: 
       output: "[NotifySerializeTestRunner.NotifyXmlConvertTest] <?xml version=\"1.0\"
         encoding=\"utf-16\"?>\r\n<NotifyPropertyOfInt32 xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"
@@ -1467,59 +1605,59 @@ MonoBehaviour:
         [Int32] Value || 4533\n\r\n[NotifySerializeTestRunner.NotifyXmlConvertTest]
         <?xml version=\"1.0\" encoding=\"utf-16\"?>\r\n<NotifyComplexConvertTestSample
         xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n 
-        <intProperty>\r\n    <Value>8640</Value>\r\n  </intProperty>\r\n  <floatProperty>\r\n   
-        <Value>68</Value>\r\n  </floatProperty>\r\n  <stringProperty>\r\n    <Value>O^pa_ftSjRMcxErdgA`a</Value>\r\n 
-        </stringProperty>\r\n  <intCollection>\r\n    <int>2332</int>\r\n    <int>3989</int>\r\n   
-        <int>7009</int>\r\n    <int>4917</int>\r\n    <int>5859</int>\r\n  </intCollection>\r\n 
-        <stringList>\r\n    <string>eqdXRVvbUb</string>\r\n    <string>j^TehYZJ_a</string>\r\n   
-        <string>xq^ZtQFrQm</string>\r\n    <string>qoTxsnPtXv</string>\r\n    <string>PBd]IFSVqH</string>\r\n   
-        <string>mNIucnSK^A</string>\r\n    <string>PDRbktKVkt</string>\r\n    <string>J_kcQwNBRn</string>\r\n   
-        <string>xjAIycfYVF</string>\r\n    <string>\\EVWgLjBkN</string>\r\n  </stringList>\r\n 
+        <intProperty>\r\n    <Value>57</Value>\r\n  </intProperty>\r\n  <floatProperty>\r\n   
+        <Value>1649</Value>\r\n  </floatProperty>\r\n  <stringProperty>\r\n    <Value>xudjt\\saSCBxyPcmCpMc</Value>\r\n 
+        </stringProperty>\r\n  <intCollection>\r\n    <int>5620</int>\r\n    <int>7556</int>\r\n   
+        <int>285</int>\r\n    <int>5710</int>\r\n    <int>9939</int>\r\n  </intCollection>\r\n 
+        <stringList>\r\n    <string>YNdApwEhff</string>\r\n    <string>SGZqYHVInT</string>\r\n   
+        <string>[DCTT^OuWc</string>\r\n    <string>MsCj\\OOa\\F</string>\r\n    <string>vQTcQgbyn\\</string>\r\n   
+        <string>KcMN_UKPfS</string>\r\n    <string>hJQDZYDiUK</string>\r\n    <string>rnghWKjYDg</string>\r\n   
+        <string>uPGuXdfoLG</string>\r\n    <string>DxtJXmyPJq</string>\r\n  </stringList>\r\n 
         <recordDictionary>\r\n    <item>\r\n      <key>\r\n        <int>0</int>\r\n     
-        </key>\r\n      <value>\r\n        <float>870.606445</float>\r\n      </value>\r\n   
+        </key>\r\n      <value>\r\n        <float>483.0299</float>\r\n      </value>\r\n   
         </item>\r\n    <item>\r\n      <key>\r\n        <int>1</int>\r\n      </key>\r\n     
-        <value>\r\n        <float>327.3762</float>\r\n      </value>\r\n    </item>\r\n   
+        <value>\r\n        <float>788.0802</float>\r\n      </value>\r\n    </item>\r\n   
         <item>\r\n      <key>\r\n        <int>2</int>\r\n      </key>\r\n      <value>\r\n       
-        <float>603.6385</float>\r\n      </value>\r\n    </item>\r\n    <item>\r\n     
+        <float>687.9041</float>\r\n      </value>\r\n    </item>\r\n    <item>\r\n     
         <key>\r\n        <int>3</int>\r\n      </key>\r\n      <value>\r\n       
-        <float>198.996429</float>\r\n      </value>\r\n    </item>\r\n    <item>\r\n     
+        <float>957.4003</float>\r\n      </value>\r\n    </item>\r\n    <item>\r\n     
         <key>\r\n        <int>4</int>\r\n      </key>\r\n      <value>\r\n       
-        <float>405.05368</float>\r\n      </value>\r\n    </item>\r\n    <item>\r\n     
+        <float>629.1009</float>\r\n      </value>\r\n    </item>\r\n    <item>\r\n     
         <key>\r\n        <int>5</int>\r\n      </key>\r\n      <value>\r\n       
-        <float>481.031</float>\r\n      </value>\r\n    </item>\r\n    <item>\r\n     
+        <float>747.107239</float>\r\n      </value>\r\n    </item>\r\n    <item>\r\n     
         <key>\r\n        <int>6</int>\r\n      </key>\r\n      <value>\r\n       
-        <float>289.766144</float>\r\n      </value>\r\n    </item>\r\n    <item>\r\n     
+        <float>773.359558</float>\r\n      </value>\r\n    </item>\r\n    <item>\r\n     
         <key>\r\n        <int>7</int>\r\n      </key>\r\n      <value>\r\n       
-        <float>590.1426</float>\r\n      </value>\r\n    </item>\r\n    <item>\r\n     
+        <float>420.726</float>\r\n      </value>\r\n    </item>\r\n    <item>\r\n     
         <key>\r\n        <int>8</int>\r\n      </key>\r\n      <value>\r\n       
-        <float>224.617</float>\r\n      </value>\r\n    </item>\r\n    <item>\r\n     
+        <float>528.7798</float>\r\n      </value>\r\n    </item>\r\n    <item>\r\n     
         <key>\r\n        <int>9</int>\r\n      </key>\r\n      <value>\r\n       
-        <float>985.244141</float>\r\n      </value>\r\n    </item>\r\n  </recordDictionary>\r\n 
+        <float>847.2345</float>\r\n      </value>\r\n    </item>\r\n  </recordDictionary>\r\n 
         <structDictionary>\r\n    <item>\r\n      <key>\r\n        <int>0</int>\r\n     
-        </key>\r\n      <value>\r\n        <TestStruct>\r\n          <text>uwdwxO\\`de`RrjC_DIcH</text>\r\n       
+        </key>\r\n      <value>\r\n        <TestStruct>\r\n          <text>crddcWu_pUelMyWXCVeo</text>\r\n       
         </TestStruct>\r\n      </value>\r\n    </item>\r\n    <item>\r\n      <key>\r\n       
         <int>1</int>\r\n      </key>\r\n      <value>\r\n        <TestStruct>\r\n         
-        <text>OkAeXEIUuFNMPErAGCKk</text>\r\n        </TestStruct>\r\n      </value>\r\n   
+        <text>lO^OGtt]QcKZOLDDf]SB</text>\r\n        </TestStruct>\r\n      </value>\r\n   
         </item>\r\n    <item>\r\n      <key>\r\n        <int>2</int>\r\n      </key>\r\n     
-        <value>\r\n        <TestStruct>\r\n          <text>HFnj`JMfUIIaYdxJwx_s</text>\r\n       
+        <value>\r\n        <TestStruct>\r\n          <text>hHxq[QlulykddUFUUU]h</text>\r\n       
         </TestStruct>\r\n      </value>\r\n    </item>\r\n    <item>\r\n      <key>\r\n       
         <int>3</int>\r\n      </key>\r\n      <value>\r\n        <TestStruct>\r\n         
-        <text>FHe_XTBnqBYAxrAIvQFO</text>\r\n        </TestStruct>\r\n      </value>\r\n   
+        <text>\\XNMJK^BuSl_DdHdPgmp</text>\r\n        </TestStruct>\r\n      </value>\r\n   
         </item>\r\n    <item>\r\n      <key>\r\n        <int>4</int>\r\n      </key>\r\n     
-        <value>\r\n        <TestStruct>\r\n          <text>r]ymvfmeFhDH]Qey[PRM</text>\r\n       
+        <value>\r\n        <TestStruct>\r\n          <text>IxkRraotFhiQAd_PtkgP</text>\r\n       
         </TestStruct>\r\n      </value>\r\n    </item>\r\n    <item>\r\n      <key>\r\n       
         <int>5</int>\r\n      </key>\r\n      <value>\r\n        <TestStruct>\r\n         
-        <text>HYnSiHcadoMgsQBbHqbk</text>\r\n        </TestStruct>\r\n      </value>\r\n   
+        <text>ljyZMLaAM[Fgbf`^guUc</text>\r\n        </TestStruct>\r\n      </value>\r\n   
         </item>\r\n    <item>\r\n      <key>\r\n        <int>6</int>\r\n      </key>\r\n     
-        <value>\r\n        <TestStruct>\r\n          <text>`VhIxR^gMAhgxsGZhgEo</text>\r\n       
+        <value>\r\n        <TestStruct>\r\n          <text>VduMd\\_YEqj^y]EXyRFf</text>\r\n       
         </TestStruct>\r\n      </value>\r\n    </item>\r\n    <item>\r\n      <key>\r\n       
         <int>7</int>\r\n      </key>\r\n      <value>\r\n        <TestStruct>\r\n         
-        <text>DMBQ[WNLPDrdhaflkeUX</text>\r\n        </TestStruct>\r\n      </value>\r\n   
+        <text>AogecBhTDBbxWEtHolok</text>\r\n        </TestStruct>\r\n      </value>\r\n   
         </item>\r\n    <item>\r\n      <key>\r\n        <int>8</int>\r\n      </key>\r\n     
-        <value>\r\n        <TestStruct>\r\n          <text>dvUcH`hAKbtZmlhTUWga</text>\r\n       
+        <value>\r\n        <TestStruct>\r\n          <text>gHuVkahFbI_Vpib`wQdb</text>\r\n       
         </TestStruct>\r\n      </value>\r\n    </item>\r\n    <item>\r\n      <key>\r\n       
         <int>9</int>\r\n      </key>\r\n      <value>\r\n        <TestStruct>\r\n         
-        <text>DRXJIExXMTiCSgLGrXIu</text>\r\n        </TestStruct>\r\n      </value>\r\n   
+        <text>fr\\xTyx_FS`G^F\\UKDwE</text>\r\n        </TestStruct>\r\n      </value>\r\n   
         </item>\r\n  </structDictionary>\r\n  <classDictionary />\r\n</NotifyComplexConvertTestSample>\r\n[NotifySerializeTestRunner.NotifyXmlConvertTest]
         Pass sample xml serialize\r\n[NotifySerializeTestRunner.EvaluateNotifyConvertTestSample]
         Pass evaluateSample null check\r\n[NotifySerializeTestRunner.EvaluateNotifyConvertTestSample]
@@ -1527,20 +1665,17 @@ MonoBehaviour:
         Pass evaluateSample value check\r\n[NotifySerializeTestRunner.NotifyXmlConvertTest]
         Pass NotifyComplexConvertTestSample xml convert test\n\r\n[NotifySerializeTestRunner.NotifyXmlConvertTest]
         NotifyComplexConvertTestSample (Class)\r\n [NotifyRecordCollection`1<Int32>]
-        intCollection || 2332, 3989, 7009, 4917, 5859\r\n [NotifyRecordList`1<String>]
-        stringList || eqdXRVvbUb, j^TehYZJ_a, xq^ZtQFrQm, qoTxsnPtXv, PBd]IFSVqH,
-        mNIucnSK^A, PDRbktKVkt, J_kcQwNBRn, xjAIycfYVF, \\EVWgLjBkN\r\n [NotifyRecordDictionary`2<Int32,
-        Single>] recordDictionary || [0, 870.6064], [1, 327.3762], [2, 603.6385],
-        [3, 198.9964], [4, 405.0537], [5, 481.031], [6, 289.7661], [7, 590.1426],
-        [8, 224.617], [9, 985.2441]\r\n [NotifyRecordDictionary`2<Int32, TestStruct>]
-        structDictionary || [0, NotifySerializeTestRunner+TestStruct], [1, NotifySerializeTestRunner+TestStruct],
-        [2, NotifySerializeTestRunner+TestStruct], [3, NotifySerializeTestRunner+TestStruct],
-        [4, NotifySerializeTestRunner+TestStruct], [5, NotifySerializeTestRunner+TestStruct],
-        [6, NotifySerializeTestRunner+TestStruct], [7, NotifySerializeTestRunner+TestStruct],
-        [8, NotifySerializeTestRunner+TestStruct], [9, NotifySerializeTestRunner+TestStruct]\r\n
-        [NotifyRecordDictionary`2<Int32, TestClass>] classDictionary || \r\n [NotifyProperty`1<Int32>]
-        intProperty || 8640\r\n [NotifyProperty`1<Single>] floatProperty || 68\r\n
-        [NotifyProperty`1<String>] stringProperty || O^pa_ftSjRMcxErdgA`a\r\n\n\r\n"
+        intCollection || 5620, 7556, 285, 5710, 9939\r\n [NotifyRecordList`1<String>]
+        stringList || YNdApwEhff, SGZqYHVInT, [DCTT^OuWc, MsCj\\OOa\\F, vQTcQgbyn\\,
+        KcMN_UKPfS, hJQDZYDiUK, rnghWKjYDg, uPGuXdfoLG, DxtJXmyPJq\r\n [NotifyRecordDictionary`2<Int32,
+        Single>] recordDictionary || [0, 483.0299], [1, 788.0802], [2, 687.9041],
+        [3, 957.4003], [4, 629.1009], [5, 747.1072], [6, 773.3596], [7, 420.726],
+        [8, 528.7798], [9, 847.2345]\r\n [NotifyRecordDictionary`2<Int32, TestStruct>]
+        structDictionary || [0, TestStruct], [1, TestStruct], [2, TestStruct], [3,
+        TestStruct], [4, TestStruct], [5, TestStruct], [6, TestStruct], [7, TestStruct],
+        [8, TestStruct], [9, TestStruct]\r\n [NotifyRecordDictionary`2<Int32, TestClass>]
+        classDictionary || \r\n [NotifyProperty`1<Int32>] intProperty || 57\r\n [NotifyProperty`1<Single>]
+        floatProperty || 1649\r\n [NotifyProperty`1<String>] stringProperty || xudjt\\saSCBxyPcmCpMc\r\n\n\r\n"
       stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
@@ -1564,7 +1699,7 @@ MonoBehaviour:
       description: 
       isSuite: 1
       categories: []
-      parentId: 1063
+      parentId: 1070
       parentUniqueId: '[EditModeTestAssembly][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/EditModeTestAssembly.dll][suite]'
     - id: 1040
       uniqueId: EditModeTestAssembly.dll/TcpServerTestRunner/[EditModeTestAssembly][TcpServerTestRunner.Clear]
@@ -1650,7 +1785,7 @@ MonoBehaviour:
       - Performance
       parentId: 1039
       parentUniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][TcpServerTestRunner][suite]
-    - id: 1057
+    - id: 1064
       uniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][UIViewModelTestRunner][suite]
       name: UIViewModelTestRunner
       fullName: UIViewModelTestRunner
@@ -1664,13 +1799,13 @@ MonoBehaviour:
       description: 
       isSuite: 1
       categories: []
-      parentId: 1063
+      parentId: 1070
       parentUniqueId: '[EditModeTestAssembly][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/EditModeTestAssembly.dll][suite]'
-    - id: 1062
+    - id: 1069
       uniqueId: EditModeTestAssembly.dll/UIViewModelTestRunner/[EditModeTestAssembly][UIViewModelTestRunner.ViewModelPerformanceTest][suite]
       name: ViewModelPerformanceTest
       fullName: UIViewModelTestRunner.ViewModelPerformanceTest
-      resultStatus: 0
+      resultStatus: 1
       duration: 0
       messages: 
       output: 
@@ -1681,7 +1816,7 @@ MonoBehaviour:
       isSuite: 1
       categories:
       - Performance
-      parentId: 1057
+      parentId: 1064
       parentUniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][UIViewModelTestRunner][suite]
     - id: 1048
       uniqueId: EditModeTestAssembly.dll/UIViewModelTestRunner/ViewModelPerformanceTest/[EditModeTestAssembly][UIViewModelTestRunner.ViewModelPerformanceTest(100)]
@@ -1778,18 +1913,98 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1045
       parentUniqueId: EditModeTestAssembly.dll/[EditModeTestAssembly][UIViewModelTestRunner][suite]
-    m_ResultText: 'NotifyCollectionCoverageTest (0.110s)
-
-      ---
-
-      [NotifyCoverageTestRunner.NotifyCollectionCoverageTest]
-      Pass NotifyCollection`1 test'
+    m_ResultText: "NotifyXmlConvertTest (0.092s)\nNotify Xml Convert Test\n---\n[NotifySerializeTestRunner.NotifyXmlConvertTest]
+      <?xml version=\"1.0\" encoding=\"utf-16\"?>\r\n<NotifyPropertyOfInt32 xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"
+      xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Value>4533</Value>\r\n</NotifyPropertyOfInt32>\r\n[NotifySerializeTestRunner.NotifyXmlConvertTest]
+      Pass field xml serialize\r\n[NotifySerializeTestRunner.EvaluateNotifyProperty]
+      Pass property null check\r\n[NotifySerializeTestRunner.EvaluateNotifyProperty]
+      Pass property reference check\r\n[NotifySerializeTestRunner.EvaluateNotifyProperty]
+      Pass property value check\r\n[NotifySerializeTestRunner.NotifyXmlConvertTest]
+      Pass NotifyField xml convert test\n\r\n[NotifySerializeTestRunner.NotifyXmlConvertTest]
+      NotifyProperty`1<Int32> (Class)\r\n [GenericEqualityComparer`1<Int32>] _equalityComparer
+      || System.Collections.Generic.GenericEqualityComparer`1[System.Int32]\r\n [Int32]
+      _value || 4533\r\n [SafeDelegate`1<NotifyFieldChangedHandler>] OnChanged  (Struct)\r\n\t
+      [handler] null\r\n\t [Int32] Count || 0\r\n\r\n [Boolean] isDisposed || False\r\n
+      [GenericEqualityComparer`1<Int32>] EqualityComparer || System.Collections.Generic.GenericEqualityComparer`1[System.Int32]\r\n
+      [Int32] Value || 4533\n\r\n[NotifySerializeTestRunner.NotifyXmlConvertTest]
+      <?xml version=\"1.0\" encoding=\"utf-16\"?>\r\n<NotifyComplexConvertTestSample
+      xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n 
+      <intProperty>\r\n    <Value>57</Value>\r\n  </intProperty>\r\n  <floatProperty>\r\n   
+      <Value>1649</Value>\r\n  </floatProperty>\r\n  <stringProperty>\r\n    <Value>xudjt\\saSCBxyPcmCpMc</Value>\r\n 
+      </stringProperty>\r\n  <intCollection>\r\n    <int>5620</int>\r\n    <int>7556</int>\r\n   
+      <int>285</int>\r\n    <int>5710</int>\r\n    <int>9939</int>\r\n  </intCollection>\r\n 
+      <stringList>\r\n    <string>YNdApwEhff</string>\r\n    <string>SGZqYHVInT</string>\r\n   
+      <string>[DCTT^OuWc</string>\r\n    <string>MsCj\\OOa\\F</string>\r\n    <string>vQTcQgbyn\\</string>\r\n   
+      <string>KcMN_UKPfS</string>\r\n    <string>hJQDZYDiUK</string>\r\n    <string>rnghWKjYDg</string>\r\n   
+      <string>uPGuXdfoLG</string>\r\n    <string>DxtJXmyPJq</string>\r\n  </stringList>\r\n 
+      <recordDictionary>\r\n    <item>\r\n      <key>\r\n        <int>0</int>\r\n     
+      </key>\r\n      <value>\r\n        <float>483.0299</float>\r\n      </value>\r\n   
+      </item>\r\n    <item>\r\n      <key>\r\n        <int>1</int>\r\n      </key>\r\n     
+      <value>\r\n        <float>788.0802</float>\r\n      </value>\r\n    </item>\r\n   
+      <item>\r\n      <key>\r\n        <int>2</int>\r\n      </key>\r\n      <value>\r\n       
+      <float>687.9041</float>\r\n      </value>\r\n    </item>\r\n    <item>\r\n     
+      <key>\r\n        <int>3</int>\r\n      </key>\r\n      <value>\r\n        <float>957.4003</float>\r\n     
+      </value>\r\n    </item>\r\n    <item>\r\n      <key>\r\n        <int>4</int>\r\n     
+      </key>\r\n      <value>\r\n        <float>629.1009</float>\r\n      </value>\r\n   
+      </item>\r\n    <item>\r\n      <key>\r\n        <int>5</int>\r\n      </key>\r\n     
+      <value>\r\n        <float>747.107239</float>\r\n      </value>\r\n    </item>\r\n   
+      <item>\r\n      <key>\r\n        <int>6</int>\r\n      </key>\r\n      <value>\r\n       
+      <float>773.359558</float>\r\n      </value>\r\n    </item>\r\n    <item>\r\n     
+      <key>\r\n        <int>7</int>\r\n      </key>\r\n      <value>\r\n        <float>420.726</float>\r\n     
+      </value>\r\n    </item>\r\n    <item>\r\n      <key>\r\n        <int>8</int>\r\n     
+      </key>\r\n      <value>\r\n        <float>528.7798</float>\r\n      </value>\r\n   
+      </item>\r\n    <item>\r\n      <key>\r\n        <int>9</int>\r\n      </key>\r\n     
+      <value>\r\n        <float>847.2345</float>\r\n      </value>\r\n    </item>\r\n 
+      </recordDictionary>\r\n  <structDictionary>\r\n    <item>\r\n      <key>\r\n       
+      <int>0</int>\r\n      </key>\r\n      <value>\r\n        <TestStruct>\r\n         
+      <text>crddcWu_pUelMyWXCVeo</text>\r\n        </TestStruct>\r\n      </value>\r\n   
+      </item>\r\n    <item>\r\n      <key>\r\n        <int>1</int>\r\n      </key>\r\n     
+      <value>\r\n        <TestStruct>\r\n          <text>lO^OGtt]QcKZOLDDf]SB</text>\r\n       
+      </TestStruct>\r\n      </value>\r\n    </item>\r\n    <item>\r\n      <key>\r\n       
+      <int>2</int>\r\n      </key>\r\n      <value>\r\n        <TestStruct>\r\n         
+      <text>hHxq[QlulykddUFUUU]h</text>\r\n        </TestStruct>\r\n      </value>\r\n   
+      </item>\r\n    <item>\r\n      <key>\r\n        <int>3</int>\r\n      </key>\r\n     
+      <value>\r\n        <TestStruct>\r\n          <text>\\XNMJK^BuSl_DdHdPgmp</text>\r\n       
+      </TestStruct>\r\n      </value>\r\n    </item>\r\n    <item>\r\n      <key>\r\n       
+      <int>4</int>\r\n      </key>\r\n      <value>\r\n        <TestStruct>\r\n         
+      <text>IxkRraotFhiQAd_PtkgP</text>\r\n        </TestStruct>\r\n      </value>\r\n   
+      </item>\r\n    <item>\r\n      <key>\r\n        <int>5</int>\r\n      </key>\r\n     
+      <value>\r\n        <TestStruct>\r\n          <text>ljyZMLaAM[Fgbf`^guUc</text>\r\n       
+      </TestStruct>\r\n      </value>\r\n    </item>\r\n    <item>\r\n      <key>\r\n       
+      <int>6</int>\r\n      </key>\r\n      <value>\r\n        <TestStruct>\r\n         
+      <text>VduMd\\_YEqj^y]EXyRFf</text>\r\n        </TestStruct>\r\n      </value>\r\n   
+      </item>\r\n    <item>\r\n      <key>\r\n        <int>7</int>\r\n      </key>\r\n     
+      <value>\r\n        <TestStruct>\r\n          <text>AogecBhTDBbxWEtHolok</text>\r\n       
+      </TestStruct>\r\n      </value>\r\n    </item>\r\n    <item>\r\n      <key>\r\n       
+      <int>8</int>\r\n      </key>\r\n      <value>\r\n        <TestStruct>\r\n         
+      <text>gHuVkahFbI_Vpib`wQdb</text>\r\n        </TestStruct>\r\n      </value>\r\n   
+      </item>\r\n    <item>\r\n      <key>\r\n        <int>9</int>\r\n      </key>\r\n     
+      <value>\r\n        <TestStruct>\r\n          <text>fr\\xTyx_FS`G^F\\UKDwE</text>\r\n       
+      </TestStruct>\r\n      </value>\r\n    </item>\r\n  </structDictionary>\r\n 
+      <classDictionary />\r\n</NotifyComplexConvertTestSample>\r\n[NotifySerializeTestRunner.NotifyXmlConvertTest]
+      Pass sample xml serialize\r\n[NotifySerializeTestRunner.EvaluateNotifyConvertTestSample]
+      Pass evaluateSample null check\r\n[NotifySerializeTestRunner.EvaluateNotifyConvertTestSample]
+      Pass evaluateSample reference check\r\n[NotifySerializeTestRunner.EvaluateNotifyConvertTestSample]
+      Pass evaluateSample value check\r\n[NotifySerializeTestRunner.NotifyXmlConvertTest]
+      Pass NotifyComplexConvertTestSample xml convert test\n\r\n[NotifySerializeTestRunner.NotifyXmlConvertTest]
+      NotifyComplexConvertTestSample (Class)\r\n [NotifyRecordCollection`1<Int32>]
+      intCollection || 5620, 7556, 285, 5710, 9939\r\n [NotifyRecordList`1<String>]
+      stringList || YNdApwEhff, SGZqYHVInT, [DCTT^OuWc, MsCj\\OOa\\F, vQTcQgbyn\\,
+      KcMN_UKPfS, hJQDZYDiUK, rnghWKjYDg, uPGuXdfoLG, DxtJXmyPJq\r\n [NotifyRecordDictionary`2<Int32,
+      Single>] recordDictionary || [0, 483.0299], [1, 788.0802], [2, 687.9041], [3,
+      957.4003], [4, 629.1009], [5, 747.1072], [6, 773.3596], [7, 420.726], [8, 528.7798],
+      [9, 847.2345]\r\n [NotifyRecordDictionary`2<Int32, TestStruct>] structDictionary
+      || [0, TestStruct], [1, TestStruct], [2, TestStruct], [3, TestStruct], [4,
+      TestStruct], [5, TestStruct], [6, TestStruct], [7, TestStruct], [8, TestStruct],
+      [9, TestStruct]\r\n [NotifyRecordDictionary`2<Int32, TestClass>] classDictionary
+      || \r\n [NotifyProperty`1<Int32>] intProperty || 57\r\n [NotifyProperty`1<Single>]
+      floatProperty || 1649\r\n [NotifyProperty`1<String>] stringProperty || xudjt\\saSCBxyPcmCpMc"
     m_ResultStacktrace: 
     m_TestListState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: ad3a554d
-      m_LastClickedID: 1297431213
-      m_ExpandedIDs: 7c91a5c3dedcfefe48d8a103edaa9c16c29f3933446d5b39f221606cffffff7f
+      m_SelectedIDs: bbc273df
+      m_LastClickedID: -546061637
+      m_ExpandedIDs: d50057877c91a5c348d8a103edaa9c16c29f3933f221606cffffff7f
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -1812,16 +2027,16 @@ MonoBehaviour:
       FailedHidden: 0
       NotRunHidden: 0
       m_SearchString: 
-      selectedCategories:
-      - Notify
+      selectedCategories: []
       availableCategories:
+      - Coverage
       - Notify
       - Performance
       - Uncategorized
     m_SelectedOption: 0
   - m_Window: {fileID: 15}
     runProgress:
-      RunGuid: ca7d4722-b601-4f12-b7b3-87f9ef902973
+      RunGuid: 498bb223-f43c-4008-93d0-c3822d03963e
       ExecutionSettings:
         m_TargetPlatform: 0
         m_HasTargetPlatform: 0
@@ -1832,9 +2047,9 @@ MonoBehaviour:
           categoryNames: []
           assemblyNames: []
         filters:
-        - testMode: 1
+        - testMode: 2
           testNames:
-          - NotifyCoverageTestRunner.NotifyCollectionCoverageTest
+          - UIServiceTestRunner.UIServiceTest
           groupNames: []
           categoryNames: []
           assemblyNames: []
@@ -1853,12 +2068,12 @@ MonoBehaviour:
       CurrentStepName: Unlock Reload Assemblies
       CurrentStageName: 
     m_NewResultList:
-    - id: 1029
+    - id: 1000
       uniqueId: '[CustomUtils][suite]'
       name: CustomUtils
       fullName: CustomUtils
       resultStatus: 1
-      duration: 1.1552898
+      duration: 0
       messages: 
       output: 
       stacktrace: 
@@ -1869,12 +2084,12 @@ MonoBehaviour:
       categories: []
       parentId: 
       parentUniqueId: 
-    - id: 1025
+    - id: 1028
       uniqueId: '[PlayModeTestAssembly][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/PlayModeTestAssembly.dll][suite]'
       name: PlayModeTestAssembly.dll
       fullName: C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/PlayModeTestAssembly.dll
       resultStatus: 1
-      duration: 1.121343
+      duration: 0
       messages: 
       output: 
       stacktrace: 
@@ -1883,7 +2098,7 @@ MonoBehaviour:
       description: 
       isSuite: 1
       categories: []
-      parentId: 1029
+      parentId: 1000
       parentUniqueId: '[CustomUtils][suite]'
     - id: 1001
       uniqueId: PlayModeTestAssembly.dll/[PlayModeTestAssembly][ObjectPoolServiceTestRunner][suite]
@@ -1899,7 +2114,7 @@ MonoBehaviour:
       description: 
       isSuite: 1
       categories: []
-      parentId: 1025
+      parentId: 1028
       parentUniqueId: '[PlayModeTestAssembly][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/PlayModeTestAssembly.dll][suite]'
     - id: 1011
       uniqueId: PlayModeTestAssembly.dll/ObjectPoolServiceTestRunner/[PlayModeTestAssembly][ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest][suite]
@@ -2184,7 +2399,7 @@ MonoBehaviour:
       description: 
       isSuite: 1
       categories: []
-      parentId: 1025
+      parentId: 1028
       parentUniqueId: '[PlayModeTestAssembly][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/PlayModeTestAssembly.dll][suite]'
     - id: 1078
       uniqueId: PlayModeTestAssembly.dll/ResourceServiceTestRunner/[PlayModeTestAssembly][ResourceServiceTestRunner.ResourceServiceMemoryProfilerTest]
@@ -2334,7 +2549,7 @@ MonoBehaviour:
       description: 
       isSuite: 1
       categories: []
-      parentId: 1025
+      parentId: 1028
       parentUniqueId: '[PlayModeTestAssembly][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/PlayModeTestAssembly.dll][suite]'
     - id: 1080
       uniqueId: PlayModeTestAssembly.dll/SoundTestRunner/[PlayModeTestAssembly][SoundTestRunner.SoundManagerTest]
@@ -2354,11 +2569,11 @@ MonoBehaviour:
       parentId: 1079
       parentUniqueId: PlayModeTestAssembly.dll/[PlayModeTestAssembly][SoundTestRunner][suite]
     - id: 1023
-      uniqueId: PlayModeTestAssembly.dll/[PlayModeTestAssembly][UIViewTestRunner][suite]
-      name: UIViewTestRunner
-      fullName: UIViewTestRunner
+      uniqueId: PlayModeTestAssembly.dll/[PlayModeTestAssembly][UIServiceTestRunner][suite]
+      name: UIServiceTestRunner
+      fullName: UIServiceTestRunner
       resultStatus: 1
-      duration: 1.096783
+      duration: 0
       messages: 
       output: 
       stacktrace: 
@@ -2366,8 +2581,78 @@ MonoBehaviour:
       ignoredOrSkipped: 0
       description: 
       isSuite: 1
-      categories: []
-      parentId: 1025
+      categories:
+      - Ui
+      parentId: 1028
+      parentUniqueId: '[PlayModeTestAssembly][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/PlayModeTestAssembly.dll][suite]'
+    - id: 1025
+      uniqueId: PlayModeTestAssembly.dll/UIServiceTestRunner/[PlayModeTestAssembly][UIServiceTestRunner.TempPerformanceTest]
+      name: TempPerformanceTest
+      fullName: UIServiceTestRunner.TempPerformanceTest
+      resultStatus: 1
+      duration: 0.8247248
+      messages: 
+      output: "ForCount.GC() in Undefineds\nMin:\t\t0.00 \nMedian:\t\t0.00 \nMax:\t\t0.07
+        \nAvg:\t\t0.01 \nStdDev:\t\t0.02 \nSampleCount:\t6\nSum:\t\t0.07 \r\nFirst
+        samples:\t\u2581\u2581\u2581\u2588\u2581\u2581\r\n(not enough samples for
+        histogram)\n\r\nForCount in Milliseconds\nMin:\t\t0.04 ms\nMedian:\t\t0.04
+        ms\nMax:\t\t0.04 ms\nAvg:\t\t0.04 ms\nStdDev:\t\t0.00 ms\nSampleCount:\t5\nSum:\t\t0.18
+        ms\r\nFirst samples:\t\u2582\u2588\u2587\u2581\u2582\r\n(not enough samples
+        for histogram)\n\r\n\r\n##performancetestresult2:{\"Name\":\"UIServiceTestRunner.TempPerformanceTest\",\"ClassName\":\"UIServiceTestRunner\",\"MethodName\":\"TempPerformanceTest\",\"Version\":\"1\",\"Categories\":[\"Performance\",\"Ui\"],\"SampleGroups\":[{\"Name\":\"ForCount.GC()\",\"Unit\":8,\"IncreaseIsBetter\":false,\"Samples\":[0.0,0.0,0.0,0.06666666666666667,0.0,0.0],\"Min\":0.0,\"Max\":0.06666666666666667,\"Median\":0.0,\"Average\":0.011111111111111112,\"StandardDeviation\":0.024845199749997664,\"Sum\":0.06666666666666667},{\"Name\":\"ForCount\",\"Unit\":2,\"IncreaseIsBetter\":false,\"Samples\":[0.03640000000000043,0.037800000000004278,0.037500000000008529,0.036100000000004687,0.03640000000001464],\"Min\":0.036100000000004687,\"Max\":0.037800000000004278,\"Median\":0.03640000000001464,\"Average\":0.03684000000000651,\"StandardDeviation\":0.0006770524351923216,\"Sum\":0.18420000000003257}]}\r\n##performancetestruninfo2:{\"TestSuite\":\"Playmode\",\"Date\":1730869629258,\"Player\":{\"Development\":true,\"ScreenWidth\":1920,\"ScreenHeight\":1080,\"ScreenRefreshRate\":60,\"Fullscreen\":false,\"Vsync\":1,\"AntiAliasing\":0,\"Batchmode\":false,\"RenderThreadingMode\":\"MultiThreaded\",\"GpuSkinning\":false,\"Platform\":\"WindowsEditor\",\"ColorSpace\":\"Gamma\",\"AnisotropicFiltering\":\"Disable\",\"BlendWeights\":\"FourBones\",\"GraphicsApi\":\"Direct3D11\",\"ScriptingBackend\":\"Mono2x\",\"AndroidTargetSdkVersion\":\"AndroidApiLevelAuto\",\"AndroidBuildSystem\":\"Gradle\",\"BuildTarget\":\"StandaloneWindows64\",\"StereoRenderingPath\":\"MultiPass\"},\"Hardware\":{\"OperatingSystem\":\"Windows
+        10  (10.0.19045) 64bit\",\"DeviceModel\":\"82R4 (LENOVO)\",\"DeviceName\":\"DESKTOP-55T0R54\",\"ProcessorType\":\"AMD
+        Ryzen 5 5500U with Radeon Graphics \",\"ProcessorCount\":12,\"GraphicsDeviceName\":\"AMD
+        Radeon(TM) Graphics\",\"SystemMemorySizeMB\":14181},\"Editor\":{\"Version\":\"2022.3.46f1\",\"Branch\":\"2022.3/staging\",\"Changeset\":\"8e9b8558c41a\",\"Date\":1725396290},\"Dependencies\":[\"com.cysharp.unitask@2.5.5\",\"com.unity.2d.animation@9.1.1\",\"com.unity.2d.pixel-perfect@5.0.3\",\"com.unity.2d.psdimporter@8.0.5\",\"com.unity.2d.sprite@1.0.0\",\"com.unity.2d.spriteshape@9.0.4\",\"com.unity.2d.tilemap@1.0.0\",\"com.unity.ai.navigation@1.1.5\",\"com.unity.assetbundlebrowser@1.7.0\",\"com.unity.collab-proxy@2.4.4\",\"com.unity.editorcoroutines@1.0.0\",\"com.unity.ide.rider@3.0.31\",\"com.unity.ide.vscode@1.2.5\",\"com.unity.memoryprofiler@1.1.0\",\"com.unity.mobile.android-logcat@1.4.2\",\"com.unity.performance.profile-analyzer@1.2.2\",\"com.unity.profiling.core@1.0.2\",\"com.unity.render-pipelines.universal@14.0.11\",\"com.unity.test-framework@1.4.5\",\"com.unity.test-framework.performance@3.0.3\",\"com.unity.testtools.codecoverage@1.2.6\",\"com.unity.textmeshpro@3.0.9\",\"com.unity.timeline@1.7.6\",\"com.unity.ugui@1.0.0\",\"com.unity.modules.ai@1.0.0\",\"com.unity.modules.androidjni@1.0.0\",\"com.unity.modules.animation@1.0.0\",\"com.unity.modules.assetbundle@1.0.0\",\"com.unity.modules.audio@1.0.0\",\"com.unity.modules.cloth@1.0.0\",\"com.unity.modules.director@1.0.0\",\"com.unity.modules.imageconversion@1.0.0\",\"com.unity.modules.imgui@1.0.0\",\"com.unity.modules.jsonserialize@1.0.0\",\"com.unity.modules.particlesystem@1.0.0\",\"com.unity.modules.physics@1.0.0\",\"com.unity.modules.physics2d@1.0.0\",\"com.unity.modules.screencapture@1.0.0\",\"com.unity.modules.terrain@1.0.0\",\"com.unity.modules.terrainphysics@1.0.0\",\"com.unity.modules.tilemap@1.0.0\",\"com.unity.modules.ui@1.0.0\",\"com.unity.modules.uielements@1.0.0\",\"com.unity.modules.umbra@1.0.0\",\"com.unity.modules.unityanalytics@1.0.0\",\"com.unity.modules.unitywebrequest@1.0.0\",\"com.unity.modules.unitywebrequestassetbundle@1.0.0\",\"com.unity.modules.unitywebrequestaudio@1.0.0\",\"com.unity.modules.unitywebrequesttexture@1.0.0\",\"com.unity.modules.unitywebrequestwww@1.0.0\",\"com.unity.modules.vehicles@1.0.0\",\"com.unity.modules.video@1.0.0\",\"com.unity.modules.vr@1.0.0\",\"com.unity.modules.wind@1.0.0\",\"com.unity.modules.xr@1.0.0\",\"com.unity.modules.subsystems@1.0.0\",\"com.unity.settings-manager@2.0.1\",\"com.unity.ext.nunit@2.0.3\",\"com.unity.mathematics@1.2.6\",\"com.unity.burst@1.8.17\",\"com.unity.render-pipelines.core@14.0.11\",\"com.unity.shadergraph@14.0.11\",\"com.unity.render-pipelines.universal-config@14.0.10\",\"com.unity.2d.common@8.0.3\",\"com.unity.collections@1.2.4\",\"com.unity.searcher@4.9.2\"],\"Results\":[]}\r\n"
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      - Ui
+      parentId: 1023
+      parentUniqueId: PlayModeTestAssembly.dll/[PlayModeTestAssembly][UIServiceTestRunner][suite]
+    - id: 1024
+      uniqueId: PlayModeTestAssembly.dll/UIServiceTestRunner/[PlayModeTestAssembly][UIServiceTestRunner.UIServiceTest]
+      name: UIServiceTest
+      fullName: UIServiceTestRunner.UIServiceTest
+      resultStatus: 1
+      duration: 0.6763751
+      messages: 
+      output: '[<>c.<IService.Init>b__7_0] TestSimpleUIViewModel
+
+        [<>c.<IService.Init>b__7_0]
+        TestSimpleUIViewModel
+
+        <color=#00FFFF>[Service.StartService] Service
+        Start || UIService</color>
+
+'
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Ui
+      parentId: 1023
+      parentUniqueId: PlayModeTestAssembly.dll/[PlayModeTestAssembly][UIServiceTestRunner][suite]
+    - id: 1026
+      uniqueId: PlayModeTestAssembly.dll/[PlayModeTestAssembly][UIViewTestRunner][suite]
+      name: UIViewTestRunner
+      fullName: UIViewTestRunner
+      resultStatus: 1
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories:
+      - Ui
+      parentId: 1028
       parentUniqueId: '[PlayModeTestAssembly][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/PlayModeTestAssembly.dll][suite]'
     - id: 1024
       uniqueId: PlayModeTestAssembly.dll/UIViewTestRunner/[PlayModeTestAssembly][UIViewTestRunner.SimpleUIViewModelTest]
@@ -2414,43 +2699,23 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1023
       parentUniqueId: PlayModeTestAssembly.dll/[PlayModeTestAssembly][UIViewTestRunner][suite]
-    m_ResultText: 'SimpleUIViewModelTest (0.929s)
+    m_ResultText: 'UIServiceTest (0.676s)
 
       ---
 
-      <color=#00FFFF>[ResourceService.GetValidProvider]
-      Activate provider || ResourcesProvider</color>
+      [<>c.<IService.Init>b__7_0]
+      TestSimpleUIViewModel
 
-      <color=#00FFFF>[ResourceService.GetValidProvider]
-      Activate provider || AssetBundleProvider</color>
+      [<>c.<IService.Init>b__7_0] TestSimpleUIViewModel
 
       <color=#00FFFF>[Service.StartService]
-      Service Start || ResourceService</color>
-
-      [TestExtension.FieldChangeTest]
-      Pass _titleText Change Test
-
-      [TestExtension.FieldChangeTest] Pass _countText
-      Change Test
-
-      [TestSimpleUIView.UpdateCollection] Add
-
-      [TestSimpleUIView.UpdateList]
-      Add
-
-      [TestSimpleUIView.UpdateDictionary] Add
-
-      [TestExtension.MethodCallTest]
-      Pass OnClickIncreaseCountButton Call Test
-
-      [TestExtension.MethodCallTest]
-      Pass OnClickDecreaseCountButton Call Test'
+      Service Start || UIService</color>'
     m_ResultStacktrace: 
     m_TestListState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: e00828f0
-      m_LastClickedID: -265811744
-      m_ExpandedIDs: adb59dfa23159f12c29f393348eb8574ffffff7f
+      m_SelectedIDs: 57923093
+      m_LastClickedID: -1825533353
+      m_ExpandedIDs: 3a49de9fadb59dfa23159f12c29f393348eb8574ffffff7f
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -2473,14 +2738,16 @@ MonoBehaviour:
       FailedHidden: 0
       NotRunHidden: 0
       m_SearchString: 
-      selectedCategories: []
+      selectedCategories:
+      - Ui
       availableCategories:
       - Performance
+      - Ui
       - Uncategorized
     m_SelectedOption: 0
   - m_Window: {fileID: 15}
     runProgress:
-      RunGuid: ca7d4722-b601-4f12-b7b3-87f9ef902973
+      RunGuid: 498bb223-f43c-4008-93d0-c3822d03963e
       ExecutionSettings:
         m_TargetPlatform: 0
         m_HasTargetPlatform: 0
@@ -2491,9 +2758,9 @@ MonoBehaviour:
           categoryNames: []
           assemblyNames: []
         filters:
-        - testMode: 1
+        - testMode: 2
           testNames:
-          - NotifyCoverageTestRunner.NotifyCollectionCoverageTest
+          - UIServiceTestRunner.UIServiceTest
           groupNames: []
           categoryNames: []
           assemblyNames: []
@@ -3111,9 +3378,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 
+      m_SelectedIDs: 4c6c0000
       m_LastClickedID: 0
-      m_ExpandedIDs: 14adfffffaafffffe2b2ffffe0b5ffffcab8ffffb6bbffffa0beffff1cc0ffff84c4ffff6ec7ffff6ccaffffd8cbffffd6ceffffbed1ffff2cd3ffff16d6ffff02d9ffff6edaffffd6dbffffdadeffff58e3ffff50e6ffff38e9ffff96edffff00efffff6af0ffff56f3ffffc0f4ffff38f6fffffefaffff
+      m_ExpandedIDs: 4cccfeffead0feff04d7feffa2dbfeffc8e1feffd8e7feff7aecfeff90f2feff2cf7feffc4fbfeff5e00ffff7606ffff120bffffb00fffffc815ffff281cffffac24ffffec2cffff8030ffff6a47ffffcc62ffff0e6cffffc671ffff8478ffffa27effff4283ffff6089ffff5a8cffffec8fffff7892ffff4a95ffff6c9bffff94a1ffff68a5fffffaa8ffff24afffffe6b1ffff72b5ffff5eb8ffff0cbcffffb8c0ffff24c6ffff8ac8ffff18c9fffffcc9ffff8acaffff6acbfffff8cbffff08d0ffffced2ffffa8d5ffff04dbffffe4deffffd4e2ffff6cebffff00ecffff6eedffffdeeeffffc6f1ffff3ef3ffff4af6fffffefaffff3a710000407100005c710000967a0000b87a0000d67c0000e67c0000ec7c0000087d0000848100008a810000a6810000e28b0000048c0000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -3509,7 +3776,7 @@ MonoBehaviour:
       floating: 0
       collapsed: 0
       displayed: 1
-      snapOffset: {x: 396, y: 10.399994}
+      snapOffset: {x: 236.80002, y: 10.399994}
       snapOffsetDelta: {x: 0, y: 0}
       snapCorner: 0
       id: UnityEditor.SceneViewCameraOverlay
@@ -3530,7 +3797,7 @@ MonoBehaviour:
   m_Position:
     m_Target: {x: 243.1761, y: 214.2907, z: -61.842915}
     speed: 2
-    m_Value: {x: 243.1761, y: 214.2907, z: -61.842915}
+    m_Value: {x: 155.30257, y: 233.12437, z: -53.229458}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -3560,7 +3827,7 @@ MonoBehaviour:
       m_Fade:
         m_Target: 0
         speed: 2
-        m_Value: 0
+        m_Value: 1
       m_Color: {r: 0.5, g: 0.5, b: 0.5, a: 0.4}
       m_Pivot: {x: 0, y: 0, z: 0}
       m_Size: {x: 1, y: 1}
@@ -3578,11 +3845,11 @@ MonoBehaviour:
   m_Rotation:
     m_Target: {x: 0, y: 0, z: 0, w: 1}
     speed: 2
-    m_Value: {x: 0, y: 0, z: 0, w: 1}
+    m_Value: {x: -0.00000008395063, y: -0.00000010385336, z: 0.000000031513213, w: -1}
   m_Size:
     m_Target: 1.1093404
     speed: 2
-    m_Value: 1.1093404
+    m_Value: 162.83658
   m_Ortho:
     m_Target: 1
     speed: 2
@@ -3600,7 +3867,7 @@ MonoBehaviour:
     m_FarClip: 10000
     m_DynamicClip: 1
     m_OcclusionCulling: 0
-  m_LastSceneViewRotation: {x: -0.08717229, y: 0.89959055, z: -0.21045254, w: -0.3726226}
+  m_LastSceneViewRotation: {x: -0.27184528, y: -0.33629343, z: 0.10204472, w: -0.89587885}
   m_LastSceneViewOrtho: 0
   m_ReplacementShader: {fileID: 0}
   m_ReplacementString: 
@@ -3630,7 +3897,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 459.2
-    width: 516.6
+    width: 497.4
     height: 324.19998
   m_SerializedDataModeController:
     m_DataMode: 0
@@ -3653,7 +3920,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Test/EditMode
+    - Assets/Resources
     m_Globs: []
     m_OriginalText: 
     m_ImportLogFlags: 0
@@ -3661,16 +3928,16 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 16
   m_LastFolders:
-  - Assets/Test/EditMode
+  - Assets/Resources
   m_LastFoldersGridSize: 16
   m_LastProjectPath: C:\Project\Unity\CustomUtils
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 946e0000
-    m_LastClickedID: 28308
-    m_ExpandedIDs: 00000000546e0000566e0000586e00005a6e00005c6e00005e6e0000606e0000626e0000646e0000666e0000686e00006a6e00006c6e00006e6e0000706e0000726e0000
+    scrollPos: {x: 0, y: 51.80002}
+    m_SelectedIDs: 686e0000
+    m_LastClickedID: 28264
+    m_ExpandedIDs: 000000005a6e00005c6e00005e6e0000606e0000626e0000646e0000666e0000686e00006a6e00006c6e00006e6e0000706e0000726e0000746e0000766e0000786e000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -3698,7 +3965,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000546e0000566e0000586e00005a6e00005c6e00005e6e0000606e0000626e0000646e0000666e0000686e00006a6e00006c6e00006e6e0000706e0000726e0000
+    m_ExpandedIDs: 000000005a6e00005c6e00005e6e0000606e0000626e0000646e0000666e0000686e00006a6e00006c6e00006e6e0000706e0000726e0000746e0000766e0000786e0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 

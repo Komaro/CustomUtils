@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Text;
-using System.Xml;
 using NUnit.Framework;
 
 [Category(TestConstants.Category.NOTIFY)]
@@ -71,7 +68,6 @@ public class NotifyCoverageTestRunner {
         var intList = RandomUtil.GetRandoms(20).ToList();
         var collection = new NotifyCollection<int>();
         collection = new NotifyCollection<int>(intList);
-        collection = new NotifyCollection<int>(intList.AsEnumerable());
         collection = new NotifyCollection<int>(intList.ToArray());
 
         var randomIndex = RandomUtil.GetRandom(0, intList.Count);
@@ -140,7 +136,7 @@ public class NotifyCoverageTestRunner {
 
         Logger.TraceLog($"Pass {typeof(NotifyRecordCollection<>).Name} coverage test");
     }
-
+    
     [Test]
     public void NotifyListCoverageTest() {
         var intList = RandomUtil.GetRandoms(20, _ => RandomUtil.GetRandom(0, 10000)).ToList();
@@ -203,9 +199,9 @@ public class NotifyCoverageTestRunner {
         var intList = RandomUtil.GetRandoms(20).ToList();
         var recordList = new NotifyRecordList<int>();
         recordList = new NotifyRecordList<int>(10);
-        recordList = new NotifyRecordList<int>(intList.AsEnumerable());
+        recordList = new NotifyRecordList<int>(intList);
         recordList = new NotifyRecordList<int>(intList.ToArray());
-        
+
         var evaluateList = new NotifyRecordList<int>(intList);
         Assert.IsTrue(recordList == evaluateList);
         Assert.IsFalse(recordList == null);
@@ -269,21 +265,58 @@ public class NotifyCoverageTestRunner {
 
     [Test]
     public void NotifySortedDictionaryTest() {
+        var comparer = new TestIntComparer();
+        var pairDic = RandomUtil.GetRandoms(20, index => new KeyValuePair<int, int>(index, RandomUtil.GetRandom(0, 10000))).ToDictionary(pair => pair.Key, pair => pair.Value);
+        _ = new NotifySortedDictionary<int, int>();
+        _ = new NotifySortedDictionary<int, int>(comparer);
+        _ = new NotifySortedDictionary<int, int>(comparer, pairDic.ToArray());
+        _ = new NotifySortedDictionary<int, int>(pairDic.ToArray());
+        _ = new NotifySortedDictionary<int, int>(pairDic, comparer);
         
+        Logger.TraceLog($"Pass {typeof(NotifySortedDictionary<,>)} coverage test");
     }
     
     [Test]
     public void NotifyConcurrentDictionaryTest() {
+        var comparer = new TestIntEqualityComparer();
+        var pairDic = RandomUtil.GetRandoms(20, index => new KeyValuePair<int, int>(index, RandomUtil.GetRandom(0, 10000))).ToDictionary(pair => pair.Key, pair => pair.Value);
+        _ = new NotifyConcurrentDictionary<int, int>();
+        _ = new NotifyConcurrentDictionary<int, int>(comparer);
+        _ = new NotifyConcurrentDictionary<int, int>(pairDic, comparer);
         
+        Logger.TraceLog($"Pass {typeof(NotifyConcurrentDictionary<,>)} coverage test");
     }
     
     [Test]
     public void NotifyRecordDictionaryTest() {
+        var pairDic = RandomUtil.GetRandoms(20, index => new KeyValuePair<int, int>(index, RandomUtil.GetRandom(0, 10000))).ToDictionary(pair => pair.Key, pair => pair.Value);
+        var dic = new NotifyRecordDictionary<int, int>();
+        dic = new NotifyRecordDictionary<int, int>(pairDic.ToArray());
+        dic = new NotifyRecordDictionary<int, int>(pairDic);
+        dic = new NotifyRecordDictionary<int, int>(pairDic.AsEnumerable());
         
+        var evaluateDic = new NotifyRecordDictionary<int, int>(pairDic);
+        Assert.IsTrue(dic == evaluateDic);
+        Assert.IsFalse(dic == null);
+        Assert.IsFalse(dic == new NotifyRecordDictionary<int, int>(RandomUtil.GetRandoms(20, index => new KeyValuePair<int, int>(index, RandomUtil.GetRandom(0, 10000)))));
+
+        evaluateDic.Add(int.MaxValue, int.MinValue);
+        Assert.IsTrue(dic != evaluateDic);
+        evaluateDic.Remove(int.MaxValue);
+        
+        Assert.IsTrue(dic.Equals(evaluateDic));
+        Assert.AreNotEqual(dic.GetHashCode(), 0);
+        
+        Logger.TraceLog($"Pass {typeof(NotifyRecordDictionary<,>)} coverage test");
     }
 }
 
-public sealed class TestIntEqualityComparer : EqualityComparer<int> {
+internal sealed class TestIntComparer : Comparer<int> {
+
+    public override int Compare(int x, int y) => x.CompareTo(y);
+}
+
+internal sealed class TestIntEqualityComparer : EqualityComparer<int> {
 
     public override bool Equals(int x, int y) => x.Equals(y);
     public override int GetHashCode(int obj) => obj.GetHashCode();

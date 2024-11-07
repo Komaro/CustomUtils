@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-public class TestSimpleUIViewModel : UIViewModel {
+﻿public class TestSimpleUIViewModel : UIViewModel {
 
     public readonly NotifyProperty<string> Title = new();
     public readonly NotifyProperty<int> Count = new();

@@ -41,30 +41,30 @@ public class TestSimpleUIView : UIView<TestSimpleUIViewModel> {
 
     private void OnNotifyPropertyChanged(string name) {
         switch (name) {
-            case nameof(model.Title):
+            case nameof(viewModel.Title):
                 UpdateTitle();
                 break;
-            case nameof(model.Count):
+            case nameof(viewModel.Count):
                 UpdateCount();
                 break;
         }
     }
     
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private void UpdateTitle() => _titleText.text = model.Title;
+    private void UpdateTitle() => _titleText.text = viewModel.Title;
     
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private void UpdateCount() => _countText.text = model.Count.ToString();
+    private void UpdateCount() => _countText.text = viewModel.Count.ToString();
     
     private void OnNotifyListChanged(string name, NotifyCollectionChangedEventArgs args) {
         switch (name) {
-            case nameof(model.Collection):
+            case nameof(viewModel.Collection):
                 UpdateCollection(args);
                 break;
-            case nameof(model.List):
+            case nameof(viewModel.List):
                 UpdateList(args);
                 break;
-            case nameof(model.Dictionary):
+            case nameof(viewModel.Dictionary):
                 UpdateDictionary(args);
                 break;
         }
@@ -73,21 +73,21 @@ public class TestSimpleUIView : UIView<TestSimpleUIViewModel> {
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private void UpdateCollection(NotifyCollectionChangedEventArgs args) {
         Logger.TraceLog(args.action);
-        _collectionText.text = model.Collection.ToStringCollection(", ");
+        _collectionText.text = viewModel.Collection.ToStringCollection(", ");
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private void UpdateList(NotifyCollectionChangedEventArgs args) {
         Logger.TraceLog(args.action);
-        _collectionText.text = model.List.ToStringCollection(", ");
+        _collectionText.text = viewModel.List.ToStringCollection(", ");
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private void UpdateDictionary(NotifyCollectionChangedEventArgs args) {
         Logger.TraceLog(args.action);
-        _dictionaryText.text = model.Dictionary.ToStringCollection(x => x.ToStringPair(), ", ");
+        _dictionaryText.text = viewModel.Dictionary.ToStringCollection(x => x.ToStringPair(), ", ");
     }
 
-    private void OnClickIncreaseCountButton() => model.IncreaseCount(10);
-    private void OnClickDecreaseCountButton() => model.DecreaseCount(10);
+    private void OnClickIncreaseCountButton() => viewModel.IncreaseCount(10);
+    private void OnClickDecreaseCountButton() => viewModel.DecreaseCount(10);
 }

@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using UniRx;
 
 public interface ILocalizeProvider {
+
     public Dictionary<string, string> GetLocalizeDic(Enum languageType);
 }
 
+// TODO. Service로 이전
 public class LocalizeManager : Singleton<LocalizeManager> {
 
     private HashSet<Enum> _languageSet = new();

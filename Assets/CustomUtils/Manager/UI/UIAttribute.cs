@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 public class UIAttribute : Attribute {
+    
     public readonly string prefabs;
     public readonly AnchorPresets anchorType;
     public readonly UIGroupType[] groups;

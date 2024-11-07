@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public static class TransformExtension {
@@ -17,11 +18,11 @@ public static class TransformExtension {
         return Mathf.Min(collectionScale.x, collectionScale.y);
     }
 
-    public static Vector2 GetCollectionSizeVector(this RectTransform rect) => new Vector2(rect.pivot.x * rect.rect.size.x, rect.pivot.y * rect.rect.size.y);
+    public static Vector2 GetCollectionSizeVector(this RectTransform rect) => new(rect.pivot.x * rect.rect.size.x, rect.pivot.y * rect.rect.size.y);
     public static Vector2 GetCollectionScaleVector(this RectTransform rect) => rect.rect.size / new Vector2(Screen.height, Screen.width);
 
     public static Vector3 GetCollectionLocalPosition(this RectTransform rect, PivotPresets collectionType) {
-        switch (rect.GetAnchorType()) {
+        switch (rect.GetAnchorPreset()) {
             case AnchorPresets.TOP_LEFT:
             case AnchorPresets.TOP_RIGHT:
             case AnchorPresets.BOTTOM_LEFT:
@@ -36,8 +37,10 @@ public static class TransformExtension {
                 return rect.localPosition + new Vector3(rect.sizeDelta.x * (collectionPivot.x - rect.pivot.x), rect.sizeDelta.y * (collectionPivot.y - rect.pivot.y), 0);
         }
     }
+
+    #region [Anchor]
     
-    public static void SetAnchor(this RectTransform rect, AnchorPresets presetType) {
+    public static void SetAnchorPreset(this RectTransform rect, AnchorPresets presetType) {
         switch (presetType) {
             case AnchorPresets.TOP_LEFT:
                 rect.anchorMin = new Vector2(0, 1);
@@ -105,7 +108,41 @@ public static class TransformExtension {
                 break;
         }
     }
+    
+    public static AnchorPresets GetAnchorPreset(this RectTransform rect) {
+        var minAnchor = rect.anchorMin;
+        var maxAnchor = rect.anchorMax;
+        return (minAnchor.x, minAnchor.y, maxAnchor.x, maxAnchor.y) switch {
+            (0f, 1f, 0f, 1f) => AnchorPresets.TOP_LEFT,
+            (0.5f, 1f, 0.5f, 1f) => AnchorPresets.TOP_CENTER,
+            (1f, 1f, 1f, 1f) => AnchorPresets.TOP_RIGHT,
 
+            (0f, 0.5f, 0f, 0.5f) => AnchorPresets.MIDDLE_LEFT,
+            (0.5f, 0.5f, 0.5f, 0.5f) => AnchorPresets.MIDDLE_CENTER,
+            (1f, 0.5f, 1f, 0.5f) => AnchorPresets.MIDDLE_RIGHT,
+
+            (0f, 0f, 0f, 0f) => AnchorPresets.BOTTOM_LEFT,
+            (0.5f, 0f, 0.5f, 0f) => AnchorPresets.BOTTOM_CENTER,
+            (1f, 0f, 1f, 0f) => AnchorPresets.BOTTOM_RIGHT,
+
+            (0f, 1f, 1f, 1f) => AnchorPresets.HOR_STRETCH_TOP,
+            (0f, 0.5f, 1f, 0.5f) => AnchorPresets.HOR_STRETCH_BOTTOM,
+            (0f, 0f, 1f, 0f) => AnchorPresets.HOR_STRETCH_BOTTOM,
+
+            (0f, 0f, 0f, 1f) => AnchorPresets.VERT_STRETCH_LEFT,
+            (0.5f, 0f, 0.5f, 1f) => AnchorPresets.VERT_STRETCH_CENTER,
+            (1f, 0f, 1f, 1f) => AnchorPresets.VERT_STRETCH_RIGHT,
+
+            (0f, 0f, 1f, 1f) => AnchorPresets.STRETCH_ALL,
+
+            _ => default
+        };
+    }
+    
+    #endregion
+
+    #region [Pivot]
+    
     public static Vector2 GetPivot(this PivotPresets preset) {
         return preset switch {
             PivotPresets.TOP_LEFT => new Vector2(0, 1),
@@ -153,45 +190,84 @@ public static class TransformExtension {
         }
     }
 
-    public static AnchorPresets GetAnchorType(this RectTransform rect) {
-        var minAnchor = rect.anchorMin;
-        var maxAnchor = rect.anchorMax;
-        return (minAnchor.x, minAnchor.y, maxAnchor.x, maxAnchor.y) switch {
-            (0f, 1f, 0f, 1f) => AnchorPresets.TOP_LEFT,
-            (0.5f, 1f, 0.5f, 1f) => AnchorPresets.TOP_CENTER,
-            (1f, 1f, 1f, 1f) => AnchorPresets.TOP_RIGHT,
+    #endregion
 
-            (0f, 0.5f, 0f, 0.5f) => AnchorPresets.MIDDLE_LEFT,
-            (0.5f, 0.5f, 0.5f, 0.5f) => AnchorPresets.MIDDLE_CENTER,
-            (1f, 0.5f, 1f, 0.5f) => AnchorPresets.MIDDLE_RIGHT,
+    #region [Normalize]
+    
+    public static void SetNormalizeToLocalPosition(this GameObject root, GameObject target, float xNormal, float yNormal, float xRange = 1f, float yRange = 1f) {
+        if (root == null || target == null) {
+            throw new NullReferenceException($"{(root == null ? nameof(root) : nameof(target))} is null");
+        }
 
-            (0f, 0f, 0f, 0f) => AnchorPresets.BOTTOM_LEFT,
-            (0.5f, 0f, 0.5f, 0f) => AnchorPresets.BOTTOM_CENTER,
-            (1f, 0f, 1f, 0f) => AnchorPresets.BOTTOM_RIGHT,
-
-            (0f, 1f, 1f, 1f) => AnchorPresets.HOR_STRETCH_TOP,
-            (0f, 0.5f, 1f, 0.5f) => AnchorPresets.HOR_STRETCH_BOTTOM,
-            (0f, 0f, 1f, 0f) => AnchorPresets.HOR_STRETCH_BOTTOM,
-
-            (0f, 0f, 0f, 1f) => AnchorPresets.VERT_STRETCH_LEFT,
-            (0.5f, 0f, 0.5f, 1f) => AnchorPresets.VERT_STRETCH_CENTER,
-            (1f, 0f, 1f, 1f) => AnchorPresets.VERT_STRETCH_RIGHT,
-
-            (0f, 0f, 1f, 1f) => AnchorPresets.STRETCH_ALL,
-
-            _ => default
-        };
+        target.transform.localPosition = root.GetNormalizeToLocalPosition(xNormal, yNormal, xRange, yRange);
     }
 
-    public static bool TryGetRectTransform(this Transform transform, out RectTransform rect) {
-        rect = transform.GetRectTransform();
-        return rect != null;
+    public static void SetNormalizeToLocalPosition(this GameObject root, Transform target, float xNormal, float yNormal, float xRange = 1f, float yRange = 1f) {
+        if (root == null || target == null) {
+            throw new NullReferenceException($"{(root == null ? nameof(root) : nameof(target))} is null");
+        }
+
+        target.localPosition = root.GetNormalizeToLocalPosition(xNormal, yNormal, xRange, yRange);
+    }
+    
+    public static void SetNormalizeToLocalPosition(this Transform root, GameObject target, float xNormal, float yNormal, float xRange = 1f, float yRange = 1f) {
+        if (root == null || target == null) {
+            throw new NullReferenceException($"{(root == null ? nameof(root) : nameof(target))} is null");
+        }
+        
+        target.transform.localPosition = root.GetNormalizeToLocalPosition(xNormal, yNormal, xRange, yRange);
+    }
+    
+    public static void SetNormalizeToLocalPosition(this Transform root, Transform target, float xNormal, float yNormal, float xRange = 1f, float yRange = 1f) {
+        if (root == null || target == null) {
+            throw new NullReferenceException($"{(root == null ? nameof(root) : nameof(target))} is null");
+        }
+
+        target.transform.localPosition = root.GetNormalizeToLocalPosition(xNormal, yNormal, xRange, yRange);
     }
 
+    public static Vector2 GetNormalizeToLocalPosition(this GameObject root, float xNormal, float yNormal, float xRange = 1f, float yRange = 1f) {
+        if (root == null) {
+            Logger.TraceError($"{nameof(root)} is null");
+            return Vector2.zero;
+        }
+
+        if (root.TryGetRectTransform(out var rect)) {
+            return rect.GetNormalizeToLocalPosition(xNormal, yNormal, xRange, yRange);
+        }
+
+        Logger.TraceError($"Missing component || {nameof(RectTransform)}");
+        return Vector2.zero;
+    }
+
+    public static Vector2 GetNormalizeToLocalPosition(this Transform root, float xNormal, float yNormal, float xRange = 1f, float yRange = 1f) {
+        if (root == null) {
+            return Vector2.zero;
+        }
+
+        if (root.TryGetRectTransform(out var rect)) {
+            return rect.GetNormalizeToLocalPosition(xNormal, yNormal, xRange, yRange);
+        }
+
+        Logger.TraceError($"Missing component || {nameof(RectTransform)}");
+        return Vector2.zero;
+    }
+
+    private static Vector2 GetNormalizeToLocalPosition(this RectTransform root, float xNormal, float yNormal, float xRange = 1f, float yRange = 1f) {
+        var collectionVector = -root.GetCollectionSizeVector();
+        var xPosition = Mathf.Lerp(0f, root.rect.size.x, Mathf.Max(0, xNormal / xRange)) + collectionVector.x;
+        var yPosition = Mathf.Lerp(0f, root.rect.size.y, Mathf.Max(0, yNormal / yRange)) + collectionVector.y;
+        return new Vector2(xPosition, yPosition);
+    }
+    
+    #endregion
+
+    public static bool TryGetRectTransform(this GameObject go, out RectTransform rect) => (rect = go.transform.GetRectTransform()) != null;
+    public static bool TryGetRectTransform(this Transform transform, out RectTransform rect) => (rect = transform.GetRectTransform()) != null;
     public static RectTransform GetRectTransform(this Transform transform) => transform is RectTransform rect ? rect : null;
 
     public static Vector2 GetAbsoluteSize(this RectTransform rect) => rect.rect.size;
-    public static bool IsStretch(this RectTransform rect) => AnchorPresets.HOR_STRETCH_TOP <= rect.GetAnchorType();
+    public static bool IsStretch(this RectTransform rect) => AnchorPresets.HOR_STRETCH_TOP <= rect.GetAnchorPreset();
     public static bool IsStretchAll(this RectTransform rect) => rect.anchorMin == Vector2.zero && rect.anchorMax == Vector2.one;
     public static bool IsHorizontalStretch(this RectTransform rect) => rect.anchorMin.x == 0 && rect.anchorMax.x >= 1;
     public static bool IsVerticalStretch(this RectTransform rect) => rect.anchorMin.y == 0 && rect.anchorMax.y >= 1;

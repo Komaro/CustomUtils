@@ -11,9 +11,9 @@ public abstract class UIViewModel : IDisposable {
     public SafeDelegate<NotifyModelChangeHandler> OnModelChanged;
 
     public UIViewModel() {
-        foreach (var fieldInfo in GetType().GetFields()) {
-            if (NOTIFY_TYPE_SET.Contains(fieldInfo.FieldType.GetGenericTypeDefinition()) && fieldInfo.GetValue(this) is NotifyField notifyField) {
-                notifyField.OnChanged += args => OnModelChanged.handler?.Invoke(fieldInfo.Name, args);
+        foreach (var info in GetType().GetFields()) {
+            if (NOTIFY_TYPE_SET.Contains(info.FieldType.GetGenericTypeDefinition()) && info.GetValue(this) is NotifyField notifyField) {
+                notifyField.OnChanged += args => OnModelChanged.handler?.Invoke(info.Name, args);
             }
         }
     }

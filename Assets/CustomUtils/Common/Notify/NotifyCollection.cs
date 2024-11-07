@@ -56,7 +56,7 @@ public abstract class NotifyCollection<TCollection, TValue> : NotifyField, IColl
 
     public void CopyTo(Array array, int index) {
         if (array is not TValue[] castArray) {
-            throw new InvalidCastException($"The {nameof(array)} cannot be cast to type {nameof(TValue)}");
+            throw new InvalidCastException<TValue>(nameof(array));
         }
         
         collection.CopyTo(castArray, index);

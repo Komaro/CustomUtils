@@ -60,9 +60,7 @@ public class UIService : IService {
         _uiGlobalRoot ??= _initializeProvider.GetGlobalUIRoot();
     }
 
-    void IService.Stop() {
-
-    }
+    void IService.Stop() { }
 
     void IService.Remove() {
         // TODO. 순회 처리 필요
@@ -75,25 +73,15 @@ public class UIService : IService {
         }
     }
 
+    public bool TryChange<TUIView>(UIViewModel viewModel, out TUIView uiView) where TUIView : class, IUIView => (uiView = Change<TUIView>(viewModel)) != null;
+
     public TUIView Change<TUIView>(UIViewModel viewModel) where TUIView : class, IUIView {
-        if (_uiCallStack.TryPop(out var oldUIView)) {
-            Close(oldUIView);
+        if (typeof(TUIView) == Current?.GetType()) {
+            Current.ChangeViewModel(viewModel);
+            return Current as TUIView;
         }
         
-        return Open<TUIView>(viewModel);
-    }
-
-    public TUIView Change<TUIView>() where TUIView : class, IUIView {
-        if (_uiCallStack.TryPop(out var oldUIView)) {
-            Close(oldUIView);
-        }
-
-        return Open<TUIView>();
-    }
-
-    public TUIView Open<TUIView>(UIViewModel viewModel) where TUIView : class, IUIView {
-        var uiView = Open<TUIView>();
-        if (uiView != null) {
+        if (TryChange<TUIView>(out var uiView)) {
             uiView.ChangeViewModel(viewModel);
             return uiView;
         }
@@ -101,7 +89,72 @@ public class UIService : IService {
         return null;
     }
 
+    public bool TryChange<TUIView>(out TUIView uiView) where TUIView : class, IUIView => (uiView = Change<TUIView>()) != null;
+
+    public TUIView Change<TUIView>() where TUIView : class, IUIView {
+        if (typeof(TUIView) == Current?.GetType()) {
+            Logger.TraceLog($"{typeof(TUIView).Name} is already open", Color.yellow);
+            return null;
+        }
+    
+        if (_uiCallStack.TryPop(out var oldUIView)) {
+            Close(oldUIView);
+        }
+
+        return Open<TUIView>();
+    }
+    
+    public bool TryReturn(UIViewModel viewModel, out IUIView uiView) => (uiView = Return(viewModel)) != null;
+
+    public IUIView Return(UIViewModel viewModel) {
+        if (TryReturn(out var previousUIView)) {
+            previousUIView.ChangeViewModel(viewModel);
+            return previousUIView;
+        }
+        
+        return null;
+    }
+    
+    public bool TryReturn(out IUIView previousUIView) => (previousUIView = Return()) != null;
+
+    public IUIView Return() {
+        if (_uiCallStack.TryPop(out var currentUIView)) {
+            if (_uiCallStack.TryPeek(out var previousUIView)) {
+                Close(currentUIView);
+                previousUIView.SetActive(true);
+                return previousUIView;
+            }
+            
+            _uiCallStack.Push(currentUIView);
+        }
+        
+        return null;
+    }
+
+    public bool TryOpen<TUIView>(UIViewModel viewModel, out TUIView uiView) where TUIView : class, IUIView => (uiView = Open<TUIView>(viewModel)) != null;
+
+    public TUIView Open<TUIView>(UIViewModel viewModel) where TUIView : class, IUIView {
+        if (typeof(TUIView) == Current?.GetType()) {
+            Current.ChangeViewModel(viewModel);
+            return Current as TUIView;
+        }
+        
+        if (TryOpen<TUIView>(out var uiView)) {
+            uiView.ChangeViewModel(viewModel);
+            return uiView;
+        }
+    
+        return null;
+    }
+
+    public bool TryOpen<TUIView>(out TUIView uiView) where TUIView : class, IUIView => (uiView = Open<TUIView>()) != null;
+
     public TUIView Open<TUIView>() where TUIView : class, IUIView {
+        if (typeof(TUIView) == Current?.GetType()) {
+            Logger.TraceLog($"{typeof(TUIView).Name} is already open", Color.yellow);
+            return null;
+        }
+        
         if (TryGetUI<TUIView>(out var uiView)) {
             _uiCallStack.Push(uiView);
             uiView.SetActive(true);
@@ -112,25 +165,18 @@ public class UIService : IService {
     }
 
     public void Close() {
-        if (_uiCallStack.Count <= 1) {
-            Logger.TraceError("The UI can no longer be closed");
-            return;
-        }
-        
         if (_uiCallStack.TryPop(out var uiView)) {
             Close(uiView);
         }
     }
 
-    private void Close<TUIView>() where TUIView : class, IUIView {
+    public void Close<TUIView>() where TUIView : class, IUIView {
         if (TryGetUI<TUIView>(out var uiView)) {
             Close(uiView);
         }
     }
 
-    private void Close(IUIView uiView) {
-        uiView.SetActive(false);
-    }
+    private void Close(IUIView uiView) => uiView.SetActive(false);
 
     private bool TryGetUI<TUIView>(out TUIView uiView) where TUIView : class, IUIView => (uiView = GetUI<TUIView>()) != null;
 
@@ -165,11 +211,9 @@ public class UIService : IService {
     }
 
     private bool TryCreateUIViewSwitch(Type type, out IUIView uiView) => (uiView = CreateUIViewSwitch(type)) != null;
-
-    // TODO. 최적화 필요
-    // TODO. TryInstantiate 확장 픽요 
+    
     private IUIView CreateUIViewSwitch(Type type) {
-        if (_viewAttributeDic.TryGetValue(type, out var attribute) && Service.GetService<ResourceService>().TryInstantiate(attribute.prefab, out var go) && go.TryGetComponent<IUIView>(out var uiView)) {
+        if (_viewAttributeDic.TryGetValue(type, out var attribute) && Service.GetService<ResourceService>().TryInstantiate(out var go, attribute.prefab) && go.TryGetComponent<IUIView>(out var uiView)) {
             if (type.IsDefined<GlobalUIAttribute>()) {
                 uiView.transform.SetParent(_uiGlobalRoot);
                 _cachedGlobalUIDic.TryAdd(type, uiView);
@@ -177,10 +221,14 @@ public class UIService : IService {
                 uiView.transform.SetParent(_uiRoot);
                 _cachedUIDic.TryAdd(type, uiView);
             }
+
+            return uiView;
         }
-        
+
         return null;
     }
+
+    public bool IsValid() => _uiRoot != null && _uiGlobalRoot != null || _viewSet.IsEmpty == false || _viewAttributeDic.IsEmpty == false;
 }
 
 [RequiresAttributeImplementation(typeof(PriorityAttribute))]
@@ -198,3 +246,25 @@ public abstract class UIInitializeProvider {
 }
 
 public class GlobalUIAttribute : PriorityAttribute { }
+
+
+// TODO. 현 구조상 Exception을 추가하려면 구조를 새롭게 수정해야 함.
+public class AlreadyOpenUIException : Exception {
+    
+    public AlreadyOpenUIException(Type type) : base($"{type.Name} is already open ui") { }
+}
+
+public class AlreadyOpenUIException<T> : Exception {
+    
+    public AlreadyOpenUIException() : base($"{typeof(T).Name} is already open ui") { }
+}
+
+public class CreateFailedUIException : Exception {
+
+    public CreateFailedUIException(Type type) : base($"Failed to create {type.Name}") { }
+}
+
+public class CreateFailedUIException<T> : Exception {
+    
+    public CreateFailedUIException() : base($"Failed to create {typeof(T).Name}") { }
+} 

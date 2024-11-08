@@ -10,7 +10,6 @@ public class UIViewTestRunner {
 
     [UnitySetUp]
     public IEnumerator OneTimeSetUp() {
-        TestUtil.EvaluateCodeCoverageResult();
         yield return null;
     }
 

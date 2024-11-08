@@ -3,6 +3,7 @@ using NUnit.Framework;
 using Unity.PerformanceTesting;
 using UnityEngine;
 
+[Category(TestConstants.Category.SERVICE)]
 public class ObjectPoolServiceTestRunner {
     
     private const string TEST_PREFAB = "TestPrefab";

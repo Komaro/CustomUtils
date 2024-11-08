@@ -13,8 +13,10 @@ public class TestSimpleUIView : UIView<TestSimpleUIViewModel> {
     
     private Button _increaseCountButton;
     private Button _decreaseCountButton;
-    
-    private void Awake() {
+
+    protected override void Awake() {
+        base.Awake();
+        
         gameObject.TryFindComponent("TitleText", out _titleText);
         gameObject.TryFindComponent("CountText", out _countText);
         

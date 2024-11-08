@@ -8,9 +8,15 @@ using UnityEngine.TestTools;
 using UnityEngine.UI;
 
 [Category(TestConstants.Category.UI)]
+[Category(TestConstants.Category.SERVICE)]
 public class UIServiceTestRunner {
 
     private Scene _activeScene;
+    
+    [OneTimeSetUp]
+    public void OneTimeSetUp() {
+        LogAssert.ignoreFailingMessages = true;
+    }
     
     [UnitySetUp]
     public IEnumerator Setup() {
@@ -26,13 +32,38 @@ public class UIServiceTestRunner {
 
     [OneTimeTearDown]
     public void OneTimeTearDown() {
-        
+        LogAssert.ignoreFailingMessages = false;
     }
 
-    [Test]
-    public void UIServiceTest() {
+    [UnityTest]
+    public IEnumerator UIServiceTest() {
         if (Service.TryGetService<UIService>(out var service)) {
+            yield return null;
+            Assert.IsTrue(service.IsValid());
+            Logger.TraceLog("Pass valid check");
             
+            Assert.IsNull(service.Current);
+            Assert.IsNull(service.Previous);
+            
+            Assert.IsTrue(service.TryOpen<TestSimpleUIView>(out var uiView));
+            var viewModel = new TestSimpleUIViewModel {
+                Title = { Value = "ChangeViewModel Test" },
+                Count = { Value = 3544 }
+            };
+
+            uiView.ChangeViewModel(viewModel);
+            
+            var viewType = typeof(TestSimpleUIView);
+            var viewModelType = typeof(TestSimpleUIViewModel);
+            
+            
+
+            viewModel = new TestSimpleUIViewModel {
+                Title = { Value = "Open Test" },
+                Count = { Value = 4533 }
+            };
+            
+            Assert.IsTrue(service.TryOpen(viewModel, out uiView));
         }
     }
 

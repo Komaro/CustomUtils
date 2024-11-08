@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 1536
     height: 780.8
   m_ShowMode: 4
-  m_Title: Console
+  m_Title: Test Runner
   m_RootView: {fileID: 2}
   m_MinSize: {x: 875, y: 350}
   m_MaxSize: {x: 10000, y: 10000}
@@ -119,7 +119,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 100}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 104
+  controlID: 111
   draggingID: 0
 --- !u!114 &6
 MonoBehaviour:
@@ -145,7 +145,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 1
-  controlID: 105
+  controlID: 88
   draggingID: 0
 --- !u!114 &7
 MonoBehaviour:
@@ -194,10 +194,10 @@ MonoBehaviour:
     height: 385.6
   m_MinSize: {x: 201, y: 221}
   m_MaxSize: {x: 4001, y: 4021}
-  m_ActualView: {fileID: 16}
+  m_ActualView: {fileID: 15}
   m_Panes:
+  - {fileID: 15}
   - {fileID: 16}
-  - {fileID: 17}
   m_Selected: 0
   m_LastSelected: 1
 --- !u!114 &9
@@ -221,9 +221,9 @@ MonoBehaviour:
     height: 385.6
   m_MinSize: {x: 202, y: 221}
   m_MaxSize: {x: 4002, y: 4021}
-  m_ActualView: {fileID: 18}
+  m_ActualView: {fileID: 17}
   m_Panes:
-  - {fileID: 18}
+  - {fileID: 17}
   m_Selected: 0
   m_LastSelected: 0
 --- !u!114 &10
@@ -250,7 +250,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 50}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 106
+  controlID: 89
   draggingID: 0
 --- !u!114 &11
 MonoBehaviour:
@@ -273,10 +273,10 @@ MonoBehaviour:
     height: 345.19998
   m_MinSize: {x: 101, y: 121}
   m_MaxSize: {x: 4001, y: 4021}
-  m_ActualView: {fileID: 20}
+  m_ActualView: {fileID: 19}
   m_Panes:
+  - {fileID: 18}
   - {fileID: 19}
-  - {fileID: 20}
   m_Selected: 1
   m_LastSelected: 0
 --- !u!114 &12
@@ -300,9 +300,9 @@ MonoBehaviour:
     height: 345.19998
   m_MinSize: {x: 202, y: 221}
   m_MaxSize: {x: 4002, y: 4021}
-  m_ActualView: {fileID: 21}
+  m_ActualView: {fileID: 20}
   m_Panes:
-  - {fileID: 21}
+  - {fileID: 20}
   m_Selected: 0
   m_LastSelected: 0
 --- !u!114 &13
@@ -324,50 +324,15 @@ MonoBehaviour:
     y: 0
     width: 729.6
     height: 730.8
-  m_MinSize: {x: 100, y: 100}
-  m_MaxSize: {x: 4000, y: 4000}
-  m_ActualView: {fileID: 15}
+  m_MinSize: {x: 101, y: 121}
+  m_MaxSize: {x: 4001, y: 4021}
+  m_ActualView: {fileID: 14}
   m_Panes:
-  - {fileID: 22}
-  - {fileID: 15}
+  - {fileID: 21}
   - {fileID: 14}
   m_Selected: 1
-  m_LastSelected: 2
+  m_LastSelected: 0
 --- !u!114 &14
-MonoBehaviour:
-  m_ObjectHideFlags: 52
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b5115ff20f1ea204dac14fa49c0e8f69, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_MinSize: {x: 445, y: 65}
-  m_MaxSize: {x: 4000, y: 4000}
-  m_TitleContent:
-    m_Text: Code Coverage
-    m_Image: {fileID: 2800000, guid: 48e45b7f100ee4b48a02e05135e6cece, type: 3}
-    m_Tooltip: 
-  m_Pos:
-    serializedVersion: 2
-    x: 806.4
-    y: 73.6
-    width: 728.6
-    height: 709.8
-  m_SerializedDataModeController:
-    m_DataMode: 0
-    m_PreferredDataMode: 0
-    m_SupportedDataModes: 
-    isAutomatic: 1
-  m_ViewDataDictionary: {fileID: 0}
-  m_OverlayCanvas:
-    m_LastAppliedPresetName: Default
-    m_SaveData: []
-    m_OverlaysVisible: 1
---- !u!114 &15
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -403,8 +368,8 @@ MonoBehaviour:
     m_SaveData: []
     m_OverlaysVisible: 1
   m_Spl:
-    ID: 259
-    splitterInitialOffset: 284.8
+    ID: 186
+    splitterInitialOffset: 281.6
     currentActiveSplitter: -1
     realSizes:
     - 235.2
@@ -428,9 +393,9 @@ MonoBehaviour:
     oldSplitSize: 0
   m_TestTypeToolbarIndex: 1
   m_TestListGUIs:
-  - m_Window: {fileID: 15}
+  - m_Window: {fileID: 14}
     runProgress:
-      RunGuid: 498bb223-f43c-4008-93d0-c3822d03963e
+      RunGuid: 0946d854-a5de-4d50-89b5-8fc2e5a97e80
       ExecutionSettings:
         m_TargetPlatform: 0
         m_HasTargetPlatform: 0
@@ -2034,9 +1999,9 @@ MonoBehaviour:
       - Performance
       - Uncategorized
     m_SelectedOption: 0
-  - m_Window: {fileID: 15}
+  - m_Window: {fileID: 14}
     runProgress:
-      RunGuid: 498bb223-f43c-4008-93d0-c3822d03963e
+      RunGuid: 0946d854-a5de-4d50-89b5-8fc2e5a97e80
       ExecutionSettings:
         m_TargetPlatform: 0
         m_HasTargetPlatform: 0
@@ -2068,11 +2033,11 @@ MonoBehaviour:
       CurrentStepName: Unlock Reload Assemblies
       CurrentStageName: 
     m_NewResultList:
-    - id: 1000
+    - id: 1033
       uniqueId: '[CustomUtils][suite]'
       name: CustomUtils
       fullName: CustomUtils
-      resultStatus: 1
+      resultStatus: 2
       duration: 0
       messages: 
       output: 
@@ -2088,6 +2053,22 @@ MonoBehaviour:
       uniqueId: '[PlayModeTestAssembly][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/PlayModeTestAssembly.dll][suite]'
       name: PlayModeTestAssembly.dll
       fullName: C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/PlayModeTestAssembly.dll
+      resultStatus: 2
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1033
+      parentUniqueId: '[CustomUtils][suite]'
+    - id: 1001
+      uniqueId: PlayModeTestAssembly.dll/[PlayModeTestAssembly][ObjectPoolServiceTestRunner][suite]
+      name: ObjectPoolServiceTestRunner
+      fullName: ObjectPoolServiceTestRunner
       resultStatus: 1
       duration: 0
       messages: 
@@ -2097,30 +2078,15 @@ MonoBehaviour:
       ignoredOrSkipped: 0
       description: 
       isSuite: 1
-      categories: []
-      parentId: 1000
-      parentUniqueId: '[CustomUtils][suite]'
-    - id: 1001
-      uniqueId: PlayModeTestAssembly.dll/[PlayModeTestAssembly][ObjectPoolServiceTestRunner][suite]
-      name: ObjectPoolServiceTestRunner
-      fullName: ObjectPoolServiceTestRunner
-      resultStatus: 0
-      duration: 0
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 1
-      categories: []
+      categories:
+      - Service
       parentId: 1028
       parentUniqueId: '[PlayModeTestAssembly][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/PlayModeTestAssembly.dll][suite]'
     - id: 1011
       uniqueId: PlayModeTestAssembly.dll/ObjectPoolServiceTestRunner/[PlayModeTestAssembly][ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest][suite]
       name: ObjectPoolServiceMaximumTest
       fullName: ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest
-      resultStatus: 0
+      resultStatus: 1
       duration: 0
       messages: 
       output: 
@@ -2129,17 +2095,383 @@ MonoBehaviour:
       ignoredOrSkipped: 0
       description: 
       isSuite: 1
-      categories: []
+      categories:
+      - Service
       parentId: 1001
       parentUniqueId: PlayModeTestAssembly.dll/[PlayModeTestAssembly][ObjectPoolServiceTestRunner][suite]
     - id: 1066
       uniqueId: PlayModeTestAssembly.dll/ObjectPoolServiceTestRunner/ObjectPoolServiceMaximumTest/[PlayModeTestAssembly][ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest(60)]
       name: ObjectPoolServiceMaximumTest(60)
       fullName: ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest(60)
-      resultStatus: 0
-      duration: 0
+      resultStatus: 1
+      duration: 0.5019927
       messages: 
-      output: 
+      output: '[ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest] 1 || 1
+        || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        2 || 2 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        3 || 3 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        4 || 4 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        5 || 5 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        6 || 6 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        7 || 7 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        8 || 8 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        9 || 9 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        10 || 10 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        11 || 11 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        12 || 12 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        13 || 13 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        14 || 14 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        15 || 15 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        16 || 16 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        17 || 17 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        18 || 18 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        19 || 19 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        20 || 20 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        21 || 21 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        22 || 22 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        23 || 23 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        24 || 24 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        25 || 25 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        26 || 26 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        27 || 27 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        28 || 28 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        29 || 29 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        30 || 30 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        31 || 31 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        32 || 32 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        33 || 33 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        34 || 34 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        35 || 35 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        36 || 36 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        37 || 37 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        38 || 38 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        39 || 39 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        40 || 40 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        41 || 41 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        42 || 42 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        43 || 43 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        44 || 44 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        45 || 45 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        46 || 46 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        47 || 47 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        48 || 48 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        49 || 49 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        50 || 50 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        51 || 51 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        52 || 52 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        53 || 53 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        54 || 54 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        55 || 55 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        56 || 56 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        57 || 57 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        58 || 58 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        59 || 59 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        60 || 60 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        Pass Get Test
+
+        
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        60 || 59 || 1
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        60 || 58 || 2
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        60 || 57 || 3
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        60 || 56 || 4
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        60 || 55 || 5
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        60 || 54 || 6
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        60 || 53 || 7
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        60 || 52 || 8
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        60 || 51 || 9
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        60 || 50 || 10
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        60 || 49 || 11
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        60 || 48 || 12
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        60 || 47 || 13
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        60 || 46 || 14
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        60 || 45 || 15
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        60 || 44 || 16
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        60 || 43 || 17
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        60 || 42 || 18
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        60 || 41 || 19
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        60 || 40 || 20
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        60 || 39 || 21
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        60 || 38 || 22
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        60 || 37 || 23
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        60 || 36 || 24
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        60 || 35 || 25
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        60 || 34 || 26
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        60 || 33 || 27
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        60 || 32 || 28
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        60 || 31 || 29
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        60 || 30 || 30
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        60 || 29 || 31
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        60 || 28 || 32
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        60 || 27 || 33
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        60 || 26 || 34
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        60 || 25 || 35
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        60 || 24 || 36
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        60 || 23 || 37
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        60 || 22 || 38
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        60 || 21 || 39
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        60 || 20 || 40
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        60 || 19 || 41
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        60 || 18 || 42
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        60 || 17 || 43
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        60 || 16 || 44
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        60 || 15 || 45
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        60 || 14 || 46
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        60 || 13 || 47
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        60 || 12 || 48
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        60 || 11 || 49
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        60 || 10 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        59 || 9 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        58 || 8 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        57 || 7 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        56 || 6 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        55 || 5 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        54 || 4 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        53 || 3 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        52 || 2 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        51 || 1 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        50 || 0 || 50
+
+'
       stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
@@ -2153,10 +2485,735 @@ MonoBehaviour:
       uniqueId: PlayModeTestAssembly.dll/ObjectPoolServiceTestRunner/ObjectPoolServiceMaximumTest/[PlayModeTestAssembly][ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest(120)]
       name: ObjectPoolServiceMaximumTest(120)
       fullName: ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest(120)
-      resultStatus: 0
-      duration: 0
+      resultStatus: 1
+      duration: 0.7764752
       messages: 
-      output: 
+      output: '[ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest] 1 || 1
+        || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        2 || 2 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        3 || 3 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        4 || 4 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        5 || 5 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        6 || 6 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        7 || 7 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        8 || 8 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        9 || 9 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        10 || 10 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        11 || 11 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        12 || 12 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        13 || 13 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        14 || 14 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        15 || 15 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        16 || 16 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        17 || 17 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        18 || 18 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        19 || 19 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        20 || 20 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        21 || 21 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        22 || 22 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        23 || 23 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        24 || 24 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        25 || 25 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        26 || 26 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        27 || 27 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        28 || 28 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        29 || 29 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        30 || 30 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        31 || 31 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        32 || 32 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        33 || 33 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        34 || 34 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        35 || 35 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        36 || 36 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        37 || 37 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        38 || 38 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        39 || 39 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        40 || 40 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        41 || 41 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        42 || 42 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        43 || 43 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        44 || 44 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        45 || 45 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        46 || 46 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        47 || 47 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        48 || 48 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        49 || 49 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        50 || 50 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        51 || 51 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        52 || 52 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        53 || 53 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        54 || 54 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        55 || 55 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        56 || 56 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        57 || 57 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        58 || 58 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        59 || 59 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        60 || 60 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        61 || 61 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        62 || 62 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        63 || 63 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        64 || 64 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        65 || 65 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        66 || 66 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        67 || 67 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        68 || 68 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        69 || 69 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        70 || 70 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        71 || 71 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        72 || 72 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        73 || 73 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        74 || 74 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        75 || 75 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        76 || 76 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        77 || 77 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        78 || 78 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        79 || 79 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        80 || 80 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        81 || 81 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        82 || 82 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        83 || 83 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        84 || 84 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        85 || 85 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        86 || 86 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        87 || 87 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        88 || 88 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        89 || 89 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        90 || 90 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        91 || 91 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        92 || 92 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        93 || 93 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        94 || 94 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        95 || 95 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        96 || 96 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        97 || 97 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        98 || 98 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        99 || 99 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        100 || 100 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        101 || 101 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        102 || 102 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        103 || 103 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        104 || 104 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        105 || 105 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        106 || 106 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        107 || 107 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        108 || 108 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        109 || 109 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        110 || 110 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        111 || 111 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        112 || 112 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        113 || 113 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        114 || 114 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        115 || 115 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        116 || 116 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        117 || 117 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        118 || 118 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        119 || 119 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        120 || 120 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        Pass Get Test
+
+        
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        120 || 119 || 1
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        120 || 118 || 2
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        120 || 117 || 3
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        120 || 116 || 4
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        120 || 115 || 5
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        120 || 114 || 6
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        120 || 113 || 7
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        120 || 112 || 8
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        120 || 111 || 9
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        120 || 110 || 10
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        120 || 109 || 11
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        120 || 108 || 12
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        120 || 107 || 13
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        120 || 106 || 14
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        120 || 105 || 15
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        120 || 104 || 16
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        120 || 103 || 17
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        120 || 102 || 18
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        120 || 101 || 19
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        120 || 100 || 20
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        120 || 99 || 21
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        120 || 98 || 22
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        120 || 97 || 23
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        120 || 96 || 24
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        120 || 95 || 25
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        120 || 94 || 26
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        120 || 93 || 27
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        120 || 92 || 28
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        120 || 91 || 29
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        120 || 90 || 30
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        120 || 89 || 31
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        120 || 88 || 32
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        120 || 87 || 33
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        120 || 86 || 34
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        120 || 85 || 35
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        120 || 84 || 36
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        120 || 83 || 37
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        120 || 82 || 38
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        120 || 81 || 39
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        120 || 80 || 40
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        120 || 79 || 41
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        120 || 78 || 42
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        120 || 77 || 43
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        120 || 76 || 44
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        120 || 75 || 45
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        120 || 74 || 46
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        120 || 73 || 47
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        120 || 72 || 48
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        120 || 71 || 49
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        120 || 70 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        119 || 69 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        118 || 68 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        117 || 67 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        116 || 66 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        115 || 65 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        114 || 64 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        113 || 63 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        112 || 62 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        111 || 61 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        110 || 60 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        109 || 59 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        108 || 58 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        107 || 57 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        106 || 56 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        105 || 55 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        104 || 54 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        103 || 53 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        102 || 52 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        101 || 51 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        100 || 50 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        99 || 49 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        98 || 48 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        97 || 47 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        96 || 46 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        95 || 45 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        94 || 44 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        93 || 43 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        92 || 42 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        91 || 41 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        90 || 40 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        89 || 39 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        88 || 38 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        87 || 37 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        86 || 36 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        85 || 35 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        84 || 34 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        83 || 33 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        82 || 32 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        81 || 31 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        80 || 30 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        79 || 29 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        78 || 28 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        77 || 27 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        76 || 26 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        75 || 25 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        74 || 24 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        73 || 23 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        72 || 22 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        71 || 21 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        70 || 20 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        69 || 19 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        68 || 18 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        67 || 17 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        66 || 16 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        65 || 15 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        64 || 14 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        63 || 13 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        62 || 12 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        61 || 11 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        60 || 10 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        59 || 9 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        58 || 8 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        57 || 7 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        56 || 6 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        55 || 5 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        54 || 4 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        53 || 3 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        52 || 2 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        51 || 1 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        50 || 0 || 50
+
+'
       stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
@@ -2170,10 +3227,1095 @@ MonoBehaviour:
       uniqueId: PlayModeTestAssembly.dll/ObjectPoolServiceTestRunner/ObjectPoolServiceMaximumTest/[PlayModeTestAssembly][ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest(180)]
       name: ObjectPoolServiceMaximumTest(180)
       fullName: ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest(180)
-      resultStatus: 0
-      duration: 0
+      resultStatus: 1
+      duration: 0.9440838
       messages: 
-      output: 
+      output: '[ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest] 1 || 1
+        || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        2 || 2 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        3 || 3 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        4 || 4 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        5 || 5 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        6 || 6 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        7 || 7 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        8 || 8 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        9 || 9 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        10 || 10 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        11 || 11 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        12 || 12 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        13 || 13 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        14 || 14 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        15 || 15 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        16 || 16 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        17 || 17 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        18 || 18 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        19 || 19 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        20 || 20 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        21 || 21 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        22 || 22 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        23 || 23 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        24 || 24 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        25 || 25 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        26 || 26 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        27 || 27 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        28 || 28 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        29 || 29 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        30 || 30 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        31 || 31 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        32 || 32 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        33 || 33 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        34 || 34 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        35 || 35 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        36 || 36 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        37 || 37 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        38 || 38 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        39 || 39 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        40 || 40 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        41 || 41 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        42 || 42 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        43 || 43 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        44 || 44 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        45 || 45 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        46 || 46 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        47 || 47 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        48 || 48 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        49 || 49 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        50 || 50 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        51 || 51 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        52 || 52 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        53 || 53 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        54 || 54 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        55 || 55 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        56 || 56 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        57 || 57 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        58 || 58 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        59 || 59 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        60 || 60 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        61 || 61 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        62 || 62 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        63 || 63 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        64 || 64 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        65 || 65 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        66 || 66 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        67 || 67 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        68 || 68 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        69 || 69 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        70 || 70 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        71 || 71 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        72 || 72 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        73 || 73 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        74 || 74 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        75 || 75 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        76 || 76 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        77 || 77 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        78 || 78 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        79 || 79 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        80 || 80 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        81 || 81 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        82 || 82 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        83 || 83 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        84 || 84 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        85 || 85 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        86 || 86 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        87 || 87 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        88 || 88 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        89 || 89 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        90 || 90 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        91 || 91 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        92 || 92 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        93 || 93 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        94 || 94 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        95 || 95 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        96 || 96 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        97 || 97 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        98 || 98 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        99 || 99 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        100 || 100 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        101 || 101 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        102 || 102 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        103 || 103 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        104 || 104 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        105 || 105 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        106 || 106 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        107 || 107 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        108 || 108 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        109 || 109 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        110 || 110 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        111 || 111 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        112 || 112 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        113 || 113 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        114 || 114 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        115 || 115 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        116 || 116 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        117 || 117 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        118 || 118 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        119 || 119 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        120 || 120 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        121 || 121 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        122 || 122 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        123 || 123 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        124 || 124 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        125 || 125 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        126 || 126 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        127 || 127 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        128 || 128 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        129 || 129 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        130 || 130 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        131 || 131 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        132 || 132 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        133 || 133 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        134 || 134 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        135 || 135 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        136 || 136 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        137 || 137 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        138 || 138 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        139 || 139 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        140 || 140 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        141 || 141 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        142 || 142 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        143 || 143 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        144 || 144 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        145 || 145 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        146 || 146 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        147 || 147 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        148 || 148 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        149 || 149 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        150 || 150 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        151 || 151 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        152 || 152 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        153 || 153 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        154 || 154 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        155 || 155 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        156 || 156 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        157 || 157 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        158 || 158 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        159 || 159 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        160 || 160 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        161 || 161 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        162 || 162 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        163 || 163 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        164 || 164 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        165 || 165 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        166 || 166 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        167 || 167 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        168 || 168 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        169 || 169 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        170 || 170 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        171 || 171 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        172 || 172 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        173 || 173 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        174 || 174 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        175 || 175 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        176 || 176 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        177 || 177 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        178 || 178 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        179 || 179 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        180 || 180 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        Pass Get Test
+
+        
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        180 || 179 || 1
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        180 || 178 || 2
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        180 || 177 || 3
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        180 || 176 || 4
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        180 || 175 || 5
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        180 || 174 || 6
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        180 || 173 || 7
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        180 || 172 || 8
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        180 || 171 || 9
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        180 || 170 || 10
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        180 || 169 || 11
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        180 || 168 || 12
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        180 || 167 || 13
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        180 || 166 || 14
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        180 || 165 || 15
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        180 || 164 || 16
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        180 || 163 || 17
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        180 || 162 || 18
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        180 || 161 || 19
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        180 || 160 || 20
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        180 || 159 || 21
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        180 || 158 || 22
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        180 || 157 || 23
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        180 || 156 || 24
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        180 || 155 || 25
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        180 || 154 || 26
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        180 || 153 || 27
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        180 || 152 || 28
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        180 || 151 || 29
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        180 || 150 || 30
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        180 || 149 || 31
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        180 || 148 || 32
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        180 || 147 || 33
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        180 || 146 || 34
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        180 || 145 || 35
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        180 || 144 || 36
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        180 || 143 || 37
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        180 || 142 || 38
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        180 || 141 || 39
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        180 || 140 || 40
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        180 || 139 || 41
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        180 || 138 || 42
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        180 || 137 || 43
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        180 || 136 || 44
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        180 || 135 || 45
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        180 || 134 || 46
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        180 || 133 || 47
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        180 || 132 || 48
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        180 || 131 || 49
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        180 || 130 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        179 || 129 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        178 || 128 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        177 || 127 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        176 || 126 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        175 || 125 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        174 || 124 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        173 || 123 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        172 || 122 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        171 || 121 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        170 || 120 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        169 || 119 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        168 || 118 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        167 || 117 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        166 || 116 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        165 || 115 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        164 || 114 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        163 || 113 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        162 || 112 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        161 || 111 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        160 || 110 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        159 || 109 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        158 || 108 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        157 || 107 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        156 || 106 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        155 || 105 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        154 || 104 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        153 || 103 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        152 || 102 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        151 || 101 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        150 || 100 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        149 || 99 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        148 || 98 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        147 || 97 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        146 || 96 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        145 || 95 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        144 || 94 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        143 || 93 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        142 || 92 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        141 || 91 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        140 || 90 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        139 || 89 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        138 || 88 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        137 || 87 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        136 || 86 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        135 || 85 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        134 || 84 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        133 || 83 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        132 || 82 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        131 || 81 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        130 || 80 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        129 || 79 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        128 || 78 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        127 || 77 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        126 || 76 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        125 || 75 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        124 || 74 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        123 || 73 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        122 || 72 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        121 || 71 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        120 || 70 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        119 || 69 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        118 || 68 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        117 || 67 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        116 || 66 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        115 || 65 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        114 || 64 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        113 || 63 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        112 || 62 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        111 || 61 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        110 || 60 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        109 || 59 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        108 || 58 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        107 || 57 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        106 || 56 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        105 || 55 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        104 || 54 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        103 || 53 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        102 || 52 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        101 || 51 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        100 || 50 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        99 || 49 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        98 || 48 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        97 || 47 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        96 || 46 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        95 || 45 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        94 || 44 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        93 || 43 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        92 || 42 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        91 || 41 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        90 || 40 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        89 || 39 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        88 || 38 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        87 || 37 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        86 || 36 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        85 || 35 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        84 || 34 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        83 || 33 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        82 || 32 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        81 || 31 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        80 || 30 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        79 || 29 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        78 || 28 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        77 || 27 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        76 || 26 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        75 || 25 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        74 || 24 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        73 || 23 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        72 || 22 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        71 || 21 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        70 || 20 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        69 || 19 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        68 || 18 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        67 || 17 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        66 || 16 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        65 || 15 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        64 || 14 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        63 || 13 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        62 || 12 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        61 || 11 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        60 || 10 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        59 || 9 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        58 || 8 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        57 || 7 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        56 || 6 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        55 || 5 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        54 || 4 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        53 || 3 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        52 || 2 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        51 || 1 || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServiceMaximumTest]
+        50 || 0 || 50
+
+'
       stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
@@ -2187,10 +4329,97 @@ MonoBehaviour:
       uniqueId: PlayModeTestAssembly.dll/ObjectPoolServiceTestRunner/[PlayModeTestAssembly][ObjectPoolServiceTestRunner.ObjectPoolServicePerformanceTest]
       name: ObjectPoolServicePerformanceTest
       fullName: ObjectPoolServiceTestRunner.ObjectPoolServicePerformanceTest
-      resultStatus: 0
-      duration: 0
+      resultStatus: 1
+      duration: 0.9495018
       messages: 
-      output: 
+      output: "[<>c.<ObjectPoolServicePerformanceTest>b__5_0] TestPrefab\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0]
+        TestPrefab TestPrefab_1\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0]
+        TestPrefab TestPrefab_1 TestPrefab_2\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0]
+        TestPrefab_1 TestPrefab_2\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0]
+        TestPrefab_2\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0] \n\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0]
+        Pass Performance Test\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0] TestPrefab\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0]
+        TestPrefab TestPrefab_1\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0]
+        TestPrefab TestPrefab_1 TestPrefab_2\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0]
+        TestPrefab_1 TestPrefab_2\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0]
+        TestPrefab_2\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0] \n\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0]
+        Pass Performance Test\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0] TestPrefab\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0]
+        TestPrefab TestPrefab_1\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0]
+        TestPrefab TestPrefab_1 TestPrefab_2\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0]
+        TestPrefab_1 TestPrefab_2\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0]
+        TestPrefab_2\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0] \n\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0]
+        Pass Performance Test\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0] TestPrefab\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0]
+        TestPrefab TestPrefab_1\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0]
+        TestPrefab TestPrefab_1 TestPrefab_2\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0]
+        TestPrefab_1 TestPrefab_2\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0]
+        TestPrefab_2\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0] \n\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0]
+        Pass Performance Test\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0] TestPrefab\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0]
+        TestPrefab TestPrefab_1\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0]
+        TestPrefab TestPrefab_1 TestPrefab_2\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0]
+        TestPrefab_1 TestPrefab_2\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0]
+        TestPrefab_2\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0] \n\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0]
+        Pass Performance Test\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0] TestPrefab\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0]
+        TestPrefab TestPrefab_1\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0]
+        TestPrefab TestPrefab_1 TestPrefab_2\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0]
+        TestPrefab_1 TestPrefab_2\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0]
+        TestPrefab_2\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0] \n\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0]
+        Pass Performance Test\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0] TestPrefab\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0]
+        TestPrefab TestPrefab_1\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0]
+        TestPrefab TestPrefab_1 TestPrefab_2\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0]
+        TestPrefab_1 TestPrefab_2\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0]
+        TestPrefab_2\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0] \n\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0]
+        Pass Performance Test\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0] TestPrefab\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0]
+        TestPrefab TestPrefab_1\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0]
+        TestPrefab TestPrefab_1 TestPrefab_2\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0]
+        TestPrefab_1 TestPrefab_2\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0]
+        TestPrefab_2\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0] \n\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0]
+        Pass Performance Test\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0] TestPrefab\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0]
+        TestPrefab TestPrefab_1\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0]
+        TestPrefab TestPrefab_1 TestPrefab_2\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0]
+        TestPrefab_1 TestPrefab_2\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0]
+        TestPrefab_2\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0] \n\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0]
+        Pass Performance Test\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0] TestPrefab\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0]
+        TestPrefab TestPrefab_1\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0]
+        TestPrefab TestPrefab_1 TestPrefab_2\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0]
+        TestPrefab_1 TestPrefab_2\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0]
+        TestPrefab_2\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0] \n\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0]
+        Pass Performance Test\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0] TestPrefab\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0]
+        TestPrefab TestPrefab_1\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0]
+        TestPrefab TestPrefab_1 TestPrefab_2\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0]
+        TestPrefab_1 TestPrefab_2\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0]
+        TestPrefab_2\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0] \n\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0]
+        Pass Performance Test\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0] TestPrefab\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0]
+        TestPrefab TestPrefab_1\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0]
+        TestPrefab TestPrefab_1 TestPrefab_2\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0]
+        TestPrefab_1 TestPrefab_2\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0]
+        TestPrefab_2\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0] \n\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0]
+        Pass Performance Test\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0] TestPrefab\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0]
+        TestPrefab TestPrefab_1\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0]
+        TestPrefab TestPrefab_1 TestPrefab_2\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0]
+        TestPrefab_1 TestPrefab_2\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0]
+        TestPrefab_2\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0] \n\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0]
+        Pass Performance Test\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0] TestPrefab\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0]
+        TestPrefab TestPrefab_1\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0]
+        TestPrefab TestPrefab_1 TestPrefab_2\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0]
+        TestPrefab_1 TestPrefab_2\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0]
+        TestPrefab_2\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0] \n\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0]
+        Pass Performance Test\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0] TestPrefab\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0]
+        TestPrefab TestPrefab_1\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0]
+        TestPrefab TestPrefab_1 TestPrefab_2\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0]
+        TestPrefab_1 TestPrefab_2\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0]
+        TestPrefab_2\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0] \n\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0]
+        Pass Performance Test\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0] TestPrefab\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0]
+        TestPrefab TestPrefab_1\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0]
+        TestPrefab TestPrefab_1 TestPrefab_2\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0]
+        TestPrefab_1 TestPrefab_2\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0]
+        TestPrefab_2\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0] \n\r\n[<>c.<ObjectPoolServicePerformanceTest>b__5_0]
+        Pass Performance Test\r\nObjectPoolServicePerformanceTest.GC() in Undefineds\nMin:\t\t489.00
+        \nMedian:\t\t490.00 \nMax:\t\t913.00 \nAvg:\t\t516.69 \nStdDev:\t\t102.34
+        \nSampleCount:\t16\nSum:\t\t8267.00 \r\nFirst samples:\t\u2588\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\r\nHistogram:\t\u2588\u2581\u2581\u2581\r\n\r\nObjectPoolServicePerformanceTest
+        in Milliseconds\nMin:\t\t16.02 ms\nMedian:\t\t17.42 ms\nMax:\t\t21.35 ms\nAvg:\t\t17.67
+        ms\nStdDev:\t\t1.32 ms\nSampleCount:\t15\nSum:\t\t265.01 ms\r\nFirst samples:\t\u2582\u2583\u2581\u2588\u2585\u2582\u2584\u2585\u2582\u2582\u2583\u2582\u2584\u2583\u2583\r\nHistogram:\t\u2588\u2583\u2581\u2581\r\n\r\n\r\n##performancetestresult2:{\"Name\":\"ObjectPoolServiceTestRunner.ObjectPoolServicePerformanceTest\",\"ClassName\":\"ObjectPoolServiceTestRunner\",\"MethodName\":\"ObjectPoolServicePerformanceTest\",\"Version\":\"1\",\"Categories\":[\"Performance\",\"Service\"],\"SampleGroups\":[{\"Name\":\"ObjectPoolServicePerformanceTest.GC()\",\"Unit\":8,\"IncreaseIsBetter\":false,\"Samples\":[913.0,492.0,490.0,491.0,490.0,489.0,489.0,491.0,489.0,490.0,496.0,489.0,489.0,489.0,489.0,491.0],\"Min\":489.0,\"Max\":913.0,\"Median\":490.0,\"Average\":516.6875,\"StandardDeviation\":102.34239025814279,\"Sum\":8267.0},{\"Name\":\"ObjectPoolServicePerformanceTest\",\"Unit\":2,\"IncreaseIsBetter\":false,\"Samples\":[16.865600000000016,17.174599999999999,16.018900000000003,21.3467,19.287499999999967,16.70139999999998,18.164199999999995,18.85650000000004,16.744700000000024,16.572100000000036,17.822199999999954,16.445600000000014,18.040499999999953,17.557300000000056,17.415200000000028],\"Min\":16.018900000000003,\"Max\":21.3467,\"Median\":17.415200000000028,\"Average\":17.667533333333336,\"StandardDeviation\":1.3201497574980675,\"Sum\":265.01300000000006}]}\r\n##performancetestruninfo2:{\"TestSuite\":\"Playmode\",\"Date\":1731052267697,\"Player\":{\"Development\":true,\"ScreenWidth\":1920,\"ScreenHeight\":1080,\"ScreenRefreshRate\":60,\"Fullscreen\":false,\"Vsync\":1,\"AntiAliasing\":0,\"Batchmode\":false,\"RenderThreadingMode\":\"MultiThreaded\",\"GpuSkinning\":false,\"Platform\":\"WindowsEditor\",\"ColorSpace\":\"Gamma\",\"AnisotropicFiltering\":\"Disable\",\"BlendWeights\":\"FourBones\",\"GraphicsApi\":\"Direct3D11\",\"ScriptingBackend\":\"Mono2x\",\"AndroidTargetSdkVersion\":\"AndroidApiLevelAuto\",\"AndroidBuildSystem\":\"Gradle\",\"BuildTarget\":\"StandaloneWindows64\",\"StereoRenderingPath\":\"MultiPass\"},\"Hardware\":{\"OperatingSystem\":\"Windows
+        10  (10.0.19045) 64bit\",\"DeviceModel\":\"82R4 (LENOVO)\",\"DeviceName\":\"DESKTOP-55T0R54\",\"ProcessorType\":\"AMD
+        Ryzen 5 5500U with Radeon Graphics \",\"ProcessorCount\":12,\"GraphicsDeviceName\":\"AMD
+        Radeon(TM) Graphics\",\"SystemMemorySizeMB\":14181},\"Editor\":{\"Version\":\"2022.3.46f1\",\"Branch\":\"2022.3/staging\",\"Changeset\":\"8e9b8558c41a\",\"Date\":1725396290},\"Dependencies\":[\"com.cysharp.unitask@2.5.5\",\"com.unity.2d.animation@9.1.1\",\"com.unity.2d.pixel-perfect@5.0.3\",\"com.unity.2d.psdimporter@8.0.5\",\"com.unity.2d.sprite@1.0.0\",\"com.unity.2d.spriteshape@9.0.4\",\"com.unity.2d.tilemap@1.0.0\",\"com.unity.ai.navigation@1.1.5\",\"com.unity.assetbundlebrowser@1.7.0\",\"com.unity.collab-proxy@2.4.4\",\"com.unity.editorcoroutines@1.0.0\",\"com.unity.ide.rider@3.0.31\",\"com.unity.ide.vscode@1.2.5\",\"com.unity.memoryprofiler@1.1.0\",\"com.unity.mobile.android-logcat@1.4.2\",\"com.unity.performance.profile-analyzer@1.2.2\",\"com.unity.profiling.core@1.0.2\",\"com.unity.render-pipelines.universal@14.0.11\",\"com.unity.test-framework@1.4.5\",\"com.unity.test-framework.performance@3.0.3\",\"com.unity.testtools.codecoverage@1.2.6\",\"com.unity.textmeshpro@3.0.9\",\"com.unity.timeline@1.7.6\",\"com.unity.ugui@1.0.0\",\"com.unity.modules.ai@1.0.0\",\"com.unity.modules.androidjni@1.0.0\",\"com.unity.modules.animation@1.0.0\",\"com.unity.modules.assetbundle@1.0.0\",\"com.unity.modules.audio@1.0.0\",\"com.unity.modules.cloth@1.0.0\",\"com.unity.modules.director@1.0.0\",\"com.unity.modules.imageconversion@1.0.0\",\"com.unity.modules.imgui@1.0.0\",\"com.unity.modules.jsonserialize@1.0.0\",\"com.unity.modules.particlesystem@1.0.0\",\"com.unity.modules.physics@1.0.0\",\"com.unity.modules.physics2d@1.0.0\",\"com.unity.modules.screencapture@1.0.0\",\"com.unity.modules.terrain@1.0.0\",\"com.unity.modules.terrainphysics@1.0.0\",\"com.unity.modules.tilemap@1.0.0\",\"com.unity.modules.ui@1.0.0\",\"com.unity.modules.uielements@1.0.0\",\"com.unity.modules.umbra@1.0.0\",\"com.unity.modules.unityanalytics@1.0.0\",\"com.unity.modules.unitywebrequest@1.0.0\",\"com.unity.modules.unitywebrequestassetbundle@1.0.0\",\"com.unity.modules.unitywebrequestaudio@1.0.0\",\"com.unity.modules.unitywebrequesttexture@1.0.0\",\"com.unity.modules.unitywebrequestwww@1.0.0\",\"com.unity.modules.vehicles@1.0.0\",\"com.unity.modules.video@1.0.0\",\"com.unity.modules.vr@1.0.0\",\"com.unity.modules.wind@1.0.0\",\"com.unity.modules.xr@1.0.0\",\"com.unity.modules.subsystems@1.0.0\",\"com.unity.settings-manager@2.0.1\",\"com.unity.ext.nunit@2.0.3\",\"com.unity.mathematics@1.2.6\",\"com.unity.burst@1.8.17\",\"com.unity.render-pipelines.core@14.0.11\",\"com.unity.shadergraph@14.0.11\",\"com.unity.render-pipelines.universal-config@14.0.10\",\"com.unity.2d.common@8.0.3\",\"com.unity.collections@1.2.4\",\"com.unity.searcher@4.9.2\"],\"Results\":[]}\r\n"
       stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
@@ -2204,7 +4433,7 @@ MonoBehaviour:
       uniqueId: PlayModeTestAssembly.dll/ObjectPoolServiceTestRunner/[PlayModeTestAssembly][ObjectPoolServiceTestRunner.ObjectPoolServicePreloadTest][suite]
       name: ObjectPoolServicePreloadTest
       fullName: ObjectPoolServiceTestRunner.ObjectPoolServicePreloadTest
-      resultStatus: 0
+      resultStatus: 1
       duration: 0
       messages: 
       output: 
@@ -2213,17 +4442,30 @@ MonoBehaviour:
       ignoredOrSkipped: 0
       description: 
       isSuite: 1
-      categories: []
+      categories:
+      - Service
       parentId: 1001
       parentUniqueId: PlayModeTestAssembly.dll/[PlayModeTestAssembly][ObjectPoolServiceTestRunner][suite]
     - id: 1070
       uniqueId: PlayModeTestAssembly.dll/ObjectPoolServiceTestRunner/ObjectPoolServicePreloadTest/[PlayModeTestAssembly][ObjectPoolServiceTestRunner.ObjectPoolServicePreloadTest(10)]
       name: ObjectPoolServicePreloadTest(10)
       fullName: ObjectPoolServiceTestRunner.ObjectPoolServicePreloadTest(10)
-      resultStatus: 0
-      duration: 0
+      resultStatus: 1
+      duration: 0.0141031
       messages: 
-      output: 
+      output: '[ObjectPoolServiceTestRunner.ObjectPoolServicePreloadTest] 10 || 0
+        || 10
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServicePreloadTest]
+        Pass Preload Test
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServicePreloadTest]
+        0 || 0 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServicePreloadTest]
+        Pass Clear Test
+
+'
       stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
@@ -2237,10 +4479,22 @@ MonoBehaviour:
       uniqueId: PlayModeTestAssembly.dll/ObjectPoolServiceTestRunner/ObjectPoolServicePreloadTest/[PlayModeTestAssembly][ObjectPoolServiceTestRunner.ObjectPoolServicePreloadTest(20)]
       name: ObjectPoolServicePreloadTest(20)
       fullName: ObjectPoolServiceTestRunner.ObjectPoolServicePreloadTest(20)
-      resultStatus: 0
-      duration: 0
+      resultStatus: 1
+      duration: 0.017263
       messages: 
-      output: 
+      output: '[ObjectPoolServiceTestRunner.ObjectPoolServicePreloadTest] 20 || 0
+        || 20
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServicePreloadTest]
+        Pass Preload Test
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServicePreloadTest]
+        0 || 0 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServicePreloadTest]
+        Pass Clear Test
+
+'
       stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
@@ -2254,10 +4508,22 @@ MonoBehaviour:
       uniqueId: PlayModeTestAssembly.dll/ObjectPoolServiceTestRunner/ObjectPoolServicePreloadTest/[PlayModeTestAssembly][ObjectPoolServiceTestRunner.ObjectPoolServicePreloadTest(30)]
       name: ObjectPoolServicePreloadTest(30)
       fullName: ObjectPoolServiceTestRunner.ObjectPoolServicePreloadTest(30)
-      resultStatus: 0
-      duration: 0
+      resultStatus: 1
+      duration: 0.0218454
       messages: 
-      output: 
+      output: '[ObjectPoolServiceTestRunner.ObjectPoolServicePreloadTest] 30 || 0
+        || 30
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServicePreloadTest]
+        Pass Preload Test
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServicePreloadTest]
+        0 || 0 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServicePreloadTest]
+        Pass Clear Test
+
+'
       stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
@@ -2271,10 +4537,22 @@ MonoBehaviour:
       uniqueId: PlayModeTestAssembly.dll/ObjectPoolServiceTestRunner/ObjectPoolServicePreloadTest/[PlayModeTestAssembly][ObjectPoolServiceTestRunner.ObjectPoolServicePreloadTest(40)]
       name: ObjectPoolServicePreloadTest(40)
       fullName: ObjectPoolServiceTestRunner.ObjectPoolServicePreloadTest(40)
-      resultStatus: 0
-      duration: 0
+      resultStatus: 1
+      duration: 0.0248882
       messages: 
-      output: 
+      output: '[ObjectPoolServiceTestRunner.ObjectPoolServicePreloadTest] 40 || 0
+        || 40
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServicePreloadTest]
+        Pass Preload Test
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServicePreloadTest]
+        0 || 0 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServicePreloadTest]
+        Pass Clear Test
+
+'
       stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
@@ -2288,10 +4566,22 @@ MonoBehaviour:
       uniqueId: PlayModeTestAssembly.dll/ObjectPoolServiceTestRunner/ObjectPoolServicePreloadTest/[PlayModeTestAssembly][ObjectPoolServiceTestRunner.ObjectPoolServicePreloadTest(50)]
       name: ObjectPoolServicePreloadTest(50)
       fullName: ObjectPoolServiceTestRunner.ObjectPoolServicePreloadTest(50)
-      resultStatus: 0
-      duration: 0
+      resultStatus: 1
+      duration: 0.0286432
       messages: 
-      output: 
+      output: '[ObjectPoolServiceTestRunner.ObjectPoolServicePreloadTest] 50 || 0
+        || 50
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServicePreloadTest]
+        Pass Preload Test
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServicePreloadTest]
+        0 || 0 || 0
+
+        [ObjectPoolServiceTestRunner.ObjectPoolServicePreloadTest]
+        Pass Clear Test
+
+'
       stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
@@ -2305,7 +4595,7 @@ MonoBehaviour:
       uniqueId: PlayModeTestAssembly.dll/ObjectPoolServiceTestRunner/[PlayModeTestAssembly][ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest][suite]
       name: ObjectPoolServiceRepeatTest
       fullName: ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest
-      resultStatus: 0
+      resultStatus: 1
       duration: 0
       messages: 
       output: 
@@ -2314,17 +4604,53 @@ MonoBehaviour:
       ignoredOrSkipped: 0
       description: 
       isSuite: 1
-      categories: []
+      categories:
+      - Service
       parentId: 1001
       parentUniqueId: PlayModeTestAssembly.dll/[PlayModeTestAssembly][ObjectPoolServiceTestRunner][suite]
     - id: 1061
       uniqueId: PlayModeTestAssembly.dll/ObjectPoolServiceTestRunner/ObjectPoolServiceRepeatTest/[PlayModeTestAssembly][ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest(10)]
       name: ObjectPoolServiceRepeatTest(10)
       fullName: ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest(10)
-      resultStatus: 0
-      duration: 0
+      resultStatus: 1
+      duration: 0.0538017
       messages: 
-      output: 
+      output: "[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest] TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_002, TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_003, TestPrefab(Clone)_002, TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_004, TestPrefab(Clone)_003, TestPrefab(Clone)_002, TestPrefab(Clone)_001,
+        TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_005, TestPrefab(Clone)_004, TestPrefab(Clone)_003, TestPrefab(Clone)_002,
+        TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_006, TestPrefab(Clone)_005, TestPrefab(Clone)_004, TestPrefab(Clone)_003,
+        TestPrefab(Clone)_002, TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_007, TestPrefab(Clone)_006, TestPrefab(Clone)_005, TestPrefab(Clone)_004,
+        TestPrefab(Clone)_003, TestPrefab(Clone)_002, TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_008, TestPrefab(Clone)_007, TestPrefab(Clone)_006, TestPrefab(Clone)_005,
+        TestPrefab(Clone)_004, TestPrefab(Clone)_003, TestPrefab(Clone)_002, TestPrefab(Clone)_001,
+        TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_009, TestPrefab(Clone)_008, TestPrefab(Clone)_007, TestPrefab(Clone)_006,
+        TestPrefab(Clone)_005, TestPrefab(Clone)_004, TestPrefab(Clone)_003, TestPrefab(Clone)_002,
+        TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        Pass Get Test\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_008, TestPrefab(Clone)_007, TestPrefab(Clone)_006, TestPrefab(Clone)_005,
+        TestPrefab(Clone)_004, TestPrefab(Clone)_003, TestPrefab(Clone)_002, TestPrefab(Clone)_001,
+        TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_007, TestPrefab(Clone)_006, TestPrefab(Clone)_005, TestPrefab(Clone)_004,
+        TestPrefab(Clone)_003, TestPrefab(Clone)_002, TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_006, TestPrefab(Clone)_005, TestPrefab(Clone)_004, TestPrefab(Clone)_003,
+        TestPrefab(Clone)_002, TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_005, TestPrefab(Clone)_004, TestPrefab(Clone)_003, TestPrefab(Clone)_002,
+        TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_004, TestPrefab(Clone)_003, TestPrefab(Clone)_002, TestPrefab(Clone)_001,
+        TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_003, TestPrefab(Clone)_002, TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_002, TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        \r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest] Pass Release
+        Test\r\n"
       stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
@@ -2338,10 +4664,127 @@ MonoBehaviour:
       uniqueId: PlayModeTestAssembly.dll/ObjectPoolServiceTestRunner/ObjectPoolServiceRepeatTest/[PlayModeTestAssembly][ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest(20)]
       name: ObjectPoolServiceRepeatTest(20)
       fullName: ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest(20)
-      resultStatus: 0
-      duration: 0
+      resultStatus: 1
+      duration: 0.1010333
       messages: 
-      output: 
+      output: "[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest] TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_002, TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_003, TestPrefab(Clone)_002, TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_004, TestPrefab(Clone)_003, TestPrefab(Clone)_002, TestPrefab(Clone)_001,
+        TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_005, TestPrefab(Clone)_004, TestPrefab(Clone)_003, TestPrefab(Clone)_002,
+        TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_006, TestPrefab(Clone)_005, TestPrefab(Clone)_004, TestPrefab(Clone)_003,
+        TestPrefab(Clone)_002, TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_007, TestPrefab(Clone)_006, TestPrefab(Clone)_005, TestPrefab(Clone)_004,
+        TestPrefab(Clone)_003, TestPrefab(Clone)_002, TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_008, TestPrefab(Clone)_007, TestPrefab(Clone)_006, TestPrefab(Clone)_005,
+        TestPrefab(Clone)_004, TestPrefab(Clone)_003, TestPrefab(Clone)_002, TestPrefab(Clone)_001,
+        TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_009, TestPrefab(Clone)_008, TestPrefab(Clone)_007, TestPrefab(Clone)_006,
+        TestPrefab(Clone)_005, TestPrefab(Clone)_004, TestPrefab(Clone)_003, TestPrefab(Clone)_002,
+        TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_010, TestPrefab(Clone)_009, TestPrefab(Clone)_008, TestPrefab(Clone)_007,
+        TestPrefab(Clone)_006, TestPrefab(Clone)_005, TestPrefab(Clone)_004, TestPrefab(Clone)_003,
+        TestPrefab(Clone)_002, TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_011, TestPrefab(Clone)_010, TestPrefab(Clone)_009, TestPrefab(Clone)_008,
+        TestPrefab(Clone)_007, TestPrefab(Clone)_006, TestPrefab(Clone)_005, TestPrefab(Clone)_004,
+        TestPrefab(Clone)_003, TestPrefab(Clone)_002, TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_012, TestPrefab(Clone)_011, TestPrefab(Clone)_010, TestPrefab(Clone)_009,
+        TestPrefab(Clone)_008, TestPrefab(Clone)_007, TestPrefab(Clone)_006, TestPrefab(Clone)_005,
+        TestPrefab(Clone)_004, TestPrefab(Clone)_003, TestPrefab(Clone)_002, TestPrefab(Clone)_001,
+        TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_013, TestPrefab(Clone)_012, TestPrefab(Clone)_011, TestPrefab(Clone)_010,
+        TestPrefab(Clone)_009, TestPrefab(Clone)_008, TestPrefab(Clone)_007, TestPrefab(Clone)_006,
+        TestPrefab(Clone)_005, TestPrefab(Clone)_004, TestPrefab(Clone)_003, TestPrefab(Clone)_002,
+        TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_014, TestPrefab(Clone)_013, TestPrefab(Clone)_012, TestPrefab(Clone)_011,
+        TestPrefab(Clone)_010, TestPrefab(Clone)_009, TestPrefab(Clone)_008, TestPrefab(Clone)_007,
+        TestPrefab(Clone)_006, TestPrefab(Clone)_005, TestPrefab(Clone)_004, TestPrefab(Clone)_003,
+        TestPrefab(Clone)_002, TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_015, TestPrefab(Clone)_014, TestPrefab(Clone)_013, TestPrefab(Clone)_012,
+        TestPrefab(Clone)_011, TestPrefab(Clone)_010, TestPrefab(Clone)_009, TestPrefab(Clone)_008,
+        TestPrefab(Clone)_007, TestPrefab(Clone)_006, TestPrefab(Clone)_005, TestPrefab(Clone)_004,
+        TestPrefab(Clone)_003, TestPrefab(Clone)_002, TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_016, TestPrefab(Clone)_015, TestPrefab(Clone)_014, TestPrefab(Clone)_013,
+        TestPrefab(Clone)_012, TestPrefab(Clone)_011, TestPrefab(Clone)_010, TestPrefab(Clone)_009,
+        TestPrefab(Clone)_008, TestPrefab(Clone)_007, TestPrefab(Clone)_006, TestPrefab(Clone)_005,
+        TestPrefab(Clone)_004, TestPrefab(Clone)_003, TestPrefab(Clone)_002, TestPrefab(Clone)_001,
+        TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_017, TestPrefab(Clone)_016, TestPrefab(Clone)_015, TestPrefab(Clone)_014,
+        TestPrefab(Clone)_013, TestPrefab(Clone)_012, TestPrefab(Clone)_011, TestPrefab(Clone)_010,
+        TestPrefab(Clone)_009, TestPrefab(Clone)_008, TestPrefab(Clone)_007, TestPrefab(Clone)_006,
+        TestPrefab(Clone)_005, TestPrefab(Clone)_004, TestPrefab(Clone)_003, TestPrefab(Clone)_002,
+        TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_018, TestPrefab(Clone)_017, TestPrefab(Clone)_016, TestPrefab(Clone)_015,
+        TestPrefab(Clone)_014, TestPrefab(Clone)_013, TestPrefab(Clone)_012, TestPrefab(Clone)_011,
+        TestPrefab(Clone)_010, TestPrefab(Clone)_009, TestPrefab(Clone)_008, TestPrefab(Clone)_007,
+        TestPrefab(Clone)_006, TestPrefab(Clone)_005, TestPrefab(Clone)_004, TestPrefab(Clone)_003,
+        TestPrefab(Clone)_002, TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_019, TestPrefab(Clone)_018, TestPrefab(Clone)_017, TestPrefab(Clone)_016,
+        TestPrefab(Clone)_015, TestPrefab(Clone)_014, TestPrefab(Clone)_013, TestPrefab(Clone)_012,
+        TestPrefab(Clone)_011, TestPrefab(Clone)_010, TestPrefab(Clone)_009, TestPrefab(Clone)_008,
+        TestPrefab(Clone)_007, TestPrefab(Clone)_006, TestPrefab(Clone)_005, TestPrefab(Clone)_004,
+        TestPrefab(Clone)_003, TestPrefab(Clone)_002, TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        Pass Get Test\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_018, TestPrefab(Clone)_017, TestPrefab(Clone)_016, TestPrefab(Clone)_015,
+        TestPrefab(Clone)_014, TestPrefab(Clone)_013, TestPrefab(Clone)_012, TestPrefab(Clone)_011,
+        TestPrefab(Clone)_010, TestPrefab(Clone)_009, TestPrefab(Clone)_008, TestPrefab(Clone)_007,
+        TestPrefab(Clone)_006, TestPrefab(Clone)_005, TestPrefab(Clone)_004, TestPrefab(Clone)_003,
+        TestPrefab(Clone)_002, TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_017, TestPrefab(Clone)_016, TestPrefab(Clone)_015, TestPrefab(Clone)_014,
+        TestPrefab(Clone)_013, TestPrefab(Clone)_012, TestPrefab(Clone)_011, TestPrefab(Clone)_010,
+        TestPrefab(Clone)_009, TestPrefab(Clone)_008, TestPrefab(Clone)_007, TestPrefab(Clone)_006,
+        TestPrefab(Clone)_005, TestPrefab(Clone)_004, TestPrefab(Clone)_003, TestPrefab(Clone)_002,
+        TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_016, TestPrefab(Clone)_015, TestPrefab(Clone)_014, TestPrefab(Clone)_013,
+        TestPrefab(Clone)_012, TestPrefab(Clone)_011, TestPrefab(Clone)_010, TestPrefab(Clone)_009,
+        TestPrefab(Clone)_008, TestPrefab(Clone)_007, TestPrefab(Clone)_006, TestPrefab(Clone)_005,
+        TestPrefab(Clone)_004, TestPrefab(Clone)_003, TestPrefab(Clone)_002, TestPrefab(Clone)_001,
+        TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_015, TestPrefab(Clone)_014, TestPrefab(Clone)_013, TestPrefab(Clone)_012,
+        TestPrefab(Clone)_011, TestPrefab(Clone)_010, TestPrefab(Clone)_009, TestPrefab(Clone)_008,
+        TestPrefab(Clone)_007, TestPrefab(Clone)_006, TestPrefab(Clone)_005, TestPrefab(Clone)_004,
+        TestPrefab(Clone)_003, TestPrefab(Clone)_002, TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_014, TestPrefab(Clone)_013, TestPrefab(Clone)_012, TestPrefab(Clone)_011,
+        TestPrefab(Clone)_010, TestPrefab(Clone)_009, TestPrefab(Clone)_008, TestPrefab(Clone)_007,
+        TestPrefab(Clone)_006, TestPrefab(Clone)_005, TestPrefab(Clone)_004, TestPrefab(Clone)_003,
+        TestPrefab(Clone)_002, TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_013, TestPrefab(Clone)_012, TestPrefab(Clone)_011, TestPrefab(Clone)_010,
+        TestPrefab(Clone)_009, TestPrefab(Clone)_008, TestPrefab(Clone)_007, TestPrefab(Clone)_006,
+        TestPrefab(Clone)_005, TestPrefab(Clone)_004, TestPrefab(Clone)_003, TestPrefab(Clone)_002,
+        TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_012, TestPrefab(Clone)_011, TestPrefab(Clone)_010, TestPrefab(Clone)_009,
+        TestPrefab(Clone)_008, TestPrefab(Clone)_007, TestPrefab(Clone)_006, TestPrefab(Clone)_005,
+        TestPrefab(Clone)_004, TestPrefab(Clone)_003, TestPrefab(Clone)_002, TestPrefab(Clone)_001,
+        TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_011, TestPrefab(Clone)_010, TestPrefab(Clone)_009, TestPrefab(Clone)_008,
+        TestPrefab(Clone)_007, TestPrefab(Clone)_006, TestPrefab(Clone)_005, TestPrefab(Clone)_004,
+        TestPrefab(Clone)_003, TestPrefab(Clone)_002, TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_010, TestPrefab(Clone)_009, TestPrefab(Clone)_008, TestPrefab(Clone)_007,
+        TestPrefab(Clone)_006, TestPrefab(Clone)_005, TestPrefab(Clone)_004, TestPrefab(Clone)_003,
+        TestPrefab(Clone)_002, TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_009, TestPrefab(Clone)_008, TestPrefab(Clone)_007, TestPrefab(Clone)_006,
+        TestPrefab(Clone)_005, TestPrefab(Clone)_004, TestPrefab(Clone)_003, TestPrefab(Clone)_002,
+        TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_008, TestPrefab(Clone)_007, TestPrefab(Clone)_006, TestPrefab(Clone)_005,
+        TestPrefab(Clone)_004, TestPrefab(Clone)_003, TestPrefab(Clone)_002, TestPrefab(Clone)_001,
+        TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_007, TestPrefab(Clone)_006, TestPrefab(Clone)_005, TestPrefab(Clone)_004,
+        TestPrefab(Clone)_003, TestPrefab(Clone)_002, TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_006, TestPrefab(Clone)_005, TestPrefab(Clone)_004, TestPrefab(Clone)_003,
+        TestPrefab(Clone)_002, TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_005, TestPrefab(Clone)_004, TestPrefab(Clone)_003, TestPrefab(Clone)_002,
+        TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_004, TestPrefab(Clone)_003, TestPrefab(Clone)_002, TestPrefab(Clone)_001,
+        TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_003, TestPrefab(Clone)_002, TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_002, TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        \r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest] Pass Release
+        Test\r\n"
       stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
@@ -2355,10 +4798,260 @@ MonoBehaviour:
       uniqueId: PlayModeTestAssembly.dll/ObjectPoolServiceTestRunner/ObjectPoolServiceRepeatTest/[PlayModeTestAssembly][ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest(30)]
       name: ObjectPoolServiceRepeatTest(30)
       fullName: ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest(30)
-      resultStatus: 0
-      duration: 0
+      resultStatus: 1
+      duration: 0.155047
       messages: 
-      output: 
+      output: "[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest] TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_002, TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_003, TestPrefab(Clone)_002, TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_004, TestPrefab(Clone)_003, TestPrefab(Clone)_002, TestPrefab(Clone)_001,
+        TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_005, TestPrefab(Clone)_004, TestPrefab(Clone)_003, TestPrefab(Clone)_002,
+        TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_006, TestPrefab(Clone)_005, TestPrefab(Clone)_004, TestPrefab(Clone)_003,
+        TestPrefab(Clone)_002, TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_007, TestPrefab(Clone)_006, TestPrefab(Clone)_005, TestPrefab(Clone)_004,
+        TestPrefab(Clone)_003, TestPrefab(Clone)_002, TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_008, TestPrefab(Clone)_007, TestPrefab(Clone)_006, TestPrefab(Clone)_005,
+        TestPrefab(Clone)_004, TestPrefab(Clone)_003, TestPrefab(Clone)_002, TestPrefab(Clone)_001,
+        TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_009, TestPrefab(Clone)_008, TestPrefab(Clone)_007, TestPrefab(Clone)_006,
+        TestPrefab(Clone)_005, TestPrefab(Clone)_004, TestPrefab(Clone)_003, TestPrefab(Clone)_002,
+        TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_010, TestPrefab(Clone)_009, TestPrefab(Clone)_008, TestPrefab(Clone)_007,
+        TestPrefab(Clone)_006, TestPrefab(Clone)_005, TestPrefab(Clone)_004, TestPrefab(Clone)_003,
+        TestPrefab(Clone)_002, TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_011, TestPrefab(Clone)_010, TestPrefab(Clone)_009, TestPrefab(Clone)_008,
+        TestPrefab(Clone)_007, TestPrefab(Clone)_006, TestPrefab(Clone)_005, TestPrefab(Clone)_004,
+        TestPrefab(Clone)_003, TestPrefab(Clone)_002, TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_012, TestPrefab(Clone)_011, TestPrefab(Clone)_010, TestPrefab(Clone)_009,
+        TestPrefab(Clone)_008, TestPrefab(Clone)_007, TestPrefab(Clone)_006, TestPrefab(Clone)_005,
+        TestPrefab(Clone)_004, TestPrefab(Clone)_003, TestPrefab(Clone)_002, TestPrefab(Clone)_001,
+        TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_013, TestPrefab(Clone)_012, TestPrefab(Clone)_011, TestPrefab(Clone)_010,
+        TestPrefab(Clone)_009, TestPrefab(Clone)_008, TestPrefab(Clone)_007, TestPrefab(Clone)_006,
+        TestPrefab(Clone)_005, TestPrefab(Clone)_004, TestPrefab(Clone)_003, TestPrefab(Clone)_002,
+        TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_014, TestPrefab(Clone)_013, TestPrefab(Clone)_012, TestPrefab(Clone)_011,
+        TestPrefab(Clone)_010, TestPrefab(Clone)_009, TestPrefab(Clone)_008, TestPrefab(Clone)_007,
+        TestPrefab(Clone)_006, TestPrefab(Clone)_005, TestPrefab(Clone)_004, TestPrefab(Clone)_003,
+        TestPrefab(Clone)_002, TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_015, TestPrefab(Clone)_014, TestPrefab(Clone)_013, TestPrefab(Clone)_012,
+        TestPrefab(Clone)_011, TestPrefab(Clone)_010, TestPrefab(Clone)_009, TestPrefab(Clone)_008,
+        TestPrefab(Clone)_007, TestPrefab(Clone)_006, TestPrefab(Clone)_005, TestPrefab(Clone)_004,
+        TestPrefab(Clone)_003, TestPrefab(Clone)_002, TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_016, TestPrefab(Clone)_015, TestPrefab(Clone)_014, TestPrefab(Clone)_013,
+        TestPrefab(Clone)_012, TestPrefab(Clone)_011, TestPrefab(Clone)_010, TestPrefab(Clone)_009,
+        TestPrefab(Clone)_008, TestPrefab(Clone)_007, TestPrefab(Clone)_006, TestPrefab(Clone)_005,
+        TestPrefab(Clone)_004, TestPrefab(Clone)_003, TestPrefab(Clone)_002, TestPrefab(Clone)_001,
+        TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_017, TestPrefab(Clone)_016, TestPrefab(Clone)_015, TestPrefab(Clone)_014,
+        TestPrefab(Clone)_013, TestPrefab(Clone)_012, TestPrefab(Clone)_011, TestPrefab(Clone)_010,
+        TestPrefab(Clone)_009, TestPrefab(Clone)_008, TestPrefab(Clone)_007, TestPrefab(Clone)_006,
+        TestPrefab(Clone)_005, TestPrefab(Clone)_004, TestPrefab(Clone)_003, TestPrefab(Clone)_002,
+        TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_018, TestPrefab(Clone)_017, TestPrefab(Clone)_016, TestPrefab(Clone)_015,
+        TestPrefab(Clone)_014, TestPrefab(Clone)_013, TestPrefab(Clone)_012, TestPrefab(Clone)_011,
+        TestPrefab(Clone)_010, TestPrefab(Clone)_009, TestPrefab(Clone)_008, TestPrefab(Clone)_007,
+        TestPrefab(Clone)_006, TestPrefab(Clone)_005, TestPrefab(Clone)_004, TestPrefab(Clone)_003,
+        TestPrefab(Clone)_002, TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_019, TestPrefab(Clone)_018, TestPrefab(Clone)_017, TestPrefab(Clone)_016,
+        TestPrefab(Clone)_015, TestPrefab(Clone)_014, TestPrefab(Clone)_013, TestPrefab(Clone)_012,
+        TestPrefab(Clone)_011, TestPrefab(Clone)_010, TestPrefab(Clone)_009, TestPrefab(Clone)_008,
+        TestPrefab(Clone)_007, TestPrefab(Clone)_006, TestPrefab(Clone)_005, TestPrefab(Clone)_004,
+        TestPrefab(Clone)_003, TestPrefab(Clone)_002, TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_020, TestPrefab(Clone)_019, TestPrefab(Clone)_018, TestPrefab(Clone)_017,
+        TestPrefab(Clone)_016, TestPrefab(Clone)_015, TestPrefab(Clone)_014, TestPrefab(Clone)_013,
+        TestPrefab(Clone)_012, TestPrefab(Clone)_011, TestPrefab(Clone)_010, TestPrefab(Clone)_009,
+        TestPrefab(Clone)_008, TestPrefab(Clone)_007, TestPrefab(Clone)_006, TestPrefab(Clone)_005,
+        TestPrefab(Clone)_004, TestPrefab(Clone)_003, TestPrefab(Clone)_002, TestPrefab(Clone)_001,
+        TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_021, TestPrefab(Clone)_020, TestPrefab(Clone)_019, TestPrefab(Clone)_018,
+        TestPrefab(Clone)_017, TestPrefab(Clone)_016, TestPrefab(Clone)_015, TestPrefab(Clone)_014,
+        TestPrefab(Clone)_013, TestPrefab(Clone)_012, TestPrefab(Clone)_011, TestPrefab(Clone)_010,
+        TestPrefab(Clone)_009, TestPrefab(Clone)_008, TestPrefab(Clone)_007, TestPrefab(Clone)_006,
+        TestPrefab(Clone)_005, TestPrefab(Clone)_004, TestPrefab(Clone)_003, TestPrefab(Clone)_002,
+        TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_022, TestPrefab(Clone)_021, TestPrefab(Clone)_020, TestPrefab(Clone)_019,
+        TestPrefab(Clone)_018, TestPrefab(Clone)_017, TestPrefab(Clone)_016, TestPrefab(Clone)_015,
+        TestPrefab(Clone)_014, TestPrefab(Clone)_013, TestPrefab(Clone)_012, TestPrefab(Clone)_011,
+        TestPrefab(Clone)_010, TestPrefab(Clone)_009, TestPrefab(Clone)_008, TestPrefab(Clone)_007,
+        TestPrefab(Clone)_006, TestPrefab(Clone)_005, TestPrefab(Clone)_004, TestPrefab(Clone)_003,
+        TestPrefab(Clone)_002, TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_023, TestPrefab(Clone)_022, TestPrefab(Clone)_021, TestPrefab(Clone)_020,
+        TestPrefab(Clone)_019, TestPrefab(Clone)_018, TestPrefab(Clone)_017, TestPrefab(Clone)_016,
+        TestPrefab(Clone)_015, TestPrefab(Clone)_014, TestPrefab(Clone)_013, TestPrefab(Clone)_012,
+        TestPrefab(Clone)_011, TestPrefab(Clone)_010, TestPrefab(Clone)_009, TestPrefab(Clone)_008,
+        TestPrefab(Clone)_007, TestPrefab(Clone)_006, TestPrefab(Clone)_005, TestPrefab(Clone)_004,
+        TestPrefab(Clone)_003, TestPrefab(Clone)_002, TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_024, TestPrefab(Clone)_023, TestPrefab(Clone)_022, TestPrefab(Clone)_021,
+        TestPrefab(Clone)_020, TestPrefab(Clone)_019, TestPrefab(Clone)_018, TestPrefab(Clone)_017,
+        TestPrefab(Clone)_016, TestPrefab(Clone)_015, TestPrefab(Clone)_014, TestPrefab(Clone)_013,
+        TestPrefab(Clone)_012, TestPrefab(Clone)_011, TestPrefab(Clone)_010, TestPrefab(Clone)_009,
+        TestPrefab(Clone)_008, TestPrefab(Clone)_007, TestPrefab(Clone)_006, TestPrefab(Clone)_005,
+        TestPrefab(Clone)_004, TestPrefab(Clone)_003, TestPrefab(Clone)_002, TestPrefab(Clone)_001,
+        TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_025, TestPrefab(Clone)_024, TestPrefab(Clone)_023, TestPrefab(Clone)_022,
+        TestPrefab(Clone)_021, TestPrefab(Clone)_020, TestPrefab(Clone)_019, TestPrefab(Clone)_018,
+        TestPrefab(Clone)_017, TestPrefab(Clone)_016, TestPrefab(Clone)_015, TestPrefab(Clone)_014,
+        TestPrefab(Clone)_013, TestPrefab(Clone)_012, TestPrefab(Clone)_011, TestPrefab(Clone)_010,
+        TestPrefab(Clone)_009, TestPrefab(Clone)_008, TestPrefab(Clone)_007, TestPrefab(Clone)_006,
+        TestPrefab(Clone)_005, TestPrefab(Clone)_004, TestPrefab(Clone)_003, TestPrefab(Clone)_002,
+        TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_026, TestPrefab(Clone)_025, TestPrefab(Clone)_024, TestPrefab(Clone)_023,
+        TestPrefab(Clone)_022, TestPrefab(Clone)_021, TestPrefab(Clone)_020, TestPrefab(Clone)_019,
+        TestPrefab(Clone)_018, TestPrefab(Clone)_017, TestPrefab(Clone)_016, TestPrefab(Clone)_015,
+        TestPrefab(Clone)_014, TestPrefab(Clone)_013, TestPrefab(Clone)_012, TestPrefab(Clone)_011,
+        TestPrefab(Clone)_010, TestPrefab(Clone)_009, TestPrefab(Clone)_008, TestPrefab(Clone)_007,
+        TestPrefab(Clone)_006, TestPrefab(Clone)_005, TestPrefab(Clone)_004, TestPrefab(Clone)_003,
+        TestPrefab(Clone)_002, TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_027, TestPrefab(Clone)_026, TestPrefab(Clone)_025, TestPrefab(Clone)_024,
+        TestPrefab(Clone)_023, TestPrefab(Clone)_022, TestPrefab(Clone)_021, TestPrefab(Clone)_020,
+        TestPrefab(Clone)_019, TestPrefab(Clone)_018, TestPrefab(Clone)_017, TestPrefab(Clone)_016,
+        TestPrefab(Clone)_015, TestPrefab(Clone)_014, TestPrefab(Clone)_013, TestPrefab(Clone)_012,
+        TestPrefab(Clone)_011, TestPrefab(Clone)_010, TestPrefab(Clone)_009, TestPrefab(Clone)_008,
+        TestPrefab(Clone)_007, TestPrefab(Clone)_006, TestPrefab(Clone)_005, TestPrefab(Clone)_004,
+        TestPrefab(Clone)_003, TestPrefab(Clone)_002, TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_028, TestPrefab(Clone)_027, TestPrefab(Clone)_026, TestPrefab(Clone)_025,
+        TestPrefab(Clone)_024, TestPrefab(Clone)_023, TestPrefab(Clone)_022, TestPrefab(Clone)_021,
+        TestPrefab(Clone)_020, TestPrefab(Clone)_019, TestPrefab(Clone)_018, TestPrefab(Clone)_017,
+        TestPrefab(Clone)_016, TestPrefab(Clone)_015, TestPrefab(Clone)_014, TestPrefab(Clone)_013,
+        TestPrefab(Clone)_012, TestPrefab(Clone)_011, TestPrefab(Clone)_010, TestPrefab(Clone)_009,
+        TestPrefab(Clone)_008, TestPrefab(Clone)_007, TestPrefab(Clone)_006, TestPrefab(Clone)_005,
+        TestPrefab(Clone)_004, TestPrefab(Clone)_003, TestPrefab(Clone)_002, TestPrefab(Clone)_001,
+        TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_029, TestPrefab(Clone)_028, TestPrefab(Clone)_027, TestPrefab(Clone)_026,
+        TestPrefab(Clone)_025, TestPrefab(Clone)_024, TestPrefab(Clone)_023, TestPrefab(Clone)_022,
+        TestPrefab(Clone)_021, TestPrefab(Clone)_020, TestPrefab(Clone)_019, TestPrefab(Clone)_018,
+        TestPrefab(Clone)_017, TestPrefab(Clone)_016, TestPrefab(Clone)_015, TestPrefab(Clone)_014,
+        TestPrefab(Clone)_013, TestPrefab(Clone)_012, TestPrefab(Clone)_011, TestPrefab(Clone)_010,
+        TestPrefab(Clone)_009, TestPrefab(Clone)_008, TestPrefab(Clone)_007, TestPrefab(Clone)_006,
+        TestPrefab(Clone)_005, TestPrefab(Clone)_004, TestPrefab(Clone)_003, TestPrefab(Clone)_002,
+        TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        Pass Get Test\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_028, TestPrefab(Clone)_027, TestPrefab(Clone)_026, TestPrefab(Clone)_025,
+        TestPrefab(Clone)_024, TestPrefab(Clone)_023, TestPrefab(Clone)_022, TestPrefab(Clone)_021,
+        TestPrefab(Clone)_020, TestPrefab(Clone)_019, TestPrefab(Clone)_018, TestPrefab(Clone)_017,
+        TestPrefab(Clone)_016, TestPrefab(Clone)_015, TestPrefab(Clone)_014, TestPrefab(Clone)_013,
+        TestPrefab(Clone)_012, TestPrefab(Clone)_011, TestPrefab(Clone)_010, TestPrefab(Clone)_009,
+        TestPrefab(Clone)_008, TestPrefab(Clone)_007, TestPrefab(Clone)_006, TestPrefab(Clone)_005,
+        TestPrefab(Clone)_004, TestPrefab(Clone)_003, TestPrefab(Clone)_002, TestPrefab(Clone)_001,
+        TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_027, TestPrefab(Clone)_026, TestPrefab(Clone)_025, TestPrefab(Clone)_024,
+        TestPrefab(Clone)_023, TestPrefab(Clone)_022, TestPrefab(Clone)_021, TestPrefab(Clone)_020,
+        TestPrefab(Clone)_019, TestPrefab(Clone)_018, TestPrefab(Clone)_017, TestPrefab(Clone)_016,
+        TestPrefab(Clone)_015, TestPrefab(Clone)_014, TestPrefab(Clone)_013, TestPrefab(Clone)_012,
+        TestPrefab(Clone)_011, TestPrefab(Clone)_010, TestPrefab(Clone)_009, TestPrefab(Clone)_008,
+        TestPrefab(Clone)_007, TestPrefab(Clone)_006, TestPrefab(Clone)_005, TestPrefab(Clone)_004,
+        TestPrefab(Clone)_003, TestPrefab(Clone)_002, TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_026, TestPrefab(Clone)_025, TestPrefab(Clone)_024, TestPrefab(Clone)_023,
+        TestPrefab(Clone)_022, TestPrefab(Clone)_021, TestPrefab(Clone)_020, TestPrefab(Clone)_019,
+        TestPrefab(Clone)_018, TestPrefab(Clone)_017, TestPrefab(Clone)_016, TestPrefab(Clone)_015,
+        TestPrefab(Clone)_014, TestPrefab(Clone)_013, TestPrefab(Clone)_012, TestPrefab(Clone)_011,
+        TestPrefab(Clone)_010, TestPrefab(Clone)_009, TestPrefab(Clone)_008, TestPrefab(Clone)_007,
+        TestPrefab(Clone)_006, TestPrefab(Clone)_005, TestPrefab(Clone)_004, TestPrefab(Clone)_003,
+        TestPrefab(Clone)_002, TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_025, TestPrefab(Clone)_024, TestPrefab(Clone)_023, TestPrefab(Clone)_022,
+        TestPrefab(Clone)_021, TestPrefab(Clone)_020, TestPrefab(Clone)_019, TestPrefab(Clone)_018,
+        TestPrefab(Clone)_017, TestPrefab(Clone)_016, TestPrefab(Clone)_015, TestPrefab(Clone)_014,
+        TestPrefab(Clone)_013, TestPrefab(Clone)_012, TestPrefab(Clone)_011, TestPrefab(Clone)_010,
+        TestPrefab(Clone)_009, TestPrefab(Clone)_008, TestPrefab(Clone)_007, TestPrefab(Clone)_006,
+        TestPrefab(Clone)_005, TestPrefab(Clone)_004, TestPrefab(Clone)_003, TestPrefab(Clone)_002,
+        TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_024, TestPrefab(Clone)_023, TestPrefab(Clone)_022, TestPrefab(Clone)_021,
+        TestPrefab(Clone)_020, TestPrefab(Clone)_019, TestPrefab(Clone)_018, TestPrefab(Clone)_017,
+        TestPrefab(Clone)_016, TestPrefab(Clone)_015, TestPrefab(Clone)_014, TestPrefab(Clone)_013,
+        TestPrefab(Clone)_012, TestPrefab(Clone)_011, TestPrefab(Clone)_010, TestPrefab(Clone)_009,
+        TestPrefab(Clone)_008, TestPrefab(Clone)_007, TestPrefab(Clone)_006, TestPrefab(Clone)_005,
+        TestPrefab(Clone)_004, TestPrefab(Clone)_003, TestPrefab(Clone)_002, TestPrefab(Clone)_001,
+        TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_023, TestPrefab(Clone)_022, TestPrefab(Clone)_021, TestPrefab(Clone)_020,
+        TestPrefab(Clone)_019, TestPrefab(Clone)_018, TestPrefab(Clone)_017, TestPrefab(Clone)_016,
+        TestPrefab(Clone)_015, TestPrefab(Clone)_014, TestPrefab(Clone)_013, TestPrefab(Clone)_012,
+        TestPrefab(Clone)_011, TestPrefab(Clone)_010, TestPrefab(Clone)_009, TestPrefab(Clone)_008,
+        TestPrefab(Clone)_007, TestPrefab(Clone)_006, TestPrefab(Clone)_005, TestPrefab(Clone)_004,
+        TestPrefab(Clone)_003, TestPrefab(Clone)_002, TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_022, TestPrefab(Clone)_021, TestPrefab(Clone)_020, TestPrefab(Clone)_019,
+        TestPrefab(Clone)_018, TestPrefab(Clone)_017, TestPrefab(Clone)_016, TestPrefab(Clone)_015,
+        TestPrefab(Clone)_014, TestPrefab(Clone)_013, TestPrefab(Clone)_012, TestPrefab(Clone)_011,
+        TestPrefab(Clone)_010, TestPrefab(Clone)_009, TestPrefab(Clone)_008, TestPrefab(Clone)_007,
+        TestPrefab(Clone)_006, TestPrefab(Clone)_005, TestPrefab(Clone)_004, TestPrefab(Clone)_003,
+        TestPrefab(Clone)_002, TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_021, TestPrefab(Clone)_020, TestPrefab(Clone)_019, TestPrefab(Clone)_018,
+        TestPrefab(Clone)_017, TestPrefab(Clone)_016, TestPrefab(Clone)_015, TestPrefab(Clone)_014,
+        TestPrefab(Clone)_013, TestPrefab(Clone)_012, TestPrefab(Clone)_011, TestPrefab(Clone)_010,
+        TestPrefab(Clone)_009, TestPrefab(Clone)_008, TestPrefab(Clone)_007, TestPrefab(Clone)_006,
+        TestPrefab(Clone)_005, TestPrefab(Clone)_004, TestPrefab(Clone)_003, TestPrefab(Clone)_002,
+        TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_020, TestPrefab(Clone)_019, TestPrefab(Clone)_018, TestPrefab(Clone)_017,
+        TestPrefab(Clone)_016, TestPrefab(Clone)_015, TestPrefab(Clone)_014, TestPrefab(Clone)_013,
+        TestPrefab(Clone)_012, TestPrefab(Clone)_011, TestPrefab(Clone)_010, TestPrefab(Clone)_009,
+        TestPrefab(Clone)_008, TestPrefab(Clone)_007, TestPrefab(Clone)_006, TestPrefab(Clone)_005,
+        TestPrefab(Clone)_004, TestPrefab(Clone)_003, TestPrefab(Clone)_002, TestPrefab(Clone)_001,
+        TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_019, TestPrefab(Clone)_018, TestPrefab(Clone)_017, TestPrefab(Clone)_016,
+        TestPrefab(Clone)_015, TestPrefab(Clone)_014, TestPrefab(Clone)_013, TestPrefab(Clone)_012,
+        TestPrefab(Clone)_011, TestPrefab(Clone)_010, TestPrefab(Clone)_009, TestPrefab(Clone)_008,
+        TestPrefab(Clone)_007, TestPrefab(Clone)_006, TestPrefab(Clone)_005, TestPrefab(Clone)_004,
+        TestPrefab(Clone)_003, TestPrefab(Clone)_002, TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_018, TestPrefab(Clone)_017, TestPrefab(Clone)_016, TestPrefab(Clone)_015,
+        TestPrefab(Clone)_014, TestPrefab(Clone)_013, TestPrefab(Clone)_012, TestPrefab(Clone)_011,
+        TestPrefab(Clone)_010, TestPrefab(Clone)_009, TestPrefab(Clone)_008, TestPrefab(Clone)_007,
+        TestPrefab(Clone)_006, TestPrefab(Clone)_005, TestPrefab(Clone)_004, TestPrefab(Clone)_003,
+        TestPrefab(Clone)_002, TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_017, TestPrefab(Clone)_016, TestPrefab(Clone)_015, TestPrefab(Clone)_014,
+        TestPrefab(Clone)_013, TestPrefab(Clone)_012, TestPrefab(Clone)_011, TestPrefab(Clone)_010,
+        TestPrefab(Clone)_009, TestPrefab(Clone)_008, TestPrefab(Clone)_007, TestPrefab(Clone)_006,
+        TestPrefab(Clone)_005, TestPrefab(Clone)_004, TestPrefab(Clone)_003, TestPrefab(Clone)_002,
+        TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_016, TestPrefab(Clone)_015, TestPrefab(Clone)_014, TestPrefab(Clone)_013,
+        TestPrefab(Clone)_012, TestPrefab(Clone)_011, TestPrefab(Clone)_010, TestPrefab(Clone)_009,
+        TestPrefab(Clone)_008, TestPrefab(Clone)_007, TestPrefab(Clone)_006, TestPrefab(Clone)_005,
+        TestPrefab(Clone)_004, TestPrefab(Clone)_003, TestPrefab(Clone)_002, TestPrefab(Clone)_001,
+        TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_015, TestPrefab(Clone)_014, TestPrefab(Clone)_013, TestPrefab(Clone)_012,
+        TestPrefab(Clone)_011, TestPrefab(Clone)_010, TestPrefab(Clone)_009, TestPrefab(Clone)_008,
+        TestPrefab(Clone)_007, TestPrefab(Clone)_006, TestPrefab(Clone)_005, TestPrefab(Clone)_004,
+        TestPrefab(Clone)_003, TestPrefab(Clone)_002, TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_014, TestPrefab(Clone)_013, TestPrefab(Clone)_012, TestPrefab(Clone)_011,
+        TestPrefab(Clone)_010, TestPrefab(Clone)_009, TestPrefab(Clone)_008, TestPrefab(Clone)_007,
+        TestPrefab(Clone)_006, TestPrefab(Clone)_005, TestPrefab(Clone)_004, TestPrefab(Clone)_003,
+        TestPrefab(Clone)_002, TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_013, TestPrefab(Clone)_012, TestPrefab(Clone)_011, TestPrefab(Clone)_010,
+        TestPrefab(Clone)_009, TestPrefab(Clone)_008, TestPrefab(Clone)_007, TestPrefab(Clone)_006,
+        TestPrefab(Clone)_005, TestPrefab(Clone)_004, TestPrefab(Clone)_003, TestPrefab(Clone)_002,
+        TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_012, TestPrefab(Clone)_011, TestPrefab(Clone)_010, TestPrefab(Clone)_009,
+        TestPrefab(Clone)_008, TestPrefab(Clone)_007, TestPrefab(Clone)_006, TestPrefab(Clone)_005,
+        TestPrefab(Clone)_004, TestPrefab(Clone)_003, TestPrefab(Clone)_002, TestPrefab(Clone)_001,
+        TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_011, TestPrefab(Clone)_010, TestPrefab(Clone)_009, TestPrefab(Clone)_008,
+        TestPrefab(Clone)_007, TestPrefab(Clone)_006, TestPrefab(Clone)_005, TestPrefab(Clone)_004,
+        TestPrefab(Clone)_003, TestPrefab(Clone)_002, TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_010, TestPrefab(Clone)_009, TestPrefab(Clone)_008, TestPrefab(Clone)_007,
+        TestPrefab(Clone)_006, TestPrefab(Clone)_005, TestPrefab(Clone)_004, TestPrefab(Clone)_003,
+        TestPrefab(Clone)_002, TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_009, TestPrefab(Clone)_008, TestPrefab(Clone)_007, TestPrefab(Clone)_006,
+        TestPrefab(Clone)_005, TestPrefab(Clone)_004, TestPrefab(Clone)_003, TestPrefab(Clone)_002,
+        TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_008, TestPrefab(Clone)_007, TestPrefab(Clone)_006, TestPrefab(Clone)_005,
+        TestPrefab(Clone)_004, TestPrefab(Clone)_003, TestPrefab(Clone)_002, TestPrefab(Clone)_001,
+        TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_007, TestPrefab(Clone)_006, TestPrefab(Clone)_005, TestPrefab(Clone)_004,
+        TestPrefab(Clone)_003, TestPrefab(Clone)_002, TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_006, TestPrefab(Clone)_005, TestPrefab(Clone)_004, TestPrefab(Clone)_003,
+        TestPrefab(Clone)_002, TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_005, TestPrefab(Clone)_004, TestPrefab(Clone)_003, TestPrefab(Clone)_002,
+        TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_004, TestPrefab(Clone)_003, TestPrefab(Clone)_002, TestPrefab(Clone)_001,
+        TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_003, TestPrefab(Clone)_002, TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_002, TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        \r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest] Pass Release
+        Test\r\n"
       stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
@@ -2372,10 +5065,442 @@ MonoBehaviour:
       uniqueId: PlayModeTestAssembly.dll/ObjectPoolServiceTestRunner/ObjectPoolServiceRepeatTest/[PlayModeTestAssembly][ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest(40)]
       name: ObjectPoolServiceRepeatTest(40)
       fullName: ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest(40)
-      resultStatus: 0
-      duration: 0
+      resultStatus: 1
+      duration: 0.2152295
       messages: 
-      output: 
+      output: "[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest] TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_002, TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_003, TestPrefab(Clone)_002, TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_004, TestPrefab(Clone)_003, TestPrefab(Clone)_002, TestPrefab(Clone)_001,
+        TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_005, TestPrefab(Clone)_004, TestPrefab(Clone)_003, TestPrefab(Clone)_002,
+        TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_006, TestPrefab(Clone)_005, TestPrefab(Clone)_004, TestPrefab(Clone)_003,
+        TestPrefab(Clone)_002, TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_007, TestPrefab(Clone)_006, TestPrefab(Clone)_005, TestPrefab(Clone)_004,
+        TestPrefab(Clone)_003, TestPrefab(Clone)_002, TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_008, TestPrefab(Clone)_007, TestPrefab(Clone)_006, TestPrefab(Clone)_005,
+        TestPrefab(Clone)_004, TestPrefab(Clone)_003, TestPrefab(Clone)_002, TestPrefab(Clone)_001,
+        TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_009, TestPrefab(Clone)_008, TestPrefab(Clone)_007, TestPrefab(Clone)_006,
+        TestPrefab(Clone)_005, TestPrefab(Clone)_004, TestPrefab(Clone)_003, TestPrefab(Clone)_002,
+        TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_010, TestPrefab(Clone)_009, TestPrefab(Clone)_008, TestPrefab(Clone)_007,
+        TestPrefab(Clone)_006, TestPrefab(Clone)_005, TestPrefab(Clone)_004, TestPrefab(Clone)_003,
+        TestPrefab(Clone)_002, TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_011, TestPrefab(Clone)_010, TestPrefab(Clone)_009, TestPrefab(Clone)_008,
+        TestPrefab(Clone)_007, TestPrefab(Clone)_006, TestPrefab(Clone)_005, TestPrefab(Clone)_004,
+        TestPrefab(Clone)_003, TestPrefab(Clone)_002, TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_012, TestPrefab(Clone)_011, TestPrefab(Clone)_010, TestPrefab(Clone)_009,
+        TestPrefab(Clone)_008, TestPrefab(Clone)_007, TestPrefab(Clone)_006, TestPrefab(Clone)_005,
+        TestPrefab(Clone)_004, TestPrefab(Clone)_003, TestPrefab(Clone)_002, TestPrefab(Clone)_001,
+        TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_013, TestPrefab(Clone)_012, TestPrefab(Clone)_011, TestPrefab(Clone)_010,
+        TestPrefab(Clone)_009, TestPrefab(Clone)_008, TestPrefab(Clone)_007, TestPrefab(Clone)_006,
+        TestPrefab(Clone)_005, TestPrefab(Clone)_004, TestPrefab(Clone)_003, TestPrefab(Clone)_002,
+        TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_014, TestPrefab(Clone)_013, TestPrefab(Clone)_012, TestPrefab(Clone)_011,
+        TestPrefab(Clone)_010, TestPrefab(Clone)_009, TestPrefab(Clone)_008, TestPrefab(Clone)_007,
+        TestPrefab(Clone)_006, TestPrefab(Clone)_005, TestPrefab(Clone)_004, TestPrefab(Clone)_003,
+        TestPrefab(Clone)_002, TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_015, TestPrefab(Clone)_014, TestPrefab(Clone)_013, TestPrefab(Clone)_012,
+        TestPrefab(Clone)_011, TestPrefab(Clone)_010, TestPrefab(Clone)_009, TestPrefab(Clone)_008,
+        TestPrefab(Clone)_007, TestPrefab(Clone)_006, TestPrefab(Clone)_005, TestPrefab(Clone)_004,
+        TestPrefab(Clone)_003, TestPrefab(Clone)_002, TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_016, TestPrefab(Clone)_015, TestPrefab(Clone)_014, TestPrefab(Clone)_013,
+        TestPrefab(Clone)_012, TestPrefab(Clone)_011, TestPrefab(Clone)_010, TestPrefab(Clone)_009,
+        TestPrefab(Clone)_008, TestPrefab(Clone)_007, TestPrefab(Clone)_006, TestPrefab(Clone)_005,
+        TestPrefab(Clone)_004, TestPrefab(Clone)_003, TestPrefab(Clone)_002, TestPrefab(Clone)_001,
+        TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_017, TestPrefab(Clone)_016, TestPrefab(Clone)_015, TestPrefab(Clone)_014,
+        TestPrefab(Clone)_013, TestPrefab(Clone)_012, TestPrefab(Clone)_011, TestPrefab(Clone)_010,
+        TestPrefab(Clone)_009, TestPrefab(Clone)_008, TestPrefab(Clone)_007, TestPrefab(Clone)_006,
+        TestPrefab(Clone)_005, TestPrefab(Clone)_004, TestPrefab(Clone)_003, TestPrefab(Clone)_002,
+        TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_018, TestPrefab(Clone)_017, TestPrefab(Clone)_016, TestPrefab(Clone)_015,
+        TestPrefab(Clone)_014, TestPrefab(Clone)_013, TestPrefab(Clone)_012, TestPrefab(Clone)_011,
+        TestPrefab(Clone)_010, TestPrefab(Clone)_009, TestPrefab(Clone)_008, TestPrefab(Clone)_007,
+        TestPrefab(Clone)_006, TestPrefab(Clone)_005, TestPrefab(Clone)_004, TestPrefab(Clone)_003,
+        TestPrefab(Clone)_002, TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_019, TestPrefab(Clone)_018, TestPrefab(Clone)_017, TestPrefab(Clone)_016,
+        TestPrefab(Clone)_015, TestPrefab(Clone)_014, TestPrefab(Clone)_013, TestPrefab(Clone)_012,
+        TestPrefab(Clone)_011, TestPrefab(Clone)_010, TestPrefab(Clone)_009, TestPrefab(Clone)_008,
+        TestPrefab(Clone)_007, TestPrefab(Clone)_006, TestPrefab(Clone)_005, TestPrefab(Clone)_004,
+        TestPrefab(Clone)_003, TestPrefab(Clone)_002, TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_020, TestPrefab(Clone)_019, TestPrefab(Clone)_018, TestPrefab(Clone)_017,
+        TestPrefab(Clone)_016, TestPrefab(Clone)_015, TestPrefab(Clone)_014, TestPrefab(Clone)_013,
+        TestPrefab(Clone)_012, TestPrefab(Clone)_011, TestPrefab(Clone)_010, TestPrefab(Clone)_009,
+        TestPrefab(Clone)_008, TestPrefab(Clone)_007, TestPrefab(Clone)_006, TestPrefab(Clone)_005,
+        TestPrefab(Clone)_004, TestPrefab(Clone)_003, TestPrefab(Clone)_002, TestPrefab(Clone)_001,
+        TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_021, TestPrefab(Clone)_020, TestPrefab(Clone)_019, TestPrefab(Clone)_018,
+        TestPrefab(Clone)_017, TestPrefab(Clone)_016, TestPrefab(Clone)_015, TestPrefab(Clone)_014,
+        TestPrefab(Clone)_013, TestPrefab(Clone)_012, TestPrefab(Clone)_011, TestPrefab(Clone)_010,
+        TestPrefab(Clone)_009, TestPrefab(Clone)_008, TestPrefab(Clone)_007, TestPrefab(Clone)_006,
+        TestPrefab(Clone)_005, TestPrefab(Clone)_004, TestPrefab(Clone)_003, TestPrefab(Clone)_002,
+        TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_022, TestPrefab(Clone)_021, TestPrefab(Clone)_020, TestPrefab(Clone)_019,
+        TestPrefab(Clone)_018, TestPrefab(Clone)_017, TestPrefab(Clone)_016, TestPrefab(Clone)_015,
+        TestPrefab(Clone)_014, TestPrefab(Clone)_013, TestPrefab(Clone)_012, TestPrefab(Clone)_011,
+        TestPrefab(Clone)_010, TestPrefab(Clone)_009, TestPrefab(Clone)_008, TestPrefab(Clone)_007,
+        TestPrefab(Clone)_006, TestPrefab(Clone)_005, TestPrefab(Clone)_004, TestPrefab(Clone)_003,
+        TestPrefab(Clone)_002, TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_023, TestPrefab(Clone)_022, TestPrefab(Clone)_021, TestPrefab(Clone)_020,
+        TestPrefab(Clone)_019, TestPrefab(Clone)_018, TestPrefab(Clone)_017, TestPrefab(Clone)_016,
+        TestPrefab(Clone)_015, TestPrefab(Clone)_014, TestPrefab(Clone)_013, TestPrefab(Clone)_012,
+        TestPrefab(Clone)_011, TestPrefab(Clone)_010, TestPrefab(Clone)_009, TestPrefab(Clone)_008,
+        TestPrefab(Clone)_007, TestPrefab(Clone)_006, TestPrefab(Clone)_005, TestPrefab(Clone)_004,
+        TestPrefab(Clone)_003, TestPrefab(Clone)_002, TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_024, TestPrefab(Clone)_023, TestPrefab(Clone)_022, TestPrefab(Clone)_021,
+        TestPrefab(Clone)_020, TestPrefab(Clone)_019, TestPrefab(Clone)_018, TestPrefab(Clone)_017,
+        TestPrefab(Clone)_016, TestPrefab(Clone)_015, TestPrefab(Clone)_014, TestPrefab(Clone)_013,
+        TestPrefab(Clone)_012, TestPrefab(Clone)_011, TestPrefab(Clone)_010, TestPrefab(Clone)_009,
+        TestPrefab(Clone)_008, TestPrefab(Clone)_007, TestPrefab(Clone)_006, TestPrefab(Clone)_005,
+        TestPrefab(Clone)_004, TestPrefab(Clone)_003, TestPrefab(Clone)_002, TestPrefab(Clone)_001,
+        TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_025, TestPrefab(Clone)_024, TestPrefab(Clone)_023, TestPrefab(Clone)_022,
+        TestPrefab(Clone)_021, TestPrefab(Clone)_020, TestPrefab(Clone)_019, TestPrefab(Clone)_018,
+        TestPrefab(Clone)_017, TestPrefab(Clone)_016, TestPrefab(Clone)_015, TestPrefab(Clone)_014,
+        TestPrefab(Clone)_013, TestPrefab(Clone)_012, TestPrefab(Clone)_011, TestPrefab(Clone)_010,
+        TestPrefab(Clone)_009, TestPrefab(Clone)_008, TestPrefab(Clone)_007, TestPrefab(Clone)_006,
+        TestPrefab(Clone)_005, TestPrefab(Clone)_004, TestPrefab(Clone)_003, TestPrefab(Clone)_002,
+        TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_026, TestPrefab(Clone)_025, TestPrefab(Clone)_024, TestPrefab(Clone)_023,
+        TestPrefab(Clone)_022, TestPrefab(Clone)_021, TestPrefab(Clone)_020, TestPrefab(Clone)_019,
+        TestPrefab(Clone)_018, TestPrefab(Clone)_017, TestPrefab(Clone)_016, TestPrefab(Clone)_015,
+        TestPrefab(Clone)_014, TestPrefab(Clone)_013, TestPrefab(Clone)_012, TestPrefab(Clone)_011,
+        TestPrefab(Clone)_010, TestPrefab(Clone)_009, TestPrefab(Clone)_008, TestPrefab(Clone)_007,
+        TestPrefab(Clone)_006, TestPrefab(Clone)_005, TestPrefab(Clone)_004, TestPrefab(Clone)_003,
+        TestPrefab(Clone)_002, TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_027, TestPrefab(Clone)_026, TestPrefab(Clone)_025, TestPrefab(Clone)_024,
+        TestPrefab(Clone)_023, TestPrefab(Clone)_022, TestPrefab(Clone)_021, TestPrefab(Clone)_020,
+        TestPrefab(Clone)_019, TestPrefab(Clone)_018, TestPrefab(Clone)_017, TestPrefab(Clone)_016,
+        TestPrefab(Clone)_015, TestPrefab(Clone)_014, TestPrefab(Clone)_013, TestPrefab(Clone)_012,
+        TestPrefab(Clone)_011, TestPrefab(Clone)_010, TestPrefab(Clone)_009, TestPrefab(Clone)_008,
+        TestPrefab(Clone)_007, TestPrefab(Clone)_006, TestPrefab(Clone)_005, TestPrefab(Clone)_004,
+        TestPrefab(Clone)_003, TestPrefab(Clone)_002, TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_028, TestPrefab(Clone)_027, TestPrefab(Clone)_026, TestPrefab(Clone)_025,
+        TestPrefab(Clone)_024, TestPrefab(Clone)_023, TestPrefab(Clone)_022, TestPrefab(Clone)_021,
+        TestPrefab(Clone)_020, TestPrefab(Clone)_019, TestPrefab(Clone)_018, TestPrefab(Clone)_017,
+        TestPrefab(Clone)_016, TestPrefab(Clone)_015, TestPrefab(Clone)_014, TestPrefab(Clone)_013,
+        TestPrefab(Clone)_012, TestPrefab(Clone)_011, TestPrefab(Clone)_010, TestPrefab(Clone)_009,
+        TestPrefab(Clone)_008, TestPrefab(Clone)_007, TestPrefab(Clone)_006, TestPrefab(Clone)_005,
+        TestPrefab(Clone)_004, TestPrefab(Clone)_003, TestPrefab(Clone)_002, TestPrefab(Clone)_001,
+        TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_029, TestPrefab(Clone)_028, TestPrefab(Clone)_027, TestPrefab(Clone)_026,
+        TestPrefab(Clone)_025, TestPrefab(Clone)_024, TestPrefab(Clone)_023, TestPrefab(Clone)_022,
+        TestPrefab(Clone)_021, TestPrefab(Clone)_020, TestPrefab(Clone)_019, TestPrefab(Clone)_018,
+        TestPrefab(Clone)_017, TestPrefab(Clone)_016, TestPrefab(Clone)_015, TestPrefab(Clone)_014,
+        TestPrefab(Clone)_013, TestPrefab(Clone)_012, TestPrefab(Clone)_011, TestPrefab(Clone)_010,
+        TestPrefab(Clone)_009, TestPrefab(Clone)_008, TestPrefab(Clone)_007, TestPrefab(Clone)_006,
+        TestPrefab(Clone)_005, TestPrefab(Clone)_004, TestPrefab(Clone)_003, TestPrefab(Clone)_002,
+        TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_030, TestPrefab(Clone)_029, TestPrefab(Clone)_028, TestPrefab(Clone)_027,
+        TestPrefab(Clone)_026, TestPrefab(Clone)_025, TestPrefab(Clone)_024, TestPrefab(Clone)_023,
+        TestPrefab(Clone)_022, TestPrefab(Clone)_021, TestPrefab(Clone)_020, TestPrefab(Clone)_019,
+        TestPrefab(Clone)_018, TestPrefab(Clone)_017, TestPrefab(Clone)_016, TestPrefab(Clone)_015,
+        TestPrefab(Clone)_014, TestPrefab(Clone)_013, TestPrefab(Clone)_012, TestPrefab(Clone)_011,
+        TestPrefab(Clone)_010, TestPrefab(Clone)_009, TestPrefab(Clone)_008, TestPrefab(Clone)_007,
+        TestPrefab(Clone)_006, TestPrefab(Clone)_005, TestPrefab(Clone)_004, TestPrefab(Clone)_003,
+        TestPrefab(Clone)_002, TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_031, TestPrefab(Clone)_030, TestPrefab(Clone)_029, TestPrefab(Clone)_028,
+        TestPrefab(Clone)_027, TestPrefab(Clone)_026, TestPrefab(Clone)_025, TestPrefab(Clone)_024,
+        TestPrefab(Clone)_023, TestPrefab(Clone)_022, TestPrefab(Clone)_021, TestPrefab(Clone)_020,
+        TestPrefab(Clone)_019, TestPrefab(Clone)_018, TestPrefab(Clone)_017, TestPrefab(Clone)_016,
+        TestPrefab(Clone)_015, TestPrefab(Clone)_014, TestPrefab(Clone)_013, TestPrefab(Clone)_012,
+        TestPrefab(Clone)_011, TestPrefab(Clone)_010, TestPrefab(Clone)_009, TestPrefab(Clone)_008,
+        TestPrefab(Clone)_007, TestPrefab(Clone)_006, TestPrefab(Clone)_005, TestPrefab(Clone)_004,
+        TestPrefab(Clone)_003, TestPrefab(Clone)_002, TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_032, TestPrefab(Clone)_031, TestPrefab(Clone)_030, TestPrefab(Clone)_029,
+        TestPrefab(Clone)_028, TestPrefab(Clone)_027, TestPrefab(Clone)_026, TestPrefab(Clone)_025,
+        TestPrefab(Clone)_024, TestPrefab(Clone)_023, TestPrefab(Clone)_022, TestPrefab(Clone)_021,
+        TestPrefab(Clone)_020, TestPrefab(Clone)_019, TestPrefab(Clone)_018, TestPrefab(Clone)_017,
+        TestPrefab(Clone)_016, TestPrefab(Clone)_015, TestPrefab(Clone)_014, TestPrefab(Clone)_013,
+        TestPrefab(Clone)_012, TestPrefab(Clone)_011, TestPrefab(Clone)_010, TestPrefab(Clone)_009,
+        TestPrefab(Clone)_008, TestPrefab(Clone)_007, TestPrefab(Clone)_006, TestPrefab(Clone)_005,
+        TestPrefab(Clone)_004, TestPrefab(Clone)_003, TestPrefab(Clone)_002, TestPrefab(Clone)_001,
+        TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_033, TestPrefab(Clone)_032, TestPrefab(Clone)_031, TestPrefab(Clone)_030,
+        TestPrefab(Clone)_029, TestPrefab(Clone)_028, TestPrefab(Clone)_027, TestPrefab(Clone)_026,
+        TestPrefab(Clone)_025, TestPrefab(Clone)_024, TestPrefab(Clone)_023, TestPrefab(Clone)_022,
+        TestPrefab(Clone)_021, TestPrefab(Clone)_020, TestPrefab(Clone)_019, TestPrefab(Clone)_018,
+        TestPrefab(Clone)_017, TestPrefab(Clone)_016, TestPrefab(Clone)_015, TestPrefab(Clone)_014,
+        TestPrefab(Clone)_013, TestPrefab(Clone)_012, TestPrefab(Clone)_011, TestPrefab(Clone)_010,
+        TestPrefab(Clone)_009, TestPrefab(Clone)_008, TestPrefab(Clone)_007, TestPrefab(Clone)_006,
+        TestPrefab(Clone)_005, TestPrefab(Clone)_004, TestPrefab(Clone)_003, TestPrefab(Clone)_002,
+        TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_034, TestPrefab(Clone)_033, TestPrefab(Clone)_032, TestPrefab(Clone)_031,
+        TestPrefab(Clone)_030, TestPrefab(Clone)_029, TestPrefab(Clone)_028, TestPrefab(Clone)_027,
+        TestPrefab(Clone)_026, TestPrefab(Clone)_025, TestPrefab(Clone)_024, TestPrefab(Clone)_023,
+        TestPrefab(Clone)_022, TestPrefab(Clone)_021, TestPrefab(Clone)_020, TestPrefab(Clone)_019,
+        TestPrefab(Clone)_018, TestPrefab(Clone)_017, TestPrefab(Clone)_016, TestPrefab(Clone)_015,
+        TestPrefab(Clone)_014, TestPrefab(Clone)_013, TestPrefab(Clone)_012, TestPrefab(Clone)_011,
+        TestPrefab(Clone)_010, TestPrefab(Clone)_009, TestPrefab(Clone)_008, TestPrefab(Clone)_007,
+        TestPrefab(Clone)_006, TestPrefab(Clone)_005, TestPrefab(Clone)_004, TestPrefab(Clone)_003,
+        TestPrefab(Clone)_002, TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_035, TestPrefab(Clone)_034, TestPrefab(Clone)_033, TestPrefab(Clone)_032,
+        TestPrefab(Clone)_031, TestPrefab(Clone)_030, TestPrefab(Clone)_029, TestPrefab(Clone)_028,
+        TestPrefab(Clone)_027, TestPrefab(Clone)_026, TestPrefab(Clone)_025, TestPrefab(Clone)_024,
+        TestPrefab(Clone)_023, TestPrefab(Clone)_022, TestPrefab(Clone)_021, TestPrefab(Clone)_020,
+        TestPrefab(Clone)_019, TestPrefab(Clone)_018, TestPrefab(Clone)_017, TestPrefab(Clone)_016,
+        TestPrefab(Clone)_015, TestPrefab(Clone)_014, TestPrefab(Clone)_013, TestPrefab(Clone)_012,
+        TestPrefab(Clone)_011, TestPrefab(Clone)_010, TestPrefab(Clone)_009, TestPrefab(Clone)_008,
+        TestPrefab(Clone)_007, TestPrefab(Clone)_006, TestPrefab(Clone)_005, TestPrefab(Clone)_004,
+        TestPrefab(Clone)_003, TestPrefab(Clone)_002, TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_036, TestPrefab(Clone)_035, TestPrefab(Clone)_034, TestPrefab(Clone)_033,
+        TestPrefab(Clone)_032, TestPrefab(Clone)_031, TestPrefab(Clone)_030, TestPrefab(Clone)_029,
+        TestPrefab(Clone)_028, TestPrefab(Clone)_027, TestPrefab(Clone)_026, TestPrefab(Clone)_025,
+        TestPrefab(Clone)_024, TestPrefab(Clone)_023, TestPrefab(Clone)_022, TestPrefab(Clone)_021,
+        TestPrefab(Clone)_020, TestPrefab(Clone)_019, TestPrefab(Clone)_018, TestPrefab(Clone)_017,
+        TestPrefab(Clone)_016, TestPrefab(Clone)_015, TestPrefab(Clone)_014, TestPrefab(Clone)_013,
+        TestPrefab(Clone)_012, TestPrefab(Clone)_011, TestPrefab(Clone)_010, TestPrefab(Clone)_009,
+        TestPrefab(Clone)_008, TestPrefab(Clone)_007, TestPrefab(Clone)_006, TestPrefab(Clone)_005,
+        TestPrefab(Clone)_004, TestPrefab(Clone)_003, TestPrefab(Clone)_002, TestPrefab(Clone)_001,
+        TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_037, TestPrefab(Clone)_036, TestPrefab(Clone)_035, TestPrefab(Clone)_034,
+        TestPrefab(Clone)_033, TestPrefab(Clone)_032, TestPrefab(Clone)_031, TestPrefab(Clone)_030,
+        TestPrefab(Clone)_029, TestPrefab(Clone)_028, TestPrefab(Clone)_027, TestPrefab(Clone)_026,
+        TestPrefab(Clone)_025, TestPrefab(Clone)_024, TestPrefab(Clone)_023, TestPrefab(Clone)_022,
+        TestPrefab(Clone)_021, TestPrefab(Clone)_020, TestPrefab(Clone)_019, TestPrefab(Clone)_018,
+        TestPrefab(Clone)_017, TestPrefab(Clone)_016, TestPrefab(Clone)_015, TestPrefab(Clone)_014,
+        TestPrefab(Clone)_013, TestPrefab(Clone)_012, TestPrefab(Clone)_011, TestPrefab(Clone)_010,
+        TestPrefab(Clone)_009, TestPrefab(Clone)_008, TestPrefab(Clone)_007, TestPrefab(Clone)_006,
+        TestPrefab(Clone)_005, TestPrefab(Clone)_004, TestPrefab(Clone)_003, TestPrefab(Clone)_002,
+        TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_038, TestPrefab(Clone)_037, TestPrefab(Clone)_036, TestPrefab(Clone)_035,
+        TestPrefab(Clone)_034, TestPrefab(Clone)_033, TestPrefab(Clone)_032, TestPrefab(Clone)_031,
+        TestPrefab(Clone)_030, TestPrefab(Clone)_029, TestPrefab(Clone)_028, TestPrefab(Clone)_027,
+        TestPrefab(Clone)_026, TestPrefab(Clone)_025, TestPrefab(Clone)_024, TestPrefab(Clone)_023,
+        TestPrefab(Clone)_022, TestPrefab(Clone)_021, TestPrefab(Clone)_020, TestPrefab(Clone)_019,
+        TestPrefab(Clone)_018, TestPrefab(Clone)_017, TestPrefab(Clone)_016, TestPrefab(Clone)_015,
+        TestPrefab(Clone)_014, TestPrefab(Clone)_013, TestPrefab(Clone)_012, TestPrefab(Clone)_011,
+        TestPrefab(Clone)_010, TestPrefab(Clone)_009, TestPrefab(Clone)_008, TestPrefab(Clone)_007,
+        TestPrefab(Clone)_006, TestPrefab(Clone)_005, TestPrefab(Clone)_004, TestPrefab(Clone)_003,
+        TestPrefab(Clone)_002, TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_039, TestPrefab(Clone)_038, TestPrefab(Clone)_037, TestPrefab(Clone)_036,
+        TestPrefab(Clone)_035, TestPrefab(Clone)_034, TestPrefab(Clone)_033, TestPrefab(Clone)_032,
+        TestPrefab(Clone)_031, TestPrefab(Clone)_030, TestPrefab(Clone)_029, TestPrefab(Clone)_028,
+        TestPrefab(Clone)_027, TestPrefab(Clone)_026, TestPrefab(Clone)_025, TestPrefab(Clone)_024,
+        TestPrefab(Clone)_023, TestPrefab(Clone)_022, TestPrefab(Clone)_021, TestPrefab(Clone)_020,
+        TestPrefab(Clone)_019, TestPrefab(Clone)_018, TestPrefab(Clone)_017, TestPrefab(Clone)_016,
+        TestPrefab(Clone)_015, TestPrefab(Clone)_014, TestPrefab(Clone)_013, TestPrefab(Clone)_012,
+        TestPrefab(Clone)_011, TestPrefab(Clone)_010, TestPrefab(Clone)_009, TestPrefab(Clone)_008,
+        TestPrefab(Clone)_007, TestPrefab(Clone)_006, TestPrefab(Clone)_005, TestPrefab(Clone)_004,
+        TestPrefab(Clone)_003, TestPrefab(Clone)_002, TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        Pass Get Test\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_038, TestPrefab(Clone)_037, TestPrefab(Clone)_036, TestPrefab(Clone)_035,
+        TestPrefab(Clone)_034, TestPrefab(Clone)_033, TestPrefab(Clone)_032, TestPrefab(Clone)_031,
+        TestPrefab(Clone)_030, TestPrefab(Clone)_029, TestPrefab(Clone)_028, TestPrefab(Clone)_027,
+        TestPrefab(Clone)_026, TestPrefab(Clone)_025, TestPrefab(Clone)_024, TestPrefab(Clone)_023,
+        TestPrefab(Clone)_022, TestPrefab(Clone)_021, TestPrefab(Clone)_020, TestPrefab(Clone)_019,
+        TestPrefab(Clone)_018, TestPrefab(Clone)_017, TestPrefab(Clone)_016, TestPrefab(Clone)_015,
+        TestPrefab(Clone)_014, TestPrefab(Clone)_013, TestPrefab(Clone)_012, TestPrefab(Clone)_011,
+        TestPrefab(Clone)_010, TestPrefab(Clone)_009, TestPrefab(Clone)_008, TestPrefab(Clone)_007,
+        TestPrefab(Clone)_006, TestPrefab(Clone)_005, TestPrefab(Clone)_004, TestPrefab(Clone)_003,
+        TestPrefab(Clone)_002, TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_037, TestPrefab(Clone)_036, TestPrefab(Clone)_035, TestPrefab(Clone)_034,
+        TestPrefab(Clone)_033, TestPrefab(Clone)_032, TestPrefab(Clone)_031, TestPrefab(Clone)_030,
+        TestPrefab(Clone)_029, TestPrefab(Clone)_028, TestPrefab(Clone)_027, TestPrefab(Clone)_026,
+        TestPrefab(Clone)_025, TestPrefab(Clone)_024, TestPrefab(Clone)_023, TestPrefab(Clone)_022,
+        TestPrefab(Clone)_021, TestPrefab(Clone)_020, TestPrefab(Clone)_019, TestPrefab(Clone)_018,
+        TestPrefab(Clone)_017, TestPrefab(Clone)_016, TestPrefab(Clone)_015, TestPrefab(Clone)_014,
+        TestPrefab(Clone)_013, TestPrefab(Clone)_012, TestPrefab(Clone)_011, TestPrefab(Clone)_010,
+        TestPrefab(Clone)_009, TestPrefab(Clone)_008, TestPrefab(Clone)_007, TestPrefab(Clone)_006,
+        TestPrefab(Clone)_005, TestPrefab(Clone)_004, TestPrefab(Clone)_003, TestPrefab(Clone)_002,
+        TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_036, TestPrefab(Clone)_035, TestPrefab(Clone)_034, TestPrefab(Clone)_033,
+        TestPrefab(Clone)_032, TestPrefab(Clone)_031, TestPrefab(Clone)_030, TestPrefab(Clone)_029,
+        TestPrefab(Clone)_028, TestPrefab(Clone)_027, TestPrefab(Clone)_026, TestPrefab(Clone)_025,
+        TestPrefab(Clone)_024, TestPrefab(Clone)_023, TestPrefab(Clone)_022, TestPrefab(Clone)_021,
+        TestPrefab(Clone)_020, TestPrefab(Clone)_019, TestPrefab(Clone)_018, TestPrefab(Clone)_017,
+        TestPrefab(Clone)_016, TestPrefab(Clone)_015, TestPrefab(Clone)_014, TestPrefab(Clone)_013,
+        TestPrefab(Clone)_012, TestPrefab(Clone)_011, TestPrefab(Clone)_010, TestPrefab(Clone)_009,
+        TestPrefab(Clone)_008, TestPrefab(Clone)_007, TestPrefab(Clone)_006, TestPrefab(Clone)_005,
+        TestPrefab(Clone)_004, TestPrefab(Clone)_003, TestPrefab(Clone)_002, TestPrefab(Clone)_001,
+        TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_035, TestPrefab(Clone)_034, TestPrefab(Clone)_033, TestPrefab(Clone)_032,
+        TestPrefab(Clone)_031, TestPrefab(Clone)_030, TestPrefab(Clone)_029, TestPrefab(Clone)_028,
+        TestPrefab(Clone)_027, TestPrefab(Clone)_026, TestPrefab(Clone)_025, TestPrefab(Clone)_024,
+        TestPrefab(Clone)_023, TestPrefab(Clone)_022, TestPrefab(Clone)_021, TestPrefab(Clone)_020,
+        TestPrefab(Clone)_019, TestPrefab(Clone)_018, TestPrefab(Clone)_017, TestPrefab(Clone)_016,
+        TestPrefab(Clone)_015, TestPrefab(Clone)_014, TestPrefab(Clone)_013, TestPrefab(Clone)_012,
+        TestPrefab(Clone)_011, TestPrefab(Clone)_010, TestPrefab(Clone)_009, TestPrefab(Clone)_008,
+        TestPrefab(Clone)_007, TestPrefab(Clone)_006, TestPrefab(Clone)_005, TestPrefab(Clone)_004,
+        TestPrefab(Clone)_003, TestPrefab(Clone)_002, TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_034, TestPrefab(Clone)_033, TestPrefab(Clone)_032, TestPrefab(Clone)_031,
+        TestPrefab(Clone)_030, TestPrefab(Clone)_029, TestPrefab(Clone)_028, TestPrefab(Clone)_027,
+        TestPrefab(Clone)_026, TestPrefab(Clone)_025, TestPrefab(Clone)_024, TestPrefab(Clone)_023,
+        TestPrefab(Clone)_022, TestPrefab(Clone)_021, TestPrefab(Clone)_020, TestPrefab(Clone)_019,
+        TestPrefab(Clone)_018, TestPrefab(Clone)_017, TestPrefab(Clone)_016, TestPrefab(Clone)_015,
+        TestPrefab(Clone)_014, TestPrefab(Clone)_013, TestPrefab(Clone)_012, TestPrefab(Clone)_011,
+        TestPrefab(Clone)_010, TestPrefab(Clone)_009, TestPrefab(Clone)_008, TestPrefab(Clone)_007,
+        TestPrefab(Clone)_006, TestPrefab(Clone)_005, TestPrefab(Clone)_004, TestPrefab(Clone)_003,
+        TestPrefab(Clone)_002, TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_033, TestPrefab(Clone)_032, TestPrefab(Clone)_031, TestPrefab(Clone)_030,
+        TestPrefab(Clone)_029, TestPrefab(Clone)_028, TestPrefab(Clone)_027, TestPrefab(Clone)_026,
+        TestPrefab(Clone)_025, TestPrefab(Clone)_024, TestPrefab(Clone)_023, TestPrefab(Clone)_022,
+        TestPrefab(Clone)_021, TestPrefab(Clone)_020, TestPrefab(Clone)_019, TestPrefab(Clone)_018,
+        TestPrefab(Clone)_017, TestPrefab(Clone)_016, TestPrefab(Clone)_015, TestPrefab(Clone)_014,
+        TestPrefab(Clone)_013, TestPrefab(Clone)_012, TestPrefab(Clone)_011, TestPrefab(Clone)_010,
+        TestPrefab(Clone)_009, TestPrefab(Clone)_008, TestPrefab(Clone)_007, TestPrefab(Clone)_006,
+        TestPrefab(Clone)_005, TestPrefab(Clone)_004, TestPrefab(Clone)_003, TestPrefab(Clone)_002,
+        TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_032, TestPrefab(Clone)_031, TestPrefab(Clone)_030, TestPrefab(Clone)_029,
+        TestPrefab(Clone)_028, TestPrefab(Clone)_027, TestPrefab(Clone)_026, TestPrefab(Clone)_025,
+        TestPrefab(Clone)_024, TestPrefab(Clone)_023, TestPrefab(Clone)_022, TestPrefab(Clone)_021,
+        TestPrefab(Clone)_020, TestPrefab(Clone)_019, TestPrefab(Clone)_018, TestPrefab(Clone)_017,
+        TestPrefab(Clone)_016, TestPrefab(Clone)_015, TestPrefab(Clone)_014, TestPrefab(Clone)_013,
+        TestPrefab(Clone)_012, TestPrefab(Clone)_011, TestPrefab(Clone)_010, TestPrefab(Clone)_009,
+        TestPrefab(Clone)_008, TestPrefab(Clone)_007, TestPrefab(Clone)_006, TestPrefab(Clone)_005,
+        TestPrefab(Clone)_004, TestPrefab(Clone)_003, TestPrefab(Clone)_002, TestPrefab(Clone)_001,
+        TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_031, TestPrefab(Clone)_030, TestPrefab(Clone)_029, TestPrefab(Clone)_028,
+        TestPrefab(Clone)_027, TestPrefab(Clone)_026, TestPrefab(Clone)_025, TestPrefab(Clone)_024,
+        TestPrefab(Clone)_023, TestPrefab(Clone)_022, TestPrefab(Clone)_021, TestPrefab(Clone)_020,
+        TestPrefab(Clone)_019, TestPrefab(Clone)_018, TestPrefab(Clone)_017, TestPrefab(Clone)_016,
+        TestPrefab(Clone)_015, TestPrefab(Clone)_014, TestPrefab(Clone)_013, TestPrefab(Clone)_012,
+        TestPrefab(Clone)_011, TestPrefab(Clone)_010, TestPrefab(Clone)_009, TestPrefab(Clone)_008,
+        TestPrefab(Clone)_007, TestPrefab(Clone)_006, TestPrefab(Clone)_005, TestPrefab(Clone)_004,
+        TestPrefab(Clone)_003, TestPrefab(Clone)_002, TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_030, TestPrefab(Clone)_029, TestPrefab(Clone)_028, TestPrefab(Clone)_027,
+        TestPrefab(Clone)_026, TestPrefab(Clone)_025, TestPrefab(Clone)_024, TestPrefab(Clone)_023,
+        TestPrefab(Clone)_022, TestPrefab(Clone)_021, TestPrefab(Clone)_020, TestPrefab(Clone)_019,
+        TestPrefab(Clone)_018, TestPrefab(Clone)_017, TestPrefab(Clone)_016, TestPrefab(Clone)_015,
+        TestPrefab(Clone)_014, TestPrefab(Clone)_013, TestPrefab(Clone)_012, TestPrefab(Clone)_011,
+        TestPrefab(Clone)_010, TestPrefab(Clone)_009, TestPrefab(Clone)_008, TestPrefab(Clone)_007,
+        TestPrefab(Clone)_006, TestPrefab(Clone)_005, TestPrefab(Clone)_004, TestPrefab(Clone)_003,
+        TestPrefab(Clone)_002, TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_029, TestPrefab(Clone)_028, TestPrefab(Clone)_027, TestPrefab(Clone)_026,
+        TestPrefab(Clone)_025, TestPrefab(Clone)_024, TestPrefab(Clone)_023, TestPrefab(Clone)_022,
+        TestPrefab(Clone)_021, TestPrefab(Clone)_020, TestPrefab(Clone)_019, TestPrefab(Clone)_018,
+        TestPrefab(Clone)_017, TestPrefab(Clone)_016, TestPrefab(Clone)_015, TestPrefab(Clone)_014,
+        TestPrefab(Clone)_013, TestPrefab(Clone)_012, TestPrefab(Clone)_011, TestPrefab(Clone)_010,
+        TestPrefab(Clone)_009, TestPrefab(Clone)_008, TestPrefab(Clone)_007, TestPrefab(Clone)_006,
+        TestPrefab(Clone)_005, TestPrefab(Clone)_004, TestPrefab(Clone)_003, TestPrefab(Clone)_002,
+        TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_028, TestPrefab(Clone)_027, TestPrefab(Clone)_026, TestPrefab(Clone)_025,
+        TestPrefab(Clone)_024, TestPrefab(Clone)_023, TestPrefab(Clone)_022, TestPrefab(Clone)_021,
+        TestPrefab(Clone)_020, TestPrefab(Clone)_019, TestPrefab(Clone)_018, TestPrefab(Clone)_017,
+        TestPrefab(Clone)_016, TestPrefab(Clone)_015, TestPrefab(Clone)_014, TestPrefab(Clone)_013,
+        TestPrefab(Clone)_012, TestPrefab(Clone)_011, TestPrefab(Clone)_010, TestPrefab(Clone)_009,
+        TestPrefab(Clone)_008, TestPrefab(Clone)_007, TestPrefab(Clone)_006, TestPrefab(Clone)_005,
+        TestPrefab(Clone)_004, TestPrefab(Clone)_003, TestPrefab(Clone)_002, TestPrefab(Clone)_001,
+        TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_027, TestPrefab(Clone)_026, TestPrefab(Clone)_025, TestPrefab(Clone)_024,
+        TestPrefab(Clone)_023, TestPrefab(Clone)_022, TestPrefab(Clone)_021, TestPrefab(Clone)_020,
+        TestPrefab(Clone)_019, TestPrefab(Clone)_018, TestPrefab(Clone)_017, TestPrefab(Clone)_016,
+        TestPrefab(Clone)_015, TestPrefab(Clone)_014, TestPrefab(Clone)_013, TestPrefab(Clone)_012,
+        TestPrefab(Clone)_011, TestPrefab(Clone)_010, TestPrefab(Clone)_009, TestPrefab(Clone)_008,
+        TestPrefab(Clone)_007, TestPrefab(Clone)_006, TestPrefab(Clone)_005, TestPrefab(Clone)_004,
+        TestPrefab(Clone)_003, TestPrefab(Clone)_002, TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_026, TestPrefab(Clone)_025, TestPrefab(Clone)_024, TestPrefab(Clone)_023,
+        TestPrefab(Clone)_022, TestPrefab(Clone)_021, TestPrefab(Clone)_020, TestPrefab(Clone)_019,
+        TestPrefab(Clone)_018, TestPrefab(Clone)_017, TestPrefab(Clone)_016, TestPrefab(Clone)_015,
+        TestPrefab(Clone)_014, TestPrefab(Clone)_013, TestPrefab(Clone)_012, TestPrefab(Clone)_011,
+        TestPrefab(Clone)_010, TestPrefab(Clone)_009, TestPrefab(Clone)_008, TestPrefab(Clone)_007,
+        TestPrefab(Clone)_006, TestPrefab(Clone)_005, TestPrefab(Clone)_004, TestPrefab(Clone)_003,
+        TestPrefab(Clone)_002, TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_025, TestPrefab(Clone)_024, TestPrefab(Clone)_023, TestPrefab(Clone)_022,
+        TestPrefab(Clone)_021, TestPrefab(Clone)_020, TestPrefab(Clone)_019, TestPrefab(Clone)_018,
+        TestPrefab(Clone)_017, TestPrefab(Clone)_016, TestPrefab(Clone)_015, TestPrefab(Clone)_014,
+        TestPrefab(Clone)_013, TestPrefab(Clone)_012, TestPrefab(Clone)_011, TestPrefab(Clone)_010,
+        TestPrefab(Clone)_009, TestPrefab(Clone)_008, TestPrefab(Clone)_007, TestPrefab(Clone)_006,
+        TestPrefab(Clone)_005, TestPrefab(Clone)_004, TestPrefab(Clone)_003, TestPrefab(Clone)_002,
+        TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_024, TestPrefab(Clone)_023, TestPrefab(Clone)_022, TestPrefab(Clone)_021,
+        TestPrefab(Clone)_020, TestPrefab(Clone)_019, TestPrefab(Clone)_018, TestPrefab(Clone)_017,
+        TestPrefab(Clone)_016, TestPrefab(Clone)_015, TestPrefab(Clone)_014, TestPrefab(Clone)_013,
+        TestPrefab(Clone)_012, TestPrefab(Clone)_011, TestPrefab(Clone)_010, TestPrefab(Clone)_009,
+        TestPrefab(Clone)_008, TestPrefab(Clone)_007, TestPrefab(Clone)_006, TestPrefab(Clone)_005,
+        TestPrefab(Clone)_004, TestPrefab(Clone)_003, TestPrefab(Clone)_002, TestPrefab(Clone)_001,
+        TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_023, TestPrefab(Clone)_022, TestPrefab(Clone)_021, TestPrefab(Clone)_020,
+        TestPrefab(Clone)_019, TestPrefab(Clone)_018, TestPrefab(Clone)_017, TestPrefab(Clone)_016,
+        TestPrefab(Clone)_015, TestPrefab(Clone)_014, TestPrefab(Clone)_013, TestPrefab(Clone)_012,
+        TestPrefab(Clone)_011, TestPrefab(Clone)_010, TestPrefab(Clone)_009, TestPrefab(Clone)_008,
+        TestPrefab(Clone)_007, TestPrefab(Clone)_006, TestPrefab(Clone)_005, TestPrefab(Clone)_004,
+        TestPrefab(Clone)_003, TestPrefab(Clone)_002, TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_022, TestPrefab(Clone)_021, TestPrefab(Clone)_020, TestPrefab(Clone)_019,
+        TestPrefab(Clone)_018, TestPrefab(Clone)_017, TestPrefab(Clone)_016, TestPrefab(Clone)_015,
+        TestPrefab(Clone)_014, TestPrefab(Clone)_013, TestPrefab(Clone)_012, TestPrefab(Clone)_011,
+        TestPrefab(Clone)_010, TestPrefab(Clone)_009, TestPrefab(Clone)_008, TestPrefab(Clone)_007,
+        TestPrefab(Clone)_006, TestPrefab(Clone)_005, TestPrefab(Clone)_004, TestPrefab(Clone)_003,
+        TestPrefab(Clone)_002, TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_021, TestPrefab(Clone)_020, TestPrefab(Clone)_019, TestPrefab(Clone)_018,
+        TestPrefab(Clone)_017, TestPrefab(Clone)_016, TestPrefab(Clone)_015, TestPrefab(Clone)_014,
+        TestPrefab(Clone)_013, TestPrefab(Clone)_012, TestPrefab(Clone)_011, TestPrefab(Clone)_010,
+        TestPrefab(Clone)_009, TestPrefab(Clone)_008, TestPrefab(Clone)_007, TestPrefab(Clone)_006,
+        TestPrefab(Clone)_005, TestPrefab(Clone)_004, TestPrefab(Clone)_003, TestPrefab(Clone)_002,
+        TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_020, TestPrefab(Clone)_019, TestPrefab(Clone)_018, TestPrefab(Clone)_017,
+        TestPrefab(Clone)_016, TestPrefab(Clone)_015, TestPrefab(Clone)_014, TestPrefab(Clone)_013,
+        TestPrefab(Clone)_012, TestPrefab(Clone)_011, TestPrefab(Clone)_010, TestPrefab(Clone)_009,
+        TestPrefab(Clone)_008, TestPrefab(Clone)_007, TestPrefab(Clone)_006, TestPrefab(Clone)_005,
+        TestPrefab(Clone)_004, TestPrefab(Clone)_003, TestPrefab(Clone)_002, TestPrefab(Clone)_001,
+        TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_019, TestPrefab(Clone)_018, TestPrefab(Clone)_017, TestPrefab(Clone)_016,
+        TestPrefab(Clone)_015, TestPrefab(Clone)_014, TestPrefab(Clone)_013, TestPrefab(Clone)_012,
+        TestPrefab(Clone)_011, TestPrefab(Clone)_010, TestPrefab(Clone)_009, TestPrefab(Clone)_008,
+        TestPrefab(Clone)_007, TestPrefab(Clone)_006, TestPrefab(Clone)_005, TestPrefab(Clone)_004,
+        TestPrefab(Clone)_003, TestPrefab(Clone)_002, TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_018, TestPrefab(Clone)_017, TestPrefab(Clone)_016, TestPrefab(Clone)_015,
+        TestPrefab(Clone)_014, TestPrefab(Clone)_013, TestPrefab(Clone)_012, TestPrefab(Clone)_011,
+        TestPrefab(Clone)_010, TestPrefab(Clone)_009, TestPrefab(Clone)_008, TestPrefab(Clone)_007,
+        TestPrefab(Clone)_006, TestPrefab(Clone)_005, TestPrefab(Clone)_004, TestPrefab(Clone)_003,
+        TestPrefab(Clone)_002, TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_017, TestPrefab(Clone)_016, TestPrefab(Clone)_015, TestPrefab(Clone)_014,
+        TestPrefab(Clone)_013, TestPrefab(Clone)_012, TestPrefab(Clone)_011, TestPrefab(Clone)_010,
+        TestPrefab(Clone)_009, TestPrefab(Clone)_008, TestPrefab(Clone)_007, TestPrefab(Clone)_006,
+        TestPrefab(Clone)_005, TestPrefab(Clone)_004, TestPrefab(Clone)_003, TestPrefab(Clone)_002,
+        TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_016, TestPrefab(Clone)_015, TestPrefab(Clone)_014, TestPrefab(Clone)_013,
+        TestPrefab(Clone)_012, TestPrefab(Clone)_011, TestPrefab(Clone)_010, TestPrefab(Clone)_009,
+        TestPrefab(Clone)_008, TestPrefab(Clone)_007, TestPrefab(Clone)_006, TestPrefab(Clone)_005,
+        TestPrefab(Clone)_004, TestPrefab(Clone)_003, TestPrefab(Clone)_002, TestPrefab(Clone)_001,
+        TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_015, TestPrefab(Clone)_014, TestPrefab(Clone)_013, TestPrefab(Clone)_012,
+        TestPrefab(Clone)_011, TestPrefab(Clone)_010, TestPrefab(Clone)_009, TestPrefab(Clone)_008,
+        TestPrefab(Clone)_007, TestPrefab(Clone)_006, TestPrefab(Clone)_005, TestPrefab(Clone)_004,
+        TestPrefab(Clone)_003, TestPrefab(Clone)_002, TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_014, TestPrefab(Clone)_013, TestPrefab(Clone)_012, TestPrefab(Clone)_011,
+        TestPrefab(Clone)_010, TestPrefab(Clone)_009, TestPrefab(Clone)_008, TestPrefab(Clone)_007,
+        TestPrefab(Clone)_006, TestPrefab(Clone)_005, TestPrefab(Clone)_004, TestPrefab(Clone)_003,
+        TestPrefab(Clone)_002, TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_013, TestPrefab(Clone)_012, TestPrefab(Clone)_011, TestPrefab(Clone)_010,
+        TestPrefab(Clone)_009, TestPrefab(Clone)_008, TestPrefab(Clone)_007, TestPrefab(Clone)_006,
+        TestPrefab(Clone)_005, TestPrefab(Clone)_004, TestPrefab(Clone)_003, TestPrefab(Clone)_002,
+        TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_012, TestPrefab(Clone)_011, TestPrefab(Clone)_010, TestPrefab(Clone)_009,
+        TestPrefab(Clone)_008, TestPrefab(Clone)_007, TestPrefab(Clone)_006, TestPrefab(Clone)_005,
+        TestPrefab(Clone)_004, TestPrefab(Clone)_003, TestPrefab(Clone)_002, TestPrefab(Clone)_001,
+        TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_011, TestPrefab(Clone)_010, TestPrefab(Clone)_009, TestPrefab(Clone)_008,
+        TestPrefab(Clone)_007, TestPrefab(Clone)_006, TestPrefab(Clone)_005, TestPrefab(Clone)_004,
+        TestPrefab(Clone)_003, TestPrefab(Clone)_002, TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_010, TestPrefab(Clone)_009, TestPrefab(Clone)_008, TestPrefab(Clone)_007,
+        TestPrefab(Clone)_006, TestPrefab(Clone)_005, TestPrefab(Clone)_004, TestPrefab(Clone)_003,
+        TestPrefab(Clone)_002, TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_009, TestPrefab(Clone)_008, TestPrefab(Clone)_007, TestPrefab(Clone)_006,
+        TestPrefab(Clone)_005, TestPrefab(Clone)_004, TestPrefab(Clone)_003, TestPrefab(Clone)_002,
+        TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_008, TestPrefab(Clone)_007, TestPrefab(Clone)_006, TestPrefab(Clone)_005,
+        TestPrefab(Clone)_004, TestPrefab(Clone)_003, TestPrefab(Clone)_002, TestPrefab(Clone)_001,
+        TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_007, TestPrefab(Clone)_006, TestPrefab(Clone)_005, TestPrefab(Clone)_004,
+        TestPrefab(Clone)_003, TestPrefab(Clone)_002, TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_006, TestPrefab(Clone)_005, TestPrefab(Clone)_004, TestPrefab(Clone)_003,
+        TestPrefab(Clone)_002, TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_005, TestPrefab(Clone)_004, TestPrefab(Clone)_003, TestPrefab(Clone)_002,
+        TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_004, TestPrefab(Clone)_003, TestPrefab(Clone)_002, TestPrefab(Clone)_001,
+        TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_003, TestPrefab(Clone)_002, TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_002, TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_001, TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        TestPrefab(Clone)_000\r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest]
+        \r\n[ObjectPoolServiceTestRunner.ObjectPoolServiceRepeatTest] Pass Release
+        Test\r\n"
       stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
@@ -2572,7 +5697,7 @@ MonoBehaviour:
       uniqueId: PlayModeTestAssembly.dll/[PlayModeTestAssembly][UIServiceTestRunner][suite]
       name: UIServiceTestRunner
       fullName: UIServiceTestRunner
-      resultStatus: 1
+      resultStatus: 2
       duration: 0
       messages: 
       output: 
@@ -2583,6 +5708,7 @@ MonoBehaviour:
       isSuite: 1
       categories:
       - Ui
+      - Service
       parentId: 1028
       parentUniqueId: '[PlayModeTestAssembly][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/PlayModeTestAssembly.dll][suite]'
     - id: 1025
@@ -2616,19 +5742,38 @@ MonoBehaviour:
       uniqueId: PlayModeTestAssembly.dll/UIServiceTestRunner/[PlayModeTestAssembly][UIServiceTestRunner.UIServiceTest]
       name: UIServiceTest
       fullName: UIServiceTestRunner.UIServiceTest
-      resultStatus: 1
-      duration: 0.6763751
-      messages: 
-      output: '[<>c.<IService.Init>b__7_0] TestSimpleUIViewModel
+      resultStatus: 2
+      duration: 52.19643
+      messages: "  Expected: True\r\n  But was:  False\r\n"
+      output: '<color=#00FFFF>[Service.StartService] Service Start || UIService</color>
 
-        [<>c.<IService.Init>b__7_0]
-        TestSimpleUIViewModel
+        [<UIServiceTest>d__4.MoveNext]
+        Pass valid check
 
-        <color=#00FFFF>[Service.StartService] Service
-        Start || UIService</color>
+        <color=#00FFFF>[ResourceService.GetValidProvider]
+        Activate provider || ResourcesProvider</color>
+
+        <color=#00FFFF>[ResourceService.GetValidProvider]
+        Activate provider || AssetBundleProvider</color>
+
+        <color=#00FFFF>[Service.StartService]
+        Service Start || ResourceService</color>
+
+        <color=#FFEB04>[UIView`1.OnEnable]
+        viewModel is null. Create default TestSimpleUIViewModel</color>
+
+        <color=#FFEB04>[UIService.Open]
+        TestSimpleUIView is already open</color>
 
 '
-      stacktrace: 
+      stacktrace: 'at UIServiceTestRunner+<UIServiceTest>d__4.MoveNext () [0x0012b]
+        in C:\Project\Unity\CustomUtils\Assets\Test\PlayMode\UIServiceTest\UIServiceTestRunner.cs:66
+
+        at
+        UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0004e]
+        in .\Library\PackageCache\com.unity.test-framework@1.4.5\UnityEngine.TestRunner\NUnitExtensions\Attributes\TestEnumerator.cs:44
+
+'
       notRunnable: 0
       ignoredOrSkipped: 0
       description: 
@@ -2699,18 +5844,28 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1023
       parentUniqueId: PlayModeTestAssembly.dll/[PlayModeTestAssembly][UIViewTestRunner][suite]
-    m_ResultText: 'UIServiceTest (0.676s)
+    m_ResultText: "UIServiceTest (52.196s)\n---\n  Expected: True\r\n  But was: 
+      False\r\n\n---\nat UIServiceTestRunner+<UIServiceTest>d__4.MoveNext () [0x0012b]
+      in <color=#40a0ff><a href=\"C:\\Project\\Unity\\CustomUtils\\Assets\\Test\\PlayMode\\UIServiceTest\\UIServiceTestRunner.cs\"
+      line=\"66\r\">Assets\\Test\\PlayMode\\UIServiceTest\\UIServiceTestRunner.cs:66\r</a></color>\nat
+      UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0004e] in
+      <color=#40a0ff><a href=\".\\Library\\PackageCache\\com.unity.test-framework@1.4.5\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs\"
+      line=\"44\r\">Library\\PackageCache\\com.unity.test-framework@1.4.5\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:44\r</a></color>\n\n---\n<color=#00FFFF>[Service.StartService]
+      Service Start || UIService</color>\r\n[<UIServiceTest>d__4.MoveNext] Pass valid
+      check\r\n<color=#00FFFF>[ResourceService.GetValidProvider] Activate provider
+      || ResourcesProvider</color>\r\n<color=#00FFFF>[ResourceService.GetValidProvider]
+      Activate provider || AssetBundleProvider</color>\r\n<color=#00FFFF>[Service.StartService]
+      Service Start || ResourceService</color>\r\n<color=#FFEB04>[UIView`1.OnEnable]
+      viewModel is null. Create default TestSimpleUIViewModel</color>\r\n<color=#FFEB04>[UIService.Open]
+      TestSimpleUIView is already open</color>"
+    m_ResultStacktrace: 'at UIServiceTestRunner+<UIServiceTest>d__4.MoveNext () [0x0012b]
+      in C:\Project\Unity\CustomUtils\Assets\Test\PlayMode\UIServiceTest\UIServiceTestRunner.cs:66
 
-      ---
+      at
+      UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0004e] in
+      .\Library\PackageCache\com.unity.test-framework@1.4.5\UnityEngine.TestRunner\NUnitExtensions\Attributes\TestEnumerator.cs:44
 
-      [<>c.<IService.Init>b__7_0]
-      TestSimpleUIViewModel
-
-      [<>c.<IService.Init>b__7_0] TestSimpleUIViewModel
-
-      <color=#00FFFF>[Service.StartService]
-      Service Start || UIService</color>'
-    m_ResultStacktrace: 
+'
     m_TestListState:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 57923093
@@ -2739,15 +5894,17 @@ MonoBehaviour:
       NotRunHidden: 0
       m_SearchString: 
       selectedCategories:
+      - Service
       - Ui
       availableCategories:
       - Performance
+      - Service
       - Ui
       - Uncategorized
     m_SelectedOption: 0
-  - m_Window: {fileID: 15}
+  - m_Window: {fileID: 14}
     runProgress:
-      RunGuid: 498bb223-f43c-4008-93d0-c3822d03963e
+      RunGuid: 0946d854-a5de-4d50-89b5-8fc2e5a97e80
       ExecutionSettings:
         m_TargetPlatform: 0
         m_HasTargetPlatform: 0
@@ -3340,7 +6497,7 @@ MonoBehaviour:
       - Performance
       - Uncategorized
     m_SelectedOption: 0
---- !u!114 &16
+--- !u!114 &15
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3380,21 +6537,21 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: defaffff
+      m_ExpandedIDs: a686fffff68affffc290ffff1295ffff6699ffff2e9ffffffaa4ffff7eaaffff72afffff72b1ffffeab6fffffcbcffff8cbeffff8cc0ffff2cf1ffff1efaffff5e7000006470000080700000e2700000e870000004710000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
-        m_Name: 
-        m_OriginalName: 
+        m_Name: CopyCamera
+        m_OriginalName: CopyCamera
         m_EditFieldRect:
           serializedVersion: 2
           x: 0
           y: 0
           width: 0
           height: 0
-        m_UserData: 0
+        m_UserData: 28952
         m_IsWaitingForDelay: 0
         m_IsRenaming: 0
-        m_OriginalEventType: 11
+        m_OriginalEventType: 0
         m_IsRenamingFilename: 0
         m_ClientGUIView: {fileID: 8}
       m_SearchString: 
@@ -3404,7 +6561,7 @@ MonoBehaviour:
       m_IsLocked: 0
     m_CurrentSortingName: TransformSorting
   m_WindowGUID: 37b0836aa8b4bd74696073f7347c8c8a
---- !u!114 &17
+--- !u!114 &16
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3438,7 +6595,7 @@ MonoBehaviour:
     m_LastAppliedPresetName: Default
     m_SaveData: []
     m_OverlaysVisible: 1
---- !u!114 &18
+--- !u!114 &17
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3874,7 +7031,7 @@ MonoBehaviour:
   m_SceneVisActive: 1
   m_LastLockedObject: {fileID: 0}
   m_ViewIsLockedToObject: 0
---- !u!114 &19
+--- !u!114 &18
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3920,7 +7077,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/CustomUtils/Common/Utils/TcpServer
+    - Assets/Resources
     m_Globs: []
     m_OriginalText: 
     m_ImportLogFlags: 0
@@ -3928,16 +7085,16 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 16
   m_LastFolders:
-  - Assets/CustomUtils/Common/Utils/TcpServer/Exception
+  - Assets/Resources
   m_LastFoldersGridSize: 16
   m_LastProjectPath: C:\Project\Unity\CustomUtils
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 127.80002}
-    m_SelectedIDs: 146f0000
-    m_LastClickedID: 28436
-    m_ExpandedIDs: 000000005e6e0000606e0000626e0000646e0000666e0000686e00006a6e00006c6e00006e6e0000706e0000726e0000746e0000766e0000786e00007a6e00007c6e00008c6e0000146f0000166f000000ca9a3b
+    scrollPos: {x: 0, y: 399.80002}
+    m_SelectedIDs: 986e0000
+    m_LastClickedID: 28312
+    m_ExpandedIDs: 000000008a6e00008c6e00008e6e0000906e0000926e0000946e0000966e0000986e00009a6e00009c6e00009e6e0000a06e0000a26e0000a46e0000a66e0000a86e0000ba6e0000ce6e000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -3965,7 +7122,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 000000005e6e0000606e0000626e0000646e0000666e0000686e00006a6e00006c6e00006e6e0000706e0000726e0000746e0000766e0000786e00007a6e00007c6e0000
+    m_ExpandedIDs: 000000008a6e00008c6e00008e6e0000906e0000926e0000946e0000966e0000986e00009a6e00009c6e00009e6e0000a06e0000a26e0000a46e0000a66e0000a86e0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -3996,18 +7153,18 @@ MonoBehaviour:
     m_ExpandedInstanceIDs: c6230000ac060000fc56000092f6ffff2a66000002670000ce6900006cd8ffffbe69000000000000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: Exception
-      m_OriginalName: Exception
+      m_Name: 
+      m_OriginalName: 
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 0
         height: 0
-      m_UserData: 28422
+      m_UserData: 0
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
-      m_OriginalEventType: 0
+      m_OriginalEventType: 11
       m_IsRenamingFilename: 1
       m_ClientGUIView: {fileID: 11}
     m_CreateAssetUtility:
@@ -4021,7 +7178,7 @@ MonoBehaviour:
     m_GridSize: 16
   m_SkipHiddenPackages: 0
   m_DirectoriesAreaWidth: 253
---- !u!114 &20
+--- !u!114 &19
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4056,7 +7213,7 @@ MonoBehaviour:
     m_LastAppliedPresetName: Default
     m_SaveData: []
     m_OverlaysVisible: 1
---- !u!114 &21
+--- !u!114 &20
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4155,7 +7312,7 @@ MonoBehaviour:
   m_LowResolutionForAspectRatios: 01000000000000000000
   m_XRRenderMode: 0
   m_RenderTexture: {fileID: 0}
---- !u!114 &22
+--- !u!114 &21
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}

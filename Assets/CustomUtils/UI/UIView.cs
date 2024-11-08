@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-public class UIViewAttribute : Attribute {
+public class UIViewAttribute : PriorityAttribute {
     
     public string prefab;
 
@@ -19,16 +19,23 @@ public interface IUIView {
 }
 
 [RequiresAttributeImplementation(typeof(UIViewAttribute))]
-public abstract class UIView<TViewModel> : MonoBehaviour, IUIView where TViewModel : UIViewModel {
+public abstract class UIView<TViewModel> : MonoBehaviour, IUIView where TViewModel : UIViewModel, new() {
 
     [SerializeField] 
     protected bool ignoreAttachModelChangedCallback;
 
     protected TViewModel viewModel;
 
+    protected virtual void Awake() {
+        if (GetType().TryGetCustomAttribute<UIViewAttribute>(out var attribute)) {
+            transform.SetSiblingIndex((int)attribute.priority);
+        }
+    }
+
     protected virtual void OnEnable() {
         if (viewModel == null) {
-            throw new NullReferenceException($"{nameof(viewModel)} is null || {typeof(TViewModel).Name}");
+            Logger.TraceLog($"{nameof(viewModel)} is null. Create default {typeof(TViewModel).Name}", Color.yellow);
+            viewModel = new TViewModel();
         }
         
         if (ignoreAttachModelChangedCallback == false) {

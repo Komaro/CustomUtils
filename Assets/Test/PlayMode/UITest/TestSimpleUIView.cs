@@ -2,7 +2,7 @@
 using TMPro;
 using UnityEngine.UI;
 
-[UIView("TestViewModel")]
+[UIView("TestViewModel", priority = 5)]
 public class TestSimpleUIView : UIView<TestSimpleUIViewModel> {
 
     private TextMeshProUGUI _titleText;

@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class UIViewAttribute : PriorityAttribute {
     
@@ -8,18 +7,16 @@ public class UIViewAttribute : PriorityAttribute {
     public UIViewAttribute(string prefab) => this.prefab = prefab;
 }
 
-public interface IUIView {
+public abstract class UIViewMonoBehaviour : MonoBehaviour {
 
-    public GameObject gameObject { get; }
-    public Transform transform { get; }
-
-    public void AttachModelChangedCallback();
-    public void ChangeViewModel(UIViewModel viewModel);
-    public void SetActive(bool isActive) => gameObject.SetActive(isActive);
+    public abstract void AttachModelChangedCallback();
+    public abstract void ChangeViewModel(UIViewModel viewModel);
+    
+    public virtual void SetActive(bool isActive) => gameObject.SetActive(isActive);
 }
 
 [RequiresAttributeImplementation(typeof(UIViewAttribute))]
-public abstract class UIView<TViewModel> : MonoBehaviour, IUIView where TViewModel : UIViewModel, new() {
+public abstract class UIView<TViewModel> : UIViewMonoBehaviour where TViewModel : UIViewModel, new() {
 
     [SerializeField] 
     protected bool ignoreAttachModelChangedCallback;
@@ -49,7 +46,7 @@ public abstract class UIView<TViewModel> : MonoBehaviour, IUIView where TViewMod
         }
     }
 
-    public virtual void AttachModelChangedCallback() {
+    public override void AttachModelChangedCallback() {
         if (viewModel.IsAlreadyOnChanged()) {
             viewModel.Clear();
         }
@@ -57,13 +54,15 @@ public abstract class UIView<TViewModel> : MonoBehaviour, IUIView where TViewMod
         viewModel.OnModelChanged += OnNotifyModelChanged;
     }
 
-    public virtual void ChangeViewModel(UIViewModel viewModel) {
+    public override void ChangeViewModel(UIViewModel viewModel) {
         if (viewModel is TViewModel castViewModel) {
             this.viewModel?.Dispose();
             this.viewModel = castViewModel;
             if (ignoreAttachModelChangedCallback == false) {
                 AttachModelChangedCallback();
             }
+            
+            this.viewModel.RefreshAll();
         } else {
             throw new InvalidCastException<TViewModel>(viewModel.GetType());
         }

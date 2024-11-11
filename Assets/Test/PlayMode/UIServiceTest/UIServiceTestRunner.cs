@@ -1,11 +1,14 @@
 ﻿using System.Collections;
 using System.Linq;
+using System.Reflection;
 using NUnit.Framework;
+using TMPro;
 using Unity.PerformanceTesting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
 using UnityEngine.UI;
+using Object = UnityEngine.Object;
 
 [Category(TestConstants.Category.UI)]
 [Category(TestConstants.Category.SERVICE)]
@@ -43,27 +46,47 @@ public class UIServiceTestRunner {
             Logger.TraceLog("Pass valid check");
             
             Assert.IsNull(service.Current);
-            Assert.IsNull(service.Previous);
             
-            Assert.IsTrue(service.TryOpen<TestSimpleUIView>(out var uiView));
+            //TODO. SafeDelegate 가 중복으로 추가되고 있음 버그 수정 필요
+            Assert.IsTrue(service.TryOpen<TestSimpleUIView>(out var first));
             var viewModel = new TestSimpleUIViewModel {
                 Title = { Value = "ChangeViewModel Test" },
                 Count = { Value = 3544 }
             };
 
-            uiView.ChangeViewModel(viewModel);
-            
-            var viewType = typeof(TestSimpleUIView);
-            var viewModelType = typeof(TestSimpleUIViewModel);
-            
-            
+            first.ChangeViewModel(viewModel);
+
+            var flags = BindingFlags.Instance | BindingFlags.NonPublic;
+            first.FieldChangeTest<TextMeshProUGUI>("_titleText", flags, ui => ui.text == "ChangeViewModel Test");
+            first.FieldChangeTest<TextMeshProUGUI>("_countText", flags, ui => ui.text == 3544.ToString());
 
             viewModel = new TestSimpleUIViewModel {
                 Title = { Value = "Open Test" },
                 Count = { Value = 4533 }
             };
             
-            Assert.IsTrue(service.TryOpen(viewModel, out uiView));
+            Assert.IsTrue(service.TryOpen(viewModel, out first));
+            first.FieldChangeTest<TextMeshProUGUI>("_titleText", flags, ui => ui.text == "Open Test");
+            first.FieldChangeTest<TextMeshProUGUI>("_countText", flags, ui => ui.text == 4533.ToString());
+            
+            Assert.IsTrue(service.Current.Equals(first));
+            Assert.IsNull(service.Previous);
+            
+            Logger.TraceLog("Pass Base Test");
+            
+            Assert.IsTrue(service.TryOpen<TestSimpleSecondUIView>(new TestSimpleUIViewModel {
+                Title = { Value = "Second Test" }
+            }, out var second));
+            
+            Assert.AreEqual(service.Current, second);
+            Assert.AreEqual(service.Previous, first);
+
+            service.FieldChangeTest<Transform>("_uiRoot", flags, tr => {
+                Logger.TraceLog(tr.GetComponentsInChildren<UIViewMonoBehaviour>(true).ToStringCollection(comp => $"{comp.gameObject.name} || {(comp.GetType().TryGetCustomAttribute<UIViewAttribute>(out var attribute) ? attribute.priority : "9999999999")}", "\n"));
+                return true;
+            });
+
+            service.Open<TestSimpleUIView>();
         }
     }
 

@@ -28,7 +28,7 @@ public class NotifyProperty<TValue> : NotifyField, IEqualityComparer<NotifyPrope
         set {
             if (_equalityComparer.Equals(_value, value) == false) {
                 _value = value;
-                OnChanged.handler?.Invoke(NotifyFieldChangedEventArgs.Empty);
+                Refresh();
             }
         }
     }
@@ -38,7 +38,9 @@ public class NotifyProperty<TValue> : NotifyField, IEqualityComparer<NotifyPrope
     
     public NotifyProperty(TValue value) : this(value, EqualityComparer<TValue>.Default) { }
     public NotifyProperty() : this(EqualityComparer<TValue>.Default) { }
-
+    
+    public override void Refresh() => OnChanged.handler?.Invoke(NotifyFieldChangedEventArgs.Empty);
+    
     public static bool operator ==(NotifyProperty<TValue> x, NotifyProperty<TValue> y) {
         if (ReferenceEquals(x, y)) {
             return true;
@@ -52,8 +54,8 @@ public class NotifyProperty<TValue> : NotifyField, IEqualityComparer<NotifyPrope
     }
 
     public static bool operator !=(NotifyProperty<TValue> x, NotifyProperty<TValue> y) => (x == y) == false;
-
     public static implicit operator TValue(NotifyProperty<TValue> property) => property.Value;
+
     public override string ToString() => Value != null ? Value.ToString() : base.ToString();
 
     public bool Equals(NotifyProperty<TValue> x, NotifyProperty<TValue> y) => x != null && y != null && _equalityComparer.Equals(x.Value, y.Value);

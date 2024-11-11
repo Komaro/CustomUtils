@@ -58,6 +58,8 @@ public class NotifyList<TValue> : NotifyCollection<List<TValue>, TValue>, IList<
         collection[index] = value;
         OnChanged.handler?.Invoke(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Replace));
     }
+
+    public override void Refresh() => OnChanged.handler?.Invoke(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Replace));
 }
 
 public class NotifyRecordList<TValue> : NotifyList<TValue> {

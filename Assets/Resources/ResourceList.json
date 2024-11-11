@@ -1,4 +1,5 @@
 {
+  "TESTVIEWMODEL_SECOND": "TestViewModel_Second",
   "SAMPLEFREESFX": "Sound/RowSound/SampleFreeSFX",
   "TESTPREFAB_3": "TestFolder/TestPrefab_3",
   "TESTUI": "TestUI",
@@ -8,6 +9,5 @@
   "AUDIOMIXER": "Sound/AudioMixer",
   "TESTPREFAB": "TestPrefab",
   "TESTPREFAB_1": "TestPrefab_1",
-  "FREESAMPLESFX": "Sound/SFX/FreeSampleSFX",
   "RESOURCELIST": "ResourceList"
 }

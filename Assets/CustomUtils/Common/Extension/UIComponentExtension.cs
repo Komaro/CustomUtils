@@ -1,7 +1,18 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public static class UIComponentExtension {
-	
+
+    public static bool TryGetOrAddComponent<T>(this GameObject go, Type type, out T component) where T : class => (component = go.GetOrAddComponent<T>(type)) != null;
+
+    public static T GetOrAddComponent<T>(this GameObject go, Type type) where T : class {
+        if (go.TryGetComponent(type, out var component)) {
+            return component as T;
+        }
+        
+        return go.AddComponent(type) as T;
+    }
+    
     public static TComponent GetOrAddComponent<TComponent>(this GameObject go) where TComponent : Component => go.TryGetComponent<TComponent>(out var component) ? component : go.AddComponent<TComponent>();
     
     public static GameObject FindGameObject(this GameObject go, string objectName) => go.transform.FindTransform(objectName)?.gameObject;

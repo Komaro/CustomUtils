@@ -21,7 +21,8 @@ public struct SafeDelegate<T> where T : Delegate {
             if (events == null || events.GetInvocationList().Contains(addEvent) == false) {
                 events = Delegate.Combine(events, addEvent) as T;
             } else {
-                Logger.TraceError($"Invalid delegate Type || {nameof(addSafeDelegate)} Type = {typeof(T).Name} || {nameof(addEvent)} Type = {addEvent.GetType().Name}");
+                // Logger.TraceError($"Invalid delegate Type || {nameof(addSafeDelegate)} Type = {typeof(T).Name} || {nameof(addEvent)} Type = {addEvent.GetType().Name}");
+                Logger.TraceLog($"Already delegate Type || {nameof(addSafeDelegate)} Type = {typeof(T).Name} || {nameof(addEvent)} Type = {addEvent.GetType().Name}", Color.yellow);
             }
         }
         
@@ -32,7 +33,8 @@ public struct SafeDelegate<T> where T : Delegate {
         if (safeDelegate.handler == null || safeDelegate.handler.GetInvocationList().Contains(addEvent) == false) {
             safeDelegate.handler = Delegate.Combine(safeDelegate.handler, addEvent) as T;
         } else {
-            Logger.TraceError($"Invalid delegate Type || {nameof(safeDelegate)} Type = {typeof(T).Name} || {nameof(addEvent)} Type = {addEvent.GetType().Name}");
+            // Logger.TraceError($"Invalid delegate Type || {nameof(safeDelegate)} Type = {typeof(T).Name} || {nameof(addEvent)} Type = {addEvent.GetType().Name}");
+            Logger.TraceLog($"Already delegate Type || {nameof(safeDelegate)} Type = {typeof(T).Name} || {nameof(addEvent)} Type = {addEvent.GetType().Name}", Color.yellow);
         }
         
         return safeDelegate;

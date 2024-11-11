@@ -20,4 +20,6 @@ public abstract class NotifyField : IDisposable {
         GC.SuppressFinalize(this);
         isDisposed = true;
     }
+
+    public abstract void Refresh();
 }

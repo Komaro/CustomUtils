@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -14,34 +15,63 @@ public class UIService : IService {
     private Transform _uiRoot;
     private Transform _uiGlobalRoot;
     
-    private ConcurrentStack<IUIView> _uiCallStack = new();
+    // private ConcurrentStack<UIViewMonoBehaviour> _uiCallStack = new();
+    private CallStackQueue<UIViewMonoBehaviour> _uiCallStack = new();
 
-    public IUIView Current => _uiCallStack.TryPeek(out var uiView) ? uiView : null;
+    public UIViewMonoBehaviour Current => _uiCallStack.TryPeek(out var uiView) ? uiView : null;
     
-    public IUIView Previous {
+    public UIViewMonoBehaviour Previous {
         get {
-            if (_uiCallStack.TryPop(out var uiView)) {
-                if (_uiCallStack.TryPeek(out var previousUIView)) {
-                    _uiCallStack.Push(uiView);
-                    return previousUIView;
-                }
-                
-                _uiCallStack.Push(uiView);
+            if (_uiCallStack.TryPeekTail(2, out var uiView)) {
                 return uiView;
             }
 
             return null;
+            //
+            // if (_uiCallStack.TryPop(out var uiView)) {
+            //     if (_uiCallStack.TryPeek(out var previousUIView)) {
+            //         _uiCallStack.Push(uiView);
+            //         return previousUIView;
+            //     }
+            //
+            //     _uiCallStack.Push(uiView);
+            //     return null;
+            // }
+            //
+            // return null;
         }
     }
 
-    private readonly Dictionary<Type, IUIView> _cachedUIDic = new();
-    private readonly Dictionary<Type, IUIView> _cachedGlobalUIDic = new();
+    private readonly Dictionary<Type, UIViewMonoBehaviour> _cachedUIDic = new();
+    private readonly Dictionary<Type, UIViewMonoBehaviour> _cachedGlobalUIDic = new();
 
     private ImmutableHashSet<Type> _viewSet;
     private ImmutableDictionary<Type, UIViewAttribute> _viewAttributeDic;
 
-    void IService.Init() {
-        foreach (var type in ReflectionProvider.GetSubClassTypes<UIInitializeProvider>().OrderBy(type => type.TryGetCustomInheritedAttribute<PriorityAttribute>(out var attribute) ? attribute.priority : 99999)) {
+    void IService.Init() => AttachInitializeProvider();
+
+    void IService.Start() {
+        _uiRoot ??= _initializeProvider.GetUIRoot();
+        _uiGlobalRoot ??= _initializeProvider.GetGlobalUIRoot();
+    }
+
+    void IService.Stop() { }
+
+    void IService.Refresh() => AttachInitializeProvider();
+
+    void IService.Remove() {
+        // TODO. 순회 처리 필요
+        if (_uiRoot != null) {
+            Object.Destroy(_uiRoot);
+        }
+
+        if (_uiGlobalRoot != null) {
+            Object.Destroy(_uiGlobalRoot);
+        }
+    }
+
+    private void AttachInitializeProvider() {
+        foreach (var type in ReflectionProvider.GetSubClassTypes<UIInitializeProvider>().OrderByDescending(type => type.TryGetCustomInheritedAttribute<PriorityAttribute>(out var attribute) ? attribute.priority : 99999)) {
             if (SystemUtil.TryCreateInstance<UIInitializeProvider>(out var provider, type) && provider.IsReady()) {
                 _initializeProvider = provider;
             }
@@ -55,28 +85,16 @@ public class UIService : IService {
         _viewAttributeDic = _viewSet.ToImmutableDictionary(type => type, type => type.GetCustomAttribute<UIViewAttribute>());
     }
     
-    void IService.Start() {
-        _uiRoot ??= _initializeProvider.GetUIRoot();
-        _uiGlobalRoot ??= _initializeProvider.GetGlobalUIRoot();
-    }
-
-    void IService.Stop() { }
-
-    void IService.Remove() {
-        // TODO. 순회 처리 필요
-        if (_uiRoot != null) {
-            Object.Destroy(_uiRoot);
-        }
-
-        if (_uiGlobalRoot != null) {
-            Object.Destroy(_uiGlobalRoot);
+    public void ChangeViewModel<TUIView>(UIViewModel viewModel) where TUIView : UIViewMonoBehaviour {
+        if (TryGetUI<TUIView>(out var uiView)) {
+            uiView.ChangeViewModel(viewModel);
         }
     }
 
-    public bool TryChange<TUIView>(UIViewModel viewModel, out TUIView uiView) where TUIView : class, IUIView => (uiView = Change<TUIView>(viewModel)) != null;
+    public bool TryChange<TUIView>(UIViewModel viewModel, out TUIView uiView) where TUIView : UIViewMonoBehaviour => (uiView = Change<TUIView>(viewModel)) != null;
 
-    public TUIView Change<TUIView>(UIViewModel viewModel) where TUIView : class, IUIView {
-        if (typeof(TUIView) == Current?.GetType()) {
+    public TUIView Change<TUIView>(UIViewModel viewModel) where TUIView : UIViewMonoBehaviour {
+        if (Current != null && typeof(TUIView) == Current.GetType()) {
             Current.ChangeViewModel(viewModel);
             return Current as TUIView;
         }
@@ -89,10 +107,10 @@ public class UIService : IService {
         return null;
     }
 
-    public bool TryChange<TUIView>(out TUIView uiView) where TUIView : class, IUIView => (uiView = Change<TUIView>()) != null;
+    public bool TryChange<TUIView>(out TUIView uiView) where TUIView : UIViewMonoBehaviour => (uiView = Change<TUIView>()) != null;
 
-    public TUIView Change<TUIView>() where TUIView : class, IUIView {
-        if (typeof(TUIView) == Current?.GetType()) {
+    public TUIView Change<TUIView>() where TUIView : UIViewMonoBehaviour {
+        if (Current != null && typeof(TUIView) == Current.GetType()) {
             Logger.TraceLog($"{typeof(TUIView).Name} is already open", Color.yellow);
             return null;
         }
@@ -104,9 +122,9 @@ public class UIService : IService {
         return Open<TUIView>();
     }
     
-    public bool TryReturn(UIViewModel viewModel, out IUIView uiView) => (uiView = Return(viewModel)) != null;
+    public bool TryReturn(UIViewModel viewModel, out UIViewMonoBehaviour uiView) => (uiView = Return(viewModel)) != null;
 
-    public IUIView Return(UIViewModel viewModel) {
+    public UIViewMonoBehaviour Return(UIViewModel viewModel) {
         if (TryReturn(out var previousUIView)) {
             previousUIView.ChangeViewModel(viewModel);
             return previousUIView;
@@ -115,26 +133,36 @@ public class UIService : IService {
         return null;
     }
     
-    public bool TryReturn(out IUIView previousUIView) => (previousUIView = Return()) != null;
+    public bool TryReturn(out UIViewMonoBehaviour previousUIView) => (previousUIView = Return()) != null;
 
-    public IUIView Return() {
-        if (_uiCallStack.TryPop(out var currentUIView)) {
-            if (_uiCallStack.TryPeek(out var previousUIView)) {
-                Close(currentUIView);
-                previousUIView.SetActive(true);
-                return previousUIView;
-            }
-            
-            _uiCallStack.Push(currentUIView);
+    public UIViewMonoBehaviour Return() {
+        if (_uiCallStack.Count < 2) {
+            return null;
         }
+
+        if (_uiCallStack.TryPop(out var currentUIView) && _uiCallStack.TryPeek(out var previousUIView)) {
+            Close(currentUIView);
+            previousUIView.SetActive(true);
+            return previousUIView;
+        }
+        
+        // if (_uiCallStack.TryPop(out var currentUIView)) {
+        //     if (_uiCallStack.TryPeek(out var previousUIView)) {
+        //         Close(currentUIView);
+        //         previousUIView.SetActive(true);
+        //         return previousUIView;
+        //     }
+        //     
+        //     _uiCallStack.Push(currentUIView);
+        // }
         
         return null;
     }
 
-    public bool TryOpen<TUIView>(UIViewModel viewModel, out TUIView uiView) where TUIView : class, IUIView => (uiView = Open<TUIView>(viewModel)) != null;
+    public bool TryOpen<TUIView>(UIViewModel viewModel, out TUIView uiView) where TUIView : UIViewMonoBehaviour => (uiView = Open<TUIView>(viewModel)) != null;
 
-    public TUIView Open<TUIView>(UIViewModel viewModel) where TUIView : class, IUIView {
-        if (typeof(TUIView) == Current?.GetType()) {
+    public TUIView Open<TUIView>(UIViewModel viewModel) where TUIView : UIViewMonoBehaviour {
+        if (Current != null && typeof(TUIView) == Current.GetType()) {
             Current.ChangeViewModel(viewModel);
             return Current as TUIView;
         }
@@ -147,10 +175,10 @@ public class UIService : IService {
         return null;
     }
 
-    public bool TryOpen<TUIView>(out TUIView uiView) where TUIView : class, IUIView => (uiView = Open<TUIView>()) != null;
+    public bool TryOpen<TUIView>(out TUIView uiView) where TUIView : UIViewMonoBehaviour => (uiView = Open<TUIView>()) != null;
 
-    public TUIView Open<TUIView>() where TUIView : class, IUIView {
-        if (typeof(TUIView) == Current?.GetType()) {
+    public TUIView Open<TUIView>() where TUIView : UIViewMonoBehaviour {
+        if (Current != null && typeof(TUIView) == Current.GetType()) {
             Logger.TraceLog($"{typeof(TUIView).Name} is already open", Color.yellow);
             return null;
         }
@@ -170,17 +198,17 @@ public class UIService : IService {
         }
     }
 
-    public void Close<TUIView>() where TUIView : class, IUIView {
+    public void Close<TUIView>() where TUIView : UIViewMonoBehaviour {
         if (TryGetUI<TUIView>(out var uiView)) {
             Close(uiView);
         }
     }
 
-    private void Close(IUIView uiView) => uiView.SetActive(false);
+    private void Close(UIViewMonoBehaviour uiView) => uiView.SetActive(false);
 
-    private bool TryGetUI<TUIView>(out TUIView uiView) where TUIView : class, IUIView => (uiView = GetUI<TUIView>()) != null;
+    private bool TryGetUI<TUIView>(out TUIView uiView) where TUIView : UIViewMonoBehaviour => (uiView = GetUI<TUIView>()) != null;
 
-    private TUIView GetUI<TUIView>() where TUIView : class, IUIView {
+    private TUIView GetUI<TUIView>() where TUIView : UIViewMonoBehaviour {
         if (_viewSet.Contains(typeof(TUIView)) == false) {
             throw new ArgumentException($"{nameof(TUIView)} is an invalid type of {typeof(UIView<>).Name}");
         }
@@ -196,24 +224,14 @@ public class UIService : IService {
         return null;
     }
 
-    private bool TryGetUIViewSwitch(Type type, out IUIView uiView) => (uiView = GetUIViewSwitch(type)) != null;
+    private bool TryGetUIViewSwitch(Type type, out UIViewMonoBehaviour uiView) => (uiView = GetUIViewSwitch(type)) != null;
 
-    private IUIView GetUIViewSwitch(Type type) {
-        if (_cachedUIDic.TryGetValue(type, out var uiView)) {
-            return uiView;
-        }
+    private UIViewMonoBehaviour GetUIViewSwitch(Type type) => _cachedUIDic.TryGetValue(type, out var uiView) || _cachedGlobalUIDic.TryGetValue(type, out uiView) ? uiView : null;
 
-        if (_cachedGlobalUIDic.TryGetValue(type, out uiView)) {
-            return uiView;
-        }
-
-        return null;
-    }
-
-    private bool TryCreateUIViewSwitch(Type type, out IUIView uiView) => (uiView = CreateUIViewSwitch(type)) != null;
+    private bool TryCreateUIViewSwitch(Type type, out UIViewMonoBehaviour uiView) => (uiView = CreateUIViewSwitch(type)) != null;
     
-    private IUIView CreateUIViewSwitch(Type type) {
-        if (_viewAttributeDic.TryGetValue(type, out var attribute) && Service.GetService<ResourceService>().TryInstantiate(out var go, attribute.prefab) && go.TryGetComponent<IUIView>(out var uiView)) {
+    private UIViewMonoBehaviour CreateUIViewSwitch(Type type) {
+        if (_viewAttributeDic.TryGetValue(type, out var attribute) && Service.GetService<ResourceService>().TryInstantiate(out var go, attribute.prefab) && go.TryGetOrAddComponent<UIViewMonoBehaviour>(type, out var uiView)) {
             if (type.IsDefined<GlobalUIAttribute>()) {
                 uiView.transform.SetParent(_uiGlobalRoot);
                 _cachedGlobalUIDic.TryAdd(type, uiView);
@@ -222,6 +240,7 @@ public class UIService : IService {
                 _cachedUIDic.TryAdd(type, uiView);
             }
 
+            uiView.SetActive(false);
             return uiView;
         }
 
@@ -247,24 +266,65 @@ public abstract class UIInitializeProvider {
 
 public class GlobalUIAttribute : PriorityAttribute { }
 
+public class CallStackQueue<T> : IEnumerable<T> {
 
-// TODO. 현 구조상 Exception을 추가하려면 구조를 새롭게 수정해야 함.
-public class AlreadyOpenUIException : Exception {
+    private readonly List<T> _list = new();
+    private readonly HashSet<T> _hashSet = new();
+
+    public int Count => _list.Count;
     
-    public AlreadyOpenUIException(Type type) : base($"{type.Name} is already open ui") { }
-}
-
-public class AlreadyOpenUIException<T> : Exception {
+    public void Push(T item) {
+        if (_hashSet.Contains(item)) {
+            _list.RemoveAt(_list.IndexOf(item));
+        } else {
+            _hashSet.Add(item);
+        }
+        
+        _list.Add(item);
+    }
     
-    public AlreadyOpenUIException() : base($"{typeof(T).Name} is already open ui") { }
-}
+    public bool TryPop(out T item) => (item = Pop()) != null;
 
-public class CreateFailedUIException : Exception {
+    public T Pop() {
+        if (_list.Count <= 0) {
+            return default;
+        }
+        
+        var item = _list[^1];
+        _hashSet.Remove(item);
+        return item;
+    }
 
-    public CreateFailedUIException(Type type) : base($"Failed to create {type.Name}") { }
-}
+    public bool TryPeek(out T item) => (item = Peek()) != null;
 
-public class CreateFailedUIException<T> : Exception {
+    public T Peek() {
+        if (_list.Count <= 0) {
+            return default;
+        }
     
-    public CreateFailedUIException() : base($"Failed to create {typeof(T).Name}") { }
-} 
+        return _list[^1];
+    }
+
+    public bool TryPeek(int index, out T item) => (item = Peek(index)) != null;
+
+    public T Peek(int index) {
+        if (index > _list.Count) {
+            return default;
+        }
+        
+        return _list[index];
+    }
+
+    public bool TryPeekTail(int index, out T item) => (item = PeekTail(index)) != null;
+
+    public T PeekTail(int index) {
+        if (index > _list.Count) {
+            return default;
+        }
+
+        return _list[^index];
+    }
+
+    public IEnumerator<T> GetEnumerator() => _list.GetEnumerator();
+    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+}

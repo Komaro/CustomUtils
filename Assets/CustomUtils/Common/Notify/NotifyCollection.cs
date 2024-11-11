@@ -74,7 +74,9 @@ public abstract class NotifyCollection<TCollection, TValue> : NotifyField, IColl
 
         return false;
     }
-    
+
+    public override void Refresh() => OnChanged.handler?.Invoke(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Replace));
+
     public IEnumerator<TValue> GetEnumerator() => collection.GetEnumerator();
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 

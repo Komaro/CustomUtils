@@ -9,6 +9,8 @@ public class UIViewAttribute : PriorityAttribute {
 
 public abstract class UIViewMonoBehaviour : MonoBehaviour {
 
+    public abstract uint Priority { get; protected set; }
+    
     public abstract void AttachModelChangedCallback();
     public abstract void ChangeViewModel(UIViewModel viewModel);
     
@@ -18,14 +20,17 @@ public abstract class UIViewMonoBehaviour : MonoBehaviour {
 [RequiresAttributeImplementation(typeof(UIViewAttribute))]
 public abstract class UIView<TViewModel> : UIViewMonoBehaviour where TViewModel : UIViewModel, new() {
 
+    protected TViewModel viewModel;
+
     [SerializeField] 
     protected bool ignoreAttachModelChangedCallback;
 
-    protected TViewModel viewModel;
-
+    public override uint Priority { get; protected set; }
+    
     protected virtual void Awake() {
         if (GetType().TryGetCustomAttribute<UIViewAttribute>(out var attribute)) {
             transform.SetSiblingIndex((int)attribute.priority);
+            Priority = attribute.priority;
         }
     }
 

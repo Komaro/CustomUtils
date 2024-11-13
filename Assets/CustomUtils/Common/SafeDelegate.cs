@@ -1,8 +1,8 @@
-
 using System;
 using System.Linq;
 using UnityEngine;
 
+// TODO. Unit Test 및 Coverage 체크 필요
 public struct SafeDelegate<T> where T : Delegate {
         
     public T handler;
@@ -10,7 +10,7 @@ public struct SafeDelegate<T> where T : Delegate {
 
     public void Clear() {
         if (handler != null) {
-            Delegate.RemoveAll(handler, handler);
+            handler = Delegate.RemoveAll(handler, handler) as T;
         }
     }
     

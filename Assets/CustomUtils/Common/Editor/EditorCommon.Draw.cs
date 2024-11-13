@@ -30,6 +30,12 @@ public static partial class EditorCommon {
         GUILayout.Space(rightSpace);
     }
 
+    public static bool DrawButton(string text, bool disabled = false, params GUILayoutOption[] options) {
+        using (new EditorGUI.DisabledGroupScope(disabled)) {
+            return GUILayout.Button(text, options);
+        }
+    }
+
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static string DrawLabelTextField(string label, string text, float labelWidth = 120f, GUIStyle textFieldStyle = null) {
         using (new GUILayout.HorizontalScope()) {

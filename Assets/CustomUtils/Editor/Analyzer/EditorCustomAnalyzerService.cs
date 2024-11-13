@@ -173,13 +173,15 @@ public class EditorCustomAnalyzerService : EditorService {
                         EditorGUILayout.HelpBox("빌드할 DLL 파일의 명칭을 지정해야 합니다. 확장자는 생략할 수 있습니다.", MessageType.Error);
                     } else {
                         EditorGUILayout.HelpBox("DLL파일의 명칭과 어셈블리의 명칭은 동일하게 적용됩니다. 여러개의 DLL 파일로 나누는 경우 명칭을 다르게 지정하여야 합니다.", MessageType.Info);
-                        if (GUILayout.Button("Custom Analyzer DLL 빌드", GUILayout.Height(30f))) {
-                            EditorCommon.ShowCheckDialogue("경고", "Analyzer dll 파일을 빌드합니다.\n" +
-                                                                 "환경에 따라 많은 시간이 소요될 수 있습니다.\n" +
-                                                                 $"빌드가 완료된 후 {_dllName} 파일은 자동적으로 {Constants.Path.PLUGINS_FULL_PATH}로 복사됩니다.", ok: () => {
-                                
-                                AnalyzerGenerator.GenerateCustomAnalyzerDll(_dllName, _implementInfoDic.Values.Where(info => info.isCheck).Select(info => info.type));
-                            });
+                        using (new EditorGUI.DisabledGroupScope(EditorApplication.isCompiling)) {
+                            if (GUILayout.Button("Custom Analyzer DLL 빌드", GUILayout.Height(30f))) {
+                                EditorCommon.ShowCheckDialogue("경고", "Analyzer dll 파일을 빌드합니다.\n" +
+                                                                     "환경에 따라 많은 시간이 소요될 수 있습니다.\n" +
+                                                                     $"빌드가 완료된 후 {_dllName} 파일은 자동적으로 {Constants.Path.PLUGINS_FULL_PATH}로 복사됩니다.", ok: () => {
+                                    
+                                    AnalyzerGenerator.GenerateCustomAnalyzerDll(_dllName, _implementInfoDic.Values.Where(info => info.isCheck).Select(info => info.type));
+                                });
+                            }
                         }
                     }
                 }

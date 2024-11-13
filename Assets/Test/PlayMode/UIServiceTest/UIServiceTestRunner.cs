@@ -85,8 +85,14 @@ public class UIServiceTestRunner {
                 Logger.TraceLog(tr.GetComponentsInChildren<UIViewMonoBehaviour>(true).ToStringCollection(comp => $"{comp.gameObject.name} || {(comp.GetType().TryGetCustomAttribute<UIViewAttribute>(out var attribute) ? attribute.priority : "9999999999")}", "\n"));
                 return true;
             });
+            
+            foreach (var uiView in service.GetType().GetFieldValue<Transform>(service, "_uiRoot", flags).GetComponentsInChildren<UIViewMonoBehaviour>(true)) {
+                Logger.TraceLog($"{uiView.name} || {uiView.Priority}");
+            }
 
-            service.Open<TestSimpleUIView>();
+            Assert.IsNotNull(service.Open<TestSimpleUIView>());
+            Assert.AreEqual(service.Current.GetType(), typeof(TestSimpleUIView));
+            Assert.AreEqual(service.Previous.GetType(), typeof(TestSimpleSecondUIView));
         }
     }
 

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -16,7 +15,7 @@ public class UIService : IService {
     private Transform _uiGlobalRoot;
     
     // private ConcurrentStack<UIViewMonoBehaviour> _uiCallStack = new();
-    private CallStackQueue<UIViewMonoBehaviour> _uiCallStack = new();
+    private CallStack<UIViewMonoBehaviour> _uiCallStack = new();
 
     public UIViewMonoBehaviour Current => _uiCallStack.TryPeek(out var uiView) ? uiView : null;
     
@@ -265,66 +264,3 @@ public abstract class UIInitializeProvider {
 }
 
 public class GlobalUIAttribute : PriorityAttribute { }
-
-public class CallStackQueue<T> : IEnumerable<T> {
-
-    private readonly List<T> _list = new();
-    private readonly HashSet<T> _hashSet = new();
-
-    public int Count => _list.Count;
-    
-    public void Push(T item) {
-        if (_hashSet.Contains(item)) {
-            _list.RemoveAt(_list.IndexOf(item));
-        } else {
-            _hashSet.Add(item);
-        }
-        
-        _list.Add(item);
-    }
-    
-    public bool TryPop(out T item) => (item = Pop()) != null;
-
-    public T Pop() {
-        if (_list.Count <= 0) {
-            return default;
-        }
-        
-        var item = _list[^1];
-        _hashSet.Remove(item);
-        return item;
-    }
-
-    public bool TryPeek(out T item) => (item = Peek()) != null;
-
-    public T Peek() {
-        if (_list.Count <= 0) {
-            return default;
-        }
-    
-        return _list[^1];
-    }
-
-    public bool TryPeek(int index, out T item) => (item = Peek(index)) != null;
-
-    public T Peek(int index) {
-        if (index > _list.Count) {
-            return default;
-        }
-        
-        return _list[index];
-    }
-
-    public bool TryPeekTail(int index, out T item) => (item = PeekTail(index)) != null;
-
-    public T PeekTail(int index) {
-        if (index > _list.Count) {
-            return default;
-        }
-
-        return _list[^index];
-    }
-
-    public IEnumerator<T> GetEnumerator() => _list.GetEnumerator();
-    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
-}

@@ -2,7 +2,7 @@
 using NUnit.Framework;
 
 [Category(TestConstants.Category.FUNCTIONAL)]
-public class CallStackQueueTestRunner {
+public class CallStackTestRunner {
 
     [Test]
     public void CallStackQueueFunctionalTest() {

@@ -15,6 +15,7 @@ public interface IResourceProvider : IImplementNullable {
     void Load(ResourceOrder order);
     void Unload(ResourceOrder order);
     Object Get(string name);
+    Awaitable<Object> GetAsync(string name);
     Object Get(ResourceOrder order);
     string GetPath(string name);
     bool IsReady();
@@ -125,6 +126,15 @@ public class ResourceService : IService {
         }
         
         return obj;
+    }
+
+    public async Awaitable<Object> GetObjectAsync(string name) {
+        var awaitable = _mainProvider?.GetAsync(name) ?? _subProvider?.GetAsync(name);
+        if (awaitable != null) {
+            return await awaitable;
+        }
+
+        return null;
     }
 
     public bool TryGet(ResourceOrder order, out GameObject go) => (go = Get(order)) != null;

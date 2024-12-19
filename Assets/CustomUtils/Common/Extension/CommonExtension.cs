@@ -124,4 +124,6 @@ public static class CommonExtension {
 
         return list;
     }
+
+    public static bool IsComplete(this AssetBundleRequest request) => request.isDone && request.asset != null;
 }

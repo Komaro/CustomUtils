@@ -112,6 +112,15 @@ public class AssetBundleProvider : IResourceProvider {
         return null;
     }
 
+    public async Awaitable<Object> GetAsync(string name) {
+        name = name.ToUpper();
+        if (_assetToBundleDic.TryGetValue(name, out var bundleName) && _bundleDic.TryGetValue(bundleName, out var wrapper)) {
+            return await wrapper.GetAsync(name);
+        }
+
+        return null;
+    }
+
     public Object Get(ResourceOrder order) {
         switch (order) {
             case AssetBundleOrder assetBundle:
@@ -154,6 +163,7 @@ public abstract class AssetBundleWrapperBase {
     public abstract AssetBundleUnloadOperation UnloadAsync();
 
     public abstract Object Get(string assetName);
+    public abstract Awaitable<Object> GetAsync(string assetName);
     public abstract string GetPath(string assetName);
 
     protected abstract void RefreshPath();
@@ -247,6 +257,28 @@ public class AssetBundleWrapper : AssetBundleWrapperBase {
             }
         }
         
+        return null;
+    }
+
+    public override async Awaitable<Object> GetAsync(string assetName) {
+        if (assetBundle == null) {
+            Logger.TraceError($"{name} {nameof(AssetBundle)} is null");
+            return null;
+        }
+
+        if (_assetCacheDic.TryGetValue(assetName, out var ob)) {
+            return ob;
+        }
+
+        if (_assetPathDic.TryGetValue(assetName, out var path)) {
+            var request = assetBundle.LoadAssetAsync(path);
+            await request;
+            if (request.IsComplete()) {
+                _assetCacheDic.TryAdd(assetName, request.asset);
+                return request.asset;
+            }
+        }
+
         return null;
     }
 

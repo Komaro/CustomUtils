@@ -32,13 +32,23 @@ public class ResourceServiceTestRunner {
                 callback = _ => {
                     Logger.TraceLog($"Operation Done");
                     service.Unload(new AssetBundleUnloadOrder { assetBundles = new[] { "SFX" }});
-                    MemoryProfiler.TakeSnapshot($"{Constants.Path.MEMORY_CAPTURES_PATH}/TestSnap_02.snap", null);
+                    // MemoryProfiler.TakeSnapshot($"{Constants.Path.MEMORY_CAPTURES_PATH}/TestSnap_02.snap", null);
                 }
             });
         }
 
         await Task.Delay(5000);
     } 
+    
+    [Test]
+    public async Task ResourceServiceAsyncTest() {
+        var watchService = await Service.GetServiceAsync<StopWatchService>();
+        var resourceService = await Service.GetServiceAsync<ResourceService>();
+        watchService.Start();
+        var ob = await resourceService.GetObjectAsync("FreeSampleSFX");
+        watchService.Stop();
+        Assert.IsNotNull(ob);
+    }
     
     [Test]
     [Performance]
@@ -95,7 +105,7 @@ public class ResourceServiceTestRunner {
             Assert.IsNotNull(track);
             Logger.TraceLog($"Get || {track.name}");
             
-            MemoryProfiler.TakeSnapshot($"{Constants.Path.MEMORY_CAPTURES_PATH}/TestSnap_01.snap", null);
+            // MemoryProfiler.TakeSnapshot($"{Constants.Path.MEMORY_CAPTURES_PATH}/TestSnap_01.snap", null);
         }
     }
 }

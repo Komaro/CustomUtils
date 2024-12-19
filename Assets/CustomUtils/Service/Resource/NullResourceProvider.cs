@@ -19,6 +19,12 @@ public sealed class NullResourceProvider : IResourceProvider {
         return null;
     }
 
+    public async Awaitable<Object> GetAsync(string name) {
+        await Awaitable.EndOfFrameAsync();
+        Logger.TraceLog($"{nameof(GetAsync)} {nameof(NullResourceProvider)}", Color.yellow);
+        return null;
+    }
+
     public Object Get(ResourceOrder order) {
         Logger.TraceLog($"{nameof(Get)} {nameof(NullResourceProvider)}", Color.yellow);
         return null;

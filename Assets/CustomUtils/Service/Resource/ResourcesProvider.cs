@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
 using UnityEngine;
 using Object = UnityEngine.Object;
@@ -56,6 +55,24 @@ public class ResourcesProvider : IResourceProvider {
         }
 
         return ob;
+    }
+
+    public async Awaitable<Object> GetAsync(string name) {
+        name = name.ToUpper();
+        if (_cacheDic.TryGetValue(name, out var ob)) {
+            return ob;
+        }
+
+        if (_pathDic.TryGetValue(name, out var path)) {
+            var request = Resources.LoadAsync(path);
+            await request;
+            if (request.isDone && request.asset != null) {
+                _cacheDic.TryAdd(name, request.asset);
+                return request.asset;
+            }
+        }
+
+        return null;
     }
 
     public Object Get(ResourceOrder order) {

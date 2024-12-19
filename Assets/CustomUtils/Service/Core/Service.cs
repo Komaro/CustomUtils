@@ -5,7 +5,7 @@ using System.Reflection;
 using UniRx;
 using UnityEngine;
 
-public static class Service {
+public static partial class Service {
 
     private static List<Type> _cachedServiceTypeList = new();
     private static ReactiveDictionary<Type, IService> _serviceDic = new ();

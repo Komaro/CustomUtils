@@ -285,3 +285,9 @@ public abstract record ResourceOrder {
 
 public abstract record ResourceSubOrder : ResourceOrder;
 public abstract record ResourceExtraOrder : ResourceOrder;
+
+public class IgnoreCaseStringComparer : IEqualityComparer<string> {
+
+    public bool Equals(string x, string y) => string.Equals(x, y, StringComparison.OrdinalIgnoreCase);
+    public int GetHashCode(string obj) => obj.GetHashCode(StringComparison.OrdinalIgnoreCase);
+}

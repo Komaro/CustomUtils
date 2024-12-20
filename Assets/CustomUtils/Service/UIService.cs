@@ -21,7 +21,7 @@ public class UIService : IService {
     
     public UIViewMonoBehaviour Previous {
         get {
-            if (_uiCallStack.TryPeekTail(2, out var uiView)) {
+            if (_uiCallStack.TryPeekTail(out var uiView, 1)) {
                 return uiView;
             }
 

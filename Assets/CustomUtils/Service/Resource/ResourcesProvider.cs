@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
 using UnityEngine;
 using Object = UnityEngine.Object;
@@ -8,9 +7,9 @@ using Object = UnityEngine.Object;
 [ResourceProvider(9999)]
 [ResourceSubProvider(10)]
 public class ResourcesProvider : IResourceProvider {
-    
-    private readonly ConcurrentDictionary<string, string> _pathDic = new();
-    private readonly ConcurrentDictionary<string, Object> _cacheDic = new();
+
+    private readonly ConcurrentDictionary<string, string> _pathDic = new(new IgnoreCaseStringComparer());
+    private readonly ConcurrentDictionary<string, Object> _cacheDic = new(new IgnoreCaseStringComparer());
 
     public void Init() {
         _pathDic.Clear();
@@ -43,7 +42,6 @@ public class ResourcesProvider : IResourceProvider {
     }
 
     public Object Get(string name) {
-        name = name.ToUpper();
         if (_cacheDic.TryGetValue(name, out var ob)) {
             return ob;
         }
@@ -67,7 +65,7 @@ public class ResourcesProvider : IResourceProvider {
         return null;
     }
 
-    public string GetPath(string name) => _pathDic.TryGetValue(name.ToUpper(), out var path) ? path : string.Empty;
+    public string GetPath(string name) => _pathDic.TryGetValue(name, out var path) ? path : string.Empty;
     
     public bool IsReady() => Resources.Load(Constants.Resource.RESOURCE_LIST) != null;
     public bool IsNull() => false;

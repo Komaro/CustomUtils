@@ -22,6 +22,7 @@ public static class ReflectionProvider {
     #region [Class]
 
     public static IEnumerable<Type> GetCachedTypes() => Cache.CachedTypes;
+    public static IEnumerable<Type> GetClasses() => Cache.CachedClasses;
 
     /// <summary>
     /// T 와 동일한 ClassType

@@ -12,8 +12,8 @@ using Object = UnityEngine.Object;
 public class AssetBundleProvider : IResourceProvider {
 
     private AssetBundleChecksumInfo _checksumInfo;
-    private ConcurrentDictionary<string, AssetBundleWrapperBase> _bundleDic = new();
-    private ConcurrentDictionary<string, string> _assetToBundleDic = new();
+    private ConcurrentDictionary<string, AssetBundleWrapperBase> _bundleDic = new(new IgnoreCaseStringComparer());
+    private ConcurrentDictionary<string, string> _assetToBundleDic = new(new IgnoreCaseStringComparer());
 
     private const string UNITY_3D_EXTENSION = ".unity3d";
     
@@ -104,7 +104,6 @@ public class AssetBundleProvider : IResourceProvider {
     }
 
     public Object Get(string name) {
-        name = name.ToUpper();
         if (_assetToBundleDic.TryGetValue(name, out var bundleName) && _bundleDic.TryGetValue(bundleName, out var wrapper)) {
            return wrapper.Get(name);
         }
@@ -122,7 +121,6 @@ public class AssetBundleProvider : IResourceProvider {
     }
 
     public string GetPath(string name) {
-        name = name.ToUpper();
         if (_assetToBundleDic.TryGetValue(name, out var bundleName) && _bundleDic.TryGetValue(bundleName, out var wrapper)) {
             return wrapper.GetPath(name);
         }
@@ -259,8 +257,7 @@ public class AssetBundleWrapper : AssetBundleWrapperBase {
         }
         
         foreach (var fullPath in assetBundle.GetAllAssetNames()) {
-            var assetName = Path.GetFileNameWithoutExtension(fullPath).ToUpper();
-            _assetPathDic.TryAdd(assetName, fullPath);
+            _assetPathDic.TryAdd(Path.GetFileNameWithoutExtension(fullPath), fullPath);
         }
     }
     

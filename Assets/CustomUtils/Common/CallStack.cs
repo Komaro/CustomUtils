@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 
+// TODO. 최상단의 위치가 모호함. 수정 필요
 public class CallStack<T> : IEnumerable<T> {
 
     private readonly List<T> _list = new();
@@ -72,7 +73,7 @@ public class CallStack<T> : IEnumerable<T> {
         return _list[^(offset + 1)];
     }
 
-    public bool TryPeekTail(int offset, out T item) {
+    public bool TryPeekTail(out T item, int offset = 0) {
         if (_list.Count <= 0) {
             item = default;
             return false;
@@ -81,8 +82,8 @@ public class CallStack<T> : IEnumerable<T> {
         return (item = PeekTail(offset)) != null;
     }
 
-    public T PeekTail(int offset) {
-        if (offset > _list.Count) {
+    public T PeekTail(int offset = 0) {
+        if (offset >= _list.Count) {
             return default;
         }
 

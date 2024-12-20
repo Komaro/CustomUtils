@@ -24,10 +24,10 @@ public class CallStackTestRunner {
         Assert.AreNotEqual(randomList[^1], temp);
         Assert.AreEqual(randomList[^2], temp);
         
-        Assert.IsTrue(callStack.TryPeekTail(0, out temp));
+        Assert.IsTrue(callStack.TryPeekTail(out temp));
         Assert.AreEqual(randomList[0], temp);
         
-        Assert.IsTrue(callStack.TryPeekTail(1, out temp));
+        Assert.IsTrue(callStack.TryPeekTail(out temp, 1));
         Assert.AreEqual(randomList[1], temp);
         
         Assert.AreNotEqual(callStack.Count, randomList.Count);
@@ -39,7 +39,7 @@ public class CallStackTestRunner {
         Assert.IsTrue(callStack.TryPeek(out temp));
         Assert.AreEqual(randomList[2], temp);
         
-        Assert.IsTrue(callStack.TryPeekTail(2, out temp));
+        Assert.IsTrue(callStack.TryPeekTail(out temp, 2));
         Assert.AreNotEqual(randomList[2], temp);
         Assert.AreEqual(randomList[3], temp);
 

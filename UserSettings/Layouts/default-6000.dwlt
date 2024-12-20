@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 1536
     height: 780.8
   m_ShowMode: 4
-  m_Title: Console
+  m_Title: Test Runner
   m_RootView: {fileID: 2}
   m_MinSize: {x: 875, y: 350}
   m_MaxSize: {x: 10000, y: 10000}
@@ -119,7 +119,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 100}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 45
+  controlID: 107
   draggingID: 0
 --- !u!114 &6
 MonoBehaviour:
@@ -140,12 +140,12 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 1177.6
+    width: 910.4
     height: 724.8
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 1
-  controlID: 46
+  controlID: 84
   draggingID: 0
 --- !u!114 &7
 MonoBehaviour:
@@ -166,12 +166,12 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 1177.6
+    width: 910.4
     height: 382.4
   m_MinSize: {x: 200, y: 50}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 38
+  controlID: 40
   draggingID: 0
 --- !u!114 &8
 MonoBehaviour:
@@ -190,7 +190,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 480
+    width: 371.2
     height: 382.4
   m_MinSize: {x: 201, y: 226}
   m_MaxSize: {x: 4001, y: 4026}
@@ -214,9 +214,9 @@ MonoBehaviour:
   m_Children: []
   m_Position:
     serializedVersion: 2
-    x: 480
+    x: 371.2
     y: 0
-    width: 697.6
+    width: 539.2
     height: 382.4
   m_MinSize: {x: 202, y: 226}
   m_MaxSize: {x: 4002, y: 4026}
@@ -244,12 +244,12 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 382.4
-    width: 1177.6
+    width: 910.4
     height: 342.4
   m_MinSize: {x: 200, y: 50}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 47
+  controlID: 85
   draggingID: 0
 --- !u!114 &11
 MonoBehaviour:
@@ -268,7 +268,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 767.2
+    width: 592
     height: 342.4
   m_MinSize: {x: 101, y: 126}
   m_MaxSize: {x: 4001, y: 4026}
@@ -293,9 +293,9 @@ MonoBehaviour:
   m_Children: []
   m_Position:
     serializedVersion: 2
-    x: 767.2
+    x: 592
     y: 0
-    width: 410.39996
+    width: 318.40002
     height: 342.4
   m_MinSize: {x: 202, y: 226}
   m_MaxSize: {x: 4002, y: 4026}
@@ -314,23 +314,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 1
   m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: InspectorWindow
+  m_Name: TestRunnerWindow
   m_EditorClassIdentifier: 
   m_Children: []
   m_Position:
     serializedVersion: 2
-    x: 1177.6
+    x: 910.4
     y: 0
-    width: 358.40002
+    width: 625.6
     height: 724.8
-  m_MinSize: {x: 276, y: 76}
+  m_MinSize: {x: 101, y: 126}
   m_MaxSize: {x: 4001, y: 4026}
-  m_ActualView: {fileID: 20}
+  m_ActualView: {fileID: 14}
   m_Panes:
   - {fileID: 20}
   - {fileID: 14}
-  m_Selected: 0
-  m_LastSelected: 1
+  m_Selected: 1
+  m_LastSelected: 0
 --- !u!114 &14
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -353,9 +353,9 @@ MonoBehaviour:
     m_TextWithWhitespace: "Test Runner\u200B"
   m_Pos:
     serializedVersion: 2
-    x: 1177.6
+    x: 910.4
     y: 79.200005
-    width: 357.40002
+    width: 624.6
     height: 698.8
   m_SerializedDataModeController:
     m_DataMode: 0
@@ -369,7 +369,7 @@ MonoBehaviour:
     m_ContainerData: []
     m_OverlaysVisible: 1
   m_Spl:
-    ID: 153
+    ID: 140
     splitterInitialOffset: 281.6
     currentActiveSplitter: -1
     realSizes:
@@ -392,11 +392,11 @@ MonoBehaviour:
     oldMinSizes: 
     oldMaxSizes: 
     oldSplitSize: 0
-  m_TestTypeToolbarIndex: 0
+  m_TestTypeToolbarIndex: 1
   m_TestListGUIs:
   - m_Window: {fileID: 14}
     runProgress:
-      RunGuid: 66c28103-42e4-46bb-ae0c-c415513692f5
+      RunGuid: 1c8e693e-d08b-4033-b087-7f8054098613
       ExecutionSettings:
         m_TargetPlatform: 0
         m_HasTargetPlatform: 0
@@ -407,9 +407,9 @@ MonoBehaviour:
           categoryNames: []
           assemblyNames: []
         filters:
-        - testMode: 1
+        - testMode: 2
           testNames:
-          - CallStackQueueTestRunner
+          - UIServiceTestRunner.UIServiceTest
           groupNames: []
           categoryNames: []
           assemblyNames: []
@@ -444,35 +444,1456 @@ MonoBehaviour:
       categories: []
       parentId: 
       parentUniqueId: 
-    m_ResultText: 'CallStackQueueFunctionalTest (0.069s)
+    - id: 1077
+      uniqueId: '[EditModeTestAssembly][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/EditModeTestAssembly.dll][suite]'
+      name: EditModeTestAssembly.dll
+      fullName: C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/EditModeTestAssembly.dll
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1084
+      parentUniqueId: '[CustomUtils][suite]'
+    - id: 1002
+      uniqueId: 'EditModeTestAssembly.dll/[EditModeTestAssembly][AnalyzerTestRunner][suite]'
+      name: AnalyzerTestRunner
+      fullName: AnalyzerTestRunner
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1077
+      parentUniqueId: '[EditModeTestAssembly][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/EditModeTestAssembly.dll][suite]'
+    - id: 1012
+      uniqueId: 'EditModeTestAssembly.dll/AnalyzerTestRunner/[EditModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCasePerformanceTest][suite]'
+      name: AnalyzerTestCasePerformanceTest
+      fullName: AnalyzerTestRunner.AnalyzerTestCasePerformanceTest
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories:
+      - Performance
+      parentId: 1002
+      parentUniqueId: 'EditModeTestAssembly.dll/[EditModeTestAssembly][AnalyzerTestRunner][suite]'
+    - id: 1008
+      uniqueId: 'EditModeTestAssembly.dll/AnalyzerTestRunner/AnalyzerTestCasePerformanceTest/[EditModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCasePerformanceTest(RequiresStaticMethodImplementationAttributeAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/RequiresStaticMethodTestCase")]'
+      name: AnalyzerTestCasePerformanceTest(RequiresStaticMethodImplementationAttributeAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/RequiresStaticMethodTestCase")
+      fullName: AnalyzerTestRunner.AnalyzerTestCasePerformanceTest(RequiresStaticMethodImplementationAttributeAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/RequiresStaticMethodTestCase")
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1012
+      parentUniqueId: 'EditModeTestAssembly.dll/AnalyzerTestRunner/[EditModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCasePerformanceTest][suite]'
+    - id: 1009
+      uniqueId: 'EditModeTestAssembly.dll/AnalyzerTestRunner/AnalyzerTestCasePerformanceTest/[EditModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCasePerformanceTest(RequiresAttributeImplementationAttributeAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/RequiresAttributeTestCase")]'
+      name: AnalyzerTestCasePerformanceTest(RequiresAttributeImplementationAttributeAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/RequiresAttributeTestCase")
+      fullName: AnalyzerTestRunner.AnalyzerTestCasePerformanceTest(RequiresAttributeImplementationAttributeAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/RequiresAttributeTestCase")
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1012
+      parentUniqueId: 'EditModeTestAssembly.dll/AnalyzerTestRunner/[EditModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCasePerformanceTest][suite]'
+    - id: 1010
+      uniqueId: 'EditModeTestAssembly.dll/AnalyzerTestRunner/AnalyzerTestCasePerformanceTest/[EditModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCasePerformanceTest(BuilderAttributeVerifyAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/BuilderAttributeVerifyAnalyzerTestCase")]'
+      name: AnalyzerTestCasePerformanceTest(BuilderAttributeVerifyAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/BuilderAttributeVerifyAnalyzerTestCase")
+      fullName: AnalyzerTestRunner.AnalyzerTestCasePerformanceTest(BuilderAttributeVerifyAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/BuilderAttributeVerifyAnalyzerTestCase")
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1012
+      parentUniqueId: 'EditModeTestAssembly.dll/AnalyzerTestRunner/[EditModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCasePerformanceTest][suite]'
+    - id: 1011
+      uniqueId: 'EditModeTestAssembly.dll/AnalyzerTestRunner/AnalyzerTestCasePerformanceTest/[EditModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCasePerformanceTest(AttributeAbstractAndInterfaceConstraintsAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/AttributeAbstractAndInterfaceConstraintsAnalyzerTestCase")]'
+      name: AnalyzerTestCasePerformanceTest(AttributeAbstractAndInterfaceConstraintsAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/AttributeAbstractAndInterfaceConstraintsAnalyzerTestCase")
+      fullName: AnalyzerTestRunner.AnalyzerTestCasePerformanceTest(AttributeAbstractAndInterfaceConstraintsAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/AttributeAbstractAndInterfaceConstraintsAnalyzerTestCase")
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1012
+      parentUniqueId: 'EditModeTestAssembly.dll/AnalyzerTestRunner/[EditModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCasePerformanceTest][suite]'
+    - id: 1007
+      uniqueId: 'EditModeTestAssembly.dll/AnalyzerTestRunner/[EditModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCaseTest][suite]'
+      name: AnalyzerTestCaseTest
+      fullName: AnalyzerTestRunner.AnalyzerTestCaseTest
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1002
+      parentUniqueId: 'EditModeTestAssembly.dll/[EditModeTestAssembly][AnalyzerTestRunner][suite]'
+    - id: 1003
+      uniqueId: 'EditModeTestAssembly.dll/AnalyzerTestRunner/AnalyzerTestCaseTest/[EditModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCaseTest(RequiresStaticMethodImplementationAttributeAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/RequiresStaticMethodTestCase")]'
+      name: AnalyzerTestCaseTest(RequiresStaticMethodImplementationAttributeAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/RequiresStaticMethodTestCase")
+      fullName: AnalyzerTestRunner.AnalyzerTestCaseTest(RequiresStaticMethodImplementationAttributeAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/RequiresStaticMethodTestCase")
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1007
+      parentUniqueId: 'EditModeTestAssembly.dll/AnalyzerTestRunner/[EditModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCaseTest][suite]'
+    - id: 1004
+      uniqueId: 'EditModeTestAssembly.dll/AnalyzerTestRunner/AnalyzerTestCaseTest/[EditModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCaseTest(RequiresAttributeImplementationAttributeAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/RequiresAttributeTestCase")]'
+      name: AnalyzerTestCaseTest(RequiresAttributeImplementationAttributeAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/RequiresAttributeTestCase")
+      fullName: AnalyzerTestRunner.AnalyzerTestCaseTest(RequiresAttributeImplementationAttributeAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/RequiresAttributeTestCase")
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1007
+      parentUniqueId: 'EditModeTestAssembly.dll/AnalyzerTestRunner/[EditModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCaseTest][suite]'
+    - id: 1005
+      uniqueId: 'EditModeTestAssembly.dll/AnalyzerTestRunner/AnalyzerTestCaseTest/[EditModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCaseTest(BuilderAttributeVerifyAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/BuilderAttributeVerifyAnalyzerTestCase")]'
+      name: AnalyzerTestCaseTest(BuilderAttributeVerifyAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/BuilderAttributeVerifyAnalyzerTestCase")
+      fullName: AnalyzerTestRunner.AnalyzerTestCaseTest(BuilderAttributeVerifyAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/BuilderAttributeVerifyAnalyzerTestCase")
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1007
+      parentUniqueId: 'EditModeTestAssembly.dll/AnalyzerTestRunner/[EditModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCaseTest][suite]'
+    - id: 1006
+      uniqueId: 'EditModeTestAssembly.dll/AnalyzerTestRunner/AnalyzerTestCaseTest/[EditModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCaseTest(AttributeAbstractAndInterfaceConstraintsAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/AttributeAbstractAndInterfaceConstraintsAnalyzerTestCase")]'
+      name: AnalyzerTestCaseTest(AttributeAbstractAndInterfaceConstraintsAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/AttributeAbstractAndInterfaceConstraintsAnalyzerTestCase")
+      fullName: AnalyzerTestRunner.AnalyzerTestCaseTest(AttributeAbstractAndInterfaceConstraintsAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/AttributeAbstractAndInterfaceConstraintsAnalyzerTestCase")
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1007
+      parentUniqueId: 'EditModeTestAssembly.dll/AnalyzerTestRunner/[EditModeTestAssembly][AnalyzerTestRunner.AnalyzerTestCaseTest][suite]'
+    - id: 1033
+      uniqueId: 'EditModeTestAssembly.dll/[EditModeTestAssembly][CallStackTestRunner][suite]'
+      name: CallStackTestRunner
+      fullName: CallStackTestRunner
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories:
+      - Functional
+      parentId: 1077
+      parentUniqueId: '[EditModeTestAssembly][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/EditModeTestAssembly.dll][suite]'
+    - id: 1035
+      uniqueId: 'EditModeTestAssembly.dll/CallStackTestRunner/[EditModeTestAssembly][CallStackTestRunner.CallStackQueueFunctionalTest]'
+      name: CallStackQueueFunctionalTest
+      fullName: CallStackTestRunner.CallStackQueueFunctionalTest
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Functional
+      parentId: 1034
+      parentUniqueId: 'EditModeTestAssembly.dll/[EditModeTestAssembly][CallStackTestRunner][suite]'
+    - id: 1013
+      uniqueId: 'EditModeTestAssembly.dll/[EditModeTestAssembly][DBTestRunner][suite]'
+      name: DBTestRunner
+      fullName: DBTestRunner
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1077
+      parentUniqueId: '[EditModeTestAssembly][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/EditModeTestAssembly.dll][suite]'
+    - id: 1014
+      uniqueId: 'EditModeTestAssembly.dll/DBTestRunner/[EditModeTestAssembly][DBTestRunner.InMemoryDatabaseTest]'
+      name: InMemoryDatabaseTest
+      fullName: DBTestRunner.InMemoryDatabaseTest
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1013
+      parentUniqueId: 'EditModeTestAssembly.dll/[EditModeTestAssembly][DBTestRunner][suite]'
+    - id: 1035
+      uniqueId: 'EditModeTestAssembly.dll/[EditModeTestAssembly][DictionaryTestRunner][suite]'
+      name: DictionaryTestRunner
+      fullName: DictionaryTestRunner
+      resultStatus: 1
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories:
+      - Functional
+      parentId: 1077
+      parentUniqueId: '[EditModeTestAssembly][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/EditModeTestAssembly.dll][suite]'
+    - id: 1067
+      uniqueId: 'EditModeTestAssembly.dll/DictionaryTestRunner/[EditModeTestAssembly][DictionaryTestRunner.DictionaryComparerTest]'
+      name: DictionaryComparerTest
+      fullName: DictionaryTestRunner.DictionaryComparerTest
+      resultStatus: 1
+      duration: 0.1174347
+      messages: 
+      output: '[DictionaryTestRunner.DictionaryComparerTest] Hash Check 1206424339
+        || -1175826765
 
-      ---
+        [DictionaryTestRunner.DictionaryComparerTest] [LGux[[HkU
+        || [LGUX[[HKU || [LGUX[[HKU
 
-      [CallStackQueueTestRunner.CallStackQueueFunctionalTest]
-      3045
+        [DictionaryTestRunner.DictionaryComparerTest]
+        Hash Check -1192669044 || -127317524
 
-      [CallStackQueueTestRunner.CallStackQueueFunctionalTest] 7477
+        [DictionaryTestRunner.DictionaryComparerTest]
+        YjVIkWJF\f || YJVIKWJF\F || YJVIKWJF\F
 
-      [CallStackQueueTestRunner.CallStackQueueFunctionalTest]
-      8541
+        [DictionaryTestRunner.DictionaryComparerTest]
+        Hash Check -594477346 || 1670230782
 
-      [CallStackQueueTestRunner.CallStackQueueFunctionalTest] 2563
+        [DictionaryTestRunner.DictionaryComparerTest]
+        eceeQHkpJn || ECEEQHKPJN || ECEEQHKPJN
 
-      [CallStackQueueTestRunner.CallStackQueueFunctionalTest]
-      8762
+        [DictionaryTestRunner.DictionaryComparerTest]
+        Hash Check -1667499155 || -1667500115
 
-      [CallStackQueueTestRunner.CallStackQueueFunctionalTest] 2698
+        [DictionaryTestRunner.DictionaryComparerTest]
+        DJHUDYdXiR || DJHUDYDXIR || DJHUDYDXIR
 
-      [CallStackQueueTestRunner.CallStackQueueFunctionalTest]
-      9046
+        [DictionaryTestRunner.DictionaryComparerTest]
+        Hash Check 1707281863 || -1872064345
 
-      [CallStackQueueTestRunner.CallStackQueueFunctionalTest] 8296'
+        [DictionaryTestRunner.DictionaryComparerTest]
+        xlL\Im`^JW || XLL\IM`^JW || XLL\IM`^JW
+
+        [DictionaryTestRunner.DictionaryComparerTest]
+        Hash Check -2130537853 || -1469676765
+
+        [DictionaryTestRunner.DictionaryComparerTest]
+        Ob_`Fqa[eq || OB_`FQA[EQ || OB_`FQA[EQ
+
+        [DictionaryTestRunner.DictionaryComparerTest]
+        Hash Check -1716671339 || -1139521355
+
+        [DictionaryTestRunner.DictionaryComparerTest]
+        iewvRPcAFR || IEWVRPCAFR || IEWVRPCAFR
+
+        [DictionaryTestRunner.DictionaryComparerTest]
+        Hash Check -914181685 || -1344515253
+
+        [DictionaryTestRunner.DictionaryComparerTest]
+        mkWKhrWI\] || MKWKHRWI\] || MKWKHRWI\]
+
+        [DictionaryTestRunner.DictionaryComparerTest]
+        Hash Check 117715801 || 732649977
+
+        [DictionaryTestRunner.DictionaryComparerTest]
+        aNfm`[daOL || ANFM`[DAOL || ANFM`[DAOL
+
+        [DictionaryTestRunner.DictionaryComparerTest]
+        Hash Check -1128381079 || 1824151977
+
+        [DictionaryTestRunner.DictionaryComparerTest]
+        rImrbToPKs || RIMRBTOPKS || RIMRBTOPKS
+
+        [DictionaryTestRunner.DictionaryComparerTest]
+        Hash Check 2056772781 || 2145370061
+
+        [DictionaryTestRunner.DictionaryComparerTest]
+        K_Xrd^LUrN || K_XRD^LURN || K_XRD^LURN
+
+        [DictionaryTestRunner.DictionaryComparerTest]
+        Hash Check -330113599 || 1095817377
+
+        [DictionaryTestRunner.DictionaryComparerTest]
+        [XyIP[xJWp || [XYIP[XJWP || [XYIP[XJWP
+
+        [DictionaryTestRunner.DictionaryComparerTest]
+        Hash Check -1902518479 || -320288143
+
+        [DictionaryTestRunner.DictionaryComparerTest]
+        eBlsYdx^bT || EBLSYDX^BT || EBLSYDX^BT
+
+        [DictionaryTestRunner.DictionaryComparerTest]
+        Hash Check -1755190933 || 539966571
+
+        [DictionaryTestRunner.DictionaryComparerTest]
+        CHwbRBonJB || CHWBRBONJB || CHWBRBONJB
+
+        [DictionaryTestRunner.DictionaryComparerTest]
+        Hash Check -447196256 || -670749088
+
+        [DictionaryTestRunner.DictionaryComparerTest]
+        PPhAjZJdbG || PPHAJZJDBG || PPHAJZJDBG
+
+        [DictionaryTestRunner.DictionaryComparerTest]
+        Hash Check 551026967 || 443653847
+
+        [DictionaryTestRunner.DictionaryComparerTest]
+        VerUOJm_Yy || VERUOJM_YY || VERUOJM_YY
+
+        [DictionaryTestRunner.DictionaryComparerTest]
+        Hash Check -1736721885 || 2134952259
+
+        [DictionaryTestRunner.DictionaryComparerTest]
+        `hl_KT[WqN || `HL_KT[WQN || `HL_KT[WQN
+
+        [DictionaryTestRunner.DictionaryComparerTest]
+        Hash Check -1650557777 || -1819346641
+
+        [DictionaryTestRunner.DictionaryComparerTest]
+        fJAUaVSkIy || FJAUAVSKIY || FJAUAVSKIY
+
+        [DictionaryTestRunner.DictionaryComparerTest]
+        Hash Check 160062444 || 1343663308
+
+        [DictionaryTestRunner.DictionaryComparerTest]
+        [Tv[xXPcTI || [TV[XXPCTI || [TV[XXPCTI
+
+        [DictionaryTestRunner.DictionaryComparerTest]
+        Hash Check 109314926 || 476638318
+
+        [DictionaryTestRunner.DictionaryComparerTest]
+        OQUK\b]JpW || OQUK\B]JPW || OQUK\B]JPW
+
+'
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1066
+      parentUniqueId: 'EditModeTestAssembly.dll/[EditModeTestAssembly][DictionaryTestRunner][suite]'
+    - id: 1015
+      uniqueId: 'EditModeTestAssembly.dll/[EditModeTestAssembly][EditModeTestRunner][suite]'
+      name: EditModeTestRunner
+      fullName: EditModeTestRunner
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1077
+      parentUniqueId: '[EditModeTestAssembly][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/EditModeTestAssembly.dll][suite]'
+    - id: 1026
+      uniqueId: 'EditModeTestAssembly.dll/EditModeTestRunner/[EditModeTestAssembly][EditModeTestRunner.EnumCastPerformanceTest]'
+      name: EnumCastPerformanceTest
+      fullName: EditModeTestRunner.EnumCastPerformanceTest
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1015
+      parentUniqueId: 'EditModeTestAssembly.dll/[EditModeTestAssembly][EditModeTestRunner][suite]'
+    - id: 1025
+      uniqueId: 'EditModeTestAssembly.dll/EditModeTestRunner/[EditModeTestAssembly][EditModeTestRunner.EnumParsePerformanceTest]'
+      name: EnumParsePerformanceTest
+      fullName: EditModeTestRunner.EnumParsePerformanceTest
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1015
+      parentUniqueId: 'EditModeTestAssembly.dll/[EditModeTestAssembly][EditModeTestRunner][suite]'
+    - id: 1031
+      uniqueId: 'EditModeTestAssembly.dll/EditModeTestRunner/[EditModeTestAssembly][EditModeTestRunner.IntMarshalTest]'
+      name: IntMarshalTest
+      fullName: EditModeTestRunner.IntMarshalTest
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1015
+      parentUniqueId: 'EditModeTestAssembly.dll/[EditModeTestAssembly][EditModeTestRunner][suite]'
+    - id: 1028
+      uniqueId: 'EditModeTestAssembly.dll/EditModeTestRunner/[EditModeTestAssembly][EditModeTestRunner.JsonPerformanceTest][suite]'
+      name: JsonPerformanceTest
+      fullName: EditModeTestRunner.JsonPerformanceTest
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories:
+      - Performance
+      parentId: 1015
+      parentUniqueId: 'EditModeTestAssembly.dll/[EditModeTestAssembly][EditModeTestRunner][suite]'
+    - id: 1027
+      uniqueId: 'EditModeTestAssembly.dll/EditModeTestRunner/JsonPerformanceTest/[EditModeTestAssembly][EditModeTestRunner.JsonPerformanceTest(2500)]'
+      name: JsonPerformanceTest(2500)
+      fullName: EditModeTestRunner.JsonPerformanceTest(2500)
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1028
+      parentUniqueId: 'EditModeTestAssembly.dll/EditModeTestRunner/[EditModeTestAssembly][EditModeTestRunner.JsonPerformanceTest][suite]'
+    - id: 1032
+      uniqueId: 'EditModeTestAssembly.dll/EditModeTestRunner/[EditModeTestAssembly][EditModeTestRunner.StringMarshalTest]'
+      name: StringMarshalTest
+      fullName: EditModeTestRunner.StringMarshalTest
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1015
+      parentUniqueId: 'EditModeTestAssembly.dll/[EditModeTestAssembly][EditModeTestRunner][suite]'
+    - id: 1018
+      uniqueId: 'EditModeTestAssembly.dll/EditModeTestRunner/[EditModeTestAssembly][EditModeTestRunner.TempPerformanceTest_01]'
+      name: TempPerformanceTest_01
+      fullName: EditModeTestRunner.TempPerformanceTest_01
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1015
+      parentUniqueId: 'EditModeTestAssembly.dll/[EditModeTestAssembly][EditModeTestRunner][suite]'
+    - id: 1024
+      uniqueId: 'EditModeTestAssembly.dll/EditModeTestRunner/[EditModeTestAssembly][EditModeTestRunner.TempPerformanceTest_02][suite]'
+      name: TempPerformanceTest_02
+      fullName: EditModeTestRunner.TempPerformanceTest_02
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories:
+      - Performance
+      parentId: 1015
+      parentUniqueId: 'EditModeTestAssembly.dll/[EditModeTestAssembly][EditModeTestRunner][suite]'
+    - id: 1019
+      uniqueId: 'EditModeTestAssembly.dll/EditModeTestRunner/TempPerformanceTest_02/[EditModeTestAssembly][EditModeTestRunner.TempPerformanceTest_02(100)]'
+      name: TempPerformanceTest_02(100)
+      fullName: EditModeTestRunner.TempPerformanceTest_02(100)
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1024
+      parentUniqueId: 'EditModeTestAssembly.dll/EditModeTestRunner/[EditModeTestAssembly][EditModeTestRunner.TempPerformanceTest_02][suite]'
+    - id: 1020
+      uniqueId: 'EditModeTestAssembly.dll/EditModeTestRunner/TempPerformanceTest_02/[EditModeTestAssembly][EditModeTestRunner.TempPerformanceTest_02(1000)]'
+      name: TempPerformanceTest_02(1000)
+      fullName: EditModeTestRunner.TempPerformanceTest_02(1000)
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1024
+      parentUniqueId: 'EditModeTestAssembly.dll/EditModeTestRunner/[EditModeTestAssembly][EditModeTestRunner.TempPerformanceTest_02][suite]'
+    - id: 1021
+      uniqueId: 'EditModeTestAssembly.dll/EditModeTestRunner/TempPerformanceTest_02/[EditModeTestAssembly][EditModeTestRunner.TempPerformanceTest_02(10000)]'
+      name: TempPerformanceTest_02(10000)
+      fullName: EditModeTestRunner.TempPerformanceTest_02(10000)
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1024
+      parentUniqueId: 'EditModeTestAssembly.dll/EditModeTestRunner/[EditModeTestAssembly][EditModeTestRunner.TempPerformanceTest_02][suite]'
+    - id: 1022
+      uniqueId: 'EditModeTestAssembly.dll/EditModeTestRunner/TempPerformanceTest_02/[EditModeTestAssembly][EditModeTestRunner.TempPerformanceTest_02(100000)]'
+      name: TempPerformanceTest_02(100000)
+      fullName: EditModeTestRunner.TempPerformanceTest_02(100000)
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1024
+      parentUniqueId: 'EditModeTestAssembly.dll/EditModeTestRunner/[EditModeTestAssembly][EditModeTestRunner.TempPerformanceTest_02][suite]'
+    - id: 1023
+      uniqueId: 'EditModeTestAssembly.dll/EditModeTestRunner/TempPerformanceTest_02/[EditModeTestAssembly][EditModeTestRunner.TempPerformanceTest_02(1000000)]'
+      name: TempPerformanceTest_02(1000000)
+      fullName: EditModeTestRunner.TempPerformanceTest_02(1000000)
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1024
+      parentUniqueId: 'EditModeTestAssembly.dll/EditModeTestRunner/[EditModeTestAssembly][EditModeTestRunner.TempPerformanceTest_02][suite]'
+    - id: 1016
+      uniqueId: 'EditModeTestAssembly.dll/EditModeTestRunner/[EditModeTestAssembly][EditModeTestRunner.TempTest_01]'
+      name: TempTest_01
+      fullName: EditModeTestRunner.TempTest_01
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1015
+      parentUniqueId: 'EditModeTestAssembly.dll/[EditModeTestAssembly][EditModeTestRunner][suite]'
+    - id: 1017
+      uniqueId: 'EditModeTestAssembly.dll/EditModeTestRunner/[EditModeTestAssembly][EditModeTestRunner.TempTest_02]'
+      name: TempTest_02
+      fullName: EditModeTestRunner.TempTest_02
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1015
+      parentUniqueId: 'EditModeTestAssembly.dll/[EditModeTestAssembly][EditModeTestRunner][suite]'
+    - id: 1029
+      uniqueId: 'EditModeTestAssembly.dll/EditModeTestRunner/[EditModeTestAssembly][EditModeTestRunner.UnsafePerformanceTest]'
+      name: UnsafePerformanceTest
+      fullName: EditModeTestRunner.UnsafePerformanceTest
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1015
+      parentUniqueId: 'EditModeTestAssembly.dll/[EditModeTestAssembly][EditModeTestRunner][suite]'
+    - id: 1030
+      uniqueId: 'EditModeTestAssembly.dll/EditModeTestRunner/[EditModeTestAssembly][EditModeTestRunner.UnsafeTest]'
+      name: UnsafeTest
+      fullName: EditModeTestRunner.UnsafeTest
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1015
+      parentUniqueId: 'EditModeTestAssembly.dll/[EditModeTestAssembly][EditModeTestRunner][suite]'
+    - id: 1037
+      uniqueId: 'EditModeTestAssembly.dll/[EditModeTestAssembly][GameDBTestRunner][suite]'
+      name: GameDBTestRunner
+      fullName: GameDBTestRunner
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1077
+      parentUniqueId: '[EditModeTestAssembly][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/EditModeTestAssembly.dll][suite]'
+    - id: 1041
+      uniqueId: 'EditModeTestAssembly.dll/GameDBTestRunner/[EditModeTestAssembly][GameDBTestRunner.StartTest][suite]'
+      name: StartTest
+      fullName: GameDBTestRunner.StartTest
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1037
+      parentUniqueId: 'EditModeTestAssembly.dll/[EditModeTestAssembly][GameDBTestRunner][suite]'
+    - id: 1036
+      uniqueId: 'EditModeTestAssembly.dll/GameDBTestRunner/StartTest/[EditModeTestAssembly][GameDBTestRunner.StartTest(GameDBTestRunner+JsonTestRunner)]'
+      name: StartTest(GameDBTestRunner+JsonTestRunner)
+      fullName: GameDBTestRunner.StartTest(GameDBTestRunner+JsonTestRunner)
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1039
+      parentUniqueId: 'EditModeTestAssembly.dll/GameDBTestRunner/[EditModeTestAssembly][GameDBTestRunner.StartTest][suite]'
+    - id: 1037
+      uniqueId: 'EditModeTestAssembly.dll/GameDBTestRunner/StartTest/[EditModeTestAssembly][GameDBTestRunner.StartTest(GameDBTestRunner+XmlTestRunner)]'
+      name: StartTest(GameDBTestRunner+XmlTestRunner)
+      fullName: GameDBTestRunner.StartTest(GameDBTestRunner+XmlTestRunner)
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1039
+      parentUniqueId: 'EditModeTestAssembly.dll/GameDBTestRunner/[EditModeTestAssembly][GameDBTestRunner.StartTest][suite]'
+    - id: 1038
+      uniqueId: 'EditModeTestAssembly.dll/GameDBTestRunner/StartTest/[EditModeTestAssembly][GameDBTestRunner.StartTest(GameDBTestRunner+CsvTestRunner)]'
+      name: StartTest(GameDBTestRunner+CsvTestRunner)
+      fullName: GameDBTestRunner.StartTest(GameDBTestRunner+CsvTestRunner)
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1039
+      parentUniqueId: 'EditModeTestAssembly.dll/GameDBTestRunner/[EditModeTestAssembly][GameDBTestRunner.StartTest][suite]'
+    - id: 1042
+      uniqueId: 'EditModeTestAssembly.dll/[EditModeTestAssembly][GlobalEnumTestRunner][suite]'
+      name: GlobalEnumTestRunner
+      fullName: GlobalEnumTestRunner
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1077
+      parentUniqueId: '[EditModeTestAssembly][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/EditModeTestAssembly.dll][suite]'
+    - id: 1041
+      uniqueId: 'EditModeTestAssembly.dll/GlobalEnumTestRunner/[EditModeTestAssembly][GlobalEnumTestRunner.StartTest]'
+      name: StartTest
+      fullName: GlobalEnumTestRunner.StartTest
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1040
+      parentUniqueId: 'EditModeTestAssembly.dll/[EditModeTestAssembly][GlobalEnumTestRunner][suite]'
+    - id: 1050
+      uniqueId: 'EditModeTestAssembly.dll/[EditModeTestAssembly][NotifyConstructorTestRunner][suite]'
+      name: NotifyConstructorTestRunner
+      fullName: NotifyConstructorTestRunner
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories:
+      - Notify
+      parentId: 1077
+      parentUniqueId: '[EditModeTestAssembly][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/EditModeTestAssembly.dll][suite]'
+    - id: 1049
+      uniqueId: 'EditModeTestAssembly.dll/NotifyConstructorTestRunner/[EditModeTestAssembly][NotifyConstructorTestRunner.NotifyCollectionAllConstructorTest]'
+      name: NotifyCollectionAllConstructorTest
+      fullName: NotifyConstructorTestRunner.NotifyCollectionAllConstructorTest
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: NotifyCollection constructor test
+      isSuite: 0
+      categories:
+      - Notify
+      parentId: 1048
+      parentUniqueId: 'EditModeTestAssembly.dll/[EditModeTestAssembly][NotifyConstructorTestRunner][suite]'
+    - id: 1051
+      uniqueId: 'EditModeTestAssembly.dll/NotifyConstructorTestRunner/[EditModeTestAssembly][NotifyConstructorTestRunner.NotifyDictionaryConstructorTest]'
+      name: NotifyDictionaryConstructorTest
+      fullName: NotifyConstructorTestRunner.NotifyDictionaryConstructorTest
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: NotifyDictionary constructor test
+      isSuite: 0
+      categories:
+      - Notify
+      parentId: 1048
+      parentUniqueId: 'EditModeTestAssembly.dll/[EditModeTestAssembly][NotifyConstructorTestRunner][suite]'
+    - id: 1050
+      uniqueId: 'EditModeTestAssembly.dll/NotifyConstructorTestRunner/[EditModeTestAssembly][NotifyConstructorTestRunner.NotifyListAllConstructorTest]'
+      name: NotifyListAllConstructorTest
+      fullName: NotifyConstructorTestRunner.NotifyListAllConstructorTest
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: NotifyList constructor test
+      isSuite: 0
+      categories:
+      - Notify
+      parentId: 1048
+      parentUniqueId: 'EditModeTestAssembly.dll/[EditModeTestAssembly][NotifyConstructorTestRunner][suite]'
+    - id: 1054
+      uniqueId: 'EditModeTestAssembly.dll/[EditModeTestAssembly][NotifyCoverageTestRunner][suite]'
+      name: NotifyCoverageTestRunner
+      fullName: NotifyCoverageTestRunner
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories:
+      - Notify
+      - Coverage
+      parentId: 1077
+      parentUniqueId: '[EditModeTestAssembly][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/EditModeTestAssembly.dll][suite]'
+    - id: 1054
+      uniqueId: 'EditModeTestAssembly.dll/NotifyCoverageTestRunner/[EditModeTestAssembly][NotifyCoverageTestRunner.NotifyCollectionCoverageTest]'
+      name: NotifyCollectionCoverageTest
+      fullName: NotifyCoverageTestRunner.NotifyCollectionCoverageTest
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Notify
+      - Coverage
+      parentId: 1052
+      parentUniqueId: 'EditModeTestAssembly.dll/[EditModeTestAssembly][NotifyCoverageTestRunner][suite]'
+    - id: 1060
+      uniqueId: 'EditModeTestAssembly.dll/NotifyCoverageTestRunner/[EditModeTestAssembly][NotifyCoverageTestRunner.NotifyConcurrentDictionaryTest]'
+      name: NotifyConcurrentDictionaryTest
+      fullName: NotifyCoverageTestRunner.NotifyConcurrentDictionaryTest
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Notify
+      - Coverage
+      parentId: 1052
+      parentUniqueId: 'EditModeTestAssembly.dll/[EditModeTestAssembly][NotifyCoverageTestRunner][suite]'
+    - id: 1058
+      uniqueId: 'EditModeTestAssembly.dll/NotifyCoverageTestRunner/[EditModeTestAssembly][NotifyCoverageTestRunner.NotifyDictionaryTest]'
+      name: NotifyDictionaryTest
+      fullName: NotifyCoverageTestRunner.NotifyDictionaryTest
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Notify
+      - Coverage
+      parentId: 1052
+      parentUniqueId: 'EditModeTestAssembly.dll/[EditModeTestAssembly][NotifyCoverageTestRunner][suite]'
+    - id: 1056
+      uniqueId: 'EditModeTestAssembly.dll/NotifyCoverageTestRunner/[EditModeTestAssembly][NotifyCoverageTestRunner.NotifyListCoverageTest]'
+      name: NotifyListCoverageTest
+      fullName: NotifyCoverageTestRunner.NotifyListCoverageTest
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Notify
+      - Coverage
+      parentId: 1052
+      parentUniqueId: 'EditModeTestAssembly.dll/[EditModeTestAssembly][NotifyCoverageTestRunner][suite]'
+    - id: 1053
+      uniqueId: 'EditModeTestAssembly.dll/NotifyCoverageTestRunner/[EditModeTestAssembly][NotifyCoverageTestRunner.NotifyPropertyCoverageTest]'
+      name: NotifyPropertyCoverageTest
+      fullName: NotifyCoverageTestRunner.NotifyPropertyCoverageTest
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Notify
+      - Coverage
+      parentId: 1052
+      parentUniqueId: 'EditModeTestAssembly.dll/[EditModeTestAssembly][NotifyCoverageTestRunner][suite]'
+    - id: 1055
+      uniqueId: 'EditModeTestAssembly.dll/NotifyCoverageTestRunner/[EditModeTestAssembly][NotifyCoverageTestRunner.NotifyRecordCollectionCoverageTest]'
+      name: NotifyRecordCollectionCoverageTest
+      fullName: NotifyCoverageTestRunner.NotifyRecordCollectionCoverageTest
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Notify
+      - Coverage
+      parentId: 1052
+      parentUniqueId: 'EditModeTestAssembly.dll/[EditModeTestAssembly][NotifyCoverageTestRunner][suite]'
+    - id: 1061
+      uniqueId: 'EditModeTestAssembly.dll/NotifyCoverageTestRunner/[EditModeTestAssembly][NotifyCoverageTestRunner.NotifyRecordDictionaryTest]'
+      name: NotifyRecordDictionaryTest
+      fullName: NotifyCoverageTestRunner.NotifyRecordDictionaryTest
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Notify
+      - Coverage
+      parentId: 1052
+      parentUniqueId: 'EditModeTestAssembly.dll/[EditModeTestAssembly][NotifyCoverageTestRunner][suite]'
+    - id: 1057
+      uniqueId: 'EditModeTestAssembly.dll/NotifyCoverageTestRunner/[EditModeTestAssembly][NotifyCoverageTestRunner.NotifyRecordListTest]'
+      name: NotifyRecordListTest
+      fullName: NotifyCoverageTestRunner.NotifyRecordListTest
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Notify
+      - Coverage
+      parentId: 1052
+      parentUniqueId: 'EditModeTestAssembly.dll/[EditModeTestAssembly][NotifyCoverageTestRunner][suite]'
+    - id: 1059
+      uniqueId: 'EditModeTestAssembly.dll/NotifyCoverageTestRunner/[EditModeTestAssembly][NotifyCoverageTestRunner.NotifySortedDictionaryTest]'
+      name: NotifySortedDictionaryTest
+      fullName: NotifyCoverageTestRunner.NotifySortedDictionaryTest
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Notify
+      - Coverage
+      parentId: 1052
+      parentUniqueId: 'EditModeTestAssembly.dll/[EditModeTestAssembly][NotifyCoverageTestRunner][suite]'
+    - id: 1064
+      uniqueId: 'EditModeTestAssembly.dll/[EditModeTestAssembly][NotifySerializeTestRunner][suite]'
+      name: NotifySerializeTestRunner
+      fullName: NotifySerializeTestRunner
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories:
+      - Notify
+      parentId: 1077
+      parentUniqueId: '[EditModeTestAssembly][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/EditModeTestAssembly.dll][suite]'
+    - id: 1063
+      uniqueId: 'EditModeTestAssembly.dll/NotifySerializeTestRunner/[EditModeTestAssembly][NotifySerializeTestRunner.NotifyCsvConvertTest]'
+      name: NotifyCsvConvertTest
+      fullName: NotifySerializeTestRunner.NotifyCsvConvertTest
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: Notify Csv Convert Test
+      isSuite: 0
+      categories:
+      - Notify
+      parentId: 1062
+      parentUniqueId: 'EditModeTestAssembly.dll/[EditModeTestAssembly][NotifySerializeTestRunner][suite]'
+    - id: 1064
+      uniqueId: 'EditModeTestAssembly.dll/NotifySerializeTestRunner/[EditModeTestAssembly][NotifySerializeTestRunner.NotifyJsonConvertTest]'
+      name: NotifyJsonConvertTest
+      fullName: NotifySerializeTestRunner.NotifyJsonConvertTest
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: Notify Json Convert Test
+      isSuite: 0
+      categories:
+      - Notify
+      parentId: 1062
+      parentUniqueId: 'EditModeTestAssembly.dll/[EditModeTestAssembly][NotifySerializeTestRunner][suite]'
+    - id: 1065
+      uniqueId: 'EditModeTestAssembly.dll/NotifySerializeTestRunner/[EditModeTestAssembly][NotifySerializeTestRunner.NotifyXmlConvertTest]'
+      name: NotifyXmlConvertTest
+      fullName: NotifySerializeTestRunner.NotifyXmlConvertTest
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: Notify Xml Convert Test
+      isSuite: 0
+      categories:
+      - Notify
+      parentId: 1062
+      parentUniqueId: 'EditModeTestAssembly.dll/[EditModeTestAssembly][NotifySerializeTestRunner][suite]'
+    - id: 1068
+      uniqueId: 'EditModeTestAssembly.dll/[EditModeTestAssembly][ServiceTestRunner][suite]'
+      name: ServiceTestRunner
+      fullName: ServiceTestRunner
+      resultStatus: 1
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories:
+      - Service
+      parentId: 1077
+      parentUniqueId: '[EditModeTestAssembly][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/EditModeTestAssembly.dll][suite]'
+    - id: 1070
+      uniqueId: 'EditModeTestAssembly.dll/ServiceTestRunner/[EditModeTestAssembly][ServiceTestRunner.ServiceAsyncTaskTest]'
+      name: ServiceAsyncTaskTest
+      fullName: ServiceTestRunner.ServiceAsyncTaskTest
+      resultStatus: 1
+      duration: 0.0001798
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Service
+      parentId: 1068
+      parentUniqueId: 'EditModeTestAssembly.dll/[EditModeTestAssembly][ServiceTestRunner][suite]'
+    - id: 1069
+      uniqueId: 'EditModeTestAssembly.dll/ServiceTestRunner/[EditModeTestAssembly][ServiceTestRunner.ServiceAsyncTest]'
+      name: ServiceAsyncTest
+      fullName: ServiceTestRunner.ServiceAsyncTest
+      resultStatus: 1
+      duration: 0.2071922
+      messages: 
+      output: '<color=#00FFFF>[Service.StartService] Service Start || StopWatchService</color>
+
+        <color=#00FFFF>[ResourceService.GetValidProvider]
+        Activate provider || ResourcesProvider</color>
+
+        <color=#00FFFF>[ResourceService.GetValidProvider]
+        Activate provider || NullResourceProvider</color>
+
+        <color=#FFEB04>[NullResourceProvider.Init]
+        Init NullResourceProvider</color>
+
+        <color=#00FFFF>[Service.StartService]
+        Service Start || ResourceService</color>
+
+        <color=#FFEB04>[NullResourceProvider.Init]
+        Init NullResourceProvider</color>
+
+        <color=#00FF00>[Service.RestartService]
+        Service Restart || ResourceService</color>
+
+        <color=#FFEB04>[Service.RefreshService]
+        Service Refresh || ResourceService</color>
+
+        <color=#FF00FF>[Service.StopService]
+        Service Stop || ResourceService</color>
+
+        <color=#FFEB04>[NullResourceProvider.Clear]
+        Clear NullResourceProvider</color>
+
+        <color=#00FF00>[StopWatchService.Stop]
+        ServiceAsyncTest => 1087183 tick || 108  milSec|| 00:00:00.1087183</color>
+
+'
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1068
+      parentUniqueId: 'EditModeTestAssembly.dll/[EditModeTestAssembly][ServiceTestRunner][suite]'
+    - id: 1044
+      uniqueId: 'EditModeTestAssembly.dll/[EditModeTestAssembly][TcpServerTestRunner][suite]'
+      name: TcpServerTestRunner
+      fullName: TcpServerTestRunner
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1077
+      parentUniqueId: '[EditModeTestAssembly][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/EditModeTestAssembly.dll][suite]'
+    - id: 1043
+      uniqueId: 'EditModeTestAssembly.dll/TcpServerTestRunner/[EditModeTestAssembly][TcpServerTestRunner.Clear]'
+      name: Clear
+      fullName: TcpServerTestRunner.Clear
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1042
+      parentUniqueId: 'EditModeTestAssembly.dll/[EditModeTestAssembly][TcpServerTestRunner][suite]'
+    - id: 1049
+      uniqueId: 'EditModeTestAssembly.dll/TcpServerTestRunner/[EditModeTestAssembly][TcpServerTestRunner.TcpClientTestAsync][suite]'
+      name: TcpClientTestAsync
+      fullName: TcpServerTestRunner.TcpClientTestAsync
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1044
+      parentUniqueId: 'EditModeTestAssembly.dll/[EditModeTestAssembly][TcpServerTestRunner][suite]'
+    - id: 1045
+      uniqueId: 'EditModeTestAssembly.dll/TcpServerTestRunner/TcpClientTestAsync/[EditModeTestAssembly][TcpServerTestRunner.TcpClientTestAsync(TcpJsonServeModule,TestTcpJsonClient)]'
+      name: TcpClientTestAsync(TcpJsonServeModule,TestTcpJsonClient)
+      fullName: TcpServerTestRunner.TcpClientTestAsync(TcpJsonServeModule,TestTcpJsonClient)
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1047
+      parentUniqueId: 'EditModeTestAssembly.dll/TcpServerTestRunner/[EditModeTestAssembly][TcpServerTestRunner.TcpClientTestAsync][suite]'
+    - id: 1046
+      uniqueId: 'EditModeTestAssembly.dll/TcpServerTestRunner/TcpClientTestAsync/[EditModeTestAssembly][TcpServerTestRunner.TcpClientTestAsync(TcpStructServeModule,TestTcpStructClient)]'
+      name: TcpClientTestAsync(TcpStructServeModule,TestTcpStructClient)
+      fullName: TcpServerTestRunner.TcpClientTestAsync(TcpStructServeModule,TestTcpStructClient)
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1047
+      parentUniqueId: 'EditModeTestAssembly.dll/TcpServerTestRunner/[EditModeTestAssembly][TcpServerTestRunner.TcpClientTestAsync][suite]'
+    - id: 1044
+      uniqueId: 'EditModeTestAssembly.dll/TcpServerTestRunner/[EditModeTestAssembly][TcpServerTestRunner.TcpJsonHandlerPerformanceTest]'
+      name: TcpJsonHandlerPerformanceTest
+      fullName: TcpServerTestRunner.TcpJsonHandlerPerformanceTest
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1042
+      parentUniqueId: 'EditModeTestAssembly.dll/[EditModeTestAssembly][TcpServerTestRunner][suite]'
+    - id: 1071
+      uniqueId: 'EditModeTestAssembly.dll/[EditModeTestAssembly][UIViewModelTestRunner][suite]'
+      name: UIViewModelTestRunner
+      fullName: UIViewModelTestRunner
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1077
+      parentUniqueId: '[EditModeTestAssembly][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/EditModeTestAssembly.dll][suite]'
+    - id: 1076
+      uniqueId: 'EditModeTestAssembly.dll/UIViewModelTestRunner/[EditModeTestAssembly][UIViewModelTestRunner.ViewModelPerformanceTest][suite]'
+      name: ViewModelPerformanceTest
+      fullName: UIViewModelTestRunner.ViewModelPerformanceTest
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories:
+      - Performance
+      parentId: 1071
+      parentUniqueId: 'EditModeTestAssembly.dll/[EditModeTestAssembly][UIViewModelTestRunner][suite]'
+    - id: 1068
+      uniqueId: 'EditModeTestAssembly.dll/UIViewModelTestRunner/ViewModelPerformanceTest/[EditModeTestAssembly][UIViewModelTestRunner.ViewModelPerformanceTest(100)]'
+      name: ViewModelPerformanceTest(100)
+      fullName: UIViewModelTestRunner.ViewModelPerformanceTest(100)
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1071
+      parentUniqueId: 'EditModeTestAssembly.dll/UIViewModelTestRunner/[EditModeTestAssembly][UIViewModelTestRunner.ViewModelPerformanceTest][suite]'
+    - id: 1069
+      uniqueId: 'EditModeTestAssembly.dll/UIViewModelTestRunner/ViewModelPerformanceTest/[EditModeTestAssembly][UIViewModelTestRunner.ViewModelPerformanceTest(1000)]'
+      name: ViewModelPerformanceTest(1000)
+      fullName: UIViewModelTestRunner.ViewModelPerformanceTest(1000)
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1071
+      parentUniqueId: 'EditModeTestAssembly.dll/UIViewModelTestRunner/[EditModeTestAssembly][UIViewModelTestRunner.ViewModelPerformanceTest][suite]'
+    - id: 1070
+      uniqueId: 'EditModeTestAssembly.dll/UIViewModelTestRunner/ViewModelPerformanceTest/[EditModeTestAssembly][UIViewModelTestRunner.ViewModelPerformanceTest(10000)]'
+      name: ViewModelPerformanceTest(10000)
+      fullName: UIViewModelTestRunner.ViewModelPerformanceTest(10000)
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1071
+      parentUniqueId: 'EditModeTestAssembly.dll/UIViewModelTestRunner/[EditModeTestAssembly][UIViewModelTestRunner.ViewModelPerformanceTest][suite]'
+    - id: 1067
+      uniqueId: 'EditModeTestAssembly.dll/UIViewModelTestRunner/[EditModeTestAssembly][UIViewModelTestRunner.ViewModelTest]'
+      name: ViewModelTest
+      fullName: UIViewModelTestRunner.ViewModelTest
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1066
+      parentUniqueId: 'EditModeTestAssembly.dll/[EditModeTestAssembly][UIViewModelTestRunner][suite]'
+    m_ResultText: ServiceAsyncTaskTest (0.000s)
     m_ResultStacktrace: 
     m_TestListState:
-      scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: c6726778
-      m_LastClickedID: 2020045510
-      m_ExpandedIDs: d50057877c91a5c31c52b3f948d8a103edaa9c16c29f3933f221606cffffff7f
+      scrollPos: {x: 0, y: 45}
+      m_SelectedIDs: b41b2d1a
+      m_LastClickedID: 439163828
+      m_ExpandedIDs: d5005787ccfd60bb7c91a5c348d8a103edaa9c16c29f3933f221606cffffff7f
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -498,11 +1919,16 @@ MonoBehaviour:
       m_SearchString: 
       selectedCategories: []
       availableCategories:
+      - Coverage
+      - Functional
+      - Notify
+      - Performance
+      - Service
       - Uncategorized
     m_SelectedOption: 0
   - m_Window: {fileID: 14}
     runProgress:
-      RunGuid: 66c28103-42e4-46bb-ae0c-c415513692f5
+      RunGuid: 1c8e693e-d08b-4033-b087-7f8054098613
       ExecutionSettings:
         m_TargetPlatform: 0
         m_HasTargetPlatform: 0
@@ -513,9 +1939,9 @@ MonoBehaviour:
           categoryNames: []
           assemblyNames: []
         filters:
-        - testMode: 1
+        - testMode: 2
           testNames:
-          - CallStackQueueTestRunner
+          - UIServiceTestRunner.UIServiceTest
           groupNames: []
           categoryNames: []
           assemblyNames: []
@@ -534,7 +1960,7 @@ MonoBehaviour:
       CurrentStepName: Unlock Reload Assemblies
       CurrentStageName: 
     m_NewResultList:
-    - id: 1000
+    - id: 1033
       uniqueId: '[CustomUtils][suite]'
       name: CustomUtils
       fullName: CustomUtils
@@ -564,7 +1990,7 @@ MonoBehaviour:
       description: 
       isSuite: 1
       categories: []
-      parentId: 1000
+      parentId: 1033
       parentUniqueId: '[CustomUtils][suite]'
     - id: 1001
       uniqueId: 'PlayModeTestAssembly.dll/[PlayModeTestAssembly][ObjectPoolServiceTestRunner][suite]'
@@ -4049,7 +5475,7 @@ MonoBehaviour:
       name: ResourceServiceTest
       fullName: ResourceServiceTestRunner.ResourceServiceTest
       resultStatus: 1
-      duration: 6.387657
+      duration: 40.829945
       messages: 
       output: "<color=#00FFFF>[ResourceService.GetValidProvider] Activate provider
         || ResourcesProvider</color>\r\n<color=#00FFFF>[ResourceService.GetValidProvider]
@@ -4142,16 +5568,16 @@ MonoBehaviour:
         TestPrefab_3\r\n[<>c.<ResourceServiceTest>b__4_0] Get || FreeSampleSFX\r\n[<>c.<ResourceServiceTest>b__4_0]
         TestPrefab\r\n[<>c.<ResourceServiceTest>b__4_0] TestPrefab_1\r\n[<>c.<ResourceServiceTest>b__4_0]
         TestPrefab_2\r\n[<>c.<ResourceServiceTest>b__4_0] TestPrefab_3\r\n[<>c.<ResourceServiceTest>b__4_0]
-        Get || FreeSampleSFX\r\nGroup_01.GC() in Undefineds\nMin:\t\t430.40 \nMedian:\t\t431.20
-        \nMax:\t\t906.20 \nAvg:\t\t499.11 \nStdDev:\t\t166.19 \nSampleCount:\t7\nSum:\t\t3493.80
+        Get || FreeSampleSFX\r\nGroup_01.GC() in Undefineds\nMin:\t\t426.60 \nMedian:\t\t427.00
+        \nMax:\t\t1048.20 \nAvg:\t\t516.74 \nStdDev:\t\t216.98 \nSampleCount:\t7\nSum:\t\t3617.20
         \r\nFirst samples:\t\u2588\u2581\u2581\u2581\u2581\u2581\u2581\r\n(not enough
-        samples for histogram)\n\r\nGroup_01 in Milliseconds\nMin:\t\t63.17 ms\nMedian:\t\t68.79
-        ms\nMax:\t\t82.90 ms\nAvg:\t\t70.52 ms\nStdDev:\t\t6.64 ms\nSampleCount:\t5\nSum:\t\t352.62
-        ms\r\nFirst samples:\t\u2583\u2582\u2584\u2581\u2588\r\n(not enough samples
-        for histogram)\n\r\n\r\n##performancetestresult2:{\"Name\":\"ResourceServiceTestRunner.ResourceServiceTest\",\"ClassName\":\"ResourceServiceTestRunner\",\"MethodName\":\"ResourceServiceTest\",\"Version\":\"1\",\"Categories\":[\"Performance\"],\"SampleGroups\":[{\"Name\":\"Group_01.GC()\",\"Unit\":8,\"IncreaseIsBetter\":false,\"Samples\":[906.2,432.6,431.2,430.4,430.8,430.8,431.8],\"Min\":430.4,\"Max\":906.2,\"Median\":431.2,\"Average\":499.1142857142858,\"StandardDeviation\":166.19344519110798,\"Sum\":3493.8000000000006},{\"Name\":\"Group_01\",\"Unit\":2,\"IncreaseIsBetter\":false,\"Samples\":[68.78680000000003,67.27830000000006,70.48419999999999,63.16880000000003,82.89739999999995],\"Min\":63.16880000000003,\"Max\":82.89739999999995,\"Median\":68.78680000000003,\"Average\":70.52310000000002,\"StandardDeviation\":6.644606939766983,\"Sum\":352.61550000000008}]}\r\n##performancetestruninfo2:{\"TestSuite\":\"Playmode\",\"Date\":1729916008781,\"Player\":{\"Development\":true,\"ScreenWidth\":1920,\"ScreenHeight\":1080,\"ScreenRefreshRate\":60,\"Fullscreen\":false,\"Vsync\":1,\"AntiAliasing\":0,\"Batchmode\":false,\"RenderThreadingMode\":\"MultiThreaded\",\"GpuSkinning\":false,\"Platform\":\"WindowsEditor\",\"ColorSpace\":\"Gamma\",\"AnisotropicFiltering\":\"Disable\",\"BlendWeights\":\"FourBones\",\"GraphicsApi\":\"Direct3D11\",\"ScriptingBackend\":\"Mono2x\",\"AndroidTargetSdkVersion\":\"AndroidApiLevelAuto\",\"AndroidBuildSystem\":\"Gradle\",\"BuildTarget\":\"StandaloneWindows64\",\"StereoRenderingPath\":\"MultiPass\"},\"Hardware\":{\"OperatingSystem\":\"Windows
+        samples for histogram)\n\r\nGroup_01 in Milliseconds\nMin:\t\t58.22 ms\nMedian:\t\t61.83
+        ms\nMax:\t\t70.38 ms\nAvg:\t\t62.89 ms\nStdDev:\t\t4.11 ms\nSampleCount:\t5\nSum:\t\t314.46
+        ms\r\nFirst samples:\t\u2588\u2583\u2581\u2582\u2584\r\n(not enough samples
+        for histogram)\n\r\n\r\n##performancetestresult2:{\"Name\":\"ResourceServiceTestRunner.ResourceServiceTest\",\"ClassName\":\"ResourceServiceTestRunner\",\"MethodName\":\"ResourceServiceTest\",\"Version\":\"1\",\"Categories\":[\"Performance\"],\"SampleGroups\":[{\"Name\":\"Group_01.GC()\",\"Unit\":8,\"IncreaseIsBetter\":false,\"Samples\":[1048.2,427.4,434.4,426.6,427.0,427.0,426.6],\"Min\":426.6,\"Max\":1048.2,\"Median\":427.0,\"Average\":516.7428571428571,\"StandardDeviation\":216.98196671048735,\"Sum\":3617.2},{\"Name\":\"Group_01\",\"Unit\":2,\"IncreaseIsBetter\":false,\"Samples\":[70.38299999999981,61.82719999999972,58.21600000000035,60.659599999999048,63.373899999998688],\"Min\":58.21600000000035,\"Max\":70.38299999999981,\"Median\":61.82719999999972,\"Average\":62.89193999999952,\"StandardDeviation\":4.1068161242499638,\"Sum\":314.4596999999976}]}\r\n##performancetestruninfo2:{\"TestSuite\":\"Playmode\",\"Date\":1734662035181,\"Player\":{\"Development\":true,\"ScreenWidth\":1920,\"ScreenHeight\":1080,\"ScreenRefreshRate\":60,\"Fullscreen\":false,\"Vsync\":1,\"AntiAliasing\":0,\"Batchmode\":false,\"RenderThreadingMode\":\"MultiThreaded\",\"GpuSkinning\":false,\"Platform\":\"WindowsEditor\",\"ColorSpace\":\"Gamma\",\"AnisotropicFiltering\":\"Disable\",\"BlendWeights\":\"FourBones\",\"GraphicsApi\":\"Direct3D11\",\"ScriptingBackend\":\"Mono2x\",\"AndroidTargetSdkVersion\":\"AndroidApiLevelAuto\",\"AndroidBuildSystem\":\"Gradle\",\"BuildTarget\":\"StandaloneWindows64\",\"StereoRenderingPath\":\"MultiPass\"},\"Hardware\":{\"OperatingSystem\":\"Windows
         10  (10.0.19045) 64bit\",\"DeviceModel\":\"82R4 (LENOVO)\",\"DeviceName\":\"DESKTOP-55T0R54\",\"ProcessorType\":\"AMD
         Ryzen 5 5500U with Radeon Graphics \",\"ProcessorCount\":12,\"GraphicsDeviceName\":\"AMD
-        Radeon(TM) Graphics\",\"SystemMemorySizeMB\":14181},\"Editor\":{\"Version\":\"2022.3.46f1\",\"Branch\":\"2022.3/staging\",\"Changeset\":\"8e9b8558c41a\",\"Date\":1725396290},\"Dependencies\":[\"com.cysharp.unitask@2.5.5\",\"com.unity.2d.animation@9.1.1\",\"com.unity.2d.pixel-perfect@5.0.3\",\"com.unity.2d.psdimporter@8.0.5\",\"com.unity.2d.sprite@1.0.0\",\"com.unity.2d.spriteshape@9.0.4\",\"com.unity.2d.tilemap@1.0.0\",\"com.unity.ai.navigation@1.1.5\",\"com.unity.assetbundlebrowser@1.7.0\",\"com.unity.collab-proxy@2.4.4\",\"com.unity.editorcoroutines@1.0.0\",\"com.unity.ide.rider@3.0.31\",\"com.unity.ide.vscode@1.2.5\",\"com.unity.memoryprofiler@1.1.0\",\"com.unity.mobile.android-logcat@1.4.2\",\"com.unity.performance.profile-analyzer@1.2.2\",\"com.unity.profiling.core@1.0.2\",\"com.unity.render-pipelines.universal@14.0.11\",\"com.unity.test-framework@1.4.5\",\"com.unity.test-framework.performance@3.0.3\",\"com.unity.testtools.codecoverage@1.2.6\",\"com.unity.textmeshpro@3.0.9\",\"com.unity.timeline@1.7.6\",\"com.unity.ugui@1.0.0\",\"com.unity.modules.ai@1.0.0\",\"com.unity.modules.androidjni@1.0.0\",\"com.unity.modules.animation@1.0.0\",\"com.unity.modules.assetbundle@1.0.0\",\"com.unity.modules.audio@1.0.0\",\"com.unity.modules.cloth@1.0.0\",\"com.unity.modules.director@1.0.0\",\"com.unity.modules.imageconversion@1.0.0\",\"com.unity.modules.imgui@1.0.0\",\"com.unity.modules.jsonserialize@1.0.0\",\"com.unity.modules.particlesystem@1.0.0\",\"com.unity.modules.physics@1.0.0\",\"com.unity.modules.physics2d@1.0.0\",\"com.unity.modules.screencapture@1.0.0\",\"com.unity.modules.terrain@1.0.0\",\"com.unity.modules.terrainphysics@1.0.0\",\"com.unity.modules.tilemap@1.0.0\",\"com.unity.modules.ui@1.0.0\",\"com.unity.modules.uielements@1.0.0\",\"com.unity.modules.umbra@1.0.0\",\"com.unity.modules.unityanalytics@1.0.0\",\"com.unity.modules.unitywebrequest@1.0.0\",\"com.unity.modules.unitywebrequestassetbundle@1.0.0\",\"com.unity.modules.unitywebrequestaudio@1.0.0\",\"com.unity.modules.unitywebrequesttexture@1.0.0\",\"com.unity.modules.unitywebrequestwww@1.0.0\",\"com.unity.modules.vehicles@1.0.0\",\"com.unity.modules.video@1.0.0\",\"com.unity.modules.vr@1.0.0\",\"com.unity.modules.wind@1.0.0\",\"com.unity.modules.xr@1.0.0\",\"com.unity.modules.subsystems@1.0.0\",\"com.unity.settings-manager@2.0.1\",\"com.unity.ext.nunit@2.0.3\",\"com.unity.mathematics@1.2.6\",\"com.unity.burst@1.8.17\",\"com.unity.render-pipelines.core@14.0.11\",\"com.unity.shadergraph@14.0.11\",\"com.unity.render-pipelines.universal-config@14.0.10\",\"com.unity.2d.common@8.0.3\",\"com.unity.collections@1.2.4\",\"com.unity.searcher@4.9.2\"],\"Results\":[]}\r\n"
+        Radeon(TM) Graphics\",\"SystemMemorySizeMB\":14181},\"Editor\":{\"Version\":\"6000.0.26f1\",\"Branch\":\"6000.0/staging\",\"Changeset\":\"ccb7c73d2c02\",\"Date\":1730275040},\"Dependencies\":[\"com.cysharp.unitask@2.5.10\",\"com.unity.2d.animation@10.1.4\",\"com.unity.2d.pixel-perfect@5.0.3\",\"com.unity.2d.psdimporter@9.0.3\",\"com.unity.2d.sprite@1.0.0\",\"com.unity.2d.spriteshape@10.0.7\",\"com.unity.2d.tilemap@1.0.0\",\"com.unity.ai.navigation@2.0.5\",\"com.unity.assetbundlebrowser@1.7.0\",\"com.unity.collab-proxy@2.5.2\",\"com.unity.editorcoroutines@1.0.0\",\"com.unity.ide.rider@3.0.34\",\"com.unity.memoryprofiler@1.1.3\",\"com.unity.mobile.android-logcat@1.4.4\",\"com.unity.multiplayer.center@1.0.0\",\"com.unity.performance.profile-analyzer@1.2.3\",\"com.unity.profiling.core@1.0.2\",\"com.unity.render-pipelines.universal@17.0.3\",\"com.unity.test-framework@1.4.5\",\"com.unity.test-framework.performance@3.0.3\",\"com.unity.testtools.codecoverage@1.2.6\",\"com.unity.timeline@1.8.7\",\"com.unity.ugui@2.0.0\",\"com.unity.modules.accessibility@1.0.0\",\"com.unity.modules.ai@1.0.0\",\"com.unity.modules.androidjni@1.0.0\",\"com.unity.modules.animation@1.0.0\",\"com.unity.modules.assetbundle@1.0.0\",\"com.unity.modules.audio@1.0.0\",\"com.unity.modules.cloth@1.0.0\",\"com.unity.modules.director@1.0.0\",\"com.unity.modules.imageconversion@1.0.0\",\"com.unity.modules.imgui@1.0.0\",\"com.unity.modules.jsonserialize@1.0.0\",\"com.unity.modules.particlesystem@1.0.0\",\"com.unity.modules.physics@1.0.0\",\"com.unity.modules.physics2d@1.0.0\",\"com.unity.modules.screencapture@1.0.0\",\"com.unity.modules.terrain@1.0.0\",\"com.unity.modules.terrainphysics@1.0.0\",\"com.unity.modules.tilemap@1.0.0\",\"com.unity.modules.ui@1.0.0\",\"com.unity.modules.uielements@1.0.0\",\"com.unity.modules.umbra@1.0.0\",\"com.unity.modules.unityanalytics@1.0.0\",\"com.unity.modules.unitywebrequest@1.0.0\",\"com.unity.modules.unitywebrequestassetbundle@1.0.0\",\"com.unity.modules.unitywebrequestaudio@1.0.0\",\"com.unity.modules.unitywebrequesttexture@1.0.0\",\"com.unity.modules.unitywebrequestwww@1.0.0\",\"com.unity.modules.vehicles@1.0.0\",\"com.unity.modules.video@1.0.0\",\"com.unity.modules.vr@1.0.0\",\"com.unity.modules.wind@1.0.0\",\"com.unity.modules.xr@1.0.0\",\"com.unity.modules.subsystems@1.0.0\",\"com.unity.modules.hierarchycore@1.0.0\",\"com.unity.settings-manager@2.0.1\",\"com.unity.ext.nunit@2.0.5\",\"com.unity.render-pipelines.core@17.0.3\",\"com.unity.shadergraph@17.0.3\",\"com.unity.render-pipelines.universal-config@17.0.3\",\"com.unity.burst@1.8.18\",\"com.unity.collections@2.5.1\",\"com.unity.mathematics@1.3.2\",\"com.unity.2d.common@9.0.7\",\"com.unity.searcher@4.9.2\",\"com.unity.rendering.light-transport@1.0.1\",\"com.unity.nuget.mono-cecil@1.11.4\"],\"Results\":[]}\r\n"
       stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
@@ -4208,7 +5634,7 @@ MonoBehaviour:
       description: 
       isSuite: 1
       categories:
-      - Ui
+      - UI
       - Service
       parentId: 1028
       parentUniqueId: '[PlayModeTestAssembly][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/PlayModeTestAssembly.dll][suite]'
@@ -4244,10 +5670,9 @@ MonoBehaviour:
       name: UIServiceTest
       fullName: UIServiceTestRunner.UIServiceTest
       resultStatus: 2
-      duration: 1.618671
-      messages: 'Unhandled log message: ''[Error] [SafeDelegate`1.op_Addition] Already
-        delegate Type || safeDelegate Type = NotifyModelChangeHandler || addEvent
-        Type = NotifyModelChangeHandler''. Use UnityEngine.TestTools.LogAssert.Expect'
+      duration: 8.73498
+      messages: "  Expected: <TestViewModel_Second(Clone) (TestSimpleSecondUIView)>\r\n 
+        But was:  <TestViewModel(Clone) (TestSimpleUIView)>\r\n"
       output: '<color=#00FFFF>[Service.StartService] Service Start || UIService</color>
 
         [<UIServiceTest>d__4.MoveNext]
@@ -4265,9 +5690,18 @@ MonoBehaviour:
         <color=#FFEB04>[UIView`1.OnEnable]
         viewModel is null. Create default TestSimpleUIViewModel</color>
 
-        [SafeDelegate`1.op_Addition]
-        Already delegate Type || safeDelegate Type = NotifyModelChangeHandler ||
-        addEvent Type = NotifyModelChangeHandler
+        [TestSimpleUIView.UpdateCollection]
+        Replace
+
+        [TestSimpleUIView.UpdateList] Replace
+
+        [TestSimpleUIView.UpdateDictionary]
+        Replace
+
+        [TestExtension.FieldChangeTest] Pass _titleText Change
+        Test
+
+        [TestExtension.FieldChangeTest] Pass _countText Change Test
 
         [TestSimpleUIView.UpdateCollection]
         Replace
@@ -4277,33 +5711,16 @@ MonoBehaviour:
         [TestSimpleUIView.UpdateDictionary]
         Replace
 
-        [TestExtension.FieldChangeTest] Pass _titleText Change Test
+        [TestExtension.FieldChangeTest] Pass _titleText Change
+        Test
 
-        [TestExtension.FieldChangeTest]
-        Pass _countText Change Test
+        [TestExtension.FieldChangeTest] Pass _countText Change Test
 
-        [TestSimpleUIView.UpdateCollection]
-        Replace
+        [<UIServiceTest>d__4.MoveNext]
+        Pass Base Test
 
-        [TestSimpleUIView.UpdateList] Replace
-
-        [TestSimpleUIView.UpdateDictionary]
-        Replace
-
-        [TestExtension.FieldChangeTest] Pass _titleText Change Test
-
-        [TestExtension.FieldChangeTest]
-        Pass _countText Change Test
-
-        [<UIServiceTest>d__4.MoveNext] Pass
-        Base Test
-
-        <color=#FFEB04>[UIView`1.OnEnable] viewModel is null.
-        Create default TestSimpleUIViewModel</color>
-
-        [SafeDelegate`1.op_Addition]
-        Already delegate Type || safeDelegate Type = NotifyModelChangeHandler ||
-        addEvent Type = NotifyModelChangeHandler
+        <color=#FFEB04>[UIView`1.OnEnable] viewModel is
+        null. Create default TestSimpleUIViewModel</color>
 
         [TestSimpleSecondUIView.OnNotifyModelChanged]
         Title || NotifyFieldChangedEventArgs
@@ -4320,46 +5737,13 @@ MonoBehaviour:
         [TestSimpleSecondUIView.OnNotifyModelChanged]
         Dictionary || NotifyCollectionChangedEventArgs
 
-        [<>c.<UIServiceTest>b__4_4]
-        TestViewModel(Clone) || 5
-
-        TestViewModel_Second(Clone) || 1
-
-        [TestExtension.FieldChangeTest]
-        Pass _uiRoot Change Test
-
 '
-      stacktrace: 'Logger:Error (string) (at Assets/CustomUtils/Common/Logger/Logger.cs:37)
+      stacktrace: 'at UIServiceTestRunner+<UIServiceTest>d__4.MoveNext () [0x00273]
+        in C:\Project\Unity\CustomUtils\Assets\Test\PlayMode\UIServiceTest\UIServiceTestRunner.cs:82
 
-        Logger:TraceError
-        (string) (at Assets/CustomUtils/Common/Logger/Logger.cs:119)
-
-        SafeDelegate`1<UIViewModel/NotifyModelChangeHandler>:op_Addition
-        (SafeDelegate`1<UIViewModel/NotifyModelChangeHandler>,UIViewModel/NotifyModelChangeHandler)
-        (at Assets/CustomUtils/Common/Utils/SafeDelegate.cs:36)
-
-        UIView`1<TestSimpleUIViewModel>:AttachModelChangedCallback
-        () (at Assets/CustomUtils/UI/UIView.cs:54)
-
-        UIView`1<TestSimpleUIViewModel>:OnEnable
-        () (at Assets/CustomUtils/UI/UIView.cs:39)
-
-        UIViewMonoBehaviour:SetActive
-        (bool) (at Assets/CustomUtils/UI/UIView.cs:15)
-
-        UIService:Open<TestSimpleUIView>
-        () (at Assets/CustomUtils/Service/UIService.cs:188)
-
-        UIService:TryOpen<TestSimpleUIView>
-        (TestSimpleUIView&) (at Assets/CustomUtils/Service/UIService.cs:178)
-
-        UIServiceTestRunner/<UIServiceTest>d__4:MoveNext
-        () (at Assets/Test/PlayMode/UIServiceTest/UIServiceTestRunner.cs:50)
-
-        UnityEngine.SetupCoroutine:InvokeMoveNext
-        (System.Collections.IEnumerator,intptr)
-
-
+        at
+        UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0004e]
+        in .\Library\PackageCache\com.unity.test-framework\UnityEngine.TestRunner\NUnitExtensions\Attributes\TestEnumerator.cs:44
 
 '
       notRunnable: 0
@@ -4384,7 +5768,7 @@ MonoBehaviour:
       description: 
       isSuite: 1
       categories:
-      - Ui
+      - UI
       parentId: 1028
       parentUniqueId: '[PlayModeTestAssembly][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/PlayModeTestAssembly.dll][suite]'
     - id: 1024
@@ -4434,22 +5818,45 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1023
       parentUniqueId: 'PlayModeTestAssembly.dll/[PlayModeTestAssembly][UIViewTestRunner][suite]'
-    m_ResultText: "TempPerformanceTest (0.704s)\n---\nForCount.GC() in Undefineds\nMin:\t\t0.00
-      \nMedian:\t\t0.03 \nMax:\t\t0.20 \nAvg:\t\t0.06 \nStdDev:\t\t0.07 \nSampleCount:\t6\nSum:\t\t0.33
-      \r\nFirst samples:\t\u2588\u2581\u2583\u2581\u2581\u2583\r\n(not enough samples
-      for histogram)\n\r\nForCount in Milliseconds\nMin:\t\t0.03 ms\nMedian:\t\t0.04
-      ms\nMax:\t\t0.05 ms\nAvg:\t\t0.04 ms\nStdDev:\t\t0.01 ms\nSampleCount:\t5\nSum:\t\t0.20
-      ms\r\nFirst samples:\t\u2582\u2581\u2581\u2588\u2585\r\n(not enough samples
-      for histogram)\n\r\n\r\n##performancetestresult2:{\"Name\":\"UIServiceTestRunner.TempPerformanceTest\",\"ClassName\":\"UIServiceTestRunner\",\"MethodName\":\"TempPerformanceTest\",\"Version\":\"1\",\"Categories\":[\"Performance\",\"Ui\",\"Service\"],\"SampleGroups\":[{\"Name\":\"ForCount.GC()\",\"Unit\":8,\"IncreaseIsBetter\":false,\"Samples\":[0.2,0.0,0.06666666666666667,0.0,0.0,0.06666666666666667],\"Min\":0.0,\"Max\":0.2,\"Median\":0.03333333333333333,\"Average\":0.05555555555555555,\"StandardDeviation\":0.07114582486036499,\"Sum\":0.3333333333333333},{\"Name\":\"ForCount\",\"Unit\":2,\"IncreaseIsBetter\":false,\"Samples\":[0.03529999999999944,0.033299999999997,0.032299999999992227,0.052099999999995819,0.043200000000013009],\"Min\":0.032299999999992227,\"Max\":0.052099999999995819,\"Median\":0.03529999999999944,\"Average\":0.0392399999999995,\"StandardDeviation\":0.0074837423793199,\"Sum\":0.1961999999999975}]}\r\n##performancetestruninfo2:{\"TestSuite\":\"Playmode\",\"Date\":1731315970582,\"Player\":{\"Development\":true,\"ScreenWidth\":1920,\"ScreenHeight\":1080,\"ScreenRefreshRate\":60,\"Fullscreen\":false,\"Vsync\":1,\"AntiAliasing\":0,\"Batchmode\":false,\"RenderThreadingMode\":\"MultiThreaded\",\"GpuSkinning\":false,\"Platform\":\"WindowsEditor\",\"ColorSpace\":\"Gamma\",\"AnisotropicFiltering\":\"Disable\",\"BlendWeights\":\"FourBones\",\"GraphicsApi\":\"Direct3D11\",\"ScriptingBackend\":\"Mono2x\",\"AndroidTargetSdkVersion\":\"AndroidApiLevelAuto\",\"AndroidBuildSystem\":\"Gradle\",\"BuildTarget\":\"StandaloneWindows64\",\"StereoRenderingPath\":\"MultiPass\"},\"Hardware\":{\"OperatingSystem\":\"Windows
-      10  (10.0.19045) 64bit\",\"DeviceModel\":\"82R4 (LENOVO)\",\"DeviceName\":\"DESKTOP-55T0R54\",\"ProcessorType\":\"AMD
-      Ryzen 5 5500U with Radeon Graphics \",\"ProcessorCount\":12,\"GraphicsDeviceName\":\"AMD
-      Radeon(TM) Graphics\",\"SystemMemorySizeMB\":14181},\"Editor\":{\"Version\":\"2022.3.46f1\",\"Branch\":\"2022.3/staging\",\"Changeset\":\"8e9b8558c41a\",\"Date\":1725396290},\"Dependencies\":[\"com.cysharp.unitask@2.5.5\",\"com.unity.2d.animation@9.1.1\",\"com.unity.2d.pixel-perfect@5.0.3\",\"com.unity.2d.psdimporter@8.0.5\",\"com.unity.2d.sprite@1.0.0\",\"com.unity.2d.spriteshape@9.0.4\",\"com.unity.2d.tilemap@1.0.0\",\"com.unity.ai.navigation@1.1.5\",\"com.unity.assetbundlebrowser@1.7.0\",\"com.unity.collab-proxy@2.4.4\",\"com.unity.editorcoroutines@1.0.0\",\"com.unity.ide.rider@3.0.31\",\"com.unity.ide.vscode@1.2.5\",\"com.unity.memoryprofiler@1.1.0\",\"com.unity.mobile.android-logcat@1.4.2\",\"com.unity.performance.profile-analyzer@1.2.2\",\"com.unity.profiling.core@1.0.2\",\"com.unity.render-pipelines.universal@14.0.11\",\"com.unity.test-framework@1.4.5\",\"com.unity.test-framework.performance@3.0.3\",\"com.unity.testtools.codecoverage@1.2.6\",\"com.unity.textmeshpro@3.0.9\",\"com.unity.timeline@1.7.6\",\"com.unity.ugui@1.0.0\",\"com.unity.modules.ai@1.0.0\",\"com.unity.modules.androidjni@1.0.0\",\"com.unity.modules.animation@1.0.0\",\"com.unity.modules.assetbundle@1.0.0\",\"com.unity.modules.audio@1.0.0\",\"com.unity.modules.cloth@1.0.0\",\"com.unity.modules.director@1.0.0\",\"com.unity.modules.imageconversion@1.0.0\",\"com.unity.modules.imgui@1.0.0\",\"com.unity.modules.jsonserialize@1.0.0\",\"com.unity.modules.particlesystem@1.0.0\",\"com.unity.modules.physics@1.0.0\",\"com.unity.modules.physics2d@1.0.0\",\"com.unity.modules.screencapture@1.0.0\",\"com.unity.modules.terrain@1.0.0\",\"com.unity.modules.terrainphysics@1.0.0\",\"com.unity.modules.tilemap@1.0.0\",\"com.unity.modules.ui@1.0.0\",\"com.unity.modules.uielements@1.0.0\",\"com.unity.modules.umbra@1.0.0\",\"com.unity.modules.unityanalytics@1.0.0\",\"com.unity.modules.unitywebrequest@1.0.0\",\"com.unity.modules.unitywebrequestassetbundle@1.0.0\",\"com.unity.modules.unitywebrequestaudio@1.0.0\",\"com.unity.modules.unitywebrequesttexture@1.0.0\",\"com.unity.modules.unitywebrequestwww@1.0.0\",\"com.unity.modules.vehicles@1.0.0\",\"com.unity.modules.video@1.0.0\",\"com.unity.modules.vr@1.0.0\",\"com.unity.modules.wind@1.0.0\",\"com.unity.modules.xr@1.0.0\",\"com.unity.modules.subsystems@1.0.0\",\"com.unity.settings-manager@2.0.1\",\"com.unity.ext.nunit@2.0.3\",\"com.unity.mathematics@1.2.6\",\"com.unity.burst@1.8.17\",\"com.unity.render-pipelines.core@14.0.11\",\"com.unity.shadergraph@14.0.11\",\"com.unity.render-pipelines.universal-config@14.0.10\",\"com.unity.2d.common@8.0.3\",\"com.unity.collections@1.2.4\",\"com.unity.searcher@4.9.2\"],\"Results\":[]}"
-    m_ResultStacktrace: 
+    m_ResultText: "UIServiceTest (8.735s)\n---\n  Expected: <TestViewModel_Second(Clone)
+      (TestSimpleSecondUIView)>\r\n  But was:  <TestViewModel(Clone) (TestSimpleUIView)>\r\n\n---\nat
+      UIServiceTestRunner+<UIServiceTest>d__4.MoveNext () [0x00273] in <color=#40a0ff><a
+      href=\"C:\\Project\\Unity\\CustomUtils\\Assets\\Test\\PlayMode\\UIServiceTest\\UIServiceTestRunner.cs\"
+      line=\"82\r\">Assets\\Test\\PlayMode\\UIServiceTest\\UIServiceTestRunner.cs:82\r</a></color>\nat
+      UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0004e] in
+      <color=#40a0ff><a href=\".\\Library\\PackageCache\\com.unity.test-framework\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs\"
+      line=\"44\r\">Library\\PackageCache\\com.unity.test-framework\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:44\r</a></color>\n\n---\n<color=#00FFFF>[Service.StartService]
+      Service Start || UIService</color>\r\n[<UIServiceTest>d__4.MoveNext] Pass valid
+      check\r\n<color=#00FFFF>[ResourceService.GetValidProvider] Activate provider
+      || ResourcesProvider</color>\r\n<color=#00FFFF>[ResourceService.GetValidProvider]
+      Activate provider || AssetBundleProvider</color>\r\n<color=#00FFFF>[Service.StartService]
+      Service Start || ResourceService</color>\r\n<color=#FFEB04>[UIView`1.OnEnable]
+      viewModel is null. Create default TestSimpleUIViewModel</color>\r\n[TestSimpleUIView.UpdateCollection]
+      Replace\r\n[TestSimpleUIView.UpdateList] Replace\r\n[TestSimpleUIView.UpdateDictionary]
+      Replace\r\n[TestExtension.FieldChangeTest] Pass _titleText Change Test\r\n[TestExtension.FieldChangeTest]
+      Pass _countText Change Test\r\n[TestSimpleUIView.UpdateCollection] Replace\r\n[TestSimpleUIView.UpdateList]
+      Replace\r\n[TestSimpleUIView.UpdateDictionary] Replace\r\n[TestExtension.FieldChangeTest]
+      Pass _titleText Change Test\r\n[TestExtension.FieldChangeTest] Pass _countText
+      Change Test\r\n[<UIServiceTest>d__4.MoveNext] Pass Base Test\r\n<color=#FFEB04>[UIView`1.OnEnable]
+      viewModel is null. Create default TestSimpleUIViewModel</color>\r\n[TestSimpleSecondUIView.OnNotifyModelChanged]
+      Title || NotifyFieldChangedEventArgs\r\n[TestSimpleSecondUIView.OnNotifyModelChanged]
+      Count || NotifyFieldChangedEventArgs\r\n[TestSimpleSecondUIView.OnNotifyModelChanged]
+      Collection || NotifyCollectionChangedEventArgs\r\n[TestSimpleSecondUIView.OnNotifyModelChanged]
+      List || NotifyCollectionChangedEventArgs\r\n[TestSimpleSecondUIView.OnNotifyModelChanged]
+      Dictionary || NotifyCollectionChangedEventArgs"
+    m_ResultStacktrace: 'at UIServiceTestRunner+<UIServiceTest>d__4.MoveNext () [0x00273]
+      in C:\Project\Unity\CustomUtils\Assets\Test\PlayMode\UIServiceTest\UIServiceTestRunner.cs:82
+
+      at
+      UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0004e] in
+      .\Library\PackageCache\com.unity.test-framework\UnityEngine.TestRunner\NUnitExtensions\Attributes\TestEnumerator.cs:44
+
+'
     m_TestListState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: d6edd054
-      m_LastClickedID: 1422978518
-      m_ExpandedIDs: 3a49de9fadb59dfa23159f12c29f393348eb8574ffffff7f
+      m_SelectedIDs: 57923093
+      m_LastClickedID: -1825533353
+      m_ExpandedIDs: 3a49de9fadb59dfa23159f12c29f3933fcd7303c48eb8574ffffff7f
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -4477,12 +5884,12 @@ MonoBehaviour:
       availableCategories:
       - Performance
       - Service
-      - Ui
+      - UI
       - Uncategorized
     m_SelectedOption: 0
   - m_Window: {fileID: 14}
     runProgress:
-      RunGuid: 66c28103-42e4-46bb-ae0c-c415513692f5
+      RunGuid: 1c8e693e-d08b-4033-b087-7f8054098613
       ExecutionSettings:
         m_TargetPlatform: 0
         m_HasTargetPlatform: 0
@@ -4493,9 +5900,9 @@ MonoBehaviour:
           categoryNames: []
           assemblyNames: []
         filters:
-        - testMode: 1
+        - testMode: 2
           testNames:
-          - CallStackQueueTestRunner
+          - UIServiceTestRunner.UIServiceTest
           groupNames: []
           categoryNames: []
           assemblyNames: []
@@ -5099,8 +6506,8 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 0
-    y: 24
-    width: 479
+    y: 79.200005
+    width: 370.2
     height: 356.4
   m_SerializedDataModeController:
     m_DataMode: 0
@@ -5118,7 +6525,7 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: e46fffff
+      m_ExpandedIDs: d26dffff2a74ffff7e7bffff1282ffffce86ffff8a8dffff9e92ffffe293ffffec94fffff695ffffbe98ffffd89bffff989effff60a1ffff22a4ffff34a5ffffeca7fffffca8ffffbcabffff88aeffff92afffff9cb0ffffa6b1ffffb0b2ffffbab3ffff6eb6ffff2cb9ffff44baffff4ebbffff12beffffa2c2ffff94ccffff00d1ffffc6d3ffff88d6ffff4ed9ffff10dcffff04e2ffff42e6ffffaceaffffdaf2ffffdcfaffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -5165,9 +6572,9 @@ MonoBehaviour:
     m_TextWithWhitespace: "Scene\u200B"
   m_Pos:
     serializedVersion: 2
-    x: 481
-    y: 24
-    width: 695.6
+    x: 371.2
+    y: 79.200005
+    width: 537.2
     height: 356.4
   m_SerializedDataModeController:
     m_DataMode: 0
@@ -5183,11 +6590,11 @@ MonoBehaviour:
       displayed: 1
       id: Tool Settings
       index: 0
-      contents: '{"m_Layout":1,"m_Collapsed":false,"m_Floating":false,"m_FloatingSnapOffset":{"x":-174.39999389648438,"y":-26.399993896484376},"m_SnapOffsetDelta":{"x":-0.000030517578125,"y":0.0},"m_FloatingSnapCorner":3,"m_Size":{"x":0.0,"y":0.0},"m_SizeOverridden":false}'
+      contents: '{"m_Layout":1,"m_Collapsed":false,"m_Floating":false,"m_FloatingSnapOffset":{"x":-174.39999389648438,"y":-26.399993896484376},"m_SnapOffsetDelta":{"x":0.0,"y":0.0},"m_FloatingSnapCorner":3,"m_Size":{"x":0.0,"y":0.0},"m_SizeOverridden":false}'
       floating: 0
       collapsed: 0
       snapOffset: {x: -174.4, y: -26.399994}
-      snapOffsetDelta: {x: -0.000030517578, y: 0}
+      snapOffsetDelta: {x: 0, y: 0}
       snapCorner: 3
       layout: 1
       size: {x: 0, y: 0}
@@ -5803,9 +7210,9 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 0
-    y: 459.2
-    width: 524.6
-    height: 324.19998
+    y: 461.6
+    width: 591
+    height: 316.4
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -5818,7 +7225,7 @@ MonoBehaviour:
     m_ContainerData: []
     m_OverlaysVisible: 1
   m_SearchFilter:
-    m_NameFilter: 
+    m_NameFilter: resourceservice
     m_ClassNames: []
     m_AssetLabels: []
     m_AssetBundleNames: []
@@ -5828,26 +7235,26 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Test/PlayMode/UITest
+    - Assets/AssetBundle/Sound/SFX
     m_Globs: []
     m_ProductIds: 
     m_AnyWithAssetOrigin: 0
-    m_OriginalText: 
+    m_OriginalText: resourceservice
     m_ImportLogFlags: 0
     m_FilterByTypeIntersection: 0
   m_ViewMode: 1
   m_StartGridSize: 16
   m_LastFolders:
-  - Assets/Test/PlayMode/UITest
+  - Assets/AssetBundle/Sound/SFX
   m_LastFoldersGridSize: 16
   m_LastProjectPath: C:\Project\Unity\CustomUtils
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 63.80002}
-    m_SelectedIDs: 6e820000
-    m_LastClickedID: 33390
-    m_ExpandedIDs: 00000000269f0000289f00002a9f00002c9f00002e9f0000309f0000329f0000349f0000369f0000389f00003a9f00003c9f00003e9f0000409f0000429f0000449f0000
+    scrollPos: {x: 0, y: 0}
+    m_SelectedIDs: 1aa10000
+    m_LastClickedID: 41242
+    m_ExpandedIDs: 00000000f89e0000fa9e0000fc9e0000fe9e0000009f0000029f0000049f0000069f0000089f00000a9f00000c9f00000e9f0000109f0000129f00000ca100001ca1000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -5876,7 +7283,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000269f0000289f00002a9f00002c9f00002e9f0000309f0000329f0000349f0000369f0000389f00003a9f00003c9f00003e9f0000409f0000429f0000449f0000
+    m_ExpandedIDs: 00000000f89e0000fa9e0000fc9e0000fe9e0000009f0000029f0000049f0000069f0000089f00000a9f00000c9f00000e9f0000109f0000129f0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -5904,7 +7311,7 @@ MonoBehaviour:
   m_ListAreaState:
     m_SelectedInstanceIDs: 
     m_LastClickedInstanceID: 0
-    m_HadKeyboardFocusLastEvent: 1
+    m_HadKeyboardFocusLastEvent: 0
     m_ExpandedInstanceIDs: c6230000ac060000fc56000092f6ffff2a66000002670000ce6900006cd8ffffbe69000000000000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -5957,8 +7364,8 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 0
-    y: 24
-    width: 766.2
+    y: 461.6
+    width: 591
     height: 316.4
   m_SerializedDataModeController:
     m_DataMode: 0
@@ -5993,9 +7400,9 @@ MonoBehaviour:
     m_TextWithWhitespace: "Game\u200B"
   m_Pos:
     serializedVersion: 2
-    x: 768.2
-    y: 24
-    width: 408.39996
+    x: 592
+    y: 461.6
+    width: 316.40002
     height: 316.4
   m_SerializedDataModeController:
     m_DataMode: 0
@@ -6014,7 +7421,7 @@ MonoBehaviour:
   m_ShowGizmos: 0
   m_TargetDisplay: 0
   m_ClearColor: {r: 0, g: 0, b: 0, a: 0}
-  m_TargetSize: {x: 408.39996, y: 295.4}
+  m_TargetSize: {x: 316.40002, y: 295.4}
   m_TextureFilterMode: 0
   m_TextureHideFlags: 61
   m_RenderIMGUI: 1
@@ -6029,8 +7436,8 @@ MonoBehaviour:
     m_VRangeLocked: 0
     hZoomLockedByDefault: 0
     vZoomLockedByDefault: 0
-    m_HBaseRangeMin: -163.35999
-    m_HBaseRangeMax: 163.35999
+    m_HBaseRangeMin: -126.56001
+    m_HBaseRangeMax: 126.56001
     m_VBaseRangeMin: -118.159996
     m_VBaseRangeMax: 118.159996
     m_HAllowExceedBaseRangeMin: 1
@@ -6050,23 +7457,23 @@ MonoBehaviour:
       serializedVersion: 2
       x: 0
       y: 21
-      width: 408.39996
+      width: 316.40002
       height: 295.4
     m_Scale: {x: 1.25, y: 1.25}
-    m_Translation: {x: 204.19998, y: 147.7}
+    m_Translation: {x: 158.20001, y: 147.7}
     m_MarginLeft: 0
     m_MarginRight: 0
     m_MarginTop: 0
     m_MarginBottom: 0
     m_LastShownAreaInsideMargins:
       serializedVersion: 2
-      x: -163.35999
+      x: -126.56001
       y: -118.159996
-      width: 326.71997
+      width: 253.12003
       height: 236.31999
     m_MinimalGUI: 1
   m_defaultScale: 1
-  m_LastWindowPixelSize: {x: 510.49994, y: 395.5}
+  m_LastWindowPixelSize: {x: 395.50003, y: 395.5}
   m_ClearInEditMode: 1
   m_NoCameraWarning: 1
   m_LowResolutionForAspectRatios: 01000000000000000000
@@ -6094,9 +7501,9 @@ MonoBehaviour:
     m_TextWithWhitespace: "Inspector\u200B"
   m_Pos:
     serializedVersion: 2
-    x: 1178.6
-    y: 24
-    width: 357.40002
+    x: 910.4
+    y: 79.200005
+    width: 624.6
     height: 698.8
   m_SerializedDataModeController:
     m_DataMode: 0

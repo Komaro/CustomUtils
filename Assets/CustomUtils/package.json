@@ -1,8 +1,0 @@
-{
-	"name": "com.kaka.customutils",
-	"displayName": "Custom Utils",
-	"version": "0.0.1",
-	"unity": "6000.0",
-	"description": "Custom Utils Package",
-	"keywords": ["utils"]
-}

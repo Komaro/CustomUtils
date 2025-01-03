@@ -149,11 +149,11 @@ public abstract class EditorBuildDrawer<TConfig, TNullConfig> : EditorAutoConfig
             EditorGUILayout.EndScrollView();
             
             EditorCommon.DrawLabelTextFieldWithRefresh("Define Symbol", config.defineSymbols, () => {
-                config.defineSymbols = PlayerSettings.GetScriptingDefineSymbolsForGroup(buildTargetGroup);
-                
+                config.defineSymbols = buildTargetGroup.GetScriptingDefineSymbolsForGroup();
                 var defineSymbolSet = config.defineSymbols.Split(Constants.Separator.DEFINE_SYMBOL).ToHashSet();
                 defineSymbols.ForEach(symbol => symbol.isActive = defineSymbolSet.Contains(symbol.name));
             });
+            
             EditorGUILayout.HelpBox($"새로고침시 {nameof(PlayerSettings)}의 Define Symbol 값으로 {nameof(BuildConfig)}의 값을 갱신합니다", MessageType.Warning);
         }
     }

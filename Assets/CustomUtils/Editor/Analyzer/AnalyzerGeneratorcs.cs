@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Diagnostics;
+using Microsoft.CodeAnalysis.Emit;
 using Microsoft.CodeAnalysis.Text;
 using UnityEditor;
 using UnityEditor.Compilation;
@@ -18,24 +19,29 @@ public static class AnalyzerGenerator {
     private static readonly Regex PLUGINS_FOLDER = new(string.Format(Constants.Regex.FOLDER_CONTAINS_FORMAT, Constants.Folder.PLUGINS));
 
     public static void GenerateCustomAnalyzerDll(string dllName, IEnumerable<Type> typeEnumerable) {
-        var pathList = new List<string>();
+        var typePathDic = new Dictionary<Type, string>();
         foreach (var type in typeEnumerable) {
             if (UnityAssemblyProvider.TryGetSourceFilePath(type, out var path)) {
-                pathList.Add(path);
+                typePathDic.AutoAdd(type, path);
+                foreach (var baseType in type.GetBaseTypes()) {
+                    if (typePathDic.ContainsKey(baseType) == false && UnityAssemblyProvider.TryGetSourceFilePath(baseType, out path)) {
+                        typePathDic.AutoAdd(baseType, path);
+                    }
+                }
             }
         }
 
-        if (pathList.Count <= 0) {
-            Logger.TraceLog($"{nameof(pathList)} is empty. Building all Analyzers that inherit from {nameof(DiagnosticAnalyzer)}.", Color.yellow);
-            pathList = ReflectionProvider.GetSubClassTypes<DiagnosticAnalyzer>().Where(type => PLUGINS_FOLDER.IsMatch(type.Assembly.Location) == false).Select(UnityAssemblyProvider.GetSourceFilePath).ToList();
+        if (typePathDic.Count <= 0) {
+            Logger.TraceLog($"{nameof(typePathDic)} is empty. Building all Analyzers that inherit from {nameof(DiagnosticAnalyzer)}.", Color.yellow);
+            typePathDic = ReflectionProvider.GetSubClassTypes<DiagnosticAnalyzer>().Where(type => PLUGINS_FOLDER.IsMatch(type.Assembly.Location) == false && type.IsDefined<ObsoleteAttribute>() == false).ToDictionary(type => type, UnityAssemblyProvider.GetSourceFilePath);
         }
 
-        if (pathList.Any() == false) {
-            Logger.TraceError($"{nameof(pathList)} is empty. Please review the implementation through inheriting {nameof(DiagnosticAnalyzer)} again.");
+        if (typePathDic.Any() == false) {
+            Logger.TraceError($"{nameof(typePathDic)} is empty. Please review the implementation through inheriting {nameof(DiagnosticAnalyzer)} again.");
             return;
         }
 
-        GenerateCustomAnalyzerDllOnCompilation(dllName, pathList.ToArray());
+        GenerateCustomAnalyzerDllOnCompilation(dllName, typePathDic.Values.ToArray());
     }
     
     private static void GenerateCustomAnalyzerDllOnCompilation(string dllName, params string[] sourceFiles) {
@@ -57,13 +63,15 @@ public static class AnalyzerGenerator {
             .AddSyntaxTrees(syntaxTreeList.ToArray());
 
         OnStart(outputPath);
-        if (compilation.Emit(outputPath).Success) {
+        var result = compilation.Emit(outputPath);
+        if (result.Success) {
             OnFinish(outputPath, compilation.Assembly.TypeNames.ConvertTo(name => new CompilerMessage {
                 type = CompilerMessageType.Info,
                 message = name,
             }).ToArray());
         } else { 
             Logger.TraceError($"Compilation Failed || {outputPath}");
+            OnFailed(result);
         }
     }
     
@@ -74,7 +82,7 @@ public static class AnalyzerGenerator {
                 var builder = new AssemblyBuilder(outputPath, sourceFiles) {
                     additionalReferences = assembly.assemblyReferences.Select(x => x.outputPath).ToArray(),
                 };
-
+                
                 builder.buildStarted += OnStart;
                 builder.buildFinished += OnFinish;
                 builder.Build();
@@ -105,6 +113,22 @@ public static class AnalyzerGenerator {
         
         File.WriteAllText(Path.ChangeExtension(outputPath, ".log"), messages.ToStringCollection(x => x.message, "\n"));
         AnalyzerBuildPostProcess(outputPath);
+    }
+
+    private static void OnFailed(EmitResult result) {
+        foreach (var diagnostic in result.Diagnostics) {
+            switch (diagnostic.Severity) {
+                case DiagnosticSeverity.Warning:
+                    Logger.TraceWarning(diagnostic);
+                    break;
+                case DiagnosticSeverity.Error:
+                    Logger.TraceError(diagnostic);
+                    break;
+                default:
+                    Logger.TraceLog(diagnostic);
+                    break;
+            }
+        }
     }
     
     private static void AnalyzerBuildPostProcess(string outputPath) {

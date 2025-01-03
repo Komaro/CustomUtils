@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using UnityEngine;
 
 public static class ReflectionExtension {
 
@@ -28,9 +29,12 @@ public static class ReflectionExtension {
         return false;
     }
 
-    public static bool IsDefined<T>(this MemberInfo info) where T : Attribute => info.IsDefined(typeof(T));
-    public static bool IsDefined<T>(this Type type) where T : Attribute => type.IsDefined(typeof(T));
+    public static bool IsDefinedInEnvironment<TAttribute>(this MemberInfo info) where TAttribute : Attribute => info.IsDefined<TAttribute>() && (Application.isEditor == false || info.IsDefined<OnlyEditorEnvironmentAttribute>() == false);
+    public static bool IsDefinedInEnvironment<TAttribute>(this Type type) where TAttribute : Attribute => type.IsDefined<TAttribute>() && (Application.isEditor == false || type.IsDefined<OnlyEditorEnvironmentAttribute>() == false);
 
+    public static bool IsDefined<TAttribute>(this MemberInfo info) where TAttribute : Attribute => info.IsDefined(typeof(TAttribute));
+    public static bool IsDefined<TAttribute>(this Type type) where TAttribute : Attribute => type.IsDefined(typeof(TAttribute));
+    
     public static bool TryGetCustomAttribute<TAttribute>(this Type type, out TAttribute attribute) where TAttribute : Attribute => (attribute = type.GetCustomAttribute<TAttribute>()) != null;
     public static bool TryGetCustomAttribute<TAttribute>(this Type type, Type attributeType, out TAttribute attribute) where TAttribute : Attribute => (attribute = type.GetCustomAttribute(attributeType) as TAttribute) != null;
     public static bool TryGetCustomInheritedAttribute<TBaseAttribute>(this Type type, out TBaseAttribute attribute) where TBaseAttribute : Attribute => (attribute = type.GetCustomAttributes().FirstOrDefault(attribute => attribute.GetType().IsSubclassOf(typeof(TBaseAttribute))) as TBaseAttribute) != null;

@@ -22,7 +22,7 @@ public abstract class UIViewModel : IDisposable {
         lazyNotifyFields = new Lazy<ImmutableArray<NotifyField>>(() => GetType().GetFields().Where(info => NOTIFY_TYPE_SET.Contains(info.FieldType.GetGenericTypeDefinition())).Select(info => info.GetValue(this) as NotifyField).ToImmutableArray());
     }
 
-    public void Dispose() {
+    public virtual void Dispose() {
         if (isDisposed == false) {
             Clear();
             isDisposed = true;

@@ -8,9 +8,9 @@ using UnityEngine;
 
 public abstract class Command {
 
-    private Dictionary<string, Func<object>> dynamicParameters = new();
+    private static readonly Dictionary<string, Type> _commandTypeCacheDic;
 
-    private static Dictionary<string, Type> _commandTypeCacheDic;
+    private readonly Dictionary<string, Func<object>> dynamicParameters = new();
     
     private const string IDENTIFIER_LITERAL = "@";
     private const string ASSIGN_LITERAL = ":";
@@ -28,13 +28,8 @@ public abstract class Command {
     public abstract Task ExecuteAsync();
     public virtual Task UndoAsync() => Task.CompletedTask;
 
-    static Command() {
-        if (_commandTypeCacheDic == null) {
-            _commandTypeCacheDic = new();
-            ReflectionProvider.GetSubClassTypes<Command>()?.ForEach(x => _commandTypeCacheDic.AutoAdd(x.GetCustomAttributes(typeof(CommandAliasAttribute), false).FirstOrDefault() is CommandAliasAttribute targetAttribute ? targetAttribute.Alias : x.Name, x));
-        }
-    }
-    
+    static Command() => _commandTypeCacheDic = ReflectionProvider.GetSubClassTypes<Command>().ToDictionary(type => type.TryGetCustomAttribute<CommandAliasAttribute>(out var attribute) && string.IsNullOrEmpty(attribute.Alias) == false ? attribute.Alias : type.Name, type => type);
+
     public static Command Create(string commandLine) {
         commandLine = Regex.Replace(commandLine.Trim(), @"\s+", @" ");
         return Create(GetCommand(commandLine), ParseCommandParameters(commandLine));
@@ -120,21 +115,7 @@ public abstract class Command {
         }
 
         if (paramType.IsEnum) {
-            if (Enum.IsDefined(paramType, paramValue)) {
-                return Enum.Parse(paramType, paramValue);
-            }
-
-            paramValue = paramValue.ToUpper(Constants.Culture.DEFAULT_CULTURE_INFO);
-            if (Enum.IsDefined(paramType, paramValue)) {
-                return Enum.Parse(paramType, paramValue);
-            }
-
-            paramValue = paramValue.GetForceTitleCase();
-            if (Enum.IsDefined(paramType, paramValue)) {
-                return Enum.Parse(paramType, paramValue);
-            }
-
-            return default(Enum);
+            return EnumUtil.TryConvertAllCase(paramType, paramValue, out var ob) ? ob : default(Enum);
         }
         
         if (paramType.IsGenericType && paramType.GetGenericTypeDefinition() == typeof(NameValuePair<>)) {

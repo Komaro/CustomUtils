@@ -14,8 +14,13 @@ public partial class Builder {
     }
 
     protected void SetApplicationIdentifier(BuildTargetGroup targetGroup, string identifier) {
+#if UNITY_6000_0_OR_NEWER
+        PlayerSettings.SetApplicationIdentifier(targetGroup.GetNamedBuildTarget(), identifier);
+        Debug.Log($"{BuildCount} - {nameof(PlayerSettings.SetApplicationIdentifier)} || {PlayerSettings.GetApplicationIdentifier(targetGroup.GetNamedBuildTarget())}");
+#else
         PlayerSettings.SetApplicationIdentifier(targetGroup, identifier);
         Debug.Log($"{BuildCount} - {nameof(PlayerSettings.SetApplicationIdentifier)} || {PlayerSettings.GetApplicationIdentifier(targetGroup)}");
+#endif
     }
 
     protected void SetVersionName(string version) {
@@ -34,8 +39,13 @@ public partial class Builder {
     }
 
     protected void SetDefineSymbols(BuildTargetGroup targetGroup, string symbols) {
+#if UNITY_6000_0_OR_NEWER
+        PlayerSettings.SetScriptingDefineSymbols(targetGroup.GetNamedBuildTarget(), symbols);
+        Debug.Log($"{BuildCount} - {nameof(PlayerSettings.SetScriptingDefineSymbols)} || {PlayerSettings.GetScriptingDefineSymbols(targetGroup.GetNamedBuildTarget())}");
+#else
         PlayerSettings.SetScriptingDefineSymbolsForGroup(targetGroup, symbols);
         Debug.Log($"{BuildCount} - {nameof(PlayerSettings.SetScriptingDefineSymbols)} || {PlayerSettings.GetScriptingDefineSymbolsForGroup(targetGroup)}");
+#endif
     }
     
     protected void SetDevelopmentBuild(bool isActive) {
@@ -59,20 +69,35 @@ public partial class Builder {
     }
 
     protected void SetScriptBackend(BuildTargetGroup targetGroup, ScriptingImplementation backend) {
+#if UNITY_6000_0_OR_NEWER
+        PlayerSettings.SetScriptingBackend(targetGroup.GetNamedBuildTarget(), backend);
+        Debug.Log($"{BuildCount} - {nameof(PlayerSettings.GetScriptingBackend)} || {PlayerSettings.GetScriptingBackend(targetGroup.GetNamedBuildTarget())}");
+#else
         PlayerSettings.SetScriptingBackend(targetGroup, backend);
         Debug.Log($"{BuildCount} - {nameof(PlayerSettings.GetScriptingBackend)} || {PlayerSettings.GetScriptingBackend(targetGroup)}");
+#endif
     }
 
     protected void SetManagedStrippingLevel(BuildTargetGroup targetGroup, ManagedStrippingLevel strippingLevel) {
+#if UNITY_6000_0_OR_NEWER
+        PlayerSettings.SetManagedStrippingLevel(targetGroup.GetNamedBuildTarget(), strippingLevel);
+        Debug.Log($"{BuildCount} - {nameof(PlayerSettings.GetManagedStrippingLevel)} || {PlayerSettings.GetManagedStrippingLevel(targetGroup.GetNamedBuildTarget())}");
+#else
         PlayerSettings.SetManagedStrippingLevel(targetGroup, strippingLevel);
         Debug.Log($"{BuildCount} - {nameof(PlayerSettings.GetManagedStrippingLevel)} || {PlayerSettings.GetManagedStrippingLevel(targetGroup)}");
+#endif
     }
 
     // NET_Unity_4_8 = .NET Framework
     // NET_Standard_2_0 = .NET Standard 2.1
     protected void SetApiCompatibilityLevel(BuildTargetGroup targetGroup, ApiCompatibilityLevel apiLevel) {
+#if UNITY_6000_0_OR_NEWER
+        PlayerSettings.SetApiCompatibilityLevel(targetGroup.GetNamedBuildTarget(), apiLevel);
+        Debug.Log($"{BuildCount} - {nameof(PlayerSettings.GetApiCompatibilityLevel)} || {PlayerSettings.GetApiCompatibilityLevel(targetGroup.GetNamedBuildTarget())}");
+#else
         PlayerSettings.SetApiCompatibilityLevel(targetGroup, apiLevel);
         Debug.Log($"{BuildCount} - {nameof(PlayerSettings.GetApiCompatibilityLevel)} || {PlayerSettings.GetApiCompatibilityLevel(targetGroup)}");
+#endif
     }
 
     protected void SetConditionBuildOptions(ref BuildPlayerOptions buildPlayerOptions, bool isCondition, BuildOptions type) {

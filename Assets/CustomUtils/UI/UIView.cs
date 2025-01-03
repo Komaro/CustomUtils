@@ -3,8 +3,10 @@
 public class UIViewAttribute : PriorityAttribute {
     
     public string prefab;
+    public bool isGlobal;
 
     public UIViewAttribute(string prefab) => this.prefab = prefab;
+    public UIViewAttribute(string prefab, bool isGlobal) : this(prefab) => this.isGlobal = isGlobal;
 }
 
 public abstract class UIViewMonoBehaviour : MonoBehaviour {
@@ -32,11 +34,13 @@ public abstract class UIView<TViewModel> : UIViewMonoBehaviour where TViewModel 
             transform.SetSiblingIndex((int)attribute.priority);
             Priority = attribute.priority;
         }
+
+        viewModel ??= new TViewModel();
     }
 
     protected virtual void OnEnable() {
         if (viewModel == null) {
-            Logger.TraceLog($"{nameof(viewModel)} is null. Create default {typeof(TViewModel).Name}", Color.yellow);
+            Logger.TraceError($"{nameof(viewModel)} is missing. Create default {typeof(TViewModel).Name}");
             viewModel = new TViewModel();
         }
         

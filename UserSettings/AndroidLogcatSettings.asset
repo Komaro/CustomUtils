@@ -67,6 +67,17 @@
         "DisplayIdEnabled": false,
         "DisplayId": ""
     },
+    "m_ScreenCaptureSettings": {
+        "Mode": 0,
+        "m_LastSaveLocation": [
+            "C:\\Project\\Unity\\CustomUtils",
+            "C:\\Project\\Unity\\CustomUtils"
+        ]
+    },
+    "m_QueryLayoutSettings": {
+        "LastLayoutSaveLocation": "",
+        "LastScreenshotSaveLocation": ""
+    },
     "m_InputSettings": {
         "ShiftModifier": false,
         "SendText": "",

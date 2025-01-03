@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
@@ -14,32 +13,10 @@ public class UIService : IService {
     private Transform _uiRoot;
     private Transform _uiGlobalRoot;
     
-    // private ConcurrentStack<UIViewMonoBehaviour> _uiCallStack = new();
     private CallStack<UIViewMonoBehaviour> _uiCallStack = new();
 
     public UIViewMonoBehaviour Current => _uiCallStack.TryPeek(out var uiView) ? uiView : null;
-    
-    public UIViewMonoBehaviour Previous {
-        get {
-            if (_uiCallStack.TryPeekTail(out var uiView, 1)) {
-                return uiView;
-            }
-
-            return null;
-            //
-            // if (_uiCallStack.TryPop(out var uiView)) {
-            //     if (_uiCallStack.TryPeek(out var previousUIView)) {
-            //         _uiCallStack.Push(uiView);
-            //         return previousUIView;
-            //     }
-            //
-            //     _uiCallStack.Push(uiView);
-            //     return null;
-            // }
-            //
-            // return null;
-        }
-    }
+    public UIViewMonoBehaviour Previous => _uiCallStack.TryPeek(out var uiView, 1) ? uiView : null;
 
     private readonly Dictionary<Type, UIViewMonoBehaviour> _cachedUIDic = new();
     private readonly Dictionary<Type, UIViewMonoBehaviour> _cachedGlobalUIDic = new();
@@ -59,13 +36,15 @@ public class UIService : IService {
     void IService.Refresh() => AttachInitializeProvider();
 
     void IService.Remove() {
-        // TODO. 순회 처리 필요
+        _cachedUIDic.Clear();
+        _cachedGlobalUIDic.Clear();
+        
         if (_uiRoot != null) {
-            Object.Destroy(_uiRoot);
+            Object.Destroy(_uiRoot.gameObject);
         }
 
         if (_uiGlobalRoot != null) {
-            Object.Destroy(_uiGlobalRoot);
+            Object.Destroy(_uiGlobalRoot.gameObject);
         }
     }
 
@@ -145,16 +124,6 @@ public class UIService : IService {
             return previousUIView;
         }
         
-        // if (_uiCallStack.TryPop(out var currentUIView)) {
-        //     if (_uiCallStack.TryPeek(out var previousUIView)) {
-        //         Close(currentUIView);
-        //         previousUIView.SetActive(true);
-        //         return previousUIView;
-        //     }
-        //     
-        //     _uiCallStack.Push(currentUIView);
-        // }
-        
         return null;
     }
 
@@ -231,7 +200,7 @@ public class UIService : IService {
     
     private UIViewMonoBehaviour CreateUIViewSwitch(Type type) {
         if (_viewAttributeDic.TryGetValue(type, out var attribute) && Service.GetService<ResourceService>().TryInstantiate(out var go, attribute.prefab) && go.TryGetOrAddComponent<UIViewMonoBehaviour>(type, out var uiView)) {
-            if (type.IsDefined<GlobalUIAttribute>()) {
+            if (attribute.isGlobal) {
                 uiView.transform.SetParent(_uiGlobalRoot);
                 _cachedGlobalUIDic.TryAdd(type, uiView);
             } else {
@@ -246,7 +215,7 @@ public class UIService : IService {
         return null;
     }
 
-    public bool IsValid() => _uiRoot != null && _uiGlobalRoot != null || _viewSet.IsEmpty == false || _viewAttributeDic.IsEmpty == false;
+    public bool IsValid() => _uiRoot != null && _uiGlobalRoot != null && _viewSet.IsEmpty == false && _viewAttributeDic.IsEmpty == false;
 }
 
 [RequiresAttributeImplementation(typeof(PriorityAttribute))]
@@ -262,5 +231,3 @@ public abstract class UIInitializeProvider {
         return go.transform;
     }
 }
-
-public class GlobalUIAttribute : PriorityAttribute { }

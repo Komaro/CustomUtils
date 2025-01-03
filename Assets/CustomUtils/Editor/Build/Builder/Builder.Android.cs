@@ -1,4 +1,6 @@
-﻿using UnityEditor;
+﻿using Unity.Android.Types;
+using UnityEditor;
+using UnityEditor.Android;
 using UnityEngine;
 
 public partial class Builder {
@@ -43,7 +45,12 @@ public partial class Builder {
         Debug.Log($"{BuildCount} - {nameof(EditorUserBuildSettings.exportAsGoogleAndroidProject)} || {EditorUserBuildSettings.exportAsGoogleAndroidProject}");
     }
 
-#if UNITY_2021_1_OR_NEWER
+#if UNITY_6000_0_OR_NEWER
+    protected void SetAndroidCreateSymbol(DebugSymbolLevel symbolLevel) {
+        UserBuildSettings.DebugSymbols.level = symbolLevel;
+        Debug.Log($"{BuildCount} - {nameof(UserBuildSettings.DebugSymbols.level)} || {UserBuildSettings.DebugSymbols.level}");
+    }
+#elif  UNITY_2021_1_OR_NEWER
     protected void SetAndroidCreateSymbol(AndroidCreateSymbols symbol) {
         EditorUserBuildSettings.androidCreateSymbols = symbol;
         Debug.Log($"{BuildCount} - {nameof(EditorUserBuildSettings.androidCreateSymbols)} || {EditorUserBuildSettings.androidCreateSymbols}");
@@ -54,5 +61,4 @@ public partial class Builder {
         Debug.Log($"{BuildCount} - {nameof(EditorUserBuildSettings.androidCreateSymbolsZip)} || {EditorUserBuildSettings.androidCreateSymbolsZip}");
     }
 #endif
-
 }

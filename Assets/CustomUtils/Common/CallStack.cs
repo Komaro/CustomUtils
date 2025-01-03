@@ -1,7 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 
-// TODO. 최상단의 위치가 모호함. 수정 필요
 public class CallStack<T> : IEnumerable<T> {
 
     private readonly List<T> _list = new();
@@ -20,76 +20,62 @@ public class CallStack<T> : IEnumerable<T> {
     }
     
     public bool TryPop(out T item) {
-        if (_list.Count <= 0) {
+        try {
+            item = Pop();
+            return true;
+        } catch (InvalidOperationException) {
             item = default;
             return false;
         }
-
-        return (item = Pop()) != null;
     }
 
     public T Pop() {
         if (_list.Count <= 0) {
-            return default;
+            throw new InvalidOperationException();
         }
-        
+    
         var item = _list[^1];
         _list.RemoveAt(_list.Count - 1);
         _hashSet.Remove(item);
         return item;
     }
 
-    public bool TryPeek(out T item) {
-        if (_list.Count <= 0) {
+    public bool TryPeek(out T item, int offset = 0) {
+        try {
+            item = Peek(offset);
+            return true;
+        } catch (InvalidOperationException) {
             item = default;
             return false;
         }
-        
-        return (item = Peek()) != null;
     }
 
-    public T Peek() {
-        if (_list.Count <= 0) {
-            return default;
+    public T Peek(int offset = 0) {
+        if (_list.Count <= offset) {
+            throw new InvalidOperationException();
         }
-    
-        return _list[^1];
-    }
 
-    public bool TryPeek(int offset, out T item) {
-        if (_list.Count <= 0) {
-            item = default;
-            return false;
-        }
-        
-        return (item = Peek(offset)) != null;
-    }
-
-    public T Peek(int offset) {
-        if (offset > _list.Count) {
-            return default;
-        }
-        
-        return _list[^(offset + 1)];
+        return _list[^(1 + offset)];
     }
 
     public bool TryPeekTail(out T item, int offset = 0) {
-        if (_list.Count <= 0) {
+        try {
+            item = PeekTail(offset);
+            return true;
+        } catch (InvalidOperationException) {
             item = default;
             return false;
         }
-        
-        return (item = PeekTail(offset)) != null;
     }
 
     public T PeekTail(int offset = 0) {
         if (offset >= _list.Count) {
-            return default;
+            throw new InvalidOperationException();
         }
 
         return _list[offset];
     }
-
+    
     public IEnumerator<T> GetEnumerator() => _list.GetEnumerator();
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 }

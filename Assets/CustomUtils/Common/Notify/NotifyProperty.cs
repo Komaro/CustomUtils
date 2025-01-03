@@ -38,6 +38,11 @@ public class NotifyProperty<TValue> : NotifyField, IEqualityComparer<NotifyPrope
     
     public NotifyProperty(TValue value) : this(value, EqualityComparer<TValue>.Default) { }
     public NotifyProperty() : this(EqualityComparer<TValue>.Default) { }
+
+    public void Clear() {
+        OnChanged.Clear();
+        Value = default;
+    }
     
     public override void Refresh() => OnChanged.handler?.Invoke(NotifyFieldChangedEventArgs.Empty);
     
@@ -67,7 +72,6 @@ public class NotifyProperty<TValue> : NotifyField, IEqualityComparer<NotifyPrope
 
 #region [CSV ClassMap]
 
-// TODO. 장기적으로 ClassMap을 통합해서 관리하는 시스템 필요
 public sealed class NotifyPropertyClassMap<T> : ClassMap<T> {
 
     public NotifyPropertyClassMap() {

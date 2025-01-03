@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
+using System.Linq;
+using NUnit.Framework.Internal;
 using UniRx;
 
 public interface ILocalizeProvider {
@@ -18,7 +21,7 @@ public class LocalizeManager : Singleton<LocalizeManager> {
     private ReactiveProperty<ILocalizeProvider> _bindProvider;
 
     public LocalizeManager() {
-        var enumTypes = ReflectionProvider.GetAttributeEnumTypes<LanguageAttribute>();
+        var enumTypes = ReflectionProvider.GetAttributeEnumTypes<LanguageEnumAttribute>();
         if (enumTypes != null) {
             foreach (var type in enumTypes) {
                 foreach (var value in Enum.GetValues(type)) {
@@ -88,11 +91,8 @@ public class LocalizeManager : Singleton<LocalizeManager> {
 
         text = string.Format(text, args);
         return true;
-
     }
     
     public string GetFormat(string key, params object[] args) => TryGet(key, out var format) ? string.Format(format, args) : string.Empty;
 }
 
-[AttributeUsage(AttributeTargets.Enum)]
-public class LanguageAttribute : Attribute { }

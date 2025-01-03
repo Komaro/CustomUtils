@@ -13,7 +13,7 @@ public class TestSimpleUIView : UIView<TestSimpleUIViewModel> {
     
     private Button _increaseCountButton;
     private Button _decreaseCountButton;
-
+    
     protected override void Awake() {
         base.Awake();
         

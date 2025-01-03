@@ -30,7 +30,7 @@ public class EditorBuildService : EditorService {
         CacheRefresh();
         Window.Focus();
     }
-    
+
     [DidReloadScripts(99999)]
     public static void CacheRefresh() {
         if (HasOpenInstances<EditorBuildService>()) {
@@ -184,7 +184,7 @@ public abstract class BuildConfig : JsonAutoConfig {
     public BuildConfig() {
         var type = GetType();
         if (type.TryGetCustomAttribute<BuildConfigAttribute>(out var targetAttribute)) {
-            defineSymbols = PlayerSettings.GetScriptingDefineSymbolsForGroup(targetAttribute.buildTargetGroup);
+            defineSymbols = targetAttribute.buildTargetGroup.GetScriptingDefineSymbolsForGroup();
             foreach (var (optionAttribute, enumType) in ReflectionProvider.GetAttributeEnumInfos<BuildOptionEnumAttribute>()) {
                 if (optionAttribute.buildTargetGroup == BuildTargetGroup.Unknown || optionAttribute.buildTargetGroup == targetAttribute.buildTargetGroup) {
                     foreach (var ob in Enum.GetValues(enumType)) {

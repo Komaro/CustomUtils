@@ -6,7 +6,7 @@ using SystemPath = System.IO.Path;
 using SystemRegex = System.Text.RegularExpressions.Regex;
 
 public static partial class Constants {
-
+    
     public static class Extension {
 
         public const string JSON = ".json";

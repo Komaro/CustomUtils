@@ -47,7 +47,6 @@ public class UIServiceTestRunner {
             
             Assert.IsNull(service.Current);
             
-            //TODO. SafeDelegate 가 중복으로 추가되고 있음 버그 수정 필요
             Assert.IsTrue(service.TryOpen<TestSimpleUIView>(out var first));
             var viewModel = new TestSimpleUIViewModel {
                 Title = { Value = "ChangeViewModel Test" },
@@ -93,6 +92,8 @@ public class UIServiceTestRunner {
             Assert.IsNotNull(service.Open<TestSimpleUIView>());
             Assert.AreEqual(service.Current.GetType(), typeof(TestSimpleUIView));
             Assert.AreEqual(service.Previous.GetType(), typeof(TestSimpleSecondUIView));
+            
+            Assert.IsTrue(Service.RemoveService<UIService>());
         }
     }
 
@@ -100,7 +101,7 @@ public class UIServiceTestRunner {
     [Performance]
     public void TempPerformanceTest() {
         var forGroup = new SampleGroup("ForCount");
-        var canvases = Object.FindObjectsOfType<Canvas>();
+        var canvases = Object.FindObjectsByType<Canvas>(FindObjectsSortMode.None);
         Measure.Method(() => {
             foreach (var canvas in canvases) {
                 _ = canvas.transform.GetHierarchyDepth();
@@ -109,13 +110,13 @@ public class UIServiceTestRunner {
     }
 }
 
-[Priority(100)]
+[Priority(99999)]
 public class TestUIInitializeProvider : UIInitializeProvider {
 
     public override bool IsReady() => true;
 
     public override Transform GetUIRoot() {
-        var canvas = Object.FindObjectsOfType<Canvas>().OrderBy(canvas => canvas.transform.GetHierarchyDepth(), true).First();
+        var canvas = Object.FindObjectsByType<Canvas>(FindObjectsSortMode.None).OrderBy(canvas => canvas.transform.GetHierarchyDepth(), true).First();
         if (canvas != null) {
             return canvas.transform;
         }

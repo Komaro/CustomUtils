@@ -3,7 +3,7 @@ using UnityEngine;
 
 [Serializable]
 public class SoundTrackEvent {
-    
+
     public AudioClip clip;
     public bool loop = false;
     public float startTime = 0;

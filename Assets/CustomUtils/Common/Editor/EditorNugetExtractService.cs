@@ -81,7 +81,12 @@ public class EditorNugetExtractService : EditorService {
             HandleDragAndDrop(dragArea);
 
             if (_extractPluginDic.Count > 0) {
-                _extractPluginTreeView.Draw();
+                using (new EditorGUILayout.VerticalScope()) {
+                    _extractPluginTreeView.Draw();
+                    if (GUILayout.Button("추출")) {
+                        ExtractPlugins();
+                    }
+                }
             }
         }
     }
@@ -174,8 +179,7 @@ public class EditorNugetExtractService : EditorService {
         }
     }
 
-    // TODO. Move ExtractPluginTreeView
-    public static void ExtractPlugins() {
+    private void ExtractPlugins() {
         var extractPath = $"{Constants.Path.PROJECT_TEMP_PATH}/.temp";
         SystemUtil.EnsureDirectoryExists(extractPath);
         foreach (var plugin in _extractPluginDic.Values) {
@@ -320,7 +324,7 @@ internal class PluginTreeView : EditorServiceTreeView {
         }
     }
 
-    private enum SORT_TYPE {
+    protected enum SORT_TYPE {
         NO,
         NAME,
         PATH,
@@ -342,9 +346,6 @@ internal class ExtractPluginTreeView : PluginTreeView {
             EditorGUILayout.LabelField("추출 대기");
             searchString = searchField.OnToolbarGUI(searchString);
             OnGUI(new Rect(EditorGUILayout.GetControlRect(GUILayout.ExpandWidth(true), GUILayout.ExpandHeight(true), GUILayout.MinHeight(100f), GUILayout.MaxHeight(300f))));
-            if (GUILayout.Button("추출")) {
-                EditorNugetExtractService.ExtractPlugins();
-            }
         }
     }
     

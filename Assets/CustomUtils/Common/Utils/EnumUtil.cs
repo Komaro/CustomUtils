@@ -62,17 +62,6 @@ public static class EnumUtil {
         return false;
     }
 
-    public static bool TryConvertAllCase<TEnum>(string value, out TEnum enumValue) where TEnum : struct, Enum {
-        foreach (var valueCase in ReturnValueAllCase(value)) {
-            if (TryConvertFast(valueCase, out enumValue)) {
-                return true;
-            }
-        }
-
-        enumValue = default;
-        return false;
-    }
-    
     public static TEnum Convert<TEnum>(string value) where TEnum : struct, Enum {
         try {
             return Enum.Parse<TEnum>(value);
@@ -91,6 +80,17 @@ public static class EnumUtil {
         }
     }
     
+    public static bool TryConvertAllCase<TEnum>(string value, out TEnum enumValue) where TEnum : struct, Enum {
+        foreach (var valueCase in ReturnValueAllCase(value)) {
+            if (TryConvertFast(valueCase, out enumValue)) {
+                return true;
+            }
+        }
+
+        enumValue = default;
+        return false;
+    }
+
     public static TEnum ConvertAllCase<TEnum>(string value) where TEnum : struct, Enum {
         try {
             foreach (var valueCase in ReturnValueAllCase(value)) {
@@ -104,6 +104,42 @@ public static class EnumUtil {
             Logger.TraceError($"Convert Fail || {value} || {ex}");
             return default;
         }
+    }
+
+    public static bool TryConvertAllCase(Type enumType, string value, out object enumValue) {
+        try {
+            if (enumType.IsEnum) {
+                foreach (var valueCase in ReturnValueAllCase(value)) {
+                    if (Enum.IsDefined(enumType, valueCase)) {
+                        enumValue = Enum.Parse(enumType, valueCase); 
+                        return true;
+                    }
+                }
+            }
+        } catch (Exception ex) {
+            Logger.TraceError(ex);
+        }
+
+        enumValue = default;
+        return false;
+    }
+    
+    public static object ConvertAllCase(Type enumType, string value) {
+        try {
+            if (enumType.IsEnum == false) {
+                return default;
+            }
+
+            foreach (var valueCase in ReturnValueAllCase(value)) {
+                if (Enum.IsDefined(enumType, valueCase)) {
+                    return Enum.Parse(enumType, valueCase);
+                }
+            }
+        } catch (Exception ex) {
+            Logger.TraceError(ex);
+        }
+        
+        return default;
     }
     
     #endregion
@@ -172,6 +208,7 @@ public static class EnumUtil {
     
     #endregion
 
+    public static IEnumerable<Enum> GetValues(Type enumType) => Enum.GetValues(enumType).Cast<Enum>();
     public static IEnumerable<TEnum> GetValues<TEnum>(bool ignoreDefault = false, bool ignoreObsolete = false) where TEnum : struct, Enum => EnumBag<TEnum>.GetValues(ignoreObsolete).Where((_, index) => ignoreDefault == false || index != 0);
     public static List<TEnum> GetValueList<TEnum>(bool ignoreDefault = false, bool ignoreObsolete = false) where TEnum : struct, Enum => GetValues<TEnum>(ignoreDefault, ignoreObsolete).ToList();
 

@@ -2,9 +2,8 @@ using System;
 using System.Linq;
 using UnityEngine;
 
-// TODO. Unit Test 및 Coverage 체크 필요
 public struct SafeDelegate<T> where T : Delegate {
-        
+    
     public T handler;
     public int Count => GetInvocationList()?.Length ?? 0;
 
@@ -13,7 +12,7 @@ public struct SafeDelegate<T> where T : Delegate {
             handler = Delegate.RemoveAll(handler, handler) as T;
         }
     }
-    
+
     public Delegate[] GetInvocationList() => handler?.GetInvocationList();
     
     public static T operator +(T events, SafeDelegate<T> addSafeDelegate) {
@@ -21,7 +20,6 @@ public struct SafeDelegate<T> where T : Delegate {
             if (events == null || events.GetInvocationList().Contains(addEvent) == false) {
                 events = Delegate.Combine(events, addEvent) as T;
             } else {
-                // Logger.TraceError($"Invalid delegate Type || {nameof(addSafeDelegate)} Type = {typeof(T).Name} || {nameof(addEvent)} Type = {addEvent.GetType().Name}");
                 Logger.TraceLog($"Already delegate Type || {nameof(addSafeDelegate)} Type = {typeof(T).Name} || {nameof(addEvent)} Type = {addEvent.GetType().Name}", Color.yellow);
             }
         }
@@ -33,7 +31,6 @@ public struct SafeDelegate<T> where T : Delegate {
         if (safeDelegate.handler == null || safeDelegate.handler.GetInvocationList().Contains(addEvent) == false) {
             safeDelegate.handler = Delegate.Combine(safeDelegate.handler, addEvent) as T;
         } else {
-            // Logger.TraceError($"Invalid delegate Type || {nameof(safeDelegate)} Type = {typeof(T).Name} || {nameof(addEvent)} Type = {addEvent.GetType().Name}");
             Logger.TraceLog($"Already delegate Type || {nameof(safeDelegate)} Type = {typeof(T).Name} || {nameof(addEvent)} Type = {addEvent.GetType().Name}", Color.yellow);
         }
         

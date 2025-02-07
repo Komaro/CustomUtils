@@ -5,13 +5,12 @@ using NUnit.Framework;
 public static class TestExtension {
 
     public static void FieldChangeTest<T>(this object obj, string fieldName, BindingFlags flags, Func<T, bool> check) {
-        if (obj.GetType().TryGetFieldValue<T>(out var fieldValue, obj, fieldName, flags) == false) {
-            Assert.Fail($"Field get failed || {fieldName}");
-            return;
+        if (obj.GetType().TryGetFieldValue(out var valueObj, obj, fieldName, flags) && valueObj is T value) {
+            Assert.IsTrue(check.Invoke(value));
+            Logger.TraceLog($"Pass {fieldName} Change Test");
         }
         
-        Assert.IsTrue(check.Invoke(fieldValue));
-        Logger.TraceLog($"Pass {fieldName} Change Test");
+        Assert.Fail($"Field get failed || {fieldName}");
     }
 
     public static void MethodCallTest(this object ui, string methodName, BindingFlags flags, Func<bool> check = null, params object[] param) {

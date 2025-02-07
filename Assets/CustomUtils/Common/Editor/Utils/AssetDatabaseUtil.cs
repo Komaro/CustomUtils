@@ -14,9 +14,17 @@ public static class AssetDatabaseUtil {
 
     public static bool TryFindAssets<T>(out IEnumerable<T> assets, string filter, bool ignorePackages = true) where T : Object => (assets = FindAssets<T>(filter, ignorePackages)).Any();
     
-    public static IEnumerable<T> FindAssets<T>(string filter, bool ignorePackages = true) where T : Object => ignorePackages 
-        ? AssetDatabase.FindAssets(filter).Where(guid => guid.StartsWith(Constants.Folder.ASSETS)).Select(LoadAssetFromGuid<T>) 
-        : AssetDatabase.FindAssets(filter).Select(LoadAssetFromGuid<T>);
+    public static IEnumerable<T> FindAssets<T>(string filter, bool ignorePackages = true) where T : Object {
+        foreach (var guid in AssetDatabase.FindAssets(ignorePackages ? string.Intern($"a:assets {filter}") : filter)) {
+        // foreach (var guid in AssetDatabase.FindAssets(filter)) {
+            var path = AssetDatabase.GUIDToAssetPath(guid);
+            if (ignorePackages && path.StartsWith(Constants.Folder.ASSETS) == false) {
+                continue;
+            }
+
+            yield return AssetDatabase.LoadAssetAtPath<T>(path);
+        }
+    }
 
     public static bool TryFindAssetInfos<T>(out IEnumerable<EditorAssetInfo<T>> infos, string filter, bool ignorePackage = true) where T : Object => (infos = FindAssetInfos<T>(filter, ignorePackage)).Any(); 
     
@@ -110,4 +118,21 @@ public record EditorAssetInfo<T> where T : Object {
         guid = AssetDatabase.GUIDFromAssetPath(path).ToString();
         this.path = path;
     }
+}
+
+public static class FilterUtil {
+
+    public static string CreateFilter(TypeFilter type) => string.Intern(string.Concat("t:", type.ToString()));
+    public static string CreateFilter(TypeFilter type, AreaFilter area) => string.Intern(string.Concat(CreateFilter(type), " a:", area.ToString()));
+}
+
+public enum TypeFilter {
+    Texture,
+    AssemblyDefinitionAsset,
+}
+
+public enum AreaFilter {
+    all,
+    assets,
+    packages,
 }

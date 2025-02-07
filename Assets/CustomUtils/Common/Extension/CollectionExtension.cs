@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using UnityEngine;
 using Random = System.Random;
@@ -24,8 +25,6 @@ public static class CollectionExtension {
         return dictionary;
     }
     
-    public static HashSet<T> ToHashSetWithDistinct<T>(this IEnumerable<T> enumerable) => enumerable.Distinct().ToHashSet();
-
     public static bool TryFirst<T>(this IEnumerable<T> enumerable, out T matchItem, Predicate<T> match = null) {
         if (match == null) {
             matchItem = enumerable.First();
@@ -102,7 +101,7 @@ public static class CollectionExtension {
     #endregion
 
     #region [Dictionary]
-    
+
     public static void Sync<TKey, TValue>(this IDictionary<TKey, TValue> workDictionary, ISet<TKey> sourceSet, Func<TKey, TValue> createFunc) {
         var removeSet = new HashSet<TKey>();
         foreach (var key in workDictionary.Keys) {
@@ -352,6 +351,12 @@ public static class CollectionExtension {
     }
     
     public static TValue GetRandomValue<TKey, TValue>(this IDictionary<TKey, TValue> dictionary) => dictionary.Values.ToList().Shuffle().FirstOrDefault();
+    
+    public static IEnumerable<TValue> ToValues<TKey, TValue>(this IEnumerable<KeyValuePair<TKey, TValue>> enumerable) {
+        foreach (var (_, value) in enumerable) {
+            yield return value;
+        }
+    }
     
     public static bool IsTrue<TKey>(this IDictionary<TKey, bool> dictionary, TKey key) => dictionary.TryGetValue(key, out var isTrue) && isTrue;
     public static bool IsDictionary(this Type type) => type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Dictionary<,>);
@@ -666,6 +671,16 @@ public static class CollectionExtension {
         return default;
     }
 
+    public static bool IsEmpty<TValue>(this TValue[] array) {
+        try {
+            return array.Length <= 0;
+        } catch (Exception ex) {
+            Logger.TraceError(ex);
+        }
+
+        return false;
+    }
+
     #endregion
 
     #region [Queue]
@@ -677,6 +692,13 @@ public static class CollectionExtension {
             }
         }
     }
+
+    #endregion
+
+    #region [HashSet]
+    
+    public static HashSet<T> ToHashSetWithDistinct<T>(this IEnumerable<T> enumerable, IEqualityComparer<T> equalityComparer = null) => enumerable.Distinct().ToHashSet(equalityComparer);
+    public static ImmutableHashSet<T> ToImmutableHashSetWithDistinct<T>(this IEnumerable<T> enumerable, IEqualityComparer<T> equalityComparer = null) => enumerable.Distinct().ToImmutableHashSet(equalityComparer);
 
     #endregion
 }

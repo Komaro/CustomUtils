@@ -39,8 +39,8 @@ public partial class EditorAssetBundleProviderDrawer {
             buildStartTime = DateTime.Now,
             buildPath = config.GetBuildPath()
         };
-        
-        if (Service.TryGetServiceWithStart<LogCollectorService>(out var service)) {
+
+        if (Service.TryGetServiceWithRestart<LogCollectorService>(out var service)) {
             service.ClearLog();
             service.SetFilter(LogType.Error);
         }

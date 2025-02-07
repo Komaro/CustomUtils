@@ -177,7 +177,7 @@ public static class EnumUtil {
 
     public static TEnum ConvertFast<TEnum>(int value) where TEnum : struct, Enum {
         try {
-            return LambdaExpressionProvider.GetIntToEnumFunc<TEnum>().Invoke(value);
+            return ExpressionProvider.GetIntToEnumFunc<TEnum>().Invoke(value);
         } catch (Exception ex) {
             Logger.TraceError($"Convert Fail || {value} || {ex}");
             return default;
@@ -199,7 +199,7 @@ public static class EnumUtil {
     
     public static int ConvertFast<TEnum>(TEnum value) where TEnum : struct, Enum {
         try {
-            return LambdaExpressionProvider.GetEnumToIntFun<TEnum>().Invoke(value);
+            return ExpressionProvider.GetEnumToIntFun<TEnum>().Invoke(value);
         } catch (Exception ex) {
             Logger.TraceError($"Convert Fail || {value} || {ex}");
             return -1;

@@ -1,5 +1,5 @@
 {
-    "name": "CommonUnsafeAssembly",
+    "name": "CommonAssembly.Unsafe",
     "rootNamespace": "",
     "references": [
         "GUID:cfb6063ef43c4c4da20a2093012689dc"

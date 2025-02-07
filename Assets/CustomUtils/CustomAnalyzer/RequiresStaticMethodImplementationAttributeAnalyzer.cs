@@ -25,7 +25,8 @@ public class RequiresStaticMethodImplementationAttributeAnalyzer : DiagnosticAna
     private static readonly LocalizableString STATIC_MESSAGE_FORMAT = "Class '{0}' must have the '{1}' static method";
     private static readonly DiagnosticDescriptor STATIC_RULE = new(STATIC_ID, TITLE, STATIC_MESSAGE_FORMAT, "Usage", DiagnosticSeverity.Error, isEnabledByDefault: true);
 
-    private static readonly LocalizableString ATTRIBUTE_MESSAGE_FORMAT = "Class '{0}' must have the '{1}' attribute";
+    private static readonly LocalizableString ATTRIBUTE_MESSAGE_FORMAT = "Method '{0}' must have the '{1}' attribute";
+    // private static readonly LocalizableString ATTRIBUTE_MESSAGE_FORMAT = "Class '{0}' must have the '{1}' attribute";
     private static readonly DiagnosticDescriptor ATTRIBUTE_RULE = new(ATTRIBUTE_ID, TITLE, ATTRIBUTE_MESSAGE_FORMAT, "Usage", DiagnosticSeverity.Error, isEnabledByDefault: true);
     
     public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(IMPLEMENT_RULE, STATIC_RULE, ATTRIBUTE_RULE);
@@ -59,7 +60,7 @@ public class RequiresStaticMethodImplementationAttributeAnalyzer : DiagnosticAna
                 if (methodSymbol != null && data.ConstructorArguments.Length > 1 && data.ConstructorArguments[1].Value != null) {
                     implementName = data.ConstructorArguments[1].Value.ToString();
                     if (methodSymbol.GetAttributes().Any(x => x.AttributeClass?.ToString().Equals(implementName, StringComparison.Ordinal) ?? false) == false) {
-                        context.ReportDiagnostic(Diagnostic.Create(ATTRIBUTE_RULE, namedTypeSymbol.Locations[0], namedTypeSymbol.Name, implementName));
+                        context.ReportDiagnostic(Diagnostic.Create(ATTRIBUTE_RULE, namedTypeSymbol.Locations[0], methodSymbol.Name, implementName));
                     }
                 }
             }

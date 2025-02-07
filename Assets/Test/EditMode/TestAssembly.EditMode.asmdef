@@ -1,5 +1,5 @@
 {
-    "name": "EditModeTestAssembly",
+    "name": "TestAssembly.EditMode",
     "rootNamespace": "",
     "references": [
         "GUID:27619889b8ba8c24980f49ee34dbb44a",
@@ -37,7 +37,8 @@
         "CsvHelper.dll",
         "Microsoft.EntityFrameworkCore.dll",
         "Microsoft.EntityFrameworkCore.InMemory.dll",
-        "System.ComponentModel.Annotations.dll"
+        "System.ComponentModel.Annotations.dll",
+        "Mono.Cecil.dll"
     ],
     "autoReferenced": false,
     "defineConstraints": [

@@ -1,6 +1,7 @@
 ﻿#if UNITY_EDITOR
 
 using UnityEditor;
+using UnityEditorInternal;
 using UnityEngine;
 using SystemPath = System.IO.Path;
 using SystemRegex = System.Text.RegularExpressions.Regex;
@@ -97,6 +98,22 @@ public static partial class Constants {
         
         public static readonly string ANALYZER_PLUGIN_NAME = $"{ANALYZER_NAME}{Extension.DLL}";
         public static readonly string ANALYZER_PLUGIN_PATH = SystemPath.Combine(Path.PLUGINS_FULL_PATH, $"{ANALYZER_PLUGIN_NAME}");
+    }
+
+    public static class Filter {
+
+        public static class Area {
+
+            public const string ALL = "a:all";
+            public const string ASSETS = "a:assets";
+            public const string PACKAGES = "a:packages";
+        }
+
+        public static class Type {
+
+            public static readonly string TEXTURE = $"t:{nameof(Texture)}";
+            public static readonly string ASSEMBLY_DEFINITION_ASSET = $"t:{nameof(AssemblyDefinitionAsset)}";
+        }
     }
 }
 

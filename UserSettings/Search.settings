@@ -75,6 +75,13 @@ providers = {
 objectSelectors = {
 }
 recentSearches = [
+	"t:assembly"
+	"adb:"
+	"adb: t:assembly"
+	"adb: t:"
+	"adb: t:texture"
+	""
+	"l:roslyn"
 	"?"
 	"t"
 ]

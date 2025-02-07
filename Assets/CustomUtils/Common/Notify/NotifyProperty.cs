@@ -76,7 +76,7 @@ public sealed class NotifyPropertyClassMap<T> : ClassMap<T> {
 
     public NotifyPropertyClassMap() {
         foreach (var info in typeof(T).GetFields(BindingFlags.Instance | BindingFlags.Public)) {
-            if (LambdaExpressionProvider.TryGetMappingExpression<T>(info.Name, out var expression)) {
+            if (ExpressionProvider.TryGetMappingExpression<T>(info.Name, out var expression)) {
                 Map(expression).Name(info.Name);
             }
         }

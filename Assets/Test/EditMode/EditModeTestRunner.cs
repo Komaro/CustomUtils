@@ -234,14 +234,14 @@ public class EditModeTestRunner {
         var enumToIntLambdaGroup = new SampleGroup("LambdaExpressEnumToInt");
         var intToEnumLambdaGroup = new SampleGroup("LambdaExpressIntToEnum");
 
-        var test = LambdaExpressionProvider.GetIntToEnumFunc<TCP_BODY>().Invoke(102);
+        var test = ExpressionProvider.GetIntToEnumFunc<TCP_BODY>().Invoke(102);
         Logger.TraceLog(test.ToString());
 
         Measure.Method(() => TCP_BODY.TEST_REQUEST.ToIntUnsafe()).MeasurementCount(20).IterationsPerMeasurement(5000).SampleGroup(unsafeGroup).Run();
         Measure.Method(() => _ = EnumUtil.Convert(TCP_BODY.TEST_REQUEST)).MeasurementCount(20).IterationsPerMeasurement(5000).SampleGroup(covertGroup).Run();
         Measure.Method(() => _ = (int)(object)TCP_BODY.TEST_REQUEST).MeasurementCount(20).IterationsPerMeasurement(5000).SampleGroup(duplicateCastGroup).Run();
-        Measure.Method(() => _ = LambdaExpressionProvider.GetEnumToIntFun<TCP_BODY>().Invoke(TCP_BODY.TEST_REQUEST)).MeasurementCount(20).IterationsPerMeasurement(5000).SampleGroup(enumToIntLambdaGroup).Run();
-        Measure.Method(() => _ = LambdaExpressionProvider.GetIntToEnumFunc<TCP_BODY>().Invoke(102)).MeasurementCount(20).IterationsPerMeasurement(5000).SampleGroup(intToEnumLambdaGroup).Run();
+        Measure.Method(() => _ = ExpressionProvider.GetEnumToIntFun<TCP_BODY>().Invoke(TCP_BODY.TEST_REQUEST)).MeasurementCount(20).IterationsPerMeasurement(5000).SampleGroup(enumToIntLambdaGroup).Run();
+        Measure.Method(() => _ = ExpressionProvider.GetIntToEnumFunc<TCP_BODY>().Invoke(102)).MeasurementCount(20).IterationsPerMeasurement(5000).SampleGroup(intToEnumLambdaGroup).Run();
     }
     
     [Test]

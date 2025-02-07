@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using UnityEditor;
 using UnityEngine;
@@ -50,7 +51,7 @@ public abstract class EditorBuildDrawer<TConfig, TNullConfig> : EditorAutoConfig
             var configDefineSymbolSet = config.defineSymbols.Split(Constants.Separator.DEFINE_SYMBOL).ToHashSet();
             defineSymbols = types.SelectMany(type => Enum.GetValues(type).Cast<Enum>().Select(enumValue => {
                 var name = enumValue.ToString();
-                return type.TryGetFieldInfo(out var info, name) && info.TryGetCustomAttribute<EnumValueAttribute>(out var attribute)
+                return type.TryGetFieldInfo(out var info, name, BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public) && info.TryGetCustomAttribute<EnumValueAttribute>(out var attribute)
                     ? new ToggleDraw(name, configDefineSymbolSet.Contains(name), attribute.header)
                     : new ToggleDraw(name, configDefineSymbolSet.Contains(name));
             })).ToArray();
@@ -320,7 +321,7 @@ public abstract class EditorBuildDrawer<TConfig, TNullConfig> : EditorAutoConfig
         if (BuildInteractionInterface.TryAttachBuilder(builderType, out var builder)) {
             var report = builder.StartBuild();
             if (report != null && config.isLogBuildReport) {
-                if (Service.TryGetServiceWithStart<LogCollectorService>(out var service)) {
+                if (Service.TryGetServiceWithRestart<LogCollectorService>(out var service)) {
                     service.ClearLog();
                     service.SetFilter(LogType.Error);
                 }

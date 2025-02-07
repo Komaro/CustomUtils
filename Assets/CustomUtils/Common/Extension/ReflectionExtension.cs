@@ -9,35 +9,51 @@ public static class ReflectionExtension {
     public static string GetAlias(this Type type, string defaultAlias = "") => type.TryGetCustomAttribute<AliasAttribute>(out var attribute) ? attribute.alias : string.IsNullOrEmpty(defaultAlias) ? type.Name : defaultAlias;
     public static string GetAlias(this MethodInfo info, string defaultAlias = "") => info.TryGetCustomAttribute<AliasAttribute>(out var attribute) ? attribute.alias : string.IsNullOrEmpty(defaultAlias) ? info.Name : defaultAlias;
 
-    public static IEnumerable<(string name, object value)> GetAllDataMemberNameWithValue(this Type type, object ob, BindingFlags bindingFlags = default) => 
-        type.GetFields(bindingFlags).ConvertTo(info => (info.Name, info.GetValue(ob)))
-        .Concat(type.GetProperties(bindingFlags).Where(info => info.GetIndexParameters().Length <= 0).ConvertTo(info => (info.Name, info.GetValue(ob))));
+    #region [Info]
+    
+    public static bool TryGetFieldInfo(this Type type, out FieldInfo info, string name) => (info = type.GetField(name)) != null;
+    public static bool TryGetFieldInfo(this Type type, out FieldInfo info, string name, BindingFlags bindingFlags) => (info = type.GetField(name, bindingFlags)) != null;
+    
+    public static bool TryGetMethodInfo(this Type type, out MethodInfo info, string name) => (info = type.GetMethod(name)) != null;
+    public static bool TryGetMethodInfo(this Type type, out MethodInfo info, string name, BindingFlags bindingFlags) => (info = type.GetMethod(name, bindingFlags)) != null;
+    
+    public static bool TryGetPropertyInfo(this Type type, out PropertyInfo info, string name) => (info = type.GetProperty(name)) != null;
+    public static bool TryGetPropertyInfo(this Type type, out PropertyInfo info, string name, BindingFlags bindingFlags) => (info = type.GetProperty(name, bindingFlags)) != null;
+    
+    #endregion
 
-    public static bool TryGetFieldInfo(this Type type, out FieldInfo info, string name, BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public) => (info = type.GetField(name, bindingFlags)) != null;
-    public static bool TryGetMethodInfo(this Type type, out MethodInfo info, string name, BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public) => (info = type.GetMethod(name, bindingFlags)) != null;
-    public static bool TryGetPropertyInfo(this Type type, out PropertyInfo info, string name, BindingFlags bindingFlags = BindingFlags.GetProperty | BindingFlags.SetProperty) => (info = type.GetProperty(name, bindingFlags)) != null;
+    #region [Value]
 
-    public static bool TryGetFieldValue<TValue>(this Type type, out TValue value, object obj, string name, BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public) => (value = type.GetFieldValue<TValue>(obj, name, bindingFlags)) != null;
-    public static TValue GetFieldValue<TValue>(this Type type, object obj, string name, BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public) => type.TryGetFieldInfo(out var fieldInfo, name, bindingFlags) && fieldInfo.GetValue(obj) is TValue value ? value : default;
+    public static IEnumerable<(string name, object value)> GetAllDataMemberNameWithValue(this Type type, object obj, BindingFlags bindingFlags = default) => type.GetFields(bindingFlags)
+            .ConvertTo(info => (info.Name, info.GetValue(obj)))
+            .Concat(type.GetProperties(bindingFlags).Where(info => info.GetIndexParameters().Length <= 0).ConvertTo(info => (info.Name, info.GetValue(obj))));
+    
+    public static bool TryGetFieldValue(this Type type, out object value, object obj, string name) => (value = type.GetFieldValue(obj, name)) != null;
+    public static bool TryGetFieldValue(this Type type, out object value, object obj, string name, BindingFlags bindingFlags) => (value = type.GetFieldValue(obj, name, bindingFlags)) != null;
 
-    public static bool TryGetPropertyValue<T>(this Type type, out T value, object target, string name, BindingFlags bindingFlags = BindingFlags.GetProperty | BindingFlags.SetProperty) where T : class {
-        if (type.TryGetPropertyInfo(out var info, name, bindingFlags)) {
-            return (value = info.GetValue(target) as T) != null;
-        }
+    public static object GetFieldValueFast(this Type type, object obj, string name) => DynamicMethodProvider.GetFieldValueFunc(type, name)?.Invoke(obj);
+    
+    public static object GetFieldValue(this Type type, object obj, string name) => type.TryGetFieldInfo(out var info, name) ? info.GetValue(obj) : null;
+    public static object GetFieldValue(this Type type, object obj, string name, BindingFlags bindingFlags) => type.TryGetFieldInfo(out var info, name, bindingFlags) ? info.GetValue(obj) : null;
 
-        value = null;
-        return false;
-    }
+    public static bool TryGetPropertyValue(this Type type, out object value, object obj, string name) => (value = type.GetPropertyValue(obj, name)) != null;
+    public static bool TryGetPropertyValue(this Type type, out object value, object obj, string name, BindingFlags bindingFlags) => (value = type.GetPropertyValue(obj, name, bindingFlags)) != null;
+    
+    public static object GetPropertyValue(this Type type, object obj, string name) => type.TryGetPropertyInfo(out var info, name) ? info.GetValue(obj) : null;
+    public static object GetPropertyValue(this Type type, object obj, string name, BindingFlags bindingFlags) => type.TryGetPropertyInfo(out var info, name, bindingFlags) ? info.GetValue(obj) : null;
 
+    #endregion
+    
     public static bool IsDefinedInEnvironment<TAttribute>(this MemberInfo info) where TAttribute : Attribute => info.IsDefined<TAttribute>() && (Application.isEditor == false || info.IsDefined<OnlyEditorEnvironmentAttribute>() == false);
     public static bool IsDefinedInEnvironment<TAttribute>(this Type type) where TAttribute : Attribute => type.IsDefined<TAttribute>() && (Application.isEditor == false || type.IsDefined<OnlyEditorEnvironmentAttribute>() == false);
 
     public static bool IsDefined<TAttribute>(this MemberInfo info) where TAttribute : Attribute => info.IsDefined(typeof(TAttribute));
+    public static bool IsDefined<TAttribute>(this MethodInfo info) where TAttribute : Attribute => info.IsDefined(typeof(TAttribute));
     public static bool IsDefined<TAttribute>(this Type type) where TAttribute : Attribute => type.IsDefined(typeof(TAttribute));
     
     public static bool TryGetCustomAttribute<TAttribute>(this Type type, out TAttribute attribute) where TAttribute : Attribute => (attribute = type.GetCustomAttribute<TAttribute>()) != null;
     public static bool TryGetCustomAttribute<TAttribute>(this Type type, Type attributeType, out TAttribute attribute) where TAttribute : Attribute => (attribute = type.GetCustomAttribute(attributeType) as TAttribute) != null;
-    public static bool TryGetCustomInheritedAttribute<TBaseAttribute>(this Type type, out TBaseAttribute attribute) where TBaseAttribute : Attribute => (attribute = type.GetCustomAttributes().FirstOrDefault(attribute => attribute.GetType().IsSubclassOf(typeof(TBaseAttribute))) as TBaseAttribute) != null;
+    public static bool TryGetCustomInheritedAttribute<TAttribute>(this Type type, out TAttribute attribute) where TAttribute : Attribute => (attribute = type.GetCustomAttributes().FirstOrDefault(attribute => attribute.GetType().IsSubclassOf(typeof(TAttribute))) as TAttribute) != null;
     public static bool TryGetCustomAttributeList<TAttribute>(this Type type, out List<TAttribute> attributeList) where TAttribute : Attribute => (attributeList = type.GetCustomAttributes<TAttribute>().ToList()) is { Count: > 0 };
 
     public static bool TryGetCustomAttributeList<TAttribute>(this MemberInfo info, out List<TAttribute> attributeList) where TAttribute : Attribute => (attributeList = info.GetCustomAttributes<TAttribute>().ToList()) is { Count: > 0 };

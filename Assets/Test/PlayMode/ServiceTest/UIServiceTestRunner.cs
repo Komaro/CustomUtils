@@ -85,8 +85,10 @@ public class UIServiceTestRunner {
                 return true;
             });
             
-            foreach (var uiView in service.GetType().GetFieldValue<Transform>(service, "_uiRoot", flags).GetComponentsInChildren<UIViewMonoBehaviour>(true)) {
-                Logger.TraceLog($"{uiView.name} || {uiView.Priority}");
+            if (service.GetType().TryGetFieldValue(out var valueObj, service, "_uiRoot", flags) && valueObj is Transform value) {
+                foreach (var uiView in value.GetComponentsInChildren<UIViewMonoBehaviour>(true)) {
+                    Logger.TraceLog($"{uiView.name} || {uiView.Priority}");
+                }
             }
 
             Assert.IsNotNull(service.Open<TestSimpleUIView>());

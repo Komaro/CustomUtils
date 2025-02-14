@@ -18,11 +18,6 @@ public static class RandomUtil {
         return UnityRandom.Range(min, max);
     }
 
-    public static double GetRandom() {
-        CheckRandomCount();
-        return _random.NextDouble();
-    }
-
     public static string GetRandom(int length, char min = 'A', char max = 'z') {
         if (min > max) {
             return string.Empty;
@@ -47,7 +42,17 @@ public static class RandomUtil {
         CheckRandomCount();
         _random.NextBytes(bytes);
     }
-
+    
+    public static int GetRandomInt() {
+        CheckRandomCount();
+        return _random.Next();
+    }
+    
+    public static double GetRandomDouble() {
+        CheckRandomCount();
+        return _random.NextDouble();
+    }
+    
     public static IEnumerable<int> GetRandoms(int length, int min = 0, int max = 10000) {
         CheckRandomCount();
         for (var i = 0; i < length; i++) {

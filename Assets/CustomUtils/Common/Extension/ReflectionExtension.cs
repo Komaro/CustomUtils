@@ -19,6 +19,8 @@ public static class ReflectionExtension {
     
     public static bool TryGetPropertyInfo(this Type type, out PropertyInfo info, string name) => (info = type.GetProperty(name)) != null;
     public static bool TryGetPropertyInfo(this Type type, out PropertyInfo info, string name, BindingFlags bindingFlags) => (info = type.GetProperty(name, bindingFlags)) != null;
+
+    public static bool TryGetGetGetMethod(this PropertyInfo propertyInfo, out MethodInfo methodInfo) => (methodInfo = propertyInfo.GetGetMethod()) != null;
     
     #endregion
 
@@ -28,6 +30,10 @@ public static class ReflectionExtension {
             .ConvertTo(info => (info.Name, info.GetValue(obj)))
             .Concat(type.GetProperties(bindingFlags).Where(info => info.GetIndexParameters().Length <= 0).ConvertTo(info => (info.Name, info.GetValue(obj))));
     
+    public static IEnumerable<(string name, object value)> _GetAllDataMemberNameWithValue(this Type type, object obj, BindingFlags bindingFlags = default) => type.GetFields(bindingFlags)
+        .ConvertTo(info => (info.Name, DynamicMethodProvider.GetFieldValueFunc(type, info)?.Invoke(obj)))
+        .Concat(type.GetProperties(bindingFlags).Where(info => info.GetIndexParameters().Length <= 0).ConvertTo(info => (info.Name, info.GetValue(obj))));
+
     public static bool TryGetFieldValue(this Type type, out object value, object obj, string name) => (value = type.GetFieldValue(obj, name)) != null;
     public static bool TryGetFieldValue(this Type type, out object value, object obj, string name, BindingFlags bindingFlags) => (value = type.GetFieldValue(obj, name, bindingFlags)) != null;
 
@@ -101,8 +107,7 @@ public static class ReflectionExtension {
 
     public static bool IsStruct(this Type type) => type.IsValueType && type.IsPrimitive == false;
     public static bool IsDelegate(this Type type) => type.IsSubclassOf(typeof(Delegate));
-
-
+    
     #region PriorityExtension
     
     public static uint GetOrderByPriority(this Type type) {

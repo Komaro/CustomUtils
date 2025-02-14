@@ -62,6 +62,7 @@ public class NotifyList<TValue> : NotifyCollection<List<TValue>, TValue>, IList<
     public override void Refresh() => OnChanged.handler?.Invoke(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Replace));
 }
 
+// record 형식과 동일하게 Reference 대신 데이터를 비교 
 public class NotifyRecordList<TValue> : NotifyList<TValue> {
 
     public NotifyRecordList() { }

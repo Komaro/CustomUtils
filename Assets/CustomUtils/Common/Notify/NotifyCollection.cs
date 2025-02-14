@@ -10,7 +10,7 @@ using System.Runtime.Serialization;
 public abstract class NotifyCollection<TCollection, TValue> : NotifyField, ICollection, ICollection<TValue>, IReadOnlyCollection<TValue> where TCollection : ICollection<TValue>, new() {
 
     [DataMember] 
-    protected readonly TCollection collection;
+    protected TCollection collection;
 
     public int Count => collection.Count;
     public bool IsReadOnly => collection.IsReadOnly;
@@ -173,6 +173,7 @@ public class NotifyCollection<TValue> : NotifyCollection<Collection<TValue>, TVa
     }
 }
 
+// record 형식과 동일하게 Reference 대신 데이터를 비교 
 public class NotifyRecordCollection<TValue> : NotifyCollection<TValue> {
 
     public NotifyRecordCollection() { }

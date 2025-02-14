@@ -5,15 +5,16 @@ using System.Reflection.Emit;
 
 public static class DynamicMethodProvider {
 
-    private static readonly Dictionary<Type, Dictionary<string, Func<object, object>>> _getValueFuncDic = new();
+    #region [Field]
+    
+    private static readonly Dictionary<Type, Dictionary<string, Func<object, object>>> _getFieldValueFuncDic = new();
 
-    public static Func<object, object> GetFieldValueFunc(object obj, string name) => _getValueFuncDic.TryGetValue(obj.GetType(), out var funcDic) && funcDic.TryGetValue(name, out var func) ? func : obj.GetType().TryGetFieldInfo(out var info, name) ? GetFieldValueFunc(obj, info) : null;
-    public static Func<object, object> GetFieldValueFunc(Type type, string name) => _getValueFuncDic.TryGetValue(type, out var funcDic) && funcDic.TryGetValue(name, out var func) ? func : type.TryGetFieldInfo(out var info, name) ? GetFieldValueFunc(type, info) : null;
-
+    public static Func<object, object> GetFieldValueFunc(object obj, string name) => _getFieldValueFuncDic.TryGetValue(obj.GetType(), out var funcDic) && funcDic.TryGetValue(name, out var func) ? func : obj.GetType().TryGetFieldInfo(out var info, name) ? GetFieldValueFunc(obj, info) : null;
+    public static Func<object, object> GetFieldValueFunc(Type type, string name) => _getFieldValueFuncDic.TryGetValue(type, out var funcDic) && funcDic.TryGetValue(name, out var func) ? func : type.TryGetFieldInfo(out var info, name) ? GetFieldValueFunc(type, info) : null;
     public static Func<object, object> GetFieldValueFunc(object obj, FieldInfo info) => GetFieldValueFunc(obj.GetType(), info);
     
     public static Func<object, object> GetFieldValueFunc(Type type, FieldInfo info) {
-        if (_getValueFuncDic.TryGetValue(type, out var funcDic) && funcDic.TryGetValue(info.Name, out var func)) {
+        if (_getFieldValueFuncDic.TryGetValue(type, out var funcDic) && funcDic.TryGetValue(info.Name, out var func)) {
             return func;
         }
 
@@ -31,9 +32,48 @@ public static class DynamicMethodProvider {
         
         generator.Emit(OpCodes.Ret);
         
-        _getValueFuncDic.AutoAdd(type, info.Name, (Func<object, object>) dynamicMethod.CreateDelegate(typeof(Func<object, object>)));
-        return _getValueFuncDic[type][info.Name];
+        _getFieldValueFuncDic.AutoAdd(type, info.Name, (Func<object, object>) dynamicMethod.CreateDelegate(typeof(Func<object, object>)));
+        return _getFieldValueFuncDic[type][info.Name];
+    }
+    
+    #endregion
+
+    #region [Property]
+    
+    private static readonly MultiLevelDictionary<Type, string, Func<object, object>> _getPropertyValueDic = new();
+
+    public static Func<object, object> GetPropertyValueFunc(object obj, string name) => _getPropertyValueDic.TryGetValue(obj.GetType(), out var funcDic) && funcDic.TryGetValue(name, out var func) ? func : obj.GetType().TryGetPropertyInfo(out var info, name) ? GetPropertyValueFunc(obj, info) : null;
+    public static Func<object, object> GetPropertyValueFunc(Type type, string name) => _getPropertyValueDic.TryGetValue(type, out var funcDic) && funcDic.TryGetValue(name, out var func) ? func : type.TryGetPropertyInfo(out var info, name) ? GetPropertyValueFunc(type, info) : null;
+    public static Func<object, object> GetPropertyValueFunc(object obj, PropertyInfo info) => GetPropertyValueFunc(obj.GetType(), info);
+
+    public static Func<object, object> GetPropertyValueFunc(Type type, PropertyInfo info) {
+        if (_getPropertyValueDic.TryGetValue(type, out var funcDic) && funcDic.TryGetValue(info.Name, out var func)) {
+            return func;
+        }
+
+        return CreatePropertyValueFunc(type, info);
     }
 
-    // TODO. GetProperty 구현. PropertyInfo의 GetGetMethod를 Call 하여 반환 DynamicMethod Func 반환
+    private static Func<object, object> CreatePropertyValueFunc(Type type, PropertyInfo info) {
+        if (info.TryGetGetGetMethod(out var methodInfo) == false) {
+            Logger.TraceError($"Property {info.Name} does not have a getter implemented.");
+            return null;
+        }
+        
+        var dynamicMethod = new DynamicMethod(info.Name, typeof(object), new[] { typeof(object) }, typeof(object));
+        var generator = dynamicMethod.GetILGenerator();
+        generator.Emit(OpCodes.Ldarg_0);
+        generator.Emit(methodInfo.IsStatic ? OpCodes.Call : OpCodes.Callvirt, methodInfo);
+
+        if (info.PropertyType.IsValueType) {
+            generator.Emit(OpCodes.Box, info.PropertyType);
+        }
+        
+        generator.Emit(OpCodes.Ret);
+        
+        _getPropertyValueDic.Add(type, info.Name, (Func<object, object>)dynamicMethod.CreateDelegate(typeof(Func<object, object>)));
+        return _getPropertyValueDic[type, info.Name];
+    }
+    
+    #endregion
 }

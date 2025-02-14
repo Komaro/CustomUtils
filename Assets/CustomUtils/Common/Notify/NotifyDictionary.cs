@@ -167,6 +167,7 @@ public class NotifyConcurrentDictionary <TKey, TValue> : NotifyDictionary<Concur
     }
 }
 
+// record 형식과 동일하게 Reference 대신 데이터를 비교 
 public class NotifyRecordDictionary<TKey, TValue> : NotifyDictionary<TKey, TValue> {
     
     public NotifyRecordDictionary() { }

@@ -15,7 +15,7 @@ public abstract class MultiLevelDictionary<TDictionary, TIDictionary, TKey, TIKe
     private readonly bool INNER_KEY_IS_CLASS = typeof(TIKey).IsClass;
     private readonly bool VALUE_IS_CLASS = typeof(TValue).IsClass;
 
-    public MultiLevelDictionary() => dictionary = new TDictionary();
+    protected MultiLevelDictionary() => dictionary = new TDictionary();
 
     public MultiLevelDictionary(TDictionary dictionary) : this() {
         foreach (var (key, value) in dictionary) {
@@ -170,10 +170,25 @@ public abstract class MultiLevelDictionary<TDictionary, TIDictionary, TKey, TIKe
     #endregion
 }
 
-public class MultiLevelDictionary<TKey, TIKey, TValue> : MultiLevelDictionary<Dictionary<TKey, Dictionary<TIKey, TValue>>, Dictionary<TIKey, TValue>, TKey, TIKey, TValue> { }
+public class MultiLevelDictionary<TKey, TIKey, TValue> : MultiLevelDictionary<Dictionary<TKey, Dictionary<TIKey, TValue>>, Dictionary<TIKey, TValue>, TKey, TIKey, TValue> {
+    
+    public MultiLevelDictionary(Dictionary<TKey, Dictionary<TIKey, TValue>> dictionary) : base(dictionary) { }
+    public MultiLevelDictionary(params KeyValuePair<TKey, Dictionary<TIKey, TValue>>[] pairs) : base(pairs) { }
+    public MultiLevelDictionary(IEnumerable<KeyValuePair<TKey, Dictionary<TIKey, TValue>>> enumerable) : base(enumerable) {    }
+}
 
 public class ConcurrentMultiLevelDictionary<TKey, TIKey, TValue> : MultiLevelDictionary<ConcurrentDictionary<TKey, ConcurrentDictionary<TIKey, TValue>>, ConcurrentDictionary<TIKey, TValue>, TKey, TIKey, TValue> {
+
+    public ConcurrentMultiLevelDictionary(Dictionary<TKey, Dictionary<TIKey, TValue>> dictionary) {
+        foreach (var (key, value) in dictionary) {
+            this.dictionary.TryAdd(key, new ConcurrentDictionary<TIKey, TValue>(value));
+        }
+    }
     
+    public ConcurrentMultiLevelDictionary(ConcurrentDictionary<TKey, ConcurrentDictionary<TIKey, TValue>> dictionary) : base(dictionary) { }
+    public ConcurrentMultiLevelDictionary(params KeyValuePair<TKey, ConcurrentDictionary<TIKey, TValue>>[] pairs) : base(pairs) { }
+    public ConcurrentMultiLevelDictionary(IEnumerable<KeyValuePair<TKey, ConcurrentDictionary<TIKey, TValue>>> enumerable) : base(enumerable) { }
+
     public override void Add(TKey key, ConcurrentDictionary<TIKey, TValue> value) { 
         ValidateOrThrowValue(ref value);
         dictionary.AddOrUpdate(key, value, (_, _) => value);

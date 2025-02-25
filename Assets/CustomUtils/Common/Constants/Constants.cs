@@ -62,7 +62,7 @@ public static partial class Constants {
         public static readonly string RESOURCES_FULL_PATH = $"{Application.dataPath}/{Folder.RESOURCES}";
         public static readonly string RESOURCES_PATH = $"{Folder.ASSETS}/{Folder.RESOURCES}";
 
-        public static readonly string BUILD_ROOT_PATH = $"{PROJECT_PATH}/{Folder.BUILD}";
+        public static readonly string BUILD_PATH = $"{PROJECT_PATH}/{Folder.BUILD}";
 
         public static readonly string MEMORY_CAPTURES_PATH = $"{PROJECT_PATH}/{Folder.MEMORY_CAPTURES}";
     }

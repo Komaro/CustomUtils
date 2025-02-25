@@ -57,7 +57,7 @@ public abstract partial class Builder : IDisposable {
         };
         
         if (BuildConfigProvider.TryGetValue<string>("buildPath", out var buildDirectory) == false && (BuildConfigProvider.TryGetValue(nameof(BuildConfig.buildDirectory), out buildDirectory) == false || string.IsNullOrEmpty(buildDirectory))) {
-            buildDirectory = $"{Constants.Path.BUILD_ROOT_PATH}/{buildType}";
+            buildDirectory = $"{Constants.Path.BUILD_PATH}/{buildType}";
         }
 
         options.locationPathName = buildDirectory;

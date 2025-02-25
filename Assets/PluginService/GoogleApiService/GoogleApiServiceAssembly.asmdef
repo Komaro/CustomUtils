@@ -1,0 +1,23 @@
+{
+    "name": "GoogleApiServiceAssembly",
+    "rootNamespace": "",
+    "references": [
+        "GUID:cfb6063ef43c4c4da20a2093012689dc",
+        "GUID:6b5494e695d3e884cbc61e80bf23aa9c"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "Google.Apis.dll",
+        "Google.Apis.Core.dll",
+        "Google.Apis.Auth.dll",
+        "Google.Apis.Drive.v3.dll",
+        "Google.Apis.Sheets.v4.dll"
+    ],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

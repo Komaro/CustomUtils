@@ -5,6 +5,12 @@ using System.Reflection;
 using UnityEngine;
 using UnityEngine.Audio;
 
+// TODO. Unity Audio System 관련 기능을 새로운 기반 추상 클래스로 추출하여 추가 모듈화를 통해 개선 필요. 현재 너무 많은 구현이 남아 있음
+//public abstract class UnitySoundCore : SoundCoreBase {
+//
+//
+//}
+
 public abstract class SoundCoreBase : MonoBehaviour {
     
     private HashSet<Enum> _cacheSnapshotEnumSet = new();

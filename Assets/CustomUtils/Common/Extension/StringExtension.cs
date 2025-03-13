@@ -87,14 +87,8 @@ public static class StringExtension {
 
     public static byte[] ToRawBytes(this string content) => Convert.FromBase64String(content);
 
-    public static string GetColorString(this string content, Color color) {
-        if (string.IsNullOrEmpty(content) == false) {
-            return $"<color=#{color.ToHex()}>{content}</color>";
-        }
-        
-        return content;
-    }
-    
+    public static string GetColorString(this string content, Color color) => string.IsNullOrEmpty(content) == false ? $"<color=#{color.ToHex()}>{content}</color>" : content;
+
     public static bool WrappedIn(this string content, string matchContent, StringComparison comparison = StringComparison.Ordinal) => content.StartsWith(matchContent, comparison) && content.EndsWith(matchContent, comparison);
     public static bool EqualsFast(this string content, string comparedString) => content.Equals(comparedString, StringComparison.Ordinal);
     public static bool ContainsFast(this string content, string containedContent) => content.Contains(containedContent, StringComparison.Ordinal);

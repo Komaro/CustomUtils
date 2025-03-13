@@ -1,27 +1,136 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
+
+// TODO. 구조 수정으로 인해 재테스트 필요
+internal static class EnumBag {
+
+    private static readonly ConcurrentDictionary<Type, Bag> _enumBagDic = new();
+
+    public static Enum Get(Type type, string stringValue) {
+        if (type.IsEnum == false) {
+            Logger.TraceError($"{nameof(type)} is not {nameof(Enum)} type");
+            return null;
+        }
+
+        return _enumBagDic.GetOrAdd(type, _ => new Bag(type)).Get(stringValue);
+    }
+
+    // public static Enum[] GetValues(Type type, bool ignoreObsolete = false) {
+    //     if (type.IsEnum == false) {
+    //         Logger.TraceError($"{nameof(type)} is not {nameof(Enum)} type");
+    //         return null;
+    //     }
+    //
+    //     // if (_enumBagDic.TryGetValue(type, out var bag) == false) {
+    //     //     bag = _enumBagDic.GetOrAdd(type, _ => new Bag(type));
+    //     // } 
+    //     //
+    //     // return bag.GetValues(ignoreObsolete);
+    //
+    //     return _enumBagDic.GetOrAdd(type, _ => new Bag(type)).GetValues(ignoreObsolete);
+    // }
+
+    public static ReadOnlySpan<Enum> GetValues(Type type, bool ignoreObsolete = false) {
+        if (type.IsEnum == false) {
+            Logger.TraceError($"{nameof(type)} is not {nameof(Enum)} type");
+            return ReadOnlySpan<Enum>.Empty;
+        }
+
+        return _enumBagDic.GetOrAdd(type, _ => new Bag(type)).GetValues();
+        // if (_enumBagDic.TryGetValue(type, out var bag) == false) {
+        //     bag = _enumBagDic.GetOrAdd(type, _ => new Bag(type));
+        // }
+        //
+        // return bag.GetValuesSpan(ignoreObsolete);
+    }
+
+    private sealed class Bag {
+
+        // private readonly Enum[] _values;
+        // private readonly Enum[] _ignoreObsoleteValues;
+        // private readonly ConcurrentDictionary<string, Enum> _stringToEnumDic = new();
+
+        private ImmutableArray<Enum> _immutableValues;
+        private ImmutableArray<Enum> _ignoreObsoleteImmutableValues;
+        private readonly ImmutableDictionary<string, Enum> _stringToEnumImmutableDic;
+
+        public Bag(Type type) {
+            if (type.IsEnum == false) {
+                _immutableValues = ImmutableArray<Enum>.Empty;
+                _ignoreObsoleteImmutableValues = ImmutableArray<Enum>.Empty;
+                _stringToEnumImmutableDic = ImmutableDictionary<string, Enum>.Empty;
+                Logger.TraceError($"{nameof(type)} is not enum type");
+                return;
+            }
+            
+            _immutableValues = Enum.GetValues(type).ToArray<Enum>().ToImmutableArray();
+            _ignoreObsoleteImmutableValues = _immutableValues.Where(enumValue => type.TryGetFieldInfo(out var info, enumValue.ToString()) && info.IsDefined<ObsoleteAttribute>() == false).ToImmutableArray();
+            _stringToEnumImmutableDic = _immutableValues.ToImmutableDictionary(value => string.Intern(value.ToString()), value => value);
+            
+            // if (type.IsEnum == false) {
+            //     _values = Array.Empty<Enum>();
+            //     _ignoreObsoleteValues = Array.Empty<Enum>();
+            //     Logger.TraceError($"{nameof(type)} is not enum type");
+            //     return;
+            // } 
+            //
+            // _values = Enum.GetValues(type).ToArray<Enum>();
+            // _ignoreObsoleteValues = _values.Where(enumValue => type.TryGetFieldInfo(out var info, enumValue.ToString()) && info.IsDefined<ObsoleteAttribute>() == false).ToArray();
+            // _stringToEnumDic = _values.ToConcurrentDictionary(value => string.Intern(value.ToString()), value => value);
+        }
+
+        // public Enum Get(string stringValue) => _stringToEnumDic.TryGetValue(stringValue, out var enumValue) ? enumValue : default;
+        // public Enum[] GetValues(bool ignoreObsolete = false) => ignoreObsolete ? _ignoreObsoleteValues : _values;
+        public Enum Get(string stringValue) => _stringToEnumImmutableDic.TryGetValue(stringValue, out var enumValue) ? enumValue : default;
+        public ReadOnlySpan<Enum> GetValues(bool ignoreObsolete = false) => ignoreObsolete ? _ignoreObsoleteImmutableValues.AsSpan() : _immutableValues.AsSpan();
+    }
+}
 
 internal static class EnumBag<TEnum> where TEnum : struct, Enum {
 
-    private static readonly TEnum[] _values;
-    private static readonly TEnum[] _ignoreObsoleteValues;
-    private static readonly ConcurrentDictionary<string, TEnum> _stringToEnumDic = new();
+    // private static readonly TEnum[] _values;
+    // private static readonly TEnum[] _ignoreObsoleteValues;
+    // private static readonly ConcurrentDictionary<string, TEnum> _stringToEnumDic = new();
+    
+    private static ImmutableArray<TEnum> _immutableValues;
+    private static ImmutableArray<TEnum> _ignoreObsoleteImmutableValues;
+    private static readonly ImmutableDictionary<string, TEnum> _stringToEnumImmutableDic;
+
 
     static EnumBag() {
-        var enumType = typeof(TEnum);
-        if (Enum.GetValues(enumType) is TEnum[] enumValues) {
-            _values = enumValues;
-            _ignoreObsoleteValues = _values.Where(enumValue => enumType.TryGetFieldInfo(out var info, enumValue.ToString()) && info.IsDefined<ObsoleteAttribute>() == false).ToArray();
-            foreach (var enumValue in _values) {
-                _stringToEnumDic.TryAdd(enumValue.ToString(), enumValue);
-            }
+        var span = EnumBag.GetValues(typeof(TEnum));
+        if (span.IsEmpty) {
+            _immutableValues = ImmutableArray<TEnum>.Empty;
+            _ignoreObsoleteImmutableValues = ImmutableArray<TEnum>.Empty;
+            _stringToEnumImmutableDic = ImmutableDictionary<string, TEnum>.Empty;
+            Logger.TraceError($"{nameof(span)} is empty");
+            return;
         }
+
+        _immutableValues = span.ToArray().ToArray<TEnum>().ToImmutableArray();
+        _ignoreObsoleteImmutableValues = _immutableValues.Where(enumValue => typeof(TEnum).TryGetFieldInfo(out var info, enumValue.ToString()) && info.IsDefined<ObsoleteAttribute>() == false).ToImmutableArray();
+        _stringToEnumImmutableDic = _immutableValues.ToImmutableDictionary(value => string.Intern(value.ToString()), value => value);
+        
+        // _values = EnumBag.GetValues(typeof(TEnum)).ToArray<TEnum>();
+        // if (_values == null || _values.IsEmpty()) {
+        //     _values = Array.Empty<TEnum>();
+        //     _ignoreObsoleteValues = Array.Empty<TEnum>();
+        //     Logger.TraceError($"{nameof(_values)} is null or empty");
+        //     return;
+        // }
+        //
+        // _ignoreObsoleteValues = _values.Where(enumValue => typeof(TEnum).TryGetFieldInfo(out var info, enumValue.ToString()) && info.IsDefined<ObsoleteAttribute>() == false).ToArray();
+        // _stringToEnumDic = _values.ToConcurrentDictionary(value => string.Intern(value.ToString()), value => value);
     }
 
-    public static TEnum Get(string stringValue) => _stringToEnumDic.TryGetValue(stringValue, out var enumValue) ? enumValue : default;
-    public static TEnum[] GetValues(bool ignoreObsolete = false) => ignoreObsolete ? _ignoreObsoleteValues : _values;
+    // public static TEnum Get(string stringValue) => _stringToEnumDic.TryGetValue(stringValue, out var enumValue) ? enumValue : default;
+    // public static TEnum[] GetValues(bool ignoreObsolete = false) => ignoreObsolete ? _ignoreObsoleteValues : _values;
+    
+    public static TEnum Get(string stringValue) => _stringToEnumImmutableDic.TryGetValue(stringValue, out var enumValue) ? enumValue : default;
+    public static ReadOnlySpan<TEnum> GetValues(bool ignoreObsolete = false) => ignoreObsolete ? _ignoreObsoleteImmutableValues.AsSpan() : _immutableValues.AsSpan();
 }
 
 public static class EnumUtil {
@@ -41,7 +150,7 @@ public static class EnumUtil {
     }
     
     #region [string To enum]
-    
+
     public static bool TryConvert<TEnum>(string value, out TEnum enumValue) where TEnum : struct, Enum {
         if (IsDefined<TEnum>(value)) {
             enumValue = Convert<TEnum>(value);
@@ -75,8 +184,17 @@ public static class EnumUtil {
         try {
             return EnumBag<TEnum>.Get(value);
         } catch (Exception ex) {
-            Logger.TraceError($"Convert Fail || {value} || {ex}");
+            Logger.TraceError($"Convert fail || {value} || {ex}");
             return default;
+        }
+    }
+
+    public static Enum ConvertFast(Type type, string value) {
+        try {
+            return EnumBag.Get(type, value);
+        } catch (Exception ex) {
+            Logger.TraceError($"Convert fail || {value} || {ex}");
+            throw;
         }
     }
     
@@ -101,7 +219,7 @@ public static class EnumUtil {
             
             return default;
         } catch (Exception ex) {
-            Logger.TraceError($"Convert Fail || {value} || {ex}");
+            Logger.TraceError($"Convert fail || {value} || {ex}");
             return default;
         }
     }
@@ -170,7 +288,7 @@ public static class EnumUtil {
         try {
             return (TEnum)Enum.ToObject(typeof(TEnum), value);
         } catch (Exception ex) {
-            Logger.TraceError($"Convert Fail || {value} || {ex}");
+            Logger.TraceError($"Convert fail || {value} || {ex}");
             return default;
         }
     }
@@ -179,7 +297,7 @@ public static class EnumUtil {
         try {
             return ExpressionProvider.GetIntToEnumFunc<TEnum>().Invoke(value);
         } catch (Exception ex) {
-            Logger.TraceError($"Convert Fail || {value} || {ex}");
+            Logger.TraceError($"Convert fail || {value} || {ex}");
             return default;
         }
     }
@@ -192,7 +310,7 @@ public static class EnumUtil {
         try {
             return System.Convert.ToInt32(value);
         } catch (Exception ex) {
-            Logger.TraceError($"Convert Fail || {value} || {ex}");
+            Logger.TraceError($"Convert fail || {value} || {ex}");
             return int.MinValue;
         }
     }
@@ -201,17 +319,22 @@ public static class EnumUtil {
         try {
             return ExpressionProvider.GetEnumToIntFun<TEnum>().Invoke(value);
         } catch (Exception ex) {
-            Logger.TraceError($"Convert Fail || {value} || {ex}");
+            Logger.TraceError($"Convert fail || {value} || {ex}");
             return -1;
         }
     }
     
     #endregion
 
-    public static IEnumerable<Enum> GetValues(Type enumType) => Enum.GetValues(enumType).Cast<Enum>();
-    public static IEnumerable<TEnum> GetValues<TEnum>(bool ignoreDefault = false, bool ignoreObsolete = false) where TEnum : struct, Enum => EnumBag<TEnum>.GetValues(ignoreObsolete).Where((_, index) => ignoreDefault == false || index != 0);
-    public static List<TEnum> GetValueList<TEnum>(bool ignoreDefault = false, bool ignoreObsolete = false) where TEnum : struct, Enum => GetValues<TEnum>(ignoreDefault, ignoreObsolete).ToList();
+    // public static IEnumerable<Enum> GetValues(Type enumType) => Enum.GetValues(enumType).Cast<Enum>();
+    // public static IEnumerable<TEnum> GetValues<TEnum>(bool ignoreDefault = false, bool ignoreObsolete = false) where TEnum : struct, Enum => EnumBag<TEnum>.GetValues(ignoreObsolete).Where((_, index) => ignoreDefault == false || index != 0);
+    // public static IEnumerable<Enum> GetValues(Type type, bool ignoreDefault = false, bool ignoreObsolete = false) => EnumBag.GetValues(type, ignoreObsolete).Where((_, index) => ignoreDefault == false || index != 0);
+    
+    public static ReadOnlySpan<TEnum> GetValues<TEnum>(bool ignoreDefault = false, bool ignoreObsolete = false) where TEnum : struct, Enum => ignoreDefault ? EnumBag<TEnum>.GetValues(ignoreObsolete)[1..] : EnumBag<TEnum>.GetValues(ignoreObsolete);
+    public static ReadOnlySpan<Enum> GetValues(Type type, bool ignoreDefault = false, bool ignoreObsolete = false) => ignoreDefault ? EnumBag.GetValues(type, ignoreObsolete)[1..] : EnumBag.GetValues(type, ignoreObsolete);
 
+    public static List<TEnum> GetValueList<TEnum>(bool ignoreDefault = false, bool ignoreObsolete = false) where TEnum : struct, Enum => GetValues<TEnum>(ignoreDefault, ignoreObsolete).ToList();
+    
     private static IEnumerable<string> ReturnValueAllCase(string value) {
         yield return value;
         yield return value.GetForceTitleCase();
@@ -229,14 +352,8 @@ public static class EnumExtension {
     
     public static TEnum Convert<TEnum>(this Enum enumValue) where TEnum : struct, Enum => EnumUtil.ConvertFast<TEnum>(enumValue.ToString());
 
-    public static TEnum[] GetValues<TEnum>(this TEnum _, bool ignoreDefault = false, bool ignoreObsolete = false) where TEnum : struct, Enum {
-        var values = EnumBag<TEnum>.GetValues(ignoreObsolete);
-        if (ignoreDefault) {
-            values.AsSpan().Slice(1, values.Length - 1).ToArray();
-        }
-        
-        return values;
-    }
+    public static ReadOnlySpan<TEnum> GetValues<TEnum>(this TEnum _, bool ignoreDefault = false, bool ignoreObsolete = false) where TEnum : struct, Enum => ignoreDefault ? EnumBag<TEnum>.GetValues(ignoreObsolete)[1..] : EnumBag<TEnum>.GetValues(ignoreObsolete);
+    public static ReadOnlySpan<Enum> GetValues(Type type, bool ignoreDefault = false, bool ignoreObsolete = false) => ignoreDefault ? EnumBag.GetValues(type, ignoreObsolete)[1..] : EnumBag.GetValues(type, ignoreObsolete);
 
     public static List<TEnum> GetValueList<TEnum>(this TEnum _, bool ignoreDefault = false, bool ignoreObsolete = false) where TEnum : struct, Enum => EnumUtil.GetValueList<TEnum>(ignoreDefault, ignoreObsolete);
 }

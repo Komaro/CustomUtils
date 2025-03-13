@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
@@ -14,17 +15,19 @@ public static class CollectionExtension {
     public static IEnumerable<TSource> OrderBy<TSource, TKey>(this IEnumerable<TSource> enumerable, Func<TSource, TKey> keySelector, bool isAscending) => isAscending ? enumerable.OrderBy(keySelector) : enumerable.OrderByDescending(keySelector) as IEnumerable<TSource>;
     public static IEnumerable<TSource> WhereNotNull<TSource>(this IEnumerable<TSource> enumerable) where TSource : class => enumerable.Where(source => source != null);
     
-    public static Dictionary<TKey, TValue> ToDictionaryWithDistinct<TSource, TKey, TValue>(this IEnumerable<TSource> enumerable, Func<TSource, TKey> keySelector, Func<TSource, TValue> valueSelector) {
-        var dictionary = new Dictionary<TKey, TValue>();
+    // TODO. Need Test
+    public static Dictionary<TKey, TValue> ToDictionaryWithDistinct<TSource, TKey, TValue>(this IEnumerable<TSource> enumerable, Func<TSource, TKey> keySelector, Func<TSource, TValue> valueSelector) => enumerable.ToDictionary<Dictionary<TKey, TValue>, TSource, TKey, TValue>(keySelector, valueSelector);
+    public static ConcurrentDictionary<TKey, TValue> ToConcurrentDictionary<TSource, TKey, TValue>(this IEnumerable<TSource> enumerable, Func<TSource, TKey> keySelector, Func<TSource, TValue> valueSelector) => enumerable.ToDictionary<ConcurrentDictionary<TKey, TValue>, TSource, TKey, TValue>(keySelector, valueSelector);
+    
+    public static TDictionary ToDictionary<TDictionary, TSource, TKey, TValue>(this IEnumerable<TSource> enumerable, Func<TSource, TKey> keySelector, Func<TSource, TValue> valueSelector) where TDictionary : IDictionary<TKey, TValue>, new() {
+        var dictionary = new TDictionary();
         foreach (var source in enumerable) {
-            var key = keySelector.Invoke(source);
-            var value = valueSelector.Invoke(source);
-            dictionary.AutoAdd(key, value);
+            dictionary.AutoAdd(keySelector.Invoke(source), valueSelector.Invoke(source));
         }
 
         return dictionary;
     }
-    
+
     public static bool TryFirst<T>(this IEnumerable<T> enumerable, out T matchItem, Predicate<T> match = null) {
         if (match == null) {
             matchItem = enumerable.First();
@@ -96,6 +99,24 @@ public static class CollectionExtension {
             Logger.TraceError(ex);
             throw;
         }
+    }
+
+    public static List<T> ToList<T>(this ReadOnlySpan<T> span) {
+        var list = new List<T>();
+        foreach (var value in span) {
+            list.Add(value);
+        }
+
+        return list;
+    }
+
+    public static TCast[] ToArray<TValue, TCast>(this ReadOnlySpan<TValue> span, Func<TValue, TCast> selector) {
+        var array = new TCast[span.Length];
+        for (var i = 0; i < array.Length; i++) {
+            array[i] = selector.Invoke(span[i]);
+        }
+
+        return array;
     }
 
     #endregion
@@ -440,6 +461,12 @@ public static class CollectionExtension {
         }
     }
 
+    public static void RemoveFirst<TValue>(this IList<TValue> list) {
+        if (list.Count > 1) {
+            list.RemoveAt(0);
+        }
+    }
+
     public static void RemoveLast<TValue>(this IList<TValue> list) {
         if (list.Count > 0) {
             list.RemoveAt(list.Count - 1);
@@ -627,6 +654,8 @@ public static class CollectionExtension {
 
         return list;
     }
+
+    public static T[] ToArray<T>(this Array array) => array.Cast<T>().ToArray();
 
     public static Dictionary<T, int> ToIndexDictionary<T>(this T[] array) {
         var dictionary = new Dictionary<T, int>();

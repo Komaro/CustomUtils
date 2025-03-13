@@ -117,7 +117,6 @@ public abstract partial class Builder : IDisposable {
     
     protected abstract void OnPostProcess(BuildSummary summary);
     
-    
     #region [Utils]
     
     protected void ClearBurstDebug(string path) {

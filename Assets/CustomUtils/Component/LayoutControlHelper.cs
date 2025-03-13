@@ -6,11 +6,13 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public interface ILayoutRecursive {
+
     void SelectItem(LayoutItem item);
     void SelectInfo(object info);
 }
 
 public interface ILayoutItem {
+
     void Init();
     void SetData(object data);
     void SetActive(bool isActive);
@@ -23,12 +25,13 @@ public interface ILayoutItem {
 /// <summary>
 /// Layout에 들어가는 Item을 컨트롤하는 컴포넌트
 /// </summary>
+// TODO. Notify 구조 개선을 통해 반응형 처리가 가능하도록 개선할 수 있는지 검
 [RequireComponent(typeof(LayoutGroup))]
 [DisallowMultipleComponent]
 public class LayoutControlHelper : MonoBehaviour, ILayoutRecursive {
 
     private LayoutGroup _layoutGroup;
-    public LayoutGroup p_layoutGroup { get { return _layoutGroup; } }
+    public LayoutGroup LayoutGroup { get { return _layoutGroup; } }
 
     private List<LayoutItem> _itemList = new();
     private IList _infoList;
@@ -37,10 +40,10 @@ public class LayoutControlHelper : MonoBehaviour, ILayoutRecursive {
     private GameObject _itemPrefab;
 
     private RectTransform _itemRect;
-    private RectTransform p_itemRect => _itemRect ??= _itemPrefab.GetComponent<RectTransform>();
+    private RectTransform ItemRect => _itemRect ??= _itemPrefab.GetComponent<RectTransform>();
 
     private RectTransform _layoutRect;
-    public RectTransform p_layoutRect => _layoutRect ??= gameObject.GetComponent<RectTransform>();
+    public RectTransform LayoutRect => _layoutRect ??= gameObject.GetComponent<RectTransform>();
 
     private Action<LayoutItem> _onSelectCallback;
     
@@ -486,7 +489,7 @@ public class LayoutControlHelper : MonoBehaviour, ILayoutRecursive {
     /// <returns></returns>
     public float GetNormalizePosition(int index, int collectionOffset = 0) {
         if (_itemPrefab != null) {
-            var itemSize = p_itemRect.sizeDelta;
+            var itemSize = ItemRect.sizeDelta;
             switch (_layoutGroup) {
                 case GridLayoutGroup gridLayout:
                     var gridItemSize = gridLayout.startAxis switch {
@@ -496,16 +499,16 @@ public class LayoutControlHelper : MonoBehaviour, ILayoutRecursive {
                     };
 
                     var layoutSize = gridLayout.startAxis switch {
-                        GridLayoutGroup.Axis.Horizontal => p_layoutRect.sizeDelta.y,
-                        GridLayoutGroup.Axis.Vertical => p_layoutRect.sizeDelta.x,
+                        GridLayoutGroup.Axis.Horizontal => LayoutRect.sizeDelta.y,
+                        GridLayoutGroup.Axis.Vertical => LayoutRect.sizeDelta.x,
                         _ => 0f,
                     };
 
                     return 1 - Mathf.Lerp(0f, 1f, gridItemSize * (index / (float)gridLayout.constraintCount) / layoutSize);
                 case HorizontalLayoutGroup horizontalLayout: // Not Test
-                    return 1 - Mathf.Lerp(0f, 1f, ((itemSize.x + horizontalLayout.spacing) * index) / (p_layoutRect.sizeDelta.x - collectionOffset));
+                    return 1 - Mathf.Lerp(0f, 1f, ((itemSize.x + horizontalLayout.spacing) * index) / (LayoutRect.sizeDelta.x - collectionOffset));
                 case VerticalLayoutGroup verticalLayout: // Not Test
-                    return 1 - Mathf.Lerp(0f, 1f, ((itemSize.y + verticalLayout.spacing) * index) / p_layoutRect.sizeDelta.y - collectionOffset);
+                    return 1 - Mathf.Lerp(0f, 1f, ((itemSize.y + verticalLayout.spacing) * index) / LayoutRect.sizeDelta.y - collectionOffset);
                 default:
                     return 1;
             }
@@ -549,7 +552,7 @@ public class LayoutControlHelper : MonoBehaviour, ILayoutRecursive {
 
     public void SetActive(bool isActive) => gameObject.SetActive(isActive);
     
-    public bool IsInitialized() => _isInitialized && p_layoutRect.sizeDelta != Vector2.zero;
+    public bool IsInitialized() => _isInitialized && LayoutRect.sizeDelta != Vector2.zero;
 }
 
 public abstract class LayoutItem : MonoBehaviour, ILayoutItem {

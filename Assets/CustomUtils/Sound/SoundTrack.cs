@@ -4,6 +4,18 @@ using System.Linq;
 using UniRx;
 using UnityEngine;
 
+// TODO. Abastrct 구현을 통해 SoundTrack 자체를 커스텀 할 수 있도록 개선 필요
+//[RequiresAttributeImplementation(typeof(CreateAssetMenuAttribute))]
+//public abstract class SoundTrackBase : ScriptableObject {
+//
+//    public GlobalEnum<SoundTrackEnumAttribute> trackType = new();
+//    public SoundTrackEvent[] eventList;
+//
+//    // TODO. Editor Preview Method
+//
+//    // TODO. Runtime Method
+//}
+
 [CreateAssetMenu(fileName = "SoundTrack", menuName = "Sound/Create SoundTrack")]
 public class SoundTrack : ScriptableObject {
     

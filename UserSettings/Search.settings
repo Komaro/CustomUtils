@@ -2,12 +2,12 @@ trackSelection = true
 refreshSearchWindowsInPlayMode = false
 pickerAdvancedUI = false
 fetchPreview = true
-defaultFlags = 0
+defaultFlags = 8
 keepOpen = false
 queryFolder = "Assets"
 onBoardingDoNotAskAgain = true
 showPackageIndexes = false
-showStatusBar = false
+showStatusBar = true
 scopes = {
 	"last_search.71A69CD8" = ""
 	"OpenInspectorPreview.71A69CD8" = "0"
@@ -22,7 +22,7 @@ scopes = {
 }
 providers = {
 	adb = {
-		active = false
+		active = true
 		priority = 2500
 		defaultAction = null
 	}
@@ -75,12 +75,22 @@ providers = {
 objectSelectors = {
 }
 recentSearches = [
-	"t:assembly"
+	""
 	"adb:"
+	"buildprofile"
+	"b"
+	"p: buildprofile"
+	"p: build"
+	"t: asset"
+	"p:profile"
+	"p: t:texture"
+	"p: t:"
+	"p: t:textur"
+	"p: "
+	"t:assembly"
 	"adb: t:assembly"
 	"adb: t:"
 	"adb: t:texture"
-	""
 	"l:roslyn"
 	"?"
 	"t"
@@ -88,7 +98,7 @@ recentSearches = [
 searchItemFavorites = [
 ]
 savedSearchesSortOrder = 0
-showSavedSearchPanel = false
+showSavedSearchPanel = true
 hideTabs = false
 expandedQueries = [
 ]

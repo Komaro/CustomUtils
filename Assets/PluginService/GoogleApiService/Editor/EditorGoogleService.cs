@@ -125,17 +125,18 @@ public class EditorGoogleService : EditorWindow {
 		request.Fields = DRIVE_FIELDS;
 		
 		var fileList = request.Execute();
-		var builder = new StringBuilder().AppendLine();
-		if (fileList != null && fileList.Files.Count > 0) {
-			foreach (var file in fileList.Files) {
-				var email = file.Owners.FirstOrDefault()?.EmailAddress;
-				if (email?.Contains(_eMail) ?? false) {
-					builder.AppendLine($"{file.Name} || {file.Id} || {email}");	
+		using (_ = StringUtil.StringBuilderPool.Get(out var stringBuilder)) {
+			if (fileList != null && fileList.Files.Count > 0) {
+				foreach (var file in fileList.Files) {
+					var email = file.Owners.FirstOrDefault()?.EmailAddress;
+					if (email?.Contains(_eMail) ?? false) {
+						stringBuilder.AppendLine($"{file.Name} || {file.Id} || {email}");	
+					}
 				}
-			}
-			Logger.TraceLog(builder.ToString(), Color.cyan);
+				Logger.TraceLog(stringBuilder.ToString(), Color.cyan);
+			}	
 		}
- 
+		
 		return fileList;
 	}
  

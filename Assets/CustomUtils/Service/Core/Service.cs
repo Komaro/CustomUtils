@@ -4,12 +4,27 @@ using System.Collections.Immutable;
 using System.Linq;
 using UnityEngine;
 
+#if UNITY_6000_0_OR_NEWER && UNITY_EDITOR
+using UnityEditor;
+#endif
+
 public static partial class Service {
 
     private static ImmutableHashSet<Type> _cachedServiceTypeSet;
     private static readonly Dictionary<Type, IService> _serviceDic = new ();
 
     private static bool _isInitialized = false;
+    
+#if UNITY_6000_0_OR_NEWER && UNITY_EDITOR
+    
+    [InitializeOnLoadMethod]
+    private static void InitializeOnLoad() {
+        if (EditorApplication.isPlayingOrWillChangePlaymode == false) {
+            Initialize();
+        }
+    }
+    
+#endif
     
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterAssembliesLoaded)]
     private static void Initialize() {
@@ -18,6 +33,7 @@ public static partial class Service {
             _isInitialized = true;
         }
     }
+    
 
     #region [Start]
 

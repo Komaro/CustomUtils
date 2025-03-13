@@ -49,7 +49,8 @@ public static class CsvUtil {
     
     public static async Task<string> SerializeAsync(IEnumerable records) {
         try {
-            using (var stringWriter = new StringWriter(new StringBuilder()))
+            using (_ = StringUtil.StringBuilderPool.Get(out var stringBuilder))
+            using (var stringWriter = new StringWriter(stringBuilder))
             using (var csvWriter = new CsvWriter(stringWriter, CultureInfo.InvariantCulture)) {
                 await csvWriter.WriteRecordsAsync(records);
                 return stringWriter.ToString();
@@ -63,7 +64,8 @@ public static class CsvUtil {
 
     public static string Serialize(IEnumerable records) {
         try {
-            using (var stringWriter = new StringWriter(new StringBuilder()))
+            using (_ = StringUtil.StringBuilderPool.Get(out var stringBuilder))
+            using (var stringWriter = new StringWriter(stringBuilder))
             using (var csvWriter = new CsvWriter(stringWriter, CultureInfo.InvariantCulture)) {
                 csvWriter.WriteRecords(records);
                 return stringWriter.ToString();
@@ -76,7 +78,8 @@ public static class CsvUtil {
     }
 
     public static string Serialize<TClassMap>(IEnumerable records) where TClassMap : ClassMap {
-        using (var stringWriter = new StringWriter(new StringBuilder())) 
+        using (_ = StringUtil.StringBuilderPool.Get(out var stringBuilder))
+        using (var stringWriter = new StringWriter(stringBuilder))
         using (var csvWriter = new CsvWriter(stringWriter, CultureInfo.InvariantCulture)) {
             csvWriter.Context.RegisterClassMap(typeof(TClassMap));
             csvWriter.WriteRecords(records);

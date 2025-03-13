@@ -113,6 +113,48 @@ public static class EncryptUtil {
 
     #endregion
 
+    #region [TRIPLE DES]
+
+    public static string EncryptTripleDES(string plainText, string key = nameof(EncryptUtil)) => EncryptTripleDESBytes(plainText, key).GetRawString();
+    public static string DecryptTripleDES(string cipherText, string key = nameof(EncryptUtil)) => DecryptTripleDESBytes(cipherText, key).GetString();
+
+    public static byte[] EncryptTripleDESBytes(string plainText, string key = nameof(EncryptUtil)) => EncryptTripleDESBytes(plainText.ToBytes(), key);
+    public static byte[] DecryptTripleDESBytes(string cipherText, string key = nameof(EncryptUtil)) => DecryptTripleDESBytes(cipherText.ToRawBytes(), key);
+    
+    public static byte[] EncryptTripleDESBytes(byte[] bytes, string key = nameof(EncryptUtil)) {
+        try {
+            using (var tripleDes = TripleDES.Create()) {
+                tripleDes.Key = GetSHA256LimitBytes(key, 16);
+                tripleDes.IV = new byte[8];
+
+                using (var encryptor = tripleDes.CreateEncryptor(tripleDes.Key, tripleDes.IV)) {
+                    return PerformCryptography(bytes, encryptor);
+                }
+            }
+        } catch (Exception ex) {
+            Logger.TraceError(ex);
+            return Array.Empty<byte>();
+        }
+    }
+
+    public static byte[] DecryptTripleDESBytes(byte[] bytes, string key = nameof(EncryptUtil)) {
+        try {
+            using (var tripleDes = TripleDES.Create()) {
+                tripleDes.Key = GetSHA256LimitBytes(key, 16);
+                tripleDes.IV = new byte[8];
+
+                using (var decryptor = tripleDes.CreateDecryptor(tripleDes.Key, tripleDes.IV)) {
+                    return PerformCryptography(bytes, decryptor);
+                }
+            }
+        } catch (Exception ex) {
+            Logger.TraceError(ex);
+            return Array.Empty<byte>();
+        }
+    }
+    
+    #endregion
+    
     #region [AES]
 
     public static bool TryEncryptAES(out string cipherText, string plainText, string key = nameof(EncryptUtil)) {

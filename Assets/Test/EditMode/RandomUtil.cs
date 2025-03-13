@@ -10,27 +10,26 @@ public static class RandomUtil {
     
     public static int GetRandom(int min, int max) {
         CheckRandomCount();
+        FixMinMax(ref min, ref max);
         return _random.Next(min, max);
     }
 
     public static float GetRandom(float min, float max) {
         CheckRandomCount();
+        FixMinMax(ref min, ref max);
         return UnityRandom.Range(min, max);
     }
 
     public static string GetRandom(int length, char min = 'A', char max = 'z') {
-        if (min > max) {
-            return string.Empty;
-        }
-        
         CheckRandomCount();
-        StringUtil.StringBuilderPool.Get(out var builder);
-        for (var i = 0; i < length; i++) {
-            builder.Append((char)_random.Next(min, max));
+        FixMinMax(ref min, ref max);
+        using (_ = StringUtil.StringBuilderPool.Get(out var stringBuilder)) {
+            for (var i = 0; i < length; i++) {
+                stringBuilder.Append((char)_random.Next(min, max));
+            }
+
+            return stringBuilder.ToString();
         }
-        
-        StringUtil.StringBuilderPool.Release(builder);
-        return builder.ToString();
     }
 
     public static void GetRandom(ref Span<byte> bytes) {
@@ -75,6 +74,36 @@ public static class RandomUtil {
             UnityRandom.InitState(seed);
             
             _count = 0;
+        }
+    }
+
+    private static void FixMinMax(ref int min, ref int max) {
+        if (min == max) {
+            max++;
+        }
+
+        if (min > max) {
+            (min, max) = (max, min);
+        }
+    }
+
+    private static void FixMinMax(ref float min, ref float max) {
+        if (Math.Abs(min - max) < 1e-6f) {
+            max++;
+        }
+        
+        if (min > max) {
+            (min, max) = (max, min);
+        }
+    }
+    
+    private static void FixMinMax(ref char min, ref char max) {
+        if (min == max) {
+            max++;
+        }
+
+        if (min > max) {
+            (min, max) = (max, min);
         }
     }
 }

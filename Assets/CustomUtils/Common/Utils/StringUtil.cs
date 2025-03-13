@@ -1,15 +1,8 @@
-using UnityEngine;
-using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.Text.RegularExpressions;
 using System.Text;
-using UnityEngine.Pool;
 
-public static class StringUtil {
+public static partial class StringUtil {
 
-    public static readonly ObjectPool<StringBuilder> StringBuilderPool = new(() => new StringBuilder(), builder => builder.Clear());
-    
     private static readonly List<char> _listSpecialCharacters = new() { '~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+', '|', '<', '>', '?', '/', '{', '}', ' ', '.', ',', ';', ':', '。', '、' };
 
     public static (int length, bool isOverSize) GetOverSizeANSICount(string text, int maxSize) {

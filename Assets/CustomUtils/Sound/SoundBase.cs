@@ -5,7 +5,11 @@ using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.Audio;
 
-// TODO. AudiosSource에 대한 컨트롤 처리 고도화 필요
+// TODO. AudiosSource에 대한 컨트롤 처리 고도화 필요, 한단계 상위의 추상 구조가 필요. 현재 SoundBase는 Unity Sound System에 종속되어 있
+//public abstract class UnitySound : SoundBase {
+//
+//}
+
 [RequiresAttributeImplementation(typeof(MasterSoundAttribute))]
 [RequiresAttributeImplementation(typeof(ControlSoundAttribute))]
 public abstract class SoundBase {

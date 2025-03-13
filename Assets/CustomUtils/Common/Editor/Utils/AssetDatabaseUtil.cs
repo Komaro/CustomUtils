@@ -14,15 +14,20 @@ public static class AssetDatabaseUtil {
 
     public static bool TryFindAssets<T>(out IEnumerable<T> assets, string filter, bool ignorePackages = true) where T : Object => (assets = FindAssets<T>(filter, ignorePackages)).Any();
     
+    // TODO. ignorePackages 파라메터 정리하는쪽으로 작업. 필터를 통해 컨트롤 하도록 변경하도록 수정 필요
     public static IEnumerable<T> FindAssets<T>(string filter, bool ignorePackages = true) where T : Object {
         foreach (var guid in AssetDatabase.FindAssets(ignorePackages ? string.Intern($"a:assets {filter}") : filter)) {
-        // foreach (var guid in AssetDatabase.FindAssets(filter)) {
             var path = AssetDatabase.GUIDToAssetPath(guid);
             if (ignorePackages && path.StartsWith(Constants.Folder.ASSETS) == false) {
                 continue;
             }
 
-            yield return AssetDatabase.LoadAssetAtPath<T>(path);
+            var obj = AssetDatabase.LoadAssetAtPath<T>(path);
+            if (obj == null) {
+                continue;
+            }
+
+            yield return obj;
         }
     }
 
@@ -129,6 +134,7 @@ public static class FilterUtil {
 public enum TypeFilter {
     Texture,
     AssemblyDefinitionAsset,
+    ScriptableObject,
 }
 
 public enum AreaFilter {

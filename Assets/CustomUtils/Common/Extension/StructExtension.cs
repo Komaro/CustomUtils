@@ -3,10 +3,7 @@ using System.Runtime.InteropServices;
 
 public static class StructExtension {
 
-    public static bool TryBytes<T>(this ref T structure, out byte[] bytes) where T : struct {
-        bytes = structure.ToBytes();
-        return bytes != Array.Empty<byte>();
-    }
+    public static bool TryBytes<T>(this ref T structure, out byte[] bytes) where T : struct => (bytes = structure.ToBytes()) != Array.Empty<byte>();
 
     public static byte[] ToBytes<T>(this ref T structure) where T : struct {
         var size = Marshal.SizeOf<T>();
@@ -24,22 +21,16 @@ public static class StructExtension {
         }
     }
 
-    public static bool TrySpan<T>(this ref T structure, out Span<byte> byteSpan) where T : struct {
-        byteSpan = new byte[Marshal.SizeOf<T>()];
-        return MemoryMarshal.TryWrite(byteSpan, ref structure);
-    }
-    
+    public static bool TrySpan<T>(this ref T structure, out Span<byte> byteSpan) where T : struct => MemoryMarshal.TryWrite(byteSpan = new byte[Marshal.SizeOf<T>()], ref structure);
+
     public static Span<byte> ToSpan<T>(this ref T structure) where T : struct {
         Span<byte> bytes = new byte[Marshal.SizeOf<T>()];
         MemoryMarshal.Write(bytes, ref structure);
         return bytes;
     }
 
-    public static bool TryMemory<T>(this ref T structure, out Memory<byte> byteMemory) where T : struct {
-        byteMemory = MemoryMarshal.AsMemory<byte>(structure.ToBytes());
-        return byteMemory.IsEmpty == false;
-    }
-    
+    public static bool TryMemory<T>(this ref T structure, out Memory<byte> byteMemory) where T : struct => (byteMemory = MemoryMarshal.AsMemory<byte>(structure.ToBytes())).IsEmpty == false;
+
     public static Memory<byte> ToMemory<T>(this ref T structure) where T : struct => MemoryMarshal.AsMemory<byte>(structure.ToBytes());
 
     public static T? ToStruct<T>(this ref Memory<byte> memory) where T : struct {

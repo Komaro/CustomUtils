@@ -615,11 +615,6 @@ public static class CollectionExtension {
         return list;
     }
 
-    public static string ToStringCollection<T>(this IEnumerable<T> enumerable, char separator = ' ') => string.Join(separator, enumerable);
-    public static string ToStringCollection<T>(this IEnumerable<T> enumerable, string separator) => string.Join(separator, enumerable);
-    public static string ToStringCollection<T>(this IEnumerable<T> enumerable, Func<T, string> selector, char separator = ' ') => string.Join(separator, enumerable.Select(selector.Invoke));
-    public static string ToStringCollection<T>(this IEnumerable<T> enumerable, Func<T, string> selector, string separator) => string.Join(separator, enumerable.Select(selector.Invoke));
-
     // Fisher–Yates shuffle 기반
     private static readonly Random _randomGenerator = new Random();
 

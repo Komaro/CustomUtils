@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 1536
     height: 780.8
   m_ShowMode: 4
-  m_Title: Console
+  m_Title: Project
   m_RootView: {fileID: 2}
   m_MinSize: {x: 875, y: 350}
   m_MaxSize: {x: 10000, y: 10000}
@@ -119,7 +119,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 100}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 119
+  controlID: 752
   draggingID: 0
 --- !u!114 &6
 MonoBehaviour:
@@ -145,7 +145,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 1
-  controlID: 84
+  controlID: 344
   draggingID: 0
 --- !u!114 &7
 MonoBehaviour:
@@ -249,7 +249,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 50}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 85
+  controlID: 345
   draggingID: 0
 --- !u!114 &11
 MonoBehaviour:
@@ -261,7 +261,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 1
   m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: ConsoleWindow
+  m_Name: ProjectBrowser
   m_EditorClassIdentifier: 
   m_Children: []
   m_Position:
@@ -270,14 +270,14 @@ MonoBehaviour:
     y: 0
     width: 892
     height: 340
-  m_MinSize: {x: 101, y: 126}
-  m_MaxSize: {x: 4001, y: 4026}
-  m_ActualView: {fileID: 18}
+  m_MinSize: {x: 231, y: 276}
+  m_MaxSize: {x: 10001, y: 10026}
+  m_ActualView: {fileID: 17}
   m_Panes:
   - {fileID: 17}
   - {fileID: 18}
-  m_Selected: 1
-  m_LastSelected: 0
+  m_Selected: 0
+  m_LastSelected: 1
 --- !u!114 &12
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -314,7 +314,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 1
   m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: TestRunnerWindow
+  m_Name: InspectorWindow
   m_EditorClassIdentifier: 
   m_Children: []
   m_Position:
@@ -323,14 +323,14 @@ MonoBehaviour:
     y: 0
     width: 520.8
     height: 724.8
-  m_MinSize: {x: 101, y: 126}
-  m_MaxSize: {x: 4001, y: 4026}
-  m_ActualView: {fileID: 14}
+  m_MinSize: {x: 275, y: 50}
+  m_MaxSize: {x: 4000, y: 4000}
+  m_ActualView: {fileID: 20}
   m_Panes:
   - {fileID: 20}
   - {fileID: 14}
-  m_Selected: 1
-  m_LastSelected: 0
+  m_Selected: 0
+  m_LastSelected: 1
 --- !u!114 &14
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -396,7 +396,7 @@ MonoBehaviour:
   m_TestListGUIs:
   - m_Window: {fileID: 14}
     runProgress:
-      RunGuid: bf8104dd-9f1a-4623-a471-2f0c2b9cb6f8
+      RunGuid: 5f9490a4-462c-4ead-aca5-96141d279beb
       ExecutionSettings:
         m_TargetPlatform: 0
         m_HasTargetPlatform: 0
@@ -409,7 +409,7 @@ MonoBehaviour:
         filters:
         - testMode: 1
           testNames:
-          - ReflectionTestRunner.ReflectionExtensionPerformanceTest(100,100)
+          - EnumTestRunner.AllEnumGetValuesExceptionTest
           groupNames: []
           categoryNames: []
           assemblyNames: []
@@ -432,7 +432,7 @@ MonoBehaviour:
       uniqueId: '[CustomUtils][suite]'
       name: CustomUtils
       fullName: CustomUtils
-      resultStatus: 0
+      resultStatus: 2
       duration: 0
       messages: 
       output: 
@@ -444,11 +444,11 @@ MonoBehaviour:
       categories: []
       parentId: 
       parentUniqueId: 
-    - id: 1096
+    - id: 1111
       uniqueId: '[TestAssembly.EditMode][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/TestAssembly.EditMode.dll][suite]'
       name: TestAssembly.EditMode.dll
       fullName: C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/TestAssembly.EditMode.dll
-      resultStatus: 0
+      resultStatus: 2
       duration: 0
       messages: 
       output: 
@@ -474,7 +474,7 @@ MonoBehaviour:
       description: 
       isSuite: 1
       categories: []
-      parentId: 1096
+      parentId: 1111
       parentUniqueId: '[TestAssembly.EditMode][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/TestAssembly.EditMode.dll][suite]'
     - id: 1012
       uniqueId: 'TestAssembly.EditMode.dll/AnalyzerTestRunner/[TestAssembly.EditMode][AnalyzerTestRunner.AnalyzerTestCasePerformanceTest][suite]'
@@ -645,7 +645,7 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1007
       parentUniqueId: 'TestAssembly.EditMode.dll/AnalyzerTestRunner/[TestAssembly.EditMode][AnalyzerTestRunner.AnalyzerTestCaseTest][suite]'
-    - id: 1033
+    - id: 1034
       uniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][CallStackTestRunner][suite]'
       name: CallStackTestRunner
       fullName: CallStackTestRunner
@@ -660,7 +660,7 @@ MonoBehaviour:
       isSuite: 1
       categories:
       - Functional
-      parentId: 1096
+      parentId: 1111
       parentUniqueId: '[TestAssembly.EditMode][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/TestAssembly.EditMode.dll][suite]'
     - id: 1034
       uniqueId: 'TestAssembly.EditMode.dll/CallStackTestRunner/[TestAssembly.EditMode][CallStackTestRunner.CallStackQueueFunctionalTest]'
@@ -693,7 +693,7 @@ MonoBehaviour:
       description: 
       isSuite: 1
       categories: []
-      parentId: 1096
+      parentId: 1111
       parentUniqueId: '[TestAssembly.EditMode][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/TestAssembly.EditMode.dll][suite]'
     - id: 1014
       uniqueId: 'TestAssembly.EditMode.dll/DBTestRunner/[TestAssembly.EditMode][DBTestRunner.InMemoryDatabaseTest]'
@@ -712,7 +712,7 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1013
       parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][DBTestRunner][suite]'
-    - id: 1035
+    - id: 1036
       uniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][DictionaryTestRunner][suite]'
       name: DictionaryTestRunner
       fullName: DictionaryTestRunner
@@ -727,7 +727,7 @@ MonoBehaviour:
       isSuite: 1
       categories:
       - Functional
-      parentId: 1096
+      parentId: 1111
       parentUniqueId: '[TestAssembly.EditMode][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/TestAssembly.EditMode.dll][suite]'
     - id: 1036
       uniqueId: 'TestAssembly.EditMode.dll/DictionaryTestRunner/[TestAssembly.EditMode][DictionaryTestRunner.DictionaryComparerTest]'
@@ -746,6 +746,57 @@ MonoBehaviour:
       - Functional
       parentId: 1035
       parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][DictionaryTestRunner][suite]'
+    - id: 1040
+      uniqueId: 'TestAssembly.EditMode.dll/DictionaryTestRunner/[TestAssembly.EditMode][DictionaryTestRunner.MultiLevelDictionaryTest][suite]'
+      name: MultiLevelDictionaryTest
+      fullName: DictionaryTestRunner.MultiLevelDictionaryTest
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories:
+      - Functional
+      parentId: 1036
+      parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][DictionaryTestRunner][suite]'
+    - id: 1038
+      uniqueId: 'TestAssembly.EditMode.dll/DictionaryTestRunner/MultiLevelDictionaryTest/[TestAssembly.EditMode][DictionaryTestRunner.MultiLevelDictionaryTest(10,10)]'
+      name: MultiLevelDictionaryTest(10,10)
+      fullName: DictionaryTestRunner.MultiLevelDictionaryTest(10,10)
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Functional
+      parentId: 1040
+      parentUniqueId: 'TestAssembly.EditMode.dll/DictionaryTestRunner/[TestAssembly.EditMode][DictionaryTestRunner.MultiLevelDictionaryTest][suite]'
+    - id: 1039
+      uniqueId: 'TestAssembly.EditMode.dll/DictionaryTestRunner/MultiLevelDictionaryTest/[TestAssembly.EditMode][DictionaryTestRunner.MultiLevelDictionaryTest(10,50)]'
+      name: MultiLevelDictionaryTest(10,50)
+      fullName: DictionaryTestRunner.MultiLevelDictionaryTest(10,50)
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Functional
+      parentId: 1040
+      parentUniqueId: 'TestAssembly.EditMode.dll/DictionaryTestRunner/[TestAssembly.EditMode][DictionaryTestRunner.MultiLevelDictionaryTest][suite]'
     - id: 1015
       uniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][EditModeTestRunner][suite]'
       name: EditModeTestRunner
@@ -760,42 +811,8 @@ MonoBehaviour:
       description: 
       isSuite: 1
       categories: []
-      parentId: 1096
+      parentId: 1111
       parentUniqueId: '[TestAssembly.EditMode][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/TestAssembly.EditMode.dll][suite]'
-    - id: 1026
-      uniqueId: 'TestAssembly.EditMode.dll/EditModeTestRunner/[TestAssembly.EditMode][EditModeTestRunner.EnumCastPerformanceTest]'
-      name: EnumCastPerformanceTest
-      fullName: EditModeTestRunner.EnumCastPerformanceTest
-      resultStatus: 0
-      duration: 0
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Performance
-      parentId: 1015
-      parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][EditModeTestRunner][suite]'
-    - id: 1025
-      uniqueId: 'TestAssembly.EditMode.dll/EditModeTestRunner/[TestAssembly.EditMode][EditModeTestRunner.EnumParsePerformanceTest]'
-      name: EnumParsePerformanceTest
-      fullName: EditModeTestRunner.EnumParsePerformanceTest
-      resultStatus: 0
-      duration: 0
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Performance
-      parentId: 1015
-      parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][EditModeTestRunner][suite]'
     - id: 1031
       uniqueId: 'TestAssembly.EditMode.dll/EditModeTestRunner/[TestAssembly.EditMode][EditModeTestRunner.IntMarshalTest]'
       name: IntMarshalTest
@@ -813,7 +830,7 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1015
       parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][EditModeTestRunner][suite]'
-    - id: 1028
+    - id: 1027
       uniqueId: 'TestAssembly.EditMode.dll/EditModeTestRunner/[TestAssembly.EditMode][EditModeTestRunner.JsonPerformanceTest][suite]'
       name: JsonPerformanceTest
       fullName: EditModeTestRunner.JsonPerformanceTest
@@ -881,7 +898,7 @@ MonoBehaviour:
       - Performance
       parentId: 1015
       parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][EditModeTestRunner][suite]'
-    - id: 1024
+    - id: 1025
       uniqueId: 'TestAssembly.EditMode.dll/EditModeTestRunner/[TestAssembly.EditMode][EditModeTestRunner.TempPerformanceTest_02][suite]'
       name: TempPerformanceTest_02
       fullName: EditModeTestRunner.TempPerformanceTest_02
@@ -1017,6 +1034,23 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1015
       parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][EditModeTestRunner][suite]'
+    - id: 1018
+      uniqueId: 'TestAssembly.EditMode.dll/EditModeTestRunner/[TestAssembly.EditMode][EditModeTestRunner.TempTest_03]'
+      name: TempTest_03
+      fullName: EditModeTestRunner.TempTest_03
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1015
+      parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][EditModeTestRunner][suite]'
     - id: 1029
       uniqueId: 'TestAssembly.EditMode.dll/EditModeTestRunner/[TestAssembly.EditMode][EditModeTestRunner.UnsafePerformanceTest]'
       name: UnsafePerformanceTest
@@ -1051,7 +1085,275 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1015
       parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][EditModeTestRunner][suite]'
-    - id: 1037
+    - id: 1032
+      uniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][EncryptTestRunner][suite]'
+      name: EncryptTestRunner
+      fullName: EncryptTestRunner
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1111
+      parentUniqueId: '[TestAssembly.EditMode][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/TestAssembly.EditMode.dll][suite]'
+    - id: 1033
+      uniqueId: 'TestAssembly.EditMode.dll/EncryptTestRunner/[TestAssembly.EditMode][EncryptTestRunner.TripleDESTest]'
+      name: TripleDESTest
+      fullName: EncryptTestRunner.TripleDESTest
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1032
+      parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][EncryptTestRunner][suite]'
+    - id: 1041
+      uniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][EnumTestRunner][suite]'
+      name: EnumTestRunner
+      fullName: EnumTestRunner
+      resultStatus: 2
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories:
+      - Functional
+      parentId: 1111
+      parentUniqueId: '[TestAssembly.EditMode][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/TestAssembly.EditMode.dll][suite]'
+    - id: 1042
+      uniqueId: 'TestAssembly.EditMode.dll/EnumTestRunner/[TestAssembly.EditMode][EnumTestRunner.AllEnumGetValuesExceptionTest]'
+      name: AllEnumGetValuesExceptionTest
+      fullName: EnumTestRunner.AllEnumGetValuesExceptionTest
+      resultStatus: 1
+      duration: 1.7138864
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Functional
+      parentId: 1041
+      parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][EnumTestRunner][suite]'
+    - id: 1049
+      uniqueId: 'TestAssembly.EditMode.dll/EnumTestRunner/[TestAssembly.EditMode][EnumTestRunner.EnumBagPerformanceTest][suite]'
+      name: EnumBagPerformanceTest
+      fullName: EnumTestRunner.EnumBagPerformanceTest
+      resultStatus: 2
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories:
+      - Performance
+      - Functional
+      parentId: 1041
+      parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][EnumTestRunner][suite]'
+    - id: 1043
+      uniqueId: 'TestAssembly.EditMode.dll/EnumTestRunner/EnumBagPerformanceTest/[TestAssembly.EditMode][EnumTestRunner.EnumBagPerformanceTest(1)]'
+      name: EnumBagPerformanceTest(1)
+      fullName: EnumTestRunner.EnumBagPerformanceTest(1)
+      resultStatus: 1
+      duration: 0.1720204
+      messages: 
+      output: "Enum in Milliseconds\nMin:\t\t0.01 ms\nMedian:\t\t0.01 ms\nMax:\t\t0.09
+        ms\nAvg:\t\t0.01 ms\nStdDev:\t\t0.01 ms\nSampleCount:\t200\nSum:\t\t2.46
+        ms\r\nFirst samples:\t\u2582\u2582\u2581\u2581\u2581\u2581\u2581\u2584\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2582\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2588\u2581\u2581\u2581\u2581\u2582\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2582\u2581\u2581\r\nHistogram:\t\u2588\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\r\n\r\nType
+        in Milliseconds\nMin:\t\t0.00 ms\nMedian:\t\t0.00 ms\nMax:\t\t0.01 ms\nAvg:\t\t0.00
+        ms\nStdDev:\t\t0.00 ms\nSampleCount:\t200\nSum:\t\t0.34 ms\r\nFirst samples:\t\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2582\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2582\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2582\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2583\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2582\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2582\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\r\nHistogram:\t\u2588\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\r\n\r\nGeneric
+        in Milliseconds\nMin:\t\t0.00 ms\nMedian:\t\t0.00 ms\nMax:\t\t0.00 ms\nAvg:\t\t0.00
+        ms\nStdDev:\t\t0.00 ms\nSampleCount:\t200\nSum:\t\t0.06 ms\r\nFirst samples:\t\u2581\u2581\u2581\u2588\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2588\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2588\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2588\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2588\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2588\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\r\nHistogram:\t\u2588\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\r\n\r\n\r\n##performancetestresult2:{\"Name\":\"EnumTestRunner.EnumBagPerformanceTest(1)\",\"ClassName\":\"EnumTestRunner\",\"MethodName\":\"EnumBagPerformanceTest\",\"Version\":\"1\",\"Categories\":[\"Performance\",\"Functional\"],\"SampleGroups\":[{\"Name\":\"Enum\",\"Unit\":2,\"IncreaseIsBetter\":false,\"Samples\":[0.02740000000000009,0.022499999999999966,0.012599999999999945,0.01240000000000041,0.01240000000000041,0.012500000000000178,0.014599999999999725,0.04150000000000009,0.012199999999999989,0.012099999999999334,0.014100000000000002,0.012099999999999334,0.011999999999999567,0.012100000000000222,0.012100000000000222,0.011999999999999567,0.011999999999999567,0.012100000000000222,0.014300000000000424,0.012100000000000222,0.012000000000000455,0.012000000000000455,0.011999999999999567,0.012000000000000455,0.0118999999999998,0.012000000000000455,0.012000000000000455,0.012100000000000222,0.012000000000000455,0.015399999999999637,0.013399999999999857,0.01499999999999968,0.01389999999999958,0.01330000000000009,0.013700000000000046,0.01440000000000019,0.022200000000000665,0.010400000000000631,0.010399999999999743,0.010400000000000631,0.010399999999999743,0.010400000000000631,0.010399999999999743,0.010399999999999743,0.010399999999999743,0.010400000000000631,0.010299999999999976,0.010399999999999743,0.010399999999999743,0.010399999999999743,0.010399999999999743,0.010400000000000631,0.010299999999999976,0.010399999999999743,0.010399999999999743,0.013200000000000323,0.01130000000000031,0.010399999999999743,0.010400000000000631,0.010399999999999743,0.010500000000000398,0.010399999999999743,0.010400000000000631,0.010399999999999743,0.010400000000000631,0.010500000000000398,0.010500000000000398,0.0118999999999998,0.010399999999999743,0.010400000000000631,0.010399999999999743,0.010400000000000631,0.01049999999999951,0.010399999999999743,0.010399999999999743,0.010399999999999743,0.010400000000000631,0.010399999999999743,0.010400000000000631,0.012199999999999989,0.010400000000000631,0.010399999999999743,0.0943000000000005,0.01389999999999958,0.013499999999999624,0.014100000000000002,0.013499999999999624,0.02030000000000065,0.016299999999999316,0.012399999999999523,0.013200000000000323,0.01470000000000038,0.012099999999999334,0.013100000000000556,0.013100000000000556,0.013700000000000046,0.014300000000000424,0.020799999999999487,0.010500000000000398,0.010399999999999743,0.010399999999999743,0.010399999999999743,0.010400000000000631,0.012100000000000222,0.010399999999999743,0.010400000000000631,0.010399999999999743,0.010400000000000631,0.010399999999999743,0.010300000000000864,0.010399999999999743,0.010400000000000631,0.010399999999999743,0.010400000000000631,0.010399999999999743,0.012100000000000222,0.010299999999999976,0.010399999999999743,0.010400000000000631,0.010399999999999743,0.010400000000000631,0.013399999999999857,0.012299999999999756,0.01330000000000009,0.01980000000000004,0.013499999999999624,0.010400000000000631,0.010399999999999743,0.011900000000000688,0.010699999999999932,0.010400000000000631,0.010399999999999743,0.010500000000000398,0.010500000000000398,0.010399999999999743,0.011399999999999189,0.010399999999999743,0.010399999999999743,0.010400000000000631,0.010399999999999743,0.012299999999999756,0.010400000000000631,0.010399999999999743,0.010399999999999743,0.010400000000000631,0.01049999999999951,0.013799999999999813,0.010500000000000398,0.01049999999999951,0.01049999999999951,0.01049999999999951,0.029599999999999406,0.011700000000000266,0.010699999999999932,0.010699999999999932,0.010699999999999932,0.010600000000000165,0.01070000000000082,0.010699999999999932,0.010600000000000165,0.010699999999999932,0.010699999999999932,0.010699999999999932,0.010699999999999932,0.011699999999999378,0.010699999999999932,0.010600000000000165,0.010699999999999932,0.010699999999999932,0.010600000000000165,0.010699999999999932,0.010699999999999932,0.010600000000000165,0.010699999999999932,0.010699999999999932,0.010600000000000165,0.010600000000000165,0.012199999999999989,0.010599999999999277,0.010699999999999932,0.010699999999999932,0.010699999999999932,0.010600000000000165,0.010699999999999932,0.010699999999999932,0.010699999999999932,0.010699999999999932,0.012000000000000455,0.010699999999999932,0.010699999999999932,0.012500000000000178,0.010699999999999932,0.010600000000000165,0.01070000000000082,0.010699999999999932,0.010699999999999932,0.010699999999999932,0.010699999999999932,0.010699999999999932,0.010699999999999932],\"Min\":0.010299999999999976,\"Max\":0.0943000000000005,\"Median\":0.010699999999999932,\"Average\":0.012276500000000038,\"StandardDeviation\":0.006707406186447953,\"Sum\":2.4553000000000075},{\"Name\":\"Type\",\"Unit\":2,\"IncreaseIsBetter\":false,\"Samples\":[0.0014999999999998349,0.0016000000000000459,0.0015000000000000569,0.0015999999999998238,0.0016000000000000459,0.0015999999999998238,0.0016000000000000459,0.0032000000000000918,0.0016000000000000459,0.0016000000000000459,0.0014999999999998349,0.0015000000000000569,0.0015000000000000569,0.0015000000000000569,0.0015000000000000569,0.0026999999999999248,0.0015000000000000569,0.0016000000000000459,0.0014999999999998349,0.0015000000000000569,0.0015000000000000569,0.0015000000000000569,0.0015000000000000569,0.0013999999999998459,0.0015000000000000569,0.0014999999999998349,0.0015000000000000569,0.0015000000000000569,0.0015000000000000569,0.0014999999999998349,0.0015000000000000569,0.0014999999999998349,0.0030000000000001139,0.0016000000000000459,0.0015000000000000569,0.0015000000000000569,0.0015000000000000569,0.0014999999999998349,0.0015000000000000569,0.0015000000000000569,0.0015000000000000569,0.0047999999999999158,0.0015000000000000569,0.0015000000000000569,0.0015000000000000569,0.0015000000000000569,0.0013999999999998459,0.0015000000000000569,0.0014999999999998349,0.0015000000000000569,0.0015000000000000569,0.0015000000000000569,0.0015000000000000569,0.0014999999999998349,0.0032000000000000918,0.0015999999999998238,0.0014000000000000679,0.0015000000000000569,0.0015000000000000569,0.0015000000000000569,0.0014999999999998349,0.0015000000000000569,0.0015000000000000569,0.0015000000000000569,0.0015000000000000569,0.0014999999999998349,0.0016000000000000459,0.0014000000000000679,0.0016000000000000459,0.0015000000000000569,0.0014999999999998349,0.0016000000000000459,0.0014000000000000679,0.0015000000000000569,0.0015000000000000569,0.0014999999999998349,0.0015000000000000569,0.0014999999999998349,0.0015000000000000569,0.0015000000000000569,0.0015000000000000569,0.0015000000000000569,0.0014999999999998349,0.0033000000000000808,0.0014999999999998349,0.0015000000000000569,0.0015000000000000569,0.0014000000000000679,0.0014999999999998349,0.0015000000000000569,0.0013999999999998459,0.0015000000000000569,0.0015000000000000569,0.0014999999999998349,0.0015000000000000569,0.0014999999999998349,0.0015000000000000569,0.0015000000000000569,0.0015000000000000569,0.0015000000000000569,0.0014999999999998349,0.0015000000000000569,0.0014999999999998349,0.0015000000000000569,0.0015000000000000569,0.0030000000000001139,0.0015000000000000569,0.0015000000000000569,0.0015000000000000569,0.0013999999999998459,0.0015000000000000569,0.0014999999999998349,0.0015000000000000569,0.0015000000000000569,0.0014999999999998349,0.0015000000000000569,0.0014999999999998349,0.0014000000000000679,0.0015000000000000569,0.0015000000000000569,0.0015000000000000569,0.0014999999999998349,0.0015000000000000569,0.0014999999999998349,0.00140000000000029,0.0015000000000000569,0.0015000000000000569,0.0015000000000000569,0.0015000000000000569,0.0015999999999998238,0.0040999999999997709,0.0028999999999999028,0.0015000000000000569,0.0015999999999998238,0.0015000000000000569,0.0015000000000000569,0.0015000000000000569,0.0015000000000000569,0.0015000000000000569,0.0015000000000000569,0.0014999999999996128,0.0015000000000000569,0.0015000000000000569,0.0015000000000000569,0.0015000000000000569,0.0015000000000000569,0.0015000000000000569,0.0014999999999996128,0.0015000000000000569,0.0014999999999996128,0.0015000000000000569,0.0015000000000000569,0.0015000000000000569,0.0032999999999998588,0.0015000000000000569,0.0015000000000000569,0.0015000000000000569,0.0015000000000000569,0.0014999999999996128,0.0015000000000000569,0.0015000000000000569,0.0015000000000000569,0.0015000000000000569,0.0013999999999998459,0.00140000000000029,0.0014999999999996128,0.0015000000000000569,0.0015000000000000569,0.0034000000000000698,0.0015000000000000569,0.0014999999999996128,0.0015000000000000569,0.0026999999999999248,0.0015000000000000569,0.0015000000000000569,0.0015000000000000569,0.0031999999999996477,0.0015000000000000569,0.0015000000000000569,0.0015000000000000569,0.0015000000000000569,0.0015000000000000569,0.0015000000000000569,0.0014999999999996128,0.0015000000000000569,0.0014999999999996128,0.0015000000000000569,0.0015000000000000569,0.0015000000000000569,0.0015000000000000569,0.0015000000000000569,0.012599999999999945,0.0015000000000000569,0.0015000000000000569,0.0015000000000000569,0.0015000000000000569,0.0015000000000000569,0.0015000000000000569,0.0015000000000000569,0.0028000000000001359],\"Min\":0.0013999999999998459,\"Max\":0.012599999999999945,\"Median\":0.0015000000000000569,\"Average\":0.0016799999999999949,\"StandardDeviation\":0.0009067524469225244,\"Sum\":0.33599999999999899},{\"Name\":\"Generic\",\"Unit\":2,\"IncreaseIsBetter\":false,\"Samples\":[0.0002999999999993008,0.0002999999999993008,0.00030000000000285354,0.00039999999999906777,0.0002999999999993008,0.0002999999999993008,0.00030000000000285354,0.00030000000000285354,0.00030000000000285354,0.0002999999999993008,0.0002999999999993008,0.0002999999999993008,0.00030000000000285354,0.00030000000000285354,0.00030000000000285354,0.00030000000000285354,0.0002999999999993008,0.0002999999999993008,0.0004000000000026205,0.00030000000000285354,0.00030000000000285354,0.00030000000000285354,0.0002999999999993008,0.0002999999999993008,0.0002999999999993008,0.0002999999999993008,0.0002999999999993008,0.0002999999999993008,0.0002999999999993008,0.0002999999999993008,0.0002999999999993008,0.0002999999999993008,0.0002999999999993008,0.0002999999999993008,0.0002999999999993008,0.0002999999999993008,0.00039999999999906777,0.0002999999999993008,0.0002999999999993008,0.0002999999999993008,0.0002999999999993008,0.0002999999999993008,0.0002999999999993008,0.0002999999999993008,0.0002999999999993008,0.0002999999999993008,0.0002999999999993008,0.00030000000000285354,0.00030000000000285354,0.00030000000000285354,0.0002999999999993008,0.0002999999999993008,0.0002999999999993008,0.0002999999999993008,0.00039999999999906777,0.0002999999999993008,0.0002999999999993008,0.0002999999999993008,0.0002999999999993008,0.0002999999999993008,0.0002999999999993008,0.0002999999999993008,0.00039999999999906777,0.0002999999999993008,0.00030000000000285354,0.00030000000000285354,0.0002999999999993008,0.0002999999999993008,0.0002999999999993008,0.0002999999999993008,0.0002999999999993008,0.0002999999999993008,0.0002999999999993008,0.0002999999999993008,0.0002999999999993008,0.0002999999999993008,0.0002999999999993008,0.0002999999999993008,0.0002999999999993008,0.0002999999999993008,0.0002999999999993008,0.00030000000000285354,0.00030000000000285354,0.0002999999999993008,0.0002999999999993008,0.0002999999999993008,0.0002999999999993008,0.0002999999999993008,0.0002999999999993008,0.00039999999999906777,0.0002999999999993008,0.0002999999999993008,0.00030000000000285354,0.00030000000000285354,0.00030000000000285354,0.00030000000000285354,0.0002999999999993008,0.0002999999999993008,0.0002999999999993008,0.0002999999999993008,0.0002999999999993008,0.0002999999999993008,0.0002999999999993008,0.0002999999999993008,0.0002999999999993008,0.0002999999999993008,0.0002999999999993008,0.0002999999999993008,0.0002999999999993008,0.00030000000000285354,0.00030000000000285354,0.00030000000000285354,0.00030000000000285354,0.00039999999999906777,0.0002999999999993008,0.0002999999999993008,0.0002999999999993008,0.0002999999999993008,0.0002999999999993008,0.0002999999999993008,0.0002999999999993008,0.00039999999999906777,0.0002999999999993008,0.0002999999999993008,0.0002999999999993008,0.0002999999999993008,0.0002999999999993008,0.00030000000000285354,0.00030000000000285354,0.00039999999999906777,0.0002999999999993008,0.0002999999999993008,0.0002999999999993008,0.0002999999999993008,0.0002999999999993008,0.0002999999999993008,0.0002999999999993008,0.0002999999999993008,0.0002999999999993008,0.0002999999999993008,0.0002999999999993008,0.0002999999999993008,0.0002999999999993008,0.0002999999999993008,0.00030000000000285354,0.00030000000000285354,0.00030000000000285354,0.00030000000000285354,0.00030000000000285354,0.00030000000000285354,0.0002999999999993008,0.0002999999999993008,0.0002999999999993008,0.0002999999999993008,0.0002999999999993008,0.0002999999999993008,0.0002999999999993008,0.0002999999999993008,0.00039999999999906777,0.00039999999999906777,0.0002999999999993008,0.0002999999999993008,0.0002999999999993008,0.0002999999999993008,0.0002999999999993008,0.0002999999999993008,0.0002999999999993008,0.0002999999999993008,0.00030000000000285354,0.00030000000000285354,0.0004000000000026205,0.00030000000000285354,0.00030000000000285354,0.0002999999999993008,0.0002999999999993008,0.0002999999999993008,0.0002999999999993008,0.0002999999999993008,0.0002999999999993008,0.0002999999999993008,0.0002999999999993008,0.0002999999999993008,0.0002999999999993008,0.0002999999999993008,0.0002999999999993008,0.0002999999999993008,0.0002999999999993008,0.0002999999999993008,0.0002999999999993008,0.0002999999999993008,0.0002999999999993008,0.00030000000000285354,0.00030000000000285354,0.00030000000000285354,0.00030000000000285354,0.00030000000000285354,0.0002999999999993008,0.0002999999999993008,0.0002999999999993008,0.0002999999999993008],\"Min\":0.0002999999999993008,\"Max\":0.0004000000000026205,\"Median\":0.0002999999999993008,\"Average\":0.0003060000000000862,\"StandardDeviation\":0.00002374868417396813,\"Sum\":0.06120000000001724}]}\r\n##performancetestruninfo2:{\"TestSuite\":\"Editmode\",\"Date\":1741948344866,\"Player\":{\"Development\":true,\"ScreenWidth\":1920,\"ScreenHeight\":1080,\"ScreenRefreshRate\":60,\"Fullscreen\":false,\"Vsync\":1,\"AntiAliasing\":0,\"Batchmode\":false,\"RenderThreadingMode\":\"MultiThreaded\",\"GpuSkinning\":false,\"Platform\":\"WindowsEditor\",\"ColorSpace\":\"Gamma\",\"AnisotropicFiltering\":\"Disable\",\"BlendWeights\":\"FourBones\",\"GraphicsApi\":\"Direct3D11\",\"ScriptingBackend\":\"Mono2x\",\"AndroidTargetSdkVersion\":\"AndroidApiLevelAuto\",\"AndroidBuildSystem\":\"Gradle\",\"BuildTarget\":\"StandaloneWindows64\",\"StereoRenderingPath\":\"MultiPass\"},\"Hardware\":{\"OperatingSystem\":\"Windows
+        10  (10.0.19045) 64bit\",\"DeviceModel\":\"82R4 (LENOVO)\",\"DeviceName\":\"DESKTOP-55T0R54\",\"ProcessorType\":\"AMD
+        Ryzen 5 5500U with Radeon Graphics \",\"ProcessorCount\":12,\"GraphicsDeviceName\":\"AMD
+        Radeon(TM) Graphics\",\"SystemMemorySizeMB\":14181},\"Editor\":{\"Version\":\"6000.0.26f1\",\"Branch\":\"6000.0/staging\",\"Changeset\":\"ccb7c73d2c02\",\"Date\":1730275040},\"Dependencies\":[\"com.cysharp.unitask@2.5.10\",\"com.unity.2d.animation@10.1.4\",\"com.unity.2d.pixel-perfect@5.0.3\",\"com.unity.2d.psdimporter@9.0.3\",\"com.unity.2d.sprite@1.0.0\",\"com.unity.2d.spriteshape@10.0.7\",\"com.unity.2d.tilemap@1.0.0\",\"com.unity.ai.navigation@2.0.5\",\"com.unity.assetbundlebrowser@1.7.0\",\"com.unity.collab-proxy@2.5.2\",\"com.unity.editorcoroutines@1.0.0\",\"com.unity.ide.rider@3.0.34\",\"com.unity.memoryprofiler@1.1.3\",\"com.unity.mobile.android-logcat@1.4.4\",\"com.unity.multiplayer.center@1.0.0\",\"com.unity.performance.profile-analyzer@1.2.3\",\"com.unity.profiling.core@1.0.2\",\"com.unity.render-pipelines.universal@17.0.3\",\"com.unity.test-framework@1.4.5\",\"com.unity.test-framework.performance@3.0.3\",\"com.unity.testtools.codecoverage@1.2.6\",\"com.unity.timeline@1.8.7\",\"com.unity.ugui@2.0.0\",\"com.unity.modules.accessibility@1.0.0\",\"com.unity.modules.ai@1.0.0\",\"com.unity.modules.androidjni@1.0.0\",\"com.unity.modules.animation@1.0.0\",\"com.unity.modules.assetbundle@1.0.0\",\"com.unity.modules.audio@1.0.0\",\"com.unity.modules.cloth@1.0.0\",\"com.unity.modules.director@1.0.0\",\"com.unity.modules.imageconversion@1.0.0\",\"com.unity.modules.imgui@1.0.0\",\"com.unity.modules.jsonserialize@1.0.0\",\"com.unity.modules.particlesystem@1.0.0\",\"com.unity.modules.physics@1.0.0\",\"com.unity.modules.physics2d@1.0.0\",\"com.unity.modules.screencapture@1.0.0\",\"com.unity.modules.terrain@1.0.0\",\"com.unity.modules.terrainphysics@1.0.0\",\"com.unity.modules.tilemap@1.0.0\",\"com.unity.modules.ui@1.0.0\",\"com.unity.modules.uielements@1.0.0\",\"com.unity.modules.umbra@1.0.0\",\"com.unity.modules.unityanalytics@1.0.0\",\"com.unity.modules.unitywebrequest@1.0.0\",\"com.unity.modules.unitywebrequestassetbundle@1.0.0\",\"com.unity.modules.unitywebrequestaudio@1.0.0\",\"com.unity.modules.unitywebrequesttexture@1.0.0\",\"com.unity.modules.unitywebrequestwww@1.0.0\",\"com.unity.modules.vehicles@1.0.0\",\"com.unity.modules.video@1.0.0\",\"com.unity.modules.vr@1.0.0\",\"com.unity.modules.wind@1.0.0\",\"com.unity.modules.xr@1.0.0\",\"com.unity.modules.subsystems@1.0.0\",\"com.unity.modules.hierarchycore@1.0.0\",\"com.unity.settings-manager@2.0.1\",\"com.unity.ext.nunit@2.0.5\",\"com.unity.render-pipelines.core@17.0.3\",\"com.unity.shadergraph@17.0.3\",\"com.unity.render-pipelines.universal-config@17.0.3\",\"com.unity.burst@1.8.18\",\"com.unity.collections@2.5.1\",\"com.unity.mathematics@1.3.2\",\"com.unity.2d.common@9.0.7\",\"com.unity.searcher@4.9.2\",\"com.unity.rendering.light-transport@1.0.1\",\"com.unity.nuget.mono-cecil@1.11.4\"],\"Results\":[]}\r\n"
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      - Functional
+      parentId: 1049
+      parentUniqueId: 'TestAssembly.EditMode.dll/EnumTestRunner/[TestAssembly.EditMode][EnumTestRunner.EnumBagPerformanceTest][suite]'
+    - id: 1044
+      uniqueId: 'TestAssembly.EditMode.dll/EnumTestRunner/EnumBagPerformanceTest/[TestAssembly.EditMode][EnumTestRunner.EnumBagPerformanceTest(10)]'
+      name: EnumBagPerformanceTest(10)
+      fullName: EnumTestRunner.EnumBagPerformanceTest(10)
+      resultStatus: 1
+      duration: 0.0866997
+      messages: 
+      output: "Enum in Milliseconds\nMin:\t\t0.10 ms\nMedian:\t\t0.11 ms\nMax:\t\t0.22
+        ms\nAvg:\t\t0.11 ms\nStdDev:\t\t0.01 ms\nSampleCount:\t200\nSum:\t\t21.82
+        ms\r\nFirst samples:\t\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2582\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2582\u2585\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2588\u2583\u2581\u2581\u2581\u2581\u2581\u2581\u2583\u2581\u2581\u2581\u2581\u2583\u2582\u2582\u2581\u2581\u2582\u2583\u2581\u2581\u2582\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2582\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2582\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2584\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2582\u2581\u2581\u2581\u2581\u2583\u2581\u2582\u2581\u2581\u2581\u2581\u2581\u2581\u2582\u2581\r\nHistogram:\t\u2588\u2582\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\r\n\r\nType
+        in Milliseconds\nMin:\t\t0.01 ms\nMedian:\t\t0.01 ms\nMax:\t\t0.03 ms\nAvg:\t\t0.01
+        ms\nStdDev:\t\t0.00 ms\nSampleCount:\t200\nSum:\t\t2.33 ms\r\nFirst samples:\t\u2581\u2581\u2581\u2582\u2581\u2582\u2582\u2582\u2582\u2582\u2581\u2581\u2582\u2581\u2581\u2582\u2581\u2581\u2582\u2582\u2581\u2582\u2581\u2582\u2581\u2581\u2581\u2582\u2581\u2582\u2582\u2582\u2581\u2582\u2581\u2581\u2583\u2581\u2588\u2581\u2581\u2582\u2581\u2582\u2581\u2582\u2582\u2581\u2582\u2582\u2581\u2582\u2582\u2582\u2582\u2582\u2582\u2582\u2582\u2582\u2581\u2581\u2582\u2582\u2582\u2581\u2582\u2581\u2582\u2582\u2581\u2582\u2582\u2583\u2581\u2583\u2581\u2581\u2582\u2581\u2581\u2582\u2582\u2581\u2581\u2581\u2581\u2581\u2582\u2581\u2581\u2582\u2582\u2581\u2582\u2581\u2581\u2582\u2581\u2581\r\nHistogram:\t\u2588\u2583\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\r\n\r\nGeneric
+        in Milliseconds\nMin:\t\t0.00 ms\nMedian:\t\t0.00 ms\nMax:\t\t0.00 ms\nAvg:\t\t0.00
+        ms\nStdDev:\t\t0.00 ms\nSampleCount:\t200\nSum:\t\t0.19 ms\r\nFirst samples:\t\u2581\u2585\u2585\u2585\u2585\u2585\u2585\u2585\u2588\u2585\u2585\u2585\u2588\u2585\u2585\u2588\u2585\u2585\u2585\u2588\u2585\u2585\u2585\u2585\u2588\u2585\u2585\u2585\u2588\u2585\u2585\u2585\u2585\u2588\u2585\u2585\u2585\u2588\u2585\u2585\u2585\u2585\u2588\u2585\u2585\u2588\u2585\u2585\u2588\u2585\u2585\u2588\u2585\u2585\u2588\u2585\u2585\u2588\u2585\u2585\u2585\u2585\u2588\u2585\u2585\u2585\u2585\u2588\u2585\u2585\u2585\u2585\u2588\u2585\u2585\u2588\u2585\u2585\u2588\u2585\u2585\u2585\u2585\u2585\u2585\u2585\u2588\u2585\u2585\u2588\u2585\u2585\u2588\u2585\u2585\u2588\u2585\u2585\u2585\u2585\r\nHistogram:\t\u2588\u2583\u2581\u2581\u2582\u2581\u2581\u2581\u2581\u2582\r\n\r\n\r\n##performancetestresult2:{\"Name\":\"EnumTestRunner.EnumBagPerformanceTest(10)\",\"ClassName\":\"EnumTestRunner\",\"MethodName\":\"EnumBagPerformanceTest\",\"Version\":\"1\",\"Categories\":[\"Performance\",\"Functional\"],\"SampleGroups\":[{\"Name\":\"Enum\",\"Unit\":2,\"IncreaseIsBetter\":false,\"Samples\":[0.10170000000000001,0.10319999999999996,0.10570000000000002,0.1066999999999999,0.1049,0.1059000000000001,0.10320000000000018,0.11870000000000003,0.10620000000000007,0.1036999999999999,0.10420000000000007,0.10640000000000005,0.10479999999999978,0.10670000000000002,0.10610000000000009,0.12360000000000016,0.16349999999999999,0.10250000000000004,0.10250000000000004,0.10470000000000024,0.10129999999999973,0.1057999999999999,0.10309999999999997,0.10409999999999986,0.10330000000000039,0.21550000000000003,0.13350000000000018,0.10360000000000014,0.10340000000000016,0.1041000000000003,0.10350000000000037,0.10540000000000038,0.10430000000000028,0.12469999999999981,0.10179999999999989,0.10390000000000033,0.1075999999999997,0.10439999999999916,0.1274999999999995,0.10919999999999952,0.10899999999999999,0.10689999999999955,0.10689999999999955,0.11209999999999987,0.12840000000000008,0.10280000000000023,0.10219999999999985,0.11549999999999994,0.10250000000000004,0.10320000000000018,0.10390000000000033,0.10499999999999954,0.10390000000000033,0.10419999999999963,0.10240000000000027,0.10670000000000002,0.11019999999999986,0.10430000000000028,0.10339999999999972,0.1048,0.10309999999999953,0.10719999999999974,0.10299999999999976,0.10349999999999948,0.10279999999999934,0.11050000000000004,0.10599999999999987,0.10339999999999883,0.10289999999999999,0.10139999999999994,0.10420000000000052,0.10719999999999885,0.10389999999999944,0.10280000000000023,0.10519999999999996,0.1471,0.10160000000000125,0.1031000000000013,0.10060000000000002,0.10219999999999985,0.10500000000000043,0.10339999999999883,0.10389999999999944,0.10159999999999947,0.12069999999999937,0.10139999999999994,0.1036999999999999,0.10430000000000028,0.1053999999999995,0.1274999999999995,0.10470000000000113,0.10790000000000077,0.10389999999999944,0.10719999999999885,0.1059000000000001,0.10599999999999987,0.10519999999999996,0.10749999999999993,0.11120000000000019,0.10450000000000159,0.10599999999999987,0.10519999999999996,0.10970000000000013,0.1051000000000002,0.10440000000000005,0.10490000000000066,0.1061999999999994,0.11800000000000033,0.10670000000000002,0.10689999999999955,0.10970000000000013,0.10520000000000174,0.10720000000000063,0.10609999999999964,0.10599999999999987,0.10779999999999923,0.16469999999999986,0.11110000000000042,0.1100999999999992,0.11089999999999911,0.11440000000000161,0.11270000000000025,0.10960000000000037,0.11110000000000042,0.11339999999999861,0.11350000000000016,0.11120000000000019,0.11499999999999844,0.11250000000000071,0.11250000000000071,0.11299999999999955,0.11239999999999917,0.11250000000000071,0.12119999999999998,0.1125999999999987,0.11430000000000007,0.11359999999999993,0.11329999999999885,0.1144999999999996,0.11210000000000164,0.12069999999999937,0.11810000000000187,0.11560000000000059,0.10089999999999933,0.1039999999999992,0.10150000000000148,0.10159999999999769,0.10290000000000177,0.10210000000000008,0.10470000000000113,0.10069999999999979,0.11049999999999827,0.10519999999999996,0.10440000000000183,0.10639999999999717,0.10490000000000066,0.10490000000000066,0.10579999999999856,0.1034000000000006,0.10640000000000072,0.11599999999999966,0.10679999999999979,0.1053999999999995,0.10650000000000049,0.10410000000000253,0.10839999999999961,0.10479999999999734,0.10660000000000025,0.10709999999999909,0.10500000000000043,0.19529999999999959,0.13929999999999866,0.12069999999999937,0.10099999999999909,0.10029999999999717,0.09930000000000305,0.10229999999999962,0.10260000000000247,0.12360000000000326,0.10389999999999944,0.10529999999999973,0.10159999999999769,0.10670000000000002,0.10320000000000107,0.1042999999999985,0.10529999999999973,0.10300000000000154,0.1095000000000006,0.1048999999999971,0.10430000000000206,0.10289999999999822,0.10500000000000043,0.10170000000000101,0.1039999999999992,0.1053999999999995,0.10600000000000165,0.1059999999999981,0.11439999999999984,0.10480000000000089,0.10519999999999996],\"Min\":0.09930000000000305,\"Max\":0.21550000000000003,\"Median\":0.10529999999999973,\"Average\":0.10910149999999996,\"StandardDeviation\":0.013127522529022731,\"Sum\":21.820299999999994},{\"Name\":\"Type\",\"Unit\":2,\"IncreaseIsBetter\":false,\"Samples\":[0.011499999999999997,0.010499999999999996,0.011300000000000005,0.013599999999999987,0.01050000000000001,0.011899999999999994,0.0116,0.013400000000000023,0.01200000000000001,0.0121,0.01050000000000001,0.01050000000000001,0.012800000000000006,0.01050000000000001,0.01050000000000001,0.01200000000000001,0.01050000000000001,0.010699999999999988,0.011999999999999956,0.0126,0.010599999999999999,0.0121,0.010599999999999999,0.011700000000000044,0.010599999999999999,0.010599999999999999,0.01150000000000001,0.011699999999999989,0.010599999999999999,0.012699999999999989,0.0126,0.011700000000000044,0.010500000000000065,0.012700000000000045,0.010599999999999943,0.010599999999999943,0.013900000000000024,0.010599999999999943,0.025599999999999957,0.010600000000000054,0.010700000000000043,0.011599999999999944,0.010599999999999943,0.011800000000000033,0.010599999999999943,0.0131,0.012800000000000034,0.010599999999999943,0.011900000000000022,0.01200000000000001,0.010700000000000043,0.012299999999999978,0.011700000000000044,0.011900000000000022,0.012399999999999967,0.011699999999999933,0.0131,0.011800000000000033,0.012400000000000078,0.013500000000000068,0.010699999999999932,0.010700000000000043,0.013399999999999968,0.012299999999999978,0.0121,0.010800000000000032,0.011700000000000044,0.010599999999999943,0.012799999999999923,0.012399999999999967,0.010600000000000165,0.011800000000000033,0.012499999999999956,0.014399999999999969,0.010800000000000143,0.01429999999999998,0.010699999999999932,0.010699999999999932,0.011900000000000022,0.010599999999999943,0.010599999999999943,0.0121,0.012699999999999934,0.010599999999999943,0.010699999999999932,0.011400000000000077,0.010599999999999943,0.010599999999999943,0.011900000000000022,0.010599999999999943,0.010599999999999943,0.011800000000000033,0.012499999999999956,0.010599999999999943,0.012199999999999989,0.010599999999999943,0.010599999999999943,0.0121,0.010699999999999932,0.010699999999999932,0.010700000000000154,0.013400000000000079,0.010699999999999932,0.010699999999999932,0.0121,0.010599999999999943,0.010600000000000165,0.0121,0.010600000000000165,0.010700000000000154,0.012499999999999956,0.011900000000000022,0.020500000000000186,0.013299999999999868,0.010699999999999932,0.01079999999999992,0.01079999999999992,0.01200000000000001,0.01079999999999992,0.010699999999999932,0.011900000000000022,0.01200000000000001,0.01079999999999992,0.0129999999999999,0.010699999999999932,0.010800000000000143,0.01220000000000021,0.012600000000000167,0.010700000000000154,0.011400000000000077,0.01079999999999992,0.011800000000000033,0.010599999999999943,0.01309999999999989,0.010599999999999943,0.010700000000000154,0.011500000000000066,0.012599999999999945,0.010699999999999932,0.012199999999999989,0.010599999999999943,0.010600000000000165,0.01220000000000021,0.010699999999999932,0.010699999999999932,0.012799999999999923,0.010700000000000376,0.010600000000000165,0.010699999999999932,0.012599999999999945,0.010699999999999932,0.012799999999999923,0.012399999999999967,0.010600000000000165,0.010600000000000165,0.01429999999999998,0.010600000000000165,0.010600000000000165,0.012399999999999967,0.010600000000000165,0.010699999999999932,0.013299999999999646,0.010700000000000376,0.010600000000000165,0.010699999999999932,0.011900000000000244,0.010700000000000376,0.012099999999999778,0.011600000000000055,0.010600000000000165,0.01059999999999972,0.011600000000000055,0.01059999999999972,0.010600000000000165,0.012700000000000156,0.010699999999999932,0.010699999999999932,0.012700000000000156,0.010699999999999932,0.010700000000000376,0.013500000000000068,0.01200000000000001,0.01059999999999972,0.010699999999999932,0.014399999999999747,0.010600000000000165,0.010600000000000165,0.019000000000000129,0.010699999999999932,0.012399999999999967,0.011699999999999822,0.010600000000000165,0.010600000000000165,0.012099999999999778,0.012599999999999945,0.010699999999999932,0.010699999999999932,0.011900000000000244,0.01059999999999972,0.012599999999999945],\"Min\":0.010499999999999996,\"Max\":0.025599999999999957,\"Median\":0.010800000000000143,\"Average\":0.011640500000000007,\"StandardDeviation\":0.0016232405089819547,\"Sum\":2.3281000000000016},{\"Name\":\"Generic\",\"Unit\":2,\"IncreaseIsBetter\":false,\"Samples\":[0.0008000000000000004,0.0008999999999999998,0.000899999999999998,0.000899999999999998,0.0009000000000000015,0.0009000000000000015,0.0009000000000000015,0.000899999999999998,0.0010000000000000009,0.000899999999999998,0.000899999999999998,0.000900000000000005,0.0010000000000000009,0.000900000000000005,0.000899999999999998,0.000999999999999994,0.000899999999999998,0.000899999999999998,0.000899999999999998,0.0010000000000000009,0.000899999999999998,0.000899999999999998,0.000900000000000005,0.000900000000000005,0.0010000000000000009,0.000899999999999998,0.000899999999999998,0.000899999999999998,0.0010000000000000009,0.000899999999999998,0.000899999999999998,0.000899999999999998,0.000899999999999998,0.0010000000000000009,0.000899999999999998,0.000899999999999998,0.000899999999999998,0.0010000000000000009,0.000899999999999998,0.000899999999999998,0.0009000000000000119,0.000899999999999998,0.0010000000000000009,0.0009000000000000119,0.000899999999999998,0.0010000000000000009,0.000899999999999998,0.000899999999999998,0.0010000000000000009,0.000899999999999998,0.0009000000000000119,0.0010000000000000009,0.0009000000000000119,0.0009000000000000119,0.0010000000000000009,0.0008999999999999842,0.0009000000000000119,0.0010000000000000009,0.0009000000000000119,0.0008999999999999842,0.0008999999999999842,0.0008999999999999842,0.0010000000000000009,0.0009000000000000119,0.0009000000000000119,0.0009000000000000119,0.0009000000000000119,0.0010000000000000009,0.0009000000000000119,0.0008999999999999842,0.0008999999999999842,0.0009000000000000119,0.0010000000000000009,0.0009000000000000119,0.0008999999999999842,0.0009999999999999732,0.0008999999999999842,0.0009000000000000119,0.0010000000000000009,0.0009000000000000119,0.0008999999999999842,0.0008999999999999842,0.0009000000000000119,0.0009000000000000119,0.0009000000000000119,0.0008999999999999842,0.0010000000000000009,0.0009000000000000119,0.0009000000000000119,0.0010000000000000009,0.0008999999999999842,0.0008999999999999842,0.0010000000000000009,0.0009000000000000119,0.0008999999999999842,0.0010000000000000009,0.0008999999999999842,0.0009000000000000119,0.0009000000000000119,0.0009000000000000119,0.0010000000000000009,0.0008999999999999842,0.0009000000000000119,0.0010000000000000009,0.0009000000000000119,0.0008999999999999842,0.0008999999999999842,0.0009000000000000119,0.0010000000000000009,0.0009000000000000119,0.0009000000000000119,0.0009000000000000119,0.0009000000000000119,0.0010000000000000009,0.0009000000000000119,0.0009000000000000119,0.0010000000000000009,0.0009000000000000119,0.0008999999999999564,0.0010000000000000009,0.0009000000000000119,0.0009000000000000119,0.0010000000000000009,0.0009000000000000119,0.0009000000000000119,0.0010000000000000009,0.0009000000000000119,0.0009000000000000119,0.0010000000000000009,0.0010000000000000009,0.0009000000000000119,0.0008999999999999564,0.0008999999999999564,0.0008999999999999564,0.0009000000000000119,0.0010000000000000009,0.0009000000000000119,0.0009000000000000119,0.0010000000000000009,0.0009000000000000119,0.0009000000000000119,0.0010000000000000009,0.0008999999999999564,0.0009000000000000119,0.0010000000000000009,0.0009000000000000119,0.0009000000000000119,0.0010000000000000009,0.0009000000000000119,0.0009000000000000119,0.0010000000000000009,0.0008999999999999564,0.0008999999999999564,0.0010000000000000009,0.0009000000000000119,0.0009000000000000119,0.0010000000000000009,0.0009000000000000119,0.0009000000000000119,0.0010000000000000009,0.0009000000000000119,0.0008999999999999564,0.0008999999999999564,0.0009000000000000119,0.0009000000000000119,0.0010000000000000009,0.0009000000000000119,0.0009000000000000119,0.0010000000000000009,0.0009000000000000119,0.0009000000000000119,0.0009000000000000119,0.0010000000000000009,0.0009000000000000119,0.0009000000000000119,0.0008999999999999564,0.0008999999999999564,0.0008999999999999564,0.0010000000000000009,0.0009000000000000119,0.0009000000000000119,0.0010000000000000009,0.0009000000000000119,0.0009000000000000119,0.0010000000000000009,0.0009000000000000119,0.0008999999999999564,0.0010000000000000009,0.0009000000000000119,0.0009000000000000119,0.0010000000000000009,0.0009000000000000119,0.0009000000000000119,0.0010000000000000009,0.0009000000000000119,0.0008999999999999564,0.0010000000000000009,0.0008999999999999564,0.0009000000000000119,0.0010000000000000009],\"Min\":0.0008000000000000004,\"Max\":0.0010000000000000009,\"Median\":0.0009000000000000119,\"Average\":0.0009259999999999999,\"StandardDeviation\":0.00004498888751680826,\"Sum\":0.18519999999999998}]}\r\n"
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      - Functional
+      parentId: 1049
+      parentUniqueId: 'TestAssembly.EditMode.dll/EnumTestRunner/[TestAssembly.EditMode][EnumTestRunner.EnumBagPerformanceTest][suite]'
+    - id: 1045
+      uniqueId: 'TestAssembly.EditMode.dll/EnumTestRunner/EnumBagPerformanceTest/[TestAssembly.EditMode][EnumTestRunner.EnumBagPerformanceTest(50)]'
+      name: EnumBagPerformanceTest(50)
+      fullName: EnumTestRunner.EnumBagPerformanceTest(50)
+      resultStatus: 1
+      duration: 0.1883232
+      messages: 
+      output: "Enum in Milliseconds\nMin:\t\t0.50 ms\nMedian:\t\t0.53 ms\nMax:\t\t0.83
+        ms\nAvg:\t\t0.55 ms\nStdDev:\t\t0.05 ms\nSampleCount:\t200\nSum:\t\t109.60
+        ms\r\nFirst samples:\t\u2583\u2583\u2583\u2583\u2581\u2582\u2581\u2581\u2582\u2582\u2582\u2582\u2582\u2582\u2582\u2582\u2584\u2581\u2581\u2581\u2581\u2582\u2581\u2581\u2582\u2582\u2582\u2582\u2582\u2584\u2583\u2583\u2583\u2582\u2582\u2583\u2583\u2583\u2583\u2583\u2581\u2582\u2582\u2582\u2586\u2583\u2581\u2582\u2582\u2582\u2582\u2582\u2581\u2582\u2581\u2582\u2582\u2582\u2582\u2581\u2581\u2581\u2582\u2582\u2582\u2581\u2582\u2581\u2582\u2581\u2581\u2581\u2582\u2582\u2583\u2581\u2581\u2582\u2583\u2581\u2581\u2581\u2581\u2583\u2582\u2582\u2582\u2582\u2582\u2582\u2582\u2582\u2582\u2582\u2582\u2583\u2581\u2581\u2581\u2581\r\nHistogram:\t\u2588\u2583\u2582\u2581\u2582\u2581\u2581\u2581\u2581\u2582\r\n\r\nType
+        in Milliseconds\nMin:\t\t0.05 ms\nMedian:\t\t0.05 ms\nMax:\t\t0.12 ms\nAvg:\t\t0.05
+        ms\nStdDev:\t\t0.01 ms\nSampleCount:\t200\nSum:\t\t10.92 ms\r\nFirst samples:\t\u2581\u2581\u2582\u2582\u2581\u2581\u2582\u2581\u2582\u2582\u2581\u2582\u2581\u2582\u2581\u2582\u2581\u2581\u2581\u2582\u2581\u2581\u2581\u2582\u2583\u2581\u2581\u2581\u2581\u2582\u2581\u2581\u2581\u2581\u2582\u2581\u2582\u2581\u2582\u2582\u2581\u2583\u2582\u2582\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2582\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2582\u2582\u2581\u2582\u2581\u2581\u2581\u2581\u2581\u2581\u2582\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2582\u2581\u2581\u2581\u2581\u2581\u2581\u2583\u2581\u2581\u2582\u2581\r\nHistogram:\t\u2588\u2584\u2582\u2581\u2582\u2581\u2581\u2581\u2581\u2582\r\n\r\nGeneric
+        in Milliseconds\nMin:\t\t0.00 ms\nMedian:\t\t0.00 ms\nMax:\t\t0.02 ms\nAvg:\t\t0.00
+        ms\nStdDev:\t\t0.00 ms\nSampleCount:\t200\nSum:\t\t0.77 ms\r\nFirst samples:\t\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\r\nHistogram:\t\u2588\u2583\u2582\u2581\u2582\u2581\u2581\u2581\u2581\u2581\r\n\r\n\r\n##performancetestresult2:{\"Name\":\"EnumTestRunner.EnumBagPerformanceTest(50)\",\"ClassName\":\"EnumTestRunner\",\"MethodName\":\"EnumBagPerformanceTest\",\"Version\":\"1\",\"Categories\":[\"Performance\",\"Functional\"],\"SampleGroups\":[{\"Name\":\"Enum\",\"Unit\":2,\"IncreaseIsBetter\":false,\"Samples\":[0.5797000000000003,0.5866000000000002,0.5822000000000003,0.5744000000000007,0.5131000000000006,0.5556000000000001,0.5169000000000006,0.5176000000000007,0.5333000000000006,0.523600000000001,0.5362999999999989,0.532,0.5380000000000003,0.5281000000000002,0.5347999999999988,0.5285999999999991,0.6211000000000002,0.5045000000000002,0.5206999999999997,0.5114000000000001,0.5168999999999997,0.5330999999999992,0.5160999999999998,0.5220000000000002,0.5448999999999984,0.5229999999999997,0.5509999999999984,0.5600000000000023,0.5517000000000003,0.6213999999999977,0.5776000000000003,0.5701999999999998,0.5779999999999994,0.5615000000000023,0.5690999999999988,0.5706000000000024,0.5715000000000003,0.5710999999999977,0.5709000000000017,0.5973000000000006,0.5074000000000005,0.5273000000000003,0.5458999999999996,0.5671999999999997,0.7519999999999989,0.5883000000000003,0.5206999999999979,0.5312000000000019,0.5305,0.5317000000000007,0.5265999999999984,0.5288000000000004,0.5187000000000026,0.5272000000000006,0.518100000000004,0.5334999999999965,0.5360999999999976,0.5331000000000046,0.5606000000000009,0.5,0.5167000000000002,0.5113999999999948,0.527000000000001,0.5403999999999982,0.5244,0.5183999999999998,0.5244,0.5200999999999993,0.5279000000000025,0.5184000000000069,0.5211999999999932,0.5185999999999993,0.5359999999999943,0.5271000000000043,0.5733999999999995,0.5137999999999963,0.5112999999999985,0.5550999999999959,0.5744000000000042,0.5150999999999968,0.5081999999999951,0.5138999999999996,0.5071000000000012,0.6082999999999998,0.539200000000001,0.5621999999999972,0.5556999999999945,0.5516000000000005,0.5600999999999985,0.5523000000000025,0.5553999999999988,0.5512999999999977,0.5551999999999993,0.5523000000000025,0.5570000000000022,0.5757000000000048,0.5019999999999953,0.5193000000000012,0.511099999999999,0.5174999999999983,0.5193999999999974,0.533299999999997,0.5366,0.5884,0.4998999999999967,0.5236000000000018,0.5134000000000043,0.5317000000000007,0.5172999999999988,0.5242999999999967,0.537700000000001,0.8300000000000054,0.7317999999999927,0.730400000000003,0.5314999999999941,0.6145999999999958,0.5366999999999962,0.5400999999999954,0.5376000000000119,0.541000000000011,0.5384999999999991,0.7556000000000012,0.7450000000000046,0.7305000000000064,0.7228999999999957,0.5658999999999992,0.525100000000009,0.5397999999999996,0.5306000000000068,0.5818000000000012,0.5465000000000089,0.5,0.5161999999999978,0.5087000000000046,0.515900000000002,0.5106999999999999,0.5744000000000114,0.5482000000000085,0.5656000000000034,0.5707000000000022,0.5251999999999981,0.5146000000000015,0.5202000000000027,0.5141000000000133,0.5182999999999964,0.5185000000000031,0.5150000000000006,0.5211000000000041,0.513300000000001,0.5544000000000011,0.502600000000001,0.5211999999999932,0.5136000000000109,0.5324999999999989,0.5298999999999978,0.5434999999999945,0.5287999999999897,0.5538999999999987,0.5722999999999985,0.694500000000005,0.5215000000000032,0.5146999999999906,0.5277999999999992,0.5320999999999998,0.5431999999999988,0.5515000000000043,0.5361999999999938,0.5267000000000053,0.5320000000000107,0.4989000000000061,0.5315999999999974,0.5305000000000035,0.5276999999999958,0.5330999999999904,0.5237999999999943,0.5345000000000084,0.529200000000003,0.5408000000000044,0.5298999999999978,0.5813999999999879,0.4988999999999919,0.5274000000000001,0.5148999999999973,0.5305999999999926,0.5211000000000041,0.5343999999999909,0.5268000000000086,0.5613999999999919,0.6079000000000008,0.5486999999999966,0.5263000000000062,0.5127999999999986,0.5959000000000003,0.5523000000000025,0.5623999999999967,0.5623000000000076,0.5541000000000054,0.5621000000000009,0.56280000000001,0.5397999999999996],\"Min\":0.4988999999999919,\"Max\":0.8300000000000054,\"Median\":0.5330999999999948,\"Average\":0.5480060000000002,\"StandardDeviation\":0.04972507681240953,\"Sum\":109.60120000000005},{\"Name\":\"Type\",\"Unit\":2,\"IncreaseIsBetter\":false,\"Samples\":[0.053300000000000017,0.0504,0.05459999999999998,0.054599999999999929,0.053200000000000028,0.05369999999999997,0.06359999999999999,0.05369999999999997,0.05620000000000003,0.05699999999999994,0.05410000000000004,0.06000000000000005,0.05070000000000008,0.05449999999999999,0.050799999999999959,0.05459999999999998,0.050799999999999959,0.05400000000000005,0.0515000000000001,0.055400000000000119,0.0512999999999999,0.054400000000000007,0.053199999999999917,0.05459999999999998,0.0673999999999999,0.052100000000000038,0.05370000000000008,0.054400000000000007,0.054200000000000029,0.055500000000000108,0.053099999999999928,0.053300000000000128,0.05180000000000007,0.05379999999999985,0.055199999999999697,0.05269999999999975,0.05559999999999965,0.051300000000000348,0.05600000000000005,0.05510000000000037,0.05270000000000019,0.0686,0.06370000000000031,0.05480000000000018,0.05109999999999992,0.04939999999999989,0.0512999999999999,0.05109999999999992,0.053300000000000128,0.053300000000000128,0.0512999999999999,0.051599999999999649,0.053300000000000128,0.05149999999999988,0.05210000000000026,0.05039999999999978,0.053300000000000128,0.05039999999999978,0.05290000000000017,0.06289999999999996,0.05160000000000009,0.05359999999999987,0.053999999999999829,0.0535000000000001,0.052200000000000027,0.05439999999999978,0.05369999999999964,0.056199999999999587,0.05539999999999967,0.05430000000000046,0.05480000000000018,0.05269999999999975,0.0530999999999997,0.05320000000000036,0.054199999999999807,0.05140000000000011,0.05369999999999919,0.05790000000000006,0.052999999999999939,0.051300000000000348,0.05370000000000008,0.05290000000000017,0.0539000000000005,0.05109999999999992,0.05399999999999938,0.05030000000000001,0.0539000000000005,0.05030000000000001,0.05489999999999995,0.05149999999999988,0.05370000000000008,0.053600000000000317,0.05259999999999998,0.05269999999999975,0.05210000000000026,0.06550000000000012,0.05269999999999975,0.05429999999999957,0.05590000000000028,0.05180000000000007,0.0519999999999996,0.05629999999999935,0.05370000000000008,0.052200000000000027,0.05429999999999957,0.05210000000000026,0.05129999999999946,0.05349999999999966,0.05129999999999946,0.05410000000000004,0.05140000000000011,0.05489999999999995,0.05069999999999997,0.06769999999999943,0.05310000000000059,0.05259999999999998,0.052999999999999939,0.054400000000000229,0.05489999999999995,0.05180000000000007,0.05489999999999995,0.051599999999999649,0.054999999999999719,0.05510000000000037,0.052200000000000027,0.05539999999999967,0.0530999999999997,0.055000000000000607,0.05370000000000008,0.05449999999999999,0.05410000000000004,0.06420000000000048,0.05550000000000033,0.05180000000000007,0.054199999999999807,0.05370000000000008,0.05269999999999975,0.053600000000000317,0.056100000000000708,0.054700000000000418,0.052799999999999517,0.05430000000000135,0.053300000000000128,0.05540000000000056,0.053800000000000739,0.053300000000000128,0.05349999999999966,0.05339999999999989,0.05600000000000094,0.057299999999999687,0.05400000000000027,0.05439999999999934,0.05349999999999966,0.057299999999999687,0.054199999999999807,0.05379999999999896,0.05410000000000004,0.052199999999999139,0.052799999999999517,0.05429999999999957,0.05259999999999998,0.05459999999999887,0.05250000000000021,0.05180000000000007,0.05530000000000079,0.0517000000000003,0.054700000000000418,0.12060000000000137,0.059299999999998579,0.05039999999999978,0.04970000000000141,0.05209999999999937,0.052400000000000449,0.06559999999999988,0.05889999999999951,0.05599999999999916,0.05269999999999975,0.05630000000000024,0.05450000000000088,0.05590000000000117,0.05400000000000027,0.054400000000001117,0.05480000000000018,0.0683000000000007,0.05489999999999995,0.05349999999999966,0.055899999999999398,0.05489999999999995,0.054700000000000418,0.05690000000000062,0.05370000000000097,0.056400000000000009,0.05339999999999989,0.05540000000000056,0.05410000000000004,0.05579999999999963,0.05630000000000024,0.053300000000000128,0.05579999999999963,0.05389999999999873],\"Min\":0.04939999999999989,\"Max\":0.12060000000000137,\"Median\":0.053700000000000528,\"Average\":0.054590500000000017,\"StandardDeviation\":0.00566825014885555,\"Sum\":10.918100000000003},{\"Name\":\"Generic\",\"Unit\":2,\"IncreaseIsBetter\":false,\"Samples\":[0.003700000000000002,0.0038000000000000049,0.003700000000000002,0.003699999999999995,0.003700000000000002,0.003699999999999995,0.003699999999999995,0.003700000000000009,0.003700000000000009,0.003799999999999998,0.003700000000000009,0.003700000000000009,0.003699999999999995,0.003699999999999995,0.003699999999999995,0.003699999999999995,0.003699999999999995,0.003699999999999995,0.003700000000000009,0.003699999999999981,0.003700000000000009,0.003699999999999981,0.003700000000000009,0.003700000000000009,0.003799999999999998,0.003699999999999981,0.003700000000000009,0.003699999999999981,0.003700000000000009,0.003699999999999981,0.003700000000000009,0.003700000000000009,0.003700000000000009,0.003700000000000009,0.003700000000000009,0.003699999999999981,0.003700000000000009,0.003699999999999981,0.003700000000000009,0.003700000000000009,0.003700000000000009,0.003700000000000009,0.003699999999999981,0.003700000000000009,0.0037000000000000368,0.003699999999999981,0.00379999999999997,0.003599999999999992,0.0037000000000000368,0.0037000000000000368,0.003699999999999981,0.0037000000000000368,0.003699999999999981,0.003699999999999981,0.0037000000000000368,0.003699999999999981,0.003699999999999981,0.003699999999999981,0.0037000000000000368,0.00379999999999997,0.003699999999999981,0.0037000000000000368,0.003699999999999981,0.003699999999999981,0.0037000000000000368,0.0038000000000000257,0.0037000000000000368,0.003599999999999992,0.003699999999999981,0.0037000000000000368,0.0037000000000000368,0.003699999999999981,0.003699999999999981,0.0037000000000000368,0.003699999999999981,0.003699999999999981,0.0037000000000000368,0.003699999999999981,0.003699999999999981,0.0037000000000000368,0.003699999999999981,0.003699999999999981,0.0037000000000000368,0.0037000000000000368,0.003699999999999981,0.0037000000000000368,0.0037000000000000368,0.003699999999999981,0.003699999999999981,0.0037000000000000368,0.003699999999999981,0.003699999999999981,0.0037000000000000368,0.0037000000000000368,0.0037000000000000368,0.0037999999999999147,0.0036999999999999257,0.0037000000000000368,0.0037000000000000368,0.0037000000000000368,0.0037000000000000368,0.0037000000000000368,0.0036999999999999257,0.0037000000000000368,0.0037000000000000368,0.0037000000000000368,0.0037000000000000368,0.0036999999999999257,0.0036999999999999257,0.0036999999999999257,0.0037000000000000368,0.0037000000000000368,0.0037000000000000368,0.0037000000000000368,0.0036999999999999257,0.0037000000000000368,0.0037000000000000368,0.0037000000000000368,0.0038000000000000257,0.0036999999999999257,0.0036999999999999257,0.0037000000000000368,0.0037000000000000368,0.0037000000000000368,0.0037000000000000368,0.0037000000000000368,0.0037999999999999147,0.0037000000000000368,0.0037000000000000368,0.0037999999999999147,0.0036999999999999257,0.0035999999999999368,0.0036000000000000478,0.0036000000000000478,0.0037000000000000368,0.0037000000000000368,0.0036999999999999257,0.0036999999999999257,0.0037000000000000368,0.0037000000000000368,0.0037000000000000368,0.0037000000000000368,0.0037000000000000368,0.0036999999999999257,0.0036999999999999257,0.0037000000000000368,0.0036000000000000478,0.0037000000000000368,0.0037000000000000368,0.0037000000000000368,0.0036999999999999257,0.0036999999999999257,0.0037000000000000368,0.0037000000000000368,0.0037000000000000368,0.0037000000000000368,0.0037000000000000368,0.0036999999999999257,0.0036999999999999257,0.0037000000000000368,0.0037000000000000368,0.0038000000000000257,0.0037000000000000368,0.0037000000000000368,0.0036999999999999257,0.0036999999999999257,0.0037000000000000368,0.0037000000000000368,0.0037000000000000368,0.0037000000000000368,0.0037000000000000368,0.0036999999999999257,0.0036999999999999257,0.0037000000000000368,0.0037000000000000368,0.0037000000000000368,0.0038000000000000257,0.0036999999999999257,0.0036999999999999257,0.0037000000000000368,0.0037000000000000368,0.0037000000000000368,0.0036999999999999257,0.0036999999999999257,0.0036999999999999257,0.0037000000000000368,0.0037000000000000368,0.0037000000000000368,0.0037000000000000368,0.024599999999999956,0.0041999999999999819,0.0041999999999999819,0.0046999999999999268,0.0039000000000000147,0.0042999999999999709,0.0046999999999999268,0.00649999999999995,0.0043999999999999599,0.0040000000000000039,0.0036999999999998147],\"Min\":0.0035999999999999368,\"Max\":0.024599999999999956,\"Median\":0.0037000000000000368,\"Average\":0.0038454999999999997,\"StandardDeviation\":0.0014900938728818355,\"Sum\":0.7690999999999999}]}\r\n"
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      - Functional
+      parentId: 1049
+      parentUniqueId: 'TestAssembly.EditMode.dll/EnumTestRunner/[TestAssembly.EditMode][EnumTestRunner.EnumBagPerformanceTest][suite]'
+    - id: 1046
+      uniqueId: 'TestAssembly.EditMode.dll/EnumTestRunner/EnumBagPerformanceTest/[TestAssembly.EditMode][EnumTestRunner.EnumBagPerformanceTest(100)]'
+      name: EnumBagPerformanceTest(100)
+      fullName: EnumTestRunner.EnumBagPerformanceTest(100)
+      resultStatus: 1
+      duration: 0.3145452
+      messages: 
+      output: "Enum in Milliseconds\nMin:\t\t1.01 ms\nMedian:\t\t1.07 ms\nMax:\t\t1.56
+        ms\nAvg:\t\t1.08 ms\nStdDev:\t\t0.06 ms\nSampleCount:\t200\nSum:\t\t216.35
+        ms\r\nFirst samples:\t\u2582\u2582\u2582\u2583\u2581\u2582\u2581\u2581\u2582\u2581\u2581\u2582\u2581\u2581\u2581\u2582\u2581\u2582\u2582\u2582\u2582\u2581\u2581\u2581\u2582\u2581\u2581\u2582\u2582\u2582\u2581\u2581\u2588\u2582\u2581\u2581\u2581\u2581\u2582\u2581\u2581\u2581\u2581\u2582\u2581\u2581\u2581\u2583\u2582\u2582\u2581\u2581\u2582\u2581\u2581\u2582\u2582\u2582\u2583\u2581\u2581\u2581\u2582\u2581\u2582\u2582\u2582\u2581\u2582\u2582\u2582\u2582\u2582\u2582\u2582\u2582\u2584\u2582\u2582\u2581\u2582\u2581\u2582\u2582\u2582\u2582\u2582\u2582\u2582\u2582\u2582\u2581\u2581\u2582\u2582\u2582\u2582\u2582\u2582\u2582\r\nHistogram:\t\u2588\u2584\u2582\u2581\u2582\u2581\u2581\u2581\u2581\u2581\r\n\r\nType
+        in Milliseconds\nMin:\t\t0.10 ms\nMedian:\t\t0.11 ms\nMax:\t\t0.14 ms\nAvg:\t\t0.11
+        ms\nStdDev:\t\t0.01 ms\nSampleCount:\t200\nSum:\t\t21.96 ms\r\nFirst samples:\t\u2584\u2584\u2584\u2583\u2583\u2583\u2583\u2583\u2585\u2583\u2583\u2583\u2583\u2583\u2583\u2583\u2583\u2584\u2583\u2582\u2583\u2583\u2583\u2583\u2583\u2583\u2587\u2582\u2582\u2582\u2582\u2583\u2582\u2582\u2582\u2587\u2588\u2581\u2582\u2582\u2582\u2582\u2582\u2582\u2586\u2583\u2582\u2583\u2586\u2581\u2581\u2582\u2582\u2584\u2582\u2582\u2582\u2582\u2582\u2582\u2583\u2582\u2584\u2583\u2582\u2583\u2582\u2582\u2583\u2583\u2583\u2584\u2583\u2582\u2582\u2582\u2582\u2582\u2582\u2582\u2582\u2585\u2582\u2582\u2583\u2582\u2586\u2583\u2583\u2582\u2583\u2583\u2583\u2583\u2583\u2584\u2583\u2583\u2583\u2583\r\nHistogram:\t\u2588\u2584\u2582\u2581\u2582\u2581\u2581\u2581\u2581\u2581\r\n\r\nGeneric
+        in Milliseconds\nMin:\t\t0.01 ms\nMedian:\t\t0.01 ms\nMax:\t\t0.02 ms\nAvg:\t\t0.01
+        ms\nStdDev:\t\t0.00 ms\nSampleCount:\t200\nSum:\t\t1.68 ms\r\nFirst samples:\t\u2581\u2581\u2581\u2581\u2581\u2582\u2587\u2582\u2582\u2588\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2582\u2582\u2582\u2582\u2582\u2582\u2582\u2582\u2582\u2582\u2581\u2581\u2581\u2582\u2581\u2582\u2582\u2581\u2582\u2582\u2582\u2582\u2582\u2582\u2582\u2583\u2582\u2583\u2582\u2582\u2582\u2582\u2582\u2582\u2582\u2582\u2582\u2582\u2582\u2583\u2583\u2582\u2582\u2582\u2583\u2583\u2583\u2583\u2582\u2583\u2583\u2582\u2583\u2583\u2583\u2583\u2582\u2583\u2583\u2583\u2583\u2582\u2583\u2583\u2583\u2583\u2583\u2582\u2583\u2583\u2582\u2582\u2582\u2582\u2582\u2586\u2582\u2581\u2581\u2581\u2581\u2581\u2581\r\nHistogram:\t\u2588\u2584\u2582\u2581\u2582\u2581\u2581\u2581\u2581\u2581\r\n\r\n\r\n##performancetestresult2:{\"Name\":\"EnumTestRunner.EnumBagPerformanceTest(100)\",\"ClassName\":\"EnumTestRunner\",\"MethodName\":\"EnumBagPerformanceTest\",\"Version\":\"1\",\"Categories\":[\"Performance\",\"Functional\"],\"SampleGroups\":[{\"Name\":\"Enum\",\"Unit\":2,\"IncreaseIsBetter\":false,\"Samples\":[1.1227,1.1212,1.105999999999999,1.1588999999999992,1.0350000000000002,1.0868000000000003,1.022499999999999,1.0296000000000004,1.0749000000000014,1.0401999999999987,1.0459000000000032,1.0557999999999979,1.042900000000003,1.0486000000000005,1.0505999999999994,1.0529999999999973,1.0285999999999974,1.0801000000000017,1.0579,1.0680000000000015,1.0548000000000002,1.0419000000000019,1.043800000000001,1.0414999999999993,1.0630000000000024,1.0131999999999977,1.0227000000000004,1.1019000000000006,1.1081000000000004,1.0719999999999957,1.030700000000003,1.0304999999999965,1.5604000000000014,1.0930000000000036,1.016999999999996,1.021499999999996,1.0382999999999996,1.0433000000000022,1.0765999999999992,1.0123000000000034,1.016600000000004,1.0172999999999988,1.018899999999995,1.0523000000000025,1.0219000000000023,1.028500000000001,1.0435999999999979,1.158299999999997,1.0747,1.0527000000000016,1.0313000000000017,1.0311999999999984,1.067700000000002,1.0238000000000014,1.0335000000000037,1.0978999999999957,1.1080999999999933,1.1117999999999882,1.1373999999999996,1.0227000000000004,1.0238999999999977,1.0300999999999903,1.12169999999999,1.0489999999999924,1.073599999999999,1.0973000000000042,1.1047999999999974,1.0300000000000012,1.0910999999999974,1.0516999999999968,1.069199999999995,1.0759999999999935,1.0750000000000029,1.0777000000000073,1.0908000000000016,1.086500000000001,1.2467999999999933,1.0889000000000096,1.0653999999999969,1.0504999999999996,1.068799999999996,1.0370000000000062,1.0674999999999955,1.1038000000000068,1.1184000000000083,1.1017999999999973,1.121300000000005,1.1274999999999978,1.0821000000000112,1.0537999999999955,1.0772000000000049,1.0339000000000028,1.046999999999997,1.0593999999999966,1.0841000000000066,1.0852000000000004,1.0668000000000007,1.0819000000000046,1.0881000000000115,1.0523000000000025,1.031099999999995,1.0731000000000109,1.0763000000000034,1.073900000000009,1.075800000000001,1.1099999999999995,1.043699999999987,1.0711000000000013,1.085099999999997,1.0198000000000037,1.0467000000000014,1.1372999999999963,1.109099999999998,1.0331999999999937,1.0475999999999886,1.04849999999999,1.061000000000007,1.0669999999999789,1.0852000000000147,1.0793999999999926,1.0372999999999877,1.0608000000000005,1.0889999999999987,1.0895000000000153,1.0963999999999886,1.0964999999999919,1.0930000000000178,1.1166999999999803,1.0557000000000017,1.0524999999999807,1.0587999999999909,1.0985000000000014,1.116500000000002,1.197999999999979,1.198299999999989,1.1947000000000117,1.33329999999998,1.0810999999999922,1.1115000000000067,1.1323999999999899,1.1243000000000052,1.1097000000000037,1.1154999999999973,1.1219999999999857,1.132000000000005,1.0386000000000025,1.105099999999993,1.3362999999999943,1.354600000000005,1.0198999999999786,1.052500000000009,1.063999999999993,1.0597999999999957,1.0550000000000069,1.0560999999999866,1.079999999999984,1.100500000000011,1.1062000000000012,1.0685000000000003,1.0938999999999908,1.0979000000000099,1.2035999999999945,1.146000000000015,1.0457999999999857,1.0493999999999915,1.0533000000000073,1.190499999999986,1.1214999999999976,1.1357000000000142,1.1274999999999978,1.1239000000000204,1.0544000000000154,1.0884000000000072,1.0901000000000068,1.0878999999999906,1.1285999999999775,1.042100000000005,1.0867999999999825,1.0801999999999908,1.07589999999999,1.0283000000000016,1.0524000000000058,1.054399999999987,1.0526999999999874,1.0725999999999943,1.1099999999999853,1.0422000000000083,1.0674999999999955,1.063999999999993,1.1133000000000096,1.0463999999999772,1.0604000000000156,1.0675000000000239,1.1888000000000148,1.0174000000000092,1.0664999999999907,1.0477999999999952,1.0477999999999952,1.0615999999999986,1.0529999999999973],\"Min\":1.0123000000000034,\"Max\":1.5604000000000014,\"Median\":1.0689999999999956,\"Average\":1.081738999999999,\"StandardDeviation\":0.06198330161422481,\"Sum\":216.34779999999979},{\"Name\":\"Type\",\"Unit\":2,\"IncreaseIsBetter\":false,\"Samples\":[0.11560000000000004,0.11539999999999995,0.11460000000000004,0.11109999999999998,0.10899999999999999,0.10640000000000005,0.10929999999999995,0.10870000000000002,0.12149999999999994,0.10820000000000008,0.1091000000000002,0.10940000000000017,0.11059999999999981,0.10919999999999997,0.10880000000000001,0.10939999999999994,0.11080000000000023,0.11809999999999965,0.10989999999999967,0.1057999999999999,0.1102000000000003,0.11019999999999986,0.10890000000000022,0.10990000000000011,0.1109,0.10810000000000031,0.1387999999999998,0.10199999999999987,0.10380000000000012,0.10349999999999993,0.10309999999999997,0.10709999999999997,0.10240000000000027,0.10379999999999967,0.10269999999999957,0.13450000000000007,0.14309999999999957,0.09959999999999969,0.10219999999999985,0.10310000000000042,0.10030000000000072,0.09999999999999965,0.10200000000000031,0.10029999999999984,0.13269999999999983,0.11050000000000004,0.10609999999999964,0.11070000000000047,0.1296999999999997,0.09839999999999982,0.09959999999999969,0.10049999999999937,0.10130000000000017,0.11690000000000023,0.10529999999999973,0.10550000000000015,0.1036999999999999,0.10459999999999958,0.10579999999999945,0.10440000000000005,0.1070000000000002,0.10490000000000066,0.11739999999999995,0.10660000000000025,0.10349999999999948,0.10799999999999965,0.10499999999999954,0.10609999999999964,0.10650000000000049,0.1073000000000004,0.10640000000000072,0.11710000000000065,0.11090000000000089,0.1051000000000002,0.1031000000000013,0.10020000000000096,0.10069999999999979,0.10170000000000101,0.10079999999999956,0.10030000000000072,0.10110000000000064,0.12270000000000003,0.1056000000000008,0.1034000000000006,0.10749999999999993,0.10470000000000113,0.12679999999999937,0.10879999999999868,0.1075999999999997,0.10570000000000057,0.11080000000000112,0.10800000000000054,0.10839999999999961,0.10909999999999975,0.10749999999999993,0.11829999999999963,0.10970000000000013,0.11050000000000004,0.10790000000000077,0.10970000000000013,0.11209999999999987,0.10839999999999961,0.10919999999999952,0.11270000000000025,0.11260000000000048,0.11109999999999865,0.11069999999999958,0.10990000000000144,0.1122999999999994,0.11019999999999897,0.11129999999999996,0.11280000000000001,0.12570000000000015,0.11029999999999873,0.11059999999999981,0.11120000000000019,0.11199999999999833,0.11169999999999902,0.11239999999999917,0.11299999999999955,0.11069999999999958,0.13100000000000024,0.1097999999999999,0.11000000000000121,0.11280000000000001,0.10970000000000013,0.1103999999999985,0.11059999999999981,0.10989999999999967,0.10999999999999943,0.12049999999999983,0.10939999999999906,0.1103999999999985,0.1100999999999992,0.10810000000000031,0.11019999999999897,0.10960000000000037,0.11000000000000121,0.10899999999999821,0.12929999999999709,0.11230000000000118,0.11110000000000042,0.11169999999999902,0.11849999999999739,0.1142000000000003,0.09750000000000014,0.09970000000000212,0.09909999999999997,0.11759999999999948,0.10430000000000206,0.1042999999999985,0.10410000000000253,0.10330000000000084,0.10469999999999757,0.10420000000000229,0.1036999999999999,0.10549999999999926,0.11650000000000205,0.10460000000000136,0.10419999999999874,0.10479999999999734,0.10479999999999734,0.10319999999999752,0.10480000000000089,0.10470000000000113,0.10519999999999996,0.12519999999999954,0.11020000000000252,0.10810000000000031,0.10989999999999967,0.10999999999999943,0.10839999999999961,0.11080000000000112,0.10989999999999967,0.10940000000000083,0.12320000000000064,0.13179999999999837,0.1335000000000015,0.13390000000000058,0.13560000000000017,0.1366000000000014,0.1407999999999987,0.09769999999999968,0.12040000000000006,0.10180000000000078,0.10210000000000008,0.10160000000000125,0.10449999999999804,0.10940000000000083,0.09730000000000061,0.0992999999999995,0.09710000000000108,0.11969999999999814,0.13190000000000169,0.09629999999999939,0.09720000000000084,0.1142000000000003,0.097800000000003,0.09709999999999752,0.0992999999999995],\"Min\":0.09629999999999939,\"Max\":0.14309999999999957,\"Median\":0.10904999999999987,\"Average\":0.10980899999999999,\"StandardDeviation\":0.008879781472536285,\"Sum\":21.961799999999998},{\"Name\":\"Generic\",\"Unit\":2,\"IncreaseIsBetter\":false,\"Samples\":[0.007099999999999995,0.007099999999999995,0.007100000000000009,0.007099999999999995,0.007099999999999995,0.009399999999999992,0.020099999999999994,0.008500000000000008,0.008300000000000002,0.022699999999999999,0.00789999999999999,0.008000000000000007,0.008200000000000013,0.008000000000000007,0.008000000000000007,0.008099999999999996,0.008000000000000007,0.008700000000000041,0.008500000000000008,0.008400000000000019,0.00880000000000003,0.008599999999999997,0.008500000000000008,0.00930000000000003,0.008299999999999974,0.008799999999999975,0.008599999999999997,0.008199999999999985,0.008199999999999985,0.008199999999999985,0.008399999999999963,0.008099999999999996,0.008299999999999974,0.008299999999999974,0.008199999999999985,0.008400000000000019,0.008599999999999997,0.009000000000000008,0.008799999999999975,0.008599999999999997,0.008599999999999941,0.010099999999999998,0.010500000000000065,0.010099999999999998,0.01100000000000001,0.009399999999999964,0.008899999999999908,0.009000000000000008,0.009599999999999942,0.009000000000000008,0.008999999999999897,0.008700000000000041,0.00880000000000003,0.009000000000000008,0.009299999999999975,0.010199999999999987,0.011199999999999988,0.01079999999999992,0.00880000000000003,0.009000000000000008,0.00990000000000002,0.011400000000000077,0.01100000000000001,0.010600000000000054,0.011199999999999988,0.010399999999999965,0.011099999999999999,0.011099999999999999,0.009299999999999975,0.011299999999999977,0.011400000000000077,0.011400000000000077,0.011099999999999999,0.009299999999999975,0.011599999999999944,0.01089999999999991,0.011299999999999977,0.010499999999999954,0.009800000000000031,0.01090000000000002,0.011099999999999999,0.01090000000000002,0.01079999999999992,0.01089999999999991,0.010000000000000009,0.010599999999999943,0.010699999999999932,0.010399999999999965,0.008799999999999919,0.009100000000000108,0.010199999999999987,0.00990000000000002,0.018799999999999929,0.008999999999999897,0.007600000000000051,0.007399999999999851,0.007199999999999873,0.007200000000000095,0.007100000000000106,0.007100000000000106,0.007200000000000095,0.007199999999999873,0.007199999999999873,0.007099999999999884,0.007100000000000106,0.007200000000000095,0.007200000000000095,0.007099999999999884,0.007099999999999884,0.007099999999999884,0.007200000000000095,0.007200000000000095,0.007100000000000106,0.007099999999999884,0.007199999999999873,0.007199999999999873,0.007200000000000095,0.007100000000000106,0.007100000000000106,0.007200000000000095,0.007199999999999873,0.007099999999999884,0.007099999999999884,0.007100000000000106,0.007200000000000095,0.007200000000000095,0.007099999999999884,0.007099999999999884,0.007099999999999884,0.007200000000000095,0.007200000000000095,0.007200000000000095,0.007199999999999873,0.007199999999999873,0.007099999999999884,0.007100000000000106,0.007100000000000106,0.007100000000000106,0.007099999999999884,0.007099999999999884,0.007100000000000106,0.007199999999999873,0.007199999999999873,0.007200000000000095,0.007100000000000106,0.007100000000000106,0.007100000000000106,0.007199999999999873,0.007199999999999873,0.007199999999999873,0.007200000000000095,0.007200000000000095,0.007100000000000106,0.007099999999999884,0.007099999999999884,0.007199999999999873,0.007200000000000095,0.007200000000000095,0.007200000000000095,0.007199999999999873,0.007099999999999884,0.007099999999999884,0.007100000000000106,0.007100000000000106,0.007200000000000095,0.007200000000000095,0.007199999999999873,0.007199999999999873,0.007200000000000095,0.007100000000000106,0.007100000000000106,0.007099999999999884,0.007199999999999873,0.007199999999999873,0.007200000000000095,0.007200000000000095,0.007100000000000106,0.007100000000000106,0.007099999999999884,0.007099999999999884,0.007199999999999873,0.007200000000000095,0.007200000000000095,0.007200000000000095,0.007199999999999873,0.007099999999999884,0.007099999999999884,0.007100000000000106,0.00990000000000002,0.008599999999999941,0.008499999999999952,0.008500000000000174,0.008299999999999974,0.008299999999999974,0.008199999999999985,0.007400000000000073,0.007100000000000328,0.007099999999999884,0.007099999999999884,0.007099999999999884],\"Min\":0.007099999999999884,\"Max\":0.022699999999999999,\"Median\":0.007200000000000095,\"Average\":0.008416499999999996,\"StandardDeviation\":0.0020344723517413509,\"Sum\":1.683299999999999}]}\r\n"
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      - Functional
+      parentId: 1049
+      parentUniqueId: 'TestAssembly.EditMode.dll/EnumTestRunner/[TestAssembly.EditMode][EnumTestRunner.EnumBagPerformanceTest][suite]'
+    - id: 1047
+      uniqueId: 'TestAssembly.EditMode.dll/EnumTestRunner/EnumBagPerformanceTest/[TestAssembly.EditMode][EnumTestRunner.EnumBagPerformanceTest(1000)]'
+      name: EnumBagPerformanceTest(1000)
+      fullName: EnumTestRunner.EnumBagPerformanceTest(1000)
+      resultStatus: 1
+      duration: 2.8059182
+      messages: 
+      output: "Enum in Milliseconds\nMin:\t\t10.21 ms\nMedian:\t\t10.85 ms\nMax:\t\t43.10
+        ms\nAvg:\t\t11.69 ms\nStdDev:\t\t4.80 ms\nSampleCount:\t200\nSum:\t\t2337.29
+        ms\r\nFirst samples:\t\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2588\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2588\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\r\nHistogram:\t\u2588\u2584\u2582\u2581\u2582\u2581\u2581\u2581\u2581\u2581\r\n\r\nType
+        in Milliseconds\nMin:\t\t0.98 ms\nMedian:\t\t1.05 ms\nMax:\t\t32.54 ms\nAvg:\t\t1.39
+        ms\nStdDev:\t\t3.11 ms\nSampleCount:\t200\nSum:\t\t278.12 ms\r\nFirst samples:\t\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2588\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\r\nHistogram:\t\u2588\u2584\u2582\u2581\u2582\u2581\u2581\u2581\u2581\u2581\r\n\r\nGeneric
+        in Milliseconds\nMin:\t\t0.07 ms\nMedian:\t\t0.07 ms\nMax:\t\t0.12 ms\nAvg:\t\t0.07
+        ms\nStdDev:\t\t0.00 ms\nSampleCount:\t200\nSum:\t\t14.01 ms\r\nFirst samples:\t\u2581\u2581\u2581\u2582\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2582\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2582\u2583\u2581\u2581\u2582\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2588\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\r\nHistogram:\t\u2588\u2583\u2582\u2581\u2582\u2581\u2581\u2581\u2581\u2581\r\n\r\n\r\n##performancetestresult2:{\"Name\":\"EnumTestRunner.EnumBagPerformanceTest(1000)\",\"ClassName\":\"EnumTestRunner\",\"MethodName\":\"EnumBagPerformanceTest\",\"Version\":\"1\",\"Categories\":[\"Performance\",\"Functional\"],\"SampleGroups\":[{\"Name\":\"Enum\",\"Unit\":2,\"IncreaseIsBetter\":false,\"Samples\":[10.939,10.766999999999996,10.842200000000006,10.362399999999994,10.546400000000006,10.4559,10.430400000000006,10.51430000000002,10.698799999999978,10.443099999999987,11.28449999999998,10.6815,10.585700000000003,10.498099999999994,10.400499999999994,10.844600000000014,10.902899999999989,10.603300000000019,11.885500000000008,11.288999999999988,11.07669999999996,10.99309999999997,11.504799999999989,11.054100000000006,11.51139999999998,11.195600000000013,11.849400000000003,10.925400000000025,11.865499999999998,11.170600000000036,10.9409,10.839799999999969,43.09870000000001,10.690799999999968,10.977199999999982,10.615899999999954,10.508700000000033,10.907800000000009,10.49249999999995,10.83039999999994,12.06490000000008,10.78729999999996,11.460000000000037,10.577099999999973,10.890700000000038,10.991399999999999,10.866100000000074,11.453999999999951,11.40339999999992,11.021200000000022,10.979199999999992,10.928700000000049,10.425000000000069,11.640700000000038,11.060599999999909,10.597499999999969,10.760099999999966,10.96049999999991,10.913000000000011,10.989799999999946,10.767600000000016,10.727699999999914,10.672199999999976,10.614900000000035,10.693699999999922,10.47700000000009,10.680399999999964,10.995000000000005,10.70410000000004,10.63659999999993,40.964500000000047,10.751700000000028,10.725099999999998,11.129199999999969,11.018799999999942,12.135599999999954,10.72199999999998,10.479900000000044,10.876800000000003,11.663999999999988,10.58280000000002,10.982499999999959,10.474500000000035,10.501999999999953,11.329600000000028,11.242299999999887,11.115299999999934,10.926899999999933,11.086700000000065,10.661100000000033,10.705799999999954,10.648400000000038,10.807900000000018,10.669000000000097,10.597300000000132,10.773699999999963,10.455600000000004,10.730800000000045,10.867099999999937,10.377599999999802,11.100199999999859,10.641700000000128,10.679300000000012,10.72479999999996,10.778900000000022,10.703800000000001,11.007000000000062,11.055499999999939,10.573000000000093,40.84619999999995,11.03469999999993,11.363799999999856,10.739900000000035,11.388999999999897,10.892500000000155,11.353900000000067,11.693300000000136,11.22400000000016,11.248299999999972,11.799800000000005,12.021099999999933,11.222999999999957,11.508000000000039,11.449599999999919,11.644600000000083,12.233600000000024,10.86180000000013,10.525300000000016,10.421300000000202,11.042300000000069,11.005499999999984,10.571699999999965,10.660399999999982,10.675500000000057,10.779099999999972,10.558999999999969,10.516200000000027,10.61869999999999,10.682099999999992,10.546199999999999,10.388300000000072,10.665399999999864,10.563400000000002,11.963999999999942,11.471900000000005,11.501500000000079,10.922500000000128,41.64450000000011,10.9070999999999,10.789599999999837,10.846299999999929,10.821800000000167,10.816500000000133,10.766000000000077,10.677699999999959,11.058499999999868,10.774899999999889,10.601300000000038,10.978000000000066,10.877500000000055,10.979000000000042,10.966899999999896,12.302599999999984,11.307700000000068,10.807999999999993,10.842899999999873,10.976900000000115,10.833900000000086,11.980000000000019,10.86239999999998,10.755699999999934,10.895500000000084,10.760400000000118,10.48030000000017,10.94880000000012,10.683700000000045,10.802500000000237,11.053600000000188,10.914300000000367,10.834699999999885,10.862699999999677,10.879199999999856,10.94250000000011,10.938799999999901,10.819100000000163,41.15589999999975,10.508700000000318,10.50729999999976,10.541700000000219,10.23779999999988,10.208099999999832,10.564100000000054,10.879499999999553,12.227300000000014,10.842099999999846,10.669600000000174,11.083299999999781,10.777999999999793,10.587199999999939,10.867200000000139],\"Min\":10.208099999999832,\"Max\":43.09870000000001,\"Median\":10.845449999999972,\"Average\":11.6864525,\"StandardDeviation\":4.799256220623536,\"Sum\":2337.2905},{\"Name\":\"Type\",\"Unit\":2,\"IncreaseIsBetter\":false,\"Samples\":[1.0204000000000005,1.0278,1.0355999999999997,1.034699999999999,1.0961999999999997,1.0949000000000009,1.0566999999999994,1.007299999999999,1.0053999999999999,1.0054999999999997,1.0259,1.3171,1.2109999999999986,1.0367999999999996,1.075599999999998,1.0202999999999989,1.0303000000000005,1.068200000000001,1.0742000000000012,1.094899999999999,1.1175999999999995,1.1113999999999998,1.110599999999998,1.122399999999999,1.1094000000000009,1.1372999999999963,1.0319000000000003,1.0293999999999955,1.0420999999999979,1.043699999999994,1.0264999999999987,1.0394000000000006,1.0424000000000007,1.0780999999999992,1.0718999999999995,1.0165999999999969,1.0313000000000017,1.0396,1.0512000000000015,1.0827000000000027,1.039200000000001,1.0375999999999977,1.0516000000000006,1.1664999999999993,1.6096999999999966,1.175699999999999,0.9927999999999955,1.014400000000002,0.9936000000000007,1.048099999999998,32.0726,1.06280000000001,1.0697000000000117,1.029600000000002,1.0326000000000022,1.1589000000000028,1.0056999999999903,1.0206999999999909,1.0250999999999949,1.0156000000000063,1.0239000000000119,1.0010000000000048,1.0054999999999979,1.0095000000000028,1.0148999999999973,1.0925000000000012,1.082400000000007,1.1085000000000065,1.1872999999999934,1.0722000000000094,1.0315999999999975,0.9908000000000072,0.9872999999999905,0.9925000000000068,0.9921000000000078,1.038499999999999,0.9976000000000056,0.9900999999999982,0.9907000000000039,0.9878000000000071,1.0034999999999884,0.9923000000000002,0.9947999999999979,1.521799999999999,1.0493000000000024,1.089199999999991,0.9943000000000097,1.0018999999999779,1.0027000000000044,1.0115999999999872,0.9921999999999969,0.994499999999988,0.9988999999999919,0.9969999999999857,1.026600000000002,1.0033999999999992,1.103999999999985,1.0895999999999902,1.4034000000000049,1.1563000000000159,1.050299999999993,1.0579999999999928,1.0586000000000127,1.090299999999985,1.0949999999999989,1.0703000000000032,1.0331999999999937,1.0518000000000143,0.9887999999999977,1.0737000000000024,1.0560999999999866,1.0548000000000002,1.1437999999999989,1.4543999999999926,1.6296000000000107,1.0518000000000143,1.0349999999999967,0.9928999999999917,1.0053000000000055,1.3267000000000167,1.1766000000000077,1.0409999999999969,1.0591000000000009,1.0586000000000127,1.0732000000000142,1.1108999999999867,1.203800000000001,1.0203000000000203,1.0383999999999958,1.0551000000000102,1.0803999999999974,1.0763000000000034,1.0921000000000163,1.6029000000000054,1.2732000000000028,1.4464000000000113,1.4204000000000008,1.418299999999988,32.54310000000001,1.0670999999999822,1.0713999999999829,1.0283000000000016,1.0080000000000098,1.2025999999999897,1.452600000000018,1.046199999999999,1.4110000000000014,1.0641999999999997,1.0970000000000085,1.1430000000000007,1.064300000000003,1.0527000000000158,1.105400000000003,1.0751000000000204,1.1329000000000065,0.9998999999999967,1.0012000000000115,0.993300000000005,1.0208000000000084,1.021000000000015,1.0493000000000166,1.001499999999993,1.0762,1.0737000000000024,1.071300000000008,1.0714999999999862,1.0833999999999833,1.069800000000015,1.0475000000000137,1.0508000000000096,0.9927999999999884,0.9951000000000079,1.1073000000000093,1.056600000000003,0.9954000000000178,1.0351999999999749,1.0477999999999952,1.0510000000000446,1.035600000000045,1.007600000000025,1.0217999999999848,1.0298999999999979,1.077600000000018,1.1005999999999859,1.0632000000000517,1.1363000000000057,1.227899999999977,1.0049999999999955,0.9927000000000135,0.9925999999999817,0.9933000000000334,1.0184999999999605,1.0649999999999978,0.9846999999999753,0.9927000000000135,0.9943000000000097,1.0027999999999793,1.0074000000000183,0.9850000000000136,1.0219999999999914],\"Min\":0.9846999999999753,\"Max\":32.54310000000001,\"Median\":1.0487000000000002,\"Average\":1.3906100000000013,\"StandardDeviation\":3.1095585231186768,\"Sum\":278.12200000000026},{\"Name\":\"Generic\",\"Unit\":2,\"IncreaseIsBetter\":false,\"Samples\":[0.0691,0.06919999999999999,0.06920000000000004,0.0776,0.06920000000000004,0.06920000000000004,0.06910000000000005,0.06910000000000005,0.06920000000000004,0.06920000000000015,0.06909999999999994,0.06919999999999993,0.06919999999999993,0.06919999999999993,0.06909999999999994,0.06920000000000015,0.06920000000000015,0.07230000000000003,0.06919999999999993,0.06919999999999993,0.06919999999999993,0.06910000000000016,0.06920000000000015,0.06920000000000015,0.06909999999999972,0.06919999999999993,0.06919999999999993,0.06919999999999993,0.06909999999999972,0.06919999999999993,0.06919999999999993,0.07489999999999997,0.06919999999999993,0.06930000000000014,0.06919999999999993,0.06909999999999972,0.06919999999999993,0.06910000000000016,0.06919999999999993,0.06919999999999993,0.06920000000000037,0.07869999999999999,0.0799000000000003,0.06919999999999993,0.06919999999999993,0.07389999999999963,0.06919999999999993,0.06919999999999993,0.06910000000000016,0.06919999999999993,0.06920000000000037,0.06919999999999949,0.06920000000000037,0.06919999999999949,0.06920000000000037,0.06920000000000037,0.06920000000000037,0.06919999999999949,0.06919999999999949,0.07210000000000072,0.06920000000000037,0.06920000000000037,0.06919999999999949,0.06919999999999949,0.06920000000000037,0.06919999999999949,0.06919999999999949,0.06909999999999972,0.06920000000000037,0.06920000000000037,0.06919999999999949,0.06920000000000037,0.06920000000000037,0.06920000000000037,0.07240000000000002,0.06920000000000037,0.06919999999999949,0.06919999999999949,0.06919999999999949,0.06920000000000037,0.06920000000000037,0.06919999999999949,0.06920000000000037,0.06920000000000037,0.06920000000000037,0.06919999999999949,0.06920000000000037,0.0691000000000006,0.11790000000000056,0.06920000000000037,0.06920000000000037,0.06919999999999949,0.06919999999999949,0.06920000000000037,0.06920000000000037,0.06920000000000037,0.06919999999999949,0.06919999999999949,0.06919999999999949,0.06920000000000037,0.0691000000000006,0.07460000000000022,0.07459999999999934,0.06920000000000037,0.06920000000000037,0.06920000000000037,0.0719000000000003,0.07200000000000095,0.0691999999999986,0.06909999999999883,0.06920000000000037,0.06920000000000037,0.0691000000000006,0.06920000000000037,0.0691999999999986,0.0757999999999992,0.0691000000000006,0.06920000000000037,0.06909999999999883,0.0691999999999986,0.06920000000000037,0.06920000000000037,0.06920000000000037,0.06920000000000037,0.0691999999999986,0.06920000000000037,0.0691000000000006,0.06920000000000037,0.06920000000000037,0.07240000000000002,0.0691999999999986,0.0691000000000006,0.0691000000000006,0.06920000000000037,0.06920000000000037,0.06909999999999883,0.06920000000000037,0.06920000000000037,0.06920000000000037,0.0691000000000006,0.0691999999999986,0.06920000000000037,0.0691000000000006,0.07210000000000072,0.06909999999999883,0.0691999999999986,0.0691000000000006,0.06909999999999883,0.0691000000000006,0.06920000000000037,0.06920000000000037,0.06909999999999883,0.0691999999999986,0.06920000000000037,0.0691000000000006,0.06920000000000037,0.06920000000000037,0.06909999999999883,0.07209999999999894,0.0691000000000006,0.06920000000000037,0.0691999999999986,0.06920000000000037,0.0691000000000006,0.06920000000000037,0.06920000000000037,0.0691999999999986,0.06920000000000037,0.0691000000000006,0.06920000000000037,0.06920000000000037,0.0691999999999986,0.07479999999999976,0.08539999999999992,0.06949999999999968,0.06909999999999883,0.06920000000000037,0.06920000000000037,0.06920000000000037,0.0691000000000006,0.06920000000000037,0.0691999999999986,0.0691999999999986,0.06920000000000037,0.06920000000000037,0.06920000000000037,0.07600000000000051,0.06920000000000037,0.06920000000000037,0.08089999999999975,0.07729999999999926,0.0691999999999986,0.06920000000000037,0.06920000000000037,0.0691999999999986,0.06920000000000037,0.06920000000000037,0.06920000000000037,0.06920000000000037,0.06920000000000037],\"Min\":0.06909999999999883,\"Max\":0.11790000000000056,\"Median\":0.06920000000000015,\"Average\":0.07006999999999998,\"StandardDeviation\":0.004040742506025366,\"Sum\":14.013999999999996}]}\r\n"
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      - Functional
+      parentId: 1049
+      parentUniqueId: 'TestAssembly.EditMode.dll/EnumTestRunner/[TestAssembly.EditMode][EnumTestRunner.EnumBagPerformanceTest][suite]'
+    - id: 1048
+      uniqueId: 'TestAssembly.EditMode.dll/EnumTestRunner/EnumBagPerformanceTest/[TestAssembly.EditMode][EnumTestRunner.EnumBagPerformanceTest(2500)]'
+      name: EnumBagPerformanceTest(2500)
+      fullName: EnumTestRunner.EnumBagPerformanceTest(2500)
+      resultStatus: 2
+      duration: 0
+      messages: Cancelled by user
+      output: "Enum in Milliseconds\nMin:\t\t25.78 ms\nMedian:\t\t27.40 ms\nMax:\t\t68.73
+        ms\nAvg:\t\t29.72 ms\nStdDev:\t\t8.29 ms\nSampleCount:\t200\nSum:\t\t5944.20
+        ms\r\nFirst samples:\t\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2586\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2582\u2581\u2581\u2587\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2582\u2581\u2581\u2581\u2581\u2581\u2586\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2586\u2581\u2581\u2581\u2581\u2581\u2581\u2582\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2586\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2586\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\r\nHistogram:\t\u2588\u2583\u2582\u2581\u2582\u2581\u2581\u2581\u2581\u2581\r\n\r\nType
+        in Milliseconds\nMin:\t\t2.49 ms\nMedian:\t\t2.71 ms\nMax:\t\t36.68 ms\nAvg:\t\t3.79
+        ms\nStdDev:\t\t5.52 ms\nSampleCount:\t200\nSum:\t\t758.74 ms\r\nFirst samples:\t\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2588\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2587\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2588\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\r\nHistogram:\t\u2588\u2583\u2582\u2581\u2582\u2581\u2581\u2581\u2581\u2581\r\n\r\nGeneric
+        in Milliseconds\nMin:\t\t0.17 ms\nMedian:\t\t0.17 ms\nMax:\t\t0.32 ms\nAvg:\t\t0.19
+        ms\nStdDev:\t\t0.02 ms\nSampleCount:\t200\nSum:\t\t37.19 ms\r\nFirst samples:\t\u2581\u2581\u2581\u2581\u2582\u2581\u2581\u2582\u2581\u2581\u2583\u2581\u2581\u2581\u2581\u2582\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2582\u2582\u2583\u2583\u2584\u2584\u2582\u2581\u2581\u2581\u2582\u2581\u2581\u2581\u2581\u2581\u2582\u2581\u2581\u2581\u2581\u2582\u2582\u2581\u2581\u2581\u2581\u2583\u2581\u2581\u2581\u2581\u2581\u2581\u2582\u2581\u2581\u2581\u2584\u2583\u2583\u2583\u2585\u2584\u2583\u2584\u2584\u2584\u2583\u2584\u2583\u2583\u2582\u2581\u2582\u2581\u2581\u2581\u2581\u2581\u2582\u2581\u2581\u2581\u2581\u2581\u2581\u2581\r\nHistogram:\t\u2588\u2583\u2582\u2581\u2582\u2581\u2581\u2581\u2581\u2581\r\n\r\n\r\n##performancetestresult2:{\"Name\":\"EnumTestRunner.EnumBagPerformanceTest(2500)\",\"ClassName\":\"EnumTestRunner\",\"MethodName\":\"EnumBagPerformanceTest\",\"Version\":\"1\",\"Categories\":[\"Performance\",\"Functional\"],\"SampleGroups\":[{\"Name\":\"Enum\",\"Unit\":2,\"IncreaseIsBetter\":false,\"Samples\":[26.651299999999993,27.135500000000009,27.61099999999999,27.735000000000015,27.22429999999997,26.838099999999998,26.985600000000035,26.92610000000002,27.029300000000036,57.30160000000001,26.685699999999998,26.238,26.422799999999996,27.127500000000056,27.668900000000009,27.81460000000004,27.323399999999994,27.879400000000034,26.871399999999995,26.544500000000086,26.772800000000076,31.63220000000001,28.19889999999998,27.353899999999955,64.28469999999993,27.205999999999905,27.992399999999976,27.721000000000005,27.402700000000097,27.51310000000001,27.524700000000168,26.56790000000001,27.568500000000087,28.155500000000076,29.353700000000118,27.12220000000002,27.915900000000194,27.482100000000174,27.246500000000198,26.648500000000014,59.47379999999998,27.61810000000014,27.435200000000124,26.51839999999993,27.395999999999959,27.081100000000107,27.056299999999966,26.631700000000138,26.3275000000001,26.78139999999985,27.18730000000005,27.67579999999998,27.05709999999999,27.625800000000028,26.502700000000006,58.721900000000008,26.07249999999999,26.63460000000009,26.90229999999997,27.269599999999856,26.85389999999984,27.446300000000066,29.01189999999997,27.07439999999997,26.785699999999907,26.28560000000016,26.805699999999889,26.817599999999858,26.609100000000127,27.409499999999754,56.899099999999638,26.735799999999928,27.117999999999939,27.160199999999806,27.14359999999988,26.680399999999737,28.088900000000196,27.63169999999991,27.0308,26.847800000000008,26.70640000000003,26.494700000000195,27.056499999999688,27.10440000000017,26.924399999999879,26.863800000000084,58.99409999999989,26.727699999999915,26.897699999999987,28.020700000000035,28.633299999999964,26.543500000000223,26.69820000000027,27.045799999999873,26.978999999999816,26.924199999999929,27.258200000000217,27.24850000000015,26.445799999999964,26.55450000000019,26.442299999999706,62.58959999999979,27.65689999999995,30.271899999999734,29.189800000000106,30.95029999999997,26.502700000000006,28.09320000000025,32.240200000000189,29.18560000000025,26.98570000000018,27.54910000000018,28.579499999999827,27.28710000000001,26.933300000000146,27.839600000000247,61.058500000000098,27.40570000000025,26.427099999999883,27.972499999999856,29.364100000000236,27.90809999999965,27.277100000000247,28.04870000000028,28.097099999999956,27.610200000000078,30.627799999999753,26.66040000000021,26.496799999999895,26.17560000000003,27.627599999999803,61.85939999999982,28.80289999999968,28.16939999999977,31.215000000000147,27.5632999999998,28.15189999999984,31.758199999999307,29.482200000000377,27.76379999999972,28.628500000000714,28.4384,31.308899999999995,27.677199999999176,30.11279999999988,26.533000000000358,27.575799999999619,60.95210000000043,27.500099999999294,28.721700000000057,30.39339999999993,29.311899999999697,27.67199999999957,32.28780000000006,27.534499999999754,27.79280000000017,26.247999999999594,31.085900000000039,27.33560000000034,26.349999999999456,28.242299999999888,32.776600000000147,68.73229999999967,27.84349999999995,26.50759999999991,26.55500000000029,25.77639999999974,26.66859999999997,27.600400000000265,28.251600000000509,27.063100000000305,28.21100000000024,27.65610000000015,27.404899999999544,27.595000000000256,28.047199999999977,27.33440000000064,57.025400000000448,26.764100000000327,27.19759999999951,26.28359999999975,27.84060000000045,27.23739999999998,26.96059999999943,27.56670000000031,26.750300000000608,26.03819999999996,26.269400000000134,26.793799999999466,26.258499999999914,26.38469999999961,25.833700000000137,26.866299999999684,60.90070000000014,28.066899999999806,26.942199999999504,27.541399999999159,27.578599999999825,27.843300000000455,27.50839999999971],\"Min\":25.77639999999974,\"Max\":68.73229999999967,\"Median\":27.399350000000028,\"Average\":29.721013499999985,\"StandardDeviation\":8.290851340777238,\"Sum\":5944.202699999997},{\"Name\":\"Type\",\"Unit\":2,\"IncreaseIsBetter\":false,\"Samples\":[2.5288999999999985,3.2693999999999976,2.789999999999999,2.7174000000000015,2.557500000000001,2.6415000000000008,2.5871999999999994,2.6159999999999998,2.6672999999999975,2.844299999999997,2.5839,2.549199999999999,3.3277999999999965,2.669800000000002,35.9289,2.8182999999999938,3.1203000000000005,2.6110999999999935,2.5870999999999926,3.208299999999994,2.5801000000000018,2.907499999999999,2.940899999999999,2.9587999999999967,2.576900000000009,2.8722000000000067,2.6544000000000098,2.563900000000004,2.7106999999999887,2.570300000000003,2.6122000000000016,2.626800000000003,2.659400000000005,2.5914999999999965,2.654899999999998,2.6710000000000209,2.5387000000000059,2.6397999999999799,2.63239999999999,2.563299999999998,2.8796000000000108,3.2912000000000036,2.61760000000001,3.206700000000012,3.6817000000000066,3.6521999999999936,2.879599999999982,2.7841999999999986,2.7195000000000109,33.769300000000018,3.2539999999999908,2.901299999999992,2.646000000000015,2.9720999999999835,2.6247999999999935,3.394799999999975,2.7321000000000028,2.6067999999999929,3.189300000000003,2.5670000000000074,2.602000000000004,3.149600000000021,2.6196000000000199,3.058099999999996,2.592399999999998,2.678699999999992,3.0027999999999794,2.73660000000001,2.6222999999999958,2.836900000000014,2.672799999999995,2.775599999999997,2.561499999999967,2.571700000000021,2.6111999999999968,2.613999999999976,2.5733999999999925,3.7823000000000208,2.5552999999999885,2.892600000000016,2.6888000000000149,2.550800000000038,3.0600000000000024,2.620999999999981,35.96889999999996,2.8473999999999934,3.408799999999985,2.613400000000013,2.5264999999999988,4.035799999999995,2.585399999999993,3.1365000000000124,2.630899999999997,2.737000000000023,3.0436000000000265,2.6555000000000179,2.7375999999999864,2.9553999999999975,2.5523999999999775,3.000499999999988,2.5500999999999864,2.584699999999998,2.798500000000047,2.6136000000000196,2.558599999999956,3.2701999999999886,2.5862999999999944,2.8465000000000488,2.7787999999999899,2.7111999999999627,3.225599999999986,2.5831000000000019,2.623800000000017,3.362000000000023,2.5844999999999915,3.1124000000000366,2.968900000000019,3.3174000000000207,3.833699999999965,2.564899999999966,34.87100000000004,2.8038999999999989,2.673400000000015,2.643199999999979,2.6007000000000177,2.718499999999949,2.709699999999998,2.6438999999999739,2.681100000000015,2.7128000000000158,2.6171000000000506,2.570500000000038,2.6949999999999365,2.5738999999999807,2.610900000000015,2.572400000000016,2.9771999999999254,2.6381000000000087,2.778500000000008,2.8817999999999985,2.5668000000000577,2.786899999999946,3.424600000000055,2.4870999999999414,4.0943999999999509,3.1499999999999774,3.1952,2.6517000000000054,2.72849999999994,3.1761999999999945,2.994699999999966,2.892600000000016,2.600599999999986,2.580100000000016,3.187599999999975,36.677099999999999,2.578700000000026,2.6476000000000114,3.1400999999999614,2.7170999999999596,2.621399999999994,2.868600000000015,2.6071999999999209,2.885499999999979,2.6230000000000475,2.5959000000000289,2.9133000000000495,2.568899999999985,2.6218999999999825,3.080100000000016,2.5716999999999645,2.584699999999998,3.192199999999957,3.291500000000042,3.2000000000000456,2.541900000000055,2.546799999999962,3.321800000000053,2.7520999999999278,3.8480999999999314,2.619699999999966,2.740599999999972,2.793399999999906,2.52150000000006,3.078399999999988,2.689700000000016,2.564899999999966,2.550899999999956,2.7730999999999996,2.794499999999971,33.54769999999996,2.9523000000000367,3.08179999999993,3.009800000000041,3.5590000000000829,2.622100000000046,2.628500000000031,3.1901000000000296,2.5675999999999705,3.1077000000000227],\"Min\":2.4870999999999414,\"Max\":36.677099999999999,\"Median\":2.7109499999999757,\"Average\":3.7937059999999986,\"StandardDeviation\":5.522700000784398,\"Sum\":758.7411999999997},{\"Name\":\"Generic\",\"Unit\":2,\"IncreaseIsBetter\":false,\"Samples\":[0.1725000000000001,0.17259999999999987,0.1726000000000001,0.1726000000000001,0.19620000000000016,0.17829999999999969,0.1726000000000001,0.18869999999999988,0.17259999999999965,0.1727000000000003,0.20639999999999993,0.1726000000000001,0.17259999999999965,0.17250000000000033,0.1726000000000001,0.18789999999999996,0.1726000000000001,0.17269999999999986,0.1726000000000001,0.1726000000000001,0.1726000000000001,0.1791999999999998,0.1726000000000001,0.1726000000000001,0.17250000000000033,0.1725999999999992,0.1726000000000001,0.17660000000000054,0.1726000000000001,0.1726000000000001,0.1726000000000001,0.1726000000000001,0.18359999999999933,0.18659999999999944,0.20730000000000005,0.20500000000000008,0.23279999999999924,0.22940000000000006,0.19370000000000155,0.17260000000000098,0.1725000000000012,0.17260000000000098,0.19059999999999989,0.17260000000000098,0.1725999999999992,0.17260000000000098,0.17260000000000098,0.17260000000000098,0.1921999999999997,0.18120000000000048,0.176400000000001,0.17260000000000098,0.1725999999999992,0.19059999999999989,0.1899000000000015,0.1725999999999992,0.17260000000000098,0.17260000000000098,0.17270000000000075,0.20620000000000084,0.1725999999999992,0.1725999999999992,0.17249999999999944,0.17969999999999865,0.1725999999999992,0.17520000000000025,0.1880999999999986,0.17260000000000098,0.1725000000000012,0.1772000000000009,0.2276000000000007,0.20330000000000049,0.2093000000000007,0.21859999999999858,0.2561,0.24129999999999897,0.2149000000000001,0.2272999999999996,0.23599999999999889,0.226700000000001,0.21069999999999923,0.2284000000000006,0.21100000000000208,0.2129000000000012,0.19989999999999953,0.17269999999999897,0.1836999999999982,0.17269999999999897,0.1725999999999992,0.17260000000000276,0.17260000000000276,0.1725999999999992,0.1900999999999975,0.17260000000000276,0.1725999999999992,0.17339999999999734,0.17280000000000229,0.1734000000000009,0.1783999999999999,0.17260000000000276,0.1725999999999992,0.1725999999999992,0.1725999999999992,0.17970000000000042,0.1725999999999992,0.1725999999999992,0.17260000000000276,0.17270000000000253,0.17260000000000276,0.1814,0.1767000000000003,0.17650000000000078,0.19750000000000157,0.2071000000000005,0.31510000000000107,0.2950999999999979,0.20479999999999877,0.18380000000000153,0.1725999999999992,0.18019999999999926,0.18570000000000065,0.22530000000000073,0.24749999999999873,0.24159999999999827,0.24170000000000159,0.21300000000000098,0.17560000000000287,0.1725999999999992,0.1725999999999992,0.17270000000000253,0.1725999999999992,0.1725999999999992,0.17919999999999804,0.1982999999999997,0.2052999999999976,0.22030000000000173,0.20520000000000139,0.210799999999999,0.17870000000000275,0.1725999999999992,0.1725999999999992,0.17249999999999944,0.221700000000002,0.1858000000000004,0.17269999999999897,0.1725999999999992,0.1725999999999992,0.1725999999999992,0.19460000000000123,0.1921999999999997,0.21119999999999806,0.17379999999999996,0.2254000000000005,0.22690000000000055,0.20840000000000104,0.1725999999999992,0.17249999999999944,0.1725999999999992,0.19159999999999756,0.17249999999999944,0.1725999999999992,0.17260000000000276,0.17259999999999565,0.18149999999999978,0.17260000000000276,0.17260000000000276,0.17260000000000276,0.17249999999999944,0.17260000000000276,0.18310000000000316,0.17260000000000276,0.17250000000000655,0.19020000000000437,0.17259999999999565,0.17259999999999565,0.17260000000000276,0.1916000000000011,0.18359999999999844,0.17260000000000276,0.17260000000000276,0.17259999999999565,0.17249999999999944,0.17260000000000276,0.17669999999999676,0.17259999999999565,0.17260000000000276,0.17260000000000276,0.17259999999999565,0.17249999999999944,0.18269999999999698,0.17800000000000439,0.17770000000000153,0.17260000000000276,0.17510000000000049,0.2301000000000002,0.18670000000000187,0.18849999999999768,0.17259999999999565,0.19319999999999738,0.17260000000000276],\"Min\":0.17249999999999944,\"Max\":0.31510000000000107,\"Median\":0.1726999999999994,\"Average\":0.18596850000000018,\"StandardDeviation\":0.02252916682325371,\"Sum\":37.193700000000038}]}\r\n"
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      - Functional
+      parentId: 1049
+      parentUniqueId: 'TestAssembly.EditMode.dll/EnumTestRunner/[TestAssembly.EditMode][EnumTestRunner.EnumBagPerformanceTest][suite]'
+    - id: 1051
+      uniqueId: 'TestAssembly.EditMode.dll/EnumTestRunner/[TestAssembly.EditMode][EnumTestRunner.EnumCastPerformanceTest]'
+      name: EnumCastPerformanceTest
+      fullName: EnumTestRunner.EnumCastPerformanceTest
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      - Functional
+      parentId: 1041
+      parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][EnumTestRunner][suite]'
+    - id: 1050
+      uniqueId: 'TestAssembly.EditMode.dll/EnumTestRunner/[TestAssembly.EditMode][EnumTestRunner.EnumParsePerformanceTest]'
+      name: EnumParsePerformanceTest
+      fullName: EnumTestRunner.EnumParsePerformanceTest
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      - Functional
+      parentId: 1041
+      parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][EnumTestRunner][suite]'
+    - id: 1052
       uniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][GameDBTestRunner][suite]'
       name: GameDBTestRunner
       fullName: GameDBTestRunner
@@ -1065,9 +1367,9 @@ MonoBehaviour:
       description: 
       isSuite: 1
       categories: []
-      parentId: 1096
+      parentId: 1111
       parentUniqueId: '[TestAssembly.EditMode][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/TestAssembly.EditMode.dll][suite]'
-    - id: 1041
+    - id: 1056
       uniqueId: 'TestAssembly.EditMode.dll/GameDBTestRunner/[TestAssembly.EditMode][GameDBTestRunner.StartTest][suite]'
       name: StartTest
       fullName: GameDBTestRunner.StartTest
@@ -1081,7 +1383,7 @@ MonoBehaviour:
       description: 
       isSuite: 1
       categories: []
-      parentId: 1037
+      parentId: 1052
       parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][GameDBTestRunner][suite]'
     - id: 1038
       uniqueId: 'TestAssembly.EditMode.dll/GameDBTestRunner/StartTest/[TestAssembly.EditMode][GameDBTestRunner.StartTest(GameDBTestRunner+JsonTestRunner)]'
@@ -1134,7 +1436,7 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1041
       parentUniqueId: 'TestAssembly.EditMode.dll/GameDBTestRunner/[TestAssembly.EditMode][GameDBTestRunner.StartTest][suite]'
-    - id: 1042
+    - id: 1057
       uniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][GlobalEnumTestRunner][suite]'
       name: GlobalEnumTestRunner
       fullName: GlobalEnumTestRunner
@@ -1148,7 +1450,7 @@ MonoBehaviour:
       description: 
       isSuite: 1
       categories: []
-      parentId: 1096
+      parentId: 1111
       parentUniqueId: '[TestAssembly.EditMode][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/TestAssembly.EditMode.dll][suite]'
     - id: 1043
       uniqueId: 'TestAssembly.EditMode.dll/GlobalEnumTestRunner/[TestAssembly.EditMode][GlobalEnumTestRunner.StartTest]'
@@ -1167,7 +1469,7 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1042
       parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][GlobalEnumTestRunner][suite]'
-    - id: 1085
+    - id: 1100
       uniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][LocalizeServiceTestRunner][suite]'
       name: LocalizeServiceTestRunner
       fullName: LocalizeServiceTestRunner
@@ -1182,7 +1484,7 @@ MonoBehaviour:
       isSuite: 1
       categories:
       - Service
-      parentId: 1096
+      parentId: 1111
       parentUniqueId: '[TestAssembly.EditMode][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/TestAssembly.EditMode.dll][suite]'
     - id: 1078
       uniqueId: 'TestAssembly.EditMode.dll/LocalizeServiceTestRunner/[TestAssembly.EditMode][LocalizeServiceTestRunner.LocalizeServiceTest]'
@@ -1201,7 +1503,7 @@ MonoBehaviour:
       - Service
       parentId: 1077
       parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][LocalizeServiceTestRunner][suite]'
-    - id: 1050
+    - id: 1065
       uniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][NotifyConstructorTestRunner][suite]'
       name: NotifyConstructorTestRunner
       fullName: NotifyConstructorTestRunner
@@ -1216,7 +1518,7 @@ MonoBehaviour:
       isSuite: 1
       categories:
       - Notify
-      parentId: 1096
+      parentId: 1111
       parentUniqueId: '[TestAssembly.EditMode][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/TestAssembly.EditMode.dll][suite]'
     - id: 1051
       uniqueId: 'TestAssembly.EditMode.dll/NotifyConstructorTestRunner/[TestAssembly.EditMode][NotifyConstructorTestRunner.NotifyCollectionAllConstructorTest]'
@@ -1269,7 +1571,7 @@ MonoBehaviour:
       - Notify
       parentId: 1050
       parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][NotifyConstructorTestRunner][suite]'
-    - id: 1054
+    - id: 1069
       uniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][NotifyCoverageTestRunner][suite]'
       name: NotifyCoverageTestRunner
       fullName: NotifyCoverageTestRunner
@@ -1285,7 +1587,7 @@ MonoBehaviour:
       categories:
       - Notify
       - Coverage
-      parentId: 1096
+      parentId: 1111
       parentUniqueId: '[TestAssembly.EditMode][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/TestAssembly.EditMode.dll][suite]'
     - id: 1056
       uniqueId: 'TestAssembly.EditMode.dll/NotifyCoverageTestRunner/[TestAssembly.EditMode][NotifyCoverageTestRunner.NotifyCollectionCoverageTest]'
@@ -1449,7 +1751,7 @@ MonoBehaviour:
       - Coverage
       parentId: 1054
       parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][NotifyCoverageTestRunner][suite]'
-    - id: 1064
+    - id: 1079
       uniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][NotifySerializeTestRunner][suite]'
       name: NotifySerializeTestRunner
       fullName: NotifySerializeTestRunner
@@ -1464,7 +1766,7 @@ MonoBehaviour:
       isSuite: 1
       categories:
       - Notify
-      parentId: 1096
+      parentId: 1111
       parentUniqueId: '[TestAssembly.EditMode][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/TestAssembly.EditMode.dll][suite]'
     - id: 1065
       uniqueId: 'TestAssembly.EditMode.dll/NotifySerializeTestRunner/[TestAssembly.EditMode][NotifySerializeTestRunner.NotifyCsvConvertTest]'
@@ -1517,7 +1819,7 @@ MonoBehaviour:
       - Notify
       parentId: 1064
       parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][NotifySerializeTestRunner][suite]'
-    - id: 1068
+    - id: 1083
       uniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][ReflectionTestRunner][suite]'
       name: ReflectionTestRunner
       fullName: ReflectionTestRunner
@@ -1533,13 +1835,13 @@ MonoBehaviour:
       categories:
       - Reflection
       - Performance
-      parentId: 1096
+      parentId: 1111
       parentUniqueId: '[TestAssembly.EditMode][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/TestAssembly.EditMode.dll][suite]'
-    - id: 1084
+    - id: 1099
       uniqueId: 'TestAssembly.EditMode.dll/ReflectionTestRunner/[TestAssembly.EditMode][ReflectionTestRunner.ReflectionExtensionPerformanceTest][suite]'
       name: ReflectionExtensionPerformanceTest
       fullName: ReflectionTestRunner.ReflectionExtensionPerformanceTest
-      resultStatus: 1
+      resultStatus: 0
       duration: 0
       messages: 
       output: 
@@ -1551,7 +1853,7 @@ MonoBehaviour:
       categories:
       - Performance
       - Reflection
-      parentId: 1068
+      parentId: 1083
       parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][ReflectionTestRunner][suite]'
     - id: 1080
       uniqueId: 'TestAssembly.EditMode.dll/ReflectionTestRunner/ReflectionExtensionPerformanceTest/[TestAssembly.EditMode][ReflectionTestRunner.ReflectionExtensionPerformanceTest(10,10)]'
@@ -1716,7 +2018,7 @@ MonoBehaviour:
       - Reflection
       parentId: 1083
       parentUniqueId: 'TestAssembly.EditMode.dll/ReflectionTestRunner/[TestAssembly.EditMode][ReflectionTestRunner.ReflectionExtensionPerformanceTest][suite]'
-    - id: 1079
+    - id: 1094
       uniqueId: 'TestAssembly.EditMode.dll/ReflectionTestRunner/[TestAssembly.EditMode][ReflectionTestRunner.ReflectionPerformanceTest][suite]'
       name: ReflectionPerformanceTest
       fullName: ReflectionTestRunner.ReflectionPerformanceTest
@@ -1732,7 +2034,7 @@ MonoBehaviour:
       categories:
       - Performance
       - Reflection
-      parentId: 1068
+      parentId: 1083
       parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][ReflectionTestRunner][suite]'
     - id: 1070
       uniqueId: 'TestAssembly.EditMode.dll/ReflectionTestRunner/ReflectionPerformanceTest/[TestAssembly.EditMode][ReflectionTestRunner.ReflectionPerformanceTest(100,5)]'
@@ -2088,7 +2390,7 @@ MonoBehaviour:
       - Reflection
       parentId: 1079
       parentUniqueId: 'TestAssembly.EditMode.dll/ReflectionTestRunner/[TestAssembly.EditMode][ReflectionTestRunner.ReflectionPerformanceTest][suite]'
-    - id: 1087
+    - id: 1102
       uniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][ServiceTestRunner][suite]'
       name: ServiceTestRunner
       fullName: ServiceTestRunner
@@ -2103,7 +2405,7 @@ MonoBehaviour:
       isSuite: 1
       categories:
       - Service
-      parentId: 1096
+      parentId: 1111
       parentUniqueId: '[TestAssembly.EditMode][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/TestAssembly.EditMode.dll][suite]'
     - id: 1081
       uniqueId: 'TestAssembly.EditMode.dll/ServiceTestRunner/[TestAssembly.EditMode][ServiceTestRunner.ServiceAsyncTaskTest]'
@@ -2139,7 +2441,7 @@ MonoBehaviour:
       - Service
       parentId: 1079
       parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][ServiceTestRunner][suite]'
-    - id: 1044
+    - id: 1059
       uniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][TcpServerTestRunner][suite]'
       name: TcpServerTestRunner
       fullName: TcpServerTestRunner
@@ -2153,7 +2455,7 @@ MonoBehaviour:
       description: 
       isSuite: 1
       categories: []
-      parentId: 1096
+      parentId: 1111
       parentUniqueId: '[TestAssembly.EditMode][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/TestAssembly.EditMode.dll][suite]'
     - id: 1045
       uniqueId: 'TestAssembly.EditMode.dll/TcpServerTestRunner/[TestAssembly.EditMode][TcpServerTestRunner.Clear]'
@@ -2172,7 +2474,7 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1044
       parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][TcpServerTestRunner][suite]'
-    - id: 1049
+    - id: 1064
       uniqueId: 'TestAssembly.EditMode.dll/TcpServerTestRunner/[TestAssembly.EditMode][TcpServerTestRunner.TcpClientTestAsync][suite]'
       name: TcpClientTestAsync
       fullName: TcpServerTestRunner.TcpClientTestAsync
@@ -2186,7 +2488,7 @@ MonoBehaviour:
       description: 
       isSuite: 1
       categories: []
-      parentId: 1044
+      parentId: 1059
       parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][TcpServerTestRunner][suite]'
     - id: 1047
       uniqueId: 'TestAssembly.EditMode.dll/TcpServerTestRunner/TcpClientTestAsync/[TestAssembly.EditMode][TcpServerTestRunner.TcpClientTestAsync(TcpJsonServeModule,TestTcpJsonClient)]'
@@ -2239,7 +2541,7 @@ MonoBehaviour:
       - Performance
       parentId: 1044
       parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][TcpServerTestRunner][suite]'
-    - id: 1090
+    - id: 1105
       uniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][UIViewModelTestRunner][suite]'
       name: UIViewModelTestRunner
       fullName: UIViewModelTestRunner
@@ -2253,9 +2555,9 @@ MonoBehaviour:
       description: 
       isSuite: 1
       categories: []
-      parentId: 1096
+      parentId: 1111
       parentUniqueId: '[TestAssembly.EditMode][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/TestAssembly.EditMode.dll][suite]'
-    - id: 1095
+    - id: 1110
       uniqueId: 'TestAssembly.EditMode.dll/UIViewModelTestRunner/[TestAssembly.EditMode][UIViewModelTestRunner.ViewModelPerformanceTest][suite]'
       name: ViewModelPerformanceTest
       fullName: UIViewModelTestRunner.ViewModelPerformanceTest
@@ -2270,7 +2572,7 @@ MonoBehaviour:
       isSuite: 1
       categories:
       - Performance
-      parentId: 1090
+      parentId: 1105
       parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][UIViewModelTestRunner][suite]'
     - id: 1084
       uniqueId: 'TestAssembly.EditMode.dll/UIViewModelTestRunner/ViewModelPerformanceTest/[TestAssembly.EditMode][UIViewModelTestRunner.ViewModelPerformanceTest(100)]'
@@ -2340,37 +2642,13 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1082
       parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][UIViewModelTestRunner][suite]'
-    m_ResultText: "ReflectionExtensionPerformanceTest(100,100) (14.670s)\n---\nDefault.GC()
-      in Undefineds\nMin:\t\t2.02 \nMedian:\t\t2.03 \nMax:\t\t2.03 \nAvg:\t\t2.03
-      \nStdDev:\t\t0.00 \nSampleCount:\t105\nSum:\t\t212.88 \r\nFirst samples:\t\u2588\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2588\u2588\u2588\u2588\u2581\u2581\u2581\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2581\u2588\u2588\u2588\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\r\nHistogram:\t\u2583\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2588\r\n\r\nDefault
-      in Microseconds\nMin:\t\t442.40 \u03BCs\nMedian:\t\t462.75 \u03BCs\nMax:\t\t698.20
-      \u03BCs\nAvg:\t\t486.54 \u03BCs\nStdDev:\t\t55.10 \u03BCs\nSampleCount:\t100\nSum:\t\t48654.40
-      \u03BCs\r\nFirst samples:\t\u2582\u2581\u2582\u2582\u2582\u2581\u2581\u2581\u2582\u2582\u2582\u2581\u2581\u2582\u2586\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2582\u2582\u2588\u2586\u2581\u2587\u2581\u2582\u2581\u2581\u2582\u2581\u2581\u2581\u2581\u2582\u2581\u2585\u2582\u2582\u2582\u2582\u2582\u2581\u2581\u2581\u2585\u2582\u2585\u2582\u2585\u2581\u2581\u2581\u2581\u2582\u2581\u2582\u2582\u2584\u2586\u2582\u2581\u2582\u2582\u2581\u2581\u2582\u2585\u2581\u2583\u2581\u2585\u2581\u2582\u2582\u2583\u2581\u2582\u2581\u2581\u2581\u2584\u2586\u2582\u2583\u2582\u2581\u2582\u2581\u2581\u2581\u2582\u2581\u2582\u2587\u2581\u2582\r\nHistogram:\t\u2586\u2585\u2582\u2581\u2581\u2581\u2581\u2581\u2581\u2588\r\n\r\nFast.GC()
-      in Undefineds\nMin:\t\t1.01 \nMedian:\t\t1.03 \nMax:\t\t1.03 \nAvg:\t\t1.03
-      \nStdDev:\t\t0.01 \nSampleCount:\t105\nSum:\t\t107.80 \r\nFirst samples:\t\u2588\u2581\u2581\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2585\u2585\u2585\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2585\u2581\u2581\u2585\u2585\u2585\u2585\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2585\u2585\u2585\u2585\u2585\u2585\u2585\u2585\u2585\u2585\u2585\u2585\u2585\u2585\u2585\u2585\u2585\u2585\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\r\nHistogram:\t\u2584\u2583\u2581\u2581\u2582\u2581\u2581\u2581\u2581\u2588\r\n\r\nFast
-      in Microseconds\nMin:\t\t139.90 \u03BCs\nMedian:\t\t164.60 \u03BCs\nMax:\t\t372.00
-      \u03BCs\nAvg:\t\t172.17 \u03BCs\nStdDev:\t\t32.78 \u03BCs\nSampleCount:\t100\nSum:\t\t17217.20
-      \u03BCs\r\nFirst samples:\t\u2582\u2582\u2582\u2582\u2584\u2583\u2582\u2581\u2581\u2582\u2584\u2582\u2582\u2582\u2581\u2581\u2584\u2582\u2582\u2581\u2581\u2582\u2581\u2582\u2582\u2585\u2582\u2582\u2581\u2582\u2582\u2583\u2582\u2582\u2583\u2582\u2582\u2583\u2582\u2588\u2581\u2581\u2581\u2581\u2582\u2582\u2581\u2581\u2582\u2581\u2581\u2582\u2581\u2581\u2582\u2581\u2584\u2582\u2582\u2581\u2582\u2582\u2582\u2582\u2581\u2582\u2582\u2581\u2581\u2582\u2582\u2582\u2583\u2582\u2582\u2582\u2582\u2584\u2582\u2582\u2582\u2582\u2583\u2582\u2582\u2582\u2582\u2582\u2585\u2581\u2582\u2582\u2581\u2582\u2583\u2582\u2582\u2581\u2582\u2582\r\nHistogram:\t\u2585\u2586\u2582\u2581\u2582\u2581\u2581\u2581\u2581\u2588\r\n\r\nFastInfoCache.GC()
-      in Undefineds\nMin:\t\t1.00 \nMedian:\t\t1.03 \nMax:\t\t1.04 \nAvg:\t\t1.02
-      \nStdDev:\t\t0.01 \nSampleCount:\t105\nSum:\t\t107.62 \r\nFirst samples:\t\u2586\u2586\u2585\u2585\u2586\u2586\u2585\u2585\u2585\u2586\u2586\u2586\u2586\u2586\u2585\u2588\u2586\u2586\u2586\u2585\u2585\u2585\u2585\u2581\u2585\u2585\u2585\u2585\u2585\u2585\u2585\u2585\u2585\u2585\u2585\u2585\u2585\u2585\u2583\u2585\u2586\u2586\u2586\u2586\u2586\u2586\u2586\u2586\u2585\u2583\u2585\u2585\u2586\u2586\u2586\u2586\u2585\u2586\u2586\u2586\u2586\u2586\u2586\u2586\u2585\u2586\u2585\u2583\u2586\u2586\u2586\u2586\u2586\u2586\u2586\u2585\u2585\u2583\u2585\u2586\u2586\u2585\u2586\u2586\u2585\u2585\u2586\u2586\u2586\u2586\u2581\u2586\u2586\u2586\u2586\u2586\u2585\u2586\u2586\u2586\r\nHistogram:\t\u2585\u2586\u2582\u2581\u2584\u2581\u2581\u2584\u2581\u2588\r\n\r\nFastInfoCache
-      in Microseconds\nMin:\t\t90.80 \u03BCs\nMedian:\t\t109.90 \u03BCs\nMax:\t\t320.20
-      \u03BCs\nAvg:\t\t118.56 \u03BCs\nStdDev:\t\t30.89 \u03BCs\nSampleCount:\t100\nSum:\t\t11856.10
-      \u03BCs\r\nFirst samples:\t\u2582\u2582\u2581\u2582\u2582\u2582\u2582\u2582\u2582\u2582\u2582\u2581\u2583\u2582\u2582\u2582\u2582\u2582\u2582\u2581\u2582\u2582\u2581\u2586\u2583\u2581\u2581\u2581\u2581\u2583\u2581\u2581\u2581\u2582\u2582\u2581\u2583\u2581\u2584\u2582\u2582\u2583\u2582\u2581\u2582\u2581\u2581\u2584\u2583\u2582\u2581\u2582\u2581\u2582\u2584\u2581\u2581\u2582\u2582\u2581\u2581\u2581\u2581\u2582\u2581\u2583\u2582\u2581\u2582\u2581\u2581\u2582\u2581\u2582\u2582\u2582\u2582\u2588\u2582\u2581\u2582\u2582\u2581\u2583\u2582\u2581\u2581\u2581\u2582\u2582\u2582\u2582\u2582\u2581\u2582\u2582\u2582\u2581\u2582\u2582\r\nHistogram:\t\u2585\u2588\u2582\u2582\u2584\u2581\u2581\u2583\u2581\u2587\r\n\r\nFastFuncCache.GC()
-      in Undefineds\nMin:\t\t1.00 \nMedian:\t\t1.00 \nMax:\t\t1.03 \nAvg:\t\t1.01
-      \nStdDev:\t\t0.01 \nSampleCount:\t105\nSum:\t\t105.57 \r\nFirst samples:\t\u2583\u2581\u2581\u2583\u2581\u2583\u2586\u2581\u2581\u2581\u2581\u2583\u2586\u2588\u2581\u2581\u2581\u2581\u2583\u2583\u2583\u2583\u2581\u2581\u2583\u2583\u2583\u2583\u2581\u2581\u2583\u2581\u2583\u2583\u2583\u2581\u2586\u2581\u2581\u2583\u2581\u2583\u2583\u2583\u2581\u2581\u2581\u2583\u2581\u2583\u2583\u2583\u2581\u2583\u2583\u2583\u2583\u2581\u2581\u2581\u2583\u2581\u2586\u2581\u2581\u2581\u2583\u2583\u2581\u2581\u2583\u2581\u2586\u2583\u2581\u2581\u2581\u2581\u2583\u2581\u2581\u2581\u2581\u2581\u2583\u2581\u2581\u2583\u2583\u2581\u2581\u2581\u2581\u2583\u2583\u2581\u2583\u2581\u2581\u2581\r\nHistogram:\t\u2588\u2588\u2582\u2584\u2584\u2581\u2581\u2584\u2581\u2588\r\n\r\nFastFuncCache
-      in Microseconds\nMin:\t\t33.00 \u03BCs\nMedian:\t\t38.90 \u03BCs\nMax:\t\t91.90
-      \u03BCs\nAvg:\t\t42.53 \u03BCs\nStdDev:\t\t8.62 \u03BCs\nSampleCount:\t100\nSum:\t\t4253.00
-      \u03BCs\r\nFirst samples:\t\u2582\u2583\u2581\u2582\u2581\u2581\u2581\u2583\u2588\u2581\u2582\u2582\u2582\u2584\u2581\u2583\u2584\u2582\u2582\u2583\u2582\u2585\u2582\u2581\u2582\u2583\u2582\u2582\u2584\u2584\u2581\u2584\u2582\u2582\u2581\u2581\u2584\u2581\u2582\u2581\u2582\u2582\u2581\u2581\u2582\u2582\u2582\u2582\u2582\u2584\u2582\u2583\u2582\u2582\u2582\u2583\u2582\u2583\u2582\u2581\u2581\u2584\u2581\u2582\u2581\u2582\u2582\u2583\u2584\u2582\u2582\u2582\u2582\u2583\u2581\u2582\u2581\u2582\u2582\u2583\u2581\u2581\u2583\u2582\u2581\u2583\u2582\u2582\u2582\u2582\u2582\u2583\u2581\u2584\u2583\u2583\u2581\u2583\u2582\u2582\r\nHistogram:\t\u2586\u2588\u2582\u2583\u2583\u2581\u2581\u2583\u2581\u2586\r\n\r\n\r\n##performancetestresult2:{\"Name\":\"ReflectionTestRunner.ReflectionExtensionPerformanceTest(100,100)\",\"ClassName\":\"ReflectionTestRunner\",\"MethodName\":\"ReflectionExtensionPerformanceTest\",\"Version\":\"1\",\"Categories\":[\"Performance\",\"Reflection\",\"Performance\"],\"SampleGroups\":[{\"Name\":\"Default.GC()\",\"Unit\":8,\"IncreaseIsBetter\":false,\"Samples\":[2.03,2.02,2.02,2.02,2.02,2.02,2.02,2.02,2.02,2.03,2.03,2.03,2.03,2.02,2.02,2.02,2.03,2.03,2.03,2.03,2.03,2.03,2.03,2.03,2.03,2.03,2.03,2.03,2.03,2.03,2.03,2.03,2.03,2.03,2.03,2.03,2.03,2.03,2.03,2.03,2.03,2.03,2.03,2.03,2.03,2.03,2.03,2.03,2.03,2.03,2.03,2.03,2.03,2.03,2.03,2.03,2.03,2.03,2.03,2.03,2.03,2.03,2.03,2.03,2.03,2.03,2.03,2.03,2.03,2.03,2.03,2.03,2.03,2.03,2.03,2.03,2.03,2.03,2.03,2.03,2.03,2.03,2.03,2.03,2.03,2.03,2.02,2.03,2.03,2.03,2.02,2.02,2.02,2.02,2.02,2.02,2.02,2.02,2.02,2.02,2.02,2.02,2.02,2.02,2.02],\"Min\":2.02,\"Max\":2.03,\"Median\":2.03,\"Average\":2.027428571428574,\"StandardDeviation\":0.004370588154508008,\"Sum\":212.88000000000026},{\"Name\":\"Default\",\"Unit\":1,\"IncreaseIsBetter\":false,\"Samples\":[482.5999999999908,453.6999999999978,471.8000000000302,469.99999999997046,476.90000000000057,460.1999999999862,454.4999999999959,458.6999999999648,475.70000000001758,480.59999999998129,469.4999999999254,460.40000000004968,453.7000000000262,462.2999999999138,618.099999999913,457.4000000000069,454.0000000000646,449.0000000000691,458.30000000000839,449.7000000000071,460.59999999999948,452.89999999999966,485.5999999999767,472.89999999998147,698.2000000000426,616.9999999999618,455.90000000015609,649.2000000000644,459.2000000000098,463.09999999994036,458.99999999983268,453.9999999999509,477.500000000191,452.3999999998978,451.7000000000735,457.2000000000571,459.3999999999596,462.80000000001567,455.0000000001546,576.9999999999982,471.4999999998781,462.99999999996546,467.3000000000229,479.39999999994145,487.00000000008006,452.199999999948,458.69999999990798,455.9999999999036,581.4000000000306,461.00000000001276,593.599999999924,470.80000000005387,571.5999999999894,457.6999999999316,452.3999999998978,454.60000000002767,457.2000000002845,463.9999999999418,456.40000000003058,468.69999999989889,464.69999999999348,551.1999999998807,632.8000000003158,476.10000000031507,449.9000000000706,480.30000000017028,466.2999999995918,456.99999999987997,442.4000000003616,483.2000000001244,571.100000000115,454.2999999998756,507.39999999996146,457.4000000002343,605.4999999996653,457.4000000002343,465.5000000002474,496.0000000000946,500.50000000010189,453.3000000001266,496.19999999958966,452.900000000227,457.6000000001841,451.7000000000735,555.9000000002925,619.2999999998392,492.0000000001892,514.0000000001237,472.60000000005678,447.7000000001681,484.9999999996726,456.2999999998283,456.50000000023285,454.4999999998254,462.3999999998887,456.79999999993017,462.70000000004077,677.599999999984,459.4999999999345,488.6999999998807],\"Min\":442.4000000003616,\"Max\":698.2000000000426,\"Median\":462.7500000000282,\"Average\":486.54400000001177,\"StandardDeviation\":55.09756495526098,\"Sum\":48654.40000000117},{\"Name\":\"Fast.GC()\",\"Unit\":8,\"IncreaseIsBetter\":false,\"Samples\":[1.03,1.01,1.01,1.03,1.03,1.03,1.03,1.03,1.03,1.03,1.03,1.03,1.03,1.03,1.03,1.03,1.03,1.03,1.03,1.03,1.03,1.03,1.03,1.03,1.03,1.03,1.03,1.03,1.03,1.02,1.02,1.02,1.03,1.03,1.03,1.03,1.03,1.03,1.03,1.03,1.03,1.03,1.03,1.03,1.03,1.03,1.03,1.03,1.03,1.03,1.02,1.01,1.01,1.02,1.02,1.02,1.02,1.03,1.03,1.03,1.03,1.03,1.03,1.03,1.02,1.02,1.02,1.02,1.02,1.02,1.02,1.02,1.02,1.02,1.02,1.02,1.02,1.02,1.02,1.02,1.02,1.02,1.03,1.03,1.03,1.03,1.03,1.03,1.03,1.03,1.03,1.03,1.03,1.03,1.03,1.03,1.03,1.03,1.03,1.03,1.03,1.03,1.03,1.02,1.03],\"Min\":1.01,\"Max\":1.03,\"Median\":1.03,\"Average\":1.0266666666666667,\"StandardDeviation\":0.005462716342742857,\"Sum\":107.8},{\"Name\":\"Fast\",\"Unit\":1,\"IncreaseIsBetter\":false,\"Samples\":[168.00000000000638,166.70000000002006,164.40000000000055,165.09999999999537,223.29999999999473,206.799999999987,166.4000000000101,141.59999999998264,142.29999999997745,158.19999999996527,227.7000000000271,174.49999999996636,176.19999999999437,172.69999999996345,144.49999999999364,144.9999999999818,228.39999999996508,175.99999999993089,162.50000000002275,148.69999999996254,150.9000000000924,162.69999999997254,149.3000000000393,165.4999999999518,165.09999999993853,264.5999999999731,166.30000000009205,161.4999999999327,151.60000000014407,167.3000000000684,160.8000000001084,220.90000000002875,174.89999999997964,165.3999999998632,195.90000000016517,179.1000000000622,164.30000000013934,218.39999999997418,164.79999999978646,371.99999999984359,148.20000000008805,139.90000000012516,147.79999999996108,149.2000000000644,163.99999999998728,157.60000000000219,142.39999999995235,143.90000000003057,169.1000000000713,153.0999999999949,152.39999999994326,175.5000000000564,142.9000000000542,155.50000000007459,163.90000000001238,149.40000000024157,235.9999999998763,164.40000000011424,183.5000000000946,149.89999999988869,162.49999999990906,160.40000000020883,161.09999999980574,170.49999999971988,140.19999999982248,161.49999999970533,166.49999999981447,152.99999999979264,149.19999999983703,170.59999999992216,157.60000000000219,165.80000000021756,219.20000000000074,164.80000000001383,168.9000000001215,163.0000000000109,176.50000000003275,226.90000000011424,163.7999999998101,160.99999999960347,158.4000000002561,168.79999999991925,209.10000000003493,163.80000000026485,167.7999999997155,159.0000000001055,175.0000000001819,170.39999999997236,278.8999999997941,150.30000000024303,187.1000000001004,174.79999999977736,141.29999999977373,164.99999999996363,208.00000000008368,156.99999999969806,164.89999999976136,148.9000000001397,174.99999999972716,161.7999999998574],\"Min\":139.90000000012516,\"Max\":371.99999999984359,\"Median\":164.59999999995035,\"Average\":172.1719999999837,\"StandardDeviation\":32.783795021309469,\"Sum\":17217.19999999837},{\"Name\":\"FastInfoCache.GC()\",\"Unit\":8,\"IncreaseIsBetter\":false,\"Samples\":[1.03,1.03,1.02,1.02,1.03,1.03,1.02,1.02,1.02,1.03,1.03,1.03,1.03,1.03,1.02,1.04,1.03,1.03,1.03,1.02,1.02,1.02,1.02,1.0,1.02,1.02,1.02,1.02,1.02,1.02,1.02,1.02,1.02,1.02,1.02,1.02,1.02,1.02,1.01,1.02,1.03,1.03,1.03,1.03,1.03,1.03,1.03,1.03,1.02,1.01,1.02,1.02,1.03,1.03,1.03,1.03,1.02,1.03,1.03,1.03,1.03,1.03,1.03,1.03,1.02,1.03,1.02,1.01,1.03,1.03,1.03,1.03,1.03,1.03,1.03,1.02,1.02,1.01,1.02,1.03,1.03,1.02,1.03,1.03,1.02,1.02,1.03,1.03,1.03,1.03,1.0,1.03,1.03,1.03,1.03,1.03,1.02,1.03,1.03,1.03,1.03,1.03,1.02,1.02,1.03],\"Min\":1.0,\"Max\":1.04,\"Median\":1.03,\"Average\":1.0249523809523816,\"StandardDeviation\":0.006778651294961624,\"Sum\":107.62000000000005},{\"Name\":\"FastInfoCache\",\"Unit\":1,\"IncreaseIsBetter\":false,\"Samples\":[113.89999999997258,110.19999999999186,105.19999999996799,107.70000000002256,119.0000000000282,113.8000000000261,107.59999999999082,112.8999999999678,109.800000000007,110.00000000001364,120.09999999997945,92.19999999993434,155.399999999986,115.09999999998399,113.49999999993088,128.50000000003093,112.39999999997963,111.90000000010514,135.69999999992889,105.70000000006985,108.60000000002401,118.79999999996471,94.600000000014,247.10000000004585,148.00000000013825,94.70000000010259,100.60000000021319,105.99999999999455,91.69999999994616,159.29999999980283,97.80000000000655,97.19999999992979,106.09999999996944,112.49999999995453,109.49999999979809,104.00000000004184,159.80000000013207,94.39999999995053,196.30000000006477,113.90000000005785,110.89999999990141,154.40000000012334,132.39999999996145,90.7999999999447,122.7000000001226,105.19999999996799,106.29999999991924,173.00000000000183,145.0999999999567,138.09999999989487,102.00000000008913,107.59999999982029,96.10000000020591,137.20000000012079,173.2999999999265,104.4000000001688,107.10000000017317,114.10000000023502,131.40000000021247,106.90000000022337,104.19999999976426,96.40000000035798,105.99999999976717,108.20000000012442,95.20000000020446,155.19999999969515,124.60000000010041,100.80000000016298,112.79999999987922,96.39999999990323,103.59999999991487,121.29999999979191,104.200000000219,109.10000000012588,107.49999999961801,110.09999999987486,107.89999999997235,320.2000000001135,111.49999999997817,94.99999999979991,110.39999999957218,112.10000000028231,106.9999999999709,148.9000000001397,118.49999999958527,91.30000000004657,103.80000000031942,106.40000000012151,111.30000000002838,107.49999999961801,112.39999999997963,110.99999999987631,107.99999999971988,107.10000000017317,130.79999999990833,112.5000000001819,107.79999999977008,106.9999999999709,108.50000000027649,123.10000000024957],\"Min\":90.7999999999447,\"Max\":320.2000000001135,\"Median\":109.90000000001032,\"Average\":118.56100000000197,\"StandardDeviation\":30.890933605192254,\"Sum\":11856.100000000197},{\"Name\":\"FastFuncCache.GC()\",\"Unit\":8,\"IncreaseIsBetter\":false,\"Samples\":[1.01,1.0,1.0,1.01,1.0,1.01,1.02,1.0,1.0,1.0,1.0,1.01,1.02,1.03,1.0,1.0,1.0,1.0,1.01,1.01,1.01,1.01,1.0,1.0,1.01,1.01,1.01,1.01,1.0,1.0,1.01,1.0,1.01,1.01,1.01,1.0,1.02,1.0,1.0,1.01,1.0,1.01,1.01,1.01,1.0,1.0,1.0,1.01,1.0,1.01,1.01,1.01,1.0,1.01,1.01,1.01,1.01,1.0,1.0,1.0,1.01,1.0,1.02,1.0,1.0,1.0,1.01,1.01,1.0,1.0,1.01,1.0,1.02,1.01,1.0,1.0,1.0,1.0,1.01,1.0,1.0,1.0,1.0,1.0,1.01,1.0,1.0,1.01,1.01,1.0,1.0,1.0,1.0,1.01,1.01,1.0,1.01,1.0,1.0,1.0,1.01,1.0,1.02,1.01,1.0],\"Min\":1.0,\"Max\":1.03,\"Median\":1.0,\"Average\":1.005428571428572,\"StandardDeviation\":0.006477590885002654,\"Sum\":105.57000000000005},{\"Name\":\"FastFuncCache\",\"Unit\":1,\"IncreaseIsBetter\":false,\"Samples\":[38.70000000000573,46.899999999993728,36.000000000001367,42.39999999998645,36.69999999999618,34.89999999999327,33.89999999996007,52.20000000002756,91.90000000000964,36.200000000008007,37.89999999992233,38.399999999910509,38.59999999997399,56.29999999996471,37.00000000003456,48.70000000005348,57.39999999991596,38.90000000001237,38.40000000002419,51.19999999999436,39.700000000038929,62.80000000003838,40.300000000002,37.00000000003456,37.49999999990905,50.19999999990432,39.99999999996362,40.400000000090589,58.200000000169897,54.20000000003711,36.100000000033109,57.19999999996617,37.80000000006112,37.30000000018663,36.2999999999829,36.90000000005966,55.000000000063668,36.3999999999578,37.60000000011132,35.90000000008331,40.39999999986321,40.299999999888317,34.799999999904688,36.3999999999578,37.70000000008622,38.99999999998727,40.400000000090589,38.19999999996071,40.09999999993852,54.500000000189178,38.20000000018808,50.79999999998108,37.900000000036019,38.90000000001237,40.10000000016589,50.499999999829018,38.49999999965803,47.000000000025469,38.50000000011278,34.2000000000553,34.29999999980282,55.899999999837749,33.50000000000364,37.60000000011132,36.3999999999578,38.5999999998603,38.90000000001237,51.69999999998254,56.50000000014188,37.60000000011132,38.90000000001237,41.29999999986467,37.80000000006112,48.8999999997759,36.300000000210278,38.90000000001237,36.99999999980719,38.90000000001237,38.89999999955762,48.99999999997817,36.200000000008007,36.3999999999578,51.300000000082949,38.99999999975989,36.50000000016007,50.60000000003129,40.80000000021755,37.60000000011132,41.79999999996653,40.30000000011569,40.199999999913419,46.4999999999236,37.000000000261938,55.29999999998836,52.2000000000844,47.30000000017753,33.00000000035652,50.89999999972861,39.099999999962168,38.30000000016298],\"Min\":33.00000000035652,\"Max\":91.90000000000964,\"Median\":38.90000000001237,\"Average\":42.530000000004978,\"StandardDeviation\":8.616130221852858,\"Sum\":4253.0000000004975}]}\r\n##performancetestruninfo2:{\"TestSuite\":\"Editmode\",\"Date\":1738925354255,\"Player\":{\"Development\":true,\"ScreenWidth\":1920,\"ScreenHeight\":1080,\"ScreenRefreshRate\":60,\"Fullscreen\":false,\"Vsync\":1,\"AntiAliasing\":0,\"Batchmode\":false,\"RenderThreadingMode\":\"MultiThreaded\",\"GpuSkinning\":false,\"Platform\":\"WindowsEditor\",\"ColorSpace\":\"Gamma\",\"AnisotropicFiltering\":\"Disable\",\"BlendWeights\":\"FourBones\",\"GraphicsApi\":\"Direct3D11\",\"ScriptingBackend\":\"Mono2x\",\"AndroidTargetSdkVersion\":\"AndroidApiLevelAuto\",\"AndroidBuildSystem\":\"Gradle\",\"BuildTarget\":\"StandaloneWindows64\",\"StereoRenderingPath\":\"MultiPass\"},\"Hardware\":{\"OperatingSystem\":\"Windows
-      10  (10.0.19045) 64bit\",\"DeviceModel\":\"82R4 (LENOVO)\",\"DeviceName\":\"DESKTOP-55T0R54\",\"ProcessorType\":\"AMD
-      Ryzen 5 5500U with Radeon Graphics \",\"ProcessorCount\":12,\"GraphicsDeviceName\":\"AMD
-      Radeon(TM) Graphics\",\"SystemMemorySizeMB\":14181},\"Editor\":{\"Version\":\"6000.0.26f1\",\"Branch\":\"6000.0/staging\",\"Changeset\":\"ccb7c73d2c02\",\"Date\":1730275040},\"Dependencies\":[\"com.cysharp.unitask@2.5.10\",\"com.unity.2d.animation@10.1.4\",\"com.unity.2d.pixel-perfect@5.0.3\",\"com.unity.2d.psdimporter@9.0.3\",\"com.unity.2d.sprite@1.0.0\",\"com.unity.2d.spriteshape@10.0.7\",\"com.unity.2d.tilemap@1.0.0\",\"com.unity.ai.navigation@2.0.5\",\"com.unity.assetbundlebrowser@1.7.0\",\"com.unit...\n\n---MESSAGE
-      TRUNCATED AT 15000 CHARACTERS---"
+    m_ResultText: AllEnumGetValuesExceptionTest (1.714s)
     m_ResultStacktrace: 
     m_TestListState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: b6d726b8
-      m_LastClickedID: -1205413962
-      m_ExpandedIDs: d50057877c7e3ba90c67acacccfd60bb7c91a5c37e7ebbcc48d8a103edaa9c16c29f3933ed57073fcd6f9d64f221606cb9722c78d4580079ffffff7f
+      m_SelectedIDs: 7d2775e1
+      m_LastClickedID: -512415875
+      m_ExpandedIDs: d50057877c7e3ba90c67acacccfd60bb7c91a5c37e7ebbcce1b3750148d8a103edaa9c16c29f3933ed57073f4c22f649cd6f9d64f221606cb9722c78d4580079ffffff7f
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -2395,7 +2673,7 @@ MonoBehaviour:
       NotRunHidden: 0
       m_SearchString: 
       selectedCategories:
-      - Reflection
+      - Functional
       availableCategories:
       - Coverage
       - Functional
@@ -2407,7 +2685,7 @@ MonoBehaviour:
     m_SelectedOption: 0
   - m_Window: {fileID: 14}
     runProgress:
-      RunGuid: bf8104dd-9f1a-4623-a471-2f0c2b9cb6f8
+      RunGuid: 5f9490a4-462c-4ead-aca5-96141d279beb
       ExecutionSettings:
         m_TargetPlatform: 0
         m_HasTargetPlatform: 0
@@ -2420,7 +2698,7 @@ MonoBehaviour:
         filters:
         - testMode: 1
           testNames:
-          - ReflectionTestRunner.ReflectionExtensionPerformanceTest(100,100)
+          - EnumTestRunner.AllEnumGetValuesExceptionTest
           groupNames: []
           categoryNames: []
           assemblyNames: []
@@ -6409,7 +6687,7 @@ MonoBehaviour:
     m_SelectedOption: 0
   - m_Window: {fileID: 14}
     runProgress:
-      RunGuid: bf8104dd-9f1a-4623-a471-2f0c2b9cb6f8
+      RunGuid: 5f9490a4-462c-4ead-aca5-96141d279beb
       ExecutionSettings:
         m_TargetPlatform: 0
         m_HasTargetPlatform: 0
@@ -6422,7 +6700,7 @@ MonoBehaviour:
         filters:
         - testMode: 1
           testNames:
-          - ReflectionTestRunner.ReflectionExtensionPerformanceTest(100,100)
+          - EnumTestRunner.AllEnumGetValuesExceptionTest
           groupNames: []
           categoryNames: []
           assemblyNames: []
@@ -7043,9 +7321,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 
+      m_SelectedIDs: 1e910000
       m_LastClickedID: 0
-      m_ExpandedIDs: bcfaffff
+      m_ExpandedIDs: 8cecffff98edffff2aeeffff3cefffff4ef0ffffc8f0ffff36f1ffffa8f1ffff1af2fffff0f3ffff0ef5ffff1cf6ffffc6f7ffff5ef9ffffdcfaffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -7755,7 +8033,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/CustomUtils/Common/Extension
+    - Assets/Test/EditMode
     m_Globs: []
     m_ProductIds: 
     m_AnyWithAssetOrigin: 0
@@ -7765,16 +8043,16 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 16
   m_LastFolders:
-  - Assets/CustomUtils/Common/Extension
+  - Assets/Test/EditMode
   m_LastFoldersGridSize: 16
   m_LastProjectPath: C:\Project\Unity\CustomUtils
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 04a10000
-    m_LastClickedID: 41220
-    m_ExpandedIDs: 0000000062a0000064a0000066a0000068a000006aa000006ca000006ea0000070a0000072a0000074a0000076a0000078a000007aa000007ca000007ea0000080a0000082a0000084a0000086a0000088a00000
+    scrollPos: {x: 0, y: 382}
+    m_SelectedIDs: 029f0000
+    m_LastClickedID: 40706
+    m_ExpandedIDs: 00000000e69e0000e89e0000ea9e0000ec9e0000ee9e0000f09e0000f29e0000f49e0000f69e0000f89e0000fa9e0000fc9e0000fe9e0000009f0000029f0000049f0000069f0000089f00000a9f00000c9f000006a1000010a1000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -7803,7 +8081,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 0000000062a0000064a0000066a0000068a000006aa000006ca000006ea0000070a0000072a0000074a0000076a0000078a000007aa000007ca000007ea0000080a0000082a0000084a0000086a0000088a00000
+    m_ExpandedIDs: 00000000e69e0000e89e0000ea9e0000ec9e0000ee9e0000f09e0000f29e0000f49e0000f69e0000f89e0000fa9e0000fc9e0000fe9e0000009f0000029f0000049f0000069f0000089f00000a9f00000c9f0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -7857,7 +8135,7 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
     m_NewAssetIndexInList: -1
-    m_ScrollPosition: {x: 0, y: 0}
+    m_ScrollPosition: {x: 0, y: 21}
     m_GridSize: 16
   m_SkipHiddenPackages: 0
   m_DirectoriesAreaWidth: 253
@@ -8043,7 +8321,7 @@ MonoBehaviour:
     m_ControlHash: -371814159
     m_PrefName: Preview_InspectorPreview
   m_LastInspectedObjectInstanceID: -1
-  m_LastVerticalScrollValue: 0
+  m_LastVerticalScrollValue: 1266.4
   m_GlobalObjectId: 
   m_InspectorMode: 0
   m_LockTracker:

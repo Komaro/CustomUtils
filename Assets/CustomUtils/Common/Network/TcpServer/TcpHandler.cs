@@ -28,7 +28,7 @@ public abstract class TcpHandler<TData, THeader> : ITcpReceiveHandler<TData>, IT
 
     protected TcpHandler() {
         if (GetType().TryGetCustomAttribute<TcpHandlerAttribute>(out var attribute)) {
-            Body = attribute.body.ConvertInt();
+            Body = attribute.body.ToInt32();
         }
     }
 

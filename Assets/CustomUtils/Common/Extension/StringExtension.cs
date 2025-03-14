@@ -108,6 +108,25 @@ public static class StringExtension {
     public static string FixExtension(this string content) => content.IsExtension() == false ? content.Insert(0, ".") : content;
     public static bool ContainsExtension(this string content, string extension) => Path.HasExtension(content) && Path.GetExtension(content).EqualsFast(extension);
     public static bool IsExtension(this string content) => content.StartsWith('.');
+
+    #region [ToString]
+
+    public static string ToStringSpan<T>(this Span<T> span, char separator = ' ') => span.ToArray().ToStringCollection(separator);
+    public static string ToStringSpan<T>(this Span<T> span, string separator) => span.ToArray().ToStringCollection(separator);
+    public static string ToStringSpan<T>(this Span<T> span, Func<T, string> selector, char separator = ' ') => span.ToArray().ToStringCollection(selector, separator);
+    public static string ToStringSpan<T>(this Span<T> span, Func<T, string> selector, string separator) => span.ToArray().ToStringCollection(selector, separator);
+    
+    public static string ToStringSpan<T>(this ReadOnlySpan<T> span, char separator = ' ') => span.ToArray().ToStringCollection(separator);
+    public static string ToStringSpan<T>(this ReadOnlySpan<T> span, string separator) => span.ToArray().ToStringCollection(separator);
+    public static string ToStringSpan<T>(this ReadOnlySpan<T> span, Func<T, string> selector, char separator = ' ') => span.ToArray().ToStringCollection(selector, separator);
+    public static string ToStringSpan<T>(this ReadOnlySpan<T> span, Func<T, string> selector, string separator) => span.ToArray().ToStringCollection(selector, separator);
+
+    public static string ToStringCollection<T>(this IEnumerable<T> enumerable, char separator = ' ') => string.Join(separator, enumerable);
+    public static string ToStringCollection<T>(this IEnumerable<T> enumerable, string separator) => string.Join(separator, enumerable);
+    public static string ToStringCollection<T>(this IEnumerable<T> enumerable, Func<T, string> selector, char separator = ' ') => string.Join(separator, enumerable.Select(selector.Invoke));
+    public static string ToStringCollection<T>(this IEnumerable<T> enumerable, Func<T, string> selector, string separator) => string.Join(separator, enumerable.Select(selector.Invoke));
+    
+    #endregion
 }
 
 public enum ENCODING_FORMAT {

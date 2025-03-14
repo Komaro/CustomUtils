@@ -16,13 +16,14 @@ public static class ReflectionProvider {
         public static IEnumerable<Type> CachedClasses => _cachedClasses ??= CachedTypes.Where(type => type.IsClass);
 
         private static IEnumerable<Type> _cachedEnums;
-        public static IEnumerable<Type> CachedEnums => _cachedEnums ??= CachedTypes.Where(type => type.IsEnum);
+        public static IEnumerable<Type> CachedEnums => _cachedEnums ??= CachedTypes.Where(type => type.IsEnum && type.ContainsGenericParameters == false);
     }
     
-    #region [Class]
-
-    public static IEnumerable<Type> GetCachedTypes() => Cache.CachedTypes;
+    public static IEnumerable<Type> GetTypes() => Cache.CachedTypes;
     public static IEnumerable<Type> GetClasses() => Cache.CachedClasses;
+    public static IEnumerable<Type> GetEnums() => Cache.CachedEnums;
+
+    #region [Class]
 
     /// <summary>
     /// T 와 동일한 ClassType

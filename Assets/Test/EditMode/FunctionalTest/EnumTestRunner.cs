@@ -2,7 +2,70 @@
 using NUnit.Framework;
 using Unity.PerformanceTesting;
 
+[Category(TestConstants.Category.FUNCTIONAL)]
 public class EnumTestRunner {
+
+    private enum SBYTE_ENUM : sbyte {
+        SBYTE_MIN = sbyte.MinValue,
+        SBYTE,
+        SBYTE_MAX = sbyte.MaxValue,
+    }
+    
+    private enum BYTE_ENUM : byte {
+        BYTE_MIN = byte.MinValue,
+        BYTE,
+        BYTE_MAX = byte.MaxValue,
+    }
+
+    private enum INT_16_ENUM : short {
+        INT_16_MIN = short.MinValue,
+        INT_16,
+        INT_16_MAX = short.MaxValue,
+    }
+    
+    private enum UINT_16_ENUM : ushort {
+        UINT_16_MIN = ushort.MinValue,
+        UINT_16,
+        UINT_16_MAX = ushort.MaxValue,
+    }
+
+    private enum INT_ENUM {
+        INT_MIN = int.MinValue,
+        INT,
+        INT_MAX = int.MaxValue
+    }
+    
+    private enum UINT_ENUM : uint {
+        UINT_MIN = uint.MinValue,
+        UINT,
+        UINT_MAX = uint.MaxValue
+    }
+
+    private enum INT_64_ENUM : long {
+        INT_64_MIN = long.MinValue,
+        INT_64,
+        INT_64_MAX = long.MaxValue,
+    }
+    
+    private enum UINT_64_ENUM : ulong {
+        UINT_64_MIN = ulong.MinValue,
+        UINT_64,
+        UINT_64_MAX = ulong.MaxValue,
+    }
+    
+    [Test]
+    public void AllEnumGetValuesExceptionTest() {
+        Assert.DoesNotThrow(() => {
+            foreach (var enumType in ReflectionProvider.GetEnums()) {
+                try {
+                    _ = EnumUtil.GetValues(enumType);
+                } catch (Exception e) {
+                    Logger.TraceLog(enumType.FullName);
+                    throw;
+                }
+            }
+        });
+    }
 
     [TestCase(1)]
     [TestCase(10)]

@@ -26,7 +26,7 @@ public static class UnityAssemblyProvider {
         public static Dictionary<string, string> CachedSourceFilePathDic =>  _cachedSourceFilePathDic ??= CachedUnityAssemblySet.Where(assembly => assembly.IsBuiltin() == false).SelectMany(assembly => assembly.sourceFiles).ToDictionaryWithDistinct(Path.GetFileNameWithoutExtension, path => path);
         
         private static Dictionary<Type, string> _cachedSourceFileTypePathDic;
-        public static Dictionary<Type, string> CachedSourceFileTypePathDic => _cachedSourceFileTypePathDic ??= ReflectionProvider.GetCachedTypes().Where(type => CachedSourceFilePathDic.ContainsKey(type.Name)).ToDictionary(type => type, type => CachedSourceFilePathDic[type.Name]);
+        public static Dictionary<Type, string> CachedSourceFileTypePathDic => _cachedSourceFileTypePathDic ??= ReflectionProvider.GetTypes().Where(type => CachedSourceFilePathDic.ContainsKey(type.Name)).ToDictionary(type => type, type => CachedSourceFilePathDic[type.Name]);
 
         #endregion
     }

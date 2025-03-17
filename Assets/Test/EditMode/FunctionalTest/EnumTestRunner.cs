@@ -66,7 +66,52 @@ public class EnumTestRunner {
             }
         });
     }
+    
+    private class GenericClass<T> {
 
+        public enum GENERIC_CLASS_ENUM_TYPE {
+            NONE,
+            FIRST,
+            SECOND,
+        } 
+    }
+
+    [Test]
+    public void GenericClassEnumMakeTest() {
+        var enumType = typeof(GenericClass<>.GENERIC_CLASS_ENUM_TYPE);
+        Assert.IsTrue(enumType.IsGenericTypeDefinition);
+
+        var intMakeType = enumType.MakeGenericType(typeof(int));
+        var longMakeType = enumType.MakeGenericType(typeof(long));
+        Assert.IsTrue(intMakeType.GetGenericTypeDefinition() == longMakeType.GetGenericTypeDefinition());
+        Assert.IsTrue(intMakeType != longMakeType);
+
+        var intEnums = EnumUtil.GetValues(intMakeType).ToArray();
+        var longEnums = EnumUtil.GetValues(longMakeType).ToArray();
+        Assert.IsTrue(intEnums.Length == longEnums.Length);
+
+        for (var i = 0; i < intEnums.Length; i++) {
+            var intEnum = intEnums[i];
+            var intEnumType = intEnum.GetType();
+            Logger.TraceLog(intEnumType.UnderlyingSystemType.GetCleanFullName());
+            Assert.IsTrue(intEnumType.UnderlyingSystemType.GetGenericTypeDefinition() != null);
+
+            var longEnum = longEnums[i];
+            var longEnumType = longEnum.GetType();
+            Logger.TraceLog(longEnumType.UnderlyingSystemType.GetCleanFullName());
+            Assert.IsTrue(longEnumType.UnderlyingSystemType.GetGenericTypeDefinition() != null);
+
+            Assert.IsFalse(intEnumType.UnderlyingSystemType == longEnumType.UnderlyingSystemType);
+            Assert.IsTrue(intEnumType.UnderlyingSystemType.GetGenericTypeDefinition() == longEnumType.UnderlyingSystemType.GetGenericTypeDefinition());
+
+            Assert.IsTrue(intEnum.Equals(longEnum) == false);
+            Assert.IsTrue(intEnumType != longEnumType);
+            
+            Logger.Log("");
+        }
+    }
+    
+    
     [TestCase(1)]
     [TestCase(10)]
     [TestCase(50)]

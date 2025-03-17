@@ -33,7 +33,7 @@ internal static class EnumBag {
         private readonly ImmutableDictionary<string, Enum> _stringToEnumDic = ImmutableDictionary<string, Enum>.Empty;
 
         public Bag(Type type) {
-            if (type.IsEnum == false || type.IsArray) {
+            if (type.IsEnum == false) {
                 Logger.TraceError($"{type.FullName} {nameof(type)} is not enum type");
                 return;
             }

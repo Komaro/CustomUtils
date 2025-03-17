@@ -118,8 +118,9 @@ public static partial class StringUtil {
         return isSpace;
     }
 
-    public static bool IsStartSpaceChar(string strText) => strText.StartsWith(' ');
-    public static bool IsIncludedSpaceChar(string strText) => strText.Contains(" ");
-    public static bool IsIncludedLineFeed(string strText) => strText.Contains("\n");
+    public static bool IsStartSpaceChar(string text) => text.StartsWith(' ');
+    public static bool IsIncludedSpaceChar(string text) => text.Contains(" ");
+    public static bool IsIncludedLineFeed(string text) => text.Contains("\n");
     public static bool IsAvailableSpecialCharacters(char ch) => _listSpecialCharacters.Contains(ch);
+
 }

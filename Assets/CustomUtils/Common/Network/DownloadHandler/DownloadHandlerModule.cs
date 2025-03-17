@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Net.Http;
 using Unity.Collections;
-using UnityEngine;
 using UnityEngine.Networking;
 
 public interface IDownloadHandlerModule {
@@ -19,12 +18,7 @@ public abstract class DownloadHandlerModule<TReturn> : DownloadHandlerScript, ID
     
     public UnityWebRequest webRequest;
 
-    private OverridenMethod _overridenMethod;
-
-    public DownloadHandlerModule(string url) {
-        this.url = url;
-        _overridenMethod = new OverridenMethod(GetType(), $"{nameof(GetContent)}_TType");
-    }
+    public DownloadHandlerModule(string url) => this.url = url;
 
     ~DownloadHandlerModule() {
         Dispose();
@@ -67,15 +61,4 @@ public abstract class DownloadHandlerModule<TReturn> : DownloadHandlerScript, ID
 
     public abstract bool TryGetContent(out TReturn content);
     public abstract TReturn GetContent();
-    
-    public virtual bool TryGetContent<TType>(out TType content) => (content = GetContent<TType>()) != null;
-
-    [Alias(nameof(GetContent) + "_TType")]
-    public virtual TType GetContent<TType>() {
-        if (_overridenMethod.HasOverriden($"{nameof(GetContent)}_TType")) {
-            Logger.TraceLog($"{nameof(GetContent)}_TOut has not been overridden.", Color.red);
-        }
-        
-        return default;
-    }
 }

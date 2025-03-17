@@ -14,7 +14,7 @@ using Unity.PerformanceTesting;
 using UnityEditor.Build.Profile;
 using UnityEngine;
 
-[TestFixture]
+[Category(TestConstants.Category.FUNCTIONAL)]
 public class EditModeTestRunner {
 
     [Test]

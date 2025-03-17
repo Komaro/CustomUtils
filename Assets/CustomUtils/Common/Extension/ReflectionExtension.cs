@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public static class ReflectionExtension {
@@ -103,12 +105,47 @@ public static class ReflectionExtension {
         
         return Enumerable.Empty<Type>();
     }
+
+    #region [Clean Full Name]
+
+    private static readonly ConcurrentDictionary<MemberInfo, string> _typeCleanFullNameDic = new();
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static string GetCleanFullName(this Type type) => _typeCleanFullNameDic.GetOrAdd(type, _ => {
+        using (StringUtil.StringBuilderPool.Get(out var builder)) {
+            builder.Append(type.Name);
+            if (type.IsGenericType) { 
+                builder.Append($"<{type.GenericTypeArguments.ToStringCollection(argumentType => argumentType.GetCleanFullName(), ", ")}>");
+            }
+
+            return builder.ToString();
+        }
+    });
+
+    public static string GetCleanFullName(this MethodBase methodBase) => _typeCleanFullNameDic.GetOrAdd(methodBase, _ => {
+        using (StringUtil.StringBuilderPool.Get(out var builder)) {
+            builder.Append(methodBase.Name);
+            if (methodBase.IsGenericMethod) {
+                builder.Append($"<{methodBase.GetGenericArguments().ToStringCollection(info => info.GetCleanFullName())}>");
+            }
+
+            if (methodBase.GetParameters().IsEmpty() == false) {
+                builder.Append($"({methodBase.GetParameters().ToStringCollection(info => info.GetCleanFullName(), ',')})");
+            }
+
+            return builder.ToString();
+        }
+    });
     
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static string GetCleanFullName(this ParameterInfo info) => GetCleanFullName(info.ParameterType);
+
+    #endregion
 
     public static bool IsStruct(this Type type) => type.IsValueType && type.IsPrimitive == false;
     public static bool IsDelegate(this Type type) => type.IsSubclassOf(typeof(Delegate));
     
-    #region PriorityExtension
+    #region [PriorityExtension]
     
     public static uint GetOrderByPriority(this Type type) {
         if (type.TryGetCustomInheritedAttribute<PriorityAttribute>(out var attribute)) {

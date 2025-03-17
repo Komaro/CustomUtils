@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Linq;
+using System.Reflection;
 using Unity.EditorCoroutines.Editor;
 using UnityEditor;
 using UnityEditor.Callbacks;
@@ -13,12 +14,7 @@ public abstract class EditorService : EditorWindow {
 
     private const string EDITOR_SERVICE_FIRST_OPEN_SESSION_KEY = "EditorServiceFirstOpenKey";
 
-    protected OverridenMethod overridenMethod;
-
-    protected EditorService() {
-        overridenMethod = new OverridenMethod(GetType(), nameof(OnEnteredEditMode), nameof(OnExitingEditMode), nameof(OnEnteredPlayMode), nameof(OnExitingPlayMode));
-        EditorApplication.playModeStateChanged += OnPlayModeStateChanged;
-    }
+    protected EditorService() => EditorApplication.playModeStateChanged += OnPlayModeStateChanged;
 
     protected virtual bool CheckSession() => EditorCommon.TryGetSession(SessionKey, out bool isFirstOpen) == false || isFirstOpen == false;
     
@@ -45,24 +41,16 @@ public abstract class EditorService : EditorWindow {
     private void OnPlayModeStateChanged(PlayModeStateChange state) {
         switch (state) {
             case PlayModeStateChange.EnteredEditMode:
-                if (overridenMethod.HasOverriden(nameof(OnEnteredEditMode))) {
-                    OnEnteredEditMode();
-                }
+                OnEnteredEditMode();
                 break;
             case PlayModeStateChange.ExitingEditMode:
-                if (overridenMethod.HasOverriden(nameof(OnExitingEditMode))) {
-                    OnExitingEditMode();
-                }
+                OnExitingEditMode();
                 break;
             case PlayModeStateChange.EnteredPlayMode:
-                if (overridenMethod.HasOverriden(nameof(OnEnteredEditMode))) {
-                    OnEnteredPlayMode();
-                }
+                OnEnteredPlayMode();
                 break;
             case PlayModeStateChange.ExitingPlayMode:
-                if (overridenMethod.HasOverriden(nameof(OnExitingPlayMode))) {
-                    OnExitingPlayMode();
-                }
+                OnExitingPlayMode();
                 break;
         }
     }

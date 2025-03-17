@@ -125,7 +125,7 @@ public static class StringExtension {
     public static string ToStringCollection<T>(this IEnumerable<T> enumerable, string separator) => string.Join(separator, enumerable);
     public static string ToStringCollection<T>(this IEnumerable<T> enumerable, Func<T, string> selector, char separator = ' ') => string.Join(separator, enumerable.Select(selector.Invoke));
     public static string ToStringCollection<T>(this IEnumerable<T> enumerable, Func<T, string> selector, string separator) => string.Join(separator, enumerable.Select(selector.Invoke));
-    
+
     #endregion
 }
 

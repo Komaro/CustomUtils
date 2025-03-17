@@ -1,4 +1,6 @@
-﻿using System.Text;
+﻿using System;
+using System.Collections.Concurrent;
+using System.Text;
 using UnityEngine.Pool;
 
 public static partial class StringUtil {
@@ -21,4 +23,5 @@ public static partial class StringUtil {
 
         stringBuilder.Clear();
     }
+
 }

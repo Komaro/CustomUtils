@@ -32,7 +32,7 @@ public abstract partial class Builder : IDisposable {
     public static bool TryCreateBuilder(Enum buildType, out Builder builder) => (builder = CreateBuilder(buildType)) != null;
 
     public static Builder CreateBuilder(Enum buildType) {
-        foreach (var type in ReflectionProvider.GetSubClassTypes<Builder>()) {
+        foreach (var type in ReflectionProvider.GetSubTypesOfType<Builder>()) {
             if (type.TryGetCustomAttribute<BuilderAttribute>(out var attribute) && attribute.buildType.Equals(buildType)) {
                 return CreateBuilder(type);
             }

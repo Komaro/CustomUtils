@@ -50,7 +50,7 @@ public class EditorHttpWebServerService : EditorService {
                 }
             }
 
-            _serveModuleList = ReflectionProvider.GetSubClassTypes<HttpServeModule>().ToList();
+            _serveModuleList = ReflectionProvider.GetSubTypesOfType<HttpServeModule>().ToList();
         }
     }
 

@@ -27,7 +27,7 @@ public abstract class EditorServiceTreeView : TreeView {
         }
 
         if (overridenMethod.HasOverriden(nameof(RowGUI)) == false) {
-            Logger.TraceLog($"{nameof(RowGUI)} has not been overridden.", Color.red);
+            Logger.TraceLog($"{nameof(RowGUI)} has not been overridden", Color.red);
         }
     }
 

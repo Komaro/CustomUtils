@@ -511,7 +511,7 @@ public partial class EditorBuildService_Obsolete : EditorWindow {
     }
 
     private BuilderAttribute GetBuilderAttribute() {
-        var attributeList = ReflectionProvider.GetSubClassTypes<Builder_Obsolete>()?.Where(x => x.GetCustomAttribute<BuilderAttribute>()?.buildType.Equals(_buildType) ?? false).ToList();
+        var attributeList = ReflectionProvider.GetSubTypesOfType<Builder_Obsolete>()?.Where(x => x.GetCustomAttribute<BuilderAttribute>()?.buildType.Equals(_buildType) ?? false).ToList();
         if (attributeList is not { Count: > 0 }) {
             return null;
         }

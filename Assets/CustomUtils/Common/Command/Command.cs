@@ -28,7 +28,7 @@ public abstract class Command {
     public abstract Task ExecuteAsync();
     public virtual Task UndoAsync() => Task.CompletedTask;
 
-    static Command() => _commandTypeCacheDic = ReflectionProvider.GetSubClassTypes<Command>().ToDictionary(type => type.TryGetCustomAttribute<CommandAliasAttribute>(out var attribute) && string.IsNullOrEmpty(attribute.Alias) == false ? attribute.Alias : type.Name, type => type);
+    static Command() => _commandTypeCacheDic = ReflectionProvider.GetSubTypesOfType<Command>().ToDictionary(type => type.TryGetCustomAttribute<CommandAliasAttribute>(out var attribute) && string.IsNullOrEmpty(attribute.Alias) == false ? attribute.Alias : type.Name, type => type);
 
     public static Command Create(string commandLine) {
         commandLine = Regex.Replace(commandLine.Trim(), @"\s+", @" ");

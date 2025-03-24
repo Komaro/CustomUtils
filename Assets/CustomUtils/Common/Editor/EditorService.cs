@@ -30,7 +30,7 @@ public abstract class EditorService : EditorWindow {
     private static void OnEditorFirstOpen() {
         EditorApplication.update -= OnEditorFirstOpen;
         EditorCommon.SetSession(EDITOR_SERVICE_FIRST_OPEN_SESSION_KEY, true);
-        foreach (var type in ReflectionProvider.GetSubClassTypes<EditorService>()) {
+        foreach (var type in ReflectionProvider.GetSubTypesOfType<EditorService>()) {
             var objects = Resources.FindObjectsOfTypeAll(type);
             if (objects is { Length: > 0 } && objects.First() is EditorService editorService && editorService.CheckSession()) {
                 EditorApplication.update += editorService.OnEditorOpenUpdate;

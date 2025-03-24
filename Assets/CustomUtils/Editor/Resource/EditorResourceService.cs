@@ -53,7 +53,7 @@ public class EditorResourceService : EditorService {
             }
 
             var typeDefinition = typeof(EditorAutoConfigResourceDrawer<,>);
-            foreach (var type in ReflectionProvider.GetSubClassTypeDefinitions(typeDefinition)) {
+            foreach (var type in ReflectionProvider.GetSubTypesOfTypeDefinition(typeDefinition)) {
                 if (type.TryGetCustomAttribute<EditorResourceDrawerAttribute>(out var attribute)) {
                     var key = (attribute.menuType, attribute.providerType);
                     if (_drawerDic.TryGetValue(key, out var drawer) == false || drawer == null) {

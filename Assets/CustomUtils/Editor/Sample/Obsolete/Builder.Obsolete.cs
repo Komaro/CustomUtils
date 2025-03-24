@@ -19,7 +19,7 @@ public class BuildManager_Obsolete : IPostprocessBuildWithReport {
     public static string UNITY_PROJECT_PATH => string.IsNullOrEmpty(_unityProjectPath) ? _unityProjectPath = Application.dataPath.Replace("/Assets", string.Empty) : _unityProjectPath;
     
     public static Builder_Obsolete CreateBuilder(Enum buildType) {
-        var builderType = ReflectionProvider.GetSubClassTypes<Builder_Obsolete>()?.Where(x => x.GetCustomAttribute<BuilderAttribute>()?.buildType.Equals(buildType) ?? false).FirstOrDefault();
+        var builderType = ReflectionProvider.GetSubTypesOfType<Builder_Obsolete>()?.Where(x => x.GetCustomAttribute<BuilderAttribute>()?.buildType.Equals(buildType) ?? false).FirstOrDefault();
         if (builderType != null && Activator.CreateInstance(builderType) is Builder_Obsolete builder) {
             _builder = builder;
             return _builder;

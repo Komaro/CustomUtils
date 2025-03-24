@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Immutable;
 using NUnit.Framework;
 using Unity.PerformanceTesting;
 
@@ -31,7 +32,7 @@ public class EnumTestRunner {
 
     private enum INT_ENUM {
         INT_MIN = int.MinValue,
-        INT,
+        INT = 0,
         INT_MAX = int.MaxValue
     }
     
@@ -52,11 +53,51 @@ public class EnumTestRunner {
         UINT_64,
         UINT_64_MAX = ulong.MaxValue,
     }
+
+    private class TestComparable<T> : IComparable<T> where T : Enum {
+
+        private int _value;
+
+        public int Value {
+            set => _value = value;
+        }
+
+        public int CompareTo(T other) => _value.CompareTo(other.ToInt32());
+    }
+
+    [Test]
+    public void EnumIsDefinedTest() {
+        Assert.IsTrue(EnumUtil.IsDefined<TEST_ENUM>(1));
+        
+        var enumValue = (Enum) TEST_ENUM.FIRST;
+        Assert.IsTrue(EnumUtil.IsDefined<TEST_ENUM>(enumValue));
+    }
     
+    [Test]
+    public void EnumSimpleCastTest() {
+        Assert.Throws<InvalidEnumCastException>(() => {
+            var outValue = EnumUtil.ConvertFast<INT_ENUM>(55);
+            switch (outValue) {
+                case INT_ENUM.INT_MIN:
+                case INT_ENUM.INT:
+                case INT_ENUM.INT_MAX:
+                    Logger.TraceLog("Pass");
+                    break;
+                default:
+                    throw new InvalidEnumCastException(typeof(INT_ENUM), outValue);
+            }
+        });
+        
+        Assert.DoesNotThrow(() => EnumUtil.TryConvertFast<INT_ENUM>(55, out _));
+        
+        Assert.Throws<InvalidEnumCastException>(() => EnumUtil.ConvertFast<UINT_64_ENUM>(55));
+        Assert.DoesNotThrow(() => EnumUtil.TryConvertFast<UINT_64_ENUM>(55, out _));
+    }
+
     [Test]
     public void AllEnumGetValuesExceptionTest() {
         Assert.DoesNotThrow(() => {
-            foreach (var enumType in ReflectionProvider.GetEnums()) {
+            foreach (var enumType in ReflectionProvider.GetEnumTypes()) {
                 try {
                     _ = EnumUtil.GetValues(enumType);
                 } catch (Exception e) {
@@ -66,7 +107,7 @@ public class EnumTestRunner {
             }
         });
     }
-    
+
     private class GenericClass<T> {
 
         public enum GENERIC_CLASS_ENUM_TYPE {
@@ -112,24 +153,24 @@ public class EnumTestRunner {
     }
     
     
-    [TestCase(1)]
-    [TestCase(10)]
-    [TestCase(50)]
-    [TestCase(100)]
-    [TestCase(1000)]
-    [TestCase(2500)]
+    [TestCase(50, 1)]
+    [TestCase(50, 10)]
+    [TestCase(50, 50)]
+    [TestCase(50, 100)]
+    [TestCase(50, 1000)]
+    [TestCase(50, 2500)]
     [Performance]
-    public void EnumBagPerformanceTest(int count) {
+    public void EnumBagPerformanceTest(int measurementCount, int count) {
         var enumGroup = new SampleGroup("Enum");
         var typeGroup = new SampleGroup("Type");
-        var optimizeTypeGroup = new SampleGroup("OptimizeType");
-        var optimizeTypeGroupV2 = new SampleGroup("OptimizeTypeV2");
         var genericGroup = new SampleGroup("Generic");
-        const int measurementCount = 200;
+
+        var legacyGroup = new SampleGroup("Legacy");
+        var newGroup = new SampleGroup("New");
         
-        Measure.Method(() => _ = Enum.GetValues(typeof(TCP_BODY))).WarmupCount(5).MeasurementCount(measurementCount).IterationsPerMeasurement(count).SampleGroup(enumGroup).Run();
-        Measure.Method(() => _ = EnumUtil.GetValues(typeof(TCP_BODY))).WarmupCount(5).MeasurementCount(measurementCount).IterationsPerMeasurement(count).SampleGroup(typeGroup).Run();
-        Measure.Method(() => _ = EnumUtil.GetValues<TCP_BODY>()).WarmupCount(5).MeasurementCount(measurementCount).IterationsPerMeasurement(count).SampleGroup(genericGroup).Run();
+        // Measure.Method(() => _ = Enum.GetValues(typeof(TCP_BODY))).WarmupCount(5).MeasurementCount(measurementCount).IterationsPerMeasurement(count).SampleGroup(enumGroup).Run();
+        // Measure.Method(() => _ = EnumUtil.GetValues(typeof(TCP_BODY))).WarmupCount(5).MeasurementCount(measurementCount).IterationsPerMeasurement(count).SampleGroup(typeGroup).Run();
+        // Measure.Method(() => _ = EnumUtil.GetValues<TCP_BODY>()).WarmupCount(5).MeasurementCount(measurementCount).IterationsPerMeasurement(count).SampleGroup(genericGroup).Run();
     }
 
     [Test]
@@ -140,6 +181,7 @@ public class EnumTestRunner {
         
         var intToEnumGroup = new SampleGroup("IntToEnum");
         var intToEnumFastGroup = new SampleGroup("IntToEnumFast");
+        var intToEnumInvalidFastGroup = new SampleGroup("IntToEnumInvalidFast");
         
         var stringToEnumGroup = new SampleGroup("StringToEnum");
         var stringToEnumBagGroup = new SampleGroup("StringToEnumBag");
@@ -156,12 +198,12 @@ public class EnumTestRunner {
         Measure.Method(() => _ = EnumUtil.Convert(enumValue)).WarmupCount(10).MeasurementCount(15).IterationsPerMeasurement(count).SampleGroup(enumToIntGroup).GC().Run();
         Measure.Method(() => _ = EnumUtil.ConvertFast(enumValue)).WarmupCount(10).MeasurementCount(15).IterationsPerMeasurement(count).SampleGroup(enumToIntFastGroup).GC().Run();
         
-        Measure.Method(() => _ = EnumUtil.Convert<TCP_BODY>(intValue)).WarmupCount(10).MeasurementCount(15).IterationsPerMeasurement(count).SampleGroup(intToEnumGroup).GC().Run();
-        Measure.Method(() => _ = EnumUtil.ConvertFast<TCP_BODY>(intValue)).WarmupCount(10).MeasurementCount(15).IterationsPerMeasurement(count).SampleGroup(intToEnumFastGroup).GC().Run();
+        Measure.Method(() => _ = EnumUtil.Convert<TCP_BODY>(intValue)).WarmupCount(10).MeasurementCount(15).IterationsPerMeasurement(count).SampleGroup(intToEnumGroup)/*.GC()*/.Run();
+        Measure.Method(() => _ = EnumUtil.ConvertFast<TCP_BODY>(intValue)).WarmupCount(10).MeasurementCount(15).IterationsPerMeasurement(count).SampleGroup(intToEnumFastGroup)/*.GC()*/.Run();
         
         Measure.Method(() => _ = EnumUtil.Convert<TCP_BODY>(stringValue)).WarmupCount(10).MeasurementCount(15).IterationsPerMeasurement(count).SampleGroup(stringToEnumGroup).GC().Run();
         Measure.Method(() => _ = EnumUtil.ConvertFast<TCP_BODY>(stringValue)).WarmupCount(10).MeasurementCount(15).IterationsPerMeasurement(count).SampleGroup(stringToEnumBagGroup).GC().Run();
-
+        
         Measure.Method(() => _ = enumValue.GetValues(true, true)).WarmupCount(10).MeasurementCount(15).IterationsPerMeasurement(count).SampleGroup(getValuesGroup).GC().Run();
         Measure.Method(() => _ = enumValue.GetValueList(true, true)).WarmupCount(10).MeasurementCount(15).IterationsPerMeasurement(count).SampleGroup(getValueListGroup).GC().Run();
         Measure.Method(() => _ = EnumUtil.GetValueList<TCP_BODY>(true, true)).WarmupCount(10).MeasurementCount(15).IterationsPerMeasurement(count).SampleGroup(getUtilsValueListGroup).GC().Run();

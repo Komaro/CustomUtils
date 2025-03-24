@@ -69,7 +69,7 @@ public class EditorCustomAnalyzerService : EditorService {
         
         yield return null;
         
-        var analyzerList = ReflectionProvider.GetSubClassTypes<DiagnosticAnalyzer>().Where(type => type.IsAbstract == false && type.IsDefined<ObsoleteAttribute>() == false).ToList();
+        var analyzerList = ReflectionProvider.GetSubTypesOfType<DiagnosticAnalyzer>().Where(type => type.IsAbstract == false && type.IsDefined<ObsoleteAttribute>() == false).ToList();
         var progressTick = 1.0f / analyzerList.Count;
         foreach (var type in analyzerList) {
             if (ASSEMBLY_REGEX.IsMatch(type.Assembly.Location)) {

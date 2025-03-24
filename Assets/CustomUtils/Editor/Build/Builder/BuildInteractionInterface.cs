@@ -34,7 +34,7 @@ public class BuildInteractionInterface : IPostprocessBuildWithReport {
                     if (BuildConfigProvider.TryGetValue<string>("configPath", out var path)) {
                         BuildConfigProvider.Load(path);
                     } else {
-                        foreach (var configType in ReflectionProvider.GetSubClassTypes<BuildConfig>()) {
+                        foreach (var configType in ReflectionProvider.GetSubTypesOfType<BuildConfig>()) {
                             if (configType.TryGetCustomAttribute<BuildConfigAttribute>(out var attribute) && attribute.buildType != null && attribute.buildType.Equals(enumValue)) {
                                 BuildConfigProvider.Load($"{Constants.Path.COMMON_CONFIG_PATH}/{nameof(EditorBuildService)}/{configType.Name}{Constants.Extension.JSON}");
                                 break;

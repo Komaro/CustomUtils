@@ -14,7 +14,7 @@ public static partial class Service {
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterAssembliesLoaded)]
     private static void Initialize() {
         if (_isInitialized == false) {
-            _cachedServiceTypeSet = ReflectionProvider.GetClasses().Where(type => type.IsAbstract == false && typeof(IService).IsAssignableFrom(type) && type.Name.StartsWith("Sample_") == false).ToImmutableHashSetWithDistinct();
+            _cachedServiceTypeSet = ReflectionProvider.GetClassTypes().Where(type => type.IsAbstract == false && typeof(IService).IsAssignableFrom(type) && type.Name.StartsWith("Sample_") == false).ToImmutableHashSetWithDistinct();
             _isInitialized = true;
         }
     }

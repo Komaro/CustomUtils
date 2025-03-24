@@ -33,7 +33,7 @@ public static class AnalyzerGenerator {
 
         if (typePathDic.Count <= 0) {
             Logger.TraceLog($"{nameof(typePathDic)} is empty. Building all Analyzers that inherit from {nameof(DiagnosticAnalyzer)}.", Color.yellow);
-            typePathDic = ReflectionProvider.GetSubClassTypes<DiagnosticAnalyzer>().Where(type => PLUGINS_FOLDER.IsMatch(type.Assembly.Location) == false && type.IsDefined<ObsoleteAttribute>() == false).ToDictionary(type => type, UnityAssemblyProvider.GetSourceFilePath);
+            typePathDic = ReflectionProvider.GetSubTypesOfType<DiagnosticAnalyzer>().Where(type => PLUGINS_FOLDER.IsMatch(type.Assembly.Location) == false && type.IsDefined<ObsoleteAttribute>() == false).ToDictionary(type => type, UnityAssemblyProvider.GetSourceFilePath);
         }
 
         if (typePathDic.Any() == false) {

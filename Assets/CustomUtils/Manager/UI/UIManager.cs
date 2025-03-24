@@ -28,7 +28,7 @@ public class UIManager : Singleton<UIManager> {
 			return ui as T;
 		}
 
-		var getType = ReflectionProvider.GetSubClassTypes<UIBase>().FirstOrDefault(x => x == typeof(T));
+		var getType = ReflectionProvider.GetSubTypesOfType<UIBase>().FirstOrDefault(x => x == typeof(T));
 		if (getType == null) {
 			Logger.TraceError($"{nameof(getType)} is Null");
 			return null;

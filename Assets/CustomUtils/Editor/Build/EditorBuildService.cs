@@ -34,12 +34,12 @@ public class EditorBuildService : EditorService {
     [DidReloadScripts(99999)]
     public static void CacheRefresh() {
         if (HasOpenInstances<EditorBuildService>()) {
-            _builderTypes = ReflectionProvider.GetSubClassTypes<Builder>().OrderBy(type => type.TryGetCustomAttribute<PriorityAttribute>(out var attribute) ? attribute.priority : 99999).ToArray();
+            _builderTypes = ReflectionProvider.GetSubTypesOfType<Builder>().OrderBy(type => type.TryGetCustomAttribute<PriorityAttribute>(out var attribute) ? attribute.priority : 99999).ToArray();
             if (_builderTypes.Any()) {
                 _builderTypeNames = _builderTypes.Select(type => type.TryGetCustomAttribute<AliasAttribute>(out var attribute) ? attribute.alias : type.Name).ToArray();
             }
             
-            foreach (var type in ReflectionProvider.GetSubClassTypeDefinitions(typeof(EditorBuildDrawer<,>))) {
+            foreach (var type in ReflectionProvider.GetSubTypesOfTypeDefinition(typeof(EditorBuildDrawer<,>))) {
                 if (type.TryGetCustomAttribute<EditorBuildDrawerAttribute>(out var attribute) && SystemUtil.TrySafeCreateInstance<EditorDrawer>(out var drawer, type, Window)) {
                     if (_drawerDic.ContainsKey(attribute.builderType) == false) {
                         _drawerDic.AutoAdd(attribute.builderType, drawer);

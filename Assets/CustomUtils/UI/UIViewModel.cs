@@ -11,7 +11,7 @@ public abstract class UIViewModel : IDisposable {
     public delegate void NotifyModelChangeHandler(string fieldName, NotifyFieldChangedEventArgs args);
     public SafeDelegate<NotifyModelChangeHandler> OnModelChanged;
     
-    private static readonly ImmutableHashSet<Type> NOTIFY_TYPE_SET = ReflectionProvider.GetSubClassTypes(typeof(NotifyField)).ToImmutableHashSet();
+    private static readonly ImmutableHashSet<Type> NOTIFY_TYPE_SET = ReflectionProvider.GetSubTypesOfType(typeof(NotifyField)).ToImmutableHashSet();
     
     public UIViewModel() {
         var notifyDic = GetType().GetFields().Where(info => NOTIFY_TYPE_SET.Contains(info.FieldType.GetGenericTypeDefinition())).ToDictionary(info => info, info => info.GetValue(this) as NotifyField);

@@ -9,8 +9,8 @@ public class GameDBService : IService {
     private readonly ConcurrentDictionary<Type, object> _dbDic = new();
     
     void IService.Init() {
-        var dbTypeSet = ReflectionProvider.GetSubClassTypeDefinitions(typeof(GameDB<,>)).ToHashSet();
-        foreach (var providerType in ReflectionProvider.GetSubClassTypes<GameDBProvider>().OrderBy(x => x.TryGetCustomAttribute<PriorityAttribute>(out var attribute) ? attribute.priority : 99999)) {
+        var dbTypeSet = ReflectionProvider.GetSubTypesOfTypeDefinition(typeof(GameDB<,>)).ToHashSet();
+        foreach (var providerType in ReflectionProvider.GetSubTypesOfType<GameDBProvider>().OrderBy(x => x.TryGetCustomAttribute<PriorityAttribute>(out var attribute) ? attribute.priority : 99999)) {
             if (providerType == null || SystemUtil.TryCreateInstance(out _provider, providerType) == false) {
                 Logger.TraceError($"Failed to create and initialize {nameof(GameDBProvider)} with {providerType?.Name}. Creating {nameof(NullGameDBProvider)} instead.");
                 _provider = new NullGameDBProvider();

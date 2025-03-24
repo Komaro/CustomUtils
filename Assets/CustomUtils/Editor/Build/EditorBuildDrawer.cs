@@ -372,7 +372,7 @@ public class EditorBuildDrawerAttribute : Attribute {
     public EditorBuildDrawerAttribute(object buildType) {
         if (buildType is Enum enumValue) {
             this.buildType = enumValue;
-            foreach (var type in ReflectionProvider.GetSubClassTypes<Builder>()) {
+            foreach (var type in ReflectionProvider.GetSubTypesOfType<Builder>()) {
                 if (type.TryGetCustomAttribute<BuilderAttribute>(out var attribute) && attribute.buildType.Equals(this.buildType)) {
                     builderType = type;
                     return;

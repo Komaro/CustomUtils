@@ -22,7 +22,7 @@ public class AssetBundleProvider : IResourceProvider {
         if (Service.GetService<ResourceService>().TryGet<TextAsset>("AssetBundleChecksumInfo", out var asset) && asset.dataSize > 0 && asset.text.TryToJson(out _checksumInfo)) {
             if (_checksumInfo.crcDic.TryGetValue(_checksumInfo.target, out var crc) && AssetBundleUtil.TryLoadManifestFromFile(out var manifest, $"{Constants.Path.PROJECT_PATH}/AssetBundle/{_checksumInfo.target}/{_checksumInfo.target}", crc)) {
                 foreach (var name in manifest.GetAllAssetBundles().Where(name => string.IsNullOrEmpty(name) == false)) {
-                    foreach (var type in ReflectionProvider.GetSubClassTypes<AssetBundleWrapperBase>().OrderBy(type => type.GetOrderByPriority())) {
+                    foreach (var type in ReflectionProvider.GetSubTypesOfType<AssetBundleWrapperBase>().OrderBy(type => type.GetOrderByPriority())) {
                         if (type.IsDefined<OnlyEditorEnvironmentAttribute>() && Application.isEditor == false) {
                             continue;
                         }

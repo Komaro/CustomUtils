@@ -7,5 +7,6 @@
         public const string COVERAGE = "Coverage";
         public const string SERVICE = "Service";
         public const string FUNCTIONAL = "Functional";
+        public const string PERFORMANCE = "Performance";
     }
 }

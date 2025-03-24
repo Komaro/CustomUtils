@@ -20,36 +20,31 @@ public static class ReflectionProvider {
     }
     
     public static IEnumerable<Type> GetTypes() => Cache.CachedTypes;
-    public static IEnumerable<Type> GetClasses() => Cache.CachedClasses;
-    public static IEnumerable<Type> GetEnums() => Cache.CachedEnums;
+    public static IEnumerable<Type> GetClassTypes() => Cache.CachedClasses;
+    public static IEnumerable<Type> GetEnumTypes() => Cache.CachedEnums;
 
     #region [Class]
 
     /// <summary>
-    /// T 와 동일한 ClassType
+    /// T를 상속 관계로 가지는 SubTypes
     /// </summary>
-    public static Type GetClassType<T>() where T : class => Cache.CachedClasses.FirstOrDefault(type => typeof(T) == type);
+    public static IEnumerable<Type> GetSubTypesOfType<T>() where T : class => GetSubTypesOfType(typeof(T));
     
     /// <summary>
-    /// T를 SubClass(상속 관계) 로 가지는 ClassType
+    /// type을 상속 관계로 가지는 SubTypes
     /// </summary>
-    public static IEnumerable<Type> GetSubClassTypes<T>() where T : class => GetSubClassTypes(typeof(T));
-    
+    public static IEnumerable<Type> GetSubTypesOfType(Type type) => Cache.CachedClasses.Where(subType => subType.IsSubclassOf(type));
+
     /// <summary>
-    /// subClassType을 SubClass(상속 관계)로 가지는 ClassType
+    /// typeDefinition을 상속 관계로 가지는 SubTypes
     /// </summary>
-    public static IEnumerable<Type> GetSubClassTypes(Type subClassType) => Cache.CachedClasses.Where(type => type.IsSubclassOf(subClassType));
-    
-    /// <summary>
-    /// typeDefinition을 SubClass(상속 관계)로 가지는 ClassType
-    /// </summary>
-    public static IEnumerable<Type> GetSubClassTypeDefinitions(Type typeDefinition) => Cache.CachedClasses.Where(type => {
-        if (type.IsAbstract) {
+    public static IEnumerable<Type> GetSubTypesOfTypeDefinition(Type typeDefinition) => Cache.CachedClasses.Where(subType => {
+        if (subType.IsAbstract) {
             return false;
         }
 
-        while ((type = type.BaseType) != null) {
-            if (type.IsGenericType && type.GetGenericTypeDefinition() == typeDefinition) {
+        while ((subType = subType.BaseType) != null) {
+            if (subType.IsGenericType && subType.GetGenericTypeDefinition() == typeDefinition) {
                 return true;
             }
         }

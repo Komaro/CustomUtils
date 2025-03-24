@@ -49,7 +49,7 @@ public class UIService : IService {
     }
 
     private void AttachInitializeProvider() {
-        foreach (var type in ReflectionProvider.GetSubClassTypes<UIInitializeProvider>().OrderByDescending(type => type.TryGetCustomInheritedAttribute<PriorityAttribute>(out var attribute) ? attribute.priority : 99999)) {
+        foreach (var type in ReflectionProvider.GetSubTypesOfType<UIInitializeProvider>().OrderByDescending(type => type.TryGetCustomInheritedAttribute<PriorityAttribute>(out var attribute) ? attribute.priority : 99999)) {
             if (SystemUtil.TryCreateInstance<UIInitializeProvider>(out var provider, type) && provider.IsReady()) {
                 _initializeProvider = provider;
             }
@@ -59,7 +59,7 @@ public class UIService : IService {
             Logger.TraceError($"{nameof(_initializeProvider)} is null. {nameof(UIService)} initialize failed");
         }
 
-        _viewSet = ReflectionProvider.GetSubClassTypeDefinitions(typeof(UIView<>)).ToImmutableHashSet();
+        _viewSet = ReflectionProvider.GetSubTypesOfTypeDefinition(typeof(UIView<>)).ToImmutableHashSet();
         _viewAttributeDic = _viewSet.ToImmutableDictionary(type => type, type => type.GetCustomAttribute<UIViewAttribute>());
     }
     

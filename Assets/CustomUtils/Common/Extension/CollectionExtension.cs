@@ -211,6 +211,12 @@ public static class CollectionExtension {
     }
 
     public static void AutoAdd<TKey, TValue>(this Dictionary<TKey, TValue> dictionary, KeyValuePair<TKey, TValue> pair) => dictionary.AutoAdd(pair.Key, pair.Value);
+    
+    public static void AutoAdd<TKey, TValue>(this ConcurrentDictionary<TKey, List<TValue>> dictionary, TKey key) => dictionary.AddOrUpdate(key, _ => new List<TValue>(), (_, list) => list);
+    public static void AutoAdd<TKey, TValue>(this ConcurrentDictionary<TKey, List<TValue>> dictionary, TKey key, TValue value) => dictionary.AddOrUpdate(key, _ => new List<TValue>(), (_, list) => list).Add(value);
+    
+    public static void AutoAdd<TKey, TValue>(this ConcurrentDictionary<TKey, Queue<TValue>> dictionary, TKey key) => dictionary.AddOrUpdate(key, _ => new Queue<TValue>(), (_, queue) => queue);
+    public static void AutoAdd<TKey, TValue>(this ConcurrentDictionary<TKey, Queue<TValue>> dictionary, TKey key, TValue value) => dictionary.GetOrAdd(key, _ => new Queue<TValue>()).Enqueue(value);
 
     public static bool TryGetOrAddValue<TKey, TValue>(this Dictionary<TKey, TValue> dictionary, TKey key, out TValue value) where TValue : new() {
         value = dictionary.GetOrAddValue(key);
@@ -650,7 +656,32 @@ public static class CollectionExtension {
         return list;
     }
 
-    public static T[] ToArray<T>(this Array array) => array.Cast<T>().ToArray();
+    public static bool TryToArray<T>(this Array array, out T[] result) => (result = array.ToArray<T>()) != Array.Empty<T>();
+
+    public static T[] ToArray<T>(this Array array) {
+        try {
+            return array.Cast<T>().ToArray();
+        } catch (Exception ex) {
+            Logger.TraceError(ex);
+            return Array.Empty<T>();
+        }
+    }
+
+    public static bool TryToArray<T, TResult>(this T[] array, out TResult[] result, Func<T, TResult> converter) => (result = array.ToArray<T, TResult>(converter)) != Array.Empty<TResult>();
+
+    public static TResult[] ToArray<T, TResult>(this T[] array, Func<T, TResult> converter) {
+        try {
+            var returnArray = new TResult[array.Length];
+            for (var index = 0; index < returnArray.Length; index++) {
+                returnArray[index] = converter.Invoke(array[index]);
+            }
+
+            return returnArray;
+        } catch (Exception ex) {
+            Logger.TraceError(ex);
+            return Array.Empty<TResult>();
+        }
+    }
 
     public static Dictionary<T, int> ToIndexDictionary<T>(this T[] array) {
         var dictionary = new Dictionary<T, int>();

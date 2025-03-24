@@ -1,54 +1,26 @@
-using System;
+﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.Audio;
 
-[RequiresAttributeImplementation(typeof(MasterSoundAttribute))]
-[RequiresAttributeImplementation(typeof(ControlSoundAttribute))]
-public abstract class SoundBase {
+public abstract class UnitySound : NewSoundBase {
 
-    protected SoundCoreBase soundCore;
-    protected HashSet<Enum> soundControlSet = new();
+    protected ConcurrentDictionary<Enum, AudioMixerGroup> audioMixerGroupDic = new();
+    protected ConcurrentDictionary<Enum, AudioSource> audioSourceDic = new();
 
-    protected Dictionary<Enum, AudioMixerGroup> audioMixerGroupDic = new();
-    protected Dictionary<Enum, AudioSource> audioSourceDic = new();
+    protected ConcurrentDictionary<Enum, Queue<AudioSource>> audioSourceQueueDic = new();
+    protected ConcurrentDictionary<Enum, Queue<AudioSource>> audioSourcePlayingDic = new();
+    protected ConcurrentDictionary<Enum, int> maxQueueDic = new();
 
-    protected Dictionary<Enum, Queue<AudioSource>> audioSourceQueueDic = new();
-    protected Dictionary<Enum, Queue<AudioSource>> audioSourcePlayingDic = new();
-    protected Dictionary<Enum, int> maxQueueDic = new();
+    protected object updateLock = new();
 
-    private Dictionary<Enum, GameObject> _audioSourceRootDic = new();
+    protected Dictionary<Enum, GameObject> audioSourceRootDic = new();
 
-    public Enum masterEnum;
-    public Enum representControlEnum;
-    protected bool isMute;
+    protected UnitySound(SoundCoreBase soundCore) : base(soundCore) { }
 
-    protected readonly char PATH_SEPARATOR = '/';
-    protected readonly char NAME_SEPARATOR = '_';
-    protected readonly char EXTENSION_SEPARATOR = '.';
-
-    public SoundBase(SoundCoreBase soundCore) {
-        this.soundCore = soundCore;
-
-        var type = GetType();
-        if (type.TryGetCustomAttribute<MasterSoundAttribute>(out var masterAttribute)) {
-            masterEnum = masterAttribute.masterEnum;
-            representControlEnum = masterAttribute.representControlEnum;
-
-            soundControlSet.Add(masterAttribute.masterEnum);
-            soundControlSet.Add(masterAttribute.representControlEnum);
-        }
-
-        if (type.TryGetCustomAttribute<ControlSoundAttribute>(out var controlAttribute)) {
-            foreach (var controlEnum in controlAttribute.controlList) {
-                soundControlSet.Add(controlEnum);
-            }
-        }
-    }
-    
-    public void Init() {
+    public override void Init() {
         if (masterEnum == null) {
             Logger.TraceError($"{nameof(Init)} Failed. {nameof(masterEnum)} is Null. Check {nameof(MasterSoundAttribute)}");
             return;
@@ -74,11 +46,8 @@ public abstract class SoundBase {
         }
     }
 
-    public virtual void ExtensionDataRefresh(SoundCoreBase soundCore) { }
-
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    protected virtual void UpdateQueue() {
-        lock (audioSourcePlayingDic) {
+    protected override void UpdateQueue() {
+        lock (updateLock) {
             foreach (var pair in audioSourcePlayingDic) {
                 for (var i = 0; i < pair.Value.Count; i++) {
                     if (pair.Value.TryDequeue(out var audioSource)) {
@@ -93,46 +62,25 @@ public abstract class SoundBase {
         }
     }
 
-    protected abstract void UpdateSoundAssetInfo(SoundAssetInfo info);
+    protected abstract override void UpdateSoundAssetInfo(SoundAssetInfo info);
     
-    public abstract void PlayRefresh();
-
-    public virtual void PlayOneShot(AudioClip clip) {
-        if (clip != null && TryGetRepresentAudioSource(out var audioSource)) {
-            audioSource.PlayOneShot(clip);
-        }
-    }
-
-    public abstract void SubmitSoundOrder(SoundOrder order);
-
-    public bool TryGetAudioMixerGroup(Enum type, out AudioMixerGroup mixerGroup) {
-        mixerGroup = GetAudioMixerGroup(type);
-        return mixerGroup != null;
-    } 
+    public abstract override void PlayRefresh();
+    public abstract override void PlayOneShot(SoundTrackEvent trackEvent);
+    public abstract override void SubmitSoundOrder(NewSoundOrder order);
     
-    public virtual AudioMixerGroup GetAudioMixerGroup(Enum type) => audioMixerGroupDic.TryGetValue(type, out var mixerGroup) ? mixerGroup : null;
-
-    protected bool TryGetMasterAudioSource(out AudioSource audioSource) {
-        audioSource = GetMasterAudioSource();
-        return audioSource != null;
-    }
-
+    protected bool TryGetMasterAudioSource(out AudioSource audioSource) => (audioSource = GetMasterAudioSource()) != null;
     protected virtual AudioSource GetMasterAudioSource() => GetAudioSource(masterEnum);
     
-    protected bool TryGetRepresentAudioSource(out AudioSource audioMixer) {
-        audioMixer = GetRepresentAudioSource();
-        return audioMixer != null;
-    }
+    public bool TryGetAudioMixerGroup(Enum type, out AudioMixerGroup mixerGroup) => (mixerGroup = GetAudioMixerGroup(type)) != null;
+    public virtual AudioMixerGroup GetAudioMixerGroup(Enum type) => audioMixerGroupDic.TryGetValue(type, out var mixerGroup) ? mixerGroup : null;
     
+    protected bool TryGetRepresentAudioSource(out AudioSource audioMixer) => (audioMixer = GetRepresentAudioSource()) != null;
     protected virtual AudioSource GetRepresentAudioSource() => GetAudioSource(representControlEnum);
-
-    protected bool TryGetAudioSource(Enum controlType, out AudioSource audioSource) {
-        audioSource = GetAudioSource(controlType);
-        return audioSource != null;
-    }
     
+    protected bool TryGetAudioSource(Enum controlType, out AudioSource audioSource) => (audioSource = GetAudioSource(controlType)) != null;
+
     protected virtual AudioSource GetAudioSource(Enum controlType) {
-        lock (audioSourceDic) {
+        lock (updateLock) {
             if (audioSourceDic.TryGetValue(controlType, out var audioSource)) {
                 return audioSource;
             }
@@ -158,7 +106,7 @@ public abstract class SoundBase {
             return null;
         }
 
-        lock (audioSourceQueueDic) {
+        lock (updateLock) {
             if (audioSourceQueueDic.TryGetValue(controlType, out var idleQueue) && audioSourcePlayingDic.TryGetValue(controlType, out var playQueue)) {
                 if (idleQueue.TryDequeue(out var audioSource)) {
                     playQueue.Enqueue(audioSource);
@@ -183,12 +131,12 @@ public abstract class SoundBase {
     }
 
     protected virtual AudioSource CreateAudioSource(Enum controlType) {
-        if (_audioSourceRootDic.TryGetValue(controlType, out var go) && TryCreateAudioSource(go, controlType, out var audioSource)) {
+        if (audioSourceRootDic.TryGetValue(controlType, out var go) && TryCreateAudioSource(go, controlType, out var audioSource)) {
             return audioSource;
         }
         
         if (soundCore.TryGetSoundRootObject(controlType, out go) && TryCreateAudioSource(go, controlType, out audioSource)) {
-            _audioSourceRootDic.AutoAdd(controlType, go);
+            audioSourceRootDic.AutoAdd(controlType, go);
             return audioSource;
         }
         
@@ -196,11 +144,8 @@ public abstract class SoundBase {
         return null;
     }
 
-    protected bool TryCreateAudioSource(GameObject go, Enum controlType, out AudioSource audioSource) {
-        audioSource = CreateAudioSource(go, controlType);
-        return audioSource != null;
-    }
-    
+    protected bool TryCreateAudioSource(GameObject go, Enum controlType, out AudioSource audioSource) => (audioSource = CreateAudioSource(go, controlType)) != null;
+
     protected virtual AudioSource CreateAudioSource(GameObject go, Enum controlType) {
         if (audioMixerGroupDic.TryGetValue(controlType, out var mixerGroup)) {
             var audioSource = go.AddComponent<AudioSource>();
@@ -212,25 +157,21 @@ public abstract class SoundBase {
         
         return null;
     }
-    
+
     public virtual void UnloadAudioClips() {
-        lock (audioSourceDic) {
+        lock (updateLock) {
             foreach (var audioSource in audioSourceDic.Values.Where(audioSource => audioSource.IsValidClip())) {
                 audioSource.clip.UnloadAudioData();
                 audioSource.clip = null;
             }
-        }
-
-        lock (audioSourceQueueDic) {
+            
             foreach (var queue in audioSourceQueueDic.Values) {
                 queue.Where(audioSource => audioSource.IsValidClip()).ForEach(audioSource => {
                     audioSource.clip.UnloadAudioData();
                     audioSource.clip = null;
                 });
             }
-        }
-
-        lock (audioSourcePlayingDic) {
+            
             foreach (var queue in audioSourcePlayingDic.Values) {
                 queue.Where(audioSource => audioSource.IsValidClip()).ForEach(audioSource => {
                     audioSource.clip.UnloadAudioData();
@@ -240,43 +181,26 @@ public abstract class SoundBase {
         }
     }
 
-    public virtual void LoadSystemVolume() => SetVolume(1f);
-    public virtual float GetVolume() => soundCore.GetVolume(masterEnum);
-    public virtual void SetVolume(float volume) => soundCore.SetVolume(masterEnum, volume);
-    
-    public virtual bool GetMute() => isMute;
-    
-    public virtual void SetMute(bool isMute) {
+    public override void SetMute(bool isMute) {
         this.isMute = isMute;
-        lock (audioSourceDic) {
-            foreach (var audioSource in audioSourceDic.Values.Where(audioSource => audioSource != null)) {
+        lock (updateLock) {
+            foreach (var audioSource in audioSourceDic.Values.WhereNotNull()) {
                 audioSource.mute = isMute;
             }
-        }
-
-        lock (audioSourceQueueDic) {
+            
+            foreach (var queue in audioSourceQueueDic.Values) {
+                foreach (var audioSource in queue) {
+                    audioSource.mute = isMute;
+                }
+            }
+            
             foreach (var audioSource in audioSourceQueueDic.Values.SelectMany(queue => queue).Where(audioSource => audioSource != null)) {
                 audioSource.mute = isMute;
             }
-        }
-
-        lock (audioSourcePlayingDic) {
+            
             foreach (var audioSource in audioSourcePlayingDic.Values.SelectMany(queue => queue).Where(audioSource => audioSource != null)) {
                 audioSource.mute = isMute;
             }
         }
-    }
-
-    public bool IsContainsControlType(Enum type) => soundControlSet.Contains(type);
-}
-
-public abstract record SoundOrder {
-    
-    public Enum masterType;
-    public Enum representControlType;
-    
-    public SoundOrder(Enum masterType, Enum representControlType) {
-        this.masterType = masterType;
-        this.representControlType = representControlType;
     }
 }

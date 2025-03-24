@@ -6,12 +6,25 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using UnityEditor;
+using UnityEngine;
 using Object = UnityEngine.Object;
 
 public static class AssetDatabaseUtil {
 
     private static readonly Regex ASSETS_GET_AFTER_REGEX = new(string.Format(Constants.Regex.GET_AFTER_REGEX, @"Assets[\\/]"));
 
+    public static bool TryGetAssetDirectory(Object obj, out string path) => string.IsNullOrEmpty(path = GetAssetDirectory(obj)) == false;
+
+    public static string GetAssetDirectory(Object obj) {
+        if (obj == null) {
+            Logger.TraceLog($"{nameof(obj)} is null", Color.red);
+            return string.Empty;
+        }
+        
+        var path = Path.GetDirectoryName(AssetDatabase.GetAssetPath(obj));
+        return AssetDatabase.IsValidFolder(path) ? path : string.Empty;
+    }
+    
     public static bool TryFindAssets<T>(out IEnumerable<T> assets, string filter, bool ignorePackages = true) where T : Object => (assets = FindAssets<T>(filter, ignorePackages)).Any();
     
     // TODO. ignorePackages 파라메터 정리하는쪽으로 작업. 필터를 통해 컨트롤 하도록 변경하도록 수정 필요

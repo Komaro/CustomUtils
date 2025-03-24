@@ -1,6 +1,7 @@
 ﻿using UnityEditor;
 using UnityEngine;
 
+// TODO. Obsolete
 [CustomPropertyDrawer(typeof(SoundTrackEvent))]
 public class EditorSoundTrackEventInstance : PropertyDrawer {
 

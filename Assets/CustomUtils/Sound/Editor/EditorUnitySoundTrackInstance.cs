@@ -4,9 +4,8 @@ using UnityEngine;
 using UnityEngine.Audio;
 using Object = UnityEngine.Object;
 
-// TODO. Obsolete
-[CustomEditor(typeof(SoundTrack), true)]
-public class EditorSoundTrackInstance : Editor {
+[CustomEditor(typeof(UnitySoundTrack), true)]
+public class EditorUnitySoundTrackInstance : Editor {
 
     private AudioSource _previewSource;
     private static Object _audioMixer;
@@ -24,7 +23,7 @@ public class EditorSoundTrackInstance : Editor {
 
     public override void OnInspectorGUI() {
         DrawDefaultInspector();
-        if (target is SoundTrack track) {
+        if (target is UnitySoundTrack track) {
             using (new EditorGUILayout.VerticalScope(Constants.Draw.BOX)) {
                 _audioMixer = EditorGUILayout.ObjectField("Target Audio Mixer", _audioMixer, typeof(AudioMixer), true);
                 if (_audioMixer is AudioMixer mixer) {
@@ -58,7 +57,7 @@ public class EditorSoundTrackInstance : Editor {
                             Repaint();
                         }
                     }
-
+                    
                     if (GUILayout.Button("Stop")) {
                         _previewSource.Stop();
                         track.PreviewStop();

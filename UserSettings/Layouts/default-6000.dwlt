@@ -8,98 +8,23 @@ MonoBehaviour:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 12004, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_PixelRect:
-    serializedVersion: 2
-    x: 57.600002
-    y: 97.6
-    width: 781.60004
-    height: 646.4
-  m_ShowMode: 0
-  m_Title: Test Report
-  m_RootView: {fileID: 4}
-  m_MinSize: {x: 640, y: 506}
-  m_MaxSize: {x: 4000, y: 4026}
-  m_Maximized: 0
---- !u!114 &2
-MonoBehaviour:
-  m_ObjectHideFlags: 52
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
   m_EditorHideFlags: 1
   m_Script: {fileID: 12004, guid: 0000000000000000e000000000000000, type: 0}
   m_Name: 
   m_EditorClassIdentifier: 
   m_PixelRect:
     serializedVersion: 2
-    x: 7.2000003
-    y: 50.4
-    width: 1521.6
-    height: 766.4
+    x: 0
+    y: 43.2
+    width: 1536
+    height: 780.8
   m_ShowMode: 4
-  m_Title: Test Runner
-  m_RootView: {fileID: 5}
+  m_Title: Hierarchy
+  m_RootView: {fileID: 2}
   m_MinSize: {x: 875, y: 350}
   m_MaxSize: {x: 10000, y: 10000}
-  m_Maximized: 0
---- !u!114 &3
-MonoBehaviour:
-  m_ObjectHideFlags: 52
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: TestReportWindow
-  m_EditorClassIdentifier: 
-  m_Children: []
-  m_Position:
-    serializedVersion: 2
-    x: 0
-    y: 0
-    width: 781.6
-    height: 646.4
-  m_MinSize: {x: 640, y: 506}
-  m_MaxSize: {x: 4000, y: 4026}
-  m_ActualView: {fileID: 17}
-  m_Panes:
-  - {fileID: 17}
-  m_Selected: 0
-  m_LastSelected: 0
---- !u!114 &4
-MonoBehaviour:
-  m_ObjectHideFlags: 52
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 12010, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Children:
-  - {fileID: 3}
-  m_Position:
-    serializedVersion: 2
-    x: 0
-    y: 0
-    width: 781.6
-    height: 646.4
-  m_MinSize: {x: 640, y: 506}
-  m_MaxSize: {x: 4000, y: 4026}
-  vertical: 0
-  controlID: 16
-  draggingID: 0
---- !u!114 &5
+  m_Maximized: 1
+--- !u!114 &2
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -112,22 +37,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Children:
-  - {fileID: 6}
-  - {fileID: 8}
-  - {fileID: 7}
+  - {fileID: 3}
+  - {fileID: 5}
+  - {fileID: 4}
   m_Position:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 1521.6
-    height: 766.4
+    width: 1536
+    height: 780.8
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
   m_UseTopView: 1
   m_TopViewHeight: 36
   m_UseBottomView: 1
   m_BottomViewHeight: 20
---- !u!114 &6
+--- !u!114 &3
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -144,12 +69,12 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 1521.6
+    width: 1536
     height: 36
   m_MinSize: {x: 0, y: 0}
   m_MaxSize: {x: 0, y: 0}
   m_LastLoadedLayoutName: 
---- !u!114 &7
+--- !u!114 &4
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -165,12 +90,12 @@ MonoBehaviour:
   m_Position:
     serializedVersion: 2
     x: 0
-    y: 746.4
-    width: 1521.6
+    y: 760.8
+    width: 1536
     height: 20
   m_MinSize: {x: 0, y: 0}
   m_MaxSize: {x: 0, y: 0}
---- !u!114 &8
+--- !u!114 &5
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -183,46 +108,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Children:
-  - {fileID: 9}
-  - {fileID: 16}
-  m_Position:
-    serializedVersion: 2
-    x: 0
-    y: 36
-    width: 1521.6
-    height: 710.4
-  m_MinSize: {x: 300, y: 100}
-  m_MaxSize: {x: 24288, y: 16192}
-  vertical: 0
-  controlID: 128
-  draggingID: 0
---- !u!114 &9
-MonoBehaviour:
-  m_ObjectHideFlags: 52
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 1
-  m_Script: {fileID: 12010, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Children:
-  - {fileID: 10}
+  - {fileID: 6}
   - {fileID: 13}
   m_Position:
     serializedVersion: 2
     x: 0
-    y: 0
-    width: 937.6
-    height: 710.4
-  m_MinSize: {x: 200, y: 100}
-  m_MaxSize: {x: 16192, y: 16192}
-  vertical: 1
-  controlID: 129
+    y: 36
+    width: 1536
+    height: 724.8
+  m_MinSize: {x: 300, y: 100}
+  m_MaxSize: {x: 24288, y: 16192}
+  vertical: 0
+  controlID: 375
   draggingID: 0
---- !u!114 &10
+--- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -235,20 +134,46 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Children:
-  - {fileID: 11}
-  - {fileID: 12}
+  - {fileID: 7}
+  - {fileID: 10}
   m_Position:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 937.6
-    height: 376.8
+    width: 946.4
+    height: 724.8
+  m_MinSize: {x: 200, y: 100}
+  m_MaxSize: {x: 16192, y: 16192}
+  vertical: 1
+  controlID: 84
+  draggingID: 0
+--- !u!114 &7
+MonoBehaviour:
+  m_ObjectHideFlags: 52
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 1
+  m_Script: {fileID: 12010, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Children:
+  - {fileID: 8}
+  - {fileID: 9}
+  m_Position:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 946.4
+    height: 384.8
   m_MinSize: {x: 200, y: 50}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
   controlID: 85
   draggingID: 0
---- !u!114 &11
+--- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -265,16 +190,16 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 226.4
-    height: 376.8
-  m_MinSize: {x: 201, y: 226}
-  m_MaxSize: {x: 4001, y: 4026}
-  m_ActualView: {fileID: 19}
+    width: 228.8
+    height: 384.8
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
+  m_ActualView: {fileID: 15}
   m_Panes:
-  - {fileID: 19}
+  - {fileID: 15}
   m_Selected: 0
   m_LastSelected: 1
---- !u!114 &12
+--- !u!114 &9
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -289,18 +214,18 @@ MonoBehaviour:
   m_Children: []
   m_Position:
     serializedVersion: 2
-    x: 226.4
+    x: 228.8
     y: 0
-    width: 711.19995
-    height: 376.8
+    width: 717.60004
+    height: 384.8
   m_MinSize: {x: 202, y: 226}
   m_MaxSize: {x: 4002, y: 4026}
-  m_ActualView: {fileID: 20}
+  m_ActualView: {fileID: 16}
   m_Panes:
-  - {fileID: 20}
+  - {fileID: 16}
   m_Selected: 0
   m_LastSelected: 0
---- !u!114 &13
+--- !u!114 &10
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -313,20 +238,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Children:
-  - {fileID: 14}
-  - {fileID: 15}
+  - {fileID: 11}
+  - {fileID: 12}
   m_Position:
     serializedVersion: 2
     x: 0
-    y: 376.8
-    width: 937.6
-    height: 333.60004
+    y: 384.8
+    width: 946.4
+    height: 340
   m_MinSize: {x: 200, y: 50}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 130
+  controlID: 145
   draggingID: 0
---- !u!114 &14
+--- !u!114 &11
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -336,24 +261,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 1
   m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: ProjectBrowser
+  m_Name: ConsoleWindow
   m_EditorClassIdentifier: 
   m_Children: []
   m_Position:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 625.6
-    height: 333.60004
-  m_MinSize: {x: 231, y: 276}
-  m_MaxSize: {x: 10001, y: 10026}
-  m_ActualView: {fileID: 21}
+    width: 631.2
+    height: 340
+  m_MinSize: {x: 101, y: 126}
+  m_MaxSize: {x: 4001, y: 4026}
+  m_ActualView: {fileID: 18}
   m_Panes:
-  - {fileID: 21}
-  - {fileID: 22}
-  m_Selected: 0
-  m_LastSelected: 1
---- !u!114 &15
+  - {fileID: 17}
+  - {fileID: 18}
+  m_Selected: 1
+  m_LastSelected: 0
+--- !u!114 &12
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -368,18 +293,18 @@ MonoBehaviour:
   m_Children: []
   m_Position:
     serializedVersion: 2
-    x: 625.6
+    x: 631.2
     y: 0
-    width: 312
-    height: 333.60004
-  m_MinSize: {x: 202, y: 226}
-  m_MaxSize: {x: 4002, y: 4026}
-  m_ActualView: {fileID: 23}
+    width: 315.2
+    height: 340
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
+  m_ActualView: {fileID: 19}
   m_Panes:
-  - {fileID: 23}
+  - {fileID: 19}
   m_Selected: 0
   m_LastSelected: 0
---- !u!114 &16
+--- !u!114 &13
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -389,209 +314,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 1
   m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: TestRunnerWindow
+  m_Name: InspectorWindow
   m_EditorClassIdentifier: 
   m_Children: []
   m_Position:
     serializedVersion: 2
-    x: 937.6
+    x: 946.4
     y: 0
-    width: 584
-    height: 710.4
-  m_MinSize: {x: 101, y: 126}
+    width: 589.6
+    height: 724.8
+  m_MinSize: {x: 276, y: 76}
   m_MaxSize: {x: 4001, y: 4026}
-  m_ActualView: {fileID: 18}
+  m_ActualView: {fileID: 20}
   m_Panes:
-  - {fileID: 24}
-  - {fileID: 18}
-  m_Selected: 1
-  m_LastSelected: 0
---- !u!114 &17
-MonoBehaviour:
-  m_ObjectHideFlags: 52
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4272062d6dbd273438736c85848ea974, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_MinSize: {x: 640, y: 480}
-  m_MaxSize: {x: 4000, y: 4000}
-  m_TitleContent:
-    m_Text: Test Report
-    m_Image: {fileID: 0}
-    m_Tooltip: 
-    m_TextWithWhitespace: "Test Report\u200B"
-  m_Pos:
-    serializedVersion: 2
-    x: 0
-    y: 26
-    width: 781.6
-    height: 620.4
-  m_SerializedDataModeController:
-    m_DataMode: 0
-    m_PreferredDataMode: 0
-    m_SupportedDataModes: 
-    isAutomatic: 1
-  m_ViewDataDictionary: {fileID: 0}
-  m_OverlayCanvas:
-    m_LastAppliedPresetName: Default
-    m_SaveData: []
-    m_ContainerData: []
-    m_OverlaysVisible: 1
-  m_colorWhite: {r: 1, g: 1, b: 1, a: 1}
-  m_colorBarBackground: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-  m_colorBoxAndWhiskerBackground: {r: 0.4, g: 0.4, b: 0.4, a: 1}
-  m_colorBar: {r: 0.95, g: 0.95, b: 0.95, a: 1}
-  m_colorStandardLine: {r: 1, g: 1, b: 1, a: 1}
-  m_colorMedianLine: {r: 0.2, g: 0.5, b: 1, a: 0.5}
-  m_colorMedianText: {r: 0.4, g: 0.7, b: 1, a: 1}
-  m_colorWarningText: {r: 1, g: 0, b: 0, a: 1}
-  m_toolbarSeparator: {r: 0.15, g: 0.15, b: 0.15, a: 1}
-  m_testListTreeViewState:
-    scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 00000000
-    m_LastClickedID: 0
-    m_ExpandedIDs: ffffffff01000000060000000a000000
-    m_RenameOverlay:
-      m_UserAcceptedRename: 0
-      m_Name: 
-      m_OriginalName: 
-      m_EditFieldRect:
-        serializedVersion: 2
-        x: 0
-        y: 0
-        width: 0
-        height: 0
-      m_UserData: 0
-      m_IsWaitingForDelay: 0
-      m_IsRenaming: 0
-      m_OriginalEventType: 11
-      m_IsRenamingFilename: 0
-      m_TrimLeadingAndTrailingWhitespace: 0
-      m_ClientGUIView: {fileID: 0}
-    m_SearchString: 
-  m_testListMulticolumnHeaderState:
-    m_Columns:
-    - width: 500
-      sortedAscending: 1
-      headerContent:
-        m_Text: Name
-        m_Image: {fileID: 0}
-        m_Tooltip: Name of test
-        m_TextWithWhitespace: "Name\u200B"
-      contextMenuText: 
-      headerTextAlignment: 0
-      sortingArrowAlignment: 0
-      minWidth: 100
-      maxWidth: 1000000
-      autoResize: 0
-      allowToggleVisibility: 0
-      canSort: 1
-      userData: 0
-    - width: 60
-      sortedAscending: 0
-      headerContent:
-        m_Text: Groups
-        m_Image: {fileID: 0}
-        m_Tooltip: Number of Sample Groups
-        m_TextWithWhitespace: "Groups\u200B"
-      contextMenuText: 
-      headerTextAlignment: 0
-      sortingArrowAlignment: 0
-      minWidth: 50
-      maxWidth: 1000000
-      autoResize: 1
-      allowToggleVisibility: 1
-      canSort: 1
-      userData: 0
-    - width: 100
-      sortedAscending: 0
-      headerContent:
-        m_Text: SD
-        m_Image: {fileID: 0}
-        m_Tooltip: Standard Deviation
-        m_TextWithWhitespace: "SD\u200B"
-      contextMenuText: 
-      headerTextAlignment: 0
-      sortingArrowAlignment: 0
-      minWidth: 50
-      maxWidth: 1000000
-      autoResize: 1
-      allowToggleVisibility: 1
-      canSort: 1
-      userData: 0
-    - width: 100
-      sortedAscending: 0
-      headerContent:
-        m_Text: Deviation
-        m_Image: {fileID: 0}
-        m_Tooltip: Standard Deviation / Median
-        m_TextWithWhitespace: "Deviation\u200B"
-      contextMenuText: 
-      headerTextAlignment: 0
-      sortingArrowAlignment: 0
-      minWidth: 50
-      maxWidth: 1000000
-      autoResize: 1
-      allowToggleVisibility: 1
-      canSort: 1
-      userData: 0
-    - width: 100
-      sortedAscending: 0
-      headerContent:
-        m_Text: Median
-        m_Image: {fileID: 0}
-        m_Tooltip: Median value
-        m_TextWithWhitespace: "Median\u200B"
-      contextMenuText: 
-      headerTextAlignment: 0
-      sortingArrowAlignment: 0
-      minWidth: 50
-      maxWidth: 1000000
-      autoResize: 1
-      allowToggleVisibility: 1
-      canSort: 1
-      userData: 0
-    - width: 100
-      sortedAscending: 0
-      headerContent:
-        m_Text: Min
-        m_Image: {fileID: 0}
-        m_Tooltip: Min value
-        m_TextWithWhitespace: "Min\u200B"
-      contextMenuText: 
-      headerTextAlignment: 0
-      sortingArrowAlignment: 0
-      minWidth: 50
-      maxWidth: 1000000
-      autoResize: 1
-      allowToggleVisibility: 1
-      canSort: 1
-      userData: 0
-    - width: 100
-      sortedAscending: 0
-      headerContent:
-        m_Text: Max
-        m_Image: {fileID: 0}
-        m_Tooltip: Max value
-        m_TextWithWhitespace: "Max\u200B"
-      contextMenuText: 
-      headerTextAlignment: 0
-      sortingArrowAlignment: 0
-      minWidth: 50
-      maxWidth: 1000000
-      autoResize: 1
-      allowToggleVisibility: 1
-      canSort: 1
-      userData: 0
-    m_VisibleColumns: 00000000010000000300000002000000040000000500000006000000
-    m_SortedColumns: 00000000
-  searchString: 
---- !u!114 &18
+  - {fileID: 20}
+  - {fileID: 14}
+  m_Selected: 0
+  m_LastSelected: 1
+--- !u!114 &14
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -613,10 +353,10 @@ MonoBehaviour:
     m_TextWithWhitespace: "Test Runner\u200B"
   m_Pos:
     serializedVersion: 2
-    x: 938.6
-    y: 24
-    width: 583
-    height: 684.4
+    x: 946.4
+    y: 79.200005
+    width: 588.6
+    height: 698.8
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -629,12 +369,12 @@ MonoBehaviour:
     m_ContainerData: []
     m_OverlaysVisible: 1
   m_Spl:
-    ID: 185
+    ID: 200
     splitterInitialOffset: 368
     currentActiveSplitter: -1
     realSizes:
-    - 312.8
-    - 302.40002
+    - 320
+    - 308.8
     relativeSizes:
     - 0.5089058
     - 0.49109417
@@ -644,7 +384,7 @@ MonoBehaviour:
     maxSizes:
     - 0
     - 0
-    lastTotalSize: 615.2
+    lastTotalSize: 628.8
     splitSize: 6
     xOffset: 0
     m_Version: 1
@@ -654,9 +394,9 @@ MonoBehaviour:
     oldSplitSize: 0
   m_TestTypeToolbarIndex: 0
   m_TestListGUIs:
-  - m_Window: {fileID: 18}
+  - m_Window: {fileID: 14}
     runProgress:
-      RunGuid: ce2dcd74-95ce-421e-b241-ffc3d81471fb
+      RunGuid: 294caff6-3028-4b87-b06b-7f7bb4f57be7
       ExecutionSettings:
         m_TargetPlatform: 0
         m_HasTargetPlatform: 0
@@ -669,7 +409,7 @@ MonoBehaviour:
         filters:
         - testMode: 1
           testNames:
-          - EnumTestRunner.EnumIsDefinedTest
+          - CollectionTestRunner
           groupNames: []
           categoryNames: []
           assemblyNames: []
@@ -704,7 +444,7 @@ MonoBehaviour:
       categories: []
       parentId: 
       parentUniqueId: 
-    - id: 1130
+    - id: 1133
       uniqueId: '[TestAssembly.EditMode][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/TestAssembly.EditMode.dll][suite]'
       name: TestAssembly.EditMode.dll
       fullName: C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/TestAssembly.EditMode.dll
@@ -718,7 +458,7 @@ MonoBehaviour:
       description: 
       isSuite: 1
       categories: []
-      parentId: 1135
+      parentId: 1000
       parentUniqueId: '[CustomUtils][suite]'
     - id: 1002
       uniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][AnalyzerTestRunner][suite]'
@@ -734,7 +474,7 @@ MonoBehaviour:
       description: 
       isSuite: 1
       categories: []
-      parentId: 1130
+      parentId: 1133
       parentUniqueId: '[TestAssembly.EditMode][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/TestAssembly.EditMode.dll][suite]'
     - id: 1012
       uniqueId: 'TestAssembly.EditMode.dll/AnalyzerTestRunner/[TestAssembly.EditMode][AnalyzerTestRunner.AnalyzerTestCasePerformanceTest][suite]'
@@ -920,7 +660,7 @@ MonoBehaviour:
       isSuite: 1
       categories:
       - Functional
-      parentId: 1130
+      parentId: 1133
       parentUniqueId: '[TestAssembly.EditMode][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/TestAssembly.EditMode.dll][suite]'
     - id: 1034
       uniqueId: 'TestAssembly.EditMode.dll/CallStackTestRunner/[TestAssembly.EditMode][CallStackTestRunner.CallStackQueueFunctionalTest]'
@@ -939,6 +679,75 @@ MonoBehaviour:
       - Functional
       parentId: 1033
       parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][CallStackTestRunner][suite]'
+    - id: 1036
+      uniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][CollectionTestRunner][suite]'
+      name: CollectionTestRunner
+      fullName: CollectionTestRunner
+      resultStatus: 1
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories:
+      - Functional
+      - Performance
+      parentId: 1133
+      parentUniqueId: '[TestAssembly.EditMode][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/TestAssembly.EditMode.dll][suite]'
+    - id: 1038
+      uniqueId: 'TestAssembly.EditMode.dll/CollectionTestRunner/[TestAssembly.EditMode][CollectionTestRunner.ToArrayPerformanceTest][suite]'
+      name: ToArrayPerformanceTest
+      fullName: CollectionTestRunner.ToArrayPerformanceTest
+      resultStatus: 1
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories:
+      - Performance
+      - Functional
+      parentId: 1036
+      parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][CollectionTestRunner][suite]'
+    - id: 1037
+      uniqueId: 'TestAssembly.EditMode.dll/CollectionTestRunner/ToArrayPerformanceTest/[TestAssembly.EditMode][CollectionTestRunner.ToArrayPerformanceTest(100,100)]'
+      name: ToArrayPerformanceTest(100,100)
+      fullName: CollectionTestRunner.ToArrayPerformanceTest(100,100)
+      resultStatus: 1
+      duration: 10.577469
+      messages: 
+      output: "Converter.GC() in Undefineds\nMin:\t\t27.01 \nMedian:\t\t27.06 \nMax:\t\t27.14
+        \nAvg:\t\t27.06 \nStdDev:\t\t0.02 \nSampleCount:\t105\nSum:\t\t2841.63 \r\nFirst
+        samples:\t\u2581\u2584\u2584\u2583\u2584\u2584\u2584\u2584\u2584\u2584\u2588\u2584\u2584\u2583\u2584\u2584\u2584\u2584\u2584\u2584\u2584\u2584\u2584\u2584\u2584\u2584\u2584\u2588\u2584\u2584\u2584\u2584\u2584\u2584\u2584\u2584\u2584\u2584\u2584\u2584\u2584\u2584\u2584\u2588\u2584\u2584\u2584\u2584\u2584\u2584\u2584\u2584\u2584\u2583\u2584\u2584\u2584\u2584\u2584\u2588\u2584\u2583\u2584\u2584\u2584\u2584\u2584\u2584\u2584\u2584\u2583\u2584\u2584\u2584\u2584\u2588\u2583\u2584\u2584\u2583\u2584\u2584\u2584\u2584\u2584\u2584\u2584\u2584\u2583\u2583\u2584\u2588\u2584\u2584\u2584\u2584\u2584\u2584\u2583\u2584\r\nHistogram:\t\u2581\u2581\u2581\u2588\u2581\u2581\u2581\u2581\u2581\u2581\r\n\r\nConverter
+        in Milliseconds\nMin:\t\t1.00 ms\nMedian:\t\t1.09 ms\nMax:\t\t1.72 ms\nAvg:\t\t1.14
+        ms\nStdDev:\t\t0.14 ms\nSampleCount:\t100\nSum:\t\t113.66 ms\r\nFirst samples:\t\u2581\u2582\u2582\u2581\u2582\u2581\u2582\u2582\u2582\u2582\u2582\u2582\u2581\u2582\u2585\u2582\u2582\u2581\u2581\u2582\u2582\u2581\u2583\u2582\u2581\u2582\u2582\u2582\u2582\u2582\u2582\u2582\u2585\u2581\u2585\u2582\u2581\u2586\u2588\u2582\u2582\u2582\u2582\u2583\u2582\u2585\u2581\u2581\u2586\u2582\u2581\u2582\u2583\u2583\u2581\u2583\u2582\u2582\u2582\u2581\u2586\u2582\u2581\u2582\u2585\u2581\u2582\u2582\u2582\u2585\u2582\u2584\u2582\u2582\u2582\u2582\u2582\u2582\u2586\u2581\u2582\u2582\u2582\u2582\u2582\u2582\u2582\u2581\u2582\u2582\u2581\u2581\u2582\u2582\u2581\u2587\u2582\u2581\u2582\u2582\r\nHistogram:\t\u2582\u2585\u2582\u2588\u2581\u2581\u2581\u2581\u2581\u2581\r\n\r\nSelect.GC()
+        in Undefineds\nMin:\t\t2.00 \nMedian:\t\t2.06 \nMax:\t\t2.14 \nAvg:\t\t2.06
+        \nStdDev:\t\t0.02 \nSampleCount:\t105\nSum:\t\t215.79 \r\nFirst samples:\t\u2585\u2581\u2585\u2583\u2583\u2581\u2584\u2583\u2584\u2583\u2583\u2583\u2584\u2583\u2583\u2584\u2584\u2583\u2584\u2584\u2588\u2584\u2583\u2583\u2583\u2583\u2584\u2584\u2584\u2583\u2583\u2584\u2584\u2584\u2584\u2584\u2584\u2584\u2586\u2584\u2583\u2584\u2584\u2583\u2584\u2583\u2584\u2584\u2584\u2584\u2584\u2584\u2584\u2584\u2588\u2584\u2584\u2584\u2583\u2584\u2584\u2583\u2584\u2584\u2584\u2583\u2584\u2583\u2584\u2584\u2583\u2588\u2584\u2583\u2584\u2584\u2584\u2584\u2584\u2583\u2584\u2584\u2584\u2584\u2584\u2584\u2583\u2584\u2583\u2587\u2584\u2584\u2583\u2584\u2584\u2584\u2583\u2584\u2583\u2584\r\nHistogram:\t\u2582\u2584\u2583\u2588\u2585\u2581\u2581\u2581\u2581\u2582\r\n\r\nSelect
+        in Milliseconds\nMin:\t\t0.13 ms\nMedian:\t\t0.14 ms\nMax:\t\t0.35 ms\nAvg:\t\t0.16
+        ms\nStdDev:\t\t0.03 ms\nSampleCount:\t100\nSum:\t\t15.60 ms\r\nFirst samples:\t\u2581\u2581\u2581\u2581\u2582\u2581\u2581\u2581\u2581\u2583\u2581\u2581\u2582\u2581\u2582\u2583\u2581\u2582\u2583\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2582\u2582\u2581\u2583\u2583\u2581\u2581\u2582\u2581\u2581\u2581\u2581\u2581\u2582\u2582\u2582\u2583\u2581\u2585\u2582\u2583\u2583\u2588\u2581\u2581\u2581\u2581\u2582\u2581\u2582\u2581\u2581\u2581\u2581\u2581\u2581\u2582\u2583\u2581\u2583\u2582\u2582\u2582\u2582\u2582\u2581\u2582\u2582\u2581\u2581\u2582\u2581\u2582\u2582\u2581\u2583\u2582\u2581\u2581\u2581\u2582\u2581\u2583\u2581\u2581\u2581\u2581\u2583\u2582\u2582\u2582\r\nHistogram:\t\u2585\u2586\u2584\u2588\u2585\u2581\u2581\u2581\u2581\u2582\r\n\r\nFor.GC()
+        in Undefineds\nMin:\t\t1.00 \nMedian:\t\t1.02 \nMax:\t\t1.12 \nAvg:\t\t1.03
+        \nStdDev:\t\t0.03 \nSampleCount:\t105\nSum:\t\t107.96 \r\nFirst samples:\t\u2585\u2585\u2581\u2585\u2583\u2581\u2582\u2583\u2582\u2581\u2584\u2582\u2584\u2583\u2582\u2581\u2584\u2583\u2585\u2587\u2583\u2582\u2582\u2582\u2583\u2581\u2581\u2582\u2582\u2583\u2582\u2583\u2583\u2582\u2582\u2585\u2582\u2582\u2581\u2586\u2581\u2581\u2582\u2582\u2583\u2581\u2583\u2582\u2584\u2584\u2582\u2583\u2582\u2584\u2582\u2587\u2588\u2581\u2584\u2582\u2584\u2582\u2585\u2584\u2582\u2585\u2582\u2587\u2582\u2584\u2582\u2583\u2582\u2581\u2583\u2582\u2582\u2582\u2583\u2582\u2583\u2583\u2583\u2583\u2583\u2584\u2583\u2582\u2583\u2582\u2583\u2582\u2581\u2584\u2582\u2582\u2582\u2582\u2582\u2582\r\nHistogram:\t\u2586\u2587\u2585\u2588\u2586\u2581\u2581\u2581\u2581\u2582\r\n\r\nFor
+        in Milliseconds\nMin:\t\t0.05 ms\nMedian:\t\t0.07 ms\nMax:\t\t0.18 ms\nAvg:\t\t0.08
+        ms\nStdDev:\t\t0.02 ms\nSampleCount:\t100\nSum:\t\t7.84 ms\r\nFirst samples:\t\u2581\u2581\u2586\u2582\u2581\u2583\u2582\u2588\u2582\u2582\u2581\u2583\u2583\u2585\u2583\u2582\u2581\u2583\u2581\u2583\u2581\u2581\u2582\u2585\u2582\u2583\u2582\u2583\u2581\u2583\u2582\u2581\u2581\u2581\u2585\u2581\u2581\u2581\u2582\u2582\u2582\u2584\u2584\u2584\u2583\u2582\u2582\u2583\u2582\u2582\u2585\u2582\u2583\u2583\u2582\u2582\u2583\u2583\u2583\u2582\u2583\u2582\u2585\u2581\u2583\u2581\u2582\u2582\u2582\u2582\u2582\u2581\u2583\u2582\u2583\u2582\u2582\u2582\u2583\u2583\u2586\u2583\u2583\u2583\u2581\u2581\u2581\u2581\u2583\u2583\u2581\u2582\u2582\u2581\u2581\u2581\u2581\u2581\u2581\u2583\r\nHistogram:\t\u2586\u2588\u2586\u2588\u2585\u2582\u2581\u2581\u2581\u2582\r\n\r\n\r\n##performancetestresult2:{\"Name\":\"CollectionTestRunner.ToArrayPerformanceTest(100,100)\",\"ClassName\":\"CollectionTestRunner\",\"MethodName\":\"ToArrayPerformanceTest\",\"Version\":\"1\",\"Categories\":[\"Performance\",\"Functional\",\"Performance\"],\"SampleGroups\":[{\"Name\":\"Converter.GC()\",\"Unit\":8,\"IncreaseIsBetter\":false,\"Samples\":[27.01,27.06,27.06,27.05,27.06,27.06,27.06,27.06,27.06,27.06,27.14,27.06,27.06,27.05,27.06,27.06,27.06,27.06,27.06,27.06,27.06,27.06,27.06,27.06,27.06,27.06,27.06,27.14,27.06,27.06,27.06,27.06,27.06,27.06,27.06,27.06,27.06,27.06,27.06,27.06,27.06,27.06,27.06,27.14,27.06,27.06,27.06,27.06,27.06,27.06,27.06,27.06,27.06,27.05,27.06,27.06,27.06,27.06,27.06,27.14,27.06,27.05,27.06,27.06,27.06,27.06,27.06,27.06,27.06,27.06,27.05,27.06,27.06,27.06,27.06,27.14,27.05,27.06,27.06,27.05,27.06,27.06,27.06,27.06,27.06,27.06,27.06,27.06,27.05,27.05,27.06,27.14,27.06,27.06,27.06,27.06,27.06,27.06,27.05,27.06,27.06,27.06,27.06,27.06,27.06],\"Min\":27.01,\"Max\":27.14,\"Median\":27.06,\"Average\":27.06314285714283,\"StandardDeviation\":0.019727393847825387,\"Sum\":2841.629999999997},{\"Name\":\"Converter\",\"Unit\":2,\"IncreaseIsBetter\":false,\"Samples\":[1.0212999999999966,1.1259000000000015,1.0884000000000356,1.0065999999999918,1.068899999999985,1.032699999999977,1.1043000000000234,1.0726999999999976,1.105099999999993,1.0896999999999935,1.1108000000000403,1.1137999999999693,1.040399999999977,1.064799999999991,1.3795999999999822,1.1044000000000552,1.0944000000000643,1.0031999999999926,1.0323000000000775,1.0799999999999273,1.0960000000000037,1.0194000000000188,1.2183999999999742,1.0950000000000273,1.0534000000000106,1.1326999999999999,1.0731999999999289,1.0688000000000102,1.1146000000001096,1.0751999999999953,1.0941000000000259,1.082700000000159,1.3771999999999026,1.0147999999999229,1.3706999999999426,1.08400000000006,1.0199999999999819,1.4800000000000183,1.7248999999999342,1.1147000000000845,1.102500000000191,1.0605000000000474,1.0932000000000244,1.216899999999896,1.1403999999999997,1.441000000000031,1.0190000000000055,1.049600000000055,1.4972000000000208,1.1015999999999622,1.0240000000001147,1.0649999999998273,1.1648999999999888,1.1595999999999549,1.039299999999912,1.2488000000000739,1.1016000000001896,1.0588999999999942,1.090599999999995,1.0401999999999135,1.5255999999999404,1.0691999999999098,1.0334000000002562,1.0697000000000117,1.4268000000001849,1.051300000000083,1.1572999999998502,1.0579999999999928,1.1112000000002809,1.461399999999685,1.0565999999998895,1.3580000000001747,1.143999999999778,1.1273999999998524,1.0570999999999913,1.0919999999996435,1.0819000000001325,1.153099999999995,1.5211999999996806,1.0201999999999317,1.071400000000267,1.1073999999998705,1.0830999999998313,1.0920000000000983,1.1221999999997934,1.1190999999998895,1.0864999999998873,1.036899999999605,1.1487999999999375,1.063799999999901,1.0174000000001798,1.0414999999998145,1.110400000000027,1.091899999999896,1.044300000000021,1.6347999999998138,1.1415999999999258,1.022899999999936,1.1567000000000008,1.1323999999999615],\"Min\":1.0031999999999926,\"Max\":1.7248999999999342,\"Median\":1.0919999999998709,\"Average\":1.136643999999983,\"StandardDeviation\":0.1439127279429946,\"Sum\":113.6643999999983},{\"Name\":\"Select.GC()\",\"Unit\":8,\"IncreaseIsBetter\":false,\"Samples\":[2.07,2.01,2.07,2.05,2.05,2.0,2.06,2.03,2.06,2.05,2.05,2.03,2.06,2.03,2.05,2.06,2.06,2.03,2.06,2.06,2.14,2.06,2.05,2.05,2.05,2.03,2.06,2.06,2.06,2.03,2.03,2.06,2.06,2.06,2.06,2.06,2.06,2.06,2.1,2.06,2.03,2.06,2.06,2.03,2.06,2.03,2.06,2.06,2.06,2.06,2.06,2.06,2.06,2.06,2.14,2.06,2.06,2.06,2.03,2.06,2.06,2.03,2.06,2.06,2.06,2.03,2.06,2.03,2.06,2.06,2.03,2.14,2.06,2.03,2.06,2.06,2.06,2.06,2.06,2.03,2.06,2.06,2.06,2.06,2.06,2.06,2.03,2.06,2.03,2.12,2.06,2.06,2.03,2.06,2.06,2.06,2.05,2.06,2.03,2.06,2.03,2.06,2.06,2.05,2.06],\"Min\":2.0,\"Max\":2.14,\"Median\":2.06,\"Average\":2.0551428571428587,\"StandardDeviation\":0.02160750688398592,\"Sum\":215.79000000000017},{\"Name\":\"Select\",\"Unit\":2,\"IncreaseIsBetter\":false,\"Samples\":[0.13569999999998573,0.1348000000000127,0.13829999999998678,0.14210000000002766,0.17109999999996718,0.13760000000002038,0.13929999999999155,0.13679999999999382,0.13360000000000128,0.18900000000002138,0.1312000000000353,0.13440000000002784,0.17679999999995744,0.1433999999999287,0.17190000000005058,0.18250000000000456,0.14560000000005858,0.161200000000008,0.18180000000006658,0.14220000000000256,0.13559999999995399,0.13639999999998055,0.13360000000000128,0.14550000000008368,0.13639999999998055,0.13159999999993489,0.1432000000000926,0.13679999999999382,0.14069999999992434,0.16790000000014516,0.1615999999999076,0.13650000000006913,0.19389999999998509,0.18609999999989669,0.13979999999992288,0.13400000000001456,0.15630000000010114,0.13840000000004694,0.13599999999996727,0.14000000000010005,0.13810000000012224,0.133199999999988,0.16380000000003748,0.16830000000004476,0.16459999999983666,0.17770000000018627,0.1368999999999687,0.2544000000000324,0.16290000000003602,0.18960000000015499,0.1879999999998745,0.3474999999998545,0.14400000000000547,0.13959999999997309,0.13450000000011642,0.13800000000014735,0.16709999999989123,0.14269999999987705,0.16050000000018373,0.1414999999999509,0.13859999999999673,0.141399999999976,0.13859999999976936,0.14199999999982539,0.1398999999996704,0.1756000000000313,0.20579999999972643,0.14309999999977664,0.19350000000031288,0.15779999999995199,0.16640000000006695,0.16660000000001674,0.1639999999997599,0.15180000000009387,0.13760000000002038,0.15889999999990324,0.16440000000011424,0.13770000000022265,0.13260000000036599,0.1653999999998632,0.14589999999998327,0.16809999999986759,0.16669999999976427,0.13630000000011933,0.19049999999970169,0.1631999999999607,0.1433999999999287,0.14089999999987413,0.13599999999996727,0.15970000000015717,0.13670000000001893,0.1873000000000502,0.13779999999997018,0.1313000000000102,0.14170000000012807,0.13869999999997163,0.1993999999999687,0.16959999999971843,0.1730000000002292,0.16400000000021465],\"Min\":0.1312000000000353,\"Max\":0.3474999999998545,\"Median\":0.14330000000001065,\"Average\":0.156043999999996,\"StandardDeviation\":0.028848304352235626,\"Sum\":15.6043999999996},{\"Name\":\"For.GC()\",\"Unit\":8,\"IncreaseIsBetter\":false,\"Samples\":[1.06,1.06,1.0,1.07,1.04,1.0,1.01,1.04,1.01,1.0,1.05,1.01,1.05,1.03,1.01,1.0,1.05,1.03,1.06,1.1,1.04,1.01,1.01,1.01,1.03,1.0,1.0,1.02,1.01,1.03,1.01,1.04,1.03,1.01,1.02,1.06,1.01,1.01,1.0,1.09,1.0,1.0,1.02,1.01,1.04,1.0,1.04,1.02,1.05,1.05,1.01,1.03,1.02,1.05,1.02,1.11,1.12,1.0,1.05,1.01,1.05,1.02,1.06,1.05,1.02,1.06,1.01,1.11,1.01,1.05,1.01,1.03,1.01,1.0,1.03,1.01,1.01,1.01,1.04,1.02,1.04,1.03,1.04,1.04,1.04,1.05,1.04,1.01,1.04,1.01,1.04,1.01,1.0,1.05,1.02,1.01,1.02,1.01,1.01,1.01,1.0,1.01,1.0,1.01,1.04],\"Min\":1.0,\"Max\":1.12,\"Median\":1.02,\"Average\":1.0281904761904775,\"StandardDeviation\":0.025700878338926329,\"Sum\":107.96000000000012},{\"Name\":\"For\",\"Unit\":2,\"IncreaseIsBetter\":false,\"Samples\":[0.06020000000000891,0.056099999999986497,0.14999999999997727,0.06860000000000355,0.05500000000000682,0.08439999999995962,0.07600000000002183,0.18180000000000974,0.06440000000003465,0.07720000000000482,0.06179999999994834,0.0845000000000482,0.08399999999994634,0.11950000000001637,0.09440000000006421,0.06740000000002056,0.057900000000017829,0.08579999999994925,0.05920000000003256,0.08519999999998618,0.06069999999999709,0.061599999999998548,0.0786000000000513,0.12810000000001765,0.08120000000008077,0.08210000000008222,0.07960000000002765,0.08159999999998036,0.05870000000004438,0.0887000000000171,0.0726999999999407,0.0624000000000251,0.05700000000001637,0.054300000000012008,0.12839999999982866,0.05579999999986285,0.06310000000007676,0.06210000000010041,0.06690000000003238,0.06480000000010478,0.07220000000006621,0.10639999999989414,0.10800000000017462,0.10829999999987195,0.08359999999993306,0.06520000000000437,0.06970000000001164,0.09699999999997999,0.07940000000007785,0.0645999999999276,0.12850000000003093,0.07940000000007785,0.08189999999990505,0.08480000000008659,0.06849999999985812,0.07099999999991269,0.08350000000018554,0.09660000000030777,0.0850999999997839,0.06400000000030559,0.09519999999974971,0.06320000000005166,0.12879999999995563,0.05859999999984211,0.08890000000019427,0.061199999999644209,0.06340000000000146,0.06939999999985958,0.06359999999995125,0.06739999999990687,0.066899999999805,0.061899999999695868,0.09020000000009532,0.06739999999990687,0.08680000000003929,0.06739999999990687,0.07230000000026848,0.07340000000021974,0.09020000000009532,0.08429999999998472,0.13619999999991706,0.08680000000003929,0.0886000000000422,0.09790000000020882,0.061599999999998548,0.062000000000352887,0.05639999999993961,0.05760000000009313,0.08550000000013825,0.08360000000038781,0.057999999999992727,0.0773999999996704,0.08039999999982683,0.057999999999992727,0.055900000000292496,0.06129999999984648,0.058100000000194999,0.05400000000008731,0.05819999999994252,0.0842000000002372],\"Min\":0.05400000000008731,\"Max\":0.18180000000000974,\"Median\":0.07250000000010459,\"Average\":0.07841700000001112,\"StandardDeviation\":0.022456055107697639,\"Sum\":7.8417000000011118}]}\r\n##performancetestruninfo2:{\"TestSuite\":\"Editmode\",\"Date\":1742803702866,\"Player\":{\"Development\":true,\"ScreenWidth\":1920,\"ScreenHeight\":1080,\"ScreenRefreshRate\":60,\"Fullscreen\":false,\"Vsync\":1,\"AntiAliasing\":0,\"Batchmode\":false,\"RenderThreadingMode\":\"MultiThreaded\",\"GpuSkinning\":false,\"Platform\":\"WindowsEditor\",\"ColorSpace\":\"Gamma\",\"AnisotropicFiltering\":\"Disable\",\"BlendWeights\":\"FourBones\",\"GraphicsApi\":\"Direct3D11\",\"ScriptingBackend\":\"Mono2x\",\"AndroidTargetSdkVersion\":\"AndroidApiLevelAuto\",\"AndroidBuildSystem\":\"Gradle\",\"BuildTarget\":\"StandaloneWindows64\",\"StereoRenderingPath\":\"MultiPass\"},\"Hardware\":{\"OperatingSystem\":\"Windows
+        10  (10.0.19045) 64bit\",\"DeviceModel\":\"82R4 (LENOVO)\",\"DeviceName\":\"DESKTOP-55T0R54\",\"ProcessorType\":\"AMD
+        Ryzen 5 5500U with Radeon Graphics \",\"ProcessorCount\":12,\"GraphicsDeviceName\":\"AMD
+        Radeon(TM) Graphics\",\"SystemMemorySizeMB\":14181},\"Editor\":{\"Version\":\"6000.0.26f1\",\"Branch\":\"6000.0/staging\",\"Changeset\":\"ccb7c73d2c02\",\"Date\":1730275040},\"Dependencies\":[\"com.cysharp.unitask@2.5.10\",\"com.unity.2d.animation@10.1.4\",\"com.unity.2d.pixel-perfect@5.0.3\",\"com.unity.2d.psdimporter@9.0.3\",\"com.unity.2d.sprite@1.0.0\",\"com.unity.2d.spriteshape@10.0.7\",\"com.unity.2d.tilemap@1.0.0\",\"com.unity.ai.navigation@2.0.5\",\"com.unity.assetbundlebrowser@1.7.0\",\"com.unity.collab-proxy@2.5.2\",\"com.unity.editorcoroutines@1.0.0\",\"com.unity.ide.rider@3.0.34\",\"com.unity.memoryprofiler@1.1.3\",\"com.unity.mobile.android-logcat@1.4.4\",\"com.unity.multiplayer.center@1.0.0\",\"com.unity.performance.profile-analyzer@1.2.3\",\"com.unity.profiling.core@1.0.2\",\"com.unity.render-pipelines.universal@17.0.3\",\"com.unity.test-framework@1.4.5\",\"com.unity.test-framework.performance@3.0.3\",\"com.unity.testtools.codecoverage@1.2.6\",\"com.unity.timeline@1.8.7\",\"com.unity.ugui@2.0.0\",\"com.unity.modules.accessibility@1.0.0\",\"com.unity.modules.ai@1.0.0\",\"com.unity.modules.androidjni@1.0.0\",\"com.unity.modules.animation@1.0.0\",\"com.unity.modules.assetbundle@1.0.0\",\"com.unity.modules.audio@1.0.0\",\"com.unity.modules.cloth@1.0.0\",\"com.unity.modules.director@1.0.0\",\"com.unity.modules.imageconversion@1.0.0\",\"com.unity.modules.imgui@1.0.0\",\"com.unity.modules.jsonserialize@1.0.0\",\"com.unity.modules.particlesystem@1.0.0\",\"com.unity.modules.physics@1.0.0\",\"com.unity.modules.physics2d@1.0.0\",\"com.unity.modules.screencapture@1.0.0\",\"com.unity.modules.terrain@1.0.0\",\"com.unity.modules.terrainphysics@1.0.0\",\"com.unity.modules.tilemap@1.0.0\",\"com.unity.modules.ui@1.0.0\",\"com.unity.modules.uielements@1.0.0\",\"com.unity.modules.umbra@1.0.0\",\"com.unity.modules.unityanalytics@1.0.0\",\"com.unity.modules.unitywebrequest@1.0.0\",\"com.unity.modules.unitywebrequestassetbundle@1.0.0\",\"com.unity.modules.unitywebrequestaudio@1.0.0\",\"com.unity.modules.unitywebrequesttexture@1.0.0\",\"com.unity.modules.unitywebrequestwww@1.0.0\",\"com.unity.modules.vehicles@1.0.0\",\"com.unity.modules.video@1.0.0\",\"com.unity.modules.vr@1.0.0\",\"com.unity.modules.wind@1.0.0\",\"com.unity.modules.xr@1.0.0\",\"com.unity.modules.subsystems@1.0.0\",\"com.unity.modules.hierarchycore@1.0.0\",\"com.unity.settings-manager@2.0.1\",\"com.unity.ext.nunit@2.0.5\",\"com.unity.render-pipelines.core@17.0.3\",\"com.unity.shadergraph@17.0.3\",\"com.unity.render-pipelines.universal-config@17.0.3\",\"com.unity.burst@1.8.18\",\"com.unity.collections@2.5.1\",\"com.unity.mathematics@1.3.2\",\"com.unity.2d.common@9.0.7\",\"com.unity.searcher@4.9.2\",\"com.unity.rendering.light-transport@1.0.1\",\"com.unity.nuget.mono-cecil@1.11.4\"],\"Results\":[]}\r\n"
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      - Functional
+      parentId: 1038
+      parentUniqueId: 'TestAssembly.EditMode.dll/CollectionTestRunner/[TestAssembly.EditMode][CollectionTestRunner.ToArrayPerformanceTest][suite]'
     - id: 1013
       uniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][DBTestRunner][suite]'
       name: DBTestRunner
@@ -953,7 +762,7 @@ MonoBehaviour:
       description: 
       isSuite: 1
       categories: []
-      parentId: 1130
+      parentId: 1133
       parentUniqueId: '[TestAssembly.EditMode][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/TestAssembly.EditMode.dll][suite]'
     - id: 1014
       uniqueId: 'TestAssembly.EditMode.dll/DBTestRunner/[TestAssembly.EditMode][DBTestRunner.InMemoryDatabaseTest]'
@@ -972,7 +781,7 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1013
       parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][DBTestRunner][suite]'
-    - id: 1036
+    - id: 1039
       uniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][DictionaryTestRunner][suite]'
       name: DictionaryTestRunner
       fullName: DictionaryTestRunner
@@ -987,7 +796,7 @@ MonoBehaviour:
       isSuite: 1
       categories:
       - Functional
-      parentId: 1130
+      parentId: 1133
       parentUniqueId: '[TestAssembly.EditMode][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/TestAssembly.EditMode.dll][suite]'
     - id: 1036
       uniqueId: 'TestAssembly.EditMode.dll/DictionaryTestRunner/[TestAssembly.EditMode][DictionaryTestRunner.DictionaryComparerTest]'
@@ -1006,7 +815,7 @@ MonoBehaviour:
       - Functional
       parentId: 1035
       parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][DictionaryTestRunner][suite]'
-    - id: 1040
+    - id: 1043
       uniqueId: 'TestAssembly.EditMode.dll/DictionaryTestRunner/[TestAssembly.EditMode][DictionaryTestRunner.MultiLevelDictionaryTest][suite]'
       name: MultiLevelDictionaryTest
       fullName: DictionaryTestRunner.MultiLevelDictionaryTest
@@ -1021,7 +830,7 @@ MonoBehaviour:
       isSuite: 1
       categories:
       - Functional
-      parentId: 1036
+      parentId: 1039
       parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][DictionaryTestRunner][suite]'
     - id: 1038
       uniqueId: 'TestAssembly.EditMode.dll/DictionaryTestRunner/MultiLevelDictionaryTest/[TestAssembly.EditMode][DictionaryTestRunner.MultiLevelDictionaryTest(10,10)]'
@@ -1072,7 +881,7 @@ MonoBehaviour:
       isSuite: 1
       categories:
       - Functional
-      parentId: 1130
+      parentId: 1133
       parentUniqueId: '[TestAssembly.EditMode][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/TestAssembly.EditMode.dll][suite]'
     - id: 1031
       uniqueId: 'TestAssembly.EditMode.dll/EditModeTestRunner/[TestAssembly.EditMode][EditModeTestRunner.IntMarshalTest]'
@@ -1362,7 +1171,7 @@ MonoBehaviour:
       description: 
       isSuite: 1
       categories: []
-      parentId: 1130
+      parentId: 1133
       parentUniqueId: '[TestAssembly.EditMode][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/TestAssembly.EditMode.dll][suite]'
     - id: 1033
       uniqueId: 'TestAssembly.EditMode.dll/EncryptTestRunner/[TestAssembly.EditMode][EncryptTestRunner.TripleDESTest]'
@@ -1381,7 +1190,7 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1032
       parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][EncryptTestRunner][suite]'
-    - id: 1041
+    - id: 1044
       uniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][EnumTestRunner][suite]'
       name: EnumTestRunner
       fullName: EnumTestRunner
@@ -1396,7 +1205,7 @@ MonoBehaviour:
       isSuite: 1
       categories:
       - Functional
-      parentId: 1130
+      parentId: 1133
       parentUniqueId: '[TestAssembly.EditMode][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/TestAssembly.EditMode.dll][suite]'
     - id: 1042
       uniqueId: 'TestAssembly.EditMode.dll/EnumTestRunner/[TestAssembly.EditMode][EnumTestRunner.AllEnumGetValuesExceptionTest]'
@@ -1415,7 +1224,7 @@ MonoBehaviour:
       - Functional
       parentId: 1041
       parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][EnumTestRunner][suite]'
-    - id: 1052
+    - id: 1055
       uniqueId: 'TestAssembly.EditMode.dll/EnumTestRunner/[TestAssembly.EditMode][EnumTestRunner.EnumBagPerformanceTest][suite]'
       name: EnumBagPerformanceTest
       fullName: EnumTestRunner.EnumBagPerformanceTest
@@ -1431,7 +1240,7 @@ MonoBehaviour:
       categories:
       - Performance
       - Functional
-      parentId: 1041
+      parentId: 1044
       parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][EnumTestRunner][suite]'
     - id: 1046
       uniqueId: 'TestAssembly.EditMode.dll/EnumTestRunner/EnumBagPerformanceTest/[TestAssembly.EditMode][EnumTestRunner.EnumBagPerformanceTest(50,1)]'
@@ -1754,7 +1563,7 @@ MonoBehaviour:
       - Functional
       parentId: 1041
       parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][EnumTestRunner][suite]'
-    - id: 1055
+    - id: 1058
       uniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][ExpressionTestRunner][suite]'
       name: ExpressionTestRunner
       fullName: ExpressionTestRunner
@@ -1770,9 +1579,9 @@ MonoBehaviour:
       categories:
       - Functional
       - Performance
-      parentId: 1130
+      parentId: 1133
       parentUniqueId: '[TestAssembly.EditMode][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/TestAssembly.EditMode.dll][suite]'
-    - id: 1057
+    - id: 1060
       uniqueId: 'TestAssembly.EditMode.dll/ExpressionTestRunner/[TestAssembly.EditMode][ExpressionTestRunner.CreateConstructorPerformanceTest][suite]'
       name: CreateConstructorPerformanceTest
       fullName: ExpressionTestRunner.CreateConstructorPerformanceTest
@@ -1788,7 +1597,7 @@ MonoBehaviour:
       categories:
       - Performance
       - Functional
-      parentId: 1055
+      parentId: 1058
       parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][ExpressionTestRunner][suite]'
     - id: 1057
       uniqueId: 'TestAssembly.EditMode.dll/ExpressionTestRunner/CreateConstructorPerformanceTest/[TestAssembly.EditMode][ExpressionTestRunner.CreateConstructorPerformanceTest(50,500)]'
@@ -1819,7 +1628,7 @@ MonoBehaviour:
       - Functional
       parentId: 1058
       parentUniqueId: 'TestAssembly.EditMode.dll/ExpressionTestRunner/[TestAssembly.EditMode][ExpressionTestRunner.CreateConstructorPerformanceTest][suite]'
-    - id: 1068
+    - id: 1071
       uniqueId: 'TestAssembly.EditMode.dll/ExpressionTestRunner/[TestAssembly.EditMode][ExpressionTestRunner.DelegateCastingPerformanceTest][suite]'
       name: DelegateCastingPerformanceTest
       fullName: ExpressionTestRunner.DelegateCastingPerformanceTest
@@ -1835,7 +1644,7 @@ MonoBehaviour:
       categories:
       - Performance
       - Functional
-      parentId: 1055
+      parentId: 1058
       parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][ExpressionTestRunner][suite]'
     - id: 1057
       uniqueId: 'TestAssembly.EditMode.dll/ExpressionTestRunner/DelegateCastingPerformanceTest/[TestAssembly.EditMode][ExpressionTestRunner.DelegateCastingPerformanceTest(50,100)]'
@@ -2070,7 +1879,7 @@ MonoBehaviour:
       - Functional
       parentId: 1058
       parentUniqueId: 'TestAssembly.EditMode.dll/ExpressionTestRunner/[TestAssembly.EditMode][ExpressionTestRunner.DelegateCastingPerformanceTest][suite]'
-    - id: 1071
+    - id: 1074
       uniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][GameDBTestRunner][suite]'
       name: GameDBTestRunner
       fullName: GameDBTestRunner
@@ -2084,9 +1893,9 @@ MonoBehaviour:
       description: 
       isSuite: 1
       categories: []
-      parentId: 1130
+      parentId: 1133
       parentUniqueId: '[TestAssembly.EditMode][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/TestAssembly.EditMode.dll][suite]'
-    - id: 1075
+    - id: 1078
       uniqueId: 'TestAssembly.EditMode.dll/GameDBTestRunner/[TestAssembly.EditMode][GameDBTestRunner.StartTest][suite]'
       name: StartTest
       fullName: GameDBTestRunner.StartTest
@@ -2100,7 +1909,7 @@ MonoBehaviour:
       description: 
       isSuite: 1
       categories: []
-      parentId: 1071
+      parentId: 1074
       parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][GameDBTestRunner][suite]'
     - id: 1038
       uniqueId: 'TestAssembly.EditMode.dll/GameDBTestRunner/StartTest/[TestAssembly.EditMode][GameDBTestRunner.StartTest(GameDBTestRunner+JsonTestRunner)]'
@@ -2153,7 +1962,7 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1041
       parentUniqueId: 'TestAssembly.EditMode.dll/GameDBTestRunner/[TestAssembly.EditMode][GameDBTestRunner.StartTest][suite]'
-    - id: 1076
+    - id: 1079
       uniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][GlobalEnumTestRunner][suite]'
       name: GlobalEnumTestRunner
       fullName: GlobalEnumTestRunner
@@ -2167,7 +1976,7 @@ MonoBehaviour:
       description: 
       isSuite: 1
       categories: []
-      parentId: 1130
+      parentId: 1133
       parentUniqueId: '[TestAssembly.EditMode][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/TestAssembly.EditMode.dll][suite]'
     - id: 1043
       uniqueId: 'TestAssembly.EditMode.dll/GlobalEnumTestRunner/[TestAssembly.EditMode][GlobalEnumTestRunner.StartTest]'
@@ -2186,7 +1995,7 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1042
       parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][GlobalEnumTestRunner][suite]'
-    - id: 1119
+    - id: 1122
       uniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][LocalizeServiceTestRunner][suite]'
       name: LocalizeServiceTestRunner
       fullName: LocalizeServiceTestRunner
@@ -2201,7 +2010,7 @@ MonoBehaviour:
       isSuite: 1
       categories:
       - Service
-      parentId: 1130
+      parentId: 1133
       parentUniqueId: '[TestAssembly.EditMode][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/TestAssembly.EditMode.dll][suite]'
     - id: 1078
       uniqueId: 'TestAssembly.EditMode.dll/LocalizeServiceTestRunner/[TestAssembly.EditMode][LocalizeServiceTestRunner.LocalizeServiceTest]'
@@ -2220,7 +2029,7 @@ MonoBehaviour:
       - Service
       parentId: 1077
       parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][LocalizeServiceTestRunner][suite]'
-    - id: 1084
+    - id: 1087
       uniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][NotifyConstructorTestRunner][suite]'
       name: NotifyConstructorTestRunner
       fullName: NotifyConstructorTestRunner
@@ -2235,7 +2044,7 @@ MonoBehaviour:
       isSuite: 1
       categories:
       - Notify
-      parentId: 1130
+      parentId: 1133
       parentUniqueId: '[TestAssembly.EditMode][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/TestAssembly.EditMode.dll][suite]'
     - id: 1051
       uniqueId: 'TestAssembly.EditMode.dll/NotifyConstructorTestRunner/[TestAssembly.EditMode][NotifyConstructorTestRunner.NotifyCollectionAllConstructorTest]'
@@ -2288,7 +2097,7 @@ MonoBehaviour:
       - Notify
       parentId: 1050
       parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][NotifyConstructorTestRunner][suite]'
-    - id: 1088
+    - id: 1091
       uniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][NotifyCoverageTestRunner][suite]'
       name: NotifyCoverageTestRunner
       fullName: NotifyCoverageTestRunner
@@ -2304,7 +2113,7 @@ MonoBehaviour:
       categories:
       - Notify
       - Coverage
-      parentId: 1130
+      parentId: 1133
       parentUniqueId: '[TestAssembly.EditMode][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/TestAssembly.EditMode.dll][suite]'
     - id: 1056
       uniqueId: 'TestAssembly.EditMode.dll/NotifyCoverageTestRunner/[TestAssembly.EditMode][NotifyCoverageTestRunner.NotifyCollectionCoverageTest]'
@@ -2468,7 +2277,7 @@ MonoBehaviour:
       - Coverage
       parentId: 1054
       parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][NotifyCoverageTestRunner][suite]'
-    - id: 1098
+    - id: 1101
       uniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][NotifySerializeTestRunner][suite]'
       name: NotifySerializeTestRunner
       fullName: NotifySerializeTestRunner
@@ -2483,7 +2292,7 @@ MonoBehaviour:
       isSuite: 1
       categories:
       - Notify
-      parentId: 1130
+      parentId: 1133
       parentUniqueId: '[TestAssembly.EditMode][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/TestAssembly.EditMode.dll][suite]'
     - id: 1065
       uniqueId: 'TestAssembly.EditMode.dll/NotifySerializeTestRunner/[TestAssembly.EditMode][NotifySerializeTestRunner.NotifyCsvConvertTest]'
@@ -2536,7 +2345,7 @@ MonoBehaviour:
       - Notify
       parentId: 1064
       parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][NotifySerializeTestRunner][suite]'
-    - id: 1069
+    - id: 1072
       uniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][OverridenMethodTestRunner][suite]'
       name: OverridenMethodTestRunner
       fullName: OverridenMethodTestRunner
@@ -2551,7 +2360,7 @@ MonoBehaviour:
       isSuite: 1
       categories:
       - Functional
-      parentId: 1130
+      parentId: 1133
       parentUniqueId: '[TestAssembly.EditMode][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/TestAssembly.EditMode.dll][suite]'
     - id: 1054
       uniqueId: 'TestAssembly.EditMode.dll/OverridenMethodTestRunner/[TestAssembly.EditMode][OverridenMethodTestRunner.OverridenMethodTest]'
@@ -2570,7 +2379,7 @@ MonoBehaviour:
       - Functional
       parentId: 1053
       parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][OverridenMethodTestRunner][suite]'
-    - id: 1102
+    - id: 1105
       uniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][ReflectionTestRunner][suite]'
       name: ReflectionTestRunner
       fullName: ReflectionTestRunner
@@ -2586,9 +2395,9 @@ MonoBehaviour:
       categories:
       - Reflection
       - Performance
-      parentId: 1130
+      parentId: 1133
       parentUniqueId: '[TestAssembly.EditMode][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/TestAssembly.EditMode.dll][suite]'
-    - id: 1118
+    - id: 1121
       uniqueId: 'TestAssembly.EditMode.dll/ReflectionTestRunner/[TestAssembly.EditMode][ReflectionTestRunner.ReflectionExtensionPerformanceTest][suite]'
       name: ReflectionExtensionPerformanceTest
       fullName: ReflectionTestRunner.ReflectionExtensionPerformanceTest
@@ -2604,7 +2413,7 @@ MonoBehaviour:
       categories:
       - Performance
       - Reflection
-      parentId: 1102
+      parentId: 1105
       parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][ReflectionTestRunner][suite]'
     - id: 1080
       uniqueId: 'TestAssembly.EditMode.dll/ReflectionTestRunner/ReflectionExtensionPerformanceTest/[TestAssembly.EditMode][ReflectionTestRunner.ReflectionExtensionPerformanceTest(10,10)]'
@@ -2769,7 +2578,7 @@ MonoBehaviour:
       - Reflection
       parentId: 1083
       parentUniqueId: 'TestAssembly.EditMode.dll/ReflectionTestRunner/[TestAssembly.EditMode][ReflectionTestRunner.ReflectionExtensionPerformanceTest][suite]'
-    - id: 1113
+    - id: 1116
       uniqueId: 'TestAssembly.EditMode.dll/ReflectionTestRunner/[TestAssembly.EditMode][ReflectionTestRunner.ReflectionPerformanceTest][suite]'
       name: ReflectionPerformanceTest
       fullName: ReflectionTestRunner.ReflectionPerformanceTest
@@ -2785,7 +2594,7 @@ MonoBehaviour:
       categories:
       - Performance
       - Reflection
-      parentId: 1102
+      parentId: 1105
       parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][ReflectionTestRunner][suite]'
     - id: 1070
       uniqueId: 'TestAssembly.EditMode.dll/ReflectionTestRunner/ReflectionPerformanceTest/[TestAssembly.EditMode][ReflectionTestRunner.ReflectionPerformanceTest(100,5)]'
@@ -3141,7 +2950,7 @@ MonoBehaviour:
       - Reflection
       parentId: 1079
       parentUniqueId: 'TestAssembly.EditMode.dll/ReflectionTestRunner/[TestAssembly.EditMode][ReflectionTestRunner.ReflectionPerformanceTest][suite]'
-    - id: 1121
+    - id: 1124
       uniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][ServiceTestRunner][suite]'
       name: ServiceTestRunner
       fullName: ServiceTestRunner
@@ -3156,7 +2965,7 @@ MonoBehaviour:
       isSuite: 1
       categories:
       - Service
-      parentId: 1130
+      parentId: 1133
       parentUniqueId: '[TestAssembly.EditMode][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/TestAssembly.EditMode.dll][suite]'
     - id: 1081
       uniqueId: 'TestAssembly.EditMode.dll/ServiceTestRunner/[TestAssembly.EditMode][ServiceTestRunner.ServiceAsyncTaskTest]'
@@ -3192,7 +3001,7 @@ MonoBehaviour:
       - Service
       parentId: 1079
       parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][ServiceTestRunner][suite]'
-    - id: 1078
+    - id: 1081
       uniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][TcpServerTestRunner][suite]'
       name: TcpServerTestRunner
       fullName: TcpServerTestRunner
@@ -3206,7 +3015,7 @@ MonoBehaviour:
       description: 
       isSuite: 1
       categories: []
-      parentId: 1130
+      parentId: 1133
       parentUniqueId: '[TestAssembly.EditMode][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/TestAssembly.EditMode.dll][suite]'
     - id: 1045
       uniqueId: 'TestAssembly.EditMode.dll/TcpServerTestRunner/[TestAssembly.EditMode][TcpServerTestRunner.Clear]'
@@ -3225,7 +3034,7 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1044
       parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][TcpServerTestRunner][suite]'
-    - id: 1083
+    - id: 1086
       uniqueId: 'TestAssembly.EditMode.dll/TcpServerTestRunner/[TestAssembly.EditMode][TcpServerTestRunner.TcpClientTestAsync][suite]'
       name: TcpClientTestAsync
       fullName: TcpServerTestRunner.TcpClientTestAsync
@@ -3239,7 +3048,7 @@ MonoBehaviour:
       description: 
       isSuite: 1
       categories: []
-      parentId: 1078
+      parentId: 1081
       parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][TcpServerTestRunner][suite]'
     - id: 1047
       uniqueId: 'TestAssembly.EditMode.dll/TcpServerTestRunner/TcpClientTestAsync/[TestAssembly.EditMode][TcpServerTestRunner.TcpClientTestAsync(TcpJsonServeModule,TestTcpJsonClient)]'
@@ -3292,7 +3101,7 @@ MonoBehaviour:
       - Performance
       parentId: 1044
       parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][TcpServerTestRunner][suite]'
-    - id: 1124
+    - id: 1127
       uniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][UIViewModelTestRunner][suite]'
       name: UIViewModelTestRunner
       fullName: UIViewModelTestRunner
@@ -3306,9 +3115,9 @@ MonoBehaviour:
       description: 
       isSuite: 1
       categories: []
-      parentId: 1130
+      parentId: 1133
       parentUniqueId: '[TestAssembly.EditMode][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/TestAssembly.EditMode.dll][suite]'
-    - id: 1129
+    - id: 1132
       uniqueId: 'TestAssembly.EditMode.dll/UIViewModelTestRunner/[TestAssembly.EditMode][UIViewModelTestRunner.ViewModelPerformanceTest][suite]'
       name: ViewModelPerformanceTest
       fullName: UIViewModelTestRunner.ViewModelPerformanceTest
@@ -3323,7 +3132,7 @@ MonoBehaviour:
       isSuite: 1
       categories:
       - Performance
-      parentId: 1124
+      parentId: 1127
       parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][UIViewModelTestRunner][suite]'
     - id: 1084
       uniqueId: 'TestAssembly.EditMode.dll/UIViewModelTestRunner/ViewModelPerformanceTest/[TestAssembly.EditMode][UIViewModelTestRunner.ViewModelPerformanceTest(100)]'
@@ -3393,13 +3202,28 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1082
       parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][UIViewModelTestRunner][suite]'
-    m_ResultText: EnumIsDefinedTest (0.028s)
+    m_ResultText: "ToArrayPerformanceTest(100,100) (10.577s)\n---\nConverter.GC()
+      in Undefineds\nMin:\t\t27.01 \nMedian:\t\t27.06 \nMax:\t\t27.14 \nAvg:\t\t27.06
+      \nStdDev:\t\t0.02 \nSampleCount:\t105\nSum:\t\t2841.63 \r\nFirst samples:\t\u2581\u2584\u2584\u2583\u2584\u2584\u2584\u2584\u2584\u2584\u2588\u2584\u2584\u2583\u2584\u2584\u2584\u2584\u2584\u2584\u2584\u2584\u2584\u2584\u2584\u2584\u2584\u2588\u2584\u2584\u2584\u2584\u2584\u2584\u2584\u2584\u2584\u2584\u2584\u2584\u2584\u2584\u2584\u2588\u2584\u2584\u2584\u2584\u2584\u2584\u2584\u2584\u2584\u2583\u2584\u2584\u2584\u2584\u2584\u2588\u2584\u2583\u2584\u2584\u2584\u2584\u2584\u2584\u2584\u2584\u2583\u2584\u2584\u2584\u2584\u2588\u2583\u2584\u2584\u2583\u2584\u2584\u2584\u2584\u2584\u2584\u2584\u2584\u2583\u2583\u2584\u2588\u2584\u2584\u2584\u2584\u2584\u2584\u2583\u2584\r\nHistogram:\t\u2581\u2581\u2581\u2588\u2581\u2581\u2581\u2581\u2581\u2581\r\n\r\nConverter
+      in Milliseconds\nMin:\t\t1.00 ms\nMedian:\t\t1.09 ms\nMax:\t\t1.72 ms\nAvg:\t\t1.14
+      ms\nStdDev:\t\t0.14 ms\nSampleCount:\t100\nSum:\t\t113.66 ms\r\nFirst samples:\t\u2581\u2582\u2582\u2581\u2582\u2581\u2582\u2582\u2582\u2582\u2582\u2582\u2581\u2582\u2585\u2582\u2582\u2581\u2581\u2582\u2582\u2581\u2583\u2582\u2581\u2582\u2582\u2582\u2582\u2582\u2582\u2582\u2585\u2581\u2585\u2582\u2581\u2586\u2588\u2582\u2582\u2582\u2582\u2583\u2582\u2585\u2581\u2581\u2586\u2582\u2581\u2582\u2583\u2583\u2581\u2583\u2582\u2582\u2582\u2581\u2586\u2582\u2581\u2582\u2585\u2581\u2582\u2582\u2582\u2585\u2582\u2584\u2582\u2582\u2582\u2582\u2582\u2582\u2586\u2581\u2582\u2582\u2582\u2582\u2582\u2582\u2582\u2581\u2582\u2582\u2581\u2581\u2582\u2582\u2581\u2587\u2582\u2581\u2582\u2582\r\nHistogram:\t\u2582\u2585\u2582\u2588\u2581\u2581\u2581\u2581\u2581\u2581\r\n\r\nSelect.GC()
+      in Undefineds\nMin:\t\t2.00 \nMedian:\t\t2.06 \nMax:\t\t2.14 \nAvg:\t\t2.06
+      \nStdDev:\t\t0.02 \nSampleCount:\t105\nSum:\t\t215.79 \r\nFirst samples:\t\u2585\u2581\u2585\u2583\u2583\u2581\u2584\u2583\u2584\u2583\u2583\u2583\u2584\u2583\u2583\u2584\u2584\u2583\u2584\u2584\u2588\u2584\u2583\u2583\u2583\u2583\u2584\u2584\u2584\u2583\u2583\u2584\u2584\u2584\u2584\u2584\u2584\u2584\u2586\u2584\u2583\u2584\u2584\u2583\u2584\u2583\u2584\u2584\u2584\u2584\u2584\u2584\u2584\u2584\u2588\u2584\u2584\u2584\u2583\u2584\u2584\u2583\u2584\u2584\u2584\u2583\u2584\u2583\u2584\u2584\u2583\u2588\u2584\u2583\u2584\u2584\u2584\u2584\u2584\u2583\u2584\u2584\u2584\u2584\u2584\u2584\u2583\u2584\u2583\u2587\u2584\u2584\u2583\u2584\u2584\u2584\u2583\u2584\u2583\u2584\r\nHistogram:\t\u2582\u2584\u2583\u2588\u2585\u2581\u2581\u2581\u2581\u2582\r\n\r\nSelect
+      in Milliseconds\nMin:\t\t0.13 ms\nMedian:\t\t0.14 ms\nMax:\t\t0.35 ms\nAvg:\t\t0.16
+      ms\nStdDev:\t\t0.03 ms\nSampleCount:\t100\nSum:\t\t15.60 ms\r\nFirst samples:\t\u2581\u2581\u2581\u2581\u2582\u2581\u2581\u2581\u2581\u2583\u2581\u2581\u2582\u2581\u2582\u2583\u2581\u2582\u2583\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2582\u2582\u2581\u2583\u2583\u2581\u2581\u2582\u2581\u2581\u2581\u2581\u2581\u2582\u2582\u2582\u2583\u2581\u2585\u2582\u2583\u2583\u2588\u2581\u2581\u2581\u2581\u2582\u2581\u2582\u2581\u2581\u2581\u2581\u2581\u2581\u2582\u2583\u2581\u2583\u2582\u2582\u2582\u2582\u2582\u2581\u2582\u2582\u2581\u2581\u2582\u2581\u2582\u2582\u2581\u2583\u2582\u2581\u2581\u2581\u2582\u2581\u2583\u2581\u2581\u2581\u2581\u2583\u2582\u2582\u2582\r\nHistogram:\t\u2585\u2586\u2584\u2588\u2585\u2581\u2581\u2581\u2581\u2582\r\n\r\nFor.GC()
+      in Undefineds\nMin:\t\t1.00 \nMedian:\t\t1.02 \nMax:\t\t1.12 \nAvg:\t\t1.03
+      \nStdDev:\t\t0.03 \nSampleCount:\t105\nSum:\t\t107.96 \r\nFirst samples:\t\u2585\u2585\u2581\u2585\u2583\u2581\u2582\u2583\u2582\u2581\u2584\u2582\u2584\u2583\u2582\u2581\u2584\u2583\u2585\u2587\u2583\u2582\u2582\u2582\u2583\u2581\u2581\u2582\u2582\u2583\u2582\u2583\u2583\u2582\u2582\u2585\u2582\u2582\u2581\u2586\u2581\u2581\u2582\u2582\u2583\u2581\u2583\u2582\u2584\u2584\u2582\u2583\u2582\u2584\u2582\u2587\u2588\u2581\u2584\u2582\u2584\u2582\u2585\u2584\u2582\u2585\u2582\u2587\u2582\u2584\u2582\u2583\u2582\u2581\u2583\u2582\u2582\u2582\u2583\u2582\u2583\u2583\u2583\u2583\u2583\u2584\u2583\u2582\u2583\u2582\u2583\u2582\u2581\u2584\u2582\u2582\u2582\u2582\u2582\u2582\r\nHistogram:\t\u2586\u2587\u2585\u2588\u2586\u2581\u2581\u2581\u2581\u2582\r\n\r\nFor
+      in Milliseconds\nMin:\t\t0.05 ms\nMedian:\t\t0.07 ms\nMax:\t\t0.18 ms\nAvg:\t\t0.08
+      ms\nStdDev:\t\t0.02 ms\nSampleCount:\t100\nSum:\t\t7.84 ms\r\nFirst samples:\t\u2581\u2581\u2586\u2582\u2581\u2583\u2582\u2588\u2582\u2582\u2581\u2583\u2583\u2585\u2583\u2582\u2581\u2583\u2581\u2583\u2581\u2581\u2582\u2585\u2582\u2583\u2582\u2583\u2581\u2583\u2582\u2581\u2581\u2581\u2585\u2581\u2581\u2581\u2582\u2582\u2582\u2584\u2584\u2584\u2583\u2582\u2582\u2583\u2582\u2582\u2585\u2582\u2583\u2583\u2582\u2582\u2583\u2583\u2583\u2582\u2583\u2582\u2585\u2581\u2583\u2581\u2582\u2582\u2582\u2582\u2582\u2581\u2583\u2582\u2583\u2582\u2582\u2582\u2583\u2583\u2586\u2583\u2583\u2583\u2581\u2581\u2581\u2581\u2583\u2583\u2581\u2582\u2582\u2581\u2581\u2581\u2581\u2581\u2581\u2583\r\nHistogram:\t\u2586\u2588\u2586\u2588\u2585\u2582\u2581\u2581\u2581\u2582\r\n\r\n\r\n##performancetestresult2:{\"Name\":\"CollectionTestRunner.ToArrayPerformanceTest(100,100)\",\"ClassName\":\"CollectionTestRunner\",\"MethodName\":\"ToArrayPerformanceTest\",\"Version\":\"1\",\"Categories\":[\"Performance\",\"Functional\",\"Performance\"],\"SampleGroups\":[{\"Name\":\"Converter.GC()\",\"Unit\":8,\"IncreaseIsBetter\":false,\"Samples\":[27.01,27.06,27.06,27.05,27.06,27.06,27.06,27.06,27.06,27.06,27.14,27.06,27.06,27.05,27.06,27.06,27.06,27.06,27.06,27.06,27.06,27.06,27.06,27.06,27.06,27.06,27.06,27.14,27.06,27.06,27.06,27.06,27.06,27.06,27.06,27.06,27.06,27.06,27.06,27.06,27.06,27.06,27.06,27.14,27.06,27.06,27.06,27.06,27.06,27.06,27.06,27.06,27.06,27.05,27.06,27.06,27.06,27.06,27.06,27.14,27.06,27.05,27.06,27.06,27.06,27.06,27.06,27.06,27.06,27.06,27.05,27.06,27.06,27.06,27.06,27.14,27.05,27.06,27.06,27.05,27.06,27.06,27.06,27.06,27.06,27.06,27.06,27.06,27.05,27.05,27.06,27.14,27.06,27.06,27.06,27.06,27.06,27.06,27.05,27.06,27.06,27.06,27.06,27.06,27.06],\"Min\":27.01,\"Max\":27.14,\"Median\":27.06,\"Average\":27.06314285714283,\"StandardDeviation\":0.019727393847825387,\"Sum\":2841.629999999997},{\"Name\":\"Converter\",\"Unit\":2,\"IncreaseIsBetter\":false,\"Samples\":[1.0212999999999966,1.1259000000000015,1.0884000000000356,1.0065999999999918,1.068899999999985,1.032699999999977,1.1043000000000234,1.0726999999999976,1.105099999999993,1.0896999999999935,1.1108000000000403,1.1137999999999693,1.040399999999977,1.064799999999991,1.3795999999999822,1.1044000000000552,1.0944000000000643,1.0031999999999926,1.0323000000000775,1.0799999999999273,1.0960000000000037,1.0194000000000188,1.2183999999999742,1.0950000000000273,1.0534000000000106,1.1326999999999999,1.0731999999999289,1.0688000000000102,1.1146000000001096,1.0751999999999953,1.0941000000000259,1.082700000000159,1.3771999999999026,1.0147999999999229,1.3706999999999426,1.08400000000006,1.0199999999999819,1.4800000000000183,1.7248999999999342,1.1147000000000845,1.102500000000191,1.0605000000000474,1.0932000000000244,1.216899999999896,1.1403999999999997,1.441000000000031,1.0190000000000055,1.049600000000055,1.4972000000000208,1.1015999999999622,1.0240000000001147,1.0649999999998273,1.1648999999999888,1.1595999999999549,1.039299999999912,1.2488000000000739,1.1016000000001896,1.0588999999999942,1.090599999999995,1.0401999999999135,1.5255999999999404,1.0691999999999098,1.0334000000002562,1.0697000000000117,1.4268000000001849,1.051300000000083,1.1572999999998502,1.0579999999999928,1.1112000000002809,1.461399999999685,1.0565999999998895,1.3580000000001747,1.143999999999778,1.1273999999998524,1.0570999999999913,1.0919999999996435,1.0819000000001325,1.153099999999995,1.5211999999996806,1.0201999999999317,1.071400000000267,1.1073999999998705,1.0830999999998313,1.0920000000000983,1.1221999999997934,1.1190999999998895,1.0864999999998873,1.036899999999605,1.1487999999999375,1.063799999999901,1.0174000000001798,1.0414999999998145,1.110400000000027,1.091899999999896,1.044300000000021,1.6347999999998138,1.1415999999999258,1.022899999999936,1.1567000000000008,1.1323999999999615],\"Min\":1.0031999999999926,\"Max\":1.7248999999999342,\"Median\":1.0919999999998709,\"Average\":1.136643999999983,\"StandardDeviation\":0.1439127279429946,\"Sum\":113.6643999999983},{\"Name\":\"Select.GC()\",\"Unit\":8,\"IncreaseIsBetter\":false,\"Samples\":[2.07,2.01,2.07,2.05,2.05,2.0,2.06,2.03,2.06,2.05,2.05,2.03,2.06,2.03,2.05,2.06,2.06,2.03,2.06,2.06,2.14,2.06,2.05,2.05,2.05,2.03,2.06,2.06,2.06,2.03,2.03,2.06,2.06,2.06,2.06,2.06,2.06,2.06,2.1,2.06,2.03,2.06,2.06,2.03,2.06,2.03,2.06,2.06,2.06,2.06,2.06,2.06,2.06,2.06,2.14,2.06,2.06,2.06,2.03,2.06,2.06,2.03,2.06,2.06,2.06,2.03,2.06,2.03,2.06,2.06,2.03,2.14,2.06,2.03,2.06,2.06,2.06,2.06,2.06,2.03,2.06,2.06,2.06,2.06,2.06,2.06,2.03,2.06,2.03,2.12,2.06,2.06,2.03,2.06,2.06,2.06,2.05,2.06,2.03,2.06,2.03,2.06,2.06,2.05,2.06],\"Min\":2.0,\"Max\":2.14,\"Median\":2.06,\"Average\":2.0551428571428587,\"StandardDeviation\":0.02160750688398592,\"Sum\":215.79000000000017},{\"Name\":\"Select\",\"Unit\":2,\"IncreaseIsBetter\":false,\"Samples\":[0.13569999999998573,0.1348000000000127,0.13829999999998678,0.14210000000002766,0.17109999999996718,0.13760000000002038,0.13929999999999155,0.13679999999999382,0.13360000000000128,0.18900000000002138,0.1312000000000353,0.13440000000002784,0.17679999999995744,0.1433999999999287,0.17190000000005058,0.18250000000000456,0.14560000000005858,0.161200000000008,0.18180000000006658,0.14220000000000256,0.13559999999995399,0.13639999999998055,0.13360000000000128,0.14550000000008368,0.13639999999998055,0.13159999999993489,0.1432000000000926,0.13679999999999382,0.14069999999992434,0.16790000000014516,0.1615999999999076,0.13650000000006913,0.19389999999998509,0.18609999999989669,0.13979999999992288,0.13400000000001456,0.15630000000010114,0.13840000000004694,0.13599999999996727,0.14000000000010005,0.13810000000012224,0.133199999999988,0.16380000000003748,0.16830000000004476,0.16459999999983666,0.17770000000018627,0.1368999999999687,0.2544000000000324,0.16290000000003602,0.18960000000015499,0.1879999999998745,0.3474999999998545,0.14400000000000547,0.13959999999997309,0.13450000000011642,0.13800000000014735,0.16709999999989123,0.14269999999987705,0.16050000000018373,0.1414999999999509,0.13859999999999673,0.141399999999976,0.13859999999976936,0.14199999999982539,0.1398999999996704,0.1756000000000313,0.20579999999972643,0.14309999999977664,0.19350000000031288,0.15779999999995199,0.16640000000006695,0.16660000000001674,0.1639999999997599,0.15180000000009387,0.13760000000002038,0.15889999999990324,0.16440000000011424,0.13770000000022265,0.13260000000036599,0.1653999999998632,0.14589999999998327,0.16809999999986759,0.16669999999976427,0.13630000000011933,0.19049999999970169,0.1631999999999607,0.1433999999999287,0.14089999999987413,0.13599999999996727,0.15970000000015717,0.13670000000001893,0.1873000000000502,0.13779999999997018,0.1313000000000102,0.14170000000012807,0.13869999999997163,0.1993999999999687,0.16959999999971843,0.1730000000002292,0.16400000000021465],\"Min\":0.1312000000000353,\"Max\":0.3474999999998545,\"Median\":0.14330000000001065,\"Average\":0.156043999999996,\"StandardDeviation\":0.028848304352235626,\"Sum\":15.6043999999996},{\"Name\":\"For.GC()\",\"Unit\":8,\"IncreaseIsBetter\":false,\"Samples\":[1.06,1.06,1.0,1.07,1.04,1.0,1.01,1.04,1.01,1.0,1.05,1.01,1.05,1.03,1.01,1.0,1.05,1.03,1.06,1.1,1.04,1.01,1.01,1.01,1.03,1.0,1.0,1.02,1.01,1.03,1.01,1.04,1.03,1.01,1.02,1.06,1.01,1.01,1.0,1.09,1.0,1.0,1.02,1.01,1.04,1.0,1.04,1.02,1.05,1.05,1.01,1.03,1.02,1.05,1.02,1.11,1.12,1.0,1.05,1.01,1.05,1.02,1.06,1.05,1.02,1.06,1.01,1.11,1.01,1.05,1.01,1.03,1.01,1.0,1.03,1.01,1.01,1.01,1.04,1.02,1.04,1.03,1.04,1.04,1.04,1.05,1.04,1.01,1.04,1.01,1.04,1.01,1.0,1.05,1.02,1.01,1.02,1.01,1.01,1.01,1.0,1.01,1.0,1.01,1.04],\"Min\":1.0,\"Max\":1.12,\"Median\":1.02,\"Average\":1.0281904761904775,\"StandardDeviation\":0.025700878338926329,\"Sum\":107.96000000000012},{\"Name\":\"For\",\"Unit\":2,\"IncreaseIsBetter\":false,\"Samples\":[0.06020000000000891,0.056099999999986497,0.14999999999997727,0.06860000000000355,0.05500000000000682,0.08439999999995962,0.07600000000002183,0.18180000000000974,0.06440000000003465,0.07720000000000482,0.06179999999994834,0.0845000000000482,0.08399999999994634,0.11950000000001637,0.09440000000006421,0.06740000000002056,0.057900000000017829,0.08579999999994925,0.05920000000003256,0.08519999999998618,0.06069999999999709,0.061599999999998548,0.0786000000000513,0.12810000000001765,0.08120000000008077,0.08210000000008222,0.07960000000002765,0.08159999999998036,0.05870000000004438,0.0887000000000171,0.0726999999999407,0.0624000000000251,0.05700000000001637,0.054300000000012008,0.12839999999982866,0.05579999999986285,0.06310000000007676,0.06210000000010041,0.06690000000003238,0.06480000000010478,0.07220000000006621,0.10639999999989414,0.10800000000017462,0.10829999999987195,0.08359999999993306,0.06520000000000437,0.06970000000001164,0.09699999999997999,0.07940000000007785,0.0645999999999276,0.12850000000003093,0.07940000000007785,0.08189999999990505,0.08480000000008659,0.06849999999985812,0.07099999999991269,0.08350000000018554,0.09660000000030777,0.0850999999997839,0.06400000000030559,0.09519999999974971,0.06320000000005166,0.12879999999995563,0.05859999999984211,0.08890000000019427,0.061199999999644209,0.06340000000000146,0.06939999999985958,0.06359999999995125,0.06739999999990687,0.066899999999805,0.061899999999695868,0.09020000000009532,0.06739999999990687,0.08680000000003929,0.06739999999990687,0.07230000000026848,0.07340000000021974,0.09020000000009532,0.08429999999998472,0.13619999999991706,0.08680000000003929,0.0886000000000422,0.09790000000020882,0.061599999999998548,0.062000000000352887,0.05639999999993961,0.05760000000009313,0.08550000000013825,0.08360000000038781,0.057999999999992727,0.0773999999996704,0.08039999999982683,0.057999999999992727,0.055900000000292496,0.06129999999984648,0.058100000000194999,0.05400000000008731,0.05819999999994252,0.0842000000002372],\"Min\":0.05400000000008731,\"Max\":0.18180000000000974,\"Median\":0.07250000000010459,\"Average\":0.07841700000001112,\"StandardDeviation\":0.022456055107697639,\"Sum\":7.8417000000011118}]}\r\n##performancetestruninfo2:{\"TestSuite\":\"Editmode\",\"Date\":1742803702866,\"Player\":{\"Development\":true,\"ScreenWidth\":1920,\"ScreenHeight\":1080,\"ScreenRefreshRate\":60,\"Fullscreen\":false,\"Vsync\":1,\"AntiAliasing\":0,\"Batchmode\":false,\"RenderThreadingMode\":\"MultiThreaded\",\"GpuSkinning\":false,\"Platform\":\"WindowsEditor\",\"ColorSpace\":\"Gamma\",\"AnisotropicFiltering\":\"Disable\",\"BlendWeights\":\"FourBones\",\"GraphicsApi\":\"Direct3D11\",\"ScriptingBackend\":\"Mono2x\",\"AndroidTargetSdkVersion\":\"AndroidApiLevelAuto\",\"AndroidBuildSystem\":\"Gradle\",\"BuildTarget\":\"StandaloneWindows64\",\"StereoRenderingPath\":\"MultiPass\"},\"Hardware\":{\"OperatingSystem\":\"Windows
+      10  (10.0.19045) 64bit\",\"DeviceModel\":\"82R4 (LENOVO)\",\"DeviceName\":\"DESKTOP-55T0R54\",\"ProcessorType\":\"AMD
+      Ryzen 5 5500U with Radeon Graphics \",\"ProcessorCount\":12,\"GraphicsDeviceName\":\"AMD
+      Radeon(TM) Graphics\",\"SystemMemorySizeMB\":14181},\"Editor\":{\"Version\":\"6000.0.26f1\",\"Branch\":\"6000.0/staging\",\"Changeset\":\"ccb7c73d2c02\",\"Date\":1730275040},\"Dependencies\":[\"com.cysharp.unitask@2.5.10\",\"com.unity.2d.animation@10.1.4\",\"com.unity.2d.pixel-perfect@5.0.3\",\"com.unity.2d.psdimporter@9.0.3\",\"com.unity.2d.sprite@1.0.0\",\"com.unity.2d.spriteshape@10.0.7\",\"com.unity.2d.tilemap@1.0.0\",\"com.unity.ai.navigation@2.0.5\",\"com.unity.assetbundlebrowser@1.7.0\",\"com.unity.collab-proxy@2.5.2\",\"com.unity.editorcoroutines@1.0.0\",\"com.unity.ide.rider@3.0.34\",\"com.unity.memoryprofiler@1.1.3\",\"com.unity.mobile.android-logcat@1.4.4\",\"com.unity.multiplayer.center@1.0.0\",\"com.unity.performance.profile-analyzer@1.2.3\",\"com.unity.profiling.core@1.0.2\",\"com.unity.render-pipelines.universal@17.0.3\",\"com.unity.test-framework@1.4.5\",\"com.unity.test-framework.performance@3.0.3\",\"com.unity.testtools.codecoverage@1.2.6\",\"com.unity.timeline@1.8.7\",\"com.unity.ugui@2.0.0\",\"com.unity.modules.accessibility@1.0.0\",\"com.unity.modules.ai@1.0.0\",\"com.unity.modules.androidjni@1.0.0\",\"com.unity.modules.animation@1.0.0\",\"com.unity.modules.assetbundle@1.0.0\",\"com.unity.modules.audio@1.0.0\",\"com.unity.modules.cloth@1.0.0\",\"com.unity.modules.director@1.0.0\",\"com.unity.modules.imageconversion@1.0.0\",\"com.unity.modules.imgui@1.0.0\",\"com.unity.modules.jsonserialize@1.0.0\",\"com.unity.modules.particlesystem@1.0.0\",\"com.unity.modules.physics@1.0.0\",\"com.unity.modules.physics2d@1.0.0\",\"com.unity.modules.screencapture@1.0.0\",\"com.unity.modules.terrain@1.0.0\",\"com.unity.modules.terrainphysics@1.0.0\",\"com.unity.modules.tilemap@1.0.0\",\"com.unity.modules.ui@1.0.0\",\"com.unity.modules.uielements@1.0.0\",\"com.unity.modules.umbra@1.0.0\",\"com.unity.modules.unityanalytics@1.0.0\",\"com.unity.modules.unitywebrequest@1.0.0\",\"com.unity.modules.unitywebrequestassetbundle@1.0.0\",\"com.unity.modules.unitywebrequestaudio@1.0.0\",\"com.unity.modules.unitywebrequesttexture@1.0.0\",\"com.unity.modules.unitywebrequestwww@1.0.0\",\"com.unity.modules.vehicles@1.0.0\",\"com.unity.modules.video@1.0.0\",\"com.unity.modules.vr@1.0.0\",\"com.unity.modules.wind@1.0.0\",\"com.unity.modules.xr@1.0.0\",\"com.unity.modules.subsystems@1.0.0\",\"com.unity.modules.hierarchycore@1.0.0\",\"com.unity.settings-manager@2.0.1\",\"com.unity.ext.nunit@2.0.5\",\"com.unity.render-pipelines.core@17.0.3\",\"com.unity.shadergraph@17.0.3\",\"com.unity.render-pipelines.universal-config@17.0.3\",\"com.unity.burst@1.8.18\",\"com.unity.collections@2.5.1\",\"com.unity.mathematics@1.3.2\",\"com.unity.2d.common@9.0.7\",\"com.unity.searcher@4.9.2\",\"com.unity.rendering.light-transport@1.0.1\",\"com.unity.nuget.mono-cecil@1.11.4\"],\"Results\":[]}"
     m_ResultStacktrace: 
     m_TestListState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: bacb5e41
-      m_LastClickedID: 1096731578
-      m_ExpandedIDs: d50057879eb7db8f7c7e3ba90c67acacccfd60bb7c91a5c37e7ebbcc323df2f248d8a1037ca54c05edaa9c16ac512a1cc29f3933ed57073f4c22f649cd6f9d64f221606cb9722c78d4580079ffffff7f
+      m_SelectedIDs: f65a3881
+      m_LastClickedID: -2127013130
+      m_ExpandedIDs: d50057879eb7db8f7c7e3ba90c67acacccfd60bb191e6dbd7c91a5c37e7ebbcc323df2f248d8a1037ca54c05edaa9c16ac512a1cf6d4b51cc29f3933ed57073fcd6f9d64f221606cb9722c78d4580079ffffff7f
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -3434,9 +3258,9 @@ MonoBehaviour:
       - Service
       - Uncategorized
     m_SelectedOption: 0
-  - m_Window: {fileID: 18}
+  - m_Window: {fileID: 14}
     runProgress:
-      RunGuid: ce2dcd74-95ce-421e-b241-ffc3d81471fb
+      RunGuid: 294caff6-3028-4b87-b06b-7f7bb4f57be7
       ExecutionSettings:
         m_TargetPlatform: 0
         m_HasTargetPlatform: 0
@@ -3449,7 +3273,7 @@ MonoBehaviour:
         filters:
         - testMode: 1
           testNames:
-          - EnumTestRunner.EnumIsDefinedTest
+          - CollectionTestRunner
           groupNames: []
           categoryNames: []
           assemblyNames: []
@@ -7436,9 +7260,9 @@ MonoBehaviour:
       - UI
       - Uncategorized
     m_SelectedOption: 0
-  - m_Window: {fileID: 18}
+  - m_Window: {fileID: 14}
     runProgress:
-      RunGuid: ce2dcd74-95ce-421e-b241-ffc3d81471fb
+      RunGuid: 294caff6-3028-4b87-b06b-7f7bb4f57be7
       ExecutionSettings:
         m_TargetPlatform: 0
         m_HasTargetPlatform: 0
@@ -7451,7 +7275,7 @@ MonoBehaviour:
         filters:
         - testMode: 1
           testNames:
-          - EnumTestRunner.EnumIsDefinedTest
+          - CollectionTestRunner
           groupNames: []
           categoryNames: []
           assemblyNames: []
@@ -8032,7 +7856,7 @@ MonoBehaviour:
       - Performance
       - Uncategorized
     m_SelectedOption: 0
---- !u!114 &19
+--- !u!114 &15
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8055,9 +7879,9 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 0
-    y: 24
-    width: 225.4
-    height: 350.8
+    y: 79.200005
+    width: 227.8
+    height: 358.8
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -8074,7 +7898,7 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: 86adffffeabdffff7ec4ffff48d2ffffecd4ffff46dbffff3cddffffc8deffff42e0ffffc0e1ffff98ebffff60f2ffff16f5ffff68f7ffffb2f8ffffdcfaffff
+      m_ExpandedIDs: 4cf5ffffe2faffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -8091,7 +7915,7 @@ MonoBehaviour:
         m_OriginalEventType: 11
         m_IsRenamingFilename: 0
         m_TrimLeadingAndTrailingWhitespace: 0
-        m_ClientGUIView: {fileID: 11}
+        m_ClientGUIView: {fileID: 8}
       m_SearchString: 
     m_ExpandedScenes: []
     m_CurrenRootInstanceID: 0
@@ -8099,7 +7923,7 @@ MonoBehaviour:
       m_IsLocked: 0
     m_CurrentSortingName: TransformSorting
   m_WindowGUID: 37b0836aa8b4bd74696073f7347c8c8a
---- !u!114 &20
+--- !u!114 &16
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8121,10 +7945,10 @@ MonoBehaviour:
     m_TextWithWhitespace: "Scene\u200B"
   m_Pos:
     serializedVersion: 2
-    x: 227.4
-    y: 24
-    width: 709.19995
-    height: 350.8
+    x: 228.8
+    y: 79.200005
+    width: 715.60004
+    height: 358.8
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -8139,11 +7963,11 @@ MonoBehaviour:
       displayed: 1
       id: Tool Settings
       index: 0
-      contents: '{"m_Layout":1,"m_Collapsed":false,"m_Floating":false,"m_FloatingSnapOffset":{"x":-174.39999389648438,"y":-26.399993896484376},"m_SnapOffsetDelta":{"x":0.000030517578125,"y":0.0},"m_FloatingSnapCorner":3,"m_Size":{"x":0.0,"y":0.0},"m_SizeOverridden":false}'
+      contents: '{"m_Layout":1,"m_Collapsed":false,"m_Floating":false,"m_FloatingSnapOffset":{"x":-174.39999389648438,"y":-26.399993896484376},"m_SnapOffsetDelta":{"x":-0.000030517578125,"y":0.0},"m_FloatingSnapCorner":3,"m_Size":{"x":0.0,"y":0.0},"m_SizeOverridden":false}'
       floating: 0
       collapsed: 0
       snapOffset: {x: -174.4, y: -26.399994}
-      snapOffsetDelta: {x: 0.000030517578, y: 0}
+      snapOffsetDelta: {x: -0.000030517578, y: 0}
       snapCorner: 3
       layout: 1
       size: {x: 0, y: 0}
@@ -8726,7 +8550,7 @@ MonoBehaviour:
   m_LastSceneViewRotation: {x: -0.08717229, y: 0.89959055, z: -0.21045254, w: -0.3726226}
   m_LastSceneViewOrtho: 0
   m_Viewpoint:
-    m_SceneView: {fileID: 20}
+    m_SceneView: {fileID: 16}
     m_CameraOverscanSettings:
       m_Opacity: 50
       m_Scale: 1
@@ -8736,7 +8560,7 @@ MonoBehaviour:
   m_LastLockedObject: {fileID: 0}
   m_LastDebugDrawMode: 35
   m_ViewIsLockedToObject: 0
---- !u!114 &21
+--- !u!114 &17
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8759,9 +8583,9 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 0
-    y: 24
-    width: 624.6
-    height: 307.60004
+    y: 464
+    width: 630.2
+    height: 314
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -8784,7 +8608,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/CustomUtils/UI
+    - Assets/Resources/Sound/RowSound
     m_Globs: []
     m_ProductIds: 
     m_AnyWithAssetOrigin: 0
@@ -8794,16 +8618,16 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 16
   m_LastFolders:
-  - Assets/CustomUtils/UI
+  - Assets/Resources/Sound/RowSound
   m_LastFoldersGridSize: 16
   m_LastProjectPath: C:\Project\Unity\CustomUtils
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 256.39996}
-    m_SelectedIDs: 3aa10000
-    m_LastClickedID: 41274
-    m_ExpandedIDs: 00000000fa9e0000fc9e0000fe9e0000009f0000029f0000049f0000069f0000089f00000a9f00000c9f00000e9f0000109f0000129f0000149f0000169f0000189f00001a9f00001c9f00001e9f0000209f0000
+    scrollPos: {x: 0, y: 0}
+    m_SelectedIDs: c6a20000
+    m_LastClickedID: 41670
+    m_ExpandedIDs: 00000000fa9e0000fc9e0000fe9e0000009f0000029f0000049f0000069f0000089f00000a9f00000c9f00000e9f0000109f0000129f0000149f0000169f0000189f00001a9f00001c9f00001e9f0000209f00002ea1000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -8820,7 +8644,7 @@ MonoBehaviour:
       m_OriginalEventType: 11
       m_IsRenamingFilename: 1
       m_TrimLeadingAndTrailingWhitespace: 0
-      m_ClientGUIView: {fileID: 14}
+      m_ClientGUIView: {fileID: 11}
     m_SearchString: 
     m_CreateAssetUtility:
       m_EndAction: {fileID: 0}
@@ -8878,7 +8702,7 @@ MonoBehaviour:
       m_OriginalEventType: 11
       m_IsRenamingFilename: 1
       m_TrimLeadingAndTrailingWhitespace: 0
-      m_ClientGUIView: {fileID: 14}
+      m_ClientGUIView: {fileID: 11}
     m_CreateAssetUtility:
       m_EndAction: {fileID: 0}
       m_InstanceID: 0
@@ -8890,7 +8714,7 @@ MonoBehaviour:
     m_GridSize: 16
   m_SkipHiddenPackages: 0
   m_DirectoriesAreaWidth: 253
---- !u!114 &22
+--- !u!114 &18
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8912,10 +8736,10 @@ MonoBehaviour:
     m_TextWithWhitespace: "Console\u200B"
   m_Pos:
     serializedVersion: 2
-    x: 7.2000003
-    y: 463.2
-    width: 624.6
-    height: 307.60004
+    x: 0
+    y: 464
+    width: 630.2
+    height: 314
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -8927,7 +8751,7 @@ MonoBehaviour:
     m_SaveData: []
     m_ContainerData: []
     m_OverlaysVisible: 1
---- !u!114 &23
+--- !u!114 &19
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8949,10 +8773,10 @@ MonoBehaviour:
     m_TextWithWhitespace: "Game\u200B"
   m_Pos:
     serializedVersion: 2
-    x: 626.6
-    y: 24
-    width: 310
-    height: 307.60004
+    x: 631.2
+    y: 464
+    width: 313.2
+    height: 314
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -8970,7 +8794,7 @@ MonoBehaviour:
   m_ShowGizmos: 0
   m_TargetDisplay: 0
   m_ClearColor: {r: 0, g: 0, b: 0, a: 0}
-  m_TargetSize: {x: 310, y: 286.60004}
+  m_TargetSize: {x: 313.2, y: 293}
   m_TextureFilterMode: 0
   m_TextureHideFlags: 61
   m_RenderIMGUI: 1
@@ -8985,17 +8809,17 @@ MonoBehaviour:
     m_VRangeLocked: 0
     hZoomLockedByDefault: 0
     vZoomLockedByDefault: 0
-    m_HBaseRangeMin: -124
-    m_HBaseRangeMax: 124
-    m_VBaseRangeMin: -114.640015
-    m_VBaseRangeMax: 114.640015
+    m_HBaseRangeMin: -125.28001
+    m_HBaseRangeMax: 125.28001
+    m_VBaseRangeMin: -117.200005
+    m_VBaseRangeMax: 117.200005
     m_HAllowExceedBaseRangeMin: 1
     m_HAllowExceedBaseRangeMax: 1
     m_VAllowExceedBaseRangeMin: 1
     m_VAllowExceedBaseRangeMax: 1
     m_ScaleWithWindow: 0
     m_HSlider: 0
-    m_VSlider: 0
+    m_VSlider: 1
     m_IgnoreScrollWheelUntilClicked: 0
     m_EnableMouseInput: 1
     m_EnableSliderZoomHorizontal: 0
@@ -9006,29 +8830,29 @@ MonoBehaviour:
       serializedVersion: 2
       x: 0
       y: 21
-      width: 310
-      height: 286.60004
+      width: 313.2
+      height: 293
     m_Scale: {x: 1.25, y: 1.25}
-    m_Translation: {x: 155, y: 143.30002}
+    m_Translation: {x: 156.6, y: 146.5}
     m_MarginLeft: 0
     m_MarginRight: 0
     m_MarginTop: 0
     m_MarginBottom: 0
     m_LastShownAreaInsideMargins:
       serializedVersion: 2
-      x: -124
-      y: -114.640015
-      width: 248
-      height: 229.28003
+      x: -125.28001
+      y: -117.2
+      width: 250.56001
+      height: 234.4
     m_MinimalGUI: 1
   m_defaultScale: 1
-  m_LastWindowPixelSize: {x: 387.5, y: 384.50006}
+  m_LastWindowPixelSize: {x: 391.5, y: 392.5}
   m_ClearInEditMode: 1
   m_NoCameraWarning: 1
   m_LowResolutionForAspectRatios: 01000000000000000000
   m_XRRenderMode: 0
   m_RenderTexture: {fileID: 0}
---- !u!114 &24
+--- !u!114 &20
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9050,9 +8874,9 @@ MonoBehaviour:
     m_TextWithWhitespace: "Inspector\u200B"
   m_Pos:
     serializedVersion: 2
-    x: 1015.2
+    x: 946.4
     y: 79.200005
-    width: 519.8
+    width: 588.6
     height: 698.8
   m_SerializedDataModeController:
     m_DataMode: 0

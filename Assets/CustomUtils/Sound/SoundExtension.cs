@@ -10,6 +10,7 @@ public static class SoundExtension {
         return audioSource.clip.loadState == AudioDataLoadState.Loaded;
     }
 
+    // TODO. SoundTrackEvent 제거 혹은 수정
     public static void Set(this AudioSource audioSource, SoundTrackEvent trackEvent) {
         if (trackEvent != null) {
             audioSource.clip = trackEvent.clip;
@@ -17,13 +18,38 @@ public static class SoundExtension {
         }
     }
 
+    // TODO. SoundTrackEvent 제거 혹은 수정
     public static void PlayOneShot(this AudioSource audioSource, SoundTrackEvent trackEvent) {
         if (trackEvent != null) {
             audioSource.PlayOneShot(trackEvent.clip);
         }
     }
 
+    // TODO. SoundTrackEvent 제거 혹은 수정
     public static void Play(this AudioSource audioSource, SoundTrackEvent trackEvent) {
+        if (trackEvent != null) {
+            audioSource.clip = trackEvent.clip;
+            audioSource.loop = trackEvent.loop;
+            audioSource.Play();
+        }
+    }
+    
+    public static void Set(this AudioSource audioSource, UnitySoundTrackEvent trackEvent) {
+        if (trackEvent != null) {
+            audioSource.clip = trackEvent.clip;
+            audioSource.loop = trackEvent.loop;
+        }
+    }
+
+    public static void PlayOneShot(this AudioSource audioSource, ISoundTrackEvent trackEvent) => audioSource.PlayOneShot(trackEvent as UnitySoundTrackEvent);
+
+    public static void PlayOneShot(this AudioSource audioSource, UnitySoundTrackEvent trackEvent) {
+        if (trackEvent != null) {
+            audioSource.PlayOneShot(trackEvent.clip);
+        }
+    }
+    
+    public static void Play(this AudioSource audioSource, UnitySoundTrackEvent trackEvent) {
         if (trackEvent != null) {
             audioSource.clip = trackEvent.clip;
             audioSource.loop = trackEvent.loop;

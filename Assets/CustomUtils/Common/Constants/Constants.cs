@@ -11,6 +11,7 @@ public static partial class Constants {
 
         public const string JSON = ".json";
         public const string MANIFEST = ".manifest";
+        public const string ASSET = ".asset";
         public const string DLL = ".dll";
         public const string PDB = ".pdb";
         public const string ZIP = ".zip";

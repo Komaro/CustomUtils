@@ -6,7 +6,7 @@ public struct SafeDelegate<T> where T : Delegate {
     
     public T handler;
     public int Count => GetInvocationList()?.Length ?? 0;
-
+    
     public void Clear() {
         if (handler != null) {
             handler = Delegate.RemoveAll(handler, handler) as T;

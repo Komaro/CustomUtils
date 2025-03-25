@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using JetBrains.Annotations;
 
 public class NotifyList<TValue> : NotifyCollection<List<TValue>, TValue>, IList<TValue>, IReadOnlyList<TValue> {
 
@@ -32,6 +33,19 @@ public class NotifyList<TValue> : NotifyCollection<List<TValue>, TValue>, IList<
         OnChanged.handler?.Invoke(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add));
     }
 
+    public virtual void InsertWithDetails(int index, [CanBeNull]TValue item) {
+        if (index > Count || index < 0) {
+            throw new ArgumentOutOfRangeException(nameof(item));
+        }
+
+        if (item == null) {
+            throw new NullReferenceException($"{nameof(item)} is null");
+        }
+        
+        collection.Insert(index, item);
+        OnChanged.handler?.Invoke(new NotifyListChangedEventArgs<TValue>(index, item, NotifyCollectionChangedAction.Add));
+    }
+
     public void RemoveAt(int index) {
         if (index >= Count) {
             throw new ArgumentOutOfRangeException(nameof(index));
@@ -40,14 +54,23 @@ public class NotifyList<TValue> : NotifyCollection<List<TValue>, TValue>, IList<
         collection.RemoveAt(index);
         OnChanged.handler?.Invoke(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove));
     }
+
+    public virtual void RemoveAtWithDetails(int index) {
+        if (index >= Count) {
+            throw new ArgumentOutOfRangeException(nameof(index));
+        }
+
+        collection.RemoveAt(index, out var item);
+        OnChanged.handler?.Invoke(new NotifyListChangedEventArgs<TValue>(index, item, NotifyCollectionChangedAction.Remove));
+    }
     
     public TValue this[int index] {
         get => collection[index];
         set => Replace(index, value);
     }
 
-    public void Replace(int index, TValue value) {
-        if (index < 0 || index >= Count) {
+    public void Replace(int index, [CanBeNull]TValue value) {
+        if (collection.IsValidIndex(index) == false) {
             throw new ArgumentOutOfRangeException(nameof(index));
         }
 
@@ -57,6 +80,20 @@ public class NotifyList<TValue> : NotifyCollection<List<TValue>, TValue>, IList<
 
         collection[index] = value;
         OnChanged.handler?.Invoke(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Replace));
+    }
+
+    public virtual void ReplaceWithDetails(int index, [CanBeNull]TValue value) {
+        if (collection.IsValidIndex(index) == false) {
+            throw new ArgumentOutOfRangeException(nameof(index));
+        }
+
+        if (value == null) {
+            throw new NullReferenceException($"{nameof(value)} is null");
+        }
+
+        var oldValue = collection[index];
+        collection[index] = value;
+        OnChanged.handler?.Invoke(new NotifyListChangedEventArgs<TValue>(index, value, oldValue, NotifyCollectionChangedAction.Replace));
     }
 
     public override void Refresh() => OnChanged.handler?.Invoke(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Replace));

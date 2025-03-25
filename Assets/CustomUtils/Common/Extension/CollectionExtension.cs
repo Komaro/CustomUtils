@@ -4,6 +4,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using Random = System.Random;
 
@@ -544,30 +545,41 @@ public static class CollectionExtension {
         }
     }
 
-    public static void LimitedAdd<T>(this List<T> list, T item, int maxCount) {
+    public static void LimitedAdd<T>(this List<T> list, T value, int maxCount) {
         if (list.Count >= maxCount) {
             list.RemoveAt(0);
         }
         
-        list.Add(item);
+        list.Add(value);
     }
 
-    public static void AutoAdd<T>(this List<T> list, Predicate<T> match, T item) {
+    public static void AutoAdd<T>(this List<T> list, Predicate<T> match, T value) {
         if (list.TryFindIndex(out var index, match)) {
-            list[index] = item;
+            list[index] = value;
         } else {
-            list.Add(item);
+            list.Add(value);
         }
     }
 
-    public static bool TryFirst<T>(this List<T> baseList, out T value, int index) {
-        if (index + 1 > baseList.Count || index < 0) {
-            value = default;
-            return false;
+    public static bool RemoveAt<T>(this List<T> list, int index, out T value) {
+        if (list.IsValidIndex(index)) {
+            value = list[index];
+            list.RemoveAt(index);
+            return true;
         }
         
-        value = baseList[index];
-        return true;
+        value = default;
+        return false;
+    }
+
+    public static bool TryFirst<T>(this List<T> list, int index, out T value) {
+        if (list.IsValidIndex(index)) {
+            value = list[index];
+            return true;
+        }
+
+        value = default;
+        return false;
     }
 
     public static bool TryFirst<T>(this List<T> list, out T value, Predicate<T> match) {
@@ -585,6 +597,7 @@ public static class CollectionExtension {
         return list;
     }
     
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static bool IsValidIndex<T>(this List<T> list, int index) {
         if (list == null) {
             return false;

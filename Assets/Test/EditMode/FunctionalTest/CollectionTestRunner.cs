@@ -7,7 +7,6 @@ using Unity.PerformanceTesting;
 [Category(TestConstants.Category.PERFORMANCE)]
 public class CollectionTestRunner {
 
-
     [TestCase(100, 100)]
     [Performance]
     public void ToArrayPerformanceTest(int measurementCount, int count) {

@@ -2,6 +2,7 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Diagnostics.CodeAnalysis;
 using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
@@ -16,13 +17,22 @@ public abstract class NotifyDictionary<TDictionary, TKey, TValue> : NotifyCollec
 
     public virtual void Add(TKey key, TValue value) {
         if (value == null) {
-            throw new NullReferenceException();
+            throw new NullReferenceException($"{nameof(value)} is null");
         }
         
         collection.Add(key, value);
         OnChanged.handler?.Invoke(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add));
     }
-    
+
+    public virtual void AddWithDetails([NotNull]TKey key, TValue value) {
+        if (value == null) {
+            throw new NullReferenceException($"{nameof(value)} is null");
+        }
+        
+        collection.Add(key, value);
+        OnChanged.handler?.Invoke(new NotifyDictionaryChangedEventArgs<TKey,TValue>(key, value, NotifyCollectionChangedAction.Add));
+    }
+
     public bool ContainsKey(TKey key) => collection.ContainsKey(key);
     
     public bool Remove(TKey key) {
@@ -32,6 +42,12 @@ public abstract class NotifyDictionary<TDictionary, TKey, TValue> : NotifyCollec
         }
 
         return false;
+    }
+
+    public virtual void RemoveWithDetails([NotNull]TKey key) {
+        if (collection.Remove(key, out var value)) {
+            OnChanged.handler?.Invoke(new NotifyDictionaryChangedEventArgs<TKey,TValue>(key, value, NotifyCollectionChangedAction.Remove));
+        }
     }
 
     public bool TryGetValue(TKey key, out TValue value) => collection.TryGetValue(key, out value);

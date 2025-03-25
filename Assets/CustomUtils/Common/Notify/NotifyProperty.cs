@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Runtime.Serialization;
@@ -35,7 +36,6 @@ public class NotifyProperty<TValue> : NotifyField, IEqualityComparer<NotifyPrope
 
     public NotifyProperty(IEqualityComparer<TValue> equalityComparer) => _equalityComparer = equalityComparer;
     public NotifyProperty(TValue value, IEqualityComparer<TValue> equalityComparer) : this(equalityComparer) => _value = value;
-    
     public NotifyProperty(TValue value) : this(value, EqualityComparer<TValue>.Default) { }
     public NotifyProperty() : this(EqualityComparer<TValue>.Default) { }
 
@@ -45,22 +45,19 @@ public class NotifyProperty<TValue> : NotifyField, IEqualityComparer<NotifyPrope
     }
     
     public override void Refresh() => OnChanged.handler?.Invoke(NotifyFieldChangedEventArgs.Empty);
+
+    public static bool operator ==(NotifyProperty<TValue> x, NotifyProperty<TValue> y) => x?.EqualityComparer.Equals(x, y) ?? false;
+    public static bool operator !=(NotifyProperty<TValue> x, NotifyProperty<TValue> y) => x == y == false;
     
-    public static bool operator ==(NotifyProperty<TValue> x, NotifyProperty<TValue> y) {
-        if (ReferenceEquals(x, y)) {
-            return true;
-        }
+    public static bool operator ==(NotifyProperty<TValue> x, TValue y) => x?.EqualityComparer.Equals(x, y) ?? false;
+    public static bool operator !=(NotifyProperty<TValue> x, TValue y) => x == y == false;
 
-        if (ReferenceEquals(x, null) || ReferenceEquals(y, null)) {
-            return false;
-        }
+    public static bool operator ==(TValue x, NotifyProperty<TValue> y) => y?.EqualityComparer.Equals(x, y) ?? false;
+    public static bool operator !=(TValue x, NotifyProperty<TValue> y) => x == y == false;
 
-        return x.Value.Equals(y.Value);
-    }
-
-    public static bool operator !=(NotifyProperty<TValue> x, NotifyProperty<TValue> y) => (x == y) == false;
     public static implicit operator TValue(NotifyProperty<TValue> property) => property.Value;
-
+    public static explicit operator NotifyProperty<TValue>(TValue value) => new(value);
+    
     public override string ToString() => Value != null ? Value.ToString() : base.ToString();
 
     public bool Equals(NotifyProperty<TValue> x, NotifyProperty<TValue> y) => x != null && y != null && _equalityComparer.Equals(x.Value, y.Value);

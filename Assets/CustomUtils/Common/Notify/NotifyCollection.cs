@@ -5,11 +5,12 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Runtime.Serialization;
+using JetBrains.Annotations;
 
 [Serializable, DataContract]
 public abstract class NotifyCollection<TCollection, TValue> : NotifyField, ICollection, ICollection<TValue>, IReadOnlyCollection<TValue> where TCollection : ICollection<TValue>, new() {
 
-    [DataMember] 
+    [DataMember]
     protected TCollection collection;
 
     public int Count => collection.Count;
@@ -37,6 +38,15 @@ public abstract class NotifyCollection<TCollection, TValue> : NotifyField, IColl
         
         collection.Add(item);
         OnChanged.handler?.Invoke(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add));
+    }
+
+    public virtual void AddWithDetails([CanBeNull]TValue item) {
+        if (item == null) {
+            throw new NullReferenceException($"{nameof(item)} is null");
+        }
+        
+        collection.Add(item);
+        OnChanged.handler?.Invoke(new NotifyCollectionChangedEventArgs<TValue>(item, NotifyCollectionChangedAction.Add));
     }
 
     public void Clear() {
@@ -69,6 +79,19 @@ public abstract class NotifyCollection<TCollection, TValue> : NotifyField, IColl
 
         if (collection.Remove(item)) {
             OnChanged.handler?.Invoke(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove));
+            return true;
+        }
+
+        return false;
+    }
+
+    public virtual bool RemoveWithDetails([CanBeNull]TValue item) {
+        if (item == null) {
+            throw new NullReferenceException($"{nameof(item)} is null");
+        }
+
+        if (collection.Remove(item)) {
+            OnChanged.handler?.Invoke(new NotifyCollectionChangedEventArgs<TValue>(item, NotifyCollectionChangedAction.Remove));
             return true;
         }
 

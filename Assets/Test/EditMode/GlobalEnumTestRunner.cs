@@ -63,11 +63,11 @@ public class GlobalEnumTestRunner {
         Logger.TraceLog("Pass Method Set Test");
         
         // Contains Test
-        foreach (var value in EnumUtil.GetValues<TEST_GLOBAL_ENUM_01>()) {
+        foreach (var value in EnumUtil.AsSpan<TEST_GLOBAL_ENUM_01>()) {
             Assert.IsTrue(globalEnum.Contains(value));
         }
         
-        foreach (var value in EnumUtil.GetValues<TEST_GLOBAL_ENUM_02>()) {
+        foreach (var value in EnumUtil.AsSpan<TEST_GLOBAL_ENUM_02>()) {
             Assert.IsTrue(globalEnum.Contains(value));
         }
 

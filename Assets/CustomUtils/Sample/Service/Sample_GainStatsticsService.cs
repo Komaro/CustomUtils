@@ -92,7 +92,7 @@ public class Sample_GainStatsticsService : IService {
         }
     }
 
-    public List<(Enum type, string id, double count)> GetHistory() => _gainHistoryDic.ConvertTo(x => (x.Key.type, x.Key.id, x.Value)).ToList();
+    public List<(Enum type, string id, double count)> GetHistory() => _gainHistoryDic.Select(x => (x.Key.type, x.Key.id, x.Value)).ToList();
 
     public void ResetHistory() {
         _recordingTick = 0;

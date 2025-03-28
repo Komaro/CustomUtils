@@ -40,7 +40,7 @@ public static partial class EditorCommon {
                 fileInfos.ForEach(x => Debug.Log(x.FullName));
             }
 
-            return fileInfos.ConvertTo(x => x.FullName).ToList();
+            return fileInfos.ToList(x => x.FullName);
         }
         
         return null;

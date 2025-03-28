@@ -22,7 +22,7 @@ public class EditorResourceService : EditorService {
     
     private static readonly Dictionary<(RESOURCE_SERVICE_MENU_TYPE, Type), EditorDrawer> _drawerDic = new();
 
-    private static readonly string[] EDITOR_MENUS = EnumUtil.GetValues<RESOURCE_SERVICE_MENU_TYPE>().ToArray(x => x.ToString());
+    private static readonly string[] EDITOR_MENUS = EnumUtil.AsSpan<RESOURCE_SERVICE_MENU_TYPE>().ToArray(x => x.ToString());
     private static readonly string SELECT_MENU_SAVE_KEY = $"{nameof(EditorResourceService)}_Menu";
     private static readonly string SELECT_DRAWER_SAVE_KEY = $"{nameof(EditorResourceService)}_Drawer";
 

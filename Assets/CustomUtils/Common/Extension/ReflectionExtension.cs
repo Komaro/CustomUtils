@@ -29,13 +29,9 @@ public static class ReflectionExtension {
     #region [Value]
 
     public static IEnumerable<(string name, object value)> GetAllDataMemberNameWithValue(this Type type, object obj, BindingFlags bindingFlags = default) => type.GetFields(bindingFlags)
-            .ConvertTo(info => (info.Name, info.GetValue(obj)))
-            .Concat(type.GetProperties(bindingFlags).Where(info => info.GetIndexParameters().Length <= 0).ConvertTo(info => (info.Name, info.GetValue(obj))));
+            .Select(info => (info.Name, info.GetValue(obj)))
+            .Concat(type.GetProperties(bindingFlags).Where(info => info.GetIndexParameters().Length <= 0).Select(info => (info.Name, info.GetValue(obj))));
     
-    public static IEnumerable<(string name, object value)> _GetAllDataMemberNameWithValue(this Type type, object obj, BindingFlags bindingFlags = default) => type.GetFields(bindingFlags)
-        .ConvertTo(info => (info.Name, DynamicMethodProvider.GetFieldValueFunc(type, info)?.Invoke(obj)))
-        .Concat(type.GetProperties(bindingFlags).Where(info => info.GetIndexParameters().Length <= 0).ConvertTo(info => (info.Name, info.GetValue(obj))));
-
     public static bool TryGetFieldValue(this Type type, out object value, object obj, string name) => (value = type.GetFieldValue(obj, name)) != null;
     public static bool TryGetFieldValue(this Type type, out object value, object obj, string name, BindingFlags bindingFlags) => (value = type.GetFieldValue(obj, name, bindingFlags)) != null;
 

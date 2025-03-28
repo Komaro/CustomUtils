@@ -59,7 +59,7 @@ public abstract class EditorBuildDrawer<TConfig, TNullConfig> : EditorAutoConfig
         
         buildOptionSet = ReflectionProvider.GetAttributeEnumInfos<BuildOptionEnumAttribute>()
             .Where(info => info.attribute.buildTargetGroup == BuildTargetGroup.Unknown || info.attribute.buildTargetGroup == buildTargetGroup)
-            .ConvertTo(info => Enum.GetValues(info.enumType).Cast<object>()).Select(ob => ob.ToString()).ToHashSetWithDistinct();
+            .SelectMany(info => Enum.GetValues(info.enumType).Cast<object>()).Select(ob => ob.ToString()).ToHashSetWithDistinct();
         
         RefreshScenes();
     }
@@ -114,16 +114,16 @@ public abstract class EditorBuildDrawer<TConfig, TNullConfig> : EditorAutoConfig
         using (new EditorGUILayout.VerticalScope(Constants.Draw.BOX)) {
             GUILayout.Label("스택 트레이스 (Stack Trace)", Constants.Draw.BOLD_CENTER_LABEL);
             using (new EditorGUILayout.HorizontalScope()) {
-                foreach (var traceType in EnumUtil.GetValues<StackTraceLogType>()) {
+                foreach (var traceType in EnumUtil.AsSpan<StackTraceLogType>()) {
                     if (GUILayout.Button(traceType.ToString())) {
-                        foreach (var logType in EnumUtil.GetValues<LogType>()) {
+                        foreach (var logType in EnumUtil.AsSpan<LogType>()) {
                             config.stackTraceDic[logType] = traceType;
                         }
                     }
                 }
             }
             
-            foreach (var logType in EnumUtil.GetValues<LogType>()) {
+            foreach (var logType in EnumUtil.AsSpan<LogType>()) {
                 using (new EditorGUILayout.HorizontalScope()) {
                     config.stackTraceDic[logType] = EditorCommon.DrawEnumPopup(logType.ToString(), config.stackTraceDic[logType], 60f);
                 }

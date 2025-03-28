@@ -1,7 +1,10 @@
 ﻿using UnityEngine;
+using UnityEngine.Audio;
 
 public static class SoundExtension {
-    
+
+    public static bool TryFindMatchingGroups(this AudioMixer audioMixer, string subPath, out AudioMixerGroup[] mixerGroups) => (mixerGroups = audioMixer.FindMatchingGroups(subPath))?.Length > 0;
+
     public static bool IsValidClip(this AudioSource audioSource) {
         if (audioSource.clip == null) {
             return false;

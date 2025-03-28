@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 public static partial class EnumUtil {
     
@@ -203,10 +205,17 @@ public static partial class EnumUtil {
     
     #endregion
 
-    public static ReadOnlySpan<TEnum> GetValues<TEnum>(bool ignoreDefault = false, bool ignoreObsolete = false) where TEnum : struct, Enum => ignoreDefault ? EnumBag<TEnum>.GetValues(ignoreObsolete)[1..] : EnumBag<TEnum>.GetValues(ignoreObsolete);
-    public static ReadOnlySpan<Enum> GetValues(Type type, bool ignoreDefault = false, bool ignoreObsolete = false) => ignoreDefault ? EnumBag.GetValues(type, ignoreObsolete)[1..] : EnumBag.GetValues(type, ignoreObsolete);
-
     public static List<TEnum> GetValueList<TEnum>(bool ignoreDefault = false, bool ignoreObsolete = false) where TEnum : struct, Enum => GetValues<TEnum>(ignoreDefault, ignoreObsolete).ToList();
+    public static List<Enum> GetValueList(Enum enumValue, bool ignoreDefault = false, bool ignoreObsolete = false) => GetValueList(enumValue.GetType(), ignoreDefault, ignoreObsolete);
+    public static List<Enum> GetValueList(Type type, bool ignoreDefault = false, bool ignoreObsolete = false) => GetValues(type, ignoreDefault, ignoreObsolete).ToList();
+    
+    public static IEnumerable<TEnum> GetValues<TEnum>(bool ignoreDefault = false, bool ignoreObsolete = false) where TEnum : struct, Enum => ignoreDefault ? EnumBag<TEnum>.GetValues(ignoreObsolete).Skip(1) : EnumBag<TEnum>.GetValues(ignoreObsolete);
+    public static IEnumerable<Enum> GetValues(Enum enumValue, bool ignoreDefault = false, bool ignoreObsolete = false) => GetValues(enumValue.GetType(), ignoreDefault, ignoreObsolete);
+    public static IEnumerable<Enum> GetValues(Type type, bool ignoreDefault = false, bool ignoreObsolete = false) => ignoreDefault ? EnumBag.GetValues(type, ignoreObsolete).Skip(1) : EnumBag.GetValues(type, ignoreObsolete);
+
+    public static ReadOnlySpan<TEnum> AsSpan<TEnum>(bool ignoreDefault = false, bool ignoreObsolete = false) where TEnum : struct, Enum => ignoreDefault ? EnumBag<TEnum>.AsSpan(ignoreObsolete)[1..] : EnumBag<TEnum>.AsSpan(ignoreObsolete);
+    public static ReadOnlySpan<Enum> AsSpan(Enum enumValue, bool ignoreDefault = false, bool ignoreObsolete = false) => AsSpan(enumValue.GetType(), ignoreDefault, ignoreObsolete);
+    public static ReadOnlySpan<Enum> AsSpan(Type type, bool ignoreDefault = false, bool ignoreObsolete = false) => ignoreDefault ? EnumBag.AsSpan(type, ignoreObsolete)[1..] : EnumBag.AsSpan(type, ignoreObsolete);
     
     private static IEnumerable<string> ReturnValueAllCase(string value) {
         yield return value;
@@ -231,8 +240,9 @@ public static class EnumExtension {
 
     public static TEnum Convert<TEnum>(this Enum enumValue) where TEnum : struct, Enum => EnumUtil.ConvertFast<TEnum>(enumValue.ToString());
 
-    public static ReadOnlySpan<TEnum> GetValues<TEnum>(this TEnum _, bool ignoreDefault = false, bool ignoreObsolete = false) where TEnum : struct, Enum => EnumUtil.GetValues<TEnum>(ignoreDefault, ignoreObsolete);
-    public static ReadOnlySpan<Enum> GetValues(Type type, bool ignoreDefault = false, bool ignoreObsolete = false) => EnumUtil.GetValues(type, ignoreDefault, ignoreObsolete);
+    public static IEnumerable<TEnum> GetValues<TEnum>(this TEnum _, bool ignoreDefault = false, bool ignoreObsolete = false) where TEnum : struct, Enum => EnumUtil.GetValues<TEnum>(ignoreDefault, ignoreObsolete);
+    public static IEnumerable<Enum> GetValues(this Type type, bool ignoreDefault = false, bool ignoreObsolete = false) => EnumUtil.GetValues(type, ignoreDefault, ignoreObsolete);
+    public static IEnumerable<Enum> GetValues(this Enum enumValue, bool ignoreDefault = false, bool ignoreObsolete = false) => EnumUtil.GetValues(enumValue, ignoreDefault, ignoreObsolete);
 
     public static List<TEnum> GetValueList<TEnum>(this TEnum _, bool ignoreDefault = false, bool ignoreObsolete = false) where TEnum : struct, Enum => EnumUtil.GetValueList<TEnum>(ignoreDefault, ignoreObsolete);
 }

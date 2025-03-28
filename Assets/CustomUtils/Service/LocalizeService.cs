@@ -23,7 +23,7 @@ public class LocalizeService : IService {
     void IService.Init() {
         // _languageSet = ReflectionProvider.GetAttributeEnumTypes<LanguageEnumAttribute>().SelectMany(EnumUtil.GetValues).ToImmutableHashSet();
         // _languageSet = ReflectionProvider.GetAttributeEnumTypes<LanguageEnumAttribute>().SelectMany(type => EnumUtil.GetValues(type)).ToImmutableHashSet();
-        _languageSet = ReflectionProvider.GetAttributeEnumTypes<LanguageEnumAttribute>().SelectMany(type => EnumUtil.GetValues(type).ToArray()).ToImmutableHashSet();
+        _languageSet = ReflectionProvider.GetAttributeEnumTypes<LanguageEnumAttribute>().SelectMany(type => EnumUtil.AsSpan(type).ToArray()).ToImmutableHashSet();
         foreach (var type in ReflectionProvider.GetSubTypesOfType<LocalizeServiceProvider>().OrderBy(type => type.GetOrderByPriority())) {
             if (SystemUtil.TryCreateInstance<LocalizeServiceProvider>(out var provider, type) && provider.IsReady()) {
                 _provider.Value = provider;

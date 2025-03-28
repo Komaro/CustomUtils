@@ -3,7 +3,156 @@ using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.CompilerServices;
+
+public abstract class MultiLayerDictionary<TDictionary, TCollection, TKey, TValue> : IDictionary<TKey, TCollection> 
+    where TDictionary : IDictionary<TKey, TCollection>, new()
+    where TCollection : ICollection<TValue> {
+
+    protected TDictionary dictionary;
+    
+    private readonly bool KEY_IS_CLASS = typeof(TKey).IsClass;
+    private readonly bool VALUE_IS_CLASS = typeof(TValue).IsClass;
+
+    protected MultiLayerDictionary() => dictionary = new TDictionary();
+
+    public MultiLayerDictionary(TDictionary dictionary) : this() {
+        foreach (var (key, value) in dictionary) {
+            this.dictionary.Add(key, value);
+        }
+    }
+
+    public MultiLayerDictionary(params KeyValuePair<TKey, TCollection>[] pairs) : this() {
+        foreach (var (key, value) in pairs) {
+            dictionary.Add(key, value);
+        }
+    }
+
+    public MultiLayerDictionary(IEnumerable<KeyValuePair<TKey, TCollection>> enumerable) : this() {
+        foreach (var (key, value) in enumerable) {
+            dictionary.Add(key, value);
+        }
+    }
+    
+    public virtual TCollection this[TKey key] {
+        get => dictionary[key];
+        set => dictionary[key] = value;
+    }
+    
+    public virtual ICollection<TKey> Keys => dictionary.Keys;
+    public virtual ICollection<TCollection> Values => dictionary.Values;
+    
+    public IEnumerator<KeyValuePair<TKey, TCollection>> GetEnumerator() => dictionary.GetEnumerator();
+
+    public virtual IEnumerator<TCollection> GetEnumerator(TKey key) {
+        ValidateOrThrowKey(ref key);
+        if (dictionary.TryGetValue(key, out var collection)) {
+            yield return collection;
+        }
+    }
+
+    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+    void ICollection<KeyValuePair<TKey, TCollection>>.Add(KeyValuePair<TKey, TCollection> item) {
+        ValidateOrThrowKeyValue(ref item);
+        dictionary.AutoAdd(item.Key, item.Value);
+    }
+
+    public virtual void Clear() => dictionary.Clear();
+    
+    public virtual void Clear(TKey key) {
+        ValidateOrThrowKey(ref key);
+        if (dictionary.TryGetValue(key, out var collection)) {
+            collection.Clear();
+        }
+    }
+
+    bool ICollection<KeyValuePair<TKey, TCollection>>.Contains(KeyValuePair<TKey, TCollection> item) {
+        ValidateOrThrowKeyValue(ref item);
+        return dictionary.TryGetValue(item.Key, out var innerDic) && innerDic.Equals(item.Value);
+    }
+
+    void ICollection<KeyValuePair<TKey, TCollection>>.CopyTo(KeyValuePair<TKey, TCollection>[] array, int arrayIndex) => dictionary.ToList().CopyTo(array, arrayIndex);
+    
+    bool ICollection<KeyValuePair<TKey, TCollection>>.Remove(KeyValuePair<TKey, TCollection> item) {
+        ValidateOrThrowKeyValue(ref item);
+        return dictionary.Remove(item.Key);
+    }
+
+    public virtual int Count => dictionary.Count;
+    public virtual bool IsReadOnly => dictionary.IsReadOnly;
+    
+    public virtual void Add(TKey key, TCollection value) {
+        ValidateOrThrowValue(ref value);
+        dictionary.AutoAdd(key, value);
+    }
+
+    public virtual bool ContainsKey(TKey key) => dictionary.ContainsKey(key);
+    public virtual bool Remove(TKey key) => dictionary.Remove(key);
+
+    public virtual bool TryGetValue(TKey key, out TCollection value) => dictionary.TryGetValue(key, out value);
+
+    #region [ValidateOrThrow]
+    
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    protected virtual void ValidateOrThrowKey(ref TKey key) {
+        if (KEY_IS_CLASS && key == null) {
+            throw new NullReferenceException($"{nameof(key)} is null");
+        }
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    protected virtual void ValidateOrThrowValue(ref TCollection value) {
+        if (value == null) {
+            throw new NullReferenceException($"{nameof(value)} is null");
+        }
+    }
+    
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    protected virtual void ValidateOrThrowKeyValue(ref TKey outKey, ref TValue value) {
+        if (KEY_IS_CLASS && outKey == null) {
+            throw new NullReferenceException($"{nameof(outKey)} is null");
+        }
+
+        if (VALUE_IS_CLASS && value == null) {
+            throw new NullReferenceException($"{nameof(value)} is null");
+        }
+    }
+    
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    protected virtual void ValidateOrThrowKeyValue(ref KeyValuePair<TKey, TCollection> item) {
+        if (KEY_IS_CLASS && item.Key == null) {
+            throw new NullReferenceException($"{nameof(TKey)} is null");
+        }
+
+        if (item.Value == null) {
+            throw new NullReferenceException($"{nameof(TCollection)} is null");
+        }
+    }
+    
+    #endregion
+}
+
+public abstract class NewMultiLevelDictionary<TDictionary, TIDictionary, TKey, TIKey, TValue> : MultiLayerDictionary<TDictionary, TIDictionary, TKey, KeyValuePair<TIKey, TValue>>
+    where TDictionary : IDictionary<TKey, TIDictionary>, new()
+    where TIDictionary : IDictionary<TIKey, TValue>, new() {
+    
+    
+    protected readonly bool INNER_KEY_IS_CLASS = typeof(TIKey).IsClass;
+    
+    
+}
+
+public class NewMultiLevelDictionary<TKey, TIKey, TValue> : NewMultiLevelDictionary<Dictionary<TKey, Dictionary<TIKey, TValue>>, Dictionary<TIKey, TValue>, TKey, TIKey, TValue> {
+
+}
+
+public static class TestStatic {
+    public static void TestStaticMethod() {
+        
+    }
+}
 
 public abstract class MultiLevelDictionary<TDictionary, TIDictionary, TKey, TIKey, TValue> : IDictionary<TKey, TIDictionary> 
     where TDictionary : IDictionary<TKey, TIDictionary>, new()

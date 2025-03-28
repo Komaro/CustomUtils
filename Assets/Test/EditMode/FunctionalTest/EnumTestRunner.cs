@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Immutable;
+using System.Linq;
 using NUnit.Framework;
 using Unity.PerformanceTesting;
 
@@ -99,7 +100,7 @@ public class EnumTestRunner {
         Assert.DoesNotThrow(() => {
             foreach (var enumType in ReflectionProvider.GetEnumTypes()) {
                 try {
-                    _ = EnumUtil.GetValues(enumType);
+                    _ = EnumUtil.AsSpan(enumType);
                 } catch (Exception e) {
                     Logger.TraceLog(enumType.FullName);
                     throw;
@@ -127,8 +128,8 @@ public class EnumTestRunner {
         Assert.IsTrue(intMakeType.GetGenericTypeDefinition() == longMakeType.GetGenericTypeDefinition());
         Assert.IsTrue(intMakeType != longMakeType);
 
-        var intEnums = EnumUtil.GetValues(intMakeType).ToArray();
-        var longEnums = EnumUtil.GetValues(longMakeType).ToArray();
+        var intEnums = EnumUtil.AsSpan(intMakeType).ToArray();
+        var longEnums = EnumUtil.AsSpan(longMakeType).ToArray();
         Assert.IsTrue(intEnums.Length == longEnums.Length);
 
         for (var i = 0; i < intEnums.Length; i++) {

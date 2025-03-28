@@ -533,8 +533,8 @@ public class LayoutControlHelper : MonoBehaviour, ILayoutRecursive {
         if (_infoList == null) {
             return null;
         }
-        
-        return _infoList as List<TInfo> ?? _infoList.CastList<TInfo>();
+
+        return _infoList as List<TInfo> ?? _infoList.ToList<TInfo>();
     }
 
     public bool TryGetCastInfos<TInfo>(out IEnumerable<TInfo> castInfos) {

@@ -200,7 +200,7 @@ public abstract class BuildConfig : JsonAutoConfig {
         applicationIdentifier = PlayerSettings.applicationIdentifier;
         bundleVersion = PlayerSettings.bundleVersion;
         
-        foreach (var logType in EnumUtil.GetValues<LogType>()) {
+        foreach (var logType in EnumUtil.AsSpan<LogType>()) {
             stackTraceDic.AutoAdd(logType, PlayerSettings.GetStackTraceLogType(logType));
         }
         

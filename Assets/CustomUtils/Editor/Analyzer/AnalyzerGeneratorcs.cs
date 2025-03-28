@@ -65,10 +65,10 @@ public static class AnalyzerGenerator {
         OnStart(outputPath);
         var result = compilation.Emit(outputPath);
         if (result.Success) {
-            OnFinish(outputPath, compilation.Assembly.TypeNames.ConvertTo(name => new CompilerMessage {
+            OnFinish(outputPath, compilation.Assembly.TypeNames.ToArray(name => new CompilerMessage {
                 type = CompilerMessageType.Info,
                 message = name,
-            }).ToArray());
+            }));
         } else { 
             Logger.TraceError($"Compilation Failed || {outputPath}");
             OnFailed(result);

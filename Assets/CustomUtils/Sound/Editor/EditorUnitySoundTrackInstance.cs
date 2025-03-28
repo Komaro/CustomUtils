@@ -27,7 +27,7 @@ public class EditorUnitySoundTrackInstance : Editor {
             using (new EditorGUILayout.VerticalScope(Constants.Draw.BOX)) {
                 _audioMixer = EditorGUILayout.ObjectField("Target Audio Mixer", _audioMixer, typeof(AudioMixer), true);
                 if (_audioMixer is AudioMixer mixer) {
-                    _groups ??= mixer.FindMatchingGroups("Master").ConvertTo(x => x.name).ToArray();
+                    _groups ??= mixer.FindMatchingGroups("Master").ToArray(x => x.name);
                     using (var scope = new EditorGUI.ChangeCheckScope()) {
                         _groupIndex = EditorGUILayout.Popup("Target Group", _groupIndex, _groups);
                         if (scope.changed) {

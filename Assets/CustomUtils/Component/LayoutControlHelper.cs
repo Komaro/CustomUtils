@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
@@ -66,6 +67,7 @@ public class LayoutControlHelper : MonoBehaviour, ILayoutRecursive {
         _itemList?.ForEach(x => x.SetActive(false));
     }
 
+    [TestRequired]
     public void SetData(IList infoList) {
         if (_itemPrefab == null) {
             Logger.TraceError($"{nameof(_itemPrefab)} is Null");
@@ -74,13 +76,14 @@ public class LayoutControlHelper : MonoBehaviour, ILayoutRecursive {
         }
 
         _infoList = infoList;
-        _itemList.ISync(_infoList, CreateFunc);
+        _itemList.Sync(_infoList, CreateFunc);
         if (_itemList.Count < _infoList.Count) {
             Logger.TraceError("List Count Not Matched");
             return;
         }
-
-        _infoList.ISyncForEach(_itemList, DataAction, ClearAction);
+        
+        _itemList.SyncForEach(_infoList, DataAction, ClearAction);
+        // _infoList.ISyncForEach(_itemList, DataAction, ClearAction);
     }
 
     public void SetData(IList infoList, Action<bool> onChangeCount) {
@@ -97,10 +100,11 @@ public class LayoutControlHelper : MonoBehaviour, ILayoutRecursive {
 
         index = Math.Clamp(index, 0, GetInfoCount());
         _infoList.Insert(index, info);
-        _itemList.ISync(_infoList, CreateFunc);
+        _itemList.Sync(_infoList, CreateFunc);
 
         if (isClean) {
-            _infoList.ISyncForEach(_itemList, DataAction, ClearAction);
+            _itemList.SyncForEach(_infoList, DataAction, ClearAction);
+            // _infoList.ISyncForEach(_itemList, DataAction, ClearAction);
         } else {
             for (var i = index; i < _itemList.Count; i++) {
                 if (i < _infoList.Count) {
@@ -156,7 +160,8 @@ public class LayoutControlHelper : MonoBehaviour, ILayoutRecursive {
         if (isOnlyActiveSet) {
             _itemList[index].SetActive(false);
         } else {
-            _infoList.ISyncForEach(_itemList, DataAction, ClearAction);
+            _itemList.SyncForEach(_infoList, DataAction, ClearAction);
+            // _infoList.ISyncForEach(_itemList, DataAction, ClearAction);
         }
     }
 
@@ -218,7 +223,8 @@ public class LayoutControlHelper : MonoBehaviour, ILayoutRecursive {
         if (TryGetCastInfos<TInfo>(out var castInfos)) {
             castInfos.ForEach(batchUpdateAction.Invoke);
             if (isRefresh) {
-                _infoList.ISyncForEach(_itemList, (info, item) => item.SetData(info));
+                _itemList.SyncForEach(_infoList, (item, info) => item.SetData(info));
+                // _infoList.ISyncForEach(_itemList, (info, item) => item.SetData(info));
             }
         }
     }
@@ -227,12 +233,18 @@ public class LayoutControlHelper : MonoBehaviour, ILayoutRecursive {
         if (_infoList is not { Count: > 0 }) {
             return;
         }
-        
-        _infoList.ISyncForEach(_itemList, (info, item) => {
-            if (info is TInfo castInfo && (batchUpdateAction?.Invoke(castInfo) ?? false)) {
-                item.SetData(info);
+
+        _itemList.SyncForEach(_infoList, (item, info) => {
+            if (info is TInfo castInfo && batchUpdateAction.Invoke(castInfo)) {
+                item.SetData(castInfo);
             }
         });
+        
+        // _infoList.ISyncForEach(_itemList, (info, item) => {
+        //     if (info is TInfo castInfo && (batchUpdateAction?.Invoke(castInfo) ?? false)) {
+        //         item.SetData(info);
+        //     }
+        // });
     }
 
     public void BatchActionItem<TItem>(Action<TItem> batchAction) where TItem : LayoutItem{
@@ -292,7 +304,7 @@ public class LayoutControlHelper : MonoBehaviour, ILayoutRecursive {
 
                 newList.Add(sortInfoList[i].Key < _itemList.Count ? _itemList[sortInfoList[i].Key] : _itemList[i]);
             }
-
+            
             newList.IndexForEach((x, index) => x.transform.SetSiblingIndex(index));
 
             _itemList = newList;
@@ -364,6 +376,10 @@ public class LayoutControlHelper : MonoBehaviour, ILayoutRecursive {
         
         return null;
     }
+    
+    [TempMethod]
+    [RefactoringRequired(10)]
+    private void DataAction(LayoutItem item, object info) => DataAction(info, item);
 
     private void DataAction(object info, LayoutItem item) {
         try {
@@ -524,31 +540,11 @@ public class LayoutControlHelper : MonoBehaviour, ILayoutRecursive {
     public List<TItem> GetItemList<TItem>() where TItem : LayoutItem => _itemList as List<TItem> ?? _itemList.Cast<TItem>().ToList();
     public List<LayoutItem> GetItemList() => _itemList;
     
-    public bool TryGetCastInfoList<TInfo>(out List<TInfo> castList) {
-        castList = GetCastInfoList<TInfo>();
-        return castList != null;
-    }
+    public bool TryGetCastInfoList<TInfo>(out List<TInfo> castList) => (castList = GetCastInfoList<TInfo>()).Equals(CollectionUtil.List.Empty<TInfo>()) == false;
+    public List<TInfo> GetCastInfoList<TInfo>() => _infoList == null ? CollectionUtil.List.Empty<TInfo>() : _infoList as List<TInfo> ?? _infoList.ToList<TInfo>();
 
-    public List<TInfo> GetCastInfoList<TInfo>() {
-        if (_infoList == null) {
-            return null;
-        }
-
-        return _infoList as List<TInfo> ?? _infoList.ToList<TInfo>();
-    }
-
-    public bool TryGetCastInfos<TInfo>(out IEnumerable<TInfo> castInfos) {
-        castInfos = GetCastInfos<TInfo>();
-        return castInfos != null;
-    }
-
-    public IEnumerable<TInfo> GetCastInfos<TInfo>() {
-        if (_infoList == null) {
-            return null;
-        }
-
-        return _infoList as IEnumerable<TInfo> ?? _infoList.Cast<TInfo>();
-    }
+    public bool TryGetCastInfos<TInfo>(out IEnumerable<TInfo> castInfos) => (castInfos = GetCastInfos<TInfo>()).Equals(Enumerable.Empty<TInfo>()) == false;
+    public IEnumerable<TInfo> GetCastInfos<TInfo>() => _infoList == null ? Enumerable.Empty<TInfo>() : _infoList as IEnumerable<TInfo> ?? _infoList.Cast<TInfo>();
 
     public void SetActive(bool isActive) => gameObject.SetActive(isActive);
     

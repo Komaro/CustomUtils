@@ -3,11 +3,12 @@ using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using UnityEngine;
-using Random = System.Random;
 
+[RefactoringRequired(5, "전체적으로 모든 메소드를 점검하고 리팩토링 필요. 메소드 수가 많아지고 기간이 길어지면서 코드의 일관성이 줄어듬")]
 public static partial class CollectionExtension {
 
     #region [Common]
@@ -32,7 +33,7 @@ public static partial class CollectionExtension {
         }
 
         foreach (var item in enumerable) {
-            if (match?.Invoke(item) ?? false) {
+            if (match.Invoke(item)) {
                 matchItem = item;
                 return true;
             }
@@ -151,7 +152,11 @@ public static partial class CollectionExtension {
 
     #region [Queue]
 
-    public static void Clear<T>(this Queue<T> queue, Func<T, bool> match) {
+    public static void Clear<T>(this Queue<T> queue, [NotNull]Func<T, bool> match) {
+        if (match == null) {
+            return;
+        }
+        
         for (var i = 0; i < queue.Count; i++) {
             if (queue.TryDequeue(out var value) && (match?.Invoke(value) ?? false)) {
                 queue.Enqueue(value);
@@ -168,4 +173,18 @@ public static partial class CollectionExtension {
     public static ImmutableHashSet<TResult> ToImmutableHashSetForLinq<TValue, TResult>(this IEnumerable<TValue> enumerable, Func<TValue, TResult> converter) => enumerable.SelectWithDistinct(converter).ToImmutableHashSet();
 
     #endregion
+    
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private static void ThrowIfNull<T>(T func, string name) {
+        if (func == null) {
+            throw new NullReferenceException<T>(name);
+        }
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private static void ThrowIfInvalidCast<T>(IEnumerable enumerable, string name) where T : IEnumerable {
+        if (enumerable is not T) {
+            throw new InvalidCastException<T>(name);
+        }
+    }
 }

@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Net;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -124,4 +126,13 @@ public static class CommonExtension {
 
         return list;
     }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static bool TryInvoke<TResult>([NotNull]this Func<TResult> func, out TResult result) => func == null ? throw new ArgumentNullException(nameof(func)) : (result = func.Invoke()) != null;
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static bool TryInvoke<T, TResult>(this Func<T, TResult> func, T arg, out TResult result) => func == null ? throw new ArgumentNullException(nameof(func)) : (result = func.Invoke(arg)) != null;
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static bool TryInvoke<T1, T2, TResult>(this Func<T1, T2, TResult> func, T1 arg1, T2 arg2, out TResult result) => func == null ? throw new ArgumentNullException(nameof(func)) : (result = func.Invoke(arg1, arg2)) != null;
 }

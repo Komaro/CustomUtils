@@ -138,7 +138,6 @@ public abstract class NewMultiLevelDictionary<TDictionary, TIDictionary, TKey, T
     where TDictionary : IDictionary<TKey, TIDictionary>, new()
     where TIDictionary : IDictionary<TIKey, TValue>, new() {
     
-    
     protected readonly bool INNER_KEY_IS_CLASS = typeof(TIKey).IsClass;
     
     

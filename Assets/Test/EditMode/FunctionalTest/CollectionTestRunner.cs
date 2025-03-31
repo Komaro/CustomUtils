@@ -1,7 +1,5 @@
 ﻿
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+using System;
 using System.Linq;
 using NUnit.Framework;
 using Unity.PerformanceTesting;
@@ -10,26 +8,33 @@ using Unity.PerformanceTesting;
 [Category(TestConstants.Category.PERFORMANCE)]
 public class CollectionTestRunner {
 
-
     public class SelectManyTest {
         
         public int[] values;
     }
-
+    
     [TestCase(50, 20)]
     [TestCase(50, 50)]
     [TestCase(50, 100)]
     [TestCase(50, 200)]
+    [TestCase(50, 2000)]
     [Performance]
     public void CollectionPerformanceTest(int measurementCount, int count) {
-        var castGroup = new SampleGroup("CastToList");
-        var forGroup = new SampleGroup("ForToList");
-        var linqGroup = new SampleGroup("LinqToList");
-
-        IList list = RandomUtil.GetRandoms(50).ToList();
-
-        Measure.Method(() => _ = list.ToList<int>()).WarmupCount(5).MeasurementCount(measurementCount).IterationsPerMeasurement(count).SampleGroup(castGroup).GC().Run();
-        Measure.Method(() => _ = list.ToList(obj => (int) obj)).WarmupCount(5).MeasurementCount(measurementCount).IterationsPerMeasurement(count).SampleGroup(forGroup).GC().Run();
+        var whileGroup = new SampleGroup("While", SampleUnit.Microsecond);
+        var forGroup = new SampleGroup("For", SampleUnit.Microsecond);
+        
+        Measure.Method(() => {
+            var syncCount = 10;
+            while (syncCount-- > 0) {
+                _ = syncCount + 1;
+            }
+        }).WarmupCount(5).MeasurementCount(measurementCount).IterationsPerMeasurement(count).SampleGroup(whileGroup).GC().Run();
+        Measure.Method(() => {
+            var syncCount = 10;
+            for (var i = 0; i < syncCount; i++) {
+                _ = syncCount + 1;
+            }
+        }).WarmupCount(5).MeasurementCount(measurementCount).IterationsPerMeasurement(count).SampleGroup(forGroup).GC().Run();
     }
     
     [TestCase(100, 100)]

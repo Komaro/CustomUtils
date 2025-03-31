@@ -1,113 +1,148 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.CompilerServices;
 
 public static partial class CollectionExtension {
 
-    #region [IList]
-    
-    public static void ISync<T>(this List<T> workList, IList sourceList, Func<T> createFunc) {
-        if (workList.Count < sourceList.Count) {
-            var syncCount = sourceList.Count - workList.Count;
+    [TestRequired]
+    public static void Sync<T>(this IList<T> list, IList sourceList, Func<T> creator) {
+        ThrowIfInvalidCast<IList<T>>(sourceList, nameof(sourceList));
+        ThrowIfNull(creator, nameof(creator));
+        
+        var syncCount = sourceList.Count - list.Count;
+        if (syncCount > 0) {
             for (var i = 0; i < syncCount; i++) {
-                var item = createFunc.Invoke();
-                if (item != null) {
-                    workList.Add(item);
+                if (creator.TryInvoke(out var result)) {
+                    list.Add(result);
                 }
             }
         }
     }
+    
+    // [Obsolete]
+    // public static void ISync<T>(this List<T> workList, IList sourceList, Func<T> createFunc) {
+    //     if (workList.Count < sourceList.Count) {
+    //         var syncCount = sourceList.Count - workList.Count;
+    //         for (var i = 0; i < syncCount; i++) {
+    //             var item = createFunc.Invoke();
+    //             if (item != null) {
+    //                 workList.Add(item);
+    //             }
+    //         }
+    //     }
+    // }
 
-    public static void ISync<T>(this IList workList, List<T> sourceList, Func<T> createFunc) {
-        if (workList.Count < sourceList.Count) {
-            var syncCount = sourceList.Count - workList.Count;
+    [TestRequired]
+    public static void Sync<T>(this IList list, IList<T> sourceList, Func<T> creator) {
+        ThrowIfInvalidCast<IList<T>>(list, nameof(list));
+        ThrowIfNull(creator, nameof(creator));
+
+        var syncCount = sourceList.Count - list.Count;
+        if (syncCount > 0) {
             for (var i = 0; i < syncCount; i++) {
-                var item = createFunc.Invoke();
-                if (item != null) {
-                    workList.Add(item);
+                if (creator.TryInvoke(out var result)) {
+                    list.Add(result);
+                }
+            }
+        }
+    }
+    
+    [TestRequired]
+    public static void Sync<TValue, TResult>(this IList list, IList<TValue> sourceList, Func<TValue, TResult> creator) {
+        ThrowIfInvalidCast<IList<TResult>>(list, nameof(list));
+        ThrowIfNull(creator, nameof(creator));
+        
+        var syncCount = sourceList.Count - list.Count;
+        if (syncCount > 0) {
+            for (var i = 0; i < syncCount; i++) {
+                if (creator.TryInvoke(sourceList[i], out var result)) {
+                    list.Add(result);
                 }
             }
         }
     }
 
-    public static void IndexForEach<TBase>(this IList<TBase> workList, Action<TBase, int> action) {
-        for (var i = 0; i < workList.Count; i++) {
-            action?.Invoke(workList[i], i);
-        }
-    }
-
-    public static void ISyncForEach<TBase, TWork>(this IList<TBase> sourceList, IList<TWork> workList, Func<int, TBase, TWork, bool> checkAction, Action<TBase, TWork> dataAction, Action<TWork> clearAction = null) {
-        if (sourceList.Count <= 0) {
-            return;
-        }
-
-        var targetIndex = 0;
-        while (targetIndex < workList.Count) {
-            var baseIndex = 0;
-            do {
-                if (checkAction?.Invoke(targetIndex, sourceList[baseIndex], workList[targetIndex]) ?? false) {
-                    dataAction?.Invoke(sourceList[baseIndex], workList[targetIndex]);
-                    break;
+    [TestRequired]
+    public static void Sync<TValue, TResult>(this List<TResult> list, List<TValue> sourceList, Func<int, TValue, TResult> creator) {
+        ThrowIfNull(creator, nameof(creator));
+        var syncCount = sourceList.Count - list.Count;
+        if (syncCount > 0) {
+            for (var index = 0; index < syncCount; index++) {
+                if (creator.TryInvoke(index ,sourceList[index], out var result)) {
+                    list.Add(result);
                 }
-
-                baseIndex++;
-            } while (baseIndex < sourceList.Count);
-
-            if (baseIndex >= sourceList.Count) {
-                clearAction?.Invoke(workList[targetIndex]);
             }
-
-            targetIndex++;
-        }
-    }
-
-    public static void ISyncForEach<T>(this IList sourceList, IList<T> workList, Action<object, T> dataAction, Action<T> clearAction = null) {
-        if (sourceList.Count < 0) {
-            foreach (var work in workList) {
-                clearAction?.Invoke(work);
-            }
-
-            return;
-        }
-
-        for (var i = 0; i < workList.Count; i++) {
-            if (i >= sourceList.Count) {
-                for (var j = i; j < workList.Count; j++)
-                    clearAction?.Invoke(workList[j]);
-
-                return;
-            }
-
-            dataAction?.Invoke(sourceList[i], workList[i]);
-        }
-    }
-
-    public static void RemoveFirst<TValue>(this IList<TValue> list) {
-        if (list.Count > 1) {
-            list.RemoveAt(0);
-        }
-    }
-
-    public static void RemoveLast<TValue>(this IList<TValue> list) {
-        if (list.Count > 0) {
-            list.RemoveAt(list.Count - 1);
         }
     }
     
-    #endregion
+    [TestRequired]
+    public static void Sync<TList, TCollection>(this IList<TList> list, ICollection<TCollection> collection, Func<TList> creator) {
+        var syncCount = collection.Count - list.Count;
+        if (syncCount > 0) {
+            for (var i = 0; i < syncCount; i++) {
+                if (creator.TryInvoke(out var result)) {
+                    list.Add(result);
+                }
+            }
+        }
+    }
+    
+    [Obsolete("IDictionary의 범위가 한정적임")]
+    public static void Sync<T>(this List<T> workList, IDictionary dictionary, Func<T> creator) {
+        var syncCount = dictionary.Count - workList.Count;
+        if (syncCount > 0) {
+            for (var i = 0; i < syncCount; i++) {
+                if (creator.TryInvoke(out var result)) {
+                    workList.Add(result);
+                }
+            }
+        }
+        
+        // if (syncCount > 0) {
+        //     for (var i = 0; i < syncCount; i++) {
+        //         var item = creator.Invoke();
+        //         if (item != null) {
+        //             workList.Add(item);
+        //         }
+        //     }
+        // }
+    }
 
+    // [Obsolete]
+    // public static void ISync<T>(this IList targetList, List<T> sourceList, Func<T> createFunc) {
+    //     if (targetList.Count < sourceList.Count) {
+    //         var syncCount = sourceList.Count - targetList.Count;
+    //         for (var i = 0; i < syncCount; i++) {
+    //             var item = createFunc.Invoke();
+    //             if (item != null) {
+    //                 targetList.Add(item);
+    //             }
+    //         }
+    //     }
+    // }
     
-    #region [List]
-    
-    public static void Sync<T>(this List<T> list, int maxCount, Func<T> createFunc) {
-        if (createFunc == null) {
+    [TestRequired]
+    public static void Sync<T>(this IList<T> list, int maxCount, Func<T> creator) {
+        ThrowIfNull(creator, nameof(creator));
+
+        while (list.Count < maxCount) {
+            list.Add(creator.Invoke());
+        }
+
+        while (list.Count > maxCount) {
+            list.RemoveLast();
+        }
+    }
+
+    [Obsolete]
+    public static void Sync<T>(this List<T> list, int maxCount, Func<T> creator) {
+        if (creator == null) {
             return;
         }
 
         while (list.Count < maxCount) {
-            list.Add(createFunc.Invoke());
+            list.Add(creator.Invoke());
         }
 
         if (list.Count > maxCount) {
@@ -115,34 +150,130 @@ public static partial class CollectionExtension {
         }
     }
 
-    public static void Sync<TBase, TWork>(this List<TBase> workList, List<TWork> sourceList, Func<TBase> createFunc) => ISync(workList, sourceList, createFunc);
+    [TestRequired]
+    public static void Sync<TValue, TSource>(this List<TValue> list, List<TSource> sourceList, Func<TValue> creator, Action<TValue> cleaner) {
+        ThrowIfNull(creator, nameof(creator));
+        ThrowIfNull(cleaner, nameof(cleaner));
 
-    public static void ISync<T>(this List<T> workList, IDictionary sourceList, Func<T> createFunc) {
-        if (workList.Count > sourceList.Count) {
-            var syncCount = sourceList.Count - workList.Count;
-            for (var i = 0; i < syncCount; i++) {
-                var item = createFunc.Invoke();
-                if (item != null) {
-                    workList.Add(item);
+        var syncCount = list.Count - sourceList.Count;
+        while (syncCount++ > 0) {
+            cleaner.Invoke(list[0]);
+            list.RemoveAt(0);
+        }
+
+        while (syncCount-- > 0) {
+            if (creator.TryInvoke(out var result)) {
+                list.Add(result);
+            }
+        }
+    }
+    
+    [Obsolete("포멧 정리의 일환으로 위 메소드 형태로 전환")]
+    public static void Sync<TSource, TWork>(this List<TSource> sourceList, List<TWork> workList, Func<TWork> creator, Action<TWork> cleaner) {
+        ThrowIfNull(creator, nameof(creator));
+        ThrowIfNull(cleaner, nameof(cleaner));
+        
+        var syncCount = sourceList.Count - workList.Count;
+        while (syncCount++ < 0) {
+            cleaner.Invoke(workList[0]);
+            workList.RemoveAt(0);
+        }
+
+        while (syncCount-- > 0) {
+            workList.Add(creator.Invoke());
+        }
+    }
+
+    [TestRequired]
+    public static void IndexForEach(this IList list, Action<object, int> action) {
+        ThrowIfNull(action, nameof(action));
+        for (var index = 0; index < list.Count; index++) {
+            action.Invoke(list[index], index);
+        }
+    }
+
+    [TestRequired]
+    public static void IndexForEach<T>(this IList<T> list, Action<T, int> action) {
+        ThrowIfNull(action, nameof(action));
+        for (var index = 0; index < list.Count; index++) {
+            action.Invoke(list[index], index);
+        }
+    }
+
+    [Obsolete("기능이 불분명하며 성능상의 하자로 인해 제거 예정")]
+    public static void ISyncForEach<TSource, TWork>(this IList<TSource> sourceList, IList<TWork> workList, Func<int, TSource, TWork, bool> checker, Action<TSource, TWork> setter, Action<TWork> cleaner = null) {
+        if (sourceList.Count <= 0) {
+            return;
+        }
+
+        var workIndex = 0;
+        while (workIndex < workList.Count) {
+            var index = 0;
+            do {
+                if (checker.Invoke(workIndex, sourceList[index], workList[workIndex])) {
+                    setter.Invoke(sourceList[index], workList[workIndex]);
+                    break;
                 }
+
+                index++;
+            } while (index < sourceList.Count);
+
+            if (index >= sourceList.Count) {
+                cleaner?.Invoke(workList[workIndex]);
+            }
+
+            workIndex++;
+        }
+    }
+
+    [TestRequired]
+    public static void SyncForEach<T>(this IList<T> list, IList pairList, Action<T, object> action, Action<T> cleaner = null) {
+        ThrowIfNull(action, nameof(action));
+        var index = 0;
+        if (list.Count - pairList.Count > 0) {
+            for (; index < pairList.Count; index++) {
+                action.Invoke(list[index], pairList[index]);
+            }
+        }
+
+        if (cleaner != null && list.IsValidIndex(index)) {
+            for (; index < list.Count; index++) {
+                cleaner.Invoke(list[index]);
             }
         }
     }
 
-    public static void Sync<TBase, TWork>(this List<TBase> sourceList, List<TWork> workList, Func<TWork> createFunc, Action<TWork> removeAction) => ISync(sourceList, workList, createFunc, removeAction);
-
-    public static void ISync<TBase, TWork>(this List<TBase> sourceList, List<TWork> workList, Func<TWork> createFunc, Action<TWork> removeAction) {
-        var count = sourceList.Count - workList.Count;
-        while (count++ < 0) {
-            removeAction?.Invoke(workList[0]);
-            workList.RemoveAt(0);
+    public static void SyncForEach<T>(this IList list, IList<T> pairList, Action<object, T> action, Action<object> cleaner = null) {
+        ThrowIfNull(action, nameof(action));
+        var index = 0;
+        if (list.Count - pairList.Count > 0) {
+            for (; index < pairList.Count; index++) {
+                action.Invoke(list[index], pairList[index]);
+            }
         }
 
-        while (count-- > 0) {
-            workList.Add(createFunc.Invoke());
+        if (cleaner != null && list.IsValidIndex(index)) {
+            for (; index < list.Count; index++) {
+                cleaner.Invoke(list[index]);
+            }
+        }
+    }
+    
+    [Obsolete("SyncForEach<T>로 전환")]
+    public static void ISyncForEach<T>(this IList list, IList<T> pairList, Action<object, T> dataAction, Action<T> clearAction = null) {
+        for (var i = 0; i < pairList.Count; i++) {
+            if (i >= list.Count) {
+                for (var j = i; j < pairList.Count; j++)
+                    clearAction?.Invoke(pairList[j]);
+
+                return;
+            }
+
+            dataAction?.Invoke(list[i], pairList[i]);
         }
     }
 
+    [Obsolete("위 메소드로 전환 예정")]
     public static void SyncForEach<TBase, TWork>(this List<TBase> sourceList, List<TWork> workList, Action<TBase, TWork> dataAction, Action<TWork> clearAction = null) {
         if (workList == null) {
             Logger.TraceError($"{nameof(workList)} is Null");
@@ -199,44 +330,26 @@ public static partial class CollectionExtension {
         return false;
     }
 
-    public static bool TryFirst<T>(this List<T> list, out T value, Predicate<T> match) {
-        value = list.Find(match);
-        return value != null;
+    public static bool TryFirst<T>(this List<T> list, out T value, Predicate<T> match) => (value = list.Find(match)) != null;
+    public static bool TryFindIndex<T>(this List<T> list, out int index, Predicate<T> match) => (index = list.FindIndex(match)) > 0;
+
+    public static void RemoveFirst<TValue>(this IList<TValue> list) {
+        if (list.Count > 1) {
+            list.RemoveAt(0);
+        }
     }
 
-    public static bool TryFindIndex<T>(this List<T> list, out int index, Predicate<T> match) {
-        index = list.FindIndex(match);
-        return index != -1;
+    public static void RemoveLast<TValue>(this IList<TValue> list) {
+        if (list.Count > 0) {
+            list.RemoveAt(list.Count - 1);
+        }
     }
 
     public static List<T> SortList<T>(this List<T> list, Comparison<T> comparison) {
         list?.Sort(comparison);
         return list;
     }
-
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static bool IsValidIndex<T>(this List<T> list, int index) {
-        if (list == null) {
-            return false;
-        }
-
-        return index > -1 && list.Count > index;
-    }
-
-    // public static List<TResult> ConvertTo<T, TResult>(this IEnumerable<T> enumerable, Func<T, TResult> converter) {
-    //     var convertList = new List<TResult>();
-    //     foreach (var item in enumerable) {
-    //         var convertItem = converter.Invoke(item);
-    //         if (convertItem == null) {
-    //             continue;
-    //         }
-    //
-    //         convertList.Add(convertItem);
-    //     }
-    //
-    //     return convertList;
-    // }
-
+    
     private static readonly Random _randomGenerator = new Random();
     
     public static List<T> Shuffle<T>(this IList<T> list, Predicate<T> match) => list.Shuffle().FindAll(match);
@@ -254,7 +367,16 @@ public static partial class CollectionExtension {
             Logger.TraceError(ex);
             return CollectionUtil.List.Empty<T>();
         }
-    } 
+    }
+    
+    [TestRequired]
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static bool IsValidIndex(this IList list, int index) => list != null && index > -1 && list.Count > index;
 
-    #endregion
+    [TestRequired]
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static bool IsValidIndex<T>(this IList<T> list, int index) => list != null && index > -1 && list.Count > index;
+    
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static bool IsValidIndex<T>(this List<T> list, int index) => list != null && index > -1 && list.Count > index;
 }

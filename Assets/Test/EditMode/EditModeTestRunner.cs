@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -24,7 +25,7 @@ public class EditModeTestRunner {
         EditorCoroutineUtility.StartCoroutine(StartCoroutine(Constants.Resource.RESOURCE_LIST, progress), this);
         Logger.TraceLog("Success");
     }
-
+    
     private IEnumerator StartCoroutine(string target, IProgress<float> progress) {
         var asyncOperation = LoadAsync(target);
         while (asyncOperation.isDone == false) {
@@ -63,7 +64,7 @@ public class EditModeTestRunner {
             Logger.TraceLog(profile.name);
         }
     }
-
+    
     [Test]
     [Performance]
     public void TempPerformanceTest_01() {

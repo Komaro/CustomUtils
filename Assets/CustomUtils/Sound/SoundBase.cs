@@ -215,7 +215,7 @@ public abstract class SoundBase {
     
     public virtual void UnloadAudioClips() {
         lock (audioSourceDic) {
-            foreach (var audioSource in audioSourceDic.Values.Where(audioSource => audioSource.IsValidClip())) {
+            foreach (var audioSource in audioSourceDic.Values.Where(audioSource => audioSource.IsValid())) {
                 audioSource.clip.UnloadAudioData();
                 audioSource.clip = null;
             }
@@ -223,7 +223,7 @@ public abstract class SoundBase {
 
         lock (audioSourceQueueDic) {
             foreach (var queue in audioSourceQueueDic.Values) {
-                queue.Where(audioSource => audioSource.IsValidClip()).ForEach(audioSource => {
+                queue.Where(audioSource => audioSource.IsValid()).ForEach(audioSource => {
                     audioSource.clip.UnloadAudioData();
                     audioSource.clip = null;
                 });
@@ -232,7 +232,7 @@ public abstract class SoundBase {
 
         lock (audioSourcePlayingDic) {
             foreach (var queue in audioSourcePlayingDic.Values) {
-                queue.Where(audioSource => audioSource.IsValidClip()).ForEach(audioSource => {
+                queue.Where(audioSource => audioSource.IsValid()).ForEach(audioSource => {
                     audioSource.clip.UnloadAudioData();
                     audioSource.clip = null;
                 });

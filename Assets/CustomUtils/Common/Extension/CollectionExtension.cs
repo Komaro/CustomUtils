@@ -15,7 +15,33 @@ public static partial class CollectionExtension {
 
     public static IEnumerator CloneEnumerator(this ICollection collection) => new ArrayList(collection).GetEnumerator();
     public static IEnumerable<TSource> OrderBy<TSource, TKey>(this IEnumerable<TSource> enumerable, Func<TSource, TKey> keySelector, bool isAscending) => isAscending ? enumerable.OrderBy(keySelector) : enumerable.OrderByDescending(keySelector) as IEnumerable<TSource>;
-    public static IEnumerable<TSource> WhereNotNull<TSource>(this IEnumerable<TSource> enumerable) where TSource : class => enumerable.Where(source => source != null);
+    public static IEnumerable<T> WhereNotNull<T>(this IEnumerable<T> enumerable) where T : class => enumerable.Where(source => source != null);
+
+    public static IEnumerable<TResult> WhereSelect<TSource, TResult>(this IEnumerable<TSource> enumerable, Func<TSource, bool> predicate, Func<TSource, TResult> selector) {
+        predicate.ThrowIfNull(nameof(predicate));
+        selector.ThrowIfNull(nameof(selector));
+        
+        foreach (var source in enumerable) {
+            if (predicate.Invoke(source)) {
+                yield return selector.Invoke(source);
+            }
+        }
+    }
+
+    public static IEnumerable<TResult> WhereSelectMany<TSource, TResult>(this IEnumerable<TSource> enumerable, Func<TSource, bool> predicate, Func<TSource, IEnumerable<TResult>> selector) {
+        predicate.ThrowIfNull(nameof(predicate));
+        selector.ThrowIfNull(nameof(selector));
+        
+        foreach (var source in enumerable) {
+            if (predicate.Invoke(source)) {
+                foreach (var result in selector.Invoke(source)) {
+                    yield return result;
+                }
+            }
+        }
+    }
+
+    public static IEnumerable<T> SelectMany<T>(this IEnumerable<IEnumerable<T>> enumerable) => enumerable.SelectMany(values => values);
 
     public static IEnumerable<TResult> SelectWithDistinct<TValue, TResult>(this IEnumerable<TValue> enumerable, Func<TValue, TResult> converter, IEqualityComparer<TValue> equalityComparer = null) {
         var distinctSet = new HashSet<TValue>(equalityComparer);
@@ -135,11 +161,17 @@ public static partial class CollectionExtension {
     public static TResult[] ToArray<TValue, TResult>(this IEnumerable<TValue> collection, Func<TValue, TResult> converter) => collection.Select(converter).ToArray();
 
     public static ImmutableArray<TResult> ToImmutableArray<TValue, TResult>(this ReadOnlySpan<TValue> span, Func<TValue, TResult> converter) => span.ToArray(converter).ToImmutableArray();
-    
+
+    public static ImmutableDictionary<TKey, TEnumerable> ToImmutableDictionary<TKey, TValue, TEnumerable>(this IEnumerable<IGrouping<TKey, TValue>> enumerable, Func<IGrouping<TKey, TValue>, TEnumerable> creator) where TEnumerable : IEnumerable<TValue> => enumerable.ToImmutableDictionary(grouping => grouping.Key, creator.Invoke);
+
     public static Dictionary<TKey, TValue> ToDictionaryWithDistinct<TSource, TKey, TValue>(this IEnumerable<TSource> enumerable, Func<TSource, TKey> keySelector, Func<TSource, TValue> valueSelector) => enumerable.ToDictionary<Dictionary<TKey, TValue>, TSource, TKey, TValue>(keySelector, valueSelector);
+
+    public static Dictionary<TKey, TSource> ToDictionary<TSource, TKey>(this IEnumerable<TSource> enumerable, Func<TSource, TKey> keySelector) => enumerable.ToDictionary<Dictionary<TKey, TSource>, TSource, TKey, TSource>(keySelector, source => source);
+    public static Dictionary<TKey, TValue> ToDictionary<TSource, TKey, TValue>(this IEnumerable<TSource> enumerable, Func<TSource, TKey> keySelector, Func<TSource, TValue> valueSelector) => enumerable.ToDictionary<Dictionary<TKey, TValue>, TSource, TKey, TValue>(keySelector, valueSelector);
+    
     public static ConcurrentDictionary<TKey, TValue> ToConcurrentDictionary<TSource, TKey, TValue>(this IEnumerable<TSource> enumerable, Func<TSource, TKey> keySelector, Func<TSource, TValue> valueSelector) => enumerable.ToDictionary<ConcurrentDictionary<TKey, TValue>, TSource, TKey, TValue>(keySelector, valueSelector);
     
-    public static TDictionary ToDictionary<TDictionary, TSource, TKey, TValue>(this IEnumerable<TSource> enumerable, Func<TSource, TKey> keySelector, Func<TSource, TValue> valueSelector) where TDictionary : IDictionary<TKey, TValue>, new() {
+    private static TDictionary ToDictionary<TDictionary, TSource, TKey, TValue>(this IEnumerable<TSource> enumerable, Func<TSource, TKey> keySelector, Func<TSource, TValue> valueSelector) where TDictionary : IDictionary<TKey, TValue>, new() {
         var dictionary = new TDictionary();
         foreach (var source in enumerable) {
             dictionary.AutoAdd(keySelector.Invoke(source), valueSelector.Invoke(source));
@@ -147,6 +179,11 @@ public static partial class CollectionExtension {
 
         return dictionary;
     }
+
+    public static IEnumerable<IGrouping<TKey, TSource>> GroupBy<TSource, TKey>(this IEnumerable<TSource> enumerable, Func<TSource, TKey> keySelector) => keySelector.ThrowIfNull(nameof(keySelector)).Pipe(_ => enumerable.GroupBy(keySelector, source => source));
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static TResult Pipe<T, TResult>(this T value, Func<T, TResult> func) => func.Invoke(value);
     
     #endregion
 
@@ -175,11 +212,7 @@ public static partial class CollectionExtension {
     #endregion
     
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private static void ThrowIfNull<T>(T func, string name) {
-        if (func == null) {
-            throw new NullReferenceException<T>(name);
-        }
-    }
+    private static void ThrowIfNull<T>(T func, string name) where T : Delegate => func.ThrowIfNull(name);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private static void ThrowIfInvalidCast<T>(IEnumerable enumerable, string name) where T : IEnumerable {

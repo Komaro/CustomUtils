@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 1920
     height: 997
   m_ShowMode: 4
-  m_Title: Project
+  m_Title: Console
   m_RootView: {fileID: 2}
   m_MinSize: {x: 875, y: 350}
   m_MaxSize: {x: 10000, y: 10000}
@@ -119,7 +119,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 100}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 210
+  controlID: 117
   draggingID: 0
 --- !u!114 &6
 MonoBehaviour:
@@ -145,7 +145,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 1
-  controlID: 211
+  controlID: 82
   draggingID: 0
 --- !u!114 &7
 MonoBehaviour:
@@ -249,7 +249,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 50}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 212
+  controlID: 83
   draggingID: 0
 --- !u!114 &11
 MonoBehaviour:
@@ -261,7 +261,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 1
   m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: ProjectBrowser
+  m_Name: ConsoleWindow
   m_EditorClassIdentifier: 
   m_Children: []
   m_Position:
@@ -270,14 +270,14 @@ MonoBehaviour:
     y: 0
     width: 788
     height: 442
-  m_MinSize: {x: 231, y: 276}
-  m_MaxSize: {x: 10001, y: 10026}
-  m_ActualView: {fileID: 17}
+  m_MinSize: {x: 101, y: 126}
+  m_MaxSize: {x: 4001, y: 4026}
+  m_ActualView: {fileID: 18}
   m_Panes:
   - {fileID: 17}
   - {fileID: 18}
-  m_Selected: 0
-  m_LastSelected: 1
+  m_Selected: 1
+  m_LastSelected: 0
 --- !u!114 &12
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -323,8 +323,8 @@ MonoBehaviour:
     y: 0
     width: 738
     height: 941
-  m_MinSize: {x: 101, y: 126}
-  m_MaxSize: {x: 4001, y: 4026}
+  m_MinSize: {x: 100, y: 100}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 14}
   m_Panes:
   - {fileID: 20}
@@ -353,8 +353,8 @@ MonoBehaviour:
     m_TextWithWhitespace: "Test Runner\u200B"
   m_Pos:
     serializedVersion: 2
-    x: 1183
-    y: 24
+    x: 1182
+    y: 79
     width: 737
     height: 915
   m_SerializedDataModeController:
@@ -396,7 +396,7 @@ MonoBehaviour:
   m_TestListGUIs:
   - m_Window: {fileID: 14}
     runProgress:
-      RunGuid: da41f06d-b6ea-40dd-bb59-ee6dff1d4303
+      RunGuid: 9f07b1a1-b7eb-45b2-9c0e-69896a9702d1
       ExecutionSettings:
         m_TargetPlatform: 0
         m_HasTargetPlatform: 0
@@ -409,7 +409,7 @@ MonoBehaviour:
         filters:
         - testMode: 1
           testNames:
-          - CollectionTestRunner.Test
+          - PerformanceTestRunner.QueuePerformanceTest(5000,30,10)
           groupNames: []
           categoryNames: []
           assemblyNames: []
@@ -444,7 +444,7 @@ MonoBehaviour:
       categories: []
       parentId: 
       parentUniqueId: 
-    - id: 1139
+    - id: 1142
       uniqueId: '[TestAssembly.EditMode][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/TestAssembly.EditMode.dll][suite]'
       name: TestAssembly.EditMode.dll
       fullName: C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/TestAssembly.EditMode.dll
@@ -474,7 +474,7 @@ MonoBehaviour:
       description: 
       isSuite: 1
       categories: []
-      parentId: 1139
+      parentId: 1142
       parentUniqueId: '[TestAssembly.EditMode][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/TestAssembly.EditMode.dll][suite]'
     - id: 1012
       uniqueId: 'TestAssembly.EditMode.dll/AnalyzerTestRunner/[TestAssembly.EditMode][AnalyzerTestRunner.AnalyzerTestCasePerformanceTest][suite]'
@@ -500,16 +500,7 @@ MonoBehaviour:
       resultStatus: 0
       duration: 0
       messages: 
-      output: "PerformanceGroup.GC() in Undefineds\nMin:\t\t29187.40 \nMedian:\t\t84849.60
-        \nMax:\t\t765705.60 \nAvg:\t\t226153.82 \nStdDev:\t\t234119.80 \nSampleCount:\t11\nSum:\t\t2487692.00
-        \r\nFirst samples:\t\u2581\u2586\u2584\u2582\u2582\u2581\u2581\u2583\u2581\u2588\u2582\r\n(not
-        enough samples for histogram)\n\r\nPerformanceGroup in Milliseconds\nMin:\t\t1564.95
-        ms\nMedian:\t\t3056.32 ms\nMax:\t\t8202.36 ms\nAvg:\t\t3688.20 ms\nStdDev:\t\t1891.11
-        ms\nSampleCount:\t10\nSum:\t\t36882.03 ms\r\nFirst samples:\t\u2584\u2588\u2584\u2582\u2581\u2583\u2582\u2582\u2585\u2582\r\n(not
-        enough samples for histogram)\n\r\n\r\n##performancetestresult2:{\"Name\":\"AnalyzerTestRunner.AnalyzerTestCasePerformanceTest(RequiresStaticMethodImplementationAttributeAnalyzer,\\\"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/RequiresStaticMethodTestCase\\\")\",\"ClassName\":\"AnalyzerTestRunner\",\"MethodName\":\"AnalyzerTestCasePerformanceTest\",\"Version\":\"1\",\"Categories\":[\"Performance\"],\"SampleGroups\":[{\"Name\":\"PerformanceGroup.GC()\",\"Unit\":8,\"IncreaseIsBetter\":false,\"Samples\":[66836.8,607427.6,331105.4,84849.6,82649.8,29187.4,76467.6,199268.6,67738.0,765705.6,176455.6],\"Min\":29187.4,\"Max\":765705.6,\"Median\":84849.6,\"Average\":226153.81818181824,\"StandardDeviation\":234119.79978910494,\"Sum\":2487692.0000000006},{\"Name\":\"PerformanceGroup\",\"Unit\":2,\"IncreaseIsBetter\":false,\"Samples\":[4341.8676,8202.3623,3951.5158999999985,2327.566500000001,1564.947799999998,3256.6296,2856.0112999999983,2492.323800000002,5689.2497,2199.5522999999957],\"Min\":1564.947799999998,\"Max\":8202.3623,\"Median\":3056.3204499999993,\"Average\":3688.2026799999994,\"StandardDeviation\":1891.11036420815,\"Sum\":36882.02679999999}]}\r\n##performancetestruninfo2:{\"TestSuite\":\"Editmode\",\"Date\":1743225291772,\"Player\":{\"Development\":true,\"ScreenWidth\":1920,\"ScreenHeight\":1080,\"ScreenRefreshRate\":60,\"Fullscreen\":false,\"Vsync\":1,\"AntiAliasing\":0,\"Batchmode\":false,\"RenderThreadingMode\":\"MultiThreaded\",\"GpuSkinning\":false,\"Platform\":\"WindowsEditor\",\"ColorSpace\":\"Gamma\",\"AnisotropicFiltering\":\"Disable\",\"BlendWeights\":\"FourBones\",\"GraphicsApi\":\"Direct3D11\",\"ScriptingBackend\":\"Mono2x\",\"AndroidTargetSdkVersion\":\"AndroidApiLevelAuto\",\"AndroidBuildSystem\":\"Gradle\",\"BuildTarget\":\"StandaloneWindows64\",\"StereoRenderingPath\":\"MultiPass\"},\"Hardware\":{\"OperatingSystem\":\"Windows
-        10  (10.0.19045) 64bit\",\"DeviceModel\":\"82R4 (LENOVO)\",\"DeviceName\":\"DESKTOP-55T0R54\",\"ProcessorType\":\"AMD
-        Ryzen 5 5500U with Radeon Graphics \",\"ProcessorCount\":12,\"GraphicsDeviceName\":\"AMD
-        Radeon(TM) Graphics\",\"SystemMemorySizeMB\":14181},\"Editor\":{\"Version\":\"6000.0.26f1\",\"Branch\":\"6000.0/staging\",\"Changeset\":\"ccb7c73d2c02\",\"Date\":1730275040},\"Dependencies\":[\"com.cysharp.unitask@2.5.10\",\"com.unity.2d.animation@10.1.4\",\"com.unity.2d.pixel-perfect@5.0.3\",\"com.unity.2d.psdimporter@9.0.3\",\"com.unity.2d.sprite@1.0.0\",\"com.unity.2d.spriteshape@10.0.7\",\"com.unity.2d.tilemap@1.0.0\",\"com.unity.ai.navigation@2.0.5\",\"com.unity.assetbundlebrowser@1.7.0\",\"com.unity.collab-proxy@2.5.2\",\"com.unity.editorcoroutines@1.0.0\",\"com.unity.ide.rider@3.0.34\",\"com.unity.memoryprofiler@1.1.3\",\"com.unity.mobile.android-logcat@1.4.4\",\"com.unity.multiplayer.center@1.0.0\",\"com.unity.performance.profile-analyzer@1.2.3\",\"com.unity.profiling.core@1.0.2\",\"com.unity.render-pipelines.universal@17.0.3\",\"com.unity.test-framework@1.4.5\",\"com.unity.test-framework.performance@3.0.3\",\"com.unity.testtools.codecoverage@1.2.6\",\"com.unity.timeline@1.8.7\",\"com.unity.ugui@2.0.0\",\"com.unity.modules.accessibility@1.0.0\",\"com.unity.modules.ai@1.0.0\",\"com.unity.modules.androidjni@1.0.0\",\"com.unity.modules.animation@1.0.0\",\"com.unity.modules.assetbundle@1.0.0\",\"com.unity.modules.audio@1.0.0\",\"com.unity.modules.cloth@1.0.0\",\"com.unity.modules.director@1.0.0\",\"com.unity.modules.imageconversion@1.0.0\",\"com.unity.modules.imgui@1.0.0\",\"com.unity.modules.jsonserialize@1.0.0\",\"com.unity.modules.particlesystem@1.0.0\",\"com.unity.modules.physics@1.0.0\",\"com.unity.modules.physics2d@1.0.0\",\"com.unity.modules.screencapture@1.0.0\",\"com.unity.modules.terrain@1.0.0\",\"com.unity.modules.terrainphysics@1.0.0\",\"com.unity.modules.tilemap@1.0.0\",\"com.unity.modules.ui@1.0.0\",\"com.unity.modules.uielements@1.0.0\",\"com.unity.modules.umbra@1.0.0\",\"com.unity.modules.unityanalytics@1.0.0\",\"com.unity.modules.unitywebrequest@1.0.0\",\"com.unity.modules.unitywebrequestassetbundle@1.0.0\",\"com.unity.modules.unitywebrequestaudio@1.0.0\",\"com.unity.modules.unitywebrequesttexture@1.0.0\",\"com.unity.modules.unitywebrequestwww@1.0.0\",\"com.unity.modules.vehicles@1.0.0\",\"com.unity.modules.video@1.0.0\",\"com.unity.modules.vr@1.0.0\",\"com.unity.modules.wind@1.0.0\",\"com.unity.modules.xr@1.0.0\",\"com.unity.modules.subsystems@1.0.0\",\"com.unity.modules.hierarchycore@1.0.0\",\"com.unity.settings-manager@2.0.1\",\"com.unity.ext.nunit@2.0.5\",\"com.unity.render-pipelines.core@17.0.3\",\"com.unity.shadergraph@17.0.3\",\"com.unity.render-pipelines.universal-config@17.0.3\",\"com.unity.burst@1.8.18\",\"com.unity.collections@2.5.1\",\"com.unity.mathematics@1.3.2\",\"com.unity.2d.common@9.0.7\",\"com.unity.searcher@4.9.2\",\"com.unity.rendering.light-transport@1.0.1\",\"com.unity.nuget.mono-cecil@1.11.4\"],\"Results\":[]}\r\n"
+      output: 
       stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
@@ -526,13 +517,7 @@ MonoBehaviour:
       resultStatus: 0
       duration: 0
       messages: 
-      output: "PerformanceGroup.GC() in Undefineds\nMin:\t\t33693.60 \nMedian:\t\t174883.60
-        \nMax:\t\t336886.40 \nAvg:\t\t171444.44 \nStdDev:\t\t99737.13 \nSampleCount:\t11\nSum:\t\t1885888.80
-        \r\nFirst samples:\t\u2582\u2582\u2584\u2581\u2582\u2588\u2585\u2582\u2586\u2585\u2588\r\n(not
-        enough samples for histogram)\n\r\nPerformanceGroup in Milliseconds\nMin:\t\t2292.85
-        ms\nMedian:\t\t3491.10 ms\nMax:\t\t10317.70 ms\nAvg:\t\t4494.11 ms\nStdDev:\t\t2491.82
-        ms\nSampleCount:\t10\nSum:\t\t44941.05 ms\r\nFirst samples:\t\u2581\u2581\u2582\u2581\u2585\u2583\u2585\u2583\u2581\u2588\r\n(not
-        enough samples for histogram)\n\r\n\r\n##performancetestresult2:{\"Name\":\"AnalyzerTestRunner.AnalyzerTestCasePerformanceTest(RequiresAttributeImplementationAttributeAnalyzer,\\\"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/RequiresAttributeTestCase\\\")\",\"ClassName\":\"AnalyzerTestRunner\",\"MethodName\":\"AnalyzerTestCasePerformanceTest\",\"Version\":\"1\",\"Categories\":[\"Performance\"],\"SampleGroups\":[{\"Name\":\"PerformanceGroup.GC()\",\"Unit\":8,\"IncreaseIsBetter\":false,\"Samples\":[73119.4,90155.2,174883.6,33693.6,91955.0,336886.4,198241.4,96856.4,263600.4,196766.6,329730.8],\"Min\":33693.6,\"Max\":336886.4,\"Median\":174883.6,\"Average\":171444.43636363638,\"StandardDeviation\":99737.1300706674,\"Sum\":1885888.8},{\"Name\":\"PerformanceGroup\",\"Unit\":2,\"IncreaseIsBetter\":false,\"Samples\":[2292.8542,2554.1372,2880.079099999999,2667.4539000000004,6538.0434000000005,4547.799800000001,6675.800900000002,4102.118600000002,2365.0683999999965,10317.695099999997],\"Min\":2292.8542,\"Max\":10317.695099999997,\"Median\":3491.0988500000003,\"Average\":4494.10506,\"StandardDeviation\":2491.8212244440892,\"Sum\":44941.0506}]}\r\n"
+      output: 
       stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
@@ -549,13 +534,7 @@ MonoBehaviour:
       resultStatus: 0
       duration: 0
       messages: 
-      output: "PerformanceGroup.GC() in Undefineds\nMin:\t\t28418.80 \nMedian:\t\t121445.20
-        \nMax:\t\t243172.60 \nAvg:\t\t118487.69 \nStdDev:\t\t70729.04 \nSampleCount:\t11\nSum:\t\t1303364.60
-        \r\nFirst samples:\t\u2587\u2582\u2583\u2588\u2582\u2586\u2581\u2584\u2584\u2581\u2584\r\n(not
-        enough samples for histogram)\n\r\nPerformanceGroup in Milliseconds\nMin:\t\t1363.44
-        ms\nMedian:\t\t4198.16 ms\nMax:\t\t6928.61 ms\nAvg:\t\t3591.85 ms\nStdDev:\t\t1724.57
-        ms\nSampleCount:\t10\nSum:\t\t35918.50 ms\r\nFirst samples:\t\u2581\u2585\u2585\u2581\u2585\u2582\u2588\u2585\u2581\u2584\r\n(not
-        enough samples for histogram)\n\r\n\r\n##performancetestresult2:{\"Name\":\"AnalyzerTestRunner.AnalyzerTestCasePerformanceTest(BuilderAttributeVerifyAnalyzer,\\\"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/BuilderAttributeVerifyAnalyzerTestCase\\\")\",\"ClassName\":\"AnalyzerTestRunner\",\"MethodName\":\"AnalyzerTestCasePerformanceTest\",\"Version\":\"1\",\"Categories\":[\"Performance\"],\"SampleGroups\":[{\"Name\":\"PerformanceGroup.GC()\",\"Unit\":8,\"IncreaseIsBetter\":false,\"Samples\":[223174.2,56993.2,74795.2,243172.6,68970.4,189723.2,28418.8,131186.2,130008.6,35477.0,121445.2],\"Min\":28418.8,\"Max\":243172.6,\"Median\":121445.2,\"Average\":118487.69090909092,\"StandardDeviation\":70729.03995550979,\"Sum\":1303364.6},{\"Name\":\"PerformanceGroup\",\"Unit\":2,\"IncreaseIsBetter\":false,\"Samples\":[1398.7911999999997,4536.694100000001,4600.306500000001,1363.4439999999995,4267.7723000000005,2317.604800000001,6928.609800000006,4642.397799999999,1734.3387000000002,4128.537700000001],\"Min\":1363.4439999999995,\"Max\":6928.609800000006,\"Median\":4198.155000000001,\"Average\":3591.8496900000005,\"StandardDeviation\":1724.5748876778232,\"Sum\":35918.496900000006}]}\r\n"
+      output: 
       stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
@@ -572,13 +551,7 @@ MonoBehaviour:
       resultStatus: 0
       duration: 0
       messages: 
-      output: "PerformanceGroup.GC() in Undefineds\nMin:\t\t28611.20 \nMedian:\t\t81818.40
-        \nMax:\t\t232041.20 \nAvg:\t\t98633.09 \nStdDev:\t\t60704.50 \nSampleCount:\t11\nSum:\t\t1084964.00
-        \r\nFirst samples:\t\u2582\u2586\u2581\u2583\u2582\u2581\u2583\u2588\u2585\u2584\u2583\r\n(not
-        enough samples for histogram)\n\r\nPerformanceGroup in Milliseconds\nMin:\t\t2922.46
-        ms\nMedian:\t\t4744.27 ms\nMax:\t\t6036.58 ms\nAvg:\t\t4449.21 ms\nStdDev:\t\t1053.19
-        ms\nSampleCount:\t10\nSum:\t\t44492.13 ms\r\nFirst samples:\t\u2587\u2586\u2588\u2582\u2581\u2582\u2587\u2586\u2582\u2585\r\n(not
-        enough samples for histogram)\n\r\n\r\n##performancetestresult2:{\"Name\":\"AnalyzerTestRunner.AnalyzerTestCasePerformanceTest(AttributeAbstractAndInterfaceConstraintsAnalyzer,\\\"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/AttributeAbstractAndInterfaceConstraintsAnalyzerTestCase\\\")\",\"ClassName\":\"AnalyzerTestRunner\",\"MethodName\":\"AnalyzerTestCasePerformanceTest\",\"Version\":\"1\",\"Categories\":[\"Performance\"],\"SampleGroups\":[{\"Name\":\"PerformanceGroup.GC()\",\"Unit\":8,\"IncreaseIsBetter\":false,\"Samples\":[53311.2,178596.8,33496.4,81508.6,45363.0,28611.2,81818.4,232041.2,138158.2,111425.0,100634.0],\"Min\":28611.2,\"Max\":232041.2,\"Median\":81818.4,\"Average\":98633.09090909091,\"StandardDeviation\":60704.501312946755,\"Sum\":1084964.0},{\"Name\":\"PerformanceGroup\",\"Unit\":2,\"IncreaseIsBetter\":false,\"Samples\":[5442.502999999999,4984.6765,6036.579600000001,3313.4773000000023,2922.4617,3208.413800000002,5379.284700000004,5141.332999999999,3559.5238000000027,4503.871900000006],\"Min\":2922.4617,\"Max\":6036.579600000001,\"Median\":4744.274200000003,\"Average\":4449.212530000002,\"StandardDeviation\":1053.191559178061,\"Sum\":44492.125300000014}]}\r\n"
+      output: 
       stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
@@ -687,7 +660,7 @@ MonoBehaviour:
       isSuite: 1
       categories:
       - Functional
-      parentId: 1139
+      parentId: 1142
       parentUniqueId: '[TestAssembly.EditMode][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/TestAssembly.EditMode.dll][suite]'
     - id: 1035
       uniqueId: 'TestAssembly.EditMode.dll/CallStackTestRunner/[TestAssembly.EditMode][CallStackTestRunner.CallStackQueueFunctionalTest]'
@@ -722,13 +695,13 @@ MonoBehaviour:
       categories:
       - Functional
       - Performance
-      parentId: 1139
+      parentId: 1142
       parentUniqueId: '[TestAssembly.EditMode][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/TestAssembly.EditMode.dll][suite]'
     - id: 1042
       uniqueId: 'TestAssembly.EditMode.dll/CollectionTestRunner/[TestAssembly.EditMode][CollectionTestRunner.CollectionPerformanceTest][suite]'
       name: CollectionPerformanceTest
       fullName: CollectionTestRunner.CollectionPerformanceTest
-      resultStatus: 1
+      resultStatus: 0
       duration: 0
       messages: 
       output: 
@@ -746,23 +719,10 @@ MonoBehaviour:
       uniqueId: 'TestAssembly.EditMode.dll/CollectionTestRunner/CollectionPerformanceTest/[TestAssembly.EditMode][CollectionTestRunner.CollectionPerformanceTest(50,20)]'
       name: CollectionPerformanceTest(50,20)
       fullName: CollectionTestRunner.CollectionPerformanceTest(50,20)
-      resultStatus: 1
-      duration: 4.665578
+      resultStatus: 0
+      duration: 0
       messages: 
-      output: "While.GC() in Undefineds\nMin:\t\t0.00 \nMedian:\t\t0.00 \nMax:\t\t0.05
-        \nAvg:\t\t0.00 \nStdDev:\t\t0.01 \nSampleCount:\t55\nSum:\t\t0.05 \r\nFirst
-        samples:\t\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2588\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\r\nHistogram:\t\u2588\u2582\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\r\n\r\nWhile
-        in Microseconds\nMin:\t\t3.00 \u03BCs\nMedian:\t\t4.05 \u03BCs\nMax:\t\t10.30
-        \u03BCs\nAvg:\t\t4.30 \u03BCs\nStdDev:\t\t1.56 \u03BCs\nSampleCount:\t50\nSum:\t\t214.80
-        \u03BCs\r\nFirst samples:\t\u2587\u2581\u2582\u2582\u2583\u2581\u2583\u2584\u2581\u2581\u2581\u2581\u2582\u2581\u2581\u2581\u2582\u2584\u2582\u2581\u2581\u2582\u2584\u2581\u2582\u2588\u2581\u2581\u2582\u2582\u2581\u2583\u2581\u2582\u2581\u2583\u2587\u2583\u2582\u2581\u2582\u2582\u2582\u2581\u2581\u2582\u2581\u2581\u2582\u2582\r\nHistogram:\t\u2588\u2582\u2582\u2581\u2581\u2581\u2581\u2581\u2581\u2581\r\n\r\nFor.GC()
-        in Undefineds\nMin:\t\t0.00 \nMedian:\t\t0.00 \nMax:\t\t0.05 \nAvg:\t\t0.00
-        \nStdDev:\t\t0.01 \nSampleCount:\t55\nSum:\t\t0.05 \r\nFirst samples:\t\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2588\r\nHistogram:\t\u2588\u2582\u2582\u2581\u2581\u2581\u2581\u2581\u2581\u2581\r\n\r\nFor
-        in Microseconds\nMin:\t\t3.20 \u03BCs\nMedian:\t\t4.00 \u03BCs\nMax:\t\t9.40
-        \u03BCs\nAvg:\t\t4.29 \u03BCs\nStdDev:\t\t1.14 \u03BCs\nSampleCount:\t50\nSum:\t\t214.50
-        \u03BCs\r\nFirst samples:\t\u2581\u2582\u2581\u2582\u2581\u2583\u2583\u2582\u2581\u2581\u2582\u2581\u2581\u2581\u2585\u2581\u2582\u2581\u2583\u2583\u2581\u2582\u2581\u2581\u2583\u2584\u2583\u2585\u2582\u2581\u2583\u2582\u2583\u2581\u2581\u2582\u2588\u2582\u2581\u2583\u2581\u2583\u2582\u2581\u2582\u2581\u2582\u2581\u2585\u2582\r\nHistogram:\t\u2588\u2582\u2582\u2581\u2581\u2581\u2581\u2581\u2581\u2581\r\n\r\n\r\n##performancetestresult2:{\"Name\":\"CollectionTestRunner.CollectionPerformanceTest(50,20)\",\"ClassName\":\"CollectionTestRunner\",\"MethodName\":\"CollectionPerformanceTest\",\"Version\":\"1\",\"Categories\":[\"Performance\",\"Functional\",\"Performance\"],\"SampleGroups\":[{\"Name\":\"While.GC()\",\"Unit\":8,\"IncreaseIsBetter\":false,\"Samples\":[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.05,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0],\"Min\":0.0,\"Max\":0.05,\"Median\":0.0,\"Average\":0.0009090909090909091,\"StandardDeviation\":0.006680426571226842,\"Sum\":0.05},{\"Name\":\"While\",\"Unit\":1,\"IncreaseIsBetter\":false,\"Samples\":[9.29999999999609,3.29999999996744,4.300000000000637,4.200000000025739,4.899999999963711,3.3000000000242837,5.200000000002092,5.999999999971806,3.29999999996744,3.400000000056025,3.199999999992542,3.500000000030923,4.30000000005748,3.199999999992542,3.300000000081127,3.499999999917236,3.6000000000058209,5.80000000002201,4.299999999943793,3.199999999992542,2.9999999999290596,4.1999999998552088,6.399999999985084,2.9999999999290596,4.299999999830106,10.299999999915599,3.400000000056025,3.400000000056025,3.6000000000058209,4.0999999998803109,3.2999999998537534,4.599999999982174,3.200000000106229,4.500000000007276,3.0999999999039575,5.599999999958527,9.09999999998945,4.699999999957072,4.400000000032378,3.200000000106229,4.100000000107684,4.299999999830106,4.30000000005748,3.200000000106229,3.200000000106229,4.30000000005748,3.2999999998537534,3.2999999998537534,3.9999999999054127,4.30000000005748],\"Min\":2.9999999999290596,\"Max\":10.299999999915599,\"Median\":4.0499999998928619,\"Average\":4.295999999985725,\"StandardDeviation\":1.5615325805049699,\"Sum\":214.79999999928624},{\"Name\":\"For.GC()\",\"Unit\":8,\"IncreaseIsBetter\":false,\"Samples\":[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.05],\"Min\":0.0,\"Max\":0.05,\"Median\":0.0,\"Average\":0.0009090909090909091,\"StandardDeviation\":0.00668042657122685,\"Sum\":0.05},{\"Name\":\"For\",\"Unit\":1,\"IncreaseIsBetter\":false,\"Samples\":[3.3999999999991816,3.899999999987358,3.500000000030923,3.999999999962256,3.6000000000058209,4.9999999999954529,4.799999999988813,4.000000000019099,3.499999999917236,3.499999999917236,4.500000000007276,3.29999999996744,3.399999999942338,3.399999999942338,6.300000000010186,3.29999999996744,4.400000000032378,3.500000000030923,4.699999999957072,4.599999999982174,3.500000000030923,4.299999999830106,3.6000000000058209,3.400000000056025,4.599999999982174,5.9000000001105949,4.599999999982174,6.80000000011205,4.500000000007276,3.300000000081127,5.099999999856664,4.400000000032378,4.699999999957072,3.400000000056025,3.500000000030923,4.400000000032378,9.399999999914144,4.400000000032378,3.500000000030923,4.699999999957072,3.6000000000058209,4.699999999957072,4.400000000032378,3.400000000056025,3.9999999999054127,3.400000000056025,4.500000000007276,3.200000000106229,6.899999999859574,3.7999999999556168],\"Min\":3.200000000106229,\"Max\":9.399999999914144,\"Median\":3.9999999999906779,\"Average\":4.289999999994052,\"StandardDeviation\":1.1361778029747208,\"Sum\":214.4999999997026}]}\r\n##performancetestruninfo2:{\"TestSuite\":\"Editmode\",\"Date\":1743229215717,\"Player\":{\"Development\":true,\"ScreenWidth\":1920,\"ScreenHeight\":1080,\"ScreenRefreshRate\":60,\"Fullscreen\":false,\"Vsync\":1,\"AntiAliasing\":0,\"Batchmode\":false,\"RenderThreadingMode\":\"MultiThreaded\",\"GpuSkinning\":false,\"Platform\":\"WindowsEditor\",\"ColorSpace\":\"Gamma\",\"AnisotropicFiltering\":\"Disable\",\"BlendWeights\":\"FourBones\",\"GraphicsApi\":\"Direct3D11\",\"ScriptingBackend\":\"Mono2x\",\"AndroidTargetSdkVersion\":\"AndroidApiLevelAuto\",\"AndroidBuildSystem\":\"Gradle\",\"BuildTarget\":\"StandaloneWindows64\",\"StereoRenderingPath\":\"MultiPass\"},\"Hardware\":{\"OperatingSystem\":\"Windows
-        10  (10.0.19045) 64bit\",\"DeviceModel\":\"82R4 (LENOVO)\",\"DeviceName\":\"DESKTOP-55T0R54\",\"ProcessorType\":\"AMD
-        Ryzen 5 5500U with Radeon Graphics \",\"ProcessorCount\":12,\"GraphicsDeviceName\":\"AMD
-        Radeon(TM) Graphics\",\"SystemMemorySizeMB\":14181},\"Editor\":{\"Version\":\"6000.0.26f1\",\"Branch\":\"6000.0/staging\",\"Changeset\":\"ccb7c73d2c02\",\"Date\":1730275040},\"Dependencies\":[\"com.cysharp.unitask@2.5.10\",\"com.unity.2d.animation@10.1.4\",\"com.unity.2d.pixel-perfect@5.0.3\",\"com.unity.2d.psdimporter@9.0.3\",\"com.unity.2d.sprite@1.0.0\",\"com.unity.2d.spriteshape@10.0.7\",\"com.unity.2d.tilemap@1.0.0\",\"com.unity.ai.navigation@2.0.5\",\"com.unity.assetbundlebrowser@1.7.0\",\"com.unity.collab-proxy@2.5.2\",\"com.unity.editorcoroutines@1.0.0\",\"com.unity.ide.rider@3.0.34\",\"com.unity.memoryprofiler@1.1.3\",\"com.unity.mobile.android-logcat@1.4.4\",\"com.unity.multiplayer.center@1.0.0\",\"com.unity.performance.profile-analyzer@1.2.3\",\"com.unity.profiling.core@1.0.2\",\"com.unity.render-pipelines.universal@17.0.3\",\"com.unity.test-framework@1.4.5\",\"com.unity.test-framework.performance@3.0.3\",\"com.unity.testtools.codecoverage@1.2.6\",\"com.unity.timeline@1.8.7\",\"com.unity.ugui@2.0.0\",\"com.unity.modules.accessibility@1.0.0\",\"com.unity.modules.ai@1.0.0\",\"com.unity.modules.androidjni@1.0.0\",\"com.unity.modules.animation@1.0.0\",\"com.unity.modules.assetbundle@1.0.0\",\"com.unity.modules.audio@1.0.0\",\"com.unity.modules.cloth@1.0.0\",\"com.unity.modules.director@1.0.0\",\"com.unity.modules.imageconversion@1.0.0\",\"com.unity.modules.imgui@1.0.0\",\"com.unity.modules.jsonserialize@1.0.0\",\"com.unity.modules.particlesystem@1.0.0\",\"com.unity.modules.physics@1.0.0\",\"com.unity.modules.physics2d@1.0.0\",\"com.unity.modules.screencapture@1.0.0\",\"com.unity.modules.terrain@1.0.0\",\"com.unity.modules.terrainphysics@1.0.0\",\"com.unity.modules.tilemap@1.0.0\",\"com.unity.modules.ui@1.0.0\",\"com.unity.modules.uielements@1.0.0\",\"com.unity.modules.umbra@1.0.0\",\"com.unity.modules.unityanalytics@1.0.0\",\"com.unity.modules.unitywebrequest@1.0.0\",\"com.unity.modules.unitywebrequestassetbundle@1.0.0\",\"com.unity.modules.unitywebrequestaudio@1.0.0\",\"com.unity.modules.unitywebrequesttexture@1.0.0\",\"com.unity.modules.unitywebrequestwww@1.0.0\",\"com.unity.modules.vehicles@1.0.0\",\"com.unity.modules.video@1.0.0\",\"com.unity.modules.vr@1.0.0\",\"com.unity.modules.wind@1.0.0\",\"com.unity.modules.xr@1.0.0\",\"com.unity.modules.subsystems@1.0.0\",\"com.unity.modules.hierarchycore@1.0.0\",\"com.unity.settings-manager@2.0.1\",\"com.unity.ext.nunit@2.0.5\",\"com.unity.render-pipelines.core@17.0.3\",\"com.unity.shadergraph@17.0.3\",\"com.unity.render-pipelines.universal-config@17.0.3\",\"com.unity.burst@1.8.18\",\"com.unity.collections@2.5.1\",\"com.unity.mathematics@1.3.2\",\"com.unity.2d.common@9.0.7\",\"com.unity.searcher@4.9.2\",\"com.unity.rendering.light-transport@1.0.1\",\"com.unity.nuget.mono-cecil@1.11.4\"],\"Results\":[]}\r\n"
+      output: 
       stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
@@ -771,26 +731,16 @@ MonoBehaviour:
       categories:
       - Performance
       - Functional
-      parentId: 1038
+      parentId: 1042
       parentUniqueId: 'TestAssembly.EditMode.dll/CollectionTestRunner/[TestAssembly.EditMode][CollectionTestRunner.CollectionPerformanceTest][suite]'
     - id: 1038
       uniqueId: 'TestAssembly.EditMode.dll/CollectionTestRunner/CollectionPerformanceTest/[TestAssembly.EditMode][CollectionTestRunner.CollectionPerformanceTest(50,50)]'
       name: CollectionPerformanceTest(50,50)
       fullName: CollectionTestRunner.CollectionPerformanceTest(50,50)
-      resultStatus: 1
-      duration: 4.6255894
+      resultStatus: 0
+      duration: 0
       messages: 
-      output: "While.GC() in Undefineds\nMin:\t\t0.00 \nMedian:\t\t0.00 \nMax:\t\t0.02
-        \nAvg:\t\t0.00 \nStdDev:\t\t0.01 \nSampleCount:\t55\nSum:\t\t0.08 \r\nFirst
-        samples:\t\u2581\u2581\u2581\u2581\u2581\u2581\u2588\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2588\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2588\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2588\u2581\u2581\u2581\r\nHistogram:\t\u2588\u2582\u2582\u2581\u2581\u2581\u2581\u2581\u2581\u2581\r\n\r\nWhile
-        in Microseconds\nMin:\t\t4.70 \u03BCs\nMedian:\t\t6.15 \u03BCs\nMax:\t\t11.30
-        \u03BCs\nAvg:\t\t6.62 \u03BCs\nStdDev:\t\t1.88 \u03BCs\nSampleCount:\t50\nSum:\t\t330.90
-        \u03BCs\r\nFirst samples:\t\u2586\u2584\u2582\u2583\u2583\u2582\u2582\u2582\u2582\u2581\u2583\u2582\u2582\u2582\u2582\u2583\u2582\u2581\u2581\u2581\u2587\u2583\u2584\u2583\u2588\u2588\u2584\u2583\u2586\u2584\u2582\u2581\u2581\u2588\u2582\u2584\u2582\u2583\u2582\u2583\u2583\u2581\u2582\u2582\u2582\u2583\u2588\u2585\u2582\u2584\r\nHistogram:\t\u2588\u2582\u2582\u2581\u2581\u2581\u2581\u2581\u2581\u2581\r\n\r\nFor.GC()
-        in Undefineds\nMin:\t\t0.00 \nMedian:\t\t0.00 \nMax:\t\t0.02 \nAvg:\t\t0.00
-        \nStdDev:\t\t0.01 \nSampleCount:\t55\nSum:\t\t0.12 \r\nFirst samples:\t\u2588\u2581\u2588\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2588\u2581\u2581\u2588\u2581\u2588\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2588\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\r\nHistogram:\t\u2588\u2582\u2582\u2581\u2581\u2581\u2581\u2581\u2581\u2581\r\n\r\nFor
-        in Microseconds\nMin:\t\t5.40 \u03BCs\nMedian:\t\t5.90 \u03BCs\nMax:\t\t11.50
-        \u03BCs\nAvg:\t\t6.76 \u03BCs\nStdDev:\t\t1.54 \u03BCs\nSampleCount:\t50\nSum:\t\t337.90
-        \u03BCs\r\nFirst samples:\t\u2582\u2584\u2581\u2583\u2583\u2587\u2581\u2584\u2581\u2582\u2588\u2581\u2583\u2581\u2583\u2584\u2582\u2581\u2581\u2581\u2584\u2583\u2581\u2582\u2584\u2582\u2586\u2581\u2585\u2588\u2581\u2581\u2581\u2583\u2582\u2582\u2581\u2583\u2581\u2581\u2583\u2581\u2581\u2584\u2581\u2583\u2581\u2581\u2584\u2581\r\nHistogram:\t\u2588\u2582\u2582\u2582\u2581\u2581\u2581\u2581\u2581\u2581\r\n\r\n\r\n##performancetestresult2:{\"Name\":\"CollectionTestRunner.CollectionPerformanceTest(50,50)\",\"ClassName\":\"CollectionTestRunner\",\"MethodName\":\"CollectionPerformanceTest\",\"Version\":\"1\",\"Categories\":[\"Performance\",\"Functional\",\"Performance\"],\"SampleGroups\":[{\"Name\":\"While.GC()\",\"Unit\":8,\"IncreaseIsBetter\":false,\"Samples\":[0.0,0.0,0.0,0.0,0.0,0.0,0.02,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.02,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.02,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.02,0.0,0.0,0.0],\"Min\":0.0,\"Max\":0.02,\"Median\":0.0,\"Average\":0.0014545454545454547,\"StandardDeviation\":0.005193766129849344,\"Sum\":0.08},{\"Name\":\"While\",\"Unit\":1,\"IncreaseIsBetter\":false,\"Samples\":[9.399999999970988,7.2999999999865399,5.200000000002092,6.900000000030104,6.799999999998363,5.29999999997699,5.199999999945248,5.199999999945248,5.200000000058935,4.700000000070759,6.999999999948159,5.200000000058935,5.199999999945248,5.300000000033833,5.499999999983629,7.000000000061846,5.599999999958527,4.700000000070759,4.699999999957072,4.699999999957072,9.999999999990905,6.899999999859574,7.900000000063301,6.900000000086948,11.099999999942157,11.300000000119326,7.399999999961437,7.000000000061846,9.700000000066212,7.400000000188811,5.200000000058935,4.699999999957072,4.699999999957072,11.099999999942157,5.199999999831562,7.2999999999865399,5.400000000008731,6.699999999909778,5.300000000033833,7.000000000061846,6.700000000137152,5.100000000084037,5.200000000058935,5.200000000058935,5.2999999998064599,7.000000000061846,11.200000000371802,8.000000000265573,5.200000000058935,7.700000000113505],\"Min\":4.699999999957072,\"Max\":11.300000000119326,\"Median\":6.149999999934153,\"Average\":6.618000000021311,\"StandardDeviation\":1.8808179072171974,\"Sum\":330.90000000106559},{\"Name\":\"For.GC()\",\"Unit\":8,\"IncreaseIsBetter\":false,\"Samples\":[0.02,0.0,0.02,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.02,0.0,0.0,0.02,0.0,0.02,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.02,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0],\"Min\":0.0,\"Max\":0.02,\"Median\":0.0,\"Average\":0.002181818181818182,\"StandardDeviation\":0.006235064799811727,\"Sum\":0.12000000000000001},{\"Name\":\"For\",\"Unit\":1,\"IncreaseIsBetter\":false,\"Samples\":[5.899999999996908,7.900000000006457,5.699999999990268,7.100000000036744,7.500000000050022,10.59999999995398,5.699999999990268,7.699999999999818,5.400000000008731,5.999999999971806,11.100000000055843,5.399999999895044,7.2000000000116419,5.499999999983629,7.399999999961437,7.60000000002492,5.899999999996908,5.699999999933425,5.600000000072214,5.599999999958527,8.100000000013097,7.400000000188811,5.699999999933425,5.999999999858119,8.199999999987995,5.9000000001105949,9.80000000004111,5.800000000135697,8.699999999862485,11.499999999841748,5.499999999983629,5.599999999958527,5.400000000008731,7.499999999936335,5.9000000001105949,5.9000000001105949,5.799999999908323,7.2999999999865399,5.400000000008731,5.499999999983629,7.2999999999865399,5.599999999958527,5.599999999958527,8.100000000013097,5.599999999958527,7.299999999759166,5.699999999706051,5.400000000008731,8.200000000215369,5.700000000160799],\"Min\":5.399999999895044,\"Max\":11.499999999841748,\"Median\":5.9000000001105949,\"Average\":6.757999999991853,\"StandardDeviation\":1.5381924456960757,\"Sum\":337.89999999959266}]}\r\n"
+      output: 
       stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
@@ -799,26 +749,16 @@ MonoBehaviour:
       categories:
       - Performance
       - Functional
-      parentId: 1039
+      parentId: 1042
       parentUniqueId: 'TestAssembly.EditMode.dll/CollectionTestRunner/[TestAssembly.EditMode][CollectionTestRunner.CollectionPerformanceTest][suite]'
     - id: 1039
       uniqueId: 'TestAssembly.EditMode.dll/CollectionTestRunner/CollectionPerformanceTest/[TestAssembly.EditMode][CollectionTestRunner.CollectionPerformanceTest(50,100)]'
       name: CollectionPerformanceTest(50,100)
       fullName: CollectionTestRunner.CollectionPerformanceTest(50,100)
-      resultStatus: 1
-      duration: 4.597854
+      resultStatus: 0
+      duration: 0
       messages: 
-      output: "While.GC() in Undefineds\nMin:\t\t0.00 \nMedian:\t\t0.00 \nMax:\t\t0.01
-        \nAvg:\t\t0.00 \nStdDev:\t\t0.00 \nSampleCount:\t55\nSum:\t\t0.04 \r\nFirst
-        samples:\t\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2588\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2588\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2588\u2581\u2581\u2588\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\r\nHistogram:\t\u2588\u2582\u2582\u2581\u2581\u2581\u2581\u2581\u2581\u2581\r\n\r\nWhile
-        in Microseconds\nMin:\t\t8.40 \u03BCs\nMedian:\t\t11.60 \u03BCs\nMax:\t\t20.30
-        \u03BCs\nAvg:\t\t11.45 \u03BCs\nStdDev:\t\t2.87 \u03BCs\nSampleCount:\t50\nSum:\t\t572.50
-        \u03BCs\r\nFirst samples:\t\u2581\u2584\u2583\u2581\u2583\u2581\u2585\u2583\u2583\u2581\u2586\u2587\u2583\u2581\u2588\u2581\u2584\u2581\u2586\u2584\u2582\u2583\u2581\u2583\u2584\u2581\u2583\u2584\u2581\u2581\u2583\u2583\u2581\u2583\u2583\u2586\u2583\u2581\u2583\u2581\u2583\u2583\u2581\u2583\u2581\u2581\u2581\u2582\u2583\u2584\r\nHistogram:\t\u2588\u2582\u2582\u2582\u2582\u2581\u2581\u2581\u2581\u2581\r\n\r\nFor.GC()
-        in Undefineds\nMin:\t\t0.00 \nMedian:\t\t0.00 \nMax:\t\t0.05 \nAvg:\t\t0.00
-        \nStdDev:\t\t0.01 \nSampleCount:\t55\nSum:\t\t0.17 \r\nFirst samples:\t\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2584\u2581\u2581\u2582\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2582\u2581\u2588\u2581\u2581\u2581\u2581\u2582\u2581\u2582\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2582\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2584\u2585\u2581\u2581\r\nHistogram:\t\u2588\u2582\u2582\u2582\u2581\u2581\u2581\u2581\u2581\u2581\r\n\r\nFor
-        in Microseconds\nMin:\t\t8.80 \u03BCs\nMedian:\t\t9.50 \u03BCs\nMax:\t\t39.90
-        \u03BCs\nAvg:\t\t12.30 \u03BCs\nStdDev:\t\t5.11 \u03BCs\nSampleCount:\t50\nSum:\t\t614.90
-        \u03BCs\r\nFirst samples:\t\u2581\u2583\u2583\u2581\u2582\u2582\u2581\u2581\u2581\u2581\u2581\u2583\u2582\u2583\u2583\u2581\u2582\u2581\u2581\u2583\u2581\u2582\u2581\u2581\u2582\u2581\u2581\u2581\u2582\u2582\u2581\u2582\u2581\u2582\u2581\u2581\u2583\u2581\u2581\u2581\u2581\u2581\u2581\u2582\u2581\u2581\u2583\u2588\u2582\u2582\r\nHistogram:\t\u2588\u2582\u2582\u2582\u2581\u2581\u2581\u2581\u2581\u2581\r\n\r\n\r\n##performancetestresult2:{\"Name\":\"CollectionTestRunner.CollectionPerformanceTest(50,100)\",\"ClassName\":\"CollectionTestRunner\",\"MethodName\":\"CollectionPerformanceTest\",\"Version\":\"1\",\"Categories\":[\"Performance\",\"Functional\",\"Performance\"],\"SampleGroups\":[{\"Name\":\"While.GC()\",\"Unit\":8,\"IncreaseIsBetter\":false,\"Samples\":[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.01,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.01,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.01,0.0,0.0,0.01,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0],\"Min\":0.0,\"Max\":0.01,\"Median\":0.0,\"Average\":0.0007272727272727273,\"StandardDeviation\":0.002596883064924672,\"Sum\":0.04},{\"Name\":\"While\",\"Unit\":1,\"IncreaseIsBetter\":false,\"Samples\":[8.399999999994634,13.300000000015189,11.799999999993816,8.399999999994634,11.799999999993816,8.600000000001274,14.600000000029923,11.700000000018918,11.700000000018918,8.500000000026376,16.800000000102956,17.79999999996562,11.60000000004402,8.700000000089858,20.30000000002019,8.400000000051478,13.900000000035107,8.600000000001274,17.099999999913963,14.299999999934699,10.89999999999236,11.599999999816646,8.699999999862485,11.300000000119326,14.200000000073488,8.39999999993779,11.099999999942157,13.19999999986976,8.599999999887587,8.39999999993779,11.799999999993816,12.199999999893408,8.500000000140063,11.700000000018918,11.499999999841748,16.89999999985048,12.199999999893408,8.699999999862485,11.60000000004402,8.800000000064756,11.700000000018918,12.09999999991851,8.500000000140063,11.60000000004402,8.60000000011496,8.599999999660213,8.499999999912689,10.40000000011787,11.599999999816646,14.299999999821012],\"Min\":8.39999999993779,\"Max\":20.30000000002019,\"Median\":11.599999999930333,\"Average\":11.44999999997708,\"StandardDeviation\":2.865606393064029,\"Sum\":572.499999998854},{\"Name\":\"For.GC()\",\"Unit\":8,\"IncreaseIsBetter\":false,\"Samples\":[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.02,0.0,0.0,0.01,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.01,0.0,0.05,0.0,0.0,0.0,0.0,0.01,0.0,0.01,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.01,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.02,0.03,0.0,0.0],\"Min\":0.0,\"Max\":0.05,\"Median\":0.0,\"Average\":0.0030909090909090909,\"StandardDeviation\":0.008712108036880688,\"Sum\":0.16999999999999999},{\"Name\":\"For\",\"Unit\":1,\"IncreaseIsBetter\":false,\"Samples\":[9.399999999999409,18.70000000002392,18.200000000035744,9.29999999999609,14.90000000001146,12.69999999999527,9.199999999964348,9.09999999998945,8.900000000039654,9.300000000052933,9.40000000002783,17.399999999952344,14.800000000036562,18.100000000004003,18.299999999953799,9.300000000052933,12.800000000083856,9.500000000002729,9.399999999914144,16.70000000001437,9.500000000116416,12.600000000020373,9.299999999939246,8.800000000064756,14.599999999973079,9.09999999998945,8.900000000039654,9.30000000016662,12.799999999970169,13.40000000004693,8.900000000039654,11.60000000004402,9.199999999964348,12.200000000120781,9.399999999914144,9.09999999998945,18.000000000029105,9.499999999889042,9.199999999964348,9.600000000091314,9.09999999998945,9.399999999914144,9.600000000091314,12.600000000020373,9.199999999964348,9.399999999914144,18.399999999928697,39.89999999976135,14.300000000275759,12.600000000020373],\"Min\":8.800000000064756,\"Max\":39.89999999976135,\"Median\":9.500000000059572,\"Average\":12.298000000008074,\"StandardDeviation\":5.112865732613996,\"Sum\":614.9000000004037}]}\r\n"
+      output: 
       stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
@@ -827,29 +767,16 @@ MonoBehaviour:
       categories:
       - Performance
       - Functional
-      parentId: 1041
+      parentId: 1042
       parentUniqueId: 'TestAssembly.EditMode.dll/CollectionTestRunner/[TestAssembly.EditMode][CollectionTestRunner.CollectionPerformanceTest][suite]'
     - id: 1040
       uniqueId: 'TestAssembly.EditMode.dll/CollectionTestRunner/CollectionPerformanceTest/[TestAssembly.EditMode][CollectionTestRunner.CollectionPerformanceTest(50,200)]'
       name: CollectionPerformanceTest(50,200)
       fullName: CollectionTestRunner.CollectionPerformanceTest(50,200)
-      resultStatus: 1
-      duration: 4.791761
+      resultStatus: 0
+      duration: 0
       messages: 
-      output: "While.GC() in Undefineds\nMin:\t\t0.00 \nMedian:\t\t0.00 \nMax:\t\t0.04
-        \nAvg:\t\t0.00 \nStdDev:\t\t0.01 \nSampleCount:\t55\nSum:\t\t0.10 \r\nFirst
-        samples:\t\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2588\u2581\u2581\u2581\u2581\u2582\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2582\u2587\u2581\u2581\u2581\u2581\u2581\u2581\u2582\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2582\u2581\u2581\u2581\u2582\u2581\u2581\u2581\r\nHistogram:\t\u2588\u2582\u2582\u2582\u2582\u2581\u2581\u2581\u2581\u2581\r\n\r\nWhile
-        in Microseconds\nMin:\t\t15.00 \u03BCs\nMedian:\t\t20.35 \u03BCs\nMax:\t\t174.00
-        \u03BCs\nAvg:\t\t24.66 \u03BCs\nStdDev:\t\t25.22 \u03BCs\nSampleCount:\t50\nSum:\t\t1233.10
-        \u03BCs\r\nFirst samples:\t\u2581\u2581\u2581\u2582\u2581\u2581\u2581\u2581\u2588\u2581\u2581\u2583\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2585\u2581\u2581\u2581\u2581\u2581\u2581\u2582\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2582\r\nHistogram:\t\u2588\u2582\u2582\u2582\u2582\u2581\u2581\u2581\u2581\u2581\r\n\r\nFor.GC()
-        in Undefineds\nMin:\t\t0.00 \nMedian:\t\t0.00 \nMax:\t\t0.02 \nAvg:\t\t0.00
-        \nStdDev:\t\t0.00 \nSampleCount:\t55\nSum:\t\t0.07 \r\nFirst samples:\t\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2588\u2581\u2583\u2581\u2581\u2581\u2583\u2588\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2583\u2583\u2581\u2581\u2581\u2583\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2583\u2581\u2583\u2581\u2581\u2581\u2581\u2581\u2581\r\nHistogram:\t\u2588\u2582\u2582\u2582\u2581\u2581\u2581\u2581\u2581\u2581\r\n\r\nFor
-        in Microseconds\nMin:\t\t15.60 \u03BCs\nMedian:\t\t16.40 \u03BCs\nMax:\t\t32.20
-        \u03BCs\nAvg:\t\t19.50 \u03BCs\nStdDev:\t\t4.38 \u03BCs\nSampleCount:\t50\nSum:\t\t975.20
-        \u03BCs\r\nFirst samples:\t\u2581\u2583\u2581\u2583\u2584\u2581\u2581\u2585\u2581\u2584\u2582\u2581\u2586\u2587\u2588\u2581\u2581\u2581\u2584\u2584\u2581\u2584\u2581\u2581\u2585\u2581\u2584\u2584\u2581\u2581\u2581\u2583\u2581\u2584\u2581\u2581\u2586\u2581\u2581\u2581\u2581\u2581\u2582\u2586\u2581\u2581\u2584\u2583\u2586\u2581\r\nHistogram:\t\u2588\u2582\u2582\u2582\u2582\u2581\u2581\u2581\u2581\u2581\r\n\r\n\r\n##performancetestresult2:{\"Name\":\"CollectionTestRunner.CollectionPerformanceTest(50,200)\",\"ClassName\":\"CollectionTestRunner\",\"MethodName\":\"CollectionPerformanceTest\",\"Version\":\"1\",\"Categories\":[\"Performance\",\"Functional\",\"Performance\"],\"SampleGroups\":[{\"Name\":\"While.GC()\",\"Unit\":8,\"IncreaseIsBetter\":false,\"Samples\":[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.04,0.0,0.0,0.0,0.0,0.005,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.005,0.035,0.0,0.0,0.0,0.0,0.0,0.0,0.005,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.005,0.0,0.0,0.0,0.005,0.0,0.0,0.0],\"Min\":0.0,\"Max\":0.04,\"Median\":0.0,\"Average\":0.0018181818181818182,\"StandardDeviation\":0.007094404732773339,\"Sum\":0.1},{\"Name\":\"While\",\"Unit\":1,\"IncreaseIsBetter\":false,\"Samples\":[21.199999999993226,20.30000000002019,21.399999999971443,26.399999999966896,21.200000000021647,15.300000000024739,15.100000000018099,15.20000000004984,173.99999999997818,21.100000000046749,21.700000000009824,58.300000000031108,14.999999999986358,21.999999999934518,15.599999999949432,21.200000000021647,15.300000000024739,15.20000000004984,21.599999999921239,15.100000000074943,20.099999999956709,15.399999999999637,25.39999999999054,15.499999999974535,20.399999999881403,102.49999999996362,21.09999999993306,21.499999999832654,15.399999999999637,15.20000000004984,15.69999999992433,15.300000000024739,34.99999999985448,21.600000000034926,15.000000000100045,20.70000000003347,21.09999999993306,25.39999999999054,14.99999999987267,15.300000000024739,15.000000000100045,15.600000000176806,22.50000000003638,15.100000000074943,15.100000000074943,21.900000000186993,21.200000000135334,20.200000000386355,15.300000000024739,26.39999999973952],\"Min\":14.99999999987267,\"Max\":173.99999999997818,\"Median\":20.349999999950798,\"Average\":24.662000000008108,\"StandardDeviation\":25.218769914479183,\"Sum\":1233.1000000004053},{\"Name\":\"For.GC()\",\"Unit\":8,\"IncreaseIsBetter\":false,\"Samples\":[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.015,0.0,0.005,0.0,0.0,0.0,0.005,0.015,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.005,0.005,0.0,0.0,0.0,0.005,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.005,0.0,0.005,0.0,0.0,0.0,0.0,0.0,0.0],\"Min\":0.0,\"Max\":0.015,\"Median\":0.0,\"Average\":0.0011818181818181817,\"StandardDeviation\":0.0031570464280336956,\"Sum\":0.06499999999999999},{\"Name\":\"For\",\"Unit\":1,\"IncreaseIsBetter\":false,\"Samples\":[16.39999999997599,21.299999999996545,16.39999999997599,21.200000000021647,22.30000000002974,15.600000000006276,16.59999999998263,24.00000000000091,16.39999999997599,22.399999999947796,16.900000000077854,16.100000000051297,28.30000000005839,29.199999999946159,32.199999999988907,15.800000000012915,16.30000000000109,16.39999999997599,22.300000000086585,22.50000000003638,15.700000000151704,23.000000000138244,16.100000000051297,16.100000000051297,24.09999999986212,16.30000000000109,23.299999999835565,22.99999999991087,16.100000000051297,16.200000000026195,16.100000000051297,19.900000000006913,16.100000000051297,22.699999999986177,16.400000000203364,16.100000000051297,27.399999999943249,16.19999999979882,16.200000000026195,16.30000000000109,16.19999999979882,16.000000000076399,16.79999999987558,27.399999999943249,16.300000000228466,16.10000000027867,22.300000000086585,19.800000000032015,26.499999999941794,15.899999999874126],\"Min\":15.600000000006276,\"Max\":32.199999999988907,\"Median\":16.400000000089677,\"Average\":19.504000000009684,\"StandardDeviation\":4.383147727355852,\"Sum\":975.2000000004841}]}\r\n##performancetestruninfo2:{\"TestSuite\":\"Editmode\",\"Date\":1743229319285,\"Player\":{\"Development\":true,\"ScreenWidth\":1920,\"ScreenHeight\":1080,\"ScreenRefreshRate\":60,\"Fullscreen\":false,\"Vsync\":1,\"AntiAliasing\":0,\"Batchmode\":false,\"RenderThreadingMode\":\"MultiThreaded\",\"GpuSkinning\":false,\"Platform\":\"WindowsEditor\",\"ColorSpace\":\"Gamma\",\"AnisotropicFiltering\":\"Disable\",\"BlendWeights\":\"FourBones\",\"GraphicsApi\":\"Direct3D11\",\"ScriptingBackend\":\"Mono2x\",\"AndroidTargetSdkVersion\":\"AndroidApiLevelAuto\",\"AndroidBuildSystem\":\"Gradle\",\"BuildTarget\":\"StandaloneWindows64\",\"StereoRenderingPath\":\"MultiPass\"},\"Hardware\":{\"OperatingSystem\":\"Windows
-        10  (10.0.19045) 64bit\",\"DeviceModel\":\"82R4 (LENOVO)\",\"DeviceName\":\"DESKTOP-55T0R54\",\"ProcessorType\":\"AMD
-        Ryzen 5 5500U with Radeon Graphics \",\"ProcessorCount\":12,\"GraphicsDeviceName\":\"AMD
-        Radeon(TM) Graphics\",\"SystemMemorySizeMB\":14181},\"Editor\":{\"Version\":\"6000.0.26f1\",\"Branch\":\"6000.0/staging\",\"Changeset\":\"ccb7c73d2c02\",\"Date\":1730275040},\"Dependencies\":[\"com.cysharp.unitask@2.5.10\",\"com.unity.2d.animation@10.1.4\",\"com.unity.2d.pixel-perfect@5.0.3\",\"com.unity.2d.psdimporter@9.0.3\",\"com.unity.2d.sprite@1.0.0\",\"com.unity.2d.spriteshape@10.0.7\",\"com.unity.2d.tilemap@1.0.0\",\"com.unity.ai.navigation@2.0.5\",\"com.unity.assetbundlebrowser@1.7.0\",\"com.unity.collab-proxy@2.5.2\",\"com.unity.editorcoroutines@1.0.0\",\"com.unity.ide.rider@3.0.34\",\"com.unity.memoryprofiler@1.1.3\",\"com.unity.mobile.android-logcat@1.4.4\",\"com.unity.multiplayer.center@1.0.0\",\"com.unity.performance.profile-analyzer@1.2.3\",\"com.unity.profiling.core@1.0.2\",\"com.unity.render-pipelines.universal@17.0.3\",\"com.unity.test-framework@1.4.5\",\"com.unity.test-framework.performance@3.0.3\",\"com.unity.testtools.codecoverage@1.2.6\",\"com.unity.timeline@1.8.7\",\"com.unity.ugui@2.0.0\",\"com.unity.modules.accessibility@1.0.0\",\"com.unity.modules.ai@1.0.0\",\"com.unity.modules.androidjni@1.0.0\",\"com.unity.modules.animation@1.0.0\",\"com.unity.modules.assetbundle@1.0.0\",\"com.unity.modules.audio@1.0.0\",\"com.unity.modules.cloth@1.0.0\",\"com.unity.modules.director@1.0.0\",\"com.unity.modules.imageconversion@1.0.0\",\"com.unity.modules.imgui@1.0.0\",\"com.unity.modules.jsonserialize@1.0.0\",\"com.unity.modules.particlesystem@1.0.0\",\"com.unity.modules.physics@1.0.0\",\"com.unity.modules.physics2d@1.0.0\",\"com.unity.modules.screencapture@1.0.0\",\"com.unity.modules.terrain@1.0.0\",\"com.unity.modules.terrainphysics@1.0.0\",\"com.unity.modules.tilemap@1.0.0\",\"com.unity.modules.ui@1.0.0\",\"com.unity.modules.uielements@1.0.0\",\"com.unity.modules.umbra@1.0.0\",\"com.unity.modules.unityanalytics@1.0.0\",\"com.unity.modules.unitywebrequest@1.0.0\",\"com.unity.modules.unitywebrequestassetbundle@1.0.0\",\"com.unity.modules.unitywebrequestaudio@1.0.0\",\"com.unity.modules.unitywebrequesttexture@1.0.0\",\"com.unity.modules.unitywebrequestwww@1.0.0\",\"com.unity.modules.vehicles@1.0.0\",\"com.unity.modules.video@1.0.0\",\"com.unity.modules.vr@1.0.0\",\"com.unity.modules.wind@1.0.0\",\"com.unity.modules.xr@1.0.0\",\"com.unity.modules.subsystems@1.0.0\",\"com.unity.modules.hierarchycore@1.0.0\",\"com.unity.settings-manager@2.0.1\",\"com.unity.ext.nunit@2.0.5\",\"com.unity.render-pipelines.core@17.0.3\",\"com.unity.shadergraph@17.0.3\",\"com.unity.render-pipelines.universal-config@17.0.3\",\"com.unity.burst@1.8.18\",\"com.unity.collections@2.5.1\",\"com.unity.mathematics@1.3.2\",\"com.unity.2d.common@9.0.7\",\"com.unity.searcher@4.9.2\",\"com.unity.rendering.light-transport@1.0.1\",\"com.unity.nuget.mono-cecil@1.11.4\"],\"Results\":[]}\r\n"
+      output: 
       stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
@@ -858,29 +785,16 @@ MonoBehaviour:
       categories:
       - Performance
       - Functional
-      parentId: 1041
+      parentId: 1042
       parentUniqueId: 'TestAssembly.EditMode.dll/CollectionTestRunner/[TestAssembly.EditMode][CollectionTestRunner.CollectionPerformanceTest][suite]'
     - id: 1041
       uniqueId: 'TestAssembly.EditMode.dll/CollectionTestRunner/CollectionPerformanceTest/[TestAssembly.EditMode][CollectionTestRunner.CollectionPerformanceTest(50,2000)]'
       name: CollectionPerformanceTest(50,2000)
       fullName: CollectionTestRunner.CollectionPerformanceTest(50,2000)
-      resultStatus: 1
-      duration: 4.290493
+      resultStatus: 0
+      duration: 0
       messages: 
-      output: "While.GC() in Undefineds\nMin:\t\t0.00 \nMedian:\t\t0.00 \nMax:\t\t0.01
-        \nAvg:\t\t0.00 \nStdDev:\t\t0.00 \nSampleCount:\t55\nSum:\t\t0.09 \r\nFirst
-        samples:\t\u2581\u2581\u2582\u2582\u2588\u2583\u2583\u2583\u2583\u2583\u2583\u2583\u2583\u2583\u2583\u2583\u2583\u2583\u2588\u2583\u2583\u2583\u2583\u2583\u2583\u2583\u2583\u2583\u2583\u2583\u2583\u2583\u2588\u2583\u2583\u2583\u2583\u2583\u2583\u2583\u2583\u2583\u2583\u2582\u2582\u2587\u2582\u2582\u2583\u2583\u2583\u2583\u2583\u2583\u2583\r\nHistogram:\t\u2584\u2582\u2588\u2582\u2582\u2581\u2581\u2581\u2581\u2581\r\n\r\nWhile
-        in Microseconds\nMin:\t\t123.40 \u03BCs\nMedian:\t\t155.35 \u03BCs\nMax:\t\t295.60
-        \u03BCs\nAvg:\t\t160.10 \u03BCs\nStdDev:\t\t42.50 \u03BCs\nSampleCount:\t50\nSum:\t\t8005.20
-        \u03BCs\r\nFirst samples:\t\u2581\u2583\u2581\u2583\u2583\u2581\u2583\u2581\u2583\u2581\u2581\u2581\u2581\u2584\u2581\u2585\u2581\u2584\u2588\u2582\u2583\u2583\u2583\u2581\u2583\u2583\u2583\u2587\u2581\u2581\u2583\u2581\u2582\u2581\u2581\u2581\u2581\u2585\u2585\u2584\u2582\u2581\u2584\u2583\u2586\u2581\u2581\u2581\u2583\u2581\r\nHistogram:\t\u2585\u2582\u2588\u2582\u2582\u2581\u2581\u2581\u2581\u2582\r\n\r\nFor.GC()
-        in Undefineds\nMin:\t\t0.00 \nMedian:\t\t0.00 \nMax:\t\t0.01 \nAvg:\t\t0.00
-        \nStdDev:\t\t0.00 \nSampleCount:\t55\nSum:\t\t0.09 \r\nFirst samples:\t\u2583\u2583\u2583\u2583\u2588\u2583\u2583\u2583\u2583\u2583\u2583\u2583\u2581\u2583\u2583\u2583\u2583\u2587\u2583\u2583\u2583\u2583\u2583\u2583\u2583\u2583\u2583\u2583\u2583\u2583\u2583\u2588\u2583\u2583\u2583\u2583\u2581\u2583\u2581\u2583\u2583\u2583\u2581\u2583\u2583\u2588\u2583\u2583\u2583\u2583\u2583\u2583\u2583\u2583\u2583\r\nHistogram:\t\u2584\u2582\u2588\u2582\u2582\u2581\u2581\u2581\u2581\u2581\r\n\r\nFor
-        in Microseconds\nMin:\t\t145.00 \u03BCs\nMedian:\t\t151.55 \u03BCs\nMax:\t\t242.50
-        \u03BCs\nAvg:\t\t171.42 \u03BCs\nStdDev:\t\t30.02 \u03BCs\nSampleCount:\t50\nSum:\t\t8570.90
-        \u03BCs\r\nFirst samples:\t\u2581\u2581\u2586\u2587\u2587\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2587\u2586\u2581\u2585\u2584\u2582\u2586\u2582\u2581\u2581\u2586\u2581\u2583\u2585\u2586\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2588\u2585\u2582\u2581\u2584\u2584\u2585\u2581\u2585\u2581\r\nHistogram:\t\u2584\u2582\u2588\u2582\u2582\u2581\u2581\u2581\u2581\u2582\r\n\r\n\r\n##performancetestresult2:{\"Name\":\"CollectionTestRunner.CollectionPerformanceTest(50,2000)\",\"ClassName\":\"CollectionTestRunner\",\"MethodName\":\"CollectionPerformanceTest\",\"Version\":\"1\",\"Categories\":[\"Performance\",\"Functional\",\"Performance\"],\"SampleGroups\":[{\"Name\":\"While.GC()\",\"Unit\":8,\"IncreaseIsBetter\":false,\"Samples\":[0.0,0.0,0.001,0.001,0.0055,0.0015,0.0015,0.0015,0.0015,0.0015,0.0015,0.0015,0.0015,0.0015,0.0015,0.0015,0.0015,0.0015,0.0055,0.0015,0.0015,0.0015,0.0015,0.0015,0.0015,0.0015,0.0015,0.0015,0.0015,0.0015,0.0015,0.0015,0.0055,0.0015,0.0015,0.0015,0.0015,0.0015,0.0015,0.0015,0.0015,0.0015,0.0015,0.001,0.001,0.005,0.001,0.001,0.0015,0.0015,0.0015,0.0015,0.0015,0.0015,0.0015],\"Min\":0.0,\"Max\":0.0055,\"Median\":0.0015,\"Average\":0.0016727272727272737,\"StandardDeviation\":0.0010838407372864583,\"Sum\":0.09200000000000006},{\"Name\":\"While\",\"Unit\":1,\"IncreaseIsBetter\":false,\"Samples\":[124.09999999999855,177.5000000000091,123.69999999998527,167.1999999999798,172.59999999998855,123.40000000000373,172.79999999999519,123.49999999997863,177.19999999997072,123.79999999996017,123.59999999989668,123.39999999994689,123.60000000001037,192.59999999997036,123.49999999992179,225.40000000003603,123.60000000001037,190.99999999991725,295.59999999992217,153.3999999999196,164.09999999996217,173.09999999997673,172.59999999987486,123.50000000014916,172.70000000007713,177.7999999999338,181.10000000001492,283.20000000007897,123.49999999992179,123.60000000012406,172.90000000002693,123.69999999987158,140.10000000007495,123.60000000012406,123.49999999992179,123.50000000014916,123.49999999992179,213.4000000000924,223.3000000001084,204.89999999995235,157.3000000000775,127.70000000000437,206.59999999998036,173.09999999997673,239.49999999990724,123.59999999989668,123.40000000017426,128.30000000008114,172.8000000002794,123.80000000030123],\"Min\":123.39999999994689,\"Max\":295.59999999992217,\"Median\":155.34999999999855,\"Average\":160.10400000000915,\"StandardDeviation\":42.500696276643129,\"Sum\":8005.200000000457},{\"Name\":\"For.GC()\",\"Unit\":8,\"IncreaseIsBetter\":false,\"Samples\":[0.0015,0.0015,0.0015,0.0015,0.0055,0.0015,0.0015,0.0015,0.0015,0.0015,0.0015,0.0015,0.0,0.0015,0.0015,0.0015,0.0015,0.005,0.0015,0.0015,0.0015,0.0015,0.0015,0.0015,0.0015,0.0015,0.0015,0.0015,0.0015,0.0015,0.0015,0.0055,0.0015,0.0015,0.0015,0.0015,0.0,0.0015,0.0,0.0015,0.0015,0.0015,0.0,0.0015,0.0015,0.0055,0.0015,0.0015,0.0015,0.0015,0.0015,0.0015,0.0015,0.0015,0.0015],\"Min\":0.0,\"Max\":0.0055,\"Median\":0.0015,\"Average\":0.0016727272727272737,\"StandardDeviation\":0.0011087182682481187,\"Sum\":0.09200000000000006},{\"Name\":\"For\",\"Unit\":1,\"IncreaseIsBetter\":false,\"Samples\":[151.49999999999864,145.09999999998514,208.19999999997664,225.5999999999858,229.89999999998646,148.399999999981,145.10000000001356,151.49999999999864,151.50000000005549,148.40000000003784,145.3999999999951,151.79999999998018,224.29999999997109,221.30000000004203,145.0999999999567,198.89999999998055,189.3999999999778,163.1999999999607,211.7999999999256,158.99999999999182,148.29999999994926,151.4999999999418,219.9000000000524,148.30000000006295,175.5000000000564,202.19999999994799,218.70000000012625,148.30000000006295,151.3999999999669,148.20000000008805,151.4999999999418,151.5999999999167,151.4999999999418,145.20000000015899,148.30000000006295,151.70000000011897,151.4999999999418,151.50000000016918,151.3999999999669,144.9999999999818,242.4999999998363,202.99999999997454,155.70000000002438,151.50000000016918,190.60000000013134,183.19999999994253,207.30000000003202,151.3999999999669,207.2000000002845,151.60000000014407],\"Min\":144.9999999999818,\"Max\":242.4999999998363,\"Median\":151.55000000004294,\"Average\":171.41800000001525,\"StandardDeviation\":30.01835898245588,\"Sum\":8570.900000000762}]}\r\n##performancetestruninfo2:{\"TestSuite\":\"Editmode\",\"Date\":1743229427770,\"Player\":{\"Development\":true,\"ScreenWidth\":1920,\"ScreenHeight\":1080,\"ScreenRefreshRate\":60,\"Fullscreen\":false,\"Vsync\":1,\"AntiAliasing\":0,\"Batchmode\":false,\"RenderThreadingMode\":\"MultiThreaded\",\"GpuSkinning\":false,\"Platform\":\"WindowsEditor\",\"ColorSpace\":\"Gamma\",\"AnisotropicFiltering\":\"Disable\",\"BlendWeights\":\"FourBones\",\"GraphicsApi\":\"Direct3D11\",\"ScriptingBackend\":\"Mono2x\",\"AndroidTargetSdkVersion\":\"AndroidApiLevelAuto\",\"AndroidBuildSystem\":\"Gradle\",\"BuildTarget\":\"StandaloneWindows64\",\"StereoRenderingPath\":\"MultiPass\"},\"Hardware\":{\"OperatingSystem\":\"Windows
-        10  (10.0.19045) 64bit\",\"DeviceModel\":\"82R4 (LENOVO)\",\"DeviceName\":\"DESKTOP-55T0R54\",\"ProcessorType\":\"AMD
-        Ryzen 5 5500U with Radeon Graphics \",\"ProcessorCount\":12,\"GraphicsDeviceName\":\"AMD
-        Radeon(TM) Graphics\",\"SystemMemorySizeMB\":14181},\"Editor\":{\"Version\":\"6000.0.26f1\",\"Branch\":\"6000.0/staging\",\"Changeset\":\"ccb7c73d2c02\",\"Date\":1730275040},\"Dependencies\":[\"com.cysharp.unitask@2.5.10\",\"com.unity.2d.animation@10.1.4\",\"com.unity.2d.pixel-perfect@5.0.3\",\"com.unity.2d.psdimporter@9.0.3\",\"com.unity.2d.sprite@1.0.0\",\"com.unity.2d.spriteshape@10.0.7\",\"com.unity.2d.tilemap@1.0.0\",\"com.unity.ai.navigation@2.0.5\",\"com.unity.assetbundlebrowser@1.7.0\",\"com.unity.collab-proxy@2.5.2\",\"com.unity.editorcoroutines@1.0.0\",\"com.unity.ide.rider@3.0.34\",\"com.unity.memoryprofiler@1.1.3\",\"com.unity.mobile.android-logcat@1.4.4\",\"com.unity.multiplayer.center@1.0.0\",\"com.unity.performance.profile-analyzer@1.2.3\",\"com.unity.profiling.core@1.0.2\",\"com.unity.render-pipelines.universal@17.0.3\",\"com.unity.test-framework@1.4.5\",\"com.unity.test-framework.performance@3.0.3\",\"com.unity.testtools.codecoverage@1.2.6\",\"com.unity.timeline@1.8.7\",\"com.unity.ugui@2.0.0\",\"com.unity.modules.accessibility@1.0.0\",\"com.unity.modules.ai@1.0.0\",\"com.unity.modules.androidjni@1.0.0\",\"com.unity.modules.animation@1.0.0\",\"com.unity.modules.assetbundle@1.0.0\",\"com.unity.modules.audio@1.0.0\",\"com.unity.modules.cloth@1.0.0\",\"com.unity.modules.director@1.0.0\",\"com.unity.modules.imageconversion@1.0.0\",\"com.unity.modules.imgui@1.0.0\",\"com.unity.modules.jsonserialize@1.0.0\",\"com.unity.modules.particlesystem@1.0.0\",\"com.unity.modules.physics@1.0.0\",\"com.unity.modules.physics2d@1.0.0\",\"com.unity.modules.screencapture@1.0.0\",\"com.unity.modules.terrain@1.0.0\",\"com.unity.modules.terrainphysics@1.0.0\",\"com.unity.modules.tilemap@1.0.0\",\"com.unity.modules.ui@1.0.0\",\"com.unity.modules.uielements@1.0.0\",\"com.unity.modules.umbra@1.0.0\",\"com.unity.modules.unityanalytics@1.0.0\",\"com.unity.modules.unitywebrequest@1.0.0\",\"com.unity.modules.unitywebrequestassetbundle@1.0.0\",\"com.unity.modules.unitywebrequestaudio@1.0.0\",\"com.unity.modules.unitywebrequesttexture@1.0.0\",\"com.unity.modules.unitywebrequestwww@1.0.0\",\"com.unity.modules.vehicles@1.0.0\",\"com.unity.modules.video@1.0.0\",\"com.unity.modules.vr@1.0.0\",\"com.unity.modules.wind@1.0.0\",\"com.unity.modules.xr@1.0.0\",\"com.unity.modules.subsystems@1.0.0\",\"com.unity.modules.hierarchycore@1.0.0\",\"com.unity.settings-manager@2.0.1\",\"com.unity.ext.nunit@2.0.5\",\"com.unity.render-pipelines.core@17.0.3\",\"com.unity.shadergraph@17.0.3\",\"com.unity.render-pipelines.universal-config@17.0.3\",\"com.unity.burst@1.8.18\",\"com.unity.collections@2.5.1\",\"com.unity.mathematics@1.3.2\",\"com.unity.2d.common@9.0.7\",\"com.unity.searcher@4.9.2\",\"com.unity.rendering.light-transport@1.0.1\",\"com.unity.nuget.mono-cecil@1.11.4\"],\"Results\":[]}\r\n"
+      output: 
       stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
@@ -909,25 +823,14 @@ MonoBehaviour:
       - Functional
       parentId: 1036
       parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][CollectionTestRunner][suite]'
-    - id: 1037
+    - id: 1043
       uniqueId: 'TestAssembly.EditMode.dll/CollectionTestRunner/ToArrayPerformanceTest/[TestAssembly.EditMode][CollectionTestRunner.ToArrayPerformanceTest(100,100)]'
       name: ToArrayPerformanceTest(100,100)
       fullName: CollectionTestRunner.ToArrayPerformanceTest(100,100)
       resultStatus: 0
       duration: 0
       messages: 
-      output: "Select.GC() in Undefineds\nMin:\t\t2.00 \nMedian:\t\t2.02 \nMax:\t\t2.10
-        \nAvg:\t\t2.02 \nStdDev:\t\t0.01 \nSampleCount:\t105\nSum:\t\t212.21 \r\nFirst
-        samples:\t\u2582\u2583\u2583\u2582\u2582\u2583\u2583\u2583\u2581\u2581\u2583\u2581\u2582\u2582\u2582\u2582\u2582\u2582\u2582\u2588\u2582\u2582\u2582\u2582\u2582\u2582\u2583\u2582\u2582\u2582\u2583\u2582\u2582\u2581\u2582\u2582\u2583\u2581\u2583\u2585\u2583\u2583\u2582\u2582\u2582\u2583\u2583\u2583\u2583\u2583\u2583\u2581\u2583\u2583\u2583\u2582\u2582\u2582\u2583\u2585\u2582\u2582\u2582\u2584\u2582\u2581\u2581\u2582\u2582\u2582\u2583\u2582\u2582\u2583\u2583\u2583\u2583\u2581\u2583\u2581\u2585\u2584\u2584\u2582\u2582\u2583\u2582\u2582\u2582\u2582\u2583\u2582\u2582\u2583\u2583\u2583\u2582\u2581\u2582\u2583\r\nHistogram:\t\u2583\u2587\u2585\u2588\u2582\u2581\u2581\u2581\u2581\u2581\r\n\r\nSelect
-        in Milliseconds\nMin:\t\t0.07 ms\nMedian:\t\t0.07 ms\nMax:\t\t0.18 ms\nAvg:\t\t0.08
-        ms\nStdDev:\t\t0.03 ms\nSampleCount:\t100\nSum:\t\t8.44 ms\r\nFirst samples:\t\u2581\u2585\u2585\u2585\u2581\u2585\u2585\u2581\u2581\u2581\u2581\u2583\u2581\u2585\u2585\u2581\u2581\u2582\u2585\u2581\u2582\u2585\u2581\u2581\u2581\u2581\u2581\u2581\u2585\u2581\u2581\u2583\u2585\u2581\u2582\u2588\u2581\u2581\u2581\u2585\u2581\u2583\u2581\u2581\u2581\u2581\u2585\u2581\u2581\u2581\u2581\u2581\u2581\u2585\u2582\u2581\u2581\u2584\u2585\u2581\u2581\u2581\u2582\u2581\u2586\u2581\u2581\u2581\u2581\u2581\u2581\u2585\u2585\u2581\u2581\u2581\u2582\u2582\u2581\u2582\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2582\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2582\u2582\u2584\r\nHistogram:\t\u2588\u2586\u2583\u2585\u2582\u2583\u2581\u2581\u2581\u2581\r\n\r\nFor.GC()
-        in Undefineds\nMin:\t\t1.00 \nMedian:\t\t1.01 \nMax:\t\t1.05 \nAvg:\t\t1.01
-        \nStdDev:\t\t0.01 \nSampleCount:\t105\nSum:\t\t106.12 \r\nFirst samples:\t\u2587\u2585\u2584\u2582\u2582\u2582\u2581\u2582\u2584\u2581\u2584\u2584\u2582\u2581\u2581\u2581\u2582\u2587\u2582\u2582\u2582\u2582\u2582\u2581\u2582\u2584\u2584\u2581\u2582\u2581\u2584\u2581\u2585\u2582\u2582\u2582\u2582\u2581\u2582\u2587\u2582\u2585\u2581\u2582\u2581\u2584\u2581\u2582\u2581\u2581\u2582\u2581\u2582\u2581\u2584\u2581\u2581\u2585\u2582\u2582\u2588\u2584\u2582\u2581\u2584\u2581\u2581\u2584\u2581\u2582\u2582\u2581\u2582\u2584\u2582\u2581\u2581\u2584\u2582\u2581\u2581\u2584\u2581\u2582\u2582\u2584\u2585\u2584\u2582\u2582\u2582\u2581\u2584\u2581\u2581\u2581\u2582\u2582\u2582\u2581\r\nHistogram:\t\u2588\u2584\u2585\u2584\u2583\u2583\u2581\u2581\u2581\u2581\r\n\r\nFor
-        in Milliseconds\nMin:\t\t0.04 ms\nMedian:\t\t0.04 ms\nMax:\t\t0.09 ms\nAvg:\t\t0.05
-        ms\nStdDev:\t\t0.02 ms\nSampleCount:\t100\nSum:\t\t5.31 ms\r\nFirst samples:\t\u2581\u2581\u2581\u2587\u2586\u2582\u2587\u2581\u2586\u2581\u2581\u2581\u2582\u2581\u2581\u2582\u2581\u2582\u2581\u2582\u2581\u2586\u2585\u2581\u2581\u2586\u2586\u2587\u2581\u2582\u2581\u2581\u2581\u2581\u2586\u2581\u2582\u2582\u2581\u2581\u2581\u2581\u2582\u2582\u2581\u2581\u2581\u2581\u2581\u2582\u2581\u2581\u2587\u2584\u2581\u2587\u2582\u2586\u2582\u2586\u2581\u2581\u2588\u2581\u2581\u2581\u2581\u2581\u2587\u2588\u2581\u2582\u2581\u2581\u2581\u2581\u2582\u2582\u2581\u2582\u2581\u2587\u2587\u2585\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2582\u2587\u2581\u2587\u2586\u2582\u2582\u2582\r\nHistogram:\t\u2588\u2585\u2584\u2583\u2582\u2582\u2581\u2582\u2581\u2581\r\n\r\n\r\n##performancetestresult2:{\"Name\":\"CollectionTestRunner.ToArrayPerformanceTest(100,100)\",\"ClassName\":\"CollectionTestRunner\",\"MethodName\":\"ToArrayPerformanceTest\",\"Version\":\"1\",\"Categories\":[\"Performance\",\"Functional\",\"Performance\"],\"SampleGroups\":[{\"Name\":\"Select.GC()\",\"Unit\":8,\"IncreaseIsBetter\":false,\"Samples\":[2.01,2.03,2.03,2.01,2.01,2.03,2.03,2.03,2.0,2.0,2.03,2.0,2.02,2.01,2.01,2.01,2.01,2.01,2.02,2.1,2.01,2.01,2.02,2.02,2.01,2.01,2.03,2.01,2.02,2.02,2.03,2.01,2.02,2.0,2.01,2.02,2.03,2.0,2.03,2.06,2.03,2.03,2.01,2.01,2.01,2.03,2.03,2.03,2.03,2.03,2.03,2.0,2.03,2.03,2.03,2.01,2.02,2.02,2.03,2.05,2.02,2.01,2.02,2.04,2.01,2.0,2.0,2.01,2.01,2.02,2.03,2.01,2.02,2.03,2.03,2.03,2.03,2.0,2.03,2.0,2.06,2.04,2.04,2.01,2.02,2.03,2.01,2.01,2.02,2.01,2.03,2.02,2.02,2.03,2.03,2.03,2.01,2.0,2.02,2.03,2.01,2.02,2.04,2.03,2.03],\"Min\":2.0,\"Max\":2.1,\"Median\":2.02,\"Average\":2.021047619047619,\"StandardDeviation\":0.014795353808918057,\"Sum\":212.21},{\"Name\":\"Select\",\"Unit\":2,\"IncreaseIsBetter\":false,\"Samples\":[0.06929999999999836,0.1307999999999936,0.13290000000000647,0.12810000000001765,0.06680000000000064,0.13159999999999173,0.1290000000000191,0.06909999999999173,0.06839999999999691,0.06800000000004047,0.06929999999999836,0.09960000000000946,0.06680000000000064,0.13339999999999464,0.13040000000000874,0.06670000000008258,0.06759999999997035,0.07709999999997308,0.13240000000007513,0.07380000000000564,0.07439999999996872,0.13409999999998946,0.0687999999998965,0.06720000000007076,0.06960000000003675,0.06939999999997326,0.06789999999989505,0.07280000000002929,0.12780000000009296,0.06889999999998509,0.07299999999997908,0.09339999999997417,0.12969999999995708,0.07010000000002492,0.07719999999994798,0.18360000000006949,0.06829999999990832,0.06709999999998218,0.06919999999990978,0.13220000000001165,0.0704000000000633,0.09120000000007167,0.06780000000003384,0.06940000000008695,0.06849999999985812,0.06899999999995998,0.12869999999998073,0.06999999999993634,0.06999999999993634,0.06999999999993634,0.06619999999998072,0.07109999999988759,0.06889999999998509,0.13139999999998509,0.07410000000004402,0.0725999999999658,0.07029999999986103,0.12099999999986722,0.1353999999998905,0.06819999999993343,0.06599999999980355,0.06649999999990541,0.08240000000000691,0.06880000000001019,0.14840000000003784,0.06860000000006039,0.06769999999983156,0.06999999999993634,0.06919999999990978,0.06939999999985958,0.07009999999991124,0.1326000000001386,0.13019999999983157,0.06819999999993343,0.06570000000010623,0.07270000000016808,0.08230000000003202,0.08239999999977954,0.06750000000010914,0.07420000000001892,0.07000000000016371,0.06739999999990687,0.06849999999985812,0.07300000000032014,0.07220000000006621,0.06959999999980937,0.07130000000006476,0.06829999999990832,0.08560000000034052,0.06860000000006039,0.06959999999980937,0.07009999999991124,0.06640000000015789,0.06539999999995416,0.06919999999990978,0.07330000000001746,0.07240000000001601,0.0785000000000764,0.0747999999998683,0.11439999999993234],\"Min\":0.06539999999995416,\"Max\":0.18360000000006949,\"Median\":0.07009999999991124,\"Average\":0.08441499999998684,\"StandardDeviation\":0.026410086614786406,\"Sum\":8.441499999998684},{\"Name\":\"For.GC()\",\"Unit\":8,\"IncreaseIsBetter\":false,\"Samples\":[1.04,1.03,1.02,1.01,1.01,1.01,1.0,1.01,1.02,1.0,1.02,1.02,1.01,1.0,1.0,1.0,1.01,1.04,1.01,1.01,1.01,1.01,1.01,1.0,1.01,1.02,1.02,1.0,1.01,1.0,1.02,1.0,1.03,1.01,1.01,1.01,1.01,1.0,1.01,1.04,1.01,1.03,1.0,1.01,1.0,1.02,1.0,1.01,1.0,1.0,1.01,1.0,1.01,1.0,1.02,1.0,1.0,1.03,1.01,1.01,1.05,1.02,1.01,1.0,1.02,1.0,1.0,1.02,1.0,1.01,1.01,1.0,1.01,1.02,1.01,1.0,1.0,1.02,1.01,1.0,1.0,1.02,1.0,1.01,1.01,1.02,1.03,1.02,1.01,1.01,1.01,1.0,1.02,1.0,1.0,1.0,1.01,1.01,1.01,1.0,1.02,1.02,1.0,1.0,1.01],\"Min\":1.0,\"Max\":1.05,\"Median\":1.01,\"Average\":1.010666666666667,\"StandardDeviation\":0.010624918300339492,\"Sum\":106.12000000000004},{\"Name\":\"For\",\"Unit\":2,\"IncreaseIsBetter\":false,\"Samples\":[0.04410000000001446,0.04189999999999827,0.04349999999999454,0.08199999999999364,0.07909999999998263,0.04599999999999227,0.08159999999998036,0.04349999999999454,0.07349999999996726,0.045200000000022558,0.04349999999999454,0.043000000000006369,0.05000000000001137,0.043200000000013009,0.042699999999967989,0.04619999999999891,0.043800000000032927,0.04970000000002983,0.042799999999942887,0.04579999999998563,0.043400000000019648,0.07990000000006603,0.07129999999995107,0.04349999999999454,0.044599999999945797,0.08039999999994052,0.08000000000004093,0.08410000000003493,0.04529999999999745,0.04879999999991469,0.04379999999991924,0.04329999999993106,0.0442000000000462,0.04460000000005948,0.07439999999996872,0.04349999999999454,0.04739999999992506,0.04839999999990141,0.04359999999996944,0.041800000000193907,0.044399999999996,0.04229999999984102,0.048900000000003277,0.04539999999997235,0.04330000000004475,0.04359999999996944,0.04489999999987049,0.04379999999991924,0.04310000000009495,0.04550000000017462,0.04219999999986612,0.042900000000145158,0.08130000000005566,0.06559999999990396,0.04349999999999454,0.08320000000003347,0.04600000000004911,0.07670000000007349,0.04800000000000182,0.07999999999992724,0.042300000000068397,0.042799999999942887,0.08899999999994179,0.0419000000001688,0.04500000000007276,0.04409999999984393,0.04299999999989268,0.04469999999992069,0.08589999999981046,0.0910999999998694,0.04489999999987049,0.04619999999999891,0.04500000000007276,0.043699999999716968,0.042400000000270669,0.043400000000019648,0.051300000000082949,0.04640000000017608,0.043699999999716968,0.04680000000007567,0.044799999999668219,0.08159999999998036,0.08539999999993597,0.06759999999985667,0.044100000000071307,0.044800000000122967,0.0443000000000211,0.04359999999996944,0.04350000000022192,0.04280000000017026,0.043699999999716968,0.044499999999970899,0.04719999999997526,0.08159999999998036,0.04320000000006985,0.08350000000018554,0.08000000000038199,0.04639999999972133,0.05040000000008149,0.04599999999982174],\"Min\":0.041800000000193907,\"Max\":0.0910999999998694,\"Median\":0.04489999999987049,\"Average\":0.05314599999999132,\"StandardDeviation\":0.01544730669081384,\"Sum\":5.314599999999132}]}\r\n##performancetestruninfo2:{\"TestSuite\":\"Editmode\",\"Date\":1743063426431,\"Player\":{\"Development\":true,\"ScreenWidth\":1920,\"ScreenHeight\":1080,\"ScreenRefreshRate\":60,\"Fullscreen\":false,\"Vsync\":1,\"AntiAliasing\":0,\"Batchmode\":false,\"RenderThreadingMode\":\"MultiThreaded\",\"GpuSkinning\":false,\"Platform\":\"WindowsEditor\",\"ColorSpace\":\"Gamma\",\"AnisotropicFiltering\":\"Disable\",\"BlendWeights\":\"FourBones\",\"GraphicsApi\":\"Direct3D11\",\"ScriptingBackend\":\"Mono2x\",\"AndroidTargetSdkVersion\":\"AndroidApiLevelAuto\",\"AndroidBuildSystem\":\"Gradle\",\"BuildTarget\":\"StandaloneWindows64\",\"StereoRenderingPath\":\"MultiPass\"},\"Hardware\":{\"OperatingSystem\":\"Windows
-        10  (10.0.19045) 64bit\",\"DeviceModel\":\"82R4 (LENOVO)\",\"DeviceName\":\"DESKTOP-55T0R54\",\"ProcessorType\":\"AMD
-        Ryzen 5 5500U with Radeon Graphics \",\"ProcessorCount\":12,\"GraphicsDeviceName\":\"AMD
-        Radeon(TM) Graphics\",\"SystemMemorySizeMB\":14181},\"Editor\":{\"Version\":\"6000.0.26f1\",\"Branch\":\"6000.0/staging\",\"Changeset\":\"ccb7c73d2c02\",\"Date\":1730275040},\"Dependencies\":[\"com.cysharp.unitask@2.5.10\",\"com.unity.2d.animation@10.1.4\",\"com.unity.2d.pixel-perfect@5.0.3\",\"com.unity.2d.psdimporter@9.0.3\",\"com.unity.2d.sprite@1.0.0\",\"com.unity.2d.spriteshape@10.0.7\",\"com.unity.2d.tilemap@1.0.0\",\"com.unity.ai.navigation@2.0.5\",\"com.unity.assetbundlebrowser@1.7.0\",\"com.unity.collab-proxy@2.5.2\",\"com.unity.editorcoroutines@1.0.0\",\"com.unity.ide.rider@3.0.34\",\"com.unity.memoryprofiler@1.1.3\",\"com.unity.mobile.android-logcat@1.4.4\",\"com.unity.multiplayer.center@1.0.0\",\"com.unity.performance.profile-analyzer@1.2.3\",\"com.unity.profiling.core@1.0.2\",\"com.unity.render-pipelines.universal@17.0.3\",\"com.unity.test-framework@1.4.5\",\"com.unity.test-framework.performance@3.0.3\",\"com.unity.testtools.codecoverage@1.2.6\",\"com.unity.timeline@1.8.7\",\"com.unity.ugui@2.0.0\",\"com.unity.modules.accessibility@1.0.0\",\"com.unity.modules.ai@1.0.0\",\"com.unity.modules.androidjni@1.0.0\",\"com.unity.modules.animation@1.0.0\",\"com.unity.modules.assetbundle@1.0.0\",\"com.unity.modules.audio@1.0.0\",\"com.unity.modules.cloth@1.0.0\",\"com.unity.modules.director@1.0.0\",\"com.unity.modules.imageconversion@1.0.0\",\"com.unity.modules.imgui@1.0.0\",\"com.unity.modules.jsonserialize@1.0.0\",\"com.unity.modules.particlesystem@1.0.0\",\"com.unity.modules.physics@1.0.0\",\"com.unity.modules.physics2d@1.0.0\",\"com.unity.modules.screencapture@1.0.0\",\"com.unity.modules.terrain@1.0.0\",\"com.unity.modules.terrainphysics@1.0.0\",\"com.unity.modules.tilemap@1.0.0\",\"com.unity.modules.ui@1.0.0\",\"com.unity.modules.uielements@1.0.0\",\"com.unity.modules.umbra@1.0.0\",\"com.unity.modules.unityanalytics@1.0.0\",\"com.unity.modules.unitywebrequest@1.0.0\",\"com.unity.modules.unitywebrequestassetbundle@1.0.0\",\"com.unity.modules.unitywebrequestaudio@1.0.0\",\"com.unity.modules.unitywebrequesttexture@1.0.0\",\"com.unity.modules.unitywebrequestwww@1.0.0\",\"com.unity.modules.vehicles@1.0.0\",\"com.unity.modules.video@1.0.0\",\"com.unity.modules.vr@1.0.0\",\"com.unity.modules.wind@1.0.0\",\"com.unity.modules.xr@1.0.0\",\"com.unity.modules.subsystems@1.0.0\",\"com.unity.modules.hierarchycore@1.0.0\",\"com.unity.settings-manager@2.0.1\",\"com.unity.ext.nunit@2.0.5\",\"com.unity.render-pipelines.core@17.0.3\",\"com.unity.shadergraph@17.0.3\",\"com.unity.render-pipelines.universal-config@17.0.3\",\"com.unity.burst@1.8.18\",\"com.unity.collections@2.5.1\",\"com.unity.mathematics@1.3.2\",\"com.unity.2d.common@9.0.7\",\"com.unity.searcher@4.9.2\",\"com.unity.rendering.light-transport@1.0.1\",\"com.unity.nuget.mono-cecil@1.11.4\"],\"Results\":[]}\r\n"
+      output: 
       stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
@@ -936,7 +839,7 @@ MonoBehaviour:
       categories:
       - Performance
       - Functional
-      parentId: 1038
+      parentId: 1044
       parentUniqueId: 'TestAssembly.EditMode.dll/CollectionTestRunner/[TestAssembly.EditMode][CollectionTestRunner.ToArrayPerformanceTest][suite]'
     - id: 1013
       uniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][DBTestRunner][suite]'
@@ -952,7 +855,7 @@ MonoBehaviour:
       description: 
       isSuite: 1
       categories: []
-      parentId: 1139
+      parentId: 1142
       parentUniqueId: '[TestAssembly.EditMode][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/TestAssembly.EditMode.dll][suite]'
     - id: 1014
       uniqueId: 'TestAssembly.EditMode.dll/DBTestRunner/[TestAssembly.EditMode][DBTestRunner.InMemoryDatabaseTest]'
@@ -986,9 +889,9 @@ MonoBehaviour:
       isSuite: 1
       categories:
       - Functional
-      parentId: 1139
+      parentId: 1142
       parentUniqueId: '[TestAssembly.EditMode][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/TestAssembly.EditMode.dll][suite]'
-    - id: 1040
+    - id: 1046
       uniqueId: 'TestAssembly.EditMode.dll/DictionaryTestRunner/[TestAssembly.EditMode][DictionaryTestRunner.DictionaryComparerTest]'
       name: DictionaryComparerTest
       fullName: DictionaryTestRunner.DictionaryComparerTest
@@ -1003,7 +906,7 @@ MonoBehaviour:
       isSuite: 0
       categories:
       - Functional
-      parentId: 1039
+      parentId: 1045
       parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][DictionaryTestRunner][suite]'
     - id: 1049
       uniqueId: 'TestAssembly.EditMode.dll/DictionaryTestRunner/[TestAssembly.EditMode][DictionaryTestRunner.MultiLevelDictionaryTest][suite]'
@@ -1022,7 +925,7 @@ MonoBehaviour:
       - Functional
       parentId: 1045
       parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][DictionaryTestRunner][suite]'
-    - id: 1041
+    - id: 1047
       uniqueId: 'TestAssembly.EditMode.dll/DictionaryTestRunner/MultiLevelDictionaryTest/[TestAssembly.EditMode][DictionaryTestRunner.MultiLevelDictionaryTest(10,10)]'
       name: MultiLevelDictionaryTest(10,10)
       fullName: DictionaryTestRunner.MultiLevelDictionaryTest(10,10)
@@ -1037,9 +940,9 @@ MonoBehaviour:
       isSuite: 0
       categories:
       - Functional
-      parentId: 1043
+      parentId: 1049
       parentUniqueId: 'TestAssembly.EditMode.dll/DictionaryTestRunner/[TestAssembly.EditMode][DictionaryTestRunner.MultiLevelDictionaryTest][suite]'
-    - id: 1042
+    - id: 1048
       uniqueId: 'TestAssembly.EditMode.dll/DictionaryTestRunner/MultiLevelDictionaryTest/[TestAssembly.EditMode][DictionaryTestRunner.MultiLevelDictionaryTest(10,50)]'
       name: MultiLevelDictionaryTest(10,50)
       fullName: DictionaryTestRunner.MultiLevelDictionaryTest(10,50)
@@ -1054,7 +957,7 @@ MonoBehaviour:
       isSuite: 0
       categories:
       - Functional
-      parentId: 1043
+      parentId: 1049
       parentUniqueId: 'TestAssembly.EditMode.dll/DictionaryTestRunner/[TestAssembly.EditMode][DictionaryTestRunner.MultiLevelDictionaryTest][suite]'
     - id: 1015
       uniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][EditModeTestRunner][suite]'
@@ -1071,7 +974,7 @@ MonoBehaviour:
       isSuite: 1
       categories:
       - Functional
-      parentId: 1139
+      parentId: 1142
       parentUniqueId: '[TestAssembly.EditMode][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/TestAssembly.EditMode.dll][suite]'
     - id: 1030
       uniqueId: 'TestAssembly.EditMode.dll/EditModeTestRunner/[TestAssembly.EditMode][EditModeTestRunner.IntMarshalTest]'
@@ -1369,7 +1272,7 @@ MonoBehaviour:
       description: 
       isSuite: 1
       categories: []
-      parentId: 1139
+      parentId: 1142
       parentUniqueId: '[TestAssembly.EditMode][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/TestAssembly.EditMode.dll][suite]'
     - id: 1033
       uniqueId: 'TestAssembly.EditMode.dll/EncryptTestRunner/[TestAssembly.EditMode][EncryptTestRunner.TripleDESTest]'
@@ -1403,9 +1306,9 @@ MonoBehaviour:
       isSuite: 1
       categories:
       - Functional
-      parentId: 1139
+      parentId: 1142
       parentUniqueId: '[TestAssembly.EditMode][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/TestAssembly.EditMode.dll][suite]'
-    - id: 1048
+    - id: 1053
       uniqueId: 'TestAssembly.EditMode.dll/EnumTestRunner/[TestAssembly.EditMode][EnumTestRunner.AllEnumGetValuesExceptionTest]'
       name: AllEnumGetValuesExceptionTest
       fullName: EnumTestRunner.AllEnumGetValuesExceptionTest
@@ -1420,7 +1323,7 @@ MonoBehaviour:
       isSuite: 0
       categories:
       - Functional
-      parentId: 1044
+      parentId: 1050
       parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][EnumTestRunner][suite]'
     - id: 1061
       uniqueId: 'TestAssembly.EditMode.dll/EnumTestRunner/[TestAssembly.EditMode][EnumTestRunner.EnumBagPerformanceTest][suite]'
@@ -1440,7 +1343,7 @@ MonoBehaviour:
       - Functional
       parentId: 1050
       parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][EnumTestRunner][suite]'
-    - id: 1050
+    - id: 1055
       uniqueId: 'TestAssembly.EditMode.dll/EnumTestRunner/EnumBagPerformanceTest/[TestAssembly.EditMode][EnumTestRunner.EnumBagPerformanceTest(50,1)]'
       name: EnumBagPerformanceTest(50,1)
       fullName: EnumTestRunner.EnumBagPerformanceTest(50,1)
@@ -1456,9 +1359,9 @@ MonoBehaviour:
       categories:
       - Performance
       - Functional
-      parentId: 1056
+      parentId: 1061
       parentUniqueId: 'TestAssembly.EditMode.dll/EnumTestRunner/[TestAssembly.EditMode][EnumTestRunner.EnumBagPerformanceTest][suite]'
-    - id: 1051
+    - id: 1056
       uniqueId: 'TestAssembly.EditMode.dll/EnumTestRunner/EnumBagPerformanceTest/[TestAssembly.EditMode][EnumTestRunner.EnumBagPerformanceTest(50,10)]'
       name: EnumBagPerformanceTest(50,10)
       fullName: EnumTestRunner.EnumBagPerformanceTest(50,10)
@@ -1474,9 +1377,9 @@ MonoBehaviour:
       categories:
       - Performance
       - Functional
-      parentId: 1056
+      parentId: 1061
       parentUniqueId: 'TestAssembly.EditMode.dll/EnumTestRunner/[TestAssembly.EditMode][EnumTestRunner.EnumBagPerformanceTest][suite]'
-    - id: 1052
+    - id: 1057
       uniqueId: 'TestAssembly.EditMode.dll/EnumTestRunner/EnumBagPerformanceTest/[TestAssembly.EditMode][EnumTestRunner.EnumBagPerformanceTest(50,50)]'
       name: EnumBagPerformanceTest(50,50)
       fullName: EnumTestRunner.EnumBagPerformanceTest(50,50)
@@ -1492,9 +1395,9 @@ MonoBehaviour:
       categories:
       - Performance
       - Functional
-      parentId: 1056
+      parentId: 1061
       parentUniqueId: 'TestAssembly.EditMode.dll/EnumTestRunner/[TestAssembly.EditMode][EnumTestRunner.EnumBagPerformanceTest][suite]'
-    - id: 1053
+    - id: 1058
       uniqueId: 'TestAssembly.EditMode.dll/EnumTestRunner/EnumBagPerformanceTest/[TestAssembly.EditMode][EnumTestRunner.EnumBagPerformanceTest(50,100)]'
       name: EnumBagPerformanceTest(50,100)
       fullName: EnumTestRunner.EnumBagPerformanceTest(50,100)
@@ -1510,9 +1413,9 @@ MonoBehaviour:
       categories:
       - Performance
       - Functional
-      parentId: 1056
+      parentId: 1061
       parentUniqueId: 'TestAssembly.EditMode.dll/EnumTestRunner/[TestAssembly.EditMode][EnumTestRunner.EnumBagPerformanceTest][suite]'
-    - id: 1054
+    - id: 1059
       uniqueId: 'TestAssembly.EditMode.dll/EnumTestRunner/EnumBagPerformanceTest/[TestAssembly.EditMode][EnumTestRunner.EnumBagPerformanceTest(50,1000)]'
       name: EnumBagPerformanceTest(50,1000)
       fullName: EnumTestRunner.EnumBagPerformanceTest(50,1000)
@@ -1528,9 +1431,9 @@ MonoBehaviour:
       categories:
       - Performance
       - Functional
-      parentId: 1056
+      parentId: 1061
       parentUniqueId: 'TestAssembly.EditMode.dll/EnumTestRunner/[TestAssembly.EditMode][EnumTestRunner.EnumBagPerformanceTest][suite]'
-    - id: 1055
+    - id: 1060
       uniqueId: 'TestAssembly.EditMode.dll/EnumTestRunner/EnumBagPerformanceTest/[TestAssembly.EditMode][EnumTestRunner.EnumBagPerformanceTest(50,2500)]'
       name: EnumBagPerformanceTest(50,2500)
       fullName: EnumTestRunner.EnumBagPerformanceTest(50,2500)
@@ -1546,9 +1449,9 @@ MonoBehaviour:
       categories:
       - Performance
       - Functional
-      parentId: 1056
+      parentId: 1061
       parentUniqueId: 'TestAssembly.EditMode.dll/EnumTestRunner/[TestAssembly.EditMode][EnumTestRunner.EnumBagPerformanceTest][suite]'
-    - id: 1058
+    - id: 1063
       uniqueId: 'TestAssembly.EditMode.dll/EnumTestRunner/[TestAssembly.EditMode][EnumTestRunner.EnumCastPerformanceTest]'
       name: EnumCastPerformanceTest
       fullName: EnumTestRunner.EnumCastPerformanceTest
@@ -1564,9 +1467,9 @@ MonoBehaviour:
       categories:
       - Performance
       - Functional
-      parentId: 1044
+      parentId: 1050
       parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][EnumTestRunner][suite]'
-    - id: 1046
+    - id: 1051
       uniqueId: 'TestAssembly.EditMode.dll/EnumTestRunner/[TestAssembly.EditMode][EnumTestRunner.EnumIsDefinedTest]'
       name: EnumIsDefinedTest
       fullName: EnumTestRunner.EnumIsDefinedTest
@@ -1581,9 +1484,9 @@ MonoBehaviour:
       isSuite: 0
       categories:
       - Functional
-      parentId: 1044
+      parentId: 1050
       parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][EnumTestRunner][suite]'
-    - id: 1057
+    - id: 1062
       uniqueId: 'TestAssembly.EditMode.dll/EnumTestRunner/[TestAssembly.EditMode][EnumTestRunner.EnumParsePerformanceTest]'
       name: EnumParsePerformanceTest
       fullName: EnumTestRunner.EnumParsePerformanceTest
@@ -1599,9 +1502,9 @@ MonoBehaviour:
       categories:
       - Performance
       - Functional
-      parentId: 1044
+      parentId: 1050
       parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][EnumTestRunner][suite]'
-    - id: 1047
+    - id: 1052
       uniqueId: 'TestAssembly.EditMode.dll/EnumTestRunner/[TestAssembly.EditMode][EnumTestRunner.EnumSimpleCastTest]'
       name: EnumSimpleCastTest
       fullName: EnumTestRunner.EnumSimpleCastTest
@@ -1616,9 +1519,9 @@ MonoBehaviour:
       isSuite: 0
       categories:
       - Functional
-      parentId: 1044
+      parentId: 1050
       parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][EnumTestRunner][suite]'
-    - id: 1049
+    - id: 1054
       uniqueId: 'TestAssembly.EditMode.dll/EnumTestRunner/[TestAssembly.EditMode][EnumTestRunner.GenericClassEnumMakeTest]'
       name: GenericClassEnumMakeTest
       fullName: EnumTestRunner.GenericClassEnumMakeTest
@@ -1633,7 +1536,7 @@ MonoBehaviour:
       isSuite: 0
       categories:
       - Functional
-      parentId: 1044
+      parentId: 1050
       parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][EnumTestRunner][suite]'
     - id: 1064
       uniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][ExpressionTestRunner][suite]'
@@ -1651,7 +1554,7 @@ MonoBehaviour:
       categories:
       - Functional
       - Performance
-      parentId: 1139
+      parentId: 1142
       parentUniqueId: '[TestAssembly.EditMode][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/TestAssembly.EditMode.dll][suite]'
     - id: 1066
       uniqueId: 'TestAssembly.EditMode.dll/ExpressionTestRunner/[TestAssembly.EditMode][ExpressionTestRunner.CreateConstructorPerformanceTest][suite]'
@@ -1671,7 +1574,7 @@ MonoBehaviour:
       - Functional
       parentId: 1064
       parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][ExpressionTestRunner][suite]'
-    - id: 1060
+    - id: 1065
       uniqueId: 'TestAssembly.EditMode.dll/ExpressionTestRunner/CreateConstructorPerformanceTest/[TestAssembly.EditMode][ExpressionTestRunner.CreateConstructorPerformanceTest(50,500)]'
       name: CreateConstructorPerformanceTest(50,500)
       fullName: ExpressionTestRunner.CreateConstructorPerformanceTest(50,500)
@@ -1687,7 +1590,7 @@ MonoBehaviour:
       categories:
       - Performance
       - Functional
-      parentId: 1061
+      parentId: 1066
       parentUniqueId: 'TestAssembly.EditMode.dll/ExpressionTestRunner/[TestAssembly.EditMode][ExpressionTestRunner.CreateConstructorPerformanceTest][suite]'
     - id: 1077
       uniqueId: 'TestAssembly.EditMode.dll/ExpressionTestRunner/[TestAssembly.EditMode][ExpressionTestRunner.DelegateCastingPerformanceTest][suite]'
@@ -1707,7 +1610,7 @@ MonoBehaviour:
       - Functional
       parentId: 1064
       parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][ExpressionTestRunner][suite]'
-    - id: 1062
+    - id: 1067
       uniqueId: 'TestAssembly.EditMode.dll/ExpressionTestRunner/DelegateCastingPerformanceTest/[TestAssembly.EditMode][ExpressionTestRunner.DelegateCastingPerformanceTest(50,100)]'
       name: DelegateCastingPerformanceTest(50,100)
       fullName: ExpressionTestRunner.DelegateCastingPerformanceTest(50,100)
@@ -1723,9 +1626,9 @@ MonoBehaviour:
       categories:
       - Performance
       - Functional
-      parentId: 1072
+      parentId: 1077
       parentUniqueId: 'TestAssembly.EditMode.dll/ExpressionTestRunner/[TestAssembly.EditMode][ExpressionTestRunner.DelegateCastingPerformanceTest][suite]'
-    - id: 1063
+    - id: 1068
       uniqueId: 'TestAssembly.EditMode.dll/ExpressionTestRunner/DelegateCastingPerformanceTest/[TestAssembly.EditMode][ExpressionTestRunner.DelegateCastingPerformanceTest(50,200)]'
       name: DelegateCastingPerformanceTest(50,200)
       fullName: ExpressionTestRunner.DelegateCastingPerformanceTest(50,200)
@@ -1741,9 +1644,9 @@ MonoBehaviour:
       categories:
       - Performance
       - Functional
-      parentId: 1072
+      parentId: 1077
       parentUniqueId: 'TestAssembly.EditMode.dll/ExpressionTestRunner/[TestAssembly.EditMode][ExpressionTestRunner.DelegateCastingPerformanceTest][suite]'
-    - id: 1064
+    - id: 1069
       uniqueId: 'TestAssembly.EditMode.dll/ExpressionTestRunner/DelegateCastingPerformanceTest/[TestAssembly.EditMode][ExpressionTestRunner.DelegateCastingPerformanceTest(50,300)]'
       name: DelegateCastingPerformanceTest(50,300)
       fullName: ExpressionTestRunner.DelegateCastingPerformanceTest(50,300)
@@ -1759,9 +1662,9 @@ MonoBehaviour:
       categories:
       - Performance
       - Functional
-      parentId: 1072
+      parentId: 1077
       parentUniqueId: 'TestAssembly.EditMode.dll/ExpressionTestRunner/[TestAssembly.EditMode][ExpressionTestRunner.DelegateCastingPerformanceTest][suite]'
-    - id: 1065
+    - id: 1070
       uniqueId: 'TestAssembly.EditMode.dll/ExpressionTestRunner/DelegateCastingPerformanceTest/[TestAssembly.EditMode][ExpressionTestRunner.DelegateCastingPerformanceTest(50,400)]'
       name: DelegateCastingPerformanceTest(50,400)
       fullName: ExpressionTestRunner.DelegateCastingPerformanceTest(50,400)
@@ -1777,9 +1680,9 @@ MonoBehaviour:
       categories:
       - Performance
       - Functional
-      parentId: 1072
+      parentId: 1077
       parentUniqueId: 'TestAssembly.EditMode.dll/ExpressionTestRunner/[TestAssembly.EditMode][ExpressionTestRunner.DelegateCastingPerformanceTest][suite]'
-    - id: 1066
+    - id: 1071
       uniqueId: 'TestAssembly.EditMode.dll/ExpressionTestRunner/DelegateCastingPerformanceTest/[TestAssembly.EditMode][ExpressionTestRunner.DelegateCastingPerformanceTest(50,500)]'
       name: DelegateCastingPerformanceTest(50,500)
       fullName: ExpressionTestRunner.DelegateCastingPerformanceTest(50,500)
@@ -1795,9 +1698,9 @@ MonoBehaviour:
       categories:
       - Performance
       - Functional
-      parentId: 1072
+      parentId: 1077
       parentUniqueId: 'TestAssembly.EditMode.dll/ExpressionTestRunner/[TestAssembly.EditMode][ExpressionTestRunner.DelegateCastingPerformanceTest][suite]'
-    - id: 1067
+    - id: 1072
       uniqueId: 'TestAssembly.EditMode.dll/ExpressionTestRunner/DelegateCastingPerformanceTest/[TestAssembly.EditMode][ExpressionTestRunner.DelegateCastingPerformanceTest(50,600)]'
       name: DelegateCastingPerformanceTest(50,600)
       fullName: ExpressionTestRunner.DelegateCastingPerformanceTest(50,600)
@@ -1813,9 +1716,9 @@ MonoBehaviour:
       categories:
       - Performance
       - Functional
-      parentId: 1072
+      parentId: 1077
       parentUniqueId: 'TestAssembly.EditMode.dll/ExpressionTestRunner/[TestAssembly.EditMode][ExpressionTestRunner.DelegateCastingPerformanceTest][suite]'
-    - id: 1068
+    - id: 1073
       uniqueId: 'TestAssembly.EditMode.dll/ExpressionTestRunner/DelegateCastingPerformanceTest/[TestAssembly.EditMode][ExpressionTestRunner.DelegateCastingPerformanceTest(50,700)]'
       name: DelegateCastingPerformanceTest(50,700)
       fullName: ExpressionTestRunner.DelegateCastingPerformanceTest(50,700)
@@ -1831,9 +1734,9 @@ MonoBehaviour:
       categories:
       - Performance
       - Functional
-      parentId: 1072
+      parentId: 1077
       parentUniqueId: 'TestAssembly.EditMode.dll/ExpressionTestRunner/[TestAssembly.EditMode][ExpressionTestRunner.DelegateCastingPerformanceTest][suite]'
-    - id: 1069
+    - id: 1074
       uniqueId: 'TestAssembly.EditMode.dll/ExpressionTestRunner/DelegateCastingPerformanceTest/[TestAssembly.EditMode][ExpressionTestRunner.DelegateCastingPerformanceTest(50,800)]'
       name: DelegateCastingPerformanceTest(50,800)
       fullName: ExpressionTestRunner.DelegateCastingPerformanceTest(50,800)
@@ -1849,9 +1752,9 @@ MonoBehaviour:
       categories:
       - Performance
       - Functional
-      parentId: 1072
+      parentId: 1077
       parentUniqueId: 'TestAssembly.EditMode.dll/ExpressionTestRunner/[TestAssembly.EditMode][ExpressionTestRunner.DelegateCastingPerformanceTest][suite]'
-    - id: 1070
+    - id: 1075
       uniqueId: 'TestAssembly.EditMode.dll/ExpressionTestRunner/DelegateCastingPerformanceTest/[TestAssembly.EditMode][ExpressionTestRunner.DelegateCastingPerformanceTest(50,900)]'
       name: DelegateCastingPerformanceTest(50,900)
       fullName: ExpressionTestRunner.DelegateCastingPerformanceTest(50,900)
@@ -1867,9 +1770,9 @@ MonoBehaviour:
       categories:
       - Performance
       - Functional
-      parentId: 1072
+      parentId: 1077
       parentUniqueId: 'TestAssembly.EditMode.dll/ExpressionTestRunner/[TestAssembly.EditMode][ExpressionTestRunner.DelegateCastingPerformanceTest][suite]'
-    - id: 1071
+    - id: 1076
       uniqueId: 'TestAssembly.EditMode.dll/ExpressionTestRunner/DelegateCastingPerformanceTest/[TestAssembly.EditMode][ExpressionTestRunner.DelegateCastingPerformanceTest(50,1000)]'
       name: DelegateCastingPerformanceTest(50,1000)
       fullName: ExpressionTestRunner.DelegateCastingPerformanceTest(50,1000)
@@ -1885,7 +1788,7 @@ MonoBehaviour:
       categories:
       - Performance
       - Functional
-      parentId: 1072
+      parentId: 1077
       parentUniqueId: 'TestAssembly.EditMode.dll/ExpressionTestRunner/[TestAssembly.EditMode][ExpressionTestRunner.DelegateCastingPerformanceTest][suite]'
     - id: 1080
       uniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][GameDBTestRunner][suite]'
@@ -1901,7 +1804,7 @@ MonoBehaviour:
       description: 
       isSuite: 1
       categories: []
-      parentId: 1139
+      parentId: 1142
       parentUniqueId: '[TestAssembly.EditMode][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/TestAssembly.EditMode.dll][suite]'
     - id: 1084
       uniqueId: 'TestAssembly.EditMode.dll/GameDBTestRunner/[TestAssembly.EditMode][GameDBTestRunner.StartTest][suite]'
@@ -1919,7 +1822,7 @@ MonoBehaviour:
       categories: []
       parentId: 1080
       parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][GameDBTestRunner][suite]'
-    - id: 1076
+    - id: 1081
       uniqueId: 'TestAssembly.EditMode.dll/GameDBTestRunner/StartTest/[TestAssembly.EditMode][GameDBTestRunner.StartTest(GameDBTestRunner+JsonTestRunner)]'
       name: StartTest(GameDBTestRunner+JsonTestRunner)
       fullName: GameDBTestRunner.StartTest(GameDBTestRunner+JsonTestRunner)
@@ -1934,9 +1837,9 @@ MonoBehaviour:
       isSuite: 0
       categories:
       - Uncategorized
-      parentId: 1079
+      parentId: 1084
       parentUniqueId: 'TestAssembly.EditMode.dll/GameDBTestRunner/[TestAssembly.EditMode][GameDBTestRunner.StartTest][suite]'
-    - id: 1077
+    - id: 1082
       uniqueId: 'TestAssembly.EditMode.dll/GameDBTestRunner/StartTest/[TestAssembly.EditMode][GameDBTestRunner.StartTest(GameDBTestRunner+XmlTestRunner)]'
       name: StartTest(GameDBTestRunner+XmlTestRunner)
       fullName: GameDBTestRunner.StartTest(GameDBTestRunner+XmlTestRunner)
@@ -1951,9 +1854,9 @@ MonoBehaviour:
       isSuite: 0
       categories:
       - Uncategorized
-      parentId: 1079
+      parentId: 1084
       parentUniqueId: 'TestAssembly.EditMode.dll/GameDBTestRunner/[TestAssembly.EditMode][GameDBTestRunner.StartTest][suite]'
-    - id: 1078
+    - id: 1083
       uniqueId: 'TestAssembly.EditMode.dll/GameDBTestRunner/StartTest/[TestAssembly.EditMode][GameDBTestRunner.StartTest(GameDBTestRunner+CsvTestRunner)]'
       name: StartTest(GameDBTestRunner+CsvTestRunner)
       fullName: GameDBTestRunner.StartTest(GameDBTestRunner+CsvTestRunner)
@@ -1968,7 +1871,7 @@ MonoBehaviour:
       isSuite: 0
       categories:
       - Uncategorized
-      parentId: 1079
+      parentId: 1084
       parentUniqueId: 'TestAssembly.EditMode.dll/GameDBTestRunner/[TestAssembly.EditMode][GameDBTestRunner.StartTest][suite]'
     - id: 1085
       uniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][GlobalEnumTestRunner][suite]'
@@ -1984,9 +1887,9 @@ MonoBehaviour:
       description: 
       isSuite: 1
       categories: []
-      parentId: 1139
+      parentId: 1142
       parentUniqueId: '[TestAssembly.EditMode][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/TestAssembly.EditMode.dll][suite]'
-    - id: 1081
+    - id: 1086
       uniqueId: 'TestAssembly.EditMode.dll/GlobalEnumTestRunner/[TestAssembly.EditMode][GlobalEnumTestRunner.StartTest]'
       name: StartTest
       fullName: GlobalEnumTestRunner.StartTest
@@ -2001,9 +1904,9 @@ MonoBehaviour:
       isSuite: 0
       categories:
       - Uncategorized
-      parentId: 1080
+      parentId: 1085
       parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][GlobalEnumTestRunner][suite]'
-    - id: 1128
+    - id: 1131
       uniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][LocalizeServiceTestRunner][suite]'
       name: LocalizeServiceTestRunner
       fullName: LocalizeServiceTestRunner
@@ -2018,9 +1921,9 @@ MonoBehaviour:
       isSuite: 1
       categories:
       - Service
-      parentId: 1139
+      parentId: 1142
       parentUniqueId: '[TestAssembly.EditMode][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/TestAssembly.EditMode.dll][suite]'
-    - id: 1124
+    - id: 1140
       uniqueId: 'TestAssembly.EditMode.dll/LocalizeServiceTestRunner/[TestAssembly.EditMode][LocalizeServiceTestRunner.LocalizeServiceTest]'
       name: LocalizeServiceTest
       fullName: LocalizeServiceTestRunner.LocalizeServiceTest
@@ -2035,7 +1938,7 @@ MonoBehaviour:
       isSuite: 0
       categories:
       - Service
-      parentId: 1123
+      parentId: 1139
       parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][LocalizeServiceTestRunner][suite]'
     - id: 1093
       uniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][NotifyConstructorTestRunner][suite]'
@@ -2052,9 +1955,9 @@ MonoBehaviour:
       isSuite: 1
       categories:
       - Notify
-      parentId: 1139
+      parentId: 1142
       parentUniqueId: '[TestAssembly.EditMode][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/TestAssembly.EditMode.dll][suite]'
-    - id: 1089
+    - id: 1094
       uniqueId: 'TestAssembly.EditMode.dll/NotifyConstructorTestRunner/[TestAssembly.EditMode][NotifyConstructorTestRunner.NotifyCollectionAllConstructorTest]'
       name: NotifyCollectionAllConstructorTest
       fullName: NotifyConstructorTestRunner.NotifyCollectionAllConstructorTest
@@ -2069,9 +1972,9 @@ MonoBehaviour:
       isSuite: 0
       categories:
       - Notify
-      parentId: 1088
+      parentId: 1093
       parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][NotifyConstructorTestRunner][suite]'
-    - id: 1091
+    - id: 1096
       uniqueId: 'TestAssembly.EditMode.dll/NotifyConstructorTestRunner/[TestAssembly.EditMode][NotifyConstructorTestRunner.NotifyDictionaryConstructorTest]'
       name: NotifyDictionaryConstructorTest
       fullName: NotifyConstructorTestRunner.NotifyDictionaryConstructorTest
@@ -2086,9 +1989,9 @@ MonoBehaviour:
       isSuite: 0
       categories:
       - Notify
-      parentId: 1088
+      parentId: 1093
       parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][NotifyConstructorTestRunner][suite]'
-    - id: 1090
+    - id: 1095
       uniqueId: 'TestAssembly.EditMode.dll/NotifyConstructorTestRunner/[TestAssembly.EditMode][NotifyConstructorTestRunner.NotifyListAllConstructorTest]'
       name: NotifyListAllConstructorTest
       fullName: NotifyConstructorTestRunner.NotifyListAllConstructorTest
@@ -2103,7 +2006,7 @@ MonoBehaviour:
       isSuite: 0
       categories:
       - Notify
-      parentId: 1088
+      parentId: 1093
       parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][NotifyConstructorTestRunner][suite]'
     - id: 1097
       uniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][NotifyCoverageTestRunner][suite]'
@@ -2121,9 +2024,9 @@ MonoBehaviour:
       categories:
       - Notify
       - Coverage
-      parentId: 1139
+      parentId: 1142
       parentUniqueId: '[TestAssembly.EditMode][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/TestAssembly.EditMode.dll][suite]'
-    - id: 1094
+    - id: 1099
       uniqueId: 'TestAssembly.EditMode.dll/NotifyCoverageTestRunner/[TestAssembly.EditMode][NotifyCoverageTestRunner.NotifyCollectionCoverageTest]'
       name: NotifyCollectionCoverageTest
       fullName: NotifyCoverageTestRunner.NotifyCollectionCoverageTest
@@ -2139,9 +2042,9 @@ MonoBehaviour:
       categories:
       - Notify
       - Coverage
-      parentId: 1092
+      parentId: 1097
       parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][NotifyCoverageTestRunner][suite]'
-    - id: 1100
+    - id: 1105
       uniqueId: 'TestAssembly.EditMode.dll/NotifyCoverageTestRunner/[TestAssembly.EditMode][NotifyCoverageTestRunner.NotifyConcurrentDictionaryTest]'
       name: NotifyConcurrentDictionaryTest
       fullName: NotifyCoverageTestRunner.NotifyConcurrentDictionaryTest
@@ -2157,9 +2060,9 @@ MonoBehaviour:
       categories:
       - Notify
       - Coverage
-      parentId: 1092
+      parentId: 1097
       parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][NotifyCoverageTestRunner][suite]'
-    - id: 1098
+    - id: 1103
       uniqueId: 'TestAssembly.EditMode.dll/NotifyCoverageTestRunner/[TestAssembly.EditMode][NotifyCoverageTestRunner.NotifyDictionaryTest]'
       name: NotifyDictionaryTest
       fullName: NotifyCoverageTestRunner.NotifyDictionaryTest
@@ -2175,9 +2078,9 @@ MonoBehaviour:
       categories:
       - Notify
       - Coverage
-      parentId: 1092
+      parentId: 1097
       parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][NotifyCoverageTestRunner][suite]'
-    - id: 1096
+    - id: 1101
       uniqueId: 'TestAssembly.EditMode.dll/NotifyCoverageTestRunner/[TestAssembly.EditMode][NotifyCoverageTestRunner.NotifyListCoverageTest]'
       name: NotifyListCoverageTest
       fullName: NotifyCoverageTestRunner.NotifyListCoverageTest
@@ -2193,9 +2096,9 @@ MonoBehaviour:
       categories:
       - Notify
       - Coverage
-      parentId: 1092
+      parentId: 1097
       parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][NotifyCoverageTestRunner][suite]'
-    - id: 1093
+    - id: 1098
       uniqueId: 'TestAssembly.EditMode.dll/NotifyCoverageTestRunner/[TestAssembly.EditMode][NotifyCoverageTestRunner.NotifyPropertyCoverageTest]'
       name: NotifyPropertyCoverageTest
       fullName: NotifyCoverageTestRunner.NotifyPropertyCoverageTest
@@ -2211,9 +2114,9 @@ MonoBehaviour:
       categories:
       - Notify
       - Coverage
-      parentId: 1092
+      parentId: 1097
       parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][NotifyCoverageTestRunner][suite]'
-    - id: 1095
+    - id: 1100
       uniqueId: 'TestAssembly.EditMode.dll/NotifyCoverageTestRunner/[TestAssembly.EditMode][NotifyCoverageTestRunner.NotifyRecordCollectionCoverageTest]'
       name: NotifyRecordCollectionCoverageTest
       fullName: NotifyCoverageTestRunner.NotifyRecordCollectionCoverageTest
@@ -2229,9 +2132,9 @@ MonoBehaviour:
       categories:
       - Notify
       - Coverage
-      parentId: 1092
+      parentId: 1097
       parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][NotifyCoverageTestRunner][suite]'
-    - id: 1101
+    - id: 1106
       uniqueId: 'TestAssembly.EditMode.dll/NotifyCoverageTestRunner/[TestAssembly.EditMode][NotifyCoverageTestRunner.NotifyRecordDictionaryTest]'
       name: NotifyRecordDictionaryTest
       fullName: NotifyCoverageTestRunner.NotifyRecordDictionaryTest
@@ -2247,9 +2150,9 @@ MonoBehaviour:
       categories:
       - Notify
       - Coverage
-      parentId: 1092
+      parentId: 1097
       parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][NotifyCoverageTestRunner][suite]'
-    - id: 1097
+    - id: 1102
       uniqueId: 'TestAssembly.EditMode.dll/NotifyCoverageTestRunner/[TestAssembly.EditMode][NotifyCoverageTestRunner.NotifyRecordListTest]'
       name: NotifyRecordListTest
       fullName: NotifyCoverageTestRunner.NotifyRecordListTest
@@ -2265,9 +2168,9 @@ MonoBehaviour:
       categories:
       - Notify
       - Coverage
-      parentId: 1092
+      parentId: 1097
       parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][NotifyCoverageTestRunner][suite]'
-    - id: 1099
+    - id: 1104
       uniqueId: 'TestAssembly.EditMode.dll/NotifyCoverageTestRunner/[TestAssembly.EditMode][NotifyCoverageTestRunner.NotifySortedDictionaryTest]'
       name: NotifySortedDictionaryTest
       fullName: NotifyCoverageTestRunner.NotifySortedDictionaryTest
@@ -2283,7 +2186,7 @@ MonoBehaviour:
       categories:
       - Notify
       - Coverage
-      parentId: 1092
+      parentId: 1097
       parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][NotifyCoverageTestRunner][suite]'
     - id: 1107
       uniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][NotifySerializeTestRunner][suite]'
@@ -2300,9 +2203,9 @@ MonoBehaviour:
       isSuite: 1
       categories:
       - Notify
-      parentId: 1139
+      parentId: 1142
       parentUniqueId: '[TestAssembly.EditMode][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/TestAssembly.EditMode.dll][suite]'
-    - id: 1103
+    - id: 1108
       uniqueId: 'TestAssembly.EditMode.dll/NotifySerializeTestRunner/[TestAssembly.EditMode][NotifySerializeTestRunner.NotifyCsvConvertTest]'
       name: NotifyCsvConvertTest
       fullName: NotifySerializeTestRunner.NotifyCsvConvertTest
@@ -2317,9 +2220,9 @@ MonoBehaviour:
       isSuite: 0
       categories:
       - Notify
-      parentId: 1102
+      parentId: 1107
       parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][NotifySerializeTestRunner][suite]'
-    - id: 1104
+    - id: 1109
       uniqueId: 'TestAssembly.EditMode.dll/NotifySerializeTestRunner/[TestAssembly.EditMode][NotifySerializeTestRunner.NotifyJsonConvertTest]'
       name: NotifyJsonConvertTest
       fullName: NotifySerializeTestRunner.NotifyJsonConvertTest
@@ -2334,9 +2237,9 @@ MonoBehaviour:
       isSuite: 0
       categories:
       - Notify
-      parentId: 1102
+      parentId: 1107
       parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][NotifySerializeTestRunner][suite]'
-    - id: 1105
+    - id: 1110
       uniqueId: 'TestAssembly.EditMode.dll/NotifySerializeTestRunner/[TestAssembly.EditMode][NotifySerializeTestRunner.NotifyXmlConvertTest]'
       name: NotifyXmlConvertTest
       fullName: NotifySerializeTestRunner.NotifyXmlConvertTest
@@ -2351,7 +2254,7 @@ MonoBehaviour:
       isSuite: 0
       categories:
       - Notify
-      parentId: 1102
+      parentId: 1107
       parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][NotifySerializeTestRunner][suite]'
     - id: 1078
       uniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][OverridenMethodTestRunner][suite]'
@@ -2368,9 +2271,9 @@ MonoBehaviour:
       isSuite: 1
       categories:
       - Functional
-      parentId: 1139
+      parentId: 1142
       parentUniqueId: '[TestAssembly.EditMode][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/TestAssembly.EditMode.dll][suite]'
-    - id: 1074
+    - id: 1079
       uniqueId: 'TestAssembly.EditMode.dll/OverridenMethodTestRunner/[TestAssembly.EditMode][OverridenMethodTestRunner.OverridenMethodTest]'
       name: OverridenMethodTest
       fullName: OverridenMethodTestRunner.OverridenMethodTest
@@ -2385,9 +2288,75 @@ MonoBehaviour:
       isSuite: 0
       categories:
       - Functional
-      parentId: 1073
+      parentId: 1078
       parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][OverridenMethodTestRunner][suite]'
     - id: 1111
+      uniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][PerformanceTestRunner][suite]'
+      name: PerformanceTestRunner
+      fullName: PerformanceTestRunner
+      resultStatus: 1
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories:
+      - Performance
+      parentId: 1142
+      parentUniqueId: '[TestAssembly.EditMode][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/TestAssembly.EditMode.dll][suite]'
+    - id: 1113
+      uniqueId: 'TestAssembly.EditMode.dll/PerformanceTestRunner/[TestAssembly.EditMode][PerformanceTestRunner.QueuePerformanceTest][suite]'
+      name: QueuePerformanceTest
+      fullName: PerformanceTestRunner.QueuePerformanceTest
+      resultStatus: 1
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories:
+      - Performance
+      parentId: 1111
+      parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][PerformanceTestRunner][suite]'
+    - id: 1121
+      uniqueId: 'TestAssembly.EditMode.dll/PerformanceTestRunner/QueuePerformanceTest/[TestAssembly.EditMode][PerformanceTestRunner.QueuePerformanceTest(5000,30,10)]'
+      name: QueuePerformanceTest(5000,30,10)
+      fullName: PerformanceTestRunner.QueuePerformanceTest(5000,30,10)
+      resultStatus: 1
+      duration: 6.896035
+      messages: 
+      output: "For.GC() in Undefineds\nMin:\t\t0.30 \nMedian:\t\t0.30 \nMax:\t\t3.00
+        \nAvg:\t\t0.70 \nStdDev:\t\t0.80 \nSampleCount:\t32\nSum:\t\t22.50 \r\nFirst
+        samples:\t\u2583\u2581\u2581\u2581\u2588\u2581\u2583\u2581\u2581\u2581\u2581\u2581\u2583\u2581\u2581\u2581\u2588\u2581\u2583\u2581\u2581\u2581\u2581\u2581\u2583\u2581\u2581\u2588\u2581\u2581\u2583\u2581\r\nHistogram:\t\u2588\u2586\u2583\u2581\u2581\u2581\u2581\u2581\r\n\r\nFor
+        in Milliseconds\nMin:\t\t44.81 ms\nMedian:\t\t46.92 ms\nMax:\t\t48.43 ms\nAvg:\t\t46.72
+        ms\nStdDev:\t\t1.08 ms\nSampleCount:\t30\nSum:\t\t1401.50 ms\r\nFirst samples:\t\u2581\u2587\u2581\u2582\u2588\u2585\u2585\u2585\u2581\u2586\u2587\u2588\u2584\u2584\u2586\u2585\u2585\u2588\u2585\u2584\u2587\u2585\u2582\u2585\u2585\u2586\u2581\u2586\u2585\u2582\r\nHistogram:\t\u2588\u2586\u2583\u2582\u2582\u2581\u2581\u2581\r\n\r\nParallelFor.GC()
+        in Undefineds\nMin:\t\t196.30 \nMedian:\t\t199.30 \nMax:\t\t202.70 \nAvg:\t\t199.15
+        \nStdDev:\t\t1.14 \nSampleCount:\t32\nSum:\t\t6372.80 \r\nFirst samples:\t\u2583\u2582\u2581\u2584\u2584\u2585\u2585\u2584\u2584\u2585\u2588\u2585\u2584\u2585\u2584\u2584\u2584\u2582\u2585\u2584\u2584\u2584\u2584\u2584\u2583\u2583\u2584\u2585\u2587\u2584\u2585\u2583\r\nHistogram:\t\u2588\u2586\u2583\u2583\u2582\u2581\u2582\u2581\r\n\r\nParallelFor
+        in Milliseconds\nMin:\t\t18.55 ms\nMedian:\t\t20.32 ms\nMax:\t\t25.60 ms\nAvg:\t\t21.16
+        ms\nStdDev:\t\t2.10 ms\nSampleCount:\t30\nSum:\t\t634.72 ms\r\nFirst samples:\t\u2588\u2588\u2587\u2586\u2586\u2585\u2585\u2586\u2585\u2585\u2586\u2585\u2581\u2582\u2583\u2583\u2582\u2581\u2582\u2581\u2582\u2582\u2582\u2583\u2582\u2582\u2581\u2583\u2582\u2582\r\nHistogram:\t\u2588\u2586\u2583\u2583\u2583\u2581\u2582\u2581\r\n\r\nParallelPool.GC()
+        in Undefineds\nMin:\t\t195.10 \nMedian:\t\t201.70 \nMax:\t\t203.70 \nAvg:\t\t201.23
+        \nStdDev:\t\t1.68 \nSampleCount:\t32\nSum:\t\t6439.40 \r\nFirst samples:\t\u2587\u2586\u2586\u2586\u2587\u2587\u2585\u2586\u2586\u2587\u2586\u2586\u2588\u2586\u2587\u2586\u2586\u2587\u2586\u2586\u2586\u2586\u2586\u2586\u2581\u2582\u2583\u2586\u2586\u2586\u2587\u2586\r\nHistogram:\t\u2588\u2586\u2583\u2583\u2583\u2583\u2582\u2581\r\n\r\nParallelPool
+        in Milliseconds\nMin:\t\t28.25 ms\nMedian:\t\t30.25 ms\nMax:\t\t54.37 ms\nAvg:\t\t31.92
+        ms\nStdDev:\t\t5.44 ms\nSampleCount:\t30\nSum:\t\t957.61 ms\r\nFirst samples:\t\u2581\u2581\u2581\u2581\u2582\u2582\u2581\u2581\u2581\u2582\u2582\u2582\u2581\u2581\u2582\u2581\u2581\u2582\u2582\u2581\u2581\u2582\u2588\u2586\u2583\u2583\u2582\u2582\u2582\u2582\r\nHistogram:\t\u2588\u2586\u2583\u2582\u2583\u2582\u2582\u2581\r\n\r\n\r\n##performancetestresult2:{\"Name\":\"PerformanceTestRunner.QueuePerformanceTest(5000,30,10)\",\"ClassName\":\"PerformanceTestRunner\",\"MethodName\":\"QueuePerformanceTest\",\"Version\":\"1\",\"Categories\":[\"Performance\",\"Performance\"],\"SampleGroups\":[{\"Name\":\"For.GC()\",\"Unit\":8,\"IncreaseIsBetter\":false,\"Samples\":[1.1,0.3,0.3,0.3,3.0,0.3,1.1,0.3,0.3,0.3,0.3,0.3,1.1,0.3,0.3,0.3,3.0,0.3,1.1,0.3,0.3,0.3,0.3,0.3,1.1,0.3,0.3,3.0,0.3,0.3,1.1,0.3],\"Min\":0.3,\"Max\":3.0,\"Median\":0.3,\"Average\":0.7031250000000003,\"StandardDeviation\":0.8005796240068814,\"Sum\":22.50000000000001},{\"Name\":\"For\",\"Unit\":2,\"IncreaseIsBetter\":false,\"Samples\":[44.80680000000001,47.835800000000009,44.81939999999997,45.16239999999999,48.172199999999978,46.77639999999997,47.05280000000005,47.0761,45.01859999999999,47.43130000000008,48.039999999999967,48.26070000000004,46.614500000000138,46.413699999999838,47.56619999999998,46.91720000000009,46.92640000000006,48.42600000000016,47.08360000000016,46.5619999999999,47.69510000000014,46.68170000000009,45.2195999999999,46.86100000000033,47.026200000000248,47.14350000000013,44.83190000000013,47.308300000000148,46.62909999999965,45.141399999999979],\"Min\":44.80680000000001,\"Max\":48.42600000000016,\"Median\":46.921800000000079,\"Average\":46.71666333333337,\"StandardDeviation\":1.0752943651185075,\"Sum\":1401.4999000000012},{\"Name\":\"ParallelFor.GC()\",\"Unit\":8,\"IncreaseIsBetter\":false,\"Samples\":[198.3,197.5,196.3,198.7,198.8,200.1,199.5,199.3,199.3,199.5,202.7,199.6,199.3,200.3,199.3,199.3,198.8,197.4,199.5,199.1,199.3,199.3,199.3,199.0,198.0,197.8,199.3,199.5,201.8,199.1,199.5,198.3],\"Min\":196.3,\"Max\":202.7,\"Median\":199.3,\"Average\":199.15000000000007,\"StandardDeviation\":1.1434596626029255,\"Sum\":6372.800000000002},{\"Name\":\"ParallelFor\",\"Unit\":2,\"IncreaseIsBetter\":false,\"Samples\":[25.60389999999998,25.526700000000035,24.27080000000001,23.236699999999986,23.356100000000028,22.80590000000001,22.84319999999991,23.100099999999999,22.800100000000044,22.990999999999987,23.52690000000007,22.396100000000048,18.546500000000039,19.292100000000006,20.25980000000004,20.8608999999999,19.50429999999983,18.795299999999999,19.12570000000005,18.718099999999823,20.038999999999989,19.901999999999818,19.694999999999938,20.37390000000005,19.123399999999948,19.34310000000005,18.940399999999955,20.395999999999959,19.454700000000004,19.89359999999988],\"Min\":18.546500000000039,\"Max\":25.60389999999998,\"Median\":20.316850000000046,\"Average\":21.157376666666648,\"StandardDeviation\":2.104246096615677,\"Sum\":634.7212999999994},{\"Name\":\"ParallelPool.GC()\",\"Unit\":8,\"IncreaseIsBetter\":false,\"Samples\":[202.5,201.5,201.7,201.7,201.9,201.9,200.1,200.9,201.5,202.6,201.7,201.7,203.7,201.0,201.9,201.7,201.7,202.5,201.7,201.8,201.4,201.8,201.7,201.8,195.1,196.7,197.4,201.4,201.5,201.3,201.9,201.7],\"Min\":195.1,\"Max\":203.7,\"Median\":201.7,\"Average\":201.23124999999997,\"StandardDeviation\":1.6812267656387113,\"Sum\":6439.399999999999},{\"Name\":\"ParallelPool\",\"Unit\":2,\"IncreaseIsBetter\":false,\"Samples\":[30.03,28.661,28.248800000000018,30.107000000000029,30.44799999999998,31.06220000000002,29.94990000000007,29.766900000000079,29.597999999999958,30.248199999999998,30.758399999999939,30.987300000000006,29.34030000000007,28.456199999999968,30.24429999999984,29.850200000000087,29.74420000000009,30.128299999999855,30.84789999999998,29.926400000000059,29.15840000000003,30.804499999999963,54.37429999999995,46.95170000000007,37.389700000000178,36.80230000000006,31.001199999999927,31.2670999999998,30.29029999999989,31.16269999999986],\"Min\":28.248800000000018,\"Max\":54.37429999999995,\"Median\":30.246249999999919,\"Average\":31.92018999999999,\"StandardDeviation\":5.443249996301238,\"Sum\":957.6056999999997}]}\r\n##performancetestruninfo2:{\"TestSuite\":\"Editmode\",\"Date\":1743663918966,\"Player\":{\"Development\":true,\"ScreenWidth\":1920,\"ScreenHeight\":1080,\"ScreenRefreshRate\":60,\"Fullscreen\":false,\"Vsync\":1,\"AntiAliasing\":0,\"Batchmode\":false,\"RenderThreadingMode\":\"MultiThreaded\",\"GpuSkinning\":false,\"Platform\":\"WindowsEditor\",\"ColorSpace\":\"Gamma\",\"AnisotropicFiltering\":\"Disable\",\"BlendWeights\":\"FourBones\",\"GraphicsApi\":\"Direct3D11\",\"ScriptingBackend\":\"Mono2x\",\"AndroidTargetSdkVersion\":\"AndroidApiLevelAuto\",\"AndroidBuildSystem\":\"Gradle\",\"BuildTarget\":\"StandaloneWindows64\",\"StereoRenderingPath\":\"MultiPass\"},\"Hardware\":{\"OperatingSystem\":\"Windows
+        10  (10.0.19045) 64bit\",\"DeviceModel\":\"82R4 (LENOVO)\",\"DeviceName\":\"DESKTOP-55T0R54\",\"ProcessorType\":\"AMD
+        Ryzen 5 5500U with Radeon Graphics \",\"ProcessorCount\":12,\"GraphicsDeviceName\":\"AMD
+        Radeon(TM) Graphics\",\"SystemMemorySizeMB\":14181},\"Editor\":{\"Version\":\"6000.0.26f1\",\"Branch\":\"6000.0/staging\",\"Changeset\":\"ccb7c73d2c02\",\"Date\":1730275040},\"Dependencies\":[\"com.cysharp.unitask@2.5.10\",\"com.unity.2d.animation@10.1.4\",\"com.unity.2d.pixel-perfect@5.0.3\",\"com.unity.2d.psdimporter@9.0.3\",\"com.unity.2d.sprite@1.0.0\",\"com.unity.2d.spriteshape@10.0.7\",\"com.unity.2d.tilemap@1.0.0\",\"com.unity.ai.navigation@2.0.5\",\"com.unity.assetbundlebrowser@1.7.0\",\"com.unity.collab-proxy@2.5.2\",\"com.unity.editorcoroutines@1.0.0\",\"com.unity.ide.rider@3.0.34\",\"com.unity.memoryprofiler@1.1.3\",\"com.unity.mobile.android-logcat@1.4.4\",\"com.unity.multiplayer.center@1.0.0\",\"com.unity.performance.profile-analyzer@1.2.3\",\"com.unity.profiling.core@1.0.2\",\"com.unity.render-pipelines.universal@17.0.3\",\"com.unity.test-framework@1.4.5\",\"com.unity.test-framework.performance@3.0.3\",\"com.unity.testtools.codecoverage@1.2.6\",\"com.unity.timeline@1.8.7\",\"com.unity.ugui@2.0.0\",\"com.unity.modules.accessibility@1.0.0\",\"com.unity.modules.ai@1.0.0\",\"com.unity.modules.androidjni@1.0.0\",\"com.unity.modules.animation@1.0.0\",\"com.unity.modules.assetbundle@1.0.0\",\"com.unity.modules.audio@1.0.0\",\"com.unity.modules.cloth@1.0.0\",\"com.unity.modules.director@1.0.0\",\"com.unity.modules.imageconversion@1.0.0\",\"com.unity.modules.imgui@1.0.0\",\"com.unity.modules.jsonserialize@1.0.0\",\"com.unity.modules.particlesystem@1.0.0\",\"com.unity.modules.physics@1.0.0\",\"com.unity.modules.physics2d@1.0.0\",\"com.unity.modules.screencapture@1.0.0\",\"com.unity.modules.terrain@1.0.0\",\"com.unity.modules.terrainphysics@1.0.0\",\"com.unity.modules.tilemap@1.0.0\",\"com.unity.modules.ui@1.0.0\",\"com.unity.modules.uielements@1.0.0\",\"com.unity.modules.umbra@1.0.0\",\"com.unity.modules.unityanalytics@1.0.0\",\"com.unity.modules.unitywebrequest@1.0.0\",\"com.unity.modules.unitywebrequestassetbundle@1.0.0\",\"com.unity.modules.unitywebrequestaudio@1.0.0\",\"com.unity.modules.unitywebrequesttexture@1.0.0\",\"com.unity.modules.unitywebrequestwww@1.0.0\",\"com.unity.modules.vehicles@1.0.0\",\"com.unity.modules.video@1.0.0\",\"com.unity.modules.vr@1.0.0\",\"com.unity.modules.wind@1.0.0\",\"com.unity.modules.xr@1.0.0\",\"com.unity.modules.subsystems@1.0.0\",\"com.unity.modules.hierarchycore@1.0.0\",\"com.unity.settings-manager@2.0.1\",\"com.unity.ext.nunit@2.0.5\",\"com.unity.render-pipelines.core@17.0.3\",\"com.unity.shadergraph@17.0.3\",\"com.unity.render-pipelines.universal-config@17.0.3\",\"com.unity.burst@1.8.18\",\"com.unity.collections@2.5.1\",\"com.unity.mathematics@1.3.2\",\"com.unity.2d.common@9.0.7\",\"com.unity.searcher@4.9.2\",\"com.unity.rendering.light-transport@1.0.1\",\"com.unity.nuget.mono-cecil@1.11.4\"],\"Results\":[]}\r\n"
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1122
+      parentUniqueId: 'TestAssembly.EditMode.dll/PerformanceTestRunner/[TestAssembly.EditMode][PerformanceTestRunner.QueuePerformanceTest][suite]'
+    - id: 1114
       uniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][ReflectionTestRunner][suite]'
       name: ReflectionTestRunner
       fullName: ReflectionTestRunner
@@ -2403,9 +2372,9 @@ MonoBehaviour:
       categories:
       - Reflection
       - Performance
-      parentId: 1139
+      parentId: 1142
       parentUniqueId: '[TestAssembly.EditMode][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/TestAssembly.EditMode.dll][suite]'
-    - id: 1127
+    - id: 1130
       uniqueId: 'TestAssembly.EditMode.dll/ReflectionTestRunner/[TestAssembly.EditMode][ReflectionTestRunner.ReflectionExtensionPerformanceTest][suite]'
       name: ReflectionExtensionPerformanceTest
       fullName: ReflectionTestRunner.ReflectionExtensionPerformanceTest
@@ -2421,9 +2390,9 @@ MonoBehaviour:
       categories:
       - Performance
       - Reflection
-      parentId: 1111
+      parentId: 1114
       parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][ReflectionTestRunner][suite]'
-    - id: 1118
+    - id: 1134
       uniqueId: 'TestAssembly.EditMode.dll/ReflectionTestRunner/ReflectionExtensionPerformanceTest/[TestAssembly.EditMode][ReflectionTestRunner.ReflectionExtensionPerformanceTest(10,10)]'
       name: ReflectionExtensionPerformanceTest(10,10)
       fullName: ReflectionTestRunner.ReflectionExtensionPerformanceTest(10,10)
@@ -2439,9 +2408,9 @@ MonoBehaviour:
       categories:
       - Performance
       - Reflection
-      parentId: 1122
+      parentId: 1138
       parentUniqueId: 'TestAssembly.EditMode.dll/ReflectionTestRunner/[TestAssembly.EditMode][ReflectionTestRunner.ReflectionExtensionPerformanceTest][suite]'
-    - id: 1119
+    - id: 1135
       uniqueId: 'TestAssembly.EditMode.dll/ReflectionTestRunner/ReflectionExtensionPerformanceTest/[TestAssembly.EditMode][ReflectionTestRunner.ReflectionExtensionPerformanceTest(100,100)]'
       name: ReflectionExtensionPerformanceTest(100,100)
       fullName: ReflectionTestRunner.ReflectionExtensionPerformanceTest(100,100)
@@ -2457,9 +2426,9 @@ MonoBehaviour:
       categories:
       - Performance
       - Reflection
-      parentId: 1122
+      parentId: 1138
       parentUniqueId: 'TestAssembly.EditMode.dll/ReflectionTestRunner/[TestAssembly.EditMode][ReflectionTestRunner.ReflectionExtensionPerformanceTest][suite]'
-    - id: 1120
+    - id: 1136
       uniqueId: 'TestAssembly.EditMode.dll/ReflectionTestRunner/ReflectionExtensionPerformanceTest/[TestAssembly.EditMode][ReflectionTestRunner.ReflectionExtensionPerformanceTest(100,150)]'
       name: ReflectionExtensionPerformanceTest(100,150)
       fullName: ReflectionTestRunner.ReflectionExtensionPerformanceTest(100,150)
@@ -2475,9 +2444,9 @@ MonoBehaviour:
       categories:
       - Performance
       - Reflection
-      parentId: 1122
+      parentId: 1138
       parentUniqueId: 'TestAssembly.EditMode.dll/ReflectionTestRunner/[TestAssembly.EditMode][ReflectionTestRunner.ReflectionExtensionPerformanceTest][suite]'
-    - id: 1121
+    - id: 1137
       uniqueId: 'TestAssembly.EditMode.dll/ReflectionTestRunner/ReflectionExtensionPerformanceTest/[TestAssembly.EditMode][ReflectionTestRunner.ReflectionExtensionPerformanceTest(100,200)]'
       name: ReflectionExtensionPerformanceTest(100,200)
       fullName: ReflectionTestRunner.ReflectionExtensionPerformanceTest(100,200)
@@ -2493,9 +2462,9 @@ MonoBehaviour:
       categories:
       - Performance
       - Reflection
-      parentId: 1122
+      parentId: 1138
       parentUniqueId: 'TestAssembly.EditMode.dll/ReflectionTestRunner/[TestAssembly.EditMode][ReflectionTestRunner.ReflectionExtensionPerformanceTest][suite]'
-    - id: 1122
+    - id: 1125
       uniqueId: 'TestAssembly.EditMode.dll/ReflectionTestRunner/[TestAssembly.EditMode][ReflectionTestRunner.ReflectionPerformanceTest][suite]'
       name: ReflectionPerformanceTest
       fullName: ReflectionTestRunner.ReflectionPerformanceTest
@@ -2511,9 +2480,9 @@ MonoBehaviour:
       categories:
       - Performance
       - Reflection
-      parentId: 1111
+      parentId: 1114
       parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][ReflectionTestRunner][suite]'
-    - id: 1107
+    - id: 1123
       uniqueId: 'TestAssembly.EditMode.dll/ReflectionTestRunner/ReflectionPerformanceTest/[TestAssembly.EditMode][ReflectionTestRunner.ReflectionPerformanceTest(100,5)]'
       name: ReflectionPerformanceTest(100,5)
       fullName: ReflectionTestRunner.ReflectionPerformanceTest(100,5)
@@ -2529,9 +2498,9 @@ MonoBehaviour:
       categories:
       - Performance
       - Reflection
-      parentId: 1117
+      parentId: 1133
       parentUniqueId: 'TestAssembly.EditMode.dll/ReflectionTestRunner/[TestAssembly.EditMode][ReflectionTestRunner.ReflectionPerformanceTest][suite]'
-    - id: 1108
+    - id: 1124
       uniqueId: 'TestAssembly.EditMode.dll/ReflectionTestRunner/ReflectionPerformanceTest/[TestAssembly.EditMode][ReflectionTestRunner.ReflectionPerformanceTest(100,10)]'
       name: ReflectionPerformanceTest(100,10)
       fullName: ReflectionTestRunner.ReflectionPerformanceTest(100,10)
@@ -2547,9 +2516,9 @@ MonoBehaviour:
       categories:
       - Performance
       - Reflection
-      parentId: 1117
+      parentId: 1133
       parentUniqueId: 'TestAssembly.EditMode.dll/ReflectionTestRunner/[TestAssembly.EditMode][ReflectionTestRunner.ReflectionPerformanceTest][suite]'
-    - id: 1109
+    - id: 1125
       uniqueId: 'TestAssembly.EditMode.dll/ReflectionTestRunner/ReflectionPerformanceTest/[TestAssembly.EditMode][ReflectionTestRunner.ReflectionPerformanceTest(1000,5)]'
       name: ReflectionPerformanceTest(1000,5)
       fullName: ReflectionTestRunner.ReflectionPerformanceTest(1000,5)
@@ -2565,9 +2534,9 @@ MonoBehaviour:
       categories:
       - Performance
       - Reflection
-      parentId: 1117
+      parentId: 1133
       parentUniqueId: 'TestAssembly.EditMode.dll/ReflectionTestRunner/[TestAssembly.EditMode][ReflectionTestRunner.ReflectionPerformanceTest][suite]'
-    - id: 1110
+    - id: 1126
       uniqueId: 'TestAssembly.EditMode.dll/ReflectionTestRunner/ReflectionPerformanceTest/[TestAssembly.EditMode][ReflectionTestRunner.ReflectionPerformanceTest(1000,10)]'
       name: ReflectionPerformanceTest(1000,10)
       fullName: ReflectionTestRunner.ReflectionPerformanceTest(1000,10)
@@ -2583,9 +2552,9 @@ MonoBehaviour:
       categories:
       - Performance
       - Reflection
-      parentId: 1117
+      parentId: 1133
       parentUniqueId: 'TestAssembly.EditMode.dll/ReflectionTestRunner/[TestAssembly.EditMode][ReflectionTestRunner.ReflectionPerformanceTest][suite]'
-    - id: 1111
+    - id: 1127
       uniqueId: 'TestAssembly.EditMode.dll/ReflectionTestRunner/ReflectionPerformanceTest/[TestAssembly.EditMode][ReflectionTestRunner.ReflectionPerformanceTest(10000,5)]'
       name: ReflectionPerformanceTest(10000,5)
       fullName: ReflectionTestRunner.ReflectionPerformanceTest(10000,5)
@@ -2601,9 +2570,9 @@ MonoBehaviour:
       categories:
       - Performance
       - Reflection
-      parentId: 1117
+      parentId: 1133
       parentUniqueId: 'TestAssembly.EditMode.dll/ReflectionTestRunner/[TestAssembly.EditMode][ReflectionTestRunner.ReflectionPerformanceTest][suite]'
-    - id: 1112
+    - id: 1128
       uniqueId: TestAssembly.EditMode.dll/ReflectionTestRunner/ReflectionPerformanceTest/[TestAssembly.EditMode][ReflectionTestRunner.ReflectionPerformanceTest(10000,5)]2
       name: ReflectionPerformanceTest(10000,5)
       fullName: ReflectionTestRunner.ReflectionPerformanceTest(10000,5 GeneratedTestCase2)
@@ -2619,9 +2588,9 @@ MonoBehaviour:
       categories:
       - Performance
       - Reflection
-      parentId: 1117
+      parentId: 1133
       parentUniqueId: 'TestAssembly.EditMode.dll/ReflectionTestRunner/[TestAssembly.EditMode][ReflectionTestRunner.ReflectionPerformanceTest][suite]'
-    - id: 1113
+    - id: 1129
       uniqueId: 'TestAssembly.EditMode.dll/ReflectionTestRunner/ReflectionPerformanceTest/[TestAssembly.EditMode][ReflectionTestRunner.ReflectionPerformanceTest(10000,10)]'
       name: ReflectionPerformanceTest(10000,10)
       fullName: ReflectionTestRunner.ReflectionPerformanceTest(10000,10)
@@ -2637,9 +2606,9 @@ MonoBehaviour:
       categories:
       - Performance
       - Reflection
-      parentId: 1117
+      parentId: 1133
       parentUniqueId: 'TestAssembly.EditMode.dll/ReflectionTestRunner/[TestAssembly.EditMode][ReflectionTestRunner.ReflectionPerformanceTest][suite]'
-    - id: 1114
+    - id: 1130
       uniqueId: 'TestAssembly.EditMode.dll/ReflectionTestRunner/ReflectionPerformanceTest/[TestAssembly.EditMode][ReflectionTestRunner.ReflectionPerformanceTest(10000,100)]'
       name: ReflectionPerformanceTest(10000,100)
       fullName: ReflectionTestRunner.ReflectionPerformanceTest(10000,100)
@@ -2655,9 +2624,9 @@ MonoBehaviour:
       categories:
       - Performance
       - Reflection
-      parentId: 1117
+      parentId: 1133
       parentUniqueId: 'TestAssembly.EditMode.dll/ReflectionTestRunner/[TestAssembly.EditMode][ReflectionTestRunner.ReflectionPerformanceTest][suite]'
-    - id: 1115
+    - id: 1131
       uniqueId: 'TestAssembly.EditMode.dll/ReflectionTestRunner/ReflectionPerformanceTest/[TestAssembly.EditMode][ReflectionTestRunner.ReflectionPerformanceTest(10000,200)]'
       name: ReflectionPerformanceTest(10000,200)
       fullName: ReflectionTestRunner.ReflectionPerformanceTest(10000,200)
@@ -2673,9 +2642,9 @@ MonoBehaviour:
       categories:
       - Performance
       - Reflection
-      parentId: 1117
+      parentId: 1133
       parentUniqueId: 'TestAssembly.EditMode.dll/ReflectionTestRunner/[TestAssembly.EditMode][ReflectionTestRunner.ReflectionPerformanceTest][suite]'
-    - id: 1116
+    - id: 1132
       uniqueId: 'TestAssembly.EditMode.dll/ReflectionTestRunner/ReflectionPerformanceTest/[TestAssembly.EditMode][ReflectionTestRunner.ReflectionPerformanceTest(10000,500)]'
       name: ReflectionPerformanceTest(10000,500)
       fullName: ReflectionTestRunner.ReflectionPerformanceTest(10000,500)
@@ -2691,9 +2660,9 @@ MonoBehaviour:
       categories:
       - Performance
       - Reflection
-      parentId: 1117
+      parentId: 1133
       parentUniqueId: 'TestAssembly.EditMode.dll/ReflectionTestRunner/[TestAssembly.EditMode][ReflectionTestRunner.ReflectionPerformanceTest][suite]'
-    - id: 1130
+    - id: 1133
       uniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][ServiceTestRunner][suite]'
       name: ServiceTestRunner
       fullName: ServiceTestRunner
@@ -2708,9 +2677,9 @@ MonoBehaviour:
       isSuite: 1
       categories:
       - Service
-      parentId: 1139
+      parentId: 1142
       parentUniqueId: '[TestAssembly.EditMode][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/TestAssembly.EditMode.dll][suite]'
-    - id: 1127
+    - id: 1143
       uniqueId: 'TestAssembly.EditMode.dll/ServiceTestRunner/[TestAssembly.EditMode][ServiceTestRunner.ServiceAsyncTaskTest]'
       name: ServiceAsyncTaskTest
       fullName: ServiceTestRunner.ServiceAsyncTaskTest
@@ -2725,9 +2694,9 @@ MonoBehaviour:
       isSuite: 0
       categories:
       - Service
-      parentId: 1125
+      parentId: 1141
       parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][ServiceTestRunner][suite]'
-    - id: 1126
+    - id: 1142
       uniqueId: 'TestAssembly.EditMode.dll/ServiceTestRunner/[TestAssembly.EditMode][ServiceTestRunner.ServiceAsyncTest]'
       name: ServiceAsyncTest
       fullName: ServiceTestRunner.ServiceAsyncTest
@@ -2742,7 +2711,7 @@ MonoBehaviour:
       isSuite: 0
       categories:
       - Service
-      parentId: 1125
+      parentId: 1141
       parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][ServiceTestRunner][suite]'
     - id: 1087
       uniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][TcpServerTestRunner][suite]'
@@ -2758,9 +2727,9 @@ MonoBehaviour:
       description: 
       isSuite: 1
       categories: []
-      parentId: 1139
+      parentId: 1142
       parentUniqueId: '[TestAssembly.EditMode][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/TestAssembly.EditMode.dll][suite]'
-    - id: 1083
+    - id: 1088
       uniqueId: 'TestAssembly.EditMode.dll/TcpServerTestRunner/[TestAssembly.EditMode][TcpServerTestRunner.Clear]'
       name: Clear
       fullName: TcpServerTestRunner.Clear
@@ -2775,7 +2744,7 @@ MonoBehaviour:
       isSuite: 0
       categories:
       - Uncategorized
-      parentId: 1082
+      parentId: 1087
       parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][TcpServerTestRunner][suite]'
     - id: 1092
       uniqueId: 'TestAssembly.EditMode.dll/TcpServerTestRunner/[TestAssembly.EditMode][TcpServerTestRunner.TcpClientTestAsync][suite]'
@@ -2793,7 +2762,7 @@ MonoBehaviour:
       categories: []
       parentId: 1087
       parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][TcpServerTestRunner][suite]'
-    - id: 1085
+    - id: 1090
       uniqueId: 'TestAssembly.EditMode.dll/TcpServerTestRunner/TcpClientTestAsync/[TestAssembly.EditMode][TcpServerTestRunner.TcpClientTestAsync(TcpJsonServeModule,TestTcpJsonClient)]'
       name: TcpClientTestAsync(TcpJsonServeModule,TestTcpJsonClient)
       fullName: TcpServerTestRunner.TcpClientTestAsync(TcpJsonServeModule,TestTcpJsonClient)
@@ -2808,9 +2777,9 @@ MonoBehaviour:
       isSuite: 0
       categories:
       - Uncategorized
-      parentId: 1087
+      parentId: 1092
       parentUniqueId: 'TestAssembly.EditMode.dll/TcpServerTestRunner/[TestAssembly.EditMode][TcpServerTestRunner.TcpClientTestAsync][suite]'
-    - id: 1086
+    - id: 1091
       uniqueId: 'TestAssembly.EditMode.dll/TcpServerTestRunner/TcpClientTestAsync/[TestAssembly.EditMode][TcpServerTestRunner.TcpClientTestAsync(TcpStructServeModule,TestTcpStructClient)]'
       name: TcpClientTestAsync(TcpStructServeModule,TestTcpStructClient)
       fullName: TcpServerTestRunner.TcpClientTestAsync(TcpStructServeModule,TestTcpStructClient)
@@ -2825,9 +2794,9 @@ MonoBehaviour:
       isSuite: 0
       categories:
       - Uncategorized
-      parentId: 1087
+      parentId: 1092
       parentUniqueId: 'TestAssembly.EditMode.dll/TcpServerTestRunner/[TestAssembly.EditMode][TcpServerTestRunner.TcpClientTestAsync][suite]'
-    - id: 1084
+    - id: 1089
       uniqueId: 'TestAssembly.EditMode.dll/TcpServerTestRunner/[TestAssembly.EditMode][TcpServerTestRunner.TcpJsonHandlerPerformanceTest]'
       name: TcpJsonHandlerPerformanceTest
       fullName: TcpServerTestRunner.TcpJsonHandlerPerformanceTest
@@ -2842,9 +2811,9 @@ MonoBehaviour:
       isSuite: 0
       categories:
       - Performance
-      parentId: 1082
+      parentId: 1087
       parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][TcpServerTestRunner][suite]'
-    - id: 1133
+    - id: 1136
       uniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][UIViewModelTestRunner][suite]'
       name: UIViewModelTestRunner
       fullName: UIViewModelTestRunner
@@ -2858,9 +2827,9 @@ MonoBehaviour:
       description: 
       isSuite: 1
       categories: []
-      parentId: 1139
+      parentId: 1142
       parentUniqueId: '[TestAssembly.EditMode][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/TestAssembly.EditMode.dll][suite]'
-    - id: 1138
+    - id: 1141
       uniqueId: 'TestAssembly.EditMode.dll/UIViewModelTestRunner/[TestAssembly.EditMode][UIViewModelTestRunner.ViewModelPerformanceTest][suite]'
       name: ViewModelPerformanceTest
       fullName: UIViewModelTestRunner.ViewModelPerformanceTest
@@ -2875,9 +2844,9 @@ MonoBehaviour:
       isSuite: 1
       categories:
       - Performance
-      parentId: 1133
+      parentId: 1136
       parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][UIViewModelTestRunner][suite]'
-    - id: 1130
+    - id: 1146
       uniqueId: 'TestAssembly.EditMode.dll/UIViewModelTestRunner/ViewModelPerformanceTest/[TestAssembly.EditMode][UIViewModelTestRunner.ViewModelPerformanceTest(100)]'
       name: ViewModelPerformanceTest(100)
       fullName: UIViewModelTestRunner.ViewModelPerformanceTest(100)
@@ -2892,9 +2861,9 @@ MonoBehaviour:
       isSuite: 0
       categories:
       - Performance
-      parentId: 1133
+      parentId: 1149
       parentUniqueId: 'TestAssembly.EditMode.dll/UIViewModelTestRunner/[TestAssembly.EditMode][UIViewModelTestRunner.ViewModelPerformanceTest][suite]'
-    - id: 1131
+    - id: 1147
       uniqueId: 'TestAssembly.EditMode.dll/UIViewModelTestRunner/ViewModelPerformanceTest/[TestAssembly.EditMode][UIViewModelTestRunner.ViewModelPerformanceTest(1000)]'
       name: ViewModelPerformanceTest(1000)
       fullName: UIViewModelTestRunner.ViewModelPerformanceTest(1000)
@@ -2909,9 +2878,9 @@ MonoBehaviour:
       isSuite: 0
       categories:
       - Performance
-      parentId: 1133
+      parentId: 1149
       parentUniqueId: 'TestAssembly.EditMode.dll/UIViewModelTestRunner/[TestAssembly.EditMode][UIViewModelTestRunner.ViewModelPerformanceTest][suite]'
-    - id: 1132
+    - id: 1148
       uniqueId: 'TestAssembly.EditMode.dll/UIViewModelTestRunner/ViewModelPerformanceTest/[TestAssembly.EditMode][UIViewModelTestRunner.ViewModelPerformanceTest(10000)]'
       name: ViewModelPerformanceTest(10000)
       fullName: UIViewModelTestRunner.ViewModelPerformanceTest(10000)
@@ -2926,9 +2895,9 @@ MonoBehaviour:
       isSuite: 0
       categories:
       - Performance
-      parentId: 1133
+      parentId: 1149
       parentUniqueId: 'TestAssembly.EditMode.dll/UIViewModelTestRunner/[TestAssembly.EditMode][UIViewModelTestRunner.ViewModelPerformanceTest][suite]'
-    - id: 1129
+    - id: 1145
       uniqueId: 'TestAssembly.EditMode.dll/UIViewModelTestRunner/[TestAssembly.EditMode][UIViewModelTestRunner.ViewModelTest]'
       name: ViewModelTest
       fullName: UIViewModelTestRunner.ViewModelTest
@@ -2943,26 +2912,30 @@ MonoBehaviour:
       isSuite: 0
       categories:
       - Uncategorized
-      parentId: 1128
+      parentId: 1144
       parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][UIViewModelTestRunner][suite]'
-    m_ResultText: "Test (0.025s)\n---\nNullReferenceException`1[System.Int32] : Test(Int32)
-      is null\n---\n  at CollectionTestRunner.Test () [0x00001] in <color=#40a0ff><a
-      href=\"C:\\Project\\Unity\\CustomUtils\\Assets\\Test\\EditMode\\FunctionalTest\\CollectionTestRunner.cs\"
-      line=\"13 \r\">Assets\\Test\\EditMode\\FunctionalTest\\CollectionTestRunner.cs:13
-      \r</a></color>\n  at (wrapper managed-to-native) System.Reflection.RuntimeMethodInfo.InternalInvoke(System.Reflection.RuntimeMethodInfo,object,object[],System.Exception&)\r\n 
-      at System.Reflection.RuntimeMethodInfo.Invoke (System.Object obj, System.Reflection.BindingFlags
-      invokeAttr, System.Reflection.Binder binder, System.Object[] parameters, System.Globalization.CultureInfo
-      culture) [0x0006a] in <321eb2db7c6d43ea8fc39b54eaca3452>:0"
-    m_ResultStacktrace: "  at CollectionTestRunner.Test () [0x00001] in C:\\Project\\Unity\\CustomUtils\\Assets\\Test\\EditMode\\FunctionalTest\\CollectionTestRunner.cs:13
-      \r\n  at (wrapper managed-to-native) System.Reflection.RuntimeMethodInfo.InternalInvoke(System.Reflection.RuntimeMethodInfo,object,object[],System.Exception&)\r\n 
-      at System.Reflection.RuntimeMethodInfo.Invoke (System.Object obj, System.Reflection.BindingFlags
-      invokeAttr, System.Reflection.Binder binder, System.Object[] parameters, System.Globalization.CultureInfo
-      culture) [0x0006a] in <321eb2db7c6d43ea8fc39b54eaca3452>:0 "
+    m_ResultText: "QueuePerformanceTest(5000,30,10) (6.896s)\n---\nFor.GC() in Undefineds\nMin:\t\t0.30
+      \nMedian:\t\t0.30 \nMax:\t\t3.00 \nAvg:\t\t0.70 \nStdDev:\t\t0.80 \nSampleCount:\t32\nSum:\t\t22.50
+      \r\nFirst samples:\t\u2583\u2581\u2581\u2581\u2588\u2581\u2583\u2581\u2581\u2581\u2581\u2581\u2583\u2581\u2581\u2581\u2588\u2581\u2583\u2581\u2581\u2581\u2581\u2581\u2583\u2581\u2581\u2588\u2581\u2581\u2583\u2581\r\nHistogram:\t\u2588\u2586\u2583\u2581\u2581\u2581\u2581\u2581\r\n\r\nFor
+      in Milliseconds\nMin:\t\t44.81 ms\nMedian:\t\t46.92 ms\nMax:\t\t48.43 ms\nAvg:\t\t46.72
+      ms\nStdDev:\t\t1.08 ms\nSampleCount:\t30\nSum:\t\t1401.50 ms\r\nFirst samples:\t\u2581\u2587\u2581\u2582\u2588\u2585\u2585\u2585\u2581\u2586\u2587\u2588\u2584\u2584\u2586\u2585\u2585\u2588\u2585\u2584\u2587\u2585\u2582\u2585\u2585\u2586\u2581\u2586\u2585\u2582\r\nHistogram:\t\u2588\u2586\u2583\u2582\u2582\u2581\u2581\u2581\r\n\r\nParallelFor.GC()
+      in Undefineds\nMin:\t\t196.30 \nMedian:\t\t199.30 \nMax:\t\t202.70 \nAvg:\t\t199.15
+      \nStdDev:\t\t1.14 \nSampleCount:\t32\nSum:\t\t6372.80 \r\nFirst samples:\t\u2583\u2582\u2581\u2584\u2584\u2585\u2585\u2584\u2584\u2585\u2588\u2585\u2584\u2585\u2584\u2584\u2584\u2582\u2585\u2584\u2584\u2584\u2584\u2584\u2583\u2583\u2584\u2585\u2587\u2584\u2585\u2583\r\nHistogram:\t\u2588\u2586\u2583\u2583\u2582\u2581\u2582\u2581\r\n\r\nParallelFor
+      in Milliseconds\nMin:\t\t18.55 ms\nMedian:\t\t20.32 ms\nMax:\t\t25.60 ms\nAvg:\t\t21.16
+      ms\nStdDev:\t\t2.10 ms\nSampleCount:\t30\nSum:\t\t634.72 ms\r\nFirst samples:\t\u2588\u2588\u2587\u2586\u2586\u2585\u2585\u2586\u2585\u2585\u2586\u2585\u2581\u2582\u2583\u2583\u2582\u2581\u2582\u2581\u2582\u2582\u2582\u2583\u2582\u2582\u2581\u2583\u2582\u2582\r\nHistogram:\t\u2588\u2586\u2583\u2583\u2583\u2581\u2582\u2581\r\n\r\nParallelPool.GC()
+      in Undefineds\nMin:\t\t195.10 \nMedian:\t\t201.70 \nMax:\t\t203.70 \nAvg:\t\t201.23
+      \nStdDev:\t\t1.68 \nSampleCount:\t32\nSum:\t\t6439.40 \r\nFirst samples:\t\u2587\u2586\u2586\u2586\u2587\u2587\u2585\u2586\u2586\u2587\u2586\u2586\u2588\u2586\u2587\u2586\u2586\u2587\u2586\u2586\u2586\u2586\u2586\u2586\u2581\u2582\u2583\u2586\u2586\u2586\u2587\u2586\r\nHistogram:\t\u2588\u2586\u2583\u2583\u2583\u2583\u2582\u2581\r\n\r\nParallelPool
+      in Milliseconds\nMin:\t\t28.25 ms\nMedian:\t\t30.25 ms\nMax:\t\t54.37 ms\nAvg:\t\t31.92
+      ms\nStdDev:\t\t5.44 ms\nSampleCount:\t30\nSum:\t\t957.61 ms\r\nFirst samples:\t\u2581\u2581\u2581\u2581\u2582\u2582\u2581\u2581\u2581\u2582\u2582\u2582\u2581\u2581\u2582\u2581\u2581\u2582\u2582\u2581\u2581\u2582\u2588\u2586\u2583\u2583\u2582\u2582\u2582\u2582\r\nHistogram:\t\u2588\u2586\u2583\u2582\u2583\u2582\u2582\u2581\r\n\r\n\r\n##performancetestresult2:{\"Name\":\"PerformanceTestRunner.QueuePerformanceTest(5000,30,10)\",\"ClassName\":\"PerformanceTestRunner\",\"MethodName\":\"QueuePerformanceTest\",\"Version\":\"1\",\"Categories\":[\"Performance\",\"Performance\"],\"SampleGroups\":[{\"Name\":\"For.GC()\",\"Unit\":8,\"IncreaseIsBetter\":false,\"Samples\":[1.1,0.3,0.3,0.3,3.0,0.3,1.1,0.3,0.3,0.3,0.3,0.3,1.1,0.3,0.3,0.3,3.0,0.3,1.1,0.3,0.3,0.3,0.3,0.3,1.1,0.3,0.3,3.0,0.3,0.3,1.1,0.3],\"Min\":0.3,\"Max\":3.0,\"Median\":0.3,\"Average\":0.7031250000000003,\"StandardDeviation\":0.8005796240068814,\"Sum\":22.50000000000001},{\"Name\":\"For\",\"Unit\":2,\"IncreaseIsBetter\":false,\"Samples\":[44.80680000000001,47.835800000000009,44.81939999999997,45.16239999999999,48.172199999999978,46.77639999999997,47.05280000000005,47.0761,45.01859999999999,47.43130000000008,48.039999999999967,48.26070000000004,46.614500000000138,46.413699999999838,47.56619999999998,46.91720000000009,46.92640000000006,48.42600000000016,47.08360000000016,46.5619999999999,47.69510000000014,46.68170000000009,45.2195999999999,46.86100000000033,47.026200000000248,47.14350000000013,44.83190000000013,47.308300000000148,46.62909999999965,45.141399999999979],\"Min\":44.80680000000001,\"Max\":48.42600000000016,\"Median\":46.921800000000079,\"Average\":46.71666333333337,\"StandardDeviation\":1.0752943651185075,\"Sum\":1401.4999000000012},{\"Name\":\"ParallelFor.GC()\",\"Unit\":8,\"IncreaseIsBetter\":false,\"Samples\":[198.3,197.5,196.3,198.7,198.8,200.1,199.5,199.3,199.3,199.5,202.7,199.6,199.3,200.3,199.3,199.3,198.8,197.4,199.5,199.1,199.3,199.3,199.3,199.0,198.0,197.8,199.3,199.5,201.8,199.1,199.5,198.3],\"Min\":196.3,\"Max\":202.7,\"Median\":199.3,\"Average\":199.15000000000007,\"StandardDeviation\":1.1434596626029255,\"Sum\":6372.800000000002},{\"Name\":\"ParallelFor\",\"Unit\":2,\"IncreaseIsBetter\":false,\"Samples\":[25.60389999999998,25.526700000000035,24.27080000000001,23.236699999999986,23.356100000000028,22.80590000000001,22.84319999999991,23.100099999999999,22.800100000000044,22.990999999999987,23.52690000000007,22.396100000000048,18.546500000000039,19.292100000000006,20.25980000000004,20.8608999999999,19.50429999999983,18.795299999999999,19.12570000000005,18.718099999999823,20.038999999999989,19.901999999999818,19.694999999999938,20.37390000000005,19.123399999999948,19.34310000000005,18.940399999999955,20.395999999999959,19.454700000000004,19.89359999999988],\"Min\":18.546500000000039,\"Max\":25.60389999999998,\"Median\":20.316850000000046,\"Average\":21.157376666666648,\"StandardDeviation\":2.104246096615677,\"Sum\":634.7212999999994},{\"Name\":\"ParallelPool.GC()\",\"Unit\":8,\"IncreaseIsBetter\":false,\"Samples\":[202.5,201.5,201.7,201.7,201.9,201.9,200.1,200.9,201.5,202.6,201.7,201.7,203.7,201.0,201.9,201.7,201.7,202.5,201.7,201.8,201.4,201.8,201.7,201.8,195.1,196.7,197.4,201.4,201.5,201.3,201.9,201.7],\"Min\":195.1,\"Max\":203.7,\"Median\":201.7,\"Average\":201.23124999999997,\"StandardDeviation\":1.6812267656387113,\"Sum\":6439.399999999999},{\"Name\":\"ParallelPool\",\"Unit\":2,\"IncreaseIsBetter\":false,\"Samples\":[30.03,28.661,28.248800000000018,30.107000000000029,30.44799999999998,31.06220000000002,29.94990000000007,29.766900000000079,29.597999999999958,30.248199999999998,30.758399999999939,30.987300000000006,29.34030000000007,28.456199999999968,30.24429999999984,29.850200000000087,29.74420000000009,30.128299999999855,30.84789999999998,29.926400000000059,29.15840000000003,30.804499999999963,54.37429999999995,46.95170000000007,37.389700000000178,36.80230000000006,31.001199999999927,31.2670999999998,30.29029999999989,31.16269999999986],\"Min\":28.248800000000018,\"Max\":54.37429999999995,\"Median\":30.246249999999919,\"Average\":31.92018999999999,\"StandardDeviation\":5.443249996301238,\"Sum\":957.6056999999997}]}\r\n##performancetestruninfo2:{\"TestSuite\":\"Editmode\",\"Date\":1743663918966,\"Player\":{\"Development\":true,\"ScreenWidth\":1920,\"ScreenHeight\":1080,\"ScreenRefreshRate\":60,\"Fullscreen\":false,\"Vsync\":1,\"AntiAliasing\":0,\"Batchmode\":false,\"RenderThreadingMode\":\"MultiThreaded\",\"GpuSkinning\":false,\"Platform\":\"WindowsEditor\",\"ColorSpace\":\"Gamma\",\"AnisotropicFiltering\":\"Disable\",\"BlendWeights\":\"FourBones\",\"GraphicsApi\":\"Direct3D11\",\"ScriptingBackend\":\"Mono2x\",\"AndroidTargetSdkVersion\":\"AndroidApiLevelAuto\",\"AndroidBuildSystem\":\"Gradle\",\"BuildTarget\":\"StandaloneWindows64\",\"StereoRenderingPath\":\"MultiPass\"},\"Hardware\":{\"OperatingSystem\":\"Windows
+      10  (10.0.19045) 64bit\",\"DeviceModel\":\"82R4 (LENOVO)\",\"DeviceName\":\"DESKTOP-55T0R54\",\"ProcessorType\":\"AMD
+      Ryzen 5 5500U with Radeon Graphics \",\"ProcessorCount\":12,\"GraphicsDeviceName\":\"AMD
+      Radeon(TM) Graphics\",\"SystemMemorySizeMB\":14181},\"Editor\":{\"Version\":\"6000.0.26f1\",\"Branch\":\"6000.0/staging\",\"Changeset\":\"ccb7c73d2c02\",\"Date\":1730275040},\"Dependencies\":[\"com.cysharp.unitask@2.5.10\",\"com.unity.2d.animation@10.1.4\",\"com.unity.2d.pixel-perfect@5.0.3\",\"com.unity.2d.psdimporter@9.0.3\",\"com.unity.2d.sprite@1.0.0\",\"com.unity.2d.spriteshape@10.0.7\",\"com.unity.2d.tilemap@1.0.0\",\"com.unity.ai.navigation@2.0.5\",\"com.unity.assetbundlebrowser@1.7.0\",\"com.unity.collab-proxy@2.5.2\",\"com.unity.editorcoroutines@1.0.0\",\"com.unity.ide.rider@3.0.34\",\"com.unity.memoryprofiler@1.1.3\",\"com.unity.mobile.android-logcat@1.4.4\",\"com.unity.multiplayer.center@1.0.0\",\"com.unity.performance.profile-analyzer@1.2.3\",\"com.unity.profiling.core@1.0.2\",\"com.unity.render-pipelines.universal@17.0.3\",\"com.unity.test-framework@1.4.5\",\"com.unity.test-framework.performance@3.0.3\",\"com.unity.testtools.codecoverage@1.2.6\",\"com.unity.timeline@1.8.7\",\"com.unity.ugui@2.0.0\",\"com.unity.modules.accessibility@1.0.0\",\"com.unity.modules.ai@1.0.0\",\"com.unity.modules.androidjni@1.0.0\",\"com.unity.modules.animation@1.0.0\",\"com.unity.modules.assetbundle@1.0.0\",\"com.unity.modules.audio@1.0.0\",\"com.unity.modules.cloth@1.0.0\",\"com.unity.modules.director@1.0.0\",\"com.unity.modules.imageconversion@1.0.0\",\"com.unity.modules.imgui@1.0.0\",\"com.unity.modules.jsonserialize@1.0.0\",\"com.unity.modules.particlesystem@1.0.0\",\"com.unity.modules.physics@1.0.0\",\"com.unity.modules.physics2d@1.0.0\",\"com.unity.modules.screencapture@1.0.0\",\"com.unity.modules.terrain@1.0.0\",\"com.unity.modules.terrainphysics@1.0.0\",\"com.unity.modules.tilemap@1.0.0\",\"com.unity.modules.ui@1.0.0\",\"com.unity.modules.uielements@1.0.0\",\"com.unity.modules.umbra@1.0.0\",\"com.unity.modules.unityanalytics@1.0.0\",\"com.unity.modules.unitywebrequest@1.0.0\",\"com.unity.modules.unitywebrequestassetbundle@1.0.0\",\"com.unity.modules.unitywebrequestaudio@1.0.0\",\"com.unity.modules.unitywebrequesttexture@1.0.0\",\"com.unity.modules.unitywebrequestwww@1.0.0\",\"com.unity.modules.vehicles@1.0.0\",\"com.unity.modules.video@1.0.0\",\"com.unity.modules.vr@1.0.0\",\"com.unity.modules.wind@1.0.0\",\"com.unity.modules.xr@1.0.0\",\"com.unity.modules.subsystems@1.0.0\",\"com.unity.modules.hierarchycore@1.0.0\",\"com.unity.settings-manager@2.0.1\",\"com.unity.ext.nunit@2.0.5\",\"com.unity.render-pipelines.core@17.0.3\",\"com.unity.shadergraph@17.0.3\",\"com.unity.render-pipelines.universal-config@17.0.3\",\"com.unity.burst@1.8.18\",\"com.unity.collections@2.5.1\",\"com.unity.mathematics@1.3.2\",\"com.unity.2d.common@9.0.7\",\"com.unity.searcher@4.9.2\",\"com.unity.rendering.light-transport@1.0.1\",\"com.unity.nuget.mono-cecil@1.11.4\"],\"Results\":[]}"
+    m_ResultStacktrace: 
     m_TestListState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: f8c0809b
-      m_LastClickedID: -1686060808
-      m_ExpandedIDs: d50057879eb7db8faa12e29a7c7e3ba90c67acacccfd60bb191e6dbd7c91a5c37e7ebbcc323df2f248d8a1037ca54c0516669514edaa9c16ac512a1cf6d4b51cc29f3933ed57073f4c22f649cd6f9d64f221606c3b175a71b9722c78d4580079ffffff7f
+      m_SelectedIDs: 193bf35d
+      m_LastClickedID: 1576221465
+      m_ExpandedIDs: d50057879eb7db8faa12e29a0c67acacccfd60bb7c91a5c37e7ebbcc323df2f248d8a1037ca54c05edaa9c16ac512a1cf6d4b51cc29f3933ed57073f4c22f649cd6f9d64f221606c0356356d3b175a71b9722c785f2fad78d4580079ffffff7f
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -2987,7 +2960,7 @@ MonoBehaviour:
       NotRunHidden: 0
       m_SearchString: 
       selectedCategories:
-      - Functional
+      - Performance
       availableCategories:
       - Coverage
       - Functional
@@ -2999,7 +2972,7 @@ MonoBehaviour:
     m_SelectedOption: 0
   - m_Window: {fileID: 14}
     runProgress:
-      RunGuid: da41f06d-b6ea-40dd-bb59-ee6dff1d4303
+      RunGuid: 9f07b1a1-b7eb-45b2-9c0e-69896a9702d1
       ExecutionSettings:
         m_TargetPlatform: 0
         m_HasTargetPlatform: 0
@@ -3012,7 +2985,7 @@ MonoBehaviour:
         filters:
         - testMode: 1
           testNames:
-          - CollectionTestRunner.Test
+          - PerformanceTestRunner.QueuePerformanceTest(5000,30,10)
           groupNames: []
           categoryNames: []
           assemblyNames: []
@@ -7001,7 +6974,7 @@ MonoBehaviour:
     m_SelectedOption: 0
   - m_Window: {fileID: 14}
     runProgress:
-      RunGuid: da41f06d-b6ea-40dd-bb59-ee6dff1d4303
+      RunGuid: 9f07b1a1-b7eb-45b2-9c0e-69896a9702d1
       ExecutionSettings:
         m_TargetPlatform: 0
         m_HasTargetPlatform: 0
@@ -7014,7 +6987,7 @@ MonoBehaviour:
         filters:
         - testMode: 1
           testNames:
-          - CollectionTestRunner.Test
+          - PerformanceTestRunner.QueuePerformanceTest(5000,30,10)
           groupNames: []
           categoryNames: []
           assemblyNames: []
@@ -7618,7 +7591,7 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 0
-    y: 24
+    y: 79
     width: 285
     height: 473
   m_SerializedDataModeController:
@@ -7635,7 +7608,7 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 
+      m_SelectedIDs: 8e460000
       m_LastClickedID: 0
       m_ExpandedIDs: dcfaffff
       m_RenameOverlay:
@@ -7684,8 +7657,8 @@ MonoBehaviour:
     m_TextWithWhitespace: "Scene\u200B"
   m_Pos:
     serializedVersion: 2
-    x: 287
-    y: 24
+    x: 286
+    y: 79
     width: 894
     height: 473
   m_SerializedDataModeController:
@@ -8322,7 +8295,7 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 0
-    y: 24
+    y: 578
     width: 787
     height: 416
   m_SerializedDataModeController:
@@ -8347,7 +8320,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/CustomUtils/Common/Utils
+    - Assets/CustomUtils/Sound/NewSoundSystem/UnitySoundSystem
     m_Globs: []
     m_ProductIds: 
     m_AnyWithAssetOrigin: 0
@@ -8357,16 +8330,16 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 16
   m_LastFolders:
-  - Assets/CustomUtils/Common/Utils
+  - Assets/CustomUtils/Sound/NewSoundSystem/UnitySoundSystem
   m_LastFoldersGridSize: 16
   m_LastProjectPath: C:\Project\Unity\CustomUtils
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 74}
-    m_SelectedIDs: eca00000
-    m_LastClickedID: 41196
-    m_ExpandedIDs: 00000000be9e0000c09e0000c29e0000c49e0000c69e0000c89e0000ca9e0000cc9e0000ce9e0000d09e0000d29e0000d49e0000d69e0000d89e0000da9e0000dc9e0000de9e0000e09e0000e29e0000e49e0000e69e0000
+    scrollPos: {x: 0, y: 180}
+    m_SelectedIDs: f4a00000
+    m_LastClickedID: 41204
+    m_ExpandedIDs: 00000000c29e0000c49e0000c69e0000c89e0000ca9e0000cc9e0000ce9e0000d09e0000d29e0000d49e0000d69e0000d89e0000da9e0000dc9e0000de9e0000e09e0000e29e0000e49e0000e69e0000e89e0000ea9e0000e0a00000f6a00000f8a0000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -8395,7 +8368,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000be9e0000c09e0000c29e0000c49e0000c69e0000c89e0000ca9e0000cc9e0000ce9e0000d09e0000d29e0000d49e0000d69e0000d89e0000da9e0000dc9e0000de9e0000e09e0000e29e0000e49e0000e69e0000
+    m_ExpandedIDs: 00000000c29e0000c49e0000c69e0000c89e0000ca9e0000cc9e0000ce9e0000d09e0000d29e0000d49e0000d69e0000d89e0000da9e0000dc9e0000de9e0000e09e0000e29e0000e49e0000e69e0000e89e0000ea9e0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -8421,8 +8394,8 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: 
-    m_LastClickedInstanceID: 0
+    m_SelectedInstanceIDs: 8e460000
+    m_LastClickedInstanceID: 18062
     m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: c6230000ac060000fc56000092f6ffff2a66000002670000ce6900006cd8ffffbe69000000000000909d0000
     m_RenameOverlay:
@@ -8512,8 +8485,8 @@ MonoBehaviour:
     m_TextWithWhitespace: "Game\u200B"
   m_Pos:
     serializedVersion: 2
-    x: 789
-    y: 24
+    x: 788
+    y: 578
     width: 392
     height: 416
   m_SerializedDataModeController:
@@ -8634,7 +8607,7 @@ MonoBehaviour:
     m_CachedPref: 160
     m_ControlHash: -371814159
     m_PrefName: Preview_InspectorPreview
-  m_LastInspectedObjectInstanceID: -1
+  m_LastInspectedObjectInstanceID: 18062
   m_LastVerticalScrollValue: 0
   m_GlobalObjectId: 
   m_InspectorMode: 0

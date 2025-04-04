@@ -209,7 +209,7 @@ public class Sample_EventScheduleService : IService {
     }
 
     public List<Sample_EventScheduler> GetSchedulersList() => _eventSchedulerList.FindAll(x => x.IsValid());
-    public void ResetRemainTomorrowTick() => _coroutineObject.SetRemainTick((float)(_timeSyncService.GetUTCTommorowStartTime() - _timeSyncService.GetUTCTime()).TotalSeconds);
+    public void ResetRemainTomorrowTick() => _coroutineObject.SetRemainTick((float)(_timeSyncService.GetUTCTomorrowStartTime() - _timeSyncService.GetUTCTime()).TotalSeconds);
     public float GetRemainTomorrowTick() => _coroutineObject.GetRemainTick();
     public void SetRemainTomorrowTick(float tick) => _coroutineObject.SetRemainTick(tick);
 
@@ -363,7 +363,7 @@ public class Sample_EventScheduleService : IService {
         
         private void RefreshTick() {
             if (Service.TryGetService<TimeSyncService>(out var service)) {
-                _remainTick = (float)(service.GetUTCTommorowStartTime() - service.GetUTCTime()).TotalSeconds;
+                _remainTick = (float)(service.GetUTCTomorrowStartTime() - service.GetUTCTime()).TotalSeconds;
             }
         }
 

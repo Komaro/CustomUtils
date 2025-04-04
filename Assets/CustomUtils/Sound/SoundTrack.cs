@@ -74,12 +74,12 @@ public class SoundTrack : ScriptableObject {
 
     protected virtual bool IsValidEventList(out SOUND_TRACK_ERROR error) {
         if (eventList == null) {
-            error = SOUND_TRACK_ERROR.EVENT_LIST_NULL;
+            error = SOUND_TRACK_ERROR.NULL_EVENTS;
             return false;
         } 
         
         if (eventList.Length <= 0) {
-            error = SOUND_TRACK_ERROR.EVENT_LIST_EMPTY;
+            error = SOUND_TRACK_ERROR.EMPTY_EVENTS;
             return false;
         }
 
@@ -89,12 +89,12 @@ public class SoundTrack : ScriptableObject {
 
     protected virtual bool IsValidSoundTrackEvent(SoundTrackEvent eventTrack, out SOUND_TRACK_ERROR error) {
         if (eventTrack == null) {
-            error = SOUND_TRACK_ERROR.EVENT_NULL;
+            error = SOUND_TRACK_ERROR.NULL_EVENT;
             return false;
         }
 
         if (eventTrack.IsValidClip() == false) {
-            error = SOUND_TRACK_ERROR.CLIP_INVALID;
+            error = SOUND_TRACK_ERROR.INVALID_CLIP;
             return false;
         }
 
@@ -119,7 +119,7 @@ public class SoundTrack : ScriptableObject {
                 }
             }
         } catch {
-            error = SOUND_TRACK_ERROR.EVENT_EXCEPTION;
+            error = SOUND_TRACK_ERROR.EXCEPTION_EVENT;
             return false;
         }
         
@@ -142,12 +142,13 @@ public enum TRACK_TYPE {
 
 public enum SOUND_TRACK_ERROR {
     NONE,
-    EVENT_NULL,
-    EVENT_EXCEPTION,
     
-    EVENT_LIST_NULL,
-    EVENT_LIST_EMPTY,
+    NULL_EVENT,
+    EXCEPTION_EVENT,
     
-    CLIP_INVALID,
+    NULL_EVENTS,
+    EMPTY_EVENTS,
+    
+    INVALID_CLIP,
     CLIP_LOAD_FAILED,
 }

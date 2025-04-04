@@ -5,12 +5,6 @@ using System.Reflection;
 using UnityEngine;
 using UnityEngine.Audio;
 
-// TODO. Unity Audio System 관련 기능을 새로운 기반 추상 클래스로 추출하여 추가 모듈화를 통해 개선 필요. 현재 너무 많은 구현이 남아 있음
-//public abstract class UnitySoundCore : SoundCoreBase {
-//
-//
-//}
-
 public abstract class SoundCoreBase : MonoBehaviour {
     
     private HashSet<Enum> _cacheSnapshotEnumSet = new();
@@ -223,10 +217,11 @@ public record SoundAssetInfo {
 }
 
 [AttributeUsage(AttributeTargets.Enum)]
-public class MasterSoundEnumTypeAttribute : Attribute { }
+public class SoundEnumTypeAttribute : Attribute { }
 
-[AttributeUsage(AttributeTargets.Enum)]
-public class ControlSoundEnumTypeAttribute : Attribute {
+public class MasterSoundEnumTypeAttribute : SoundEnumTypeAttribute { }
+
+public class ControlSoundEnumTypeAttribute : SoundEnumTypeAttribute {
     
     public readonly Enum masterType;
 
@@ -238,7 +233,7 @@ public class ControlSoundEnumTypeAttribute : Attribute {
 }
 
 [AttributeUsage(AttributeTargets.Enum)]
-public class SnapshotEnumTypeAttribute : Attribute { }
+public class SnapshotEnumTypeAttribute : PriorityAttribute { }
 
 [AttributeUsage(AttributeTargets.Class)]
 public class MasterSoundAttribute : Attribute {

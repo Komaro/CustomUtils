@@ -1,12 +1,13 @@
-﻿using UnityEngine;
+﻿using CustomUtils.Sound.NewSoundSystem;
+using UnityEngine;
 using UnityEngine.Audio;
 
 public static class SoundExtension {
 
     public static bool TryFindMatchingGroups(this AudioMixer audioMixer, string subPath, out AudioMixerGroup[] mixerGroups) => (mixerGroups = audioMixer.FindMatchingGroups(subPath))?.Length > 0;
 
-    public static bool IsValidClip(this AudioSource audioSource) {
-        if (audioSource.clip == null) {
+    public static bool IsValid(this AudioSource audioSource) {
+        if (audioSource == null || audioSource.clip == null) {
             return false;
         }
 
@@ -36,37 +37,14 @@ public static class SoundExtension {
             audioSource.Play();
         }
     }
-    
-    public static void Set(this AudioSource audioSource, UnitySoundTrackEvent trackEvent) {
-        if (trackEvent != null) {
-            audioSource.clip = trackEvent.clip;
-            audioSource.loop = trackEvent.loop;
-        }
-    }
-
-    public static void PlayOneShot(this AudioSource audioSource, ISoundTrackEvent trackEvent) => audioSource.PlayOneShot(trackEvent as UnitySoundTrackEvent);
-
-    public static void PlayOneShot(this AudioSource audioSource, UnitySoundTrackEvent trackEvent) {
-        if (trackEvent != null) {
-            audioSource.PlayOneShot(trackEvent.clip);
-        }
-    }
-    
-    public static void Play(this AudioSource audioSource, UnitySoundTrackEvent trackEvent) {
-        if (trackEvent != null) {
-            audioSource.clip = trackEvent.clip;
-            audioSource.loop = trackEvent.loop;
-            audioSource.Play();
-        }
-    }
 
     public static string GetDescription(this SOUND_TRACK_ERROR type) {
         switch (type) {
-            case SOUND_TRACK_ERROR.EVENT_LIST_NULL:
+            case SOUND_TRACK_ERROR.NULL_EVENTS:
                 return $"{nameof(SoundTrack.eventList)} is null. Fatal issue";
-            case SOUND_TRACK_ERROR.EVENT_LIST_EMPTY:
+            case SOUND_TRACK_ERROR.EMPTY_EVENTS:
                 return $"{nameof(SoundTrack.eventList)} is empty.";
-            case SOUND_TRACK_ERROR.EVENT_EXCEPTION:
+            case SOUND_TRACK_ERROR.EXCEPTION_EVENT:
                 return $"{nameof(SoundTrack.eventList)} is exception catch";
             case SOUND_TRACK_ERROR.CLIP_LOAD_FAILED:
                 return $"{nameof(SoundTrack.eventList)} is invalid. Some ${nameof(AudioClip)} was invalid {nameof(AudioClip.loadState)}.";

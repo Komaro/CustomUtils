@@ -4,11 +4,21 @@
 [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method | AttributeTargets.Interface | AttributeTargets.Struct, AllowMultiple = true)]
 public class TestRequiredAttribute : Attribute {
 
-    public readonly TEST_TYPE type;
+    public TEST_TYPE type;
+    public string description;
 
-    public TestRequiredAttribute(TEST_TYPE type = TEST_TYPE.FUNCTIONAL) => this.type = type;
+
+    public TestRequiredAttribute(TEST_TYPE type, string description = "No description") {
+        this.type = type;
+        this.description = description;
+    }
+    
+    public TestRequiredAttribute() : this(default) { }
+    public TestRequiredAttribute(string description) : this(TEST_TYPE.FUNCTIONAL, description) { }
+
 }
 
+[Flags]
 public enum TEST_TYPE {
     FUNCTIONAL,
     PERFORMANCE,
@@ -19,10 +29,10 @@ public enum TEST_TYPE {
 // TODO. 위와 동일
 public class RefactoringRequiredAttribute : Attribute {
 
-    public readonly string description;
-    
     public readonly int priority;
+    public readonly string description;
 
+    public RefactoringRequiredAttribute() => priority = 10;
     public RefactoringRequiredAttribute(int priority) => this.priority = Math.Clamp(priority, 0, 10);
     public RefactoringRequiredAttribute(int priority, string description) : this(priority) => this.description = description;
     public RefactoringRequiredAttribute(string description) : this(10) => this.description = description;

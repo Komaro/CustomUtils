@@ -15,7 +15,19 @@ using UnityEngine.Networking;
 using UnityEngine.Pool;
 
 public static class CommonExtension {
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static T ThrowIfNull<T>(this T instance) where T : class => instance ?? throw new ArgumentNullException(typeof(T).GetCleanFullName());
     
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static T ThrowIfNull<T>(this T instance, string name) where T : class => instance ?? throw new ArgumentNullException(name);
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static T ThrowIfUnexpectedNull<T>(this T instance) where T : class => instance ?? throw new NullReferenceException<T>(typeof(T).GetCleanFullName());
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static T ThrowIfUnexpectedNull<T>(this T instance, string name) where T : class => instance ?? throw new NullReferenceException<T>(name);
+
     public static string ToStringAllFields(this object ob, string prefix = "", bool ignoreRootName = false, BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.Public) {
         if (ob == null) {
             return $"{nameof(ob)} is null";

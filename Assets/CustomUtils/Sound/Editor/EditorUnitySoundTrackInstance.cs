@@ -65,7 +65,7 @@ public class EditorUnitySoundTrackInstance : Editor {
                     }
                 }
 
-                if (_previewSource.IsValidClip()) {
+                if (_previewSource.IsValid()) {
                     EditorCommon.DrawInteractionProgressBar($"{_previewSource.time:F} / {_previewSource.clip.length:F}", _previewSource.time, _previewSource.clip.length, OnProgressBarEvent);
                     if (_previewSource.isPlaying) {
                         Repaint();

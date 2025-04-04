@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using CustomUtils.Sound.NewSoundSystem;
 using UniRx;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "UnitySoundTrack", menuName = "Sound/Create UnitySoundTrack")]
-public class UnitySoundTrack : NewSoundTrack<UnitySoundTrackEvent> {
+public class UnitySoundTrack : SoundTrack<UnitySoundTrackEvent> {
     
 #if UNITY_EDITOR
     
@@ -34,13 +35,14 @@ public class UnitySoundTrack : NewSoundTrack<UnitySoundTrackEvent> {
             case TRACK_TYPE.OVERLAP:
                 foreach (var trackEvent in events) {
                     Logger.TraceLog($"Play || {name} || {trackEvent.clip.name}", Color.cyan);
-                    audioSource.PlayOneShot(trackEvent);
+                    audioSource.PlayOneShot(trackEvent.clip);
                 }
                 break;
             case TRACK_TYPE.RANDOM:
                 if (events.TryGetRandom(out var randomEvent)) {
                     Logger.TraceLog($"Play || {name} || {randomEvent.clip.name}", Color.cyan);
-                    audioSource.Play(randomEvent);
+                    audioSource.clip = randomEvent.clip;
+                    audioSource.Play();
                 }
                 break;
             default:
@@ -48,7 +50,8 @@ public class UnitySoundTrack : NewSoundTrack<UnitySoundTrackEvent> {
                 foreach (var trackEvent in events) {
                     _disposableList.Add(Observable.EveryUpdate().Delay(TimeSpan.FromSeconds(startTime - 0.1f)).First().Subscribe(_ => {
                         Logger.TraceLog($"Play || {name} || {trackEvent.clip.name}", Color.cyan);
-                        audioSource.Play(trackEvent);
+                        audioSource.clip = trackEvent.clip;
+                        audioSource.Play();
                     }));
                     startTime += trackEvent.clip.length;
                 }

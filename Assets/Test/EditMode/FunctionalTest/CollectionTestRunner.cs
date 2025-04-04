@@ -1,5 +1,6 @@
 ﻿
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
 using Unity.PerformanceTesting;
@@ -12,7 +13,7 @@ public class CollectionTestRunner {
         
         public int[] values;
     }
-    
+
     [TestCase(50, 20)]
     [TestCase(50, 50)]
     [TestCase(50, 100)]

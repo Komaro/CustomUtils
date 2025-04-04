@@ -3,8 +3,16 @@ using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 public static partial class CollectionExtension {
+
+    public static IEnumerable<TValue> Search<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key) {
+        dictionary.ThrowIfNull(nameof(dictionary));
+        if (dictionary.TryGetValue(key, out var value)) {
+            yield return value;
+        }
+    }
 
     public static void Sync<TKey, TValue>(this IDictionary<TKey, TValue> workDictionary, ISet<TKey> sourceSet, Func<TKey, TValue> createFunc) {
         var removeSet = new HashSet<TKey>();
@@ -44,7 +52,26 @@ public static partial class CollectionExtension {
             Logger.TraceError(ex);
         }
     }
+    
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private static IDictionary<TKey, TCollection> AutoAdd<TCollection, TKey, TValue>(this IDictionary<TKey, TCollection> dictionary, TKey key) where TCollection : IEnumerable<TValue>, new() {
+        if (dictionary.ContainsKey(key) == false) {
+            dictionary.Add(key, new TCollection());
+        }
 
+        return dictionary;
+    }
+    
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private static IDictionary<TKey, TDictionary> AutoAdd<TDictionary, TKey, TIKey, TValue>(this IDictionary<TKey, TDictionary> dictionary, TKey key) where TDictionary : IDictionary<TIKey, TValue>, new() {
+        if (dictionary.ContainsKey(key) == false) {
+            dictionary.Add(key, new TDictionary());
+        }
+
+        return dictionary;
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void AutoAdd<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key, TValue value) {
         if (dictionary.ContainsKey(key)) {
             dictionary[key] = value;
@@ -53,56 +80,37 @@ public static partial class CollectionExtension {
         }
     }
 
-    public static void AutoAdd<TKey, TValue>(this Dictionary<TKey, List<TValue>> dictionary, TKey key, TValue value) {
-        if (dictionary.ContainsKey(key)) {
-            dictionary[key].Add(value);
-        } else {
-            dictionary.Add(key, new List<TValue> { value });
-        }
-    }
+    public static void AutoAdd<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, KeyValuePair<TKey, TValue> pair) => dictionary.AutoAdd(pair.Key, pair.Value);
 
-    public static void AutoAdd<TKey, TValue>(this Dictionary<TKey, HashSet<TValue>> dictionary, TKey key, TValue value) {
-        if (dictionary.ContainsKey(key)) {
-            dictionary[key].Add(value);
-        } else {
-            dictionary.Add(key, new HashSet<TValue> { value });
-        }
-    }
+    public static List<TValue> AutoAdd<TKey, TValue>(this IDictionary<TKey, List<TValue>> dictionary, TKey key) => dictionary.AutoAdd<List<TValue>, TKey, TValue>(key)[key];
+    public static void AutoAdd<TKey, TValue>(this IDictionary<TKey, List<TValue>> dictionary, TKey key, TValue value) => dictionary.AutoAdd(key).Add(value);
 
-    public static void AutoAdd<TKey, TIKey, TValue>(this Dictionary<TKey, Dictionary<TIKey, TValue>> dictionary, TKey outKey, TIKey innerKey, TValue value) {
-        if (dictionary.ContainsKey(outKey)) {
-            dictionary[outKey].AutoAdd(innerKey, value);
-        } else {
-            dictionary.Add(outKey, new Dictionary<TIKey, TValue> { { innerKey, value } });
-        }
-    }
+    public static HashSet<TValue> AutoAdd<TKey, TValue>(this IDictionary<TKey, HashSet<TValue>> dictionary, TKey key) => dictionary.AutoAdd<HashSet<TValue>, TKey, TValue>(key)[key];
+    public static void AutoAdd<TKey, TValue>(this IDictionary<TKey, HashSet<TValue>> dictionary, TKey key, TValue value) => dictionary.AutoAdd(key).Add(value);
 
-    public static void AutoAdd<TKey, TValue>(this Dictionary<TKey, Queue<TValue>> dictionary, TKey key) {
-        if (dictionary.ContainsKey(key) == false) {
-            dictionary.Add(key, new Queue<TValue>());
-        }
-    }
+    public static Queue<TValue> AutoAdd<TKey, TValue>(this IDictionary<TKey, Queue<TValue>> dictionary, TKey key) => dictionary.AutoAdd<Queue<TValue>, TKey, TValue>(key)[key];
+    public static void AutoAdd<TKey, TValue>(this IDictionary<TKey, Queue<TValue>> dictionary, TKey key, TValue value) => dictionary.AutoAdd(key).Enqueue(value);
+    
+    public static ConcurrentQueue<TValue> AutoAdd<TKey, TValue>(this IDictionary<TKey, ConcurrentQueue<TValue>> dictionary, TKey key) => dictionary.AutoAdd<ConcurrentQueue<TValue>, TKey, TValue>(key)[key];
+    public static void AutoAdd<TKey, TValue>(this IDictionary<TKey, ConcurrentQueue<TValue>> dictionary, TKey key, TValue value) => dictionary.AutoAdd(key).Enqueue(value);
 
-    public static void AutoAdd<TKey, TValue>(this Dictionary<TKey, Queue<TValue>> dictionary, TKey key, TValue value) {
-        if (dictionary.ContainsKey(key)) {
-            dictionary[key].Enqueue(value);
-        } else {
-            var queue = new Queue<TValue>();
-            queue.Enqueue(value);
-            dictionary.Add(key, queue);
-        }
-    }
+    public static Dictionary<TIKey, TValue> AutoAdd<TKey, TIKey, TValue>(this IDictionary<TKey, Dictionary<TIKey, TValue>> dictionary, TKey outKey) => dictionary.AutoAdd<Dictionary<TIKey, TValue>, TKey, TIKey, TValue>(outKey)[outKey];
+    public static void AutoAdd<TKey, TIKey, TValue>(this IDictionary<TKey, Dictionary<TIKey, TValue>> dictionary, TKey outKey, TIKey innerKey, TValue value) => dictionary.AutoAdd<Dictionary<TIKey, TValue>, TKey, TIKey, TValue>(outKey)[outKey].AutoAdd(innerKey, value);
 
-    public static void AutoAdd<TKey, TValue>(this Dictionary<TKey, TValue> dictionary, KeyValuePair<TKey, TValue> pair) => dictionary.AutoAdd(pair.Key, pair.Value);
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private static ConcurrentDictionary<TKey, TCollection> AutoAdd<TCollection, TKey, TValue>(this ConcurrentDictionary<TKey, TCollection> dictionary, TKey key) where TCollection : IEnumerable<TValue>, new() => dictionary.AddOrUpdate(key, _ => new TCollection(), (_, collection) => collection).Pipe(_ => dictionary);
 
-    public static void AutoAdd<TKey, TValue>(this ConcurrentDictionary<TKey, List<TValue>> dictionary, TKey key) => dictionary.AddOrUpdate(key, _ => new List<TValue>(), (_, list) => list);
-    public static void AutoAdd<TKey, TValue>(this ConcurrentDictionary<TKey, List<TValue>> dictionary, TKey key, TValue value) => dictionary.AddOrUpdate(key, _ => new List<TValue>(), (_, list) => list).Add(value);
-    public static void AutoAdd<TKey, TValue>(this ConcurrentDictionary<TKey, Queue<TValue>> dictionary, TKey key) => dictionary.AddOrUpdate(key, _ => new Queue<TValue>(), (_, queue) => queue);
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private static ConcurrentDictionary<TKey, TDictionary> AutoAdd<TDictionary, TKey, TIKey, TValue>(this ConcurrentDictionary<TKey, TDictionary> dictionary, TKey key) where TDictionary : IDictionary<TIKey, TValue>, new() => dictionary.AddOrUpdate(key, _ => new TDictionary(), (_, innerDic) => innerDic).Pipe(_ => dictionary);
 
-    public static void AutoAdd<TKey, TValue>(this ConcurrentDictionary<TKey, Queue<TValue>> dictionary, TKey key, TValue value) => dictionary.GetOrAdd(key, _ => new Queue<TValue>()).Enqueue(value);
+    public static List<TValue> AutoAdd<TKey, TValue>(this ConcurrentDictionary<TKey, List<TValue>> dictionary, TKey key) => dictionary.AutoAdd<List<TValue>, TKey, TValue>(key)[key];
+    public static void AutoAdd<TKey, TValue>(this ConcurrentDictionary<TKey, List<TValue>> dictionary, TKey key, TValue value) => dictionary.AutoAdd(key).Add(value);
+    
+    public static Queue<TValue> AutoAdd<TKey, TValue>(this ConcurrentDictionary<TKey, Queue<TValue>> dictionary, TKey key) => dictionary.AutoAdd<Queue<TValue>, TKey, TValue>(key)[key];
+    public static void AutoAdd<TKey, TValue>(this ConcurrentDictionary<TKey, Queue<TValue>> dictionary, TKey key, TValue value) => dictionary.AutoAdd(key).Enqueue(value);
 
-    public static void AutoAdd<TKey, TIKey, TValue>(this ConcurrentDictionary<TKey, ConcurrentDictionary<TIKey, TValue>> dictionary, TKey key) => dictionary.AddOrUpdate(key, _ => new ConcurrentDictionary<TIKey, TValue>(), (_, dic) => dic);
-    public static void AutoAdd<TKey, TIKey, TValue>(this ConcurrentDictionary<TKey, ConcurrentDictionary<TIKey, TValue>> dictionary, TKey key, TIKey innerKey, TValue value) => dictionary.GetOrAdd(key, _ => new ConcurrentDictionary<TIKey, TValue>()).TryAdd(innerKey, value);
+    public static ConcurrentDictionary<TIKey, TValue> AutoAdd<TKey, TIKey, TValue>(this ConcurrentDictionary<TKey, ConcurrentDictionary<TIKey, TValue>> dictionary, TKey key) => dictionary.AutoAdd<ConcurrentDictionary<TIKey, TValue>, TKey, TIKey, TValue>(key)[key];
+    public static void AutoAdd<TKey, TIKey, TValue>(this ConcurrentDictionary<TKey, ConcurrentDictionary<TIKey, TValue>> dictionary, TKey key, TIKey innerKey, TValue value) => dictionary.AutoAdd(key).TryAdd(innerKey, value);
 
     public static bool TryGetOrAddValue<TKey, TValue>(this Dictionary<TKey, TValue> dictionary, TKey key, out TValue value) where TValue : new() => (value = dictionary.GetOrAddValue(key)) != null;
 

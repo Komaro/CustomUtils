@@ -4,6 +4,7 @@ using CustomUtils.Sound.NewSoundSystem;
 using UnityEngine;
 using UnityEngine.Audio;
 
+[TestRequired]
 public abstract class UnitySoundCore : CustomUtils.Sound.NewSoundSystem.SoundCoreBase {
     
     private AudioMixer _audioMixer;

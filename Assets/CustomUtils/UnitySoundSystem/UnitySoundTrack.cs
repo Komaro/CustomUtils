@@ -5,6 +5,7 @@ using UniRx;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "UnitySoundTrack", menuName = "Sound/Create UnitySoundTrack")]
+[TestRequired]
 public class UnitySoundTrack : SoundTrack<UnitySoundTrackEvent> {
     
 #if UNITY_EDITOR

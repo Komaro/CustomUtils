@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace CustomUtils.Sound.NewSoundSystem {
     
+    [TestRequired]
     public abstract class SoundTrack<TSoundTrackEvent> : ScriptableObject where TSoundTrackEvent : ISoundTrackEvent {
     
         public GlobalEnum<SoundTrackEnumAttribute> trackType = new();

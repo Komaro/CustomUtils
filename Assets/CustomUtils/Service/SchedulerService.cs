@@ -3,61 +3,57 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SchdulerTask {
-
-    public float startTime;
-    public float delay;
-    public bool cancel;
-    public Action callback;
-}
-
+[TestRequired]
 public class SchedulerService : IService {
 
-    private SchedulerObject _schedulerObject;
+    private UpdateObject _updateObject;
+    
+    private readonly List<SchedulerTask> _taskList = new();
 
     void IService.Init() {
-        _schedulerObject ??= new GameObject(nameof(SchedulerService)).GetOrAddComponent<SchedulerObject>();
-        _schedulerObject.ThrowIfUnexpectedNull(nameof(_schedulerObject));
+        _updateObject = Service.GetService<MonoUpdateService>().Get();
+        _updateObject.ThrowIfNull(nameof(_updateObject));
     }
     
     void IService.Start() {
-    
-
+        _updateObject.AttachUpdate(OnUpdate);
+        _updateObject.StartUpdate();
     }
 
-    void IService.Stop() {
-        
-        
+    void IService.Stop() => _updateObject.StopUpdate();
+
+    void IService.Remove() {
+        _taskList.Clear();
+        Service.GetService<MonoUpdateService>().Release(_updateObject);
     }
 
-    public void Schedule(float delay, Action callback) {
-        _schedulerObject.Attach(new SchdulerTask {
-            startTime = Time.time,
+    public void AttachTask(float delay, Action callback) {
+        callback.ThrowIfNull(nameof(callback));
+        _taskList.Add(new SchedulerTask {
             delay = delay,
             callback = callback
         });
     }
 
-    private class SchedulerObject : MonoBehaviour, IDisposable {
-
-        private List<SchdulerTask> _taskList = new();
-
-        private void Awake() => hideFlags = HideFlags.HideAndDontSave;
-
-        private void Update() {
-            var now = Time.time;
-            foreach (var task in _taskList) {
-                if (now >= task.startTime + task.delay) {
-                    task.callback?.Invoke();
-                    task.cancel = true;
-                }
+    private void OnUpdate() {
+        var now = Time.time;
+        foreach (var task in _taskList) {
+            if (now >= task.startTime + task.delay) {
+                task.callback.Invoke();
+                task.cancel = true;
             }
-
-            _taskList.RemoveAll(task => task.cancel);
         }
 
-        public void Dispose() => _taskList.Clear();
+        _taskList.RemoveAll(task => task.cancel);
+    }
+    
+    private record SchedulerTask {
 
-        public void Attach(SchdulerTask task) => _taskList.Add(task);
+        public readonly float startTime = Time.time;
+        public float delay;
+        public bool cancel;
+        public Action callback;
     }
 }
+
+

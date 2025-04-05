@@ -115,17 +115,17 @@ public struct SafeDelegate<T> where T : Delegate {
         } else {
             Logger.TraceError($"Invalid delegate Type || {nameof(safeDelegate)} Type = {typeof(T).Name} || {nameof(removeEvent)} Type = {removeEvent.GetType().Name}");
         }
-
+    
         return safeDelegate;
     }
-
+    
     public static SafeDelegate<T> operator -(SafeDelegate<T> safeDelegate, Delegate[] removeEvents) {
         if (removeEvents is { Length: > 0 }) {
             foreach (var removeEvent in removeEvents) {
                 safeDelegate -= removeEvent;
             }
         }
-
+    
         return safeDelegate;
     }
 

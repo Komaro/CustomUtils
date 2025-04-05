@@ -7,6 +7,7 @@ using UnityEngine;
 using UnityEngine.Audio;
 using CustomUtils.Sound.NewSoundSystem;
 
+[TestRequired]
 public abstract class UnitySound : SoundBase<UnitySoundCore> {
 
     protected ImmutableDictionary<SoundType, AudioMixerGroup> audioMixerGroupDic = ImmutableDictionary<SoundType, AudioMixerGroup>.Empty;

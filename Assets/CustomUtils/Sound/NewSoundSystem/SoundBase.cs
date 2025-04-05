@@ -8,6 +8,7 @@ namespace CustomUtils.Sound.NewSoundSystem {
     
     [RequiresAttributeImplementation(typeof(MasterSoundAttribute))]
     [RequiresAttributeImplementation(typeof(ControlSoundAttribute))]
+    [TestRequired]
     public abstract class SoundBase<TSoundCore> where TSoundCore : SoundCoreBase {
     
         protected readonly TSoundCore soundCore;

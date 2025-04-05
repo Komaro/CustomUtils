@@ -3,6 +3,7 @@ using CustomUtils.Sound.NewSoundSystem;
 using UnityEngine;
 
 [Serializable]
+[TestRequired]
 public class UnitySoundTrackEvent : ISoundTrackEvent {
 
     public AudioClip clip;

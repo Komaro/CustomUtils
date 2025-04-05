@@ -7,26 +7,8 @@ using UnityEngine;
 
 namespace CustomUtils.Sound.NewSoundSystem {
     
-    public abstract record SoundType(Enum Value) {
-    
-        public Enum Value { get; } = Value;
-    
-        public string Name => Value?.ToString() ?? string.Intern("Null");
-    
-        public static implicit operator Enum(SoundType soundType) => soundType.Value;
-        public override string ToString() => Value.ToString();
-    }
 
-    public record MasterType(Enum Value) : SoundType(Value) {
-
-        public static implicit operator MasterType(Enum enumValue) => new(enumValue);
-    }
-
-    public record ControlType(SoundType MasterType, Enum Value) : SoundType(Value) {
-
-        public SoundType MasterType { get; } = MasterType;
-    }
-
+    [TestRequired]
     public abstract class SoundCoreBase : MonoBehaviour, IDisposable {
 
         protected ImmutableDictionary<Enum, SoundType> soundTypeDic = ImmutableDictionary<Enum, SoundType>.Empty;
@@ -153,5 +135,25 @@ namespace CustomUtils.Sound.NewSoundSystem {
             Logger.TraceLog($"Audio Configuration Changed || {isChanged}");
             _onChangeAudioConfiguration?.Invoke(isChanged);
         }
+    }
+    
+    public abstract record SoundType(Enum Value) {
+    
+        public Enum Value { get; } = Value;
+    
+        public string Name => Value?.ToString() ?? string.Intern("Null");
+    
+        public static implicit operator Enum(SoundType soundType) => soundType.Value;
+        public override string ToString() => Value.ToString();
+    }
+
+    public record MasterType(Enum Value) : SoundType(Value) {
+
+        public static implicit operator MasterType(Enum enumValue) => new(enumValue);
+    }
+
+    public record ControlType(SoundType MasterType, Enum Value) : SoundType(Value) {
+
+        public SoundType MasterType { get; } = MasterType;
     }
 }

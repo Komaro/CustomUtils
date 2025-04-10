@@ -6,12 +6,12 @@ using UnityEngine;
 [TestRequired]
 public class SchedulerService : IService {
 
-    private UpdateObject _updateObject;
+    private MonoObject _updateObject;
     
     private readonly List<SchedulerTask> _taskList = new();
 
     void IService.Init() {
-        _updateObject = Service.GetService<MonoUpdateService>().Get();
+        _updateObject = Service.GetService<MonoService>().Get();
         _updateObject.ThrowIfNull(nameof(_updateObject));
     }
     
@@ -24,7 +24,7 @@ public class SchedulerService : IService {
 
     void IService.Remove() {
         _taskList.Clear();
-        Service.GetService<MonoUpdateService>().Release(_updateObject);
+        Service.GetService<MonoService>().Release(_updateObject);
     }
 
     public void AttachTask(float delay, Action callback) {

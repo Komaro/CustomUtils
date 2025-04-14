@@ -106,7 +106,7 @@ public record ObjectPoolBag : IDisposable {
                 pool.SetName(name);
             }
             
-            _prefab.hideFlags = HideFlags.HideAndDontSave;
+            _prefab.hideFlags = HideFlags.DontSave;
             Object.DontDestroyOnLoad(_prefab);
         }
         

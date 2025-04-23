@@ -227,6 +227,7 @@ public abstract class UIInitializeProvider {
 
     public virtual Transform GetGlobalUIRoot() {
         var go = new GameObject("UIGlobal");
+        go.GetOrAddComponent<Canvas>().renderMode = RenderMode.ScreenSpaceOverlay;
         Object.DontDestroyOnLoad(go);
         return go.transform;
     }

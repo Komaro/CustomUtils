@@ -106,12 +106,15 @@ public record ObjectPoolBag : IDisposable {
                 pool.SetName(name);
             }
             
-            _prefab.hideFlags = HideFlags.HideAndDontSave;
+            _prefab.hideFlags = HideFlags.DontSave;
             Object.DontDestroyOnLoad(_prefab);
         }
-        
+
         _poolRoot = new GameObject($"{name}");
         _poolRoot.transform.SetParent(root.transform);
+        _poolRoot.SetActive(false);
+        
+        _prefab.transform.SetParent(root.transform);
 
         MaxSize = max;
         _pool = new ObjectPool<GameObject>(OnCreateObject, OnGetGameObject, OnReleaseGameObject, OnDestroyGameObject, maxSize:MaxSize);

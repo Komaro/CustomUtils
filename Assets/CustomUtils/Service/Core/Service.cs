@@ -26,7 +26,7 @@ public static partial class Service {
     public static bool StartService<TService>() where TService : class, IService, new() => StartService(typeof(TService));
 
     public static bool StartService(Type type) {
-        if (_serviceDic.TryGetValue(type, out var service) == false || TryCreateService(type, out service) == false) {
+        if (_serviceDic.TryGetValue(type, out var service) == false && TryCreateService(type, out service) == false) {
             return false;
         }
 

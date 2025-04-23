@@ -26,6 +26,8 @@ public sealed class GlobalEnum<TAttribute> : GlobalEnum, IEnumerable<Enum> where
             enumSetDic.TryAdd(typeof(TAttribute), enumerable.ToImmutableSortedDictionary(info => info.enumType, info => info.enumType.GetEnumValues().OfType<Enum>().ToImmutableHashSet(), new GlobalEnumPriorityComparer()));
             intToEnumDic.TryAdd(typeof(TAttribute), enumSetDic[typeof(TAttribute)].Values.SelectMany(enumSet => enumSet).ToImmutableDictionary(_ => index++, enumValue => enumValue));
             enumToIntDic.TryAdd(typeof(TAttribute), intToEnumDic[typeof(TAttribute)].ToImmutableDictionary(pair => pair.Value, pair => pair.Key));
+            
+            // TODO. 키 중복 예외처리 발생
             stringToEnumDic.TryAdd(typeof(TAttribute), enumToIntDic[typeof(TAttribute)].ToImmutableDictionary(pair => pair.Key.ToString(), pair => pair.Key));
         } else {
             Logger.TraceLog($"Cannot find an enum type with the {nameof(TAttribute)}({typeof(TAttribute).GetCleanFullName()})", Color.Yellow);

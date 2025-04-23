@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Immutable;
+using System.Linq;
 using NUnit.Framework;
 
 [Category(TestConstants.Category.FUNCTIONAL)]

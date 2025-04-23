@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Immutable;
 using System.Linq;
 using System.Reflection;
@@ -12,29 +13,44 @@ public class EditorGlobalEnumInstance : PropertyDrawer {
     private string[] _enumStrings;
     
     private bool _isInitialize;
+    private Exception _exception;
 
     private void Init(SerializedProperty property) {
-        var obj = fieldInfo.GetValue(property.serializedObject.targetObject);
-        if (obj != null) {
-            if (obj.GetType().TryGetFieldInfo(out var info, "_index", BindingFlags.NonPublic | BindingFlags.Instance)) {
-                if (info.GetValue(obj) is int index) {
-                    _index = index;
+        try {
+            var obj = fieldInfo.GetValue(property.serializedObject.targetObject);
+            if (obj != null) {
+                if (obj.GetType().TryGetFieldInfo(out var info, "_index", BindingFlags.NonPublic | BindingFlags.Instance)) {
+                    if (info.GetValue(obj) is int index) {
+                        _index = index;
+                    }
                 }
-            }
             
-            if (obj.GetType().TryGetFieldInfo(out info, "_intToEnumDic", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static)) {
-                if (info.GetValue(obj) is ImmutableDictionary<int, Enum> intToEnumDic) {
-                    _enumStrings = intToEnumDic.Values.Select(enumValue => enumValue.GetType().GetAlias($"{enumValue.GetType()}.{enumValue}")).ToArray();
+                foreach (var baseType in obj.GetType().GetBaseTypes()) {
+                    if (baseType == typeof(GlobalEnum) && baseType.TryGetFieldInfo(out info, "intToEnumDic", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static)) {
+                        if (info.GetValue(obj) is ConcurrentDictionary<Type, ImmutableDictionary<int, Enum>> intToEnumDic) {
+                            _enumStrings = intToEnumDic.Values.SelectMany(pair => pair.Values).Select(enumValue => enumValue.GetType().GetAlias($"{enumValue.GetType()}.{enumValue}")).ToArray();
+                        }
+                    
+                        break;
+                    }
                 }
+
+                _isInitialize = _enumStrings != null && _enumStrings.Any();
             }
-            
-            _isInitialize = true;
+        } catch (Exception ex) {
+            _isInitialize = false;
+            _exception = ex;
         }
     }
     
     public override void OnGUI(Rect position, SerializedProperty property, GUIContent label) {
         if (_isInitialize == false) {
             Init(property);
+        }
+
+        if (_exception != null) {
+            EditorGUILayout.HelpBox(_exception.Message, MessageType.Error);
+            return;
         }
 
         using (var scope = new EditorGUI.ChangeCheckScope()) {

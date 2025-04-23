@@ -242,12 +242,12 @@ public class MasterSoundAttribute : Attribute {
     public readonly Enum representControlEnum;
 
     public MasterSoundAttribute(object masterType, object representControlType) {
-        if (masterType is Enum masterEnum) {
-            this.masterEnum = masterEnum;
+        if (masterType is Enum masterEnumValue) {
+            masterEnum = masterEnumValue;
         }
 
-        if (representControlType is Enum representControlEnum) {
-            this.representControlEnum = representControlEnum;
+        if (representControlType is Enum controlEnumValue) {
+            representControlEnum = controlEnumValue;
         }
     }
 }

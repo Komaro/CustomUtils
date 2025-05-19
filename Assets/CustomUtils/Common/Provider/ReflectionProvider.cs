@@ -1,22 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 public static class ReflectionProvider {
     
     private static class Cache {
-        
-        private static IEnumerable<Type> _cachedTypes;
-        public static IEnumerable<Type> CachedTypes => _cachedTypes ??= AppDomain.CurrentDomain.GetAssemblies().Where(assembly => assembly.IsDynamic == false).SelectMany(assembly => assembly.GetExportedTypes());
-    
-        private static IEnumerable<Type> _cachedClasses;
-        public static IEnumerable<Type> CachedClasses => _cachedClasses ??= CachedTypes.Where(type => type.IsClass);
 
-        private static IEnumerable<Type> _cachedEnums;
-        public static IEnumerable<Type> CachedEnums => _cachedEnums ??= CachedTypes.Where(type => type.IsEnum && type.ContainsGenericParameters == false);
+        public static readonly ImmutableArray<Type> CachedTypes = AppDomain.CurrentDomain.GetAssemblies().Where(assembly => assembly.IsDynamic == false).SelectMany(assembly => assembly.GetExportedTypes()).ToImmutableArray();
+        public static readonly ImmutableArray<Type> CachedClasses = CachedTypes.Where(type => type.IsClass).ToImmutableArray();
+        public static readonly ImmutableArray<Type> CachedEnums = CachedTypes.Where(type => type.IsEnum && type.ContainsGenericParameters == false).ToImmutableArray();
     }
     
     public static IEnumerable<Type> GetTypes() => Cache.CachedTypes;
@@ -70,7 +64,7 @@ public static class ReflectionProvider {
     /// </summary>
     public static IEnumerable<Type> GetAttributeTypes(Type attributeType) => Cache.CachedClasses.Where(type => type.IsDefined(attributeType, false));
 
-    public static IEnumerable<(T attribute, Type type)> GetAttributeTypeInfos<T>() where T : Attribute => Cache.CachedClasses.Where(type => type.IsDefined<T>()).Where(type => type.IsDefined<T>()).Select(type => (type.GetCustomAttribute<T>(), type));
+    public static IEnumerable<(T attribute, Type type)> GetAttributeTypeInfos<T>() where T : Attribute => Cache.CachedClasses.Where(type => type.IsDefined<T>()).Select(type => (type.GetCustomAttribute<T>(), type));
     
     #endregion
     

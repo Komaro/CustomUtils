@@ -36,6 +36,8 @@ public abstract class UIView<TViewModel> : UIViewMonoBehaviour where TViewModel 
         }
 
         viewModel ??= new TViewModel();
+        
+        Service.GetService<UIViewModelProxyService>().Register(GetViewModelFunc);
     }
 
     protected virtual void OnEnable() {
@@ -78,4 +80,9 @@ public abstract class UIView<TViewModel> : UIViewMonoBehaviour where TViewModel 
     }
 
     protected abstract void OnNotifyModelChanged(string fieldName, NotifyFieldChangedEventArgs args);
+
+    protected virtual TViewModel GetViewModelFunc() {
+        viewModel.ThrowIfNull();
+        return viewModel;
+    }
 }

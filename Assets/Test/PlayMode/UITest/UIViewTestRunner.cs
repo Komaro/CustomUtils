@@ -38,6 +38,26 @@ public class UIViewTestRunner {
 
             ui.MethodCallTest("OnClickIncreaseCountButton", flags, () => viewModel.Count == 25);
             ui.MethodCallTest("OnClickDecreaseCountButton", flags, () => viewModel.Count == 15);
+            
+            // Proxy Test
+            Assert.IsTrue(Service.GetService<UIViewModelProxyService>().TryGetViewModelHandler<TestSimpleUIViewModel>(out var handler));
+
+            var proxyViewModel = handler.GetViewModel<TestSimpleUIViewModel>();
+            Assert.IsTrue(viewModel == proxyViewModel);
+            
+            viewModel.Count.Value = 10;
+            proxyViewModel.IncreaseCount(10);
+            Assert.IsTrue(viewModel.Count == 20);
+
+            proxyViewModel.Count.Value = 50;
+            Assert.IsTrue(viewModel.Count == 50);
+
+            var accessor = Service.GetService<UIViewModelProxyService>().GetViewModelAccessor<TestSimpleUIViewModel>();
+            Assert.IsTrue(viewModel == accessor.ViewModel);
+
+            accessor.ViewModel.Count.Value = 20;
+            accessor.ViewModel.IncreaseCount(15);
+            Assert.IsTrue(accessor.ViewModel.Count == 35);
         }
     }
 }

@@ -12,7 +12,7 @@ public class NotifyFieldChangedEventArgs : EventArgs {
 public class NotifyFieldChangedEventArgs<TValue> : NotifyFieldChangedEventArgs {
 
     public readonly TValue value;
-
+    
     public NotifyFieldChangedEventArgs(TValue value) => this.value = value;
 }
 

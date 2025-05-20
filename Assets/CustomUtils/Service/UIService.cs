@@ -6,6 +6,7 @@ using System.Reflection;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
+// TODO. 중복 생성이 가능한 UI의 경우 해당 Service를 통해 처리할 수 없음 여기서는 어디까지나 단일 UI만 처리 가능. 이를 해결하기 위해 새로운 형태의 Service가 필요함 ex) MultiUIService.cs
 public class UIService : IService {
 
     private UIInitializeProvider _initializeProvider;
@@ -13,7 +14,7 @@ public class UIService : IService {
     private Transform _uiRoot;
     private Transform _uiGlobalRoot;
     
-    private CallStack<UIViewMonoBehaviour> _uiCallStack = new();
+    private readonly CallStack<UIViewMonoBehaviour> _uiCallStack = new();
 
     public UIViewMonoBehaviour Current => _uiCallStack.TryPeek(out var uiView) ? uiView : null;
     public UIViewMonoBehaviour Previous => _uiCallStack.TryPeek(out var uiView, 1) ? uiView : null;
@@ -56,7 +57,7 @@ public class UIService : IService {
         }
         
         if (_initializeProvider == null) {
-            Logger.TraceError($"{nameof(_initializeProvider)} is null. {nameof(UIService)} initialize failed");
+            throw new NullReferenceException($"{nameof(_initializeProvider)} is null. {nameof(UIService)} initialize failed");
         }
 
         _viewSet = ReflectionProvider.GetSubTypesOfTypeDefinition(typeof(UIView<>)).ToImmutableHashSet();
@@ -200,16 +201,24 @@ public class UIService : IService {
     
     private UIViewMonoBehaviour CreateUIViewSwitch(Type type) {
         if (_viewAttributeDic.TryGetValue(type, out var attribute) && Service.GetService<ResourceService>().TryInstantiate(out var go, attribute.prefab) && go.TryGetOrAddComponent<UIViewMonoBehaviour>(type, out var uiView)) {
-            if (attribute.isGlobal) {
-                uiView.transform.SetParent(_uiGlobalRoot);
-                _cachedGlobalUIDic.TryAdd(type, uiView);
-            } else {
-                uiView.transform.SetParent(_uiRoot);
-                _cachedUIDic.TryAdd(type, uiView);
-            }
+            if (uiView.transform.TryGetRectTransform(out var rect)) {
+                var offsetMax = rect.offsetMax;
+                var offsetMin = rect.offsetMin;
+                
+                if (attribute.isGlobal) {
+                    uiView.transform.SetParent(_uiGlobalRoot);
+                    _cachedGlobalUIDic.TryAdd(type, uiView);
+                } else {
+                    uiView.transform.SetParent(_uiRoot);
+                    _cachedUIDic.TryAdd(type, uiView);
+                }
 
-            uiView.SetActive(false);
-            return uiView;
+                rect.offsetMax = offsetMax;
+                rect.offsetMin = offsetMin;
+
+                uiView.SetActive(false);
+                return uiView;
+            }
         }
 
         return null;

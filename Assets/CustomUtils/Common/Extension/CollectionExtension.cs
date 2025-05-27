@@ -17,6 +17,18 @@ public static partial class CollectionExtension {
     public static IEnumerable<TSource> OrderBy<TSource, TKey>(this IEnumerable<TSource> enumerable, Func<TSource, TKey> keySelector, bool isAscending) => isAscending ? enumerable.OrderBy(keySelector) : enumerable.OrderByDescending(keySelector) as IEnumerable<TSource>;
     public static IEnumerable<T> WhereNotNull<T>(this IEnumerable<T> enumerable) where T : class => enumerable.Where(source => source != null);
 
+    public static IEnumerable<TResult> SelectWhere<TSource, TResult>(this IEnumerable<TSource> enumerable, Func<TSource, TResult> selector, Func<TResult, bool> predicate) {
+        selector.ThrowIfNull(nameof(selector));
+        predicate.ThrowIfNull(nameof(predicate));
+
+        foreach (var source in enumerable) {
+            var result = selector.Invoke(source);
+            if (predicate.Invoke(result)) {
+                yield return result;
+            }
+        }
+    }
+
     public static IEnumerable<TResult> WhereSelect<TSource, TResult>(this IEnumerable<TSource> enumerable, Func<TSource, bool> predicate, Func<TSource, TResult> selector) {
         predicate.ThrowIfNull(nameof(predicate));
         selector.ThrowIfNull(nameof(selector));
@@ -163,6 +175,8 @@ public static partial class CollectionExtension {
     public static ImmutableArray<TResult> ToImmutableArray<TValue, TResult>(this ReadOnlySpan<TValue> span, Func<TValue, TResult> converter) => span.ToArray(converter).ToImmutableArray();
 
     public static ImmutableDictionary<TKey, TEnumerable> ToImmutableDictionary<TKey, TValue, TEnumerable>(this IEnumerable<IGrouping<TKey, TValue>> enumerable, Func<IGrouping<TKey, TValue>, TEnumerable> creator) where TEnumerable : IEnumerable<TValue> => enumerable.ToImmutableDictionary(grouping => grouping.Key, creator.Invoke);
+
+    public static ImmutableDictionary<TKey, TValue> ToImmutableDictionaryWithDistinct<TSource, TKey, TValue>(this IEnumerable<TSource> enumerable, Func<TSource, TKey> keySelector, Func<TSource, TValue> valueSelector) => enumerable.ToDictionaryWithDistinct(keySelector, valueSelector).ToImmutableDictionary();
 
     public static Dictionary<TKey, TValue> ToDictionaryWithDistinct<TSource, TKey, TValue>(this IEnumerable<TSource> enumerable, Func<TSource, TKey> keySelector, Func<TSource, TValue> valueSelector) => enumerable.ToDictionary<Dictionary<TKey, TValue>, TSource, TKey, TValue>(keySelector, valueSelector);
 

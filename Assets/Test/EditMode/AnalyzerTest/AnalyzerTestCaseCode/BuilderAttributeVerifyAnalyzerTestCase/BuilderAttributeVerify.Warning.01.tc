@@ -1,0 +1,11 @@
+﻿using UnityEditor;
+
+public enum BuilderTestEnum {
+    NONE,
+    FIRST,
+}
+
+[Builder(BuilderTestEnum.FIRST, BuildTarget.Android, BuildTargetGroup.Android)]
+public class BuilderTest {
+    
+}

@@ -224,6 +224,28 @@ public static class SystemUtil {
         return false;
     }
 
+    public static bool TryWriteAllText(string path, string text, out FileInfo info) {
+        try {
+            return (info = WriteAllText(path, text)) != null;
+        } catch (Exception) {
+            info = null;
+            return false;
+        }
+    }
+
+    public static FileInfo WriteAllText(string path, string text) {
+        text.ThrowIfNull(nameof(text));
+        try {
+            EnsureDirectoryExists(path);
+            File.WriteAllText(path, text);
+            return new FileInfo(path);
+        } catch (Exception ex) {
+            Logger.TraceError(ex);
+        }
+
+        return null;
+    }
+
     public static bool TryReadAllBytes(string path, out byte[] bytes) {
         try {
             if (File.Exists(path)) {

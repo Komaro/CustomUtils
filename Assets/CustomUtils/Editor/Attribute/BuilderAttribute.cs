@@ -17,3 +17,13 @@ public class BuilderAttribute : Attribute {
         this.buildTargetGroup = buildTargetGroup;
     }
 }
+
+public enum BuilderTestEnum {
+    NONE,
+    FIRST,
+}
+
+[Builder(BuilderTestEnum.FIRST, BuildTarget.Android, BuildTargetGroup.Android)]
+public class BuilderTest {
+    
+}

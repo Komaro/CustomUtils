@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.ComponentModel;
@@ -26,7 +25,6 @@ public class RequiresStaticMethodImplementationAttributeAnalyzer : DiagnosticAna
     private static readonly DiagnosticDescriptor STATIC_RULE = new(STATIC_ID, TITLE, STATIC_MESSAGE_FORMAT, "Usage", DiagnosticSeverity.Error, isEnabledByDefault: true);
 
     private static readonly LocalizableString ATTRIBUTE_MESSAGE_FORMAT = "Method '{0}' must have the '{1}' attribute";
-    // private static readonly LocalizableString ATTRIBUTE_MESSAGE_FORMAT = "Class '{0}' must have the '{1}' attribute";
     private static readonly DiagnosticDescriptor ATTRIBUTE_RULE = new(ATTRIBUTE_ID, TITLE, ATTRIBUTE_MESSAGE_FORMAT, "Usage", DiagnosticSeverity.Error, isEnabledByDefault: true);
     
     public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(IMPLEMENT_RULE, STATIC_RULE, ATTRIBUTE_RULE);

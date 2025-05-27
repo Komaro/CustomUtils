@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using Object = UnityEngine.Object;
 
+[ResourceProvider(999999)]
 public sealed class NullResourceProvider : IResourceProvider {
 
     public void Init() => Logger.TraceLog($"{nameof(Init)} {nameof(NullResourceProvider)}", Color.yellow);

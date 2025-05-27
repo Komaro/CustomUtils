@@ -23,7 +23,7 @@ public static class UnityAssemblyProvider {
         #region [Source File(Ignore Builtin Assembly)]
         
         private static ImmutableDictionary<string, string> _cachedSourceFilePathDic;
-        public static ImmutableDictionary<string, string> CachedSourceFilePathDic =>  _cachedSourceFilePathDic ??= CachedUnityAssemblySet.Where(assembly => assembly.IsBuiltin() == false).SelectMany(assembly => assembly.sourceFiles).ToImmutableDictionary(Path.GetFileNameWithoutExtension, path => path);
+        public static ImmutableDictionary<string, string> CachedSourceFilePathDic =>  _cachedSourceFilePathDic ??= CachedUnityAssemblySet.Where(assembly => assembly.IsBuiltin() == false).SelectMany(assembly => assembly.sourceFiles).ToImmutableDictionaryWithDistinct(Path.GetFileNameWithoutExtension, path => path);
         
         private static ImmutableDictionary<Type, string> _cachedSourceFileTypePathDic;
         public static ImmutableDictionary<Type, string> CachedSourceFileTypePathDic => _cachedSourceFileTypePathDic ??= ReflectionProvider.GetTypes().Where(type => CachedSourceFilePathDic.ContainsKey(type.Name)).ToImmutableDictionary(type => type, type => CachedSourceFilePathDic[type.Name]);

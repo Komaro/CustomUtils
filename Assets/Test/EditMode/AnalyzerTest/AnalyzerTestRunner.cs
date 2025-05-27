@@ -35,9 +35,7 @@ public class AnalyzerTestRunner {
             .GC()
             .Run();
         
-        async void Action() {
-            await Task.WhenAll(AnalyzerRunner.GetTestCaseTaskList(type, Path.Combine(Application.dataPath, testCaseCodeFolder)));
-        }
+        async void Action() => await Task.WhenAll(AnalyzerRunner.GetTestCaseTaskList(type, Path.Combine(Application.dataPath, testCaseCodeFolder)));
     }
 }
 
@@ -71,36 +69,27 @@ internal static class AnalyzerRunner {
             return new List<Task<TestCaseLog>>();
         }
         
-        var testCaseCodeList = new List<TestCaseCode>();
-        foreach (var filePath in Directory.GetFiles(testCaseCodeFolder, Constants.Extension.TEST_CASE_FILTER, SearchOption.AllDirectories)) {
-            var testCaseCode = TestCaseCode.Create(filePath);
-            if (testCaseCode.HasValue) {
-                testCaseCodeList.Add(testCaseCode.Value);
-            }
-        }
-        
+        var testCaseCodeList = Directory.GetFiles(testCaseCodeFolder, Constants.Extension.TEST_CASE_FILTER, SearchOption.AllDirectories).ToList(TestCaseCode.Create);
         var metaDataReferences = AssemblyProvider.GetSystemAssemblySet().Select(assembly => MetadataReference.CreateFromFile(assembly.Location)).Cast<MetadataReference>().ToList();
         var taskList = new List<Task<TestCaseLog>>();
-        foreach (var testCaseCode in testCaseCodeList.OrderBy(x => x.type)) {
-            taskList.Add(Task.Run(() => {
-                var testCompilation = CSharpCompilation.Create("AnalyzerTestAssembly"
-                    , new [] { CSharpSyntaxTree.ParseText(SourceText.From(testCaseCode.source), path:testCaseCode.name) }
-                    , metaDataReferences
-                    , new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
-                var testAnalyzerCompilation = testCompilation.WithAnalyzers(ImmutableArray.Create(analyzer));
-                var task = testAnalyzerCompilation.GetAnalyzerDiagnosticsAsync();
-                var result = task.Result;
-                switch (testCaseCode.type) {
-                    case TEST_RESULT_CASE_TYPE.SUCCESS when result.Length != 0:
-                        return new TestCaseLog(LogType.Error, $"[Script Test] Failed || {testCaseCode.name}\n\t{result.ToStringCollection(x => $"[{x.Id}] {x.Location.ToPositionString()} || {x.GetMessage()}", "\n\t")}");
-                    case TEST_RESULT_CASE_TYPE.FAIL when result.Length == 0: 
-                        return new TestCaseLog(LogType.Error, $"[Script Test] Failed || {testCaseCode.name}\n\t{result.ToStringCollection(x => $"[{x.Id}] {x.Location.ToPositionString()} || {x.GetMessage()}", "\n\t")}");
+        foreach (var testCaseCode in testCaseCodeList.Where(x => x.HasValue).OrderBy(x => x.Value.type)) {
+            taskList.Add(Task.Run(async () => {
+                var compilationOptions = new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary);
+                var testCompilation = CSharpCompilation.Create("AnalyzerTestAssembly", new [] { CSharpSyntaxTree.ParseText(SourceText.From(testCaseCode.Value.source), path:testCaseCode.Value.name) }
+                    , metaDataReferences, compilationOptions);
+                var diagnostics = await testCompilation.WithAnalyzers(ImmutableArray.Create(analyzer)).GetAnalyzerDiagnosticsAsync();
+                switch (testCaseCode.Value.type) {
+                    case TEST_RESULT_CASE_TYPE.SUCCESS when diagnostics.Any(diagnostic => diagnostic.Severity == DiagnosticSeverity.Error):
+                    case TEST_RESULT_CASE_TYPE.FAIL when diagnostics.Any(diagnostic => diagnostic.Severity == DiagnosticSeverity.Error) == false:
+                    case TEST_RESULT_CASE_TYPE.WARNING when diagnostics.Any(diagnostic => diagnostic.Severity == DiagnosticSeverity.Warning) == false:
+                        return new TestCaseLog(LogType.Error, $"[Script Test] Failed || {testCaseCode.Value.name}\n\t{diagnostics.ToStringCollection(x => $"[{x.Id}] {x.Location.ToPositionString()} || {x.GetMessage()}", "\n\t")}");
                 }
-                
-                return new TestCaseLog($"[Script Test] Success || {testCaseCode.name}");
+
+                return new TestCaseLog($"[Script Test] Success || {testCaseCode.Value.name}");
+                // return new TestCaseLog($"[Script Test] Success || {testCaseCode.Value.name}\n{diagnostics.ToStringCollection(dig => dig.ToString(), "\n")}");
             }));
         }
-        
+
         return taskList;
     }
-} 
+}

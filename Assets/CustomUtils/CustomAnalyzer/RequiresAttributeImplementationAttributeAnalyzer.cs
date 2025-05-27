@@ -38,11 +38,11 @@ public class RequiresAttributeImplementationAttributeAnalyzer : BaseDianosticAna
 
         var namedTypeSymbol = (INamedTypeSymbol) context.Symbol;
         var attributeDataSet = namedTypeSymbol.GetAttributes().Select(symbol => symbol.AttributeClass.Name).ToImmutableHashSet();
-        foreach (var symbol in GetInheritedClassAndInterfaces(namedTypeSymbol)) {
+        foreach (var symbol in GetAllInheritedClassAndInterfaces(namedTypeSymbol)) {
             if (TryGetAttributeData(symbol, out var attributeData)) {
                 foreach (var data in attributeData.Where(attribute => attribute.AttributeClass?.Name.Equals(ATTRIBUTE_NAME, StringComparison.Ordinal) ?? false)) {
                     var implementType = data.ConstructorArguments[0].Value;
-                    // TODO. 타입 텍스트 확인 시 간혹 FullName을 체크하여야 하는 경우가 발생함 
+                    // TODO. 타입 텍스트 확인 시 간혹 FullName을 체크하여야 하는 경우가 발생함
                     // TODO. CreateAssetMenu 같은 경우 implementType이 UnityEngine.CreateAssetMenu 으로 지정됨
                     if (implementType != null && attributeDataSet.Contains(implementType.ToString()) == false) {
                         context.ReportDiagnostic(Diagnostic.Create(RULE, namedTypeSymbol.Locations[0], namedTypeSymbol.Name, implementType.ToString()));

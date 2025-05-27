@@ -1,0 +1,6 @@
+﻿using UnityEditor;
+
+[Builder(1, BuildTarget.StandaloneWindows64, BuildTargetGroup.Standalone)]
+public class BaseClass {
+    
+}

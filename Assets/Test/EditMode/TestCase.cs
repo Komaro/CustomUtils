@@ -56,9 +56,11 @@ internal enum TEST_RESULT_CASE_TYPE {
     NONE,
     SUCCESS,
     FAIL,
+    WARNING,
     
     Success = SUCCESS,
     Fail = FAIL,
+    Warning = WARNING,
 }
 
 public static class LocationExtension {

@@ -7,7 +7,6 @@ using UnityEngine;
 
 namespace CustomUtils.Sound.NewSoundSystem {
     
-
     [TestRequired]
     public abstract class SoundCoreBase : MonoBehaviour, IDisposable {
 

@@ -75,6 +75,7 @@ public static class AnalyzerGenerator {
         }
     }
     
+#if UNITY_6000_0_OR_NEWER == false
     private static void GenerateCustomAnalyzerDllOnAssemblyBuilder(params string[] sourceFiles) {
         if (UnityAssemblyProvider.TryGetUnityAssembly(SystemAssembly.GetExecutingAssembly(), out var assembly)) {
             try {
@@ -92,6 +93,7 @@ public static class AnalyzerGenerator {
             }
         }
     }
+#endif
     
     private static void OnStart(string assemblyPath) => Logger.TraceLog($"Start {Path.GetFileName(assemblyPath)} {nameof(Assembly)} build", Color.green);
 
@@ -122,7 +124,8 @@ public static class AnalyzerGenerator {
                     Logger.TraceWarning(diagnostic);
                     break;
                 case DiagnosticSeverity.Error:
-                    Logger.TraceError(diagnostic);
+                    // Logger.TraceError(diagnostic);
+                    Logger.TraceError($"{diagnostic.Id} || {diagnostic.Location} || {diagnostic.GetMessage()}");
                     break;
                 default:
                     Logger.TraceLog(diagnostic);
@@ -130,6 +133,8 @@ public static class AnalyzerGenerator {
             }
         }
     }
+    
+    
     
     private static void AnalyzerBuildPostProcess(string outputPath) {
         var copyPath = Path.Combine(Constants.Path.PLUGINS_FULL_PATH, Path.GetFileName(outputPath));

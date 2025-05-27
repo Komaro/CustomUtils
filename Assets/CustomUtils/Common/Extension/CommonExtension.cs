@@ -16,11 +16,18 @@ using UnityEngine.Pool;
 
 public static class CommonExtension {
 
+
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static T ThrowIfNull<T>(this T instance) where T : class => instance ?? throw new ArgumentNullException(typeof(T).GetCleanFullName());
     
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static T ThrowIfNull<T>(this T instance, string name) where T : class => instance ?? throw new ArgumentNullException(name);
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static string ThrowIfNull(this string instance) => string.IsNullOrEmpty(instance) ? throw new ArgumentNullException(nameof(String)) : instance;
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static string ThrowIfNull(this string instance, string name) => string.IsNullOrEmpty(instance) ? throw new ArgumentNullException(name) : instance;
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static T ThrowIfUnexpectedNull<T>(this T instance) where T : class => instance ?? throw new NullReferenceException<T>(typeof(T).GetCleanFullName());

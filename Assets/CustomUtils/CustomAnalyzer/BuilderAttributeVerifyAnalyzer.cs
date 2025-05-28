@@ -51,7 +51,6 @@ public class BuilderAttributeVerifyAnalyzer : BaseDianosticAnalzyer {
             }
             
             if (_cacheVerifyEnumDic.TryGetValue(enumSymbol, out var isVerify) && isVerify == false) {
-                Logger.TraceLog(enumSymbol.Locations[0]);
                 context.ReportDiagnostic(Diagnostic.Create(CLASS_IMPLEMENT_RULE, GetSyntaxReferenceLocation(attributeData), enumSymbol.Name));
                 return;
             }

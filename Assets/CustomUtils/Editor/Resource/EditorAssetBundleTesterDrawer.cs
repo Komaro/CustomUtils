@@ -100,6 +100,7 @@ public partial class EditorAssetBundleTesterDrawer : EditorAutoConfigResourceDra
                 EditorCommon.DrawLabelToggle(ref config.isActiveCaching, "Caching 활성화", 100f);
                 if (config.isActiveCaching && _cachingService.IsReady()) {
                     EditorCommon.DrawLabelTextField("현재 활성화된 Caching 폴더", _cachingService.Get().path, 170f);
+                    EditorGUILayout.HelpBox("Caching이 활성화 되어 있는 경우 일반 다운로드 폴더 지정이 무시됩니다", MessageType.Warning);
                 }
             }
             

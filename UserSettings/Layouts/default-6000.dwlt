@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 1920
     height: 997
   m_ShowMode: 4
-  m_Title: Console
+  m_Title: Test Runner
   m_RootView: {fileID: 2}
   m_MinSize: {x: 875, y: 350}
   m_MaxSize: {x: 10000, y: 10000}
@@ -119,7 +119,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 100}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 584
+  controlID: 100
   draggingID: 0
 --- !u!114 &6
 MonoBehaviour:
@@ -270,8 +270,8 @@ MonoBehaviour:
     y: 0
     width: 679
     height: 442
-  m_MinSize: {x: 101, y: 126}
-  m_MaxSize: {x: 4001, y: 4026}
+  m_MinSize: {x: 100, y: 100}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 18}
   m_Panes:
   - {fileID: 17}
@@ -314,7 +314,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 1
   m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: InspectorWindow
+  m_Name: TestRunnerWindow
   m_EditorClassIdentifier: 
   m_Children: []
   m_Position:
@@ -323,14 +323,14 @@ MonoBehaviour:
     y: 0
     width: 904
     height: 941
-  m_MinSize: {x: 276, y: 76}
-  m_MaxSize: {x: 4001, y: 4026}
-  m_ActualView: {fileID: 20}
+  m_MinSize: {x: 50, y: 50}
+  m_MaxSize: {x: 4000, y: 4000}
+  m_ActualView: {fileID: 14}
   m_Panes:
   - {fileID: 20}
   - {fileID: 14}
-  m_Selected: 0
-  m_LastSelected: 1
+  m_Selected: 1
+  m_LastSelected: 0
 --- !u!114 &14
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -369,7 +369,7 @@ MonoBehaviour:
     m_ContainerData: []
     m_OverlaysVisible: 1
   m_Spl:
-    ID: 131
+    ID: 195
     splitterInitialOffset: 466
     currentActiveSplitter: -1
     realSizes:
@@ -392,7 +392,7 @@ MonoBehaviour:
     oldMinSizes: 
     oldMaxSizes: 
     oldSplitSize: 0
-  m_TestTypeToolbarIndex: 0
+  m_TestTypeToolbarIndex: 1
   m_TestListGUIs:
   - m_Window: {fileID: 14}
     runProgress:
@@ -458,7 +458,7 @@ MonoBehaviour:
       description: 
       isSuite: 1
       categories: []
-      parentId: 1149
+      parentId: 1000
       parentUniqueId: '[CustomUtils][suite]'
     - id: 1002
       uniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][AnalyzerTestRunner][suite]'
@@ -3016,32 +3016,13 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1138
       parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][UIViewModelTestRunner][suite]'
-    m_ResultText: 'AnalyzerTestCaseTest(BuilderAttributeVerifyAnalyzer,"Test/EditMode/AnalyzerTest/AnalyzerTestCaseCode/BuilderAttributeVerifyAnalyzerTestCase")
-      (17.530s)
-
-      ---
-
-      [Script Test] Success || BuilderAttributeVerify.Success.01
-
-      [Script
-      Test] Success || BuilderAttributeVerify.Warning.01
-
-      [Script Test] Success
-      || BuilderAttributeVerify.Warning.02
-
-
-      Analyzer test complete
-
-      Success
-      : 3
-
-      Failed  : 0'
+    m_ResultText: 
     m_ResultStacktrace: 
     m_TestListState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 3413c776
-      m_LastClickedID: 1992758068
-      m_ExpandedIDs: 8d235bbf643b9fdbc29f3933cd6f9d64ffffff7f
+      m_SelectedIDs: 49f03334
+      m_LastClickedID: 875819081
+      m_ExpandedIDs: 643b9fdbc29f3933cd6f9d64ffffff7f
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -3179,7 +3160,7 @@ MonoBehaviour:
       uniqueId: 'TestAssembly.PlayMode.dll/[TestAssembly.PlayMode][NewSoundSystemTestRunner][suite]'
       name: NewSoundSystemTestRunner
       fullName: NewSoundSystemTestRunner
-      resultStatus: 2
+      resultStatus: 0
       duration: 0
       messages: 
       output: 
@@ -3674,7 +3655,7 @@ MonoBehaviour:
       uniqueId: 'TestAssembly.PlayMode.dll/[TestAssembly.PlayMode][UIViewTestRunner][suite]'
       name: UIViewTestRunner
       fullName: UIViewTestRunner
-      resultStatus: 1
+      resultStatus: 0
       duration: 0
       messages: 
       output: 
@@ -3746,56 +3727,13 @@ MonoBehaviour:
       - UI
       parentId: 1181
       parentUniqueId: 'TestAssembly.PlayMode.dll/[TestAssembly.PlayMode][UIViewTestRunner][suite]'
-    m_ResultText: 'SimpleUIViewModelTest (0.518s)
-
-      ---
-
-      <color=#00FFFF>[ResourceService.GetValidProvider]
-      Activate provider || ResourcesProvider</color>
-
-      <color=#00FFFF>[ResourceService.GetValidProvider]
-      Activate provider || AssetBundleProvider</color>
-
-      <color=#00FFFF>[Service.StartService]
-      StartService || ResourceService</color>
-
-      Font Asset [LiberationSans SDF
-      - Fallback] Units Per EM set to 2048. Please commit the newly serialized value.
-
-      <color=#00FFFF>[Service.StartService]
-      StartService || UIViewModelProxyService</color>
-
-      [TestSimpleUIView.UpdateCollection]
-      Replace
-
-      [TestSimpleUIView.UpdateList] Replace
-
-      [TestSimpleUIView.UpdateDictionary]
-      Replace
-
-      [TestExtension.FieldChangeTest] Pass _titleText change test
-
-      [TestExtension.FieldChangeTest]
-      Pass _countText change test
-
-      [TestSimpleUIView.UpdateCollection] Add
-
-      [TestSimpleUIView.UpdateList]
-      Add
-
-      [TestSimpleUIView.UpdateDictionary] Add
-
-      [TestExtension.MethodCallTest]
-      Pass OnClickIncreaseCountButton call test
-
-      [TestExtension.MethodCallTest]
-      Pass OnClickDecreaseCountButton call test'
+    m_ResultText: 
     m_ResultStacktrace: 
     m_TestListState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 4a2e6db8
-      m_LastClickedID: -1200804278
-      m_ExpandedIDs: b21863ba2075920ec29f39332d31d675ffffff7f
+      m_SelectedIDs: 75cb148c
+      m_LastClickedID: -1944794251
+      m_ExpandedIDs: b21863ba2075920ec29f39339ed4ec492d31d675ffffff7f
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -3818,7 +3756,7 @@ MonoBehaviour:
       PassedHidden: 0
       FailedHidden: 0
       NotRunHidden: 0
-      m_SearchString: 
+      m_SearchString: resource
       selectedCategories: []
       availableCategories:
       - Performance
@@ -3933,9 +3871,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 80a20000
+      m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: eaf5ffff2ef6ffff1cf7ffff5ef7ffff9af7ffffdcf7ffff18f8ffff5cf8ffff0cfbffff
+      m_ExpandedIDs: 06fbffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -4665,9 +4603,9 @@ MonoBehaviour:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 804}
-    m_SelectedIDs: 8ca20000
-    m_LastClickedID: 41612
-    m_ExpandedIDs: 00000000c09f0000c29f0000c49f0000c69f0000c89f0000ca9f0000cc9f0000ce9f0000d09f0000d29f0000d49f0000d69f0000d89f0000da9f0000dc9f0000de9f0000e09f0000e29f0000e49f0000e69f0000e89f0000fea1000002a200008ea20000d2a2000000ca9a3bffffff7f
+    m_SelectedIDs: c2a20000
+    m_LastClickedID: 41666
+    m_ExpandedIDs: 00000000c09f0000c29f0000c49f0000c69f0000c89f0000ca9f0000cc9f0000ce9f0000d09f0000d29f0000d49f0000d69f0000d89f0000da9f0000dc9f0000de9f0000e09f0000e29f0000e49f0000e69f0000e89f0000ea9f0000c4a2000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -4696,7 +4634,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000c09f0000c29f0000c49f0000c69f0000c89f0000ca9f0000cc9f0000ce9f0000d09f0000d29f0000d49f0000d69f0000d89f0000da9f0000dc9f0000de9f0000e09f0000e29f0000e49f0000e69f0000e89f0000
+    m_ExpandedIDs: 00000000c09f0000c29f0000c49f0000c69f0000c89f0000ca9f0000cc9f0000ce9f0000d09f0000d29f0000d49f0000d69f0000d89f0000da9f0000dc9f0000de9f0000e09f0000e29f0000e49f0000e69f0000e89f0000ea9f0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -4722,9 +4660,9 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: 80a20000
-    m_LastClickedInstanceID: 41600
-    m_HadKeyboardFocusLastEvent: 1
+    m_SelectedInstanceIDs: 
+    m_LastClickedInstanceID: 0
+    m_HadKeyboardFocusLastEvent: 0
     m_ExpandedInstanceIDs: c6230000ac060000fc56000092f6ffff2a66000002670000ce6900006cd8ffffbe69000000000000909d0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0

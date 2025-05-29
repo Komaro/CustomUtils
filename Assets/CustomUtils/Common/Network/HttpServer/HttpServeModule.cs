@@ -28,11 +28,9 @@ public class AssetBundleDistributionServeModule : HttpServeModule {
                 }
                 
                 Span<byte> buffer = new byte[bufferSize];
-                using (var outputStream = context.Response.OutputStream) {
-                    var bytesLength = 0;
-                    while ((bytesLength = fileStream.Read(buffer)) > 0) {
-                        outputStream.Write(buffer[..bytesLength]);
-                    }
+                var bytesLength = 0;
+                while ((bytesLength = fileStream.Read(buffer)) > 0) {
+                    context.Response.OutputStream.Write(buffer[..bytesLength]);
                 }
             }
             return true;

@@ -11,7 +11,7 @@ public class SimpleHttpServer : IDisposable {
     private HttpListener _listener = new();
     private Task _listenerTask;
     private CancellationTokenSource _listenerCancelToken;
-    private Dictionary<Type, HttpServeModule> _serveModuleDic = new();
+    private readonly Dictionary<Type, HttpServeModule> _serveModuleDic = new();
 
     private string _targetDirectory;
 
@@ -78,15 +78,12 @@ public class SimpleHttpServer : IDisposable {
                 try {
                     var task = _listener.GetContextAsync();
                     task.Wait(token);
-                    if (token.IsCancellationRequested) {
-                        Logger.TraceLog($"Receive Cancellation Request", Color.Red);
-                        break;
-                    }
+                    token.ThrowIfCancellationRequested();
 
                     var content = await task;
                     _ = Task.Run(() => Serve(content, token), token);
                 } catch (OperationCanceledException) {
-                    Logger.TraceLog(nameof(OperationCanceledException), Color.Red);
+                    Logger.TraceLog($"Receive {nameof(OperationCanceledException)}", Color.Red);
                     break;
                 } catch (HttpListenerException ex) {
                     Logger.TraceError(ex);
@@ -94,6 +91,8 @@ public class SimpleHttpServer : IDisposable {
                 } catch (InvalidOperationException ex) {
                     Logger.TraceError(ex);
                     break;
+                } catch (Exception ex){
+                    Logger.TraceLog(ex, Color.Yellow);
                 }
             }
         } catch (Exception ex) {
@@ -109,7 +108,7 @@ public class SimpleHttpServer : IDisposable {
 
     private void Serve(HttpListenerContext context, CancellationToken token) {
         try {
-            if (_serveModuleDic.Any() == false) {
+            if (_serveModuleDic.Count <= 0) {
                 throw new NoServeModuleException();
             }
 
@@ -118,13 +117,16 @@ public class SimpleHttpServer : IDisposable {
             if (context.Request != null) {
                 foreach (var module in _serveModuleDic.Values) {
                     if (module.Serve(context)) {
-                        break;
+                        context.Response.StatusCode = (int) HttpStatusCode.OK;
+                        return;
                     }
                 }
             }
-        } catch (Exception ex) {
+            
             context.Response.StatusCode = (int) HttpStatusCode.NotFound;
+        } catch (Exception ex) {
             Logger.TraceError(ex);
+            context.Response.StatusCode = (int) HttpStatusCode.InternalServerError;
         } finally {
             context.Response.Close();
         }

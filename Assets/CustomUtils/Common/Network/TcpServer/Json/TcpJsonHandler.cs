@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Buffers;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -7,13 +8,15 @@ public class TcpJsonHandlerProvider : SingletonWithParameter<TcpJsonHandlerProvi
 
 public abstract class TcpJsonHandler<TData> : TcpHandler<TData, TcpHeader> where TData : TcpJsonPacket, ITcpPacket {
 
+    protected readonly MemoryPool<byte> memoryPool = MemoryPool<byte>.Shared;
+
     public override TcpHeader CreateHeader(TcpSession session, int length) => new(session.ID, Body, length);
 
     public override async Task<TData> ReceiveBytesAsync(TcpSession session, byte[] bytes, CancellationToken token) {
         if (bytes.GetString().TryToJson<TData>(out var data)) {
             return await ReceiveDataAsync(session, data, token);
         }
-        
+
         throw new InvalidCastException();
     }
 
@@ -33,8 +36,15 @@ public abstract class TcpJsonHandler<TData> : TcpHandler<TData, TcpHeader> where
     public override async Task<bool> SendBytesAsync(TcpSession session, byte[] bytes, CancellationToken token) {
         try {
             var header = CreateHeader(session, bytes.Length);
-            await WriteAsyncWithCancellationCheck(session, header.ToBytes(), token);
-            await WriteAsyncWithCancellationCheck(session, bytes, token);
+            using(var owner = memoryPool.Rent(header.length + bytes.Length)) {
+                var buffer = owner.Memory;
+
+                // TODO. Copy buffer
+
+                await WriteAsyncWithCancellationCheck(session, header.ToBytes(), token);
+                await WriteAsyncWithCancellationCheck(session, bytes, token);
+            }
+
             return true;
         } catch (Exception ex) {
             Logger.TraceError(ex);

@@ -25,6 +25,8 @@ public abstract class EditorAutoConfigDrawer<TConfig, TNullConfig> : EditorDrawe
 
     protected TConfig config;
     protected SystemWatcherServiceOrder order;
+
+    protected bool isDirtyConfig;
     
     protected abstract string CONFIG_NAME { get; }
     protected abstract string CONFIG_PATH { get; }
@@ -74,6 +76,14 @@ public abstract class EditorAutoConfigDrawer<TConfig, TNullConfig> : EditorDrawe
 
             EditorCommon.DrawSeparator();
         } else {
+            if (isDirtyConfig) {
+                EditorGUILayout.HelpBox($"{CONFIG_NAME} 파일의 수정이 확인되었습니다.", MessageType.Info);
+                if (EditorCommon.DrawButton($"{CONFIG_NAME} 갱신")) {
+                    CacheRefresh();
+                    isDirtyConfig = false;
+                }
+            }
+            
             GUILayout.Space(10f);
         }
     }
@@ -95,6 +105,11 @@ public abstract class EditorAutoConfigDrawer<TConfig, TNullConfig> : EditorDrawe
             case WatcherChangeTypes.Deleted:
                 if (config.IsNull() == false) {
                     config = config.Clone<TNullConfig>();
+                }
+                break;
+            case WatcherChangeTypes.Changed:
+                if ((File.GetLastWriteTime(args.FullPath) - config.LastSaveTime).TotalMilliseconds > 100) {
+                    isDirtyConfig = true;
                 }
                 break;
         }

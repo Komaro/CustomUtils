@@ -18,15 +18,16 @@ public class AssetBundleDistributionServeModule : HttpServeModule {
     private const int bufferSize = 1024 * 32;
     
     public override bool Serve(HttpListenerContext context) {
+        if (context.Request.HttpMethod == HttpMethod.Head.Method) {
+            return false;
+        }
+
         var path = Path.Combine(server.GetTargetDirectory(), context.Request.RawUrl.TrimStart('/'));
         if (File.Exists(path)) {
             Logger.TraceLog($"Serve || {context.Request.HttpMethod} || {path}", Color.Magenta);
             using (var fileStream = new FileStream(path, FileMode.Open, FileAccess.Read)) {
                 context.Response.ContentLength64 = fileStream.Length;
-                if (context.Request.HttpMethod == HttpMethod.Head.Method) {
-                    return false;
-                }
-                
+
                 Span<byte> buffer = new byte[bufferSize];
                 var bytesLength = 0;
                 while ((bytesLength = fileStream.Read(buffer)) > 0) {

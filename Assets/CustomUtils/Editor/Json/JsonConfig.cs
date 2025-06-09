@@ -7,9 +7,17 @@ using Newtonsoft.Json;
 using UniRx;
 using UnityEditor;
 
-public abstract class JsonConfig {
+public abstract class JsonConfig : IDisposable {
 
-    public virtual void Save(string path) => JsonUtil.SaveJson(path, this);
+    [JsonIgnore] protected DateTime lastSaveTime;
+    [JsonIgnore] public ref DateTime LastSaveTime => ref lastSaveTime; 
+    
+    public abstract void Dispose(); 
+    
+    public virtual void Save(string path) {
+        lastSaveTime = DateTime.Now;
+        JsonUtil.SaveJson(path, this);
+    }
 
     public bool TryClone<T>(out T config) where T : JsonConfig, new() {
         config = Clone<T>();
@@ -60,7 +68,7 @@ public abstract class JsonConfig {
 }
 
 // static 필드에서 new()로 생성하지 말 것.
-public abstract class JsonAutoConfig : JsonConfig, IDisposable {
+public abstract class JsonAutoConfig : JsonConfig {
     
     [JsonIgnore] protected string savePath;
     [JsonIgnore] protected readonly List<IDisposable> disposableList = new();
@@ -93,24 +101,33 @@ public abstract class JsonAutoConfig : JsonConfig, IDisposable {
 
         var intervalObservable = Observable.Interval(TimeSpan.FromSeconds(5f)).Publish();
         intervalDisposable = intervalObservable.Connect();
-        foreach (var info in GetType().GetFields(BindingFlags.Public | BindingFlags.Instance).Where(x => x.IsDefined<JsonIgnoreAttribute>() == false)) {
+        
+        RegisterFieldWatchers(intervalObservable);
+        RegisterSaveTrigger();
+    }
+
+    protected virtual void RegisterFieldWatchers(IObservable<long> intervalObservable) {
+        foreach (var info in GetType().GetFields(BindingFlags.Public | BindingFlags.Instance).Where(info => info.IsDefined<JsonIgnoreAttribute>() == false)) {
+            var func = DynamicMethodProvider.GetFieldValueFunc(GetType(), info);
             if (info.FieldType.IsArray) {
-                disposableList.Add(intervalObservable.Select(_ => info.GetValue(this) as Array)
+                disposableList.Add(intervalObservable.Select(_ => func.Invoke(this) as Array)
                     .DistinctUntilChanged(ARRAY_COMPARER)
                     .Subscribe(_ => saveFlag = true));
             } else if (info.FieldType.IsGenericCollectionType()) {
-                disposableList.Add(intervalObservable.Select(_ => info.GetValue(this) is ICollection collection ? collection.CloneEnumerator() : null)
+                disposableList.Add(intervalObservable.Select(_ => func.Invoke(this) is ICollection collection ? collection.CloneEnumerator() : null)
                     .DistinctUntilChanged(COLLECTION_COMPARER)
                     .Subscribe(_ => saveFlag = true));
             } else {
-                disposableList.Add(intervalObservable.DistinctUntilChanged(_ => info.GetValue(this)).Subscribe(_ => saveFlag = true));
+                disposableList.Add(intervalObservable.DistinctUntilChanged(_ => func.Invoke(this)).Subscribe(_ => saveFlag = true));
             }
         }
-        
+    }
+
+    protected virtual void RegisterSaveTrigger() {
         disposableList.Add(Observable.Interval(TimeSpan.FromSeconds(5f)).Subscribe(_ => {
             if (saveFlag) {
                 saveFlag = false;
-                Save(this.savePath);
+                Save(savePath);
             }
         }));
     }
@@ -122,7 +139,7 @@ public abstract class JsonAutoConfig : JsonConfig, IDisposable {
 
     ~JsonAutoConfig() => Dispose();
     
-    public virtual void Dispose() {
+    public override void Dispose() {
         if (IsNull() == false) {
             StopAutoSave();
         }

@@ -4,7 +4,7 @@ using UnityEditor;
 using UnityEngine;
 
 [EditorResourceDrawer(RESOURCE_SERVICE_MENU_TYPE.Provider, typeof(ResourcesProvider))]
-public class EditorResourcesProviderDrawer : EditorAutoConfigResourceDrawer<ResourcesProviderConfig, ResourcesProviderConfig.NullConfig> {
+public class EditorResourcesProviderDrawer : EditorResourceDrawer<ResourcesProviderConfig, ResourcesProviderConfig.NullConfig> {
 
     private JObject _resourcesListJson;
 

@@ -6,7 +6,7 @@ using UnityEditor;
 using UnityEngine;
 
 [EditorResourceDrawer(RESOURCE_SERVICE_MENU_TYPE.Test, typeof(AssetBundleProvider))]
-public partial class EditorAssetBundleTesterDrawer : EditorAutoConfigResourceDrawer<AssetBundleTesterConfig, AssetBundleTesterConfig.NullConfig> {
+public partial class EditorAssetBundleTesterDrawer : EditorResourceDrawer<AssetBundleTesterConfig, AssetBundleTesterConfig.NullConfig> {
     
     private CachingService _cachingService;
     private DownloadService _downloadService;

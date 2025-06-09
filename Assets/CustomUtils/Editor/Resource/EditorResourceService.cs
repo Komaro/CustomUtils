@@ -52,7 +52,7 @@ public class EditorResourceService : EditorService {
                 _providerTypeNames = providerTypeList.Select(x => x.Name).ToArray();
             }
 
-            var typeDefinition = typeof(EditorAutoConfigResourceDrawer<,>);
+            var typeDefinition = typeof(EditorResourceDrawer<,>);
             foreach (var type in ReflectionProvider.GetSubTypesOfTypeDefinition(typeDefinition)) {
                 if (type.TryGetCustomAttribute<EditorResourceDrawerAttribute>(out var attribute)) {
                     var key = (attribute.menuType, attribute.providerType);
@@ -104,7 +104,7 @@ public class EditorResourceService : EditorService {
         if (_drawerDic.TryGetValue((_selectMenuType, _selectProviderType), out var drawer)) {
             drawer.Draw();
         } else {
-            EditorGUILayout.HelpBox($"유효한 {typeof(EditorAutoConfigResourceDrawer<,>).Name}를 찾을 수 없습니다.", MessageType.Warning);
+            EditorGUILayout.HelpBox($"유효한 {typeof(EditorResourceDrawer<,>).Name}를 찾을 수 없습니다.", MessageType.Warning);
         }
     }
 
@@ -145,11 +145,11 @@ public class EditorResourceDrawerAttribute : Attribute {
 }
 
 [RequiresAttributeImplementation(typeof(EditorResourceDrawerAttribute))]
-public abstract class EditorAutoConfigResourceDrawer<TConfig, TNullConfig> : EditorAutoConfigDrawer<TConfig, TNullConfig>
+public abstract class EditorResourceDrawer<TConfig, TNullConfig> : EditorAutoConfigDrawer<TConfig, TNullConfig>
     where TConfig : JsonAutoConfig, new() 
     where TNullConfig : TConfig, new() {
 
     protected override string CONFIG_PATH => $"{Constants.Path.COMMON_CONFIG_PATH}/{nameof(EditorResourceService)}/{CONFIG_NAME}";
 
-    protected EditorAutoConfigResourceDrawer(EditorWindow window) : base(window) { }
+    protected EditorResourceDrawer(EditorWindow window) : base(window) { }
 }

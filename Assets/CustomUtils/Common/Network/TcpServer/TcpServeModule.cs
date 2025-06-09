@@ -48,7 +48,7 @@ public abstract class TcpServeModule<THeader, TData> : ITcpServeModule, ITcpRece
 
     protected bool isRunning;
 
-    protected virtual int RECEIVE_BUFFER_SIZE => 1024; 
+    protected virtual int RECEIVE_BUFFER_SIZE => 1024;
 
     ~TcpServeModule() => Dispose();
     public void Dispose() => Close();
@@ -211,7 +211,9 @@ public abstract class TcpServeModule<THeader, TData> : ITcpServeModule, ITcpRece
             throw new DisconnectSessionException(client);
         }
     }
-    
+    /*
+     *
+     */
     public virtual async Task<byte[]> ReadBytesAsync(TcpSession session, int length, CancellationToken token) {
         try {
             return await ReadBytesAsync(session.Stream, length, token);

@@ -261,6 +261,9 @@ public abstract class EditorBuildDrawer<TConfig, TNullConfig> : EditorAutoConfig
             GUILayout.Label("빌드 결과", Constants.Draw.AREA_TITLE_STYLE);
             using (new EditorGUILayout.VerticalScope(Constants.Draw.BOX)) {
                 DrawBuildResultRecordCursorNavigator();
+                if (config.GetRecordCount() <= 0) {
+                    return;
+                }
                 
                 var info = config[config.Cursor];
                 EditorCommon.DrawLabelTextField("결과", info.result.ToString());

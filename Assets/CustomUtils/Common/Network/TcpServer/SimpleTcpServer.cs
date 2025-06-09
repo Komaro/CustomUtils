@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
+using System.Threading.Tasks;
 
 public class SimpleTcpServer : IDisposable {
 
@@ -103,6 +104,8 @@ public class TcpSession : IDisposable {
     public TcpClient Client { get; }
     public uint ID { get; }
     public bool Connected => IsValid() && Client.Connected;
+
+    // TODO. Stream 노출을 제거할 필요가 있음
     public NetworkStream Stream => IsValid() ? Client.GetStream() : null;
 
     public TcpSession(TcpClient client) {
@@ -119,6 +122,15 @@ public class TcpSession : IDisposable {
     
     public void Dispose() => Close();
     public void Close() => Client?.Close();
+
+    // TODO. ReceiveAsync
+    public virtual async Task ReceiveAsync(byte[] bytes, CancellationToken token) => await Client.GetStream().WriteAsync(bytes, token);
+
+    // TODO. SendAsync
+    public virtual async Task SendAsync() {
+        
+    }
+
 
     public bool IsValid() => Client != null;
     public bool VerifySession(uint id) => ID == id;

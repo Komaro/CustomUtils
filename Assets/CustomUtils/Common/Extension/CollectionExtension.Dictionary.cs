@@ -14,7 +14,7 @@ public static partial class CollectionExtension {
         }
     }
 
-    public static void Sync<TKey, TValue>(this IDictionary<TKey, TValue> workDictionary, ISet<TKey> sourceSet, Func<TKey, TValue> createFunc) {
+    public static void Sync<TKey, TValue>(this IDictionary<TKey, TValue> workDictionary, ISet<TKey> sourceSet, Func<TKey, TValue> creator) {
         var removeSet = new HashSet<TKey>();
         foreach (var key in workDictionary.Keys) {
             if (sourceSet.Contains(key) == false) {
@@ -23,7 +23,7 @@ public static partial class CollectionExtension {
         }
 
         removeSet.ForEach(key => workDictionary.Remove((TKey) key));
-        sourceSet.ForEach(key => workDictionary.TryAdd<TKey, TValue>(key, createFunc.Invoke(key)));
+        sourceSet.ForEach(key => workDictionary.TryAdd<TKey, TValue>(key, creator.Invoke(key)));
     }
 
     public static void SafeClear<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, Action<TKey, TValue> releaseAction) {
@@ -112,15 +112,31 @@ public static partial class CollectionExtension {
     public static ConcurrentDictionary<TIKey, TValue> AutoAdd<TKey, TIKey, TValue>(this ConcurrentDictionary<TKey, ConcurrentDictionary<TIKey, TValue>> dictionary, TKey key) => dictionary.AutoAdd<ConcurrentDictionary<TIKey, TValue>, TKey, TIKey, TValue>(key)[key];
     public static void AutoAdd<TKey, TIKey, TValue>(this ConcurrentDictionary<TKey, ConcurrentDictionary<TIKey, TValue>> dictionary, TKey key, TIKey innerKey, TValue value) => dictionary.AutoAdd(key).TryAdd(innerKey, value);
 
-    public static bool TryGetOrAddValue<TKey, TValue>(this Dictionary<TKey, TValue> dictionary, TKey key, out TValue value) where TValue : new() => (value = dictionary.GetOrAddValue(key)) != null;
-
-    public static TValue GetOrAddValue<TKey, TValue>(this Dictionary<TKey, TValue> dictionary, TKey key) where TValue : new() {
+    public static TValue GetOrAdd<TKey, TValue>(this Dictionary<TKey, TValue> dictionary, TKey key) where TValue : new() {
         if (dictionary.TryGetValue(key, out var value) == false) {
             value = new TValue();
             dictionary.Add(key, value);
         }
 
         return value;
+    }
+
+    public static TValue GetOrAdd<TKey, TValue>(this Dictionary<TKey, TValue> dictionary, TKey key, Func<TValue> creator) {
+        if (dictionary.TryGetValue(key, out var value) == false) {
+            value = creator.Invoke();
+            dictionary.Add(key, value);
+        }
+        
+        return value;
+    }
+
+    public static void AddOrUpdate<TKey, TValue>(this Dictionary<TKey, TValue> dictionary, TKey key, Func<TValue> creator, Action<TKey, TValue> updater) {
+        if (dictionary.TryGetValue(key, out var value)) {
+            updater.Invoke(key, value);
+            return;
+        }
+        
+        dictionary.Add(key, creator.Invoke());
     }
 
     public static void AutoCountingAdd<TKey, TValue>(this Dictionary<TKey, Dictionary<int, TValue>> dictionary, TKey key, TValue value) {

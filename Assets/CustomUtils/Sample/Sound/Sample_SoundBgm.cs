@@ -97,39 +97,38 @@ public class Sample_SoundBgm : SoundBase {
         if (_currentBgmType == type && _currentBgmOption == option && IsEmptyBgmStack() == false) {
             return;
         }
-        
-        if (_bgmTrackDic.TryGetOrAddValue(type, out var trackDic)) {
-            if (trackDic.TryGetValue(option, out var track) == false) {
-                if (_bgmTrackNameDic.TryGetValue(type, out var trackNameDic)) {
-                    if (trackNameDic.TryGetValue(option, out var trackName) == false && trackNameDic.TryGetRandom(out var randomOption, out var randomTrackName)) {
-                        option = randomOption;
-                        trackName = randomTrackName;
-                    }
-                    
-                    if (Service.GetService<ResourceService>().TryGet(trackName, out track)) {
-                        _bgmTrackDic.AutoAdd(type, option, track);
-                    } else {
-                        Logger.TraceLog($"{nameof(trackDic)} is Empty. Check Sound Track Resource || {type} || {option}", Color.red);
-                        return;
-                    }
+
+        var trackDic = _bgmTrackDic.GetOrAdd(type);
+        if (trackDic.TryGetValue(option, out var track) == false) {
+            if (_bgmTrackNameDic.TryGetValue(type, out var trackNameDic)) {
+                if (trackNameDic.TryGetValue(option, out var trackName) == false && trackNameDic.TryGetRandom(out var randomOption, out var randomTrackName)) {
+                    option = randomOption;
+                    trackName = randomTrackName;
+                }
+                
+                if (Service.GetService<ResourceService>().TryGet(trackName, out track)) {
+                    _bgmTrackDic.AutoAdd(type, option, track);
+                } else {
+                    Logger.TraceLog($"{nameof(trackDic)} is Empty. Check Sound Track Resource || {type} || {option}", Color.red);
+                    return;
                 }
             }
+        }
 
-            if (track != null) {
-                StopBgm();
+        if (track != null) {
+            StopBgm();
 
-                _currentBgmType = type;
-                _currentBgmOption = option;
-                
-                // Frame Delay로 인한 싱크 오류를 방지하기 위해 다음 프레임 끝에서 처리
-                Observable.NextFrame(FrameCountType.EndOfFrame).Subscribe(_ => {
-                    lock (_waitingStack) {
-                        if (track != null) {
-                            _waitingStack.Push(track); 
-                        }
+            _currentBgmType = type;
+            _currentBgmOption = option;
+            
+            // Frame Delay로 인한 싱크 오류를 방지하기 위해 다음 프레임 끝에서 처리
+            Observable.NextFrame(FrameCountType.EndOfFrame).Subscribe(_ => {
+                lock (_waitingStack) {
+                    if (track != null) {
+                        _waitingStack.Push(track); 
                     }
-                });
-            }
+                }
+            });
         }
     }
 

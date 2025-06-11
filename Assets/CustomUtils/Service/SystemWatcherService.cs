@@ -46,7 +46,7 @@ public class SystemWatcherService : IService {
             });
         }
 
-        watcher = _fileSystemWatcherDic.GetOrAddValue(order);
+        watcher = _fileSystemWatcherDic.GetOrAdd(order);
         watcher.BeginInit();
         
         watcher.Path = order.path;

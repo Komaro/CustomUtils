@@ -41,6 +41,8 @@ public class UIViewTestRunner {
             
             // Proxy Test
             Assert.IsTrue(Service.GetService<UIViewModelProxyService>().TryGetViewModelHandler<TestSimpleUIViewModel>(out var handler));
+            var modelAccessor = Service.GetService<UIViewModelProxyService>().GetViewModelAccessor<TestSimpleUIViewModel>();
+            Assert.IsTrue(modelAccessor.IsValid());
 
             var proxyViewModel = handler.GetViewModel<TestSimpleUIViewModel>();
             Assert.IsTrue(viewModel == proxyViewModel);

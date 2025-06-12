@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 //[CommandAlias("printer")]
@@ -13,28 +11,20 @@ public class Sample_Printer : Command {
     public string id { get => GetDynamicParameter(string.Empty); set => SetDynamicParameter(value); }
 
     public override async Task ExecuteAsync() {
-        if (Service.TryGetService<ScenarioService>(out var service) && service.TryGetPrinter(out var printer)) {
-            // Visible Task
-            var list = new List<Task> { printer.ChangeVisible(isVisible) };
-            // Change Position Task
+        if (Service.TryGetService<ScenarioService>(out var service)) {
             if (string.IsNullOrEmpty(id) == false) {
-                var target = service.GetAllActor()?.Where(x => x.Id.Equals(id)).FirstOrDefault();
-                if (target != null) {
-                    switch (target) {
-                        default:
-                            list.Add(GetChangePositionTask(printer));
-                            break;
-                    }
+                if (service.GetAllActor().TryFirst(out var targetPrinter, x => x.Id == id)) {
+                    await Task.WhenAll(targetPrinter.ChangeVisible(isVisible), GetChangePositionTask(targetPrinter));
                 }
             } else {
-                list.Add(Task.WhenAll(GetChangePositionTask(printer)));
+                if (service.TryGetPrinter(out var defaultPrinter)) {
+                    await Task.WhenAll(defaultPrinter.ChangeVisible(isVisible), GetChangePositionTask(defaultPrinter));    
+                }
             }
-            
-            await Task.WhenAll(list);
         }
         
         await Task.Delay(TimeSpan.FromSeconds(delay));
     }
 
-    private Task GetChangePositionTask(IScenarioActor printer) => Task.WhenAll(printer.ChangePosition(position.ToVector3()));
+    private Task GetChangePositionTask(IScenarioActor actor) => actor.ChangePosition(position.ToVector3());
 }

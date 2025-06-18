@@ -147,12 +147,6 @@ public class NewMultiLevelDictionary<TKey, TIKey, TValue> : NewMultiLevelDiction
 
 }
 
-public static class TestStatic {
-    public static void TestStaticMethod() {
-        
-    }
-}
-
 public abstract class MultiLevelDictionary<TDictionary, TIDictionary, TKey, TIKey, TValue> : IDictionary<TKey, TIDictionary> 
     where TDictionary : IDictionary<TKey, TIDictionary>, new()
     where TIDictionary : IDictionary<TIKey, TValue>, new() {

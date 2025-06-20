@@ -206,11 +206,22 @@ public static partial class CollectionExtension {
         }
     }
 
+    public static bool TryCastValue<TKey, TValue, TCast>(this IDictionary<TKey, TValue> dictionary, TKey key, out TCast outValue) where TCast : TValue {
+        dictionary.ThrowIfNull();
+        if (dictionary.TryGetValue(key, out var value) && value is TCast castValue) {
+            outValue = castValue;
+            return true;
+        }
+        
+        outValue = default;
+        return false;
+    }
+    
     public static bool TryGetValue<TKey, TIKey, TValue>(this IDictionary<TKey, Dictionary<TIKey, TValue>> dictionary, TKey outKey, TIKey innerKey, out TValue outValue) {
         outValue = default;
         return dictionary.TryGetValue(outKey, out var innerDic) && innerDic.TryGetValue(innerKey, out outValue);
     }
-
+    
     public static bool TryFindValue<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, out TValue value, Func<TValue, bool> match) {
         value = dictionary.FindValue(match);
         return value != null;

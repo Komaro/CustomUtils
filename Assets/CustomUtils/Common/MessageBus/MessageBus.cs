@@ -1,17 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 public interface IMessage { }
 
-public interface IMessageHandler { }
+public interface IMessageHandler : IDisposable { }
 
 public interface IMessageHandler<in T> : IMessageHandler where T : IMessage {
 
     public void Handle(T message);
 }
 
-public interface IAsyncMessageHandler<in TMessage> : IMessageHandler<TMessage> where TMessage : IMessage {
+public interface IAsyncMessageHandler<in TMessage> : IMessageHandler<TMessage>, IAsyncDisposable where TMessage : IMessage {
 
     public Task HandleAsync(TMessage message);
 }
@@ -52,4 +53,7 @@ public static class MessageBus {
             }
         }
     }
+
+    public static bool Exists<TMessage>() where TMessage : IMessage => _handlerDic.TryGetValue(typeof(TMessage), out var handlerSet) && handlerSet.Any();
+    public static bool Exists<TMessage>(IMessageHandler<TMessage> handler) where TMessage : IMessage => _handlerDic.TryGetValue(typeof(TMessage), out var handlerSet) && handlerSet.Contains(handler);
 }

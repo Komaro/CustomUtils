@@ -1,5 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using NUnit.Framework;
+using Task = System.Threading.Tasks.Task;
 
 public class MessageBusTestRunner {
 
@@ -9,15 +11,18 @@ public class MessageBusTestRunner {
         var message_02 = new SampleMessage("Message_02");
         var message_03 = new SampleMessage("Message_03");
         var message_04 = new SampleMessage("Message_04");
-        
-        MessageBus.Subscribe(new SampleMessageHandler());
+
+        var handler = new SampleMessageHandler();
+        MessageBus.Subscribe(handler);
         
         MessageBus.Publish(message_01);
         MessageBus.Publish(message_02);
         MessageBus.Publish(message_03);
         MessageBus.Publish(message_04);
-        
-        MessageBus.Unsubscribe<SampleMessage>();
+
+        handler.Dispose();
+        Assert.IsFalse(MessageBus.Exists<SampleMessage>());
+        Assert.IsFalse(MessageBus.Exists(handler));
     }
 
     [Test]
@@ -26,8 +31,9 @@ public class MessageBusTestRunner {
         var message_02 = new SampleMessage("Message_02");
         var message_03 = new SampleMessage("Message_03");
         var message_04 = new SampleMessage("Message_04");
-        
-        MessageBus.Subscribe(new SampleMessageHandler());
+
+        var handler_01 = new SampleMessageHandler();
+        MessageBus.Subscribe(handler_01);
 
         await Task.WhenAll(MessageBus.PublishAsync(message_01), MessageBus.PublishAsync(message_02), MessageBus.PublishAsync(message_03), MessageBus.PublishAsync(message_04));
 
@@ -40,7 +46,11 @@ public class MessageBusTestRunner {
         
         await Task.WhenAll(MessageBus.PublishAsync(message_01), MessageBus.PublishAsync(message_02), MessageBus.PublishAsync(message_03), MessageBus.PublishAsync(message_04));
         
-        MessageBus.Unsubscribe<SampleMessage>();
+        await Task.WhenAll(handler_01.DisposeAsync().AsTask(), handler_02.DisposeAsync().AsTask());
+        
+        Assert.IsFalse(MessageBus.Exists<SampleMessage>());
+        Assert.IsFalse(MessageBus.Exists(handler_01));
+        Assert.IsFalse(MessageBus.Exists(handler_02));
     }
 }
 
@@ -63,9 +73,17 @@ public class SampleMessageHandler : IAsyncMessageHandler<SampleMessage> {
         Logger.TraceLog(message.message);
         return Task.CompletedTask;
     }
+    
+    public void Dispose() => MessageBus.Unsubscribe(this);
+
+    public async ValueTask DisposeAsync() {
+        Dispose();
+        await Task.CompletedTask;
+    }
 }
 
 public class SampleMessageHandler_02 : IAsyncMessageHandler<SampleMessage> {
+    ~SampleMessageHandler_02() => Dispose();
 
     public void Handle(SampleMessage message) {
         message.ThrowIfNull();
@@ -76,5 +94,17 @@ public class SampleMessageHandler_02 : IAsyncMessageHandler<SampleMessage> {
         message.ThrowIfNull();
         Logger.TraceLog(message.message);
         return Task.CompletedTask;
+    }
+    
+    public WeakReference<SampleMessageHandler_02> DisposeCheck() {
+        Dispose();
+        return new WeakReference<SampleMessageHandler_02>(this);
+    }
+
+    public void Dispose() => MessageBus.Unsubscribe(this);
+
+    public async ValueTask DisposeAsync() {
+        Dispose();
+        await Task.CompletedTask;
     }
 }

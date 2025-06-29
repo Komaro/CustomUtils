@@ -157,15 +157,22 @@ public static class SystemUtil {
         }
     }
 
-    public static void EnsureDirectoryExists(string path) {
+    public static void EnsureDirectoryExists(string path, bool isHidden = false) {
         try {
-            if (Path.HasExtension(path)) {
+            path.GetAfter(Path.AltDirectorySeparatorChar);
+            var folder = path.Split(Path.AltDirectorySeparatorChar).Last();
+            if (folder.StartsWith(".") == false && Path.HasExtension(folder)) {
                 path = Directory.GetParent(path)?.FullName ?? path;
             }
 
             if (string.IsNullOrEmpty(path) == false && Directory.Exists(path) == false) {
                 Directory.CreateDirectory(path);
-                Logger.TraceLog($"Create Directory || {path}", Color.green);
+                Logger.TraceLog($"Create directory || {path}", Color.green);
+
+                if (isHidden && IsWindowsBasePlatform()) {
+                    File.SetAttributes(path, FileAttributes.Hidden);
+                    Logger.TraceLog($"Set hidden attribute || {path}", Color.yellow);
+                }
             }
         } catch (Exception ex) {
             Logger.TraceError(ex);
@@ -280,7 +287,7 @@ public static class SystemUtil {
 
     public static void CopyAllFiles(string sourceFolder, string targetFolder, params string[] suffixes) {
         if (Directory.Exists(sourceFolder) && Directory.Exists(targetFolder)) {
-            Debug.Log($"Copy Files || {sourceFolder} => {targetFolder}\n{nameof(suffixes)} || {suffixes.ToStringCollection(", ")}");
+            Logger.TraceLog($"Copy Files || {sourceFolder} => {targetFolder}\n{nameof(suffixes)} || {suffixes.ToStringCollection(", ")}", Color.green);
             var filePaths = Directory.GetFiles(sourceFolder);
             if (filePaths.Length > 0) {
                 foreach (var filePath in filePaths) {

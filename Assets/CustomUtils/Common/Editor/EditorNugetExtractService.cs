@@ -27,6 +27,8 @@ public class EditorNugetExtractService : EditorService {
         new(string.Format(Constants.Regex.FOLDER_CONTAINS_FORMAT, "netstandard1.3")),
     };
 
+    private const string NUGET_TEMP_FOLDER = ".nuget_temp";
+    
     protected override void OnEditorOpenInitialize() => CacheRefresh();
     
     [MenuItem("Service/Nuget Extract Service")]
@@ -180,8 +182,8 @@ public class EditorNugetExtractService : EditorService {
     }
 
     private void ExtractPlugins() {
-        var extractPath = $"{Constants.Path.PROJECT_TEMP_PATH}/.temp";
-        SystemUtil.EnsureDirectoryExists(extractPath);
+        var extractPath = $"{Constants.Path.PROJECT_TEMP_PATH}/{NUGET_TEMP_FOLDER}";
+        SystemUtil.EnsureDirectoryExists(extractPath, true);
         foreach (var plugin in _extractPluginDic.Values) {
             try {
                 plugin.Extract(extractPath);

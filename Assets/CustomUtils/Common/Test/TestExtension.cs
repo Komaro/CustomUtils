@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Reflection;
 using NUnit.Framework;
 
@@ -24,5 +25,11 @@ public static class TestExtension {
         
         Assert.IsTrue(check?.Invoke() ?? true);
         Logger.TraceLog($"Pass {methodName} call test");
+    }
+    
+    public static void AssertionContains(this ICollection expectedSet, string actual) {
+        Assert.IsNotEmpty(expectedSet);
+        Assert.IsNotEmpty(actual);
+        Assert.Contains(actual, expectedSet);
     }
 }

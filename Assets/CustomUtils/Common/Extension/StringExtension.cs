@@ -25,32 +25,25 @@ public static class StringExtension {
         return string.Empty;
     }
 
-    public static string GetAfter(this string content, string matchContent, bool includeMatch = false, StringComparison comp = StringComparison.Ordinal) {
+    public static string GetAfter(this string content, char matchChar, bool includeMatch = false) => content.TryIndexOf(out var index, matchChar, includeMatch) ? content[index..] : string.Empty;
+    public static string GetAfterFirst(this string content, char matchChar, bool includeMatch = false) => content.TryIndexOfFirst(out var index, matchChar, includeMatch) ? content[index..] : string.Empty;
+
+    public static string GetAfter(this string content, string matchContent, bool includeMatch = false, StringComparison comp = StringComparison.Ordinal) => content.TryIndexOf(out var index, matchContent, includeMatch, comp) ? content[index..] : string.Empty;
+    public static string GetAfterFirst(this string content, string matchContent, bool includeMatch = false, StringComparison comp = StringComparison.Ordinal) => content.TryIndexOfFirst(out var index, matchContent, includeMatch, comp) ? content[index..] : string.Empty;
+
+    public static string GetBefore(this string content, char matchChar, bool includeMatch = false) => content.TryIndexOf(out var index, matchChar, includeMatch) ? content[..index] : string.Empty;
+    public static string GetBeforeFirst(this string content, char matchChar, bool includeMatch = false) => content.TryIndexOfFirst(out var index, matchChar, includeMatch) ? content[..index] : string.Empty;
+    
+    public static string GetBefore(this string content, string matchContent, bool includeMatch = false, StringComparison comp = StringComparison.Ordinal) {
         if (content.Contains(matchContent)) {
-            var startIndex = content.LastIndexOf(matchContent, comp) + (includeMatch ? 0 : matchContent.Length);
-            return content.Length <= startIndex ? string.Empty : content.Substring(startIndex);
-        }
-
-        return string.Empty;
-    }
-
-    public static string GetAfterFirst(this string content, string matchContent, bool includeMatch = false, StringComparison comp = StringComparison.Ordinal) {
-        if (content.Contains(matchContent)) {
-            var startIndex = content.IndexOf(matchContent, comp) + (includeMatch ? 0 : matchContent.Length);
-            return content.Length <= startIndex ? string.Empty : content.Substring(startIndex);
-        }
-
-        return string.Empty;
-    }
-
-    public static string GetBefore(this string content, string matchString, StringComparison comp = StringComparison.Ordinal) {
-        if (content.Contains(matchString)) {
-            var endIndex = content.IndexOf(matchString, comp);
+            var endIndex = content.IndexOf(matchContent, comp);
             return content.Substring(0, endIndex);
         }
 
         return string.Empty;
     }
+
+    public static string GetBeforeFirst(this string content, string matchContent, bool includeMatch = false, StringComparison comp = StringComparison.Ordinal) => content.TryIndexOfFirst(out var index, matchContent, includeMatch, comp) ? content[..index] : string.Empty;
 
     public static string GetUpperBeforeSpace(this string content) => Constants.Regex.UPPER_UNICODE_REGEX.Replace(content, "$1").Trim();
 
@@ -108,6 +101,12 @@ public static class StringExtension {
     public static string FixExtension(this string content) => content.IsExtension() == false ? content.Insert(0, ".") : content;
     public static bool ContainsExtension(this string content, string extension) => Path.HasExtension(content) && Path.GetExtension(content).EqualsFast(extension);
     public static bool IsExtension(this string content) => content.StartsWith('.');
+
+    public static bool TryIndexOf(this string content, out int index, char matchChar, bool includeMatch = false) => (index = content.LastIndexOf(matchChar) + (includeMatch ? 0 : 1)) >= 0 && content.Length > index;
+    public static bool TryIndexOfFirst(this string content, out int index, char matchChar, bool includeMatch = false) => (index = content.IndexOf(matchChar) + (includeMatch ? 0 : 1)) >= 0 && content.Length > index;
+    
+    public static bool TryIndexOf(this string content, out int index, string matchContent, bool includeMatch = false, StringComparison comp = StringComparison.Ordinal) => (index = content.LastIndexOf(matchContent, comp) + (includeMatch ? 0 : matchContent.Length)) >= 0 && content.Length > index;
+    public static bool TryIndexOfFirst(this string content, out int index, string matchContent, bool includeMatch = false, StringComparison comp = StringComparison.Ordinal) => (index = content.IndexOf(matchContent, comp) + (includeMatch ? 0 : matchContent.Length)) >= 0 && content.Length > index;
 
     #region [ToString]
 

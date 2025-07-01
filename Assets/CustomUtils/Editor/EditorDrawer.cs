@@ -52,8 +52,8 @@ public abstract class EditorAutoConfigDrawer<TConfig, TNullConfig> : EditorDrawe
     
     public override void CacheRefresh() {
         if (JsonUtil.TryLoadJson(CONFIG_PATH, out config)) {
-            Service.GetService<SystemWatcherService>().Start(order);
             config.StartAutoSave(CONFIG_PATH);
+            Service.GetService<SystemWatcherService>().Start(order);
         } else {
             if (config == null || config.IsNull() == false) {
                 config = new TNullConfig();
@@ -69,6 +69,7 @@ public abstract class EditorAutoConfigDrawer<TConfig, TNullConfig> : EditorDrawe
                     if ((config = config.Clone<TConfig>()) != null) {
                         config.Save(CONFIG_PATH);
                         config.StartAutoSave(CONFIG_PATH);
+                        Service.GetService<SystemWatcherService>().Start(order);
                     }
                 });
             }

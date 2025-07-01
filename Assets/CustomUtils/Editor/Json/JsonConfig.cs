@@ -10,8 +10,10 @@ using UnityEditor;
 public abstract class JsonConfig : IDisposable {
 
     [JsonIgnore] protected DateTime lastSaveTime;
-    [JsonIgnore] public ref DateTime LastSaveTime => ref lastSaveTime; 
-    
+    [JsonIgnore] public ref DateTime LastSaveTime => ref lastSaveTime;
+
+    public JsonConfig() => lastSaveTime = DateTime.Now;
+
     public abstract void Dispose(); 
     
     public virtual void Save(string path) {

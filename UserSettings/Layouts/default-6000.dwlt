@@ -8,30 +8,6 @@ MonoBehaviour:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 12004, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_PixelRect:
-    serializedVersion: 2
-    x: 44
-    y: 67
-    width: 1061
-    height: 495
-  m_ShowMode: 0
-  m_Title: NugetExtractService
-  m_RootView: {fileID: 4}
-  m_MinSize: {x: 50, y: 76}
-  m_MaxSize: {x: 4000, y: 4026}
-  m_Maximized: 0
---- !u!114 &2
-MonoBehaviour:
-  m_ObjectHideFlags: 52
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
   m_EditorHideFlags: 1
   m_Script: {fileID: 12004, guid: 0000000000000000e000000000000000, type: 0}
   m_Name: 
@@ -44,62 +20,11 @@ MonoBehaviour:
     height: 997
   m_ShowMode: 4
   m_Title: Console
-  m_RootView: {fileID: 5}
+  m_RootView: {fileID: 2}
   m_MinSize: {x: 875, y: 350}
   m_MaxSize: {x: 10000, y: 10000}
   m_Maximized: 1
---- !u!114 &3
-MonoBehaviour:
-  m_ObjectHideFlags: 52
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: EditorNugetExtractService
-  m_EditorClassIdentifier: 
-  m_Children: []
-  m_Position:
-    serializedVersion: 2
-    x: 0
-    y: 0
-    width: 1061
-    height: 495
-  m_MinSize: {x: 50, y: 76}
-  m_MaxSize: {x: 4000, y: 4026}
-  m_ActualView: {fileID: 17}
-  m_Panes:
-  - {fileID: 17}
-  m_Selected: 0
-  m_LastSelected: 0
---- !u!114 &4
-MonoBehaviour:
-  m_ObjectHideFlags: 52
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 12010, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Children:
-  - {fileID: 3}
-  m_Position:
-    serializedVersion: 2
-    x: 0
-    y: 0
-    width: 1061
-    height: 495
-  m_MinSize: {x: 50, y: 76}
-  m_MaxSize: {x: 4000, y: 4026}
-  vertical: 0
-  controlID: 342
-  draggingID: 0
---- !u!114 &5
+--- !u!114 &2
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -112,9 +37,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Children:
-  - {fileID: 6}
-  - {fileID: 8}
-  - {fileID: 7}
+  - {fileID: 3}
+  - {fileID: 5}
+  - {fileID: 4}
   m_Position:
     serializedVersion: 2
     x: 0
@@ -127,7 +52,7 @@ MonoBehaviour:
   m_TopViewHeight: 36
   m_UseBottomView: 1
   m_BottomViewHeight: 20
---- !u!114 &6
+--- !u!114 &3
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -149,7 +74,7 @@ MonoBehaviour:
   m_MinSize: {x: 0, y: 0}
   m_MaxSize: {x: 0, y: 0}
   m_LastLoadedLayoutName: 
---- !u!114 &7
+--- !u!114 &4
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -170,7 +95,7 @@ MonoBehaviour:
     height: 20
   m_MinSize: {x: 0, y: 0}
   m_MaxSize: {x: 0, y: 0}
---- !u!114 &8
+--- !u!114 &5
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -183,8 +108,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Children:
-  - {fileID: 9}
-  - {fileID: 16}
+  - {fileID: 6}
+  - {fileID: 13}
   m_Position:
     serializedVersion: 2
     x: 0
@@ -194,9 +119,9 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 100}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 118
+  controlID: 100
   draggingID: 0
---- !u!114 &9
+--- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -209,20 +134,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Children:
+  - {fileID: 7}
   - {fileID: 10}
-  - {fileID: 13}
   m_Position:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 1234
+    width: 1155
     height: 941
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 1
-  controlID: 47
+  controlID: 37
   draggingID: 0
---- !u!114 &10
+--- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -235,20 +160,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Children:
-  - {fileID: 11}
-  - {fileID: 12}
+  - {fileID: 8}
+  - {fileID: 9}
   m_Position:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 1234
+    width: 1155
     height: 499
   m_MinSize: {x: 200, y: 50}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
   controlID: 38
   draggingID: 0
---- !u!114 &11
+--- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -265,16 +190,16 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 299
+    width: 272
     height: 499
   m_MinSize: {x: 201, y: 226}
   m_MaxSize: {x: 4001, y: 4026}
-  m_ActualView: {fileID: 19}
+  m_ActualView: {fileID: 15}
   m_Panes:
-  - {fileID: 19}
+  - {fileID: 15}
   m_Selected: 0
   m_LastSelected: 1
---- !u!114 &12
+--- !u!114 &9
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -289,18 +214,18 @@ MonoBehaviour:
   m_Children: []
   m_Position:
     serializedVersion: 2
-    x: 299
+    x: 272
     y: 0
-    width: 935
+    width: 883
     height: 499
   m_MinSize: {x: 202, y: 226}
   m_MaxSize: {x: 4002, y: 4026}
-  m_ActualView: {fileID: 20}
+  m_ActualView: {fileID: 16}
   m_Panes:
-  - {fileID: 20}
+  - {fileID: 16}
   m_Selected: 0
   m_LastSelected: 0
---- !u!114 &13
+--- !u!114 &10
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -313,20 +238,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Children:
-  - {fileID: 14}
-  - {fileID: 15}
+  - {fileID: 11}
+  - {fileID: 12}
   m_Position:
     serializedVersion: 2
     x: 0
     y: 499
-    width: 1234
+    width: 1155
     height: 442
   m_MinSize: {x: 200, y: 50}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 48
+  controlID: 76
   draggingID: 0
---- !u!114 &14
+--- !u!114 &11
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -343,17 +268,17 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 826
+    width: 773
     height: 442
   m_MinSize: {x: 101, y: 126}
   m_MaxSize: {x: 4001, y: 4026}
-  m_ActualView: {fileID: 22}
+  m_ActualView: {fileID: 18}
   m_Panes:
-  - {fileID: 21}
-  - {fileID: 22}
+  - {fileID: 17}
+  - {fileID: 18}
   m_Selected: 1
   m_LastSelected: 0
---- !u!114 &15
+--- !u!114 &12
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -368,18 +293,18 @@ MonoBehaviour:
   m_Children: []
   m_Position:
     serializedVersion: 2
-    x: 826
+    x: 773
     y: 0
-    width: 408
+    width: 382
     height: 442
   m_MinSize: {x: 202, y: 226}
   m_MaxSize: {x: 4002, y: 4026}
-  m_ActualView: {fileID: 23}
+  m_ActualView: {fileID: 19}
   m_Panes:
-  - {fileID: 23}
+  - {fileID: 19}
   m_Selected: 0
   m_LastSelected: 0
---- !u!114 &16
+--- !u!114 &13
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -389,60 +314,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 1
   m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: TestRunnerWindow
+  m_Name: InspectorWindow
   m_EditorClassIdentifier: 
   m_Children: []
   m_Position:
     serializedVersion: 2
-    x: 1234
+    x: 1155
     y: 0
-    width: 686
+    width: 765
     height: 941
-  m_MinSize: {x: 51, y: 76}
+  m_MinSize: {x: 276, y: 76}
   m_MaxSize: {x: 4001, y: 4026}
-  m_ActualView: {fileID: 18}
+  m_ActualView: {fileID: 20}
   m_Panes:
-  - {fileID: 24}
-  - {fileID: 18}
-  m_Selected: 1
+  - {fileID: 20}
+  - {fileID: 14}
+  m_Selected: 0
   m_LastSelected: 1
---- !u!114 &17
-MonoBehaviour:
-  m_ObjectHideFlags: 52
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d26ee317edf4436ea5657e4810a41cc7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_MinSize: {x: 50, y: 50}
-  m_MaxSize: {x: 4000, y: 4000}
-  m_TitleContent:
-    m_Text: NugetExtractService
-    m_Image: {fileID: 0}
-    m_Tooltip: 
-    m_TextWithWhitespace: "NugetExtractService\u200B"
-  m_Pos:
-    serializedVersion: 2
-    x: 0
-    y: 26
-    width: 1061
-    height: 469
-  m_SerializedDataModeController:
-    m_DataMode: 0
-    m_PreferredDataMode: 0
-    m_SupportedDataModes: 
-    isAutomatic: 1
-  m_ViewDataDictionary: {fileID: 0}
-  m_OverlayCanvas:
-    m_LastAppliedPresetName: Default
-    m_SaveData: []
-    m_ContainerData: []
-    m_OverlaysVisible: 1
---- !u!114 &18
+--- !u!114 &14
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -464,9 +353,9 @@ MonoBehaviour:
     m_TextWithWhitespace: "Test Runner\u200B"
   m_Pos:
     serializedVersion: 2
-    x: 1235
-    y: 24
-    width: 685
+    x: 1155
+    y: 79
+    width: 764
     height: 915
   m_SerializedDataModeController:
     m_DataMode: 0
@@ -480,7 +369,7 @@ MonoBehaviour:
     m_ContainerData: []
     m_OverlaysVisible: 1
   m_Spl:
-    ID: 155
+    ID: 143
     splitterInitialOffset: 466
     currentActiveSplitter: -1
     realSizes:
@@ -505,9 +394,9 @@ MonoBehaviour:
     oldSplitSize: 0
   m_TestTypeToolbarIndex: 0
   m_TestListGUIs:
-  - m_Window: {fileID: 18}
+  - m_Window: {fileID: 14}
     runProgress:
-      RunGuid: ecf7c9d8-f24b-444f-b64d-2da6b15368a0
+      RunGuid: 89e2176b-3756-42e2-b4a9-56a80522800e
       ExecutionSettings:
         m_TargetPlatform: 0
         m_HasTargetPlatform: 0
@@ -520,7 +409,7 @@ MonoBehaviour:
         filters:
         - testMode: 1
           testNames:
-          - ExtensionTestRunner.StringExtensionTest("C:/Users/KAKA/Downloads/TestText",'/')
+          - ExtensionTestRunner
           groupNames: []
           categoryNames: []
           assemblyNames: []
@@ -535,7 +424,7 @@ MonoBehaviour:
           disableNestedEnumeratorBugfix: 0
         randomOrderSeed: 0
       HasFinished: 1
-      Progress: 0.9999999
+      Progress: 0.9999998
       CurrentStepName: Unlock Reload Assemblies
       CurrentStageName: 
     m_NewResultList:
@@ -555,7 +444,7 @@ MonoBehaviour:
       categories: []
       parentId: 
       parentUniqueId: 
-    - id: 1162
+    - id: 1172
       uniqueId: '[TestAssembly.EditMode][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/TestAssembly.EditMode.dll][suite]'
       name: TestAssembly.EditMode.dll
       fullName: C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/TestAssembly.EditMode.dll
@@ -569,7 +458,7 @@ MonoBehaviour:
       description: 
       isSuite: 1
       categories: []
-      parentId: 1167
+      parentId: 1177
       parentUniqueId: '[CustomUtils][suite]'
     - id: 1002
       uniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][AnalyzerTestRunner][suite]'
@@ -585,7 +474,7 @@ MonoBehaviour:
       description: 
       isSuite: 1
       categories: []
-      parentId: 1162
+      parentId: 1172
       parentUniqueId: '[TestAssembly.EditMode][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/TestAssembly.EditMode.dll][suite]'
     - id: 1012
       uniqueId: 'TestAssembly.EditMode.dll/AnalyzerTestRunner/[TestAssembly.EditMode][AnalyzerTestRunner.AnalyzerTestCasePerformanceTest][suite]'
@@ -771,7 +660,7 @@ MonoBehaviour:
       isSuite: 1
       categories:
       - Functional
-      parentId: 1162
+      parentId: 1172
       parentUniqueId: '[TestAssembly.EditMode][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/TestAssembly.EditMode.dll][suite]'
     - id: 1035
       uniqueId: 'TestAssembly.EditMode.dll/CallStackTestRunner/[TestAssembly.EditMode][CallStackTestRunner.CallStackQueueFunctionalTest]'
@@ -806,7 +695,7 @@ MonoBehaviour:
       categories:
       - Functional
       - Performance
-      parentId: 1162
+      parentId: 1172
       parentUniqueId: '[TestAssembly.EditMode][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/TestAssembly.EditMode.dll][suite]'
     - id: 1042
       uniqueId: 'TestAssembly.EditMode.dll/CollectionTestRunner/[TestAssembly.EditMode][CollectionTestRunner.CollectionPerformanceTest][suite]'
@@ -966,7 +855,7 @@ MonoBehaviour:
       description: 
       isSuite: 1
       categories: []
-      parentId: 1162
+      parentId: 1172
       parentUniqueId: '[TestAssembly.EditMode][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/TestAssembly.EditMode.dll][suite]'
     - id: 1014
       uniqueId: 'TestAssembly.EditMode.dll/DBTestRunner/[TestAssembly.EditMode][DBTestRunner.InMemoryDatabaseTest]'
@@ -1000,7 +889,7 @@ MonoBehaviour:
       isSuite: 1
       categories:
       - Functional
-      parentId: 1162
+      parentId: 1172
       parentUniqueId: '[TestAssembly.EditMode][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/TestAssembly.EditMode.dll][suite]'
     - id: 1046
       uniqueId: 'TestAssembly.EditMode.dll/DictionaryTestRunner/[TestAssembly.EditMode][DictionaryTestRunner.DictionaryComparerTest]'
@@ -1086,7 +975,7 @@ MonoBehaviour:
       categories:
       - Functional
       - Performance
-      parentId: 1162
+      parentId: 1172
       parentUniqueId: '[TestAssembly.EditMode][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/TestAssembly.EditMode.dll][suite]'
     - id: 1061
       uniqueId: 'TestAssembly.EditMode.dll/DynamicMethodTestRunner/[TestAssembly.EditMode][DynamicMethodTestRunner.ConfigGetFieldsPerformanceTest][suite]'
@@ -1301,7 +1190,7 @@ MonoBehaviour:
       isSuite: 1
       categories:
       - Functional
-      parentId: 1162
+      parentId: 1172
       parentUniqueId: '[TestAssembly.EditMode][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/TestAssembly.EditMode.dll][suite]'
     - id: 1030
       uniqueId: 'TestAssembly.EditMode.dll/EditModeTestRunner/[TestAssembly.EditMode][EditModeTestRunner.IntMarshalTest]'
@@ -1599,7 +1488,7 @@ MonoBehaviour:
       description: 
       isSuite: 1
       categories: []
-      parentId: 1162
+      parentId: 1172
       parentUniqueId: '[TestAssembly.EditMode][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/TestAssembly.EditMode.dll][suite]'
     - id: 1033
       uniqueId: 'TestAssembly.EditMode.dll/EncryptTestRunner/[TestAssembly.EditMode][EncryptTestRunner.TripleDESTest]'
@@ -1633,7 +1522,7 @@ MonoBehaviour:
       isSuite: 1
       categories:
       - Functional
-      parentId: 1162
+      parentId: 1172
       parentUniqueId: '[TestAssembly.EditMode][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/TestAssembly.EditMode.dll][suite]'
     - id: 1065
       uniqueId: 'TestAssembly.EditMode.dll/EnumTestRunner/[TestAssembly.EditMode][EnumTestRunner.AllEnumGetValuesExceptionTest]'
@@ -1881,7 +1770,7 @@ MonoBehaviour:
       categories:
       - Functional
       - Performance
-      parentId: 1162
+      parentId: 1172
       parentUniqueId: '[TestAssembly.EditMode][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/TestAssembly.EditMode.dll][suite]'
     - id: 1078
       uniqueId: 'TestAssembly.EditMode.dll/ExpressionTestRunner/[TestAssembly.EditMode][ExpressionTestRunner.CreateConstructorPerformanceTest][suite]'
@@ -2132,12 +2021,12 @@ MonoBehaviour:
       isSuite: 1
       categories:
       - Functional
-      parentId: 1162
+      parentId: 1172
       parentUniqueId: '[TestAssembly.EditMode][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/TestAssembly.EditMode.dll][suite]'
-    - id: 1092
-      uniqueId: 'TestAssembly.EditMode.dll/ExtensionTestRunner/[TestAssembly.EditMode][ExtensionTestRunner.StringExtensionTest][suite]'
-      name: StringExtensionTest
-      fullName: ExtensionTestRunner.StringExtensionTest
+    - id: 1093
+      uniqueId: 'TestAssembly.EditMode.dll/ExtensionTestRunner/[TestAssembly.EditMode][ExtensionTestRunner.GetAfterCharTest][suite]'
+      name: GetAfterCharTest
+      fullName: ExtensionTestRunner.GetAfterCharTest
       resultStatus: 1
       duration: 0
       messages: 
@@ -2152,17 +2041,20 @@ MonoBehaviour:
       parentId: 1090
       parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][ExtensionTestRunner][suite]'
     - id: 1091
-      uniqueId: 'TestAssembly.EditMode.dll/ExtensionTestRunner/StringExtensionTest/[TestAssembly.EditMode][ExtensionTestRunner.StringExtensionTest("C:/Users/KAKA/Downloads/TestText",''/'')]'
-      name: StringExtensionTest("C:/Users/KAKA/Downloads/TestText",'/')
-      fullName: ExtensionTestRunner.StringExtensionTest("C:/Users/KAKA/Downloads/TestText",'/')
+      uniqueId: 'TestAssembly.EditMode.dll/ExtensionTestRunner/GetAfterCharTest/[TestAssembly.EditMode][ExtensionTestRunner.GetAfterCharTest("C:/Users/KAKA/Downloads/TestText",''/'')]'
+      name: GetAfterCharTest("C:/Users/KAKA/Downloads/TestText",'/')
+      fullName: ExtensionTestRunner.GetAfterCharTest("C:/Users/KAKA/Downloads/TestText",'/')
       resultStatus: 1
-      duration: 0.0329539
+      duration: 0.0279932
       messages: 
-      output: '[ExtensionTestRunner.StringExtensionTest] Pass char match test ||
-        TestText == TestText
+      output: '[ExtensionTestRunner.CreateAllMatchCaseList] /Users/KAKA/Downloads/TestText,
+        Users/KAKA/Downloads/TestText, /TestText, TestText, C:, C:/, C:/Users/KAKA/Downloads,
+        C:/Users/KAKA/Downloads/
 
-        [ExtensionTestRunner.StringExtensionTest] Pass
-        string match test || TestText == TestText
+
+
+        [ExtensionTestRunner.GetAfterCharTest]
+        Pass GetAfterCharTest(String,Char)
 
 '
       stacktrace: 
@@ -2172,9 +2064,238 @@ MonoBehaviour:
       isSuite: 0
       categories:
       - Functional
-      parentId: 1092
-      parentUniqueId: 'TestAssembly.EditMode.dll/ExtensionTestRunner/[TestAssembly.EditMode][ExtensionTestRunner.StringExtensionTest][suite]'
+      parentId: 1093
+      parentUniqueId: 'TestAssembly.EditMode.dll/ExtensionTestRunner/[TestAssembly.EditMode][ExtensionTestRunner.GetAfterCharTest][suite]'
+    - id: 1092
+      uniqueId: 'TestAssembly.EditMode.dll/ExtensionTestRunner/GetAfterCharTest/[TestAssembly.EditMode][ExtensionTestRunner.GetAfterCharTest("Param.Field.Value",''.'')]'
+      name: GetAfterCharTest("Param.Field.Value",'.')
+      fullName: ExtensionTestRunner.GetAfterCharTest("Param.Field.Value",'.')
+      resultStatus: 1
+      duration: 0.0028995
+      messages: 
+      output: '[ExtensionTestRunner.CreateAllMatchCaseList] .Field.Value, Field.Value,
+        .Value, Value, Param, Param., Param.Field, Param.Field.
+
+
+
+        [ExtensionTestRunner.GetAfterCharTest]
+        Pass GetAfterCharTest(String,Char)
+
+'
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Functional
+      parentId: 1093
+      parentUniqueId: 'TestAssembly.EditMode.dll/ExtensionTestRunner/[TestAssembly.EditMode][ExtensionTestRunner.GetAfterCharTest][suite]'
+    - id: 1096
+      uniqueId: 'TestAssembly.EditMode.dll/ExtensionTestRunner/[TestAssembly.EditMode][ExtensionTestRunner.GetAfterStringTest][suite]'
+      name: GetAfterStringTest
+      fullName: ExtensionTestRunner.GetAfterStringTest
+      resultStatus: 1
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories:
+      - Functional
+      parentId: 1090
+      parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][ExtensionTestRunner][suite]'
+    - id: 1094
+      uniqueId: 'TestAssembly.EditMode.dll/ExtensionTestRunner/GetAfterStringTest/[TestAssembly.EditMode][ExtensionTestRunner.GetAfterStringTest("C:/Users/KAKA/Downloads/TestText","Downloads")]'
+      name: GetAfterStringTest("C:/Users/KAKA/Downloads/TestText","Downloads")
+      fullName: ExtensionTestRunner.GetAfterStringTest("C:/Users/KAKA/Downloads/TestText","Downloads")
+      resultStatus: 1
+      duration: 0.0036088
+      messages: 
+      output: '[ExtensionTestRunner.CreateAllMatchCaseList] Downloads/TestText, /TestText,
+        Downloads/TestText, /TestText, C:/Users/KAKA/, C:/Users/KAKA/Downloads, C:/Users/KAKA/,
+        C:/Users/KAKA/Downloads
+
+
+
+        [ExtensionTestRunner.GetAfterStringTest]
+        Pass GetAfterStringTest(String,String)
+
+'
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Functional
+      parentId: 1096
+      parentUniqueId: 'TestAssembly.EditMode.dll/ExtensionTestRunner/[TestAssembly.EditMode][ExtensionTestRunner.GetAfterStringTest][suite]'
+    - id: 1095
+      uniqueId: 'TestAssembly.EditMode.dll/ExtensionTestRunner/GetAfterStringTest/[TestAssembly.EditMode][ExtensionTestRunner.GetAfterStringTest("Param.Field.Value","Field")]'
+      name: GetAfterStringTest("Param.Field.Value","Field")
+      fullName: ExtensionTestRunner.GetAfterStringTest("Param.Field.Value","Field")
+      resultStatus: 1
+      duration: 0.0025233
+      messages: 
+      output: '[ExtensionTestRunner.CreateAllMatchCaseList] Field.Value, .Value,
+        Field.Value, .Value, Param., Param.Field, Param., Param.Field
+
+
+
+        [ExtensionTestRunner.GetAfterStringTest]
+        Pass GetAfterStringTest(String,String)
+
+'
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Functional
+      parentId: 1096
+      parentUniqueId: 'TestAssembly.EditMode.dll/ExtensionTestRunner/[TestAssembly.EditMode][ExtensionTestRunner.GetAfterStringTest][suite]'
+    - id: 1099
+      uniqueId: 'TestAssembly.EditMode.dll/ExtensionTestRunner/[TestAssembly.EditMode][ExtensionTestRunner.GetBeforeCharTest][suite]'
+      name: GetBeforeCharTest
+      fullName: ExtensionTestRunner.GetBeforeCharTest
+      resultStatus: 1
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories:
+      - Functional
+      parentId: 1090
+      parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][ExtensionTestRunner][suite]'
     - id: 1097
+      uniqueId: 'TestAssembly.EditMode.dll/ExtensionTestRunner/GetBeforeCharTest/[TestAssembly.EditMode][ExtensionTestRunner.GetBeforeCharTest("C:/Users/KAKA/Downloads/TestText",''/'')]'
+      name: GetBeforeCharTest("C:/Users/KAKA/Downloads/TestText",'/')
+      fullName: ExtensionTestRunner.GetBeforeCharTest("C:/Users/KAKA/Downloads/TestText",'/')
+      resultStatus: 1
+      duration: 0.0042638
+      messages: 
+      output: '[ExtensionTestRunner.CreateAllMatchCaseList] /Users/KAKA/Downloads/TestText,
+        Users/KAKA/Downloads/TestText, /TestText, TestText, C:, C:/, C:/Users/KAKA/Downloads,
+        C:/Users/KAKA/Downloads/
+
+
+
+        [ExtensionTestRunner.GetBeforeCharTest]
+        Pass GetBeforeCharTest(String,Char)
+
+'
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Functional
+      parentId: 1099
+      parentUniqueId: 'TestAssembly.EditMode.dll/ExtensionTestRunner/[TestAssembly.EditMode][ExtensionTestRunner.GetBeforeCharTest][suite]'
+    - id: 1098
+      uniqueId: 'TestAssembly.EditMode.dll/ExtensionTestRunner/GetBeforeCharTest/[TestAssembly.EditMode][ExtensionTestRunner.GetBeforeCharTest("Param.Field.Value",''.'')]'
+      name: GetBeforeCharTest("Param.Field.Value",'.')
+      fullName: ExtensionTestRunner.GetBeforeCharTest("Param.Field.Value",'.')
+      resultStatus: 1
+      duration: 0.0027032
+      messages: 
+      output: '[ExtensionTestRunner.CreateAllMatchCaseList] .Field.Value, Field.Value,
+        .Value, Value, Param, Param., Param.Field, Param.Field.
+
+
+
+        [ExtensionTestRunner.GetBeforeCharTest]
+        Pass GetBeforeCharTest(String,Char)
+
+'
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Functional
+      parentId: 1099
+      parentUniqueId: 'TestAssembly.EditMode.dll/ExtensionTestRunner/[TestAssembly.EditMode][ExtensionTestRunner.GetBeforeCharTest][suite]'
+    - id: 1102
+      uniqueId: 'TestAssembly.EditMode.dll/ExtensionTestRunner/[TestAssembly.EditMode][ExtensionTestRunner.GetBeforeStringTest][suite]'
+      name: GetBeforeStringTest
+      fullName: ExtensionTestRunner.GetBeforeStringTest
+      resultStatus: 1
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories:
+      - Functional
+      parentId: 1090
+      parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][ExtensionTestRunner][suite]'
+    - id: 1100
+      uniqueId: 'TestAssembly.EditMode.dll/ExtensionTestRunner/GetBeforeStringTest/[TestAssembly.EditMode][ExtensionTestRunner.GetBeforeStringTest("C:/Users/KAKA/Downloads/TestText","Downloads")]'
+      name: GetBeforeStringTest("C:/Users/KAKA/Downloads/TestText","Downloads")
+      fullName: ExtensionTestRunner.GetBeforeStringTest("C:/Users/KAKA/Downloads/TestText","Downloads")
+      resultStatus: 1
+      duration: 0.0030189
+      messages: 
+      output: '[ExtensionTestRunner.CreateAllMatchCaseList] Downloads/TestText, /TestText,
+        Downloads/TestText, /TestText, C:/Users/KAKA/, C:/Users/KAKA/Downloads, C:/Users/KAKA/,
+        C:/Users/KAKA/Downloads
+
+
+
+        [ExtensionTestRunner.GetBeforeStringTest]
+        Pass GetBeforeStringTest(String,String)
+
+'
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Functional
+      parentId: 1102
+      parentUniqueId: 'TestAssembly.EditMode.dll/ExtensionTestRunner/[TestAssembly.EditMode][ExtensionTestRunner.GetBeforeStringTest][suite]'
+    - id: 1101
+      uniqueId: 'TestAssembly.EditMode.dll/ExtensionTestRunner/GetBeforeStringTest/[TestAssembly.EditMode][ExtensionTestRunner.GetBeforeStringTest("Param.Field.Value","Field")]'
+      name: GetBeforeStringTest("Param.Field.Value","Field")
+      fullName: ExtensionTestRunner.GetBeforeStringTest("Param.Field.Value","Field")
+      resultStatus: 1
+      duration: 0.0027633
+      messages: 
+      output: '[ExtensionTestRunner.CreateAllMatchCaseList] Field.Value, .Value,
+        Field.Value, .Value, Param., Param.Field, Param., Param.Field
+
+
+
+        [ExtensionTestRunner.GetBeforeStringTest]
+        Pass GetBeforeStringTest(String,String)
+
+'
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Functional
+      parentId: 1102
+      parentUniqueId: 'TestAssembly.EditMode.dll/ExtensionTestRunner/[TestAssembly.EditMode][ExtensionTestRunner.GetBeforeStringTest][suite]'
+    - id: 1107
       uniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][GameDBTestRunner][suite]'
       name: GameDBTestRunner
       fullName: GameDBTestRunner
@@ -2188,9 +2309,9 @@ MonoBehaviour:
       description: 
       isSuite: 1
       categories: []
-      parentId: 1162
+      parentId: 1172
       parentUniqueId: '[TestAssembly.EditMode][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/TestAssembly.EditMode.dll][suite]'
-    - id: 1101
+    - id: 1111
       uniqueId: 'TestAssembly.EditMode.dll/GameDBTestRunner/[TestAssembly.EditMode][GameDBTestRunner.StartTest][suite]'
       name: StartTest
       fullName: GameDBTestRunner.StartTest
@@ -2204,7 +2325,7 @@ MonoBehaviour:
       description: 
       isSuite: 1
       categories: []
-      parentId: 1097
+      parentId: 1107
       parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][GameDBTestRunner][suite]'
     - id: 1095
       uniqueId: 'TestAssembly.EditMode.dll/GameDBTestRunner/StartTest/[TestAssembly.EditMode][GameDBTestRunner.StartTest(GameDBTestRunner+JsonTestRunner)]'
@@ -2257,7 +2378,7 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1098
       parentUniqueId: 'TestAssembly.EditMode.dll/GameDBTestRunner/[TestAssembly.EditMode][GameDBTestRunner.StartTest][suite]'
-    - id: 1102
+    - id: 1112
       uniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][GlobalEnumTestRunner][suite]'
       name: GlobalEnumTestRunner
       fullName: GlobalEnumTestRunner
@@ -2271,7 +2392,7 @@ MonoBehaviour:
       description: 
       isSuite: 1
       categories: []
-      parentId: 1162
+      parentId: 1172
       parentUniqueId: '[TestAssembly.EditMode][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/TestAssembly.EditMode.dll][suite]'
     - id: 1100
       uniqueId: 'TestAssembly.EditMode.dll/GlobalEnumTestRunner/[TestAssembly.EditMode][GlobalEnumTestRunner.StartTest]'
@@ -2290,7 +2411,7 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1099
       parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][GlobalEnumTestRunner][suite]'
-    - id: 1151
+    - id: 1161
       uniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][LocalizeServiceTestRunner][suite]'
       name: LocalizeServiceTestRunner
       fullName: LocalizeServiceTestRunner
@@ -2305,7 +2426,7 @@ MonoBehaviour:
       isSuite: 1
       categories:
       - Service
-      parentId: 1162
+      parentId: 1172
       parentUniqueId: '[TestAssembly.EditMode][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/TestAssembly.EditMode.dll][suite]'
     - id: 1149
       uniqueId: 'TestAssembly.EditMode.dll/LocalizeServiceTestRunner/[TestAssembly.EditMode][LocalizeServiceTestRunner.LocalizeServiceTest]'
@@ -2324,7 +2445,7 @@ MonoBehaviour:
       - Service
       parentId: 1148
       parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][LocalizeServiceTestRunner][suite]'
-    - id: 1104
+    - id: 1114
       uniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][MessageBusTestRunner][suite]'
       name: MessageBusTestRunner
       fullName: MessageBusTestRunner
@@ -2338,7 +2459,7 @@ MonoBehaviour:
       description: 
       isSuite: 1
       categories: []
-      parentId: 1162
+      parentId: 1172
       parentUniqueId: '[TestAssembly.EditMode][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/TestAssembly.EditMode.dll][suite]'
     - id: 1103
       uniqueId: 'TestAssembly.EditMode.dll/MessageBusTestRunner/[TestAssembly.EditMode][MessageBusTestRunner.MessageBusAsyncTest]'
@@ -2374,7 +2495,7 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1101
       parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][MessageBusTestRunner][suite]'
-    - id: 1113
+    - id: 1123
       uniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][NotifyConstructorTestRunner][suite]'
       name: NotifyConstructorTestRunner
       fullName: NotifyConstructorTestRunner
@@ -2389,7 +2510,7 @@ MonoBehaviour:
       isSuite: 1
       categories:
       - Notify
-      parentId: 1162
+      parentId: 1172
       parentUniqueId: '[TestAssembly.EditMode][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/TestAssembly.EditMode.dll][suite]'
     - id: 1111
       uniqueId: 'TestAssembly.EditMode.dll/NotifyConstructorTestRunner/[TestAssembly.EditMode][NotifyConstructorTestRunner.NotifyCollectionAllConstructorTest]'
@@ -2442,7 +2563,7 @@ MonoBehaviour:
       - Notify
       parentId: 1110
       parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][NotifyConstructorTestRunner][suite]'
-    - id: 1117
+    - id: 1127
       uniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][NotifyCoverageTestRunner][suite]'
       name: NotifyCoverageTestRunner
       fullName: NotifyCoverageTestRunner
@@ -2458,7 +2579,7 @@ MonoBehaviour:
       categories:
       - Notify
       - Coverage
-      parentId: 1162
+      parentId: 1172
       parentUniqueId: '[TestAssembly.EditMode][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/TestAssembly.EditMode.dll][suite]'
     - id: 1116
       uniqueId: 'TestAssembly.EditMode.dll/NotifyCoverageTestRunner/[TestAssembly.EditMode][NotifyCoverageTestRunner.NotifyCollectionCoverageTest]'
@@ -2622,7 +2743,7 @@ MonoBehaviour:
       - Coverage
       parentId: 1114
       parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][NotifyCoverageTestRunner][suite]'
-    - id: 1127
+    - id: 1137
       uniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][NotifySerializeTestRunner][suite]'
       name: NotifySerializeTestRunner
       fullName: NotifySerializeTestRunner
@@ -2637,7 +2758,7 @@ MonoBehaviour:
       isSuite: 1
       categories:
       - Notify
-      parentId: 1162
+      parentId: 1172
       parentUniqueId: '[TestAssembly.EditMode][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/TestAssembly.EditMode.dll][suite]'
     - id: 1125
       uniqueId: 'TestAssembly.EditMode.dll/NotifySerializeTestRunner/[TestAssembly.EditMode][NotifySerializeTestRunner.NotifyCsvConvertTest]'
@@ -2690,7 +2811,7 @@ MonoBehaviour:
       - Notify
       parentId: 1124
       parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][NotifySerializeTestRunner][suite]'
-    - id: 1093
+    - id: 1103
       uniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][OverridenMethodTestRunner][suite]'
       name: OverridenMethodTestRunner
       fullName: OverridenMethodTestRunner
@@ -2705,7 +2826,7 @@ MonoBehaviour:
       isSuite: 1
       categories:
       - Functional
-      parentId: 1162
+      parentId: 1172
       parentUniqueId: '[TestAssembly.EditMode][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/TestAssembly.EditMode.dll][suite]'
     - id: 1091
       uniqueId: 'TestAssembly.EditMode.dll/OverridenMethodTestRunner/[TestAssembly.EditMode][OverridenMethodTestRunner.OverridenMethodTest]'
@@ -2724,7 +2845,7 @@ MonoBehaviour:
       - Functional
       parentId: 1090
       parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][OverridenMethodTestRunner][suite]'
-    - id: 1131
+    - id: 1141
       uniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][PerformanceTestRunner][suite]'
       name: PerformanceTestRunner
       fullName: PerformanceTestRunner
@@ -2739,9 +2860,9 @@ MonoBehaviour:
       isSuite: 1
       categories:
       - Performance
-      parentId: 1162
+      parentId: 1172
       parentUniqueId: '[TestAssembly.EditMode][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/TestAssembly.EditMode.dll][suite]'
-    - id: 1133
+    - id: 1143
       uniqueId: 'TestAssembly.EditMode.dll/PerformanceTestRunner/[TestAssembly.EditMode][PerformanceTestRunner.QueuePerformanceTest][suite]'
       name: QueuePerformanceTest
       fullName: PerformanceTestRunner.QueuePerformanceTest
@@ -2756,7 +2877,7 @@ MonoBehaviour:
       isSuite: 1
       categories:
       - Performance
-      parentId: 1131
+      parentId: 1141
       parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][PerformanceTestRunner][suite]'
     - id: 1129
       uniqueId: 'TestAssembly.EditMode.dll/PerformanceTestRunner/QueuePerformanceTest/[TestAssembly.EditMode][PerformanceTestRunner.QueuePerformanceTest(5000,30,10)]'
@@ -2776,7 +2897,7 @@ MonoBehaviour:
       - Performance
       parentId: 1130
       parentUniqueId: 'TestAssembly.EditMode.dll/PerformanceTestRunner/[TestAssembly.EditMode][PerformanceTestRunner.QueuePerformanceTest][suite]'
-    - id: 1134
+    - id: 1144
       uniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][ReflectionTestRunner][suite]'
       name: ReflectionTestRunner
       fullName: ReflectionTestRunner
@@ -2792,9 +2913,9 @@ MonoBehaviour:
       categories:
       - Reflection
       - Performance
-      parentId: 1162
+      parentId: 1172
       parentUniqueId: '[TestAssembly.EditMode][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/TestAssembly.EditMode.dll][suite]'
-    - id: 1150
+    - id: 1160
       uniqueId: 'TestAssembly.EditMode.dll/ReflectionTestRunner/[TestAssembly.EditMode][ReflectionTestRunner.ReflectionExtensionPerformanceTest][suite]'
       name: ReflectionExtensionPerformanceTest
       fullName: ReflectionTestRunner.ReflectionExtensionPerformanceTest
@@ -2810,7 +2931,7 @@ MonoBehaviour:
       categories:
       - Performance
       - Reflection
-      parentId: 1134
+      parentId: 1144
       parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][ReflectionTestRunner][suite]'
     - id: 1143
       uniqueId: 'TestAssembly.EditMode.dll/ReflectionTestRunner/ReflectionExtensionPerformanceTest/[TestAssembly.EditMode][ReflectionTestRunner.ReflectionExtensionPerformanceTest(10,10)]'
@@ -2884,7 +3005,7 @@ MonoBehaviour:
       - Reflection
       parentId: 1147
       parentUniqueId: 'TestAssembly.EditMode.dll/ReflectionTestRunner/[TestAssembly.EditMode][ReflectionTestRunner.ReflectionExtensionPerformanceTest][suite]'
-    - id: 1145
+    - id: 1155
       uniqueId: 'TestAssembly.EditMode.dll/ReflectionTestRunner/[TestAssembly.EditMode][ReflectionTestRunner.ReflectionPerformanceTest][suite]'
       name: ReflectionPerformanceTest
       fullName: ReflectionTestRunner.ReflectionPerformanceTest
@@ -2900,7 +3021,7 @@ MonoBehaviour:
       categories:
       - Performance
       - Reflection
-      parentId: 1134
+      parentId: 1144
       parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][ReflectionTestRunner][suite]'
     - id: 1132
       uniqueId: 'TestAssembly.EditMode.dll/ReflectionTestRunner/ReflectionPerformanceTest/[TestAssembly.EditMode][ReflectionTestRunner.ReflectionPerformanceTest(100,5)]'
@@ -3082,7 +3203,7 @@ MonoBehaviour:
       - Reflection
       parentId: 1142
       parentUniqueId: 'TestAssembly.EditMode.dll/ReflectionTestRunner/[TestAssembly.EditMode][ReflectionTestRunner.ReflectionPerformanceTest][suite]'
-    - id: 1095
+    - id: 1105
       uniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][SafeDelegateTestRunner][suite]'
       name: SafeDelegateTestRunner
       fullName: SafeDelegateTestRunner
@@ -3097,7 +3218,7 @@ MonoBehaviour:
       isSuite: 1
       categories:
       - Functional
-      parentId: 1162
+      parentId: 1172
       parentUniqueId: '[TestAssembly.EditMode][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/TestAssembly.EditMode.dll][suite]'
     - id: 1093
       uniqueId: 'TestAssembly.EditMode.dll/SafeDelegateTestRunner/[TestAssembly.EditMode][SafeDelegateTestRunner.SafeDelegateOperatorTest]'
@@ -3116,7 +3237,7 @@ MonoBehaviour:
       - Functional
       parentId: 1092
       parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][SafeDelegateTestRunner][suite]'
-    - id: 1153
+    - id: 1163
       uniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][ServiceTestRunner][suite]'
       name: ServiceTestRunner
       fullName: ServiceTestRunner
@@ -3131,7 +3252,7 @@ MonoBehaviour:
       isSuite: 1
       categories:
       - Service
-      parentId: 1162
+      parentId: 1172
       parentUniqueId: '[TestAssembly.EditMode][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/TestAssembly.EditMode.dll][suite]'
     - id: 1152
       uniqueId: 'TestAssembly.EditMode.dll/ServiceTestRunner/[TestAssembly.EditMode][ServiceTestRunner.ServiceAsyncTaskTest]'
@@ -3167,7 +3288,7 @@ MonoBehaviour:
       - Service
       parentId: 1150
       parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][ServiceTestRunner][suite]'
-    - id: 1107
+    - id: 1117
       uniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][TcpServerTestRunner][suite]'
       name: TcpServerTestRunner
       fullName: TcpServerTestRunner
@@ -3181,7 +3302,7 @@ MonoBehaviour:
       description: 
       isSuite: 1
       categories: []
-      parentId: 1162
+      parentId: 1172
       parentUniqueId: '[TestAssembly.EditMode][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/TestAssembly.EditMode.dll][suite]'
     - id: 1105
       uniqueId: 'TestAssembly.EditMode.dll/TcpServerTestRunner/[TestAssembly.EditMode][TcpServerTestRunner.Clear]'
@@ -3200,7 +3321,7 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1104
       parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][TcpServerTestRunner][suite]'
-    - id: 1112
+    - id: 1122
       uniqueId: 'TestAssembly.EditMode.dll/TcpServerTestRunner/[TestAssembly.EditMode][TcpServerTestRunner.TcpClientTestAsync][suite]'
       name: TcpClientTestAsync
       fullName: TcpServerTestRunner.TcpClientTestAsync
@@ -3214,7 +3335,7 @@ MonoBehaviour:
       description: 
       isSuite: 1
       categories: []
-      parentId: 1107
+      parentId: 1117
       parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][TcpServerTestRunner][suite]'
     - id: 1107
       uniqueId: 'TestAssembly.EditMode.dll/TcpServerTestRunner/TcpClientTestAsync/[TestAssembly.EditMode][TcpServerTestRunner.TcpClientTestAsync(TcpJsonServeModule,TestTcpJsonClient)]'
@@ -3267,7 +3388,7 @@ MonoBehaviour:
       - Performance
       parentId: 1104
       parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][TcpServerTestRunner][suite]'
-    - id: 1156
+    - id: 1166
       uniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][UIViewModelTestRunner][suite]'
       name: UIViewModelTestRunner
       fullName: UIViewModelTestRunner
@@ -3281,9 +3402,9 @@ MonoBehaviour:
       description: 
       isSuite: 1
       categories: []
-      parentId: 1162
+      parentId: 1172
       parentUniqueId: '[TestAssembly.EditMode][C:/Project/Unity/CustomUtils/Library/ScriptAssemblies/TestAssembly.EditMode.dll][suite]'
-    - id: 1161
+    - id: 1171
       uniqueId: 'TestAssembly.EditMode.dll/UIViewModelTestRunner/[TestAssembly.EditMode][UIViewModelTestRunner.ViewModelPerformanceTest][suite]'
       name: ViewModelPerformanceTest
       fullName: UIViewModelTestRunner.ViewModelPerformanceTest
@@ -3298,7 +3419,7 @@ MonoBehaviour:
       isSuite: 1
       categories:
       - Performance
-      parentId: 1156
+      parentId: 1166
       parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][UIViewModelTestRunner][suite]'
     - id: 1155
       uniqueId: 'TestAssembly.EditMode.dll/UIViewModelTestRunner/ViewModelPerformanceTest/[TestAssembly.EditMode][UIViewModelTestRunner.ViewModelPerformanceTest(100)]'
@@ -3368,22 +3489,13 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1153
       parentUniqueId: 'TestAssembly.EditMode.dll/[TestAssembly.EditMode][UIViewModelTestRunner][suite]'
-    m_ResultText: 'StringExtensionTest("C:/Users/KAKA/Downloads/TestText",''/'')
-      (0.033s)
-
-      ---
-
-      [ExtensionTestRunner.StringExtensionTest] Pass char
-      match test || TestText == TestText
-
-      [ExtensionTestRunner.StringExtensionTest]
-      Pass string match test || TestText == TestText'
+    m_ResultText: GetAfterStringTest (2 tests) (0.000s)
     m_ResultStacktrace: 
     m_TestListState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: dc90f826
-      m_LastClickedID: 653824220
-      m_ExpandedIDs: 68353ea19cd1d2bf643b9fdb873edffeb8bd7e271d38f030c29f3933cd6f9d64ffffff7f
+      m_SelectedIDs: a16ff2c5
+      m_LastClickedID: -973967455
+      m_ExpandedIDs: 824fad9068353ea19cd1d2bfcad15ad829608cdb643b9fdb873edffe08964309bec77221b8bd7e271d38f030c29f3933cd6f9d64ffffff7f
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -3418,9 +3530,9 @@ MonoBehaviour:
       - Service
       - Uncategorized
     m_SelectedOption: 0
-  - m_Window: {fileID: 18}
+  - m_Window: {fileID: 14}
     runProgress:
-      RunGuid: ecf7c9d8-f24b-444f-b64d-2da6b15368a0
+      RunGuid: 89e2176b-3756-42e2-b4a9-56a80522800e
       ExecutionSettings:
         m_TargetPlatform: 0
         m_HasTargetPlatform: 0
@@ -3433,7 +3545,7 @@ MonoBehaviour:
         filters:
         - testMode: 1
           testNames:
-          - ExtensionTestRunner.StringExtensionTest("C:/Users/KAKA/Downloads/TestText",'/')
+          - ExtensionTestRunner
           groupNames: []
           categoryNames: []
           assemblyNames: []
@@ -3448,7 +3560,7 @@ MonoBehaviour:
           disableNestedEnumeratorBugfix: 0
         randomOrderSeed: 0
       HasFinished: 1
-      Progress: 0.9999999
+      Progress: 0.9999998
       CurrentStepName: Unlock Reload Assemblies
       CurrentStageName: 
     m_NewResultList:
@@ -4086,7 +4198,7 @@ MonoBehaviour:
     m_SelectedOption: 0
   - m_Window: {fileID: 0}
     runProgress:
-      RunGuid: ecf7c9d8-f24b-444f-b64d-2da6b15368a0
+      RunGuid: 89e2176b-3756-42e2-b4a9-56a80522800e
       ExecutionSettings:
         m_TargetPlatform: 0
         m_HasTargetPlatform: 0
@@ -4099,7 +4211,7 @@ MonoBehaviour:
         filters:
         - testMode: 1
           testNames:
-          - ExtensionTestRunner.StringExtensionTest("C:/Users/KAKA/Downloads/TestText",'/')
+          - ExtensionTestRunner
           groupNames: []
           categoryNames: []
           assemblyNames: []
@@ -4114,7 +4226,7 @@ MonoBehaviour:
           disableNestedEnumeratorBugfix: 0
         randomOrderSeed: 0
       HasFinished: 1
-      Progress: 0.9999999
+      Progress: 0.9999998
       CurrentStepName: Unlock Reload Assemblies
       CurrentStageName: 
     m_NewResultList: []
@@ -4151,7 +4263,7 @@ MonoBehaviour:
       selectedCategories: []
       availableCategories: []
     m_SelectedOption: 0
---- !u!114 &19
+--- !u!114 &15
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4175,7 +4287,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 24
-    width: 298
+    width: 271
     height: 473
   m_SerializedDataModeController:
     m_DataMode: 0
@@ -4193,7 +4305,7 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: b6f4fffff6f4ffff00f6ffff42f6ffff06fbffff
+      m_ExpandedIDs: 0cfbffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -4210,7 +4322,7 @@ MonoBehaviour:
         m_OriginalEventType: 11
         m_IsRenamingFilename: 0
         m_TrimLeadingAndTrailingWhitespace: 0
-        m_ClientGUIView: {fileID: 11}
+        m_ClientGUIView: {fileID: 8}
       m_SearchString: 
     m_ExpandedScenes: []
     m_CurrenRootInstanceID: 0
@@ -4218,7 +4330,7 @@ MonoBehaviour:
       m_IsLocked: 0
     m_CurrentSortingName: TransformSorting
   m_WindowGUID: 37b0836aa8b4bd74696073f7347c8c8a
---- !u!114 &20
+--- !u!114 &16
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4240,9 +4352,9 @@ MonoBehaviour:
     m_TextWithWhitespace: "Scene\u200B"
   m_Pos:
     serializedVersion: 2
-    x: 300
+    x: 273
     y: 24
-    width: 933
+    width: 881
     height: 473
   m_SerializedDataModeController:
     m_DataMode: 0
@@ -4770,9 +4882,9 @@ MonoBehaviour:
   m_AudioPlay: 0
   m_DebugDrawModesUseInteractiveLightBakingData: 0
   m_Position:
-    m_Target: {x: 4.4703035, y: -2.2861545, z: 0.014302619}
+    m_Target: {x: 0, y: 0, z: 0}
     speed: 2
-    m_Value: {x: 4.4703035, y: -2.2861545, z: 0.014302619}
+    m_Value: {x: 0, y: 0, z: 0}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -4822,9 +4934,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 8.569736
+    m_Target: 134.62912
     speed: 2
-    m_Value: 8.569736
+    m_Value: 134.62912
   m_Ortho:
     m_Target: 1
     speed: 2
@@ -4845,7 +4957,7 @@ MonoBehaviour:
   m_LastSceneViewRotation: {x: -0.08717229, y: 0.89959055, z: -0.21045254, w: -0.3726226}
   m_LastSceneViewOrtho: 0
   m_Viewpoint:
-    m_SceneView: {fileID: 20}
+    m_SceneView: {fileID: 16}
     m_CameraOverscanSettings:
       m_Opacity: 50
       m_Scale: 1
@@ -4858,7 +4970,7 @@ MonoBehaviour:
     name: 
     section: 
   m_ViewIsLockedToObject: 0
---- !u!114 &21
+--- !u!114 &17
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4882,7 +4994,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 578
-    width: 825
+    width: 772
     height: 416
   m_SerializedDataModeController:
     m_DataMode: 0
@@ -4906,7 +5018,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/CustomUtils/Common/Network/TcpServer
+    - Assets/Plugins
     m_Globs: []
     m_ProductIds: 
     m_AnyWithAssetOrigin: 0
@@ -4916,16 +5028,16 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 16
   m_LastFolders:
-  - Assets/CustomUtils/Common/Network/TcpServer
+  - Assets/Plugins
   m_LastFoldersGridSize: 16
   m_LastProjectPath: C:\Project\Unity\CustomUtils
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 335}
-    m_SelectedIDs: f49f0000
-    m_LastClickedID: 40948
-    m_ExpandedIDs: 00000000de9f0000e09f0000e29f0000e49f0000e69f0000e89f0000ea9f0000ec9f0000ee9f0000f09f0000f29f0000f49f0000f69f0000f89f0000fa9f0000fc9f0000fe9f000000a0000002a00000
+    scrollPos: {x: 0, y: 424}
+    m_SelectedIDs: 02a20000
+    m_LastClickedID: 41474
+    m_ExpandedIDs: 00000000d69f0000d89f0000da9f0000dc9f0000de9f0000e09f0000e29f0000e49f0000e69f0000e89f0000ea9f0000ec9f0000ee9f0000f09f0000f29f0000f49f0000f69f0000f89f0000fa9f0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -4942,7 +5054,7 @@ MonoBehaviour:
       m_OriginalEventType: 11
       m_IsRenamingFilename: 1
       m_TrimLeadingAndTrailingWhitespace: 0
-      m_ClientGUIView: {fileID: 14}
+      m_ClientGUIView: {fileID: 11}
     m_SearchString: 
     m_CreateAssetUtility:
       m_EndAction: {fileID: 0}
@@ -4954,7 +5066,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000de9f0000e09f0000e29f0000e49f0000e69f0000e89f0000ea9f0000ec9f0000ee9f0000f09f0000f29f0000f49f0000f69f0000f89f0000fa9f0000fc9f0000fe9f000000a0000002a00000
+    m_ExpandedIDs: 00000000d69f0000d89f0000da9f0000dc9f0000de9f0000e09f0000e29f0000e49f0000e69f0000e89f0000ea9f0000ec9f0000ee9f0000f09f0000f29f0000f49f0000f69f0000f89f0000fa9f0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -4980,9 +5092,9 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: 
-    m_LastClickedInstanceID: 0
-    m_HadKeyboardFocusLastEvent: 0
+    m_SelectedInstanceIDs: 64a20000
+    m_LastClickedInstanceID: 41572
+    m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: c6230000ac060000fc56000092f6ffff2a66000002670000ce6900006cd8ffffbe69000000000000909d0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -5000,7 +5112,7 @@ MonoBehaviour:
       m_OriginalEventType: 11
       m_IsRenamingFilename: 1
       m_TrimLeadingAndTrailingWhitespace: 0
-      m_ClientGUIView: {fileID: 14}
+      m_ClientGUIView: {fileID: 11}
     m_CreateAssetUtility:
       m_EndAction: {fileID: 0}
       m_InstanceID: 0
@@ -5012,7 +5124,7 @@ MonoBehaviour:
     m_GridSize: 16
   m_SkipHiddenPackages: 0
   m_DirectoriesAreaWidth: 253
---- !u!114 &22
+--- !u!114 &18
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5036,7 +5148,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 24
-    width: 825
+    width: 772
     height: 416
   m_SerializedDataModeController:
     m_DataMode: 0
@@ -5049,7 +5161,7 @@ MonoBehaviour:
     m_SaveData: []
     m_ContainerData: []
     m_OverlaysVisible: 1
---- !u!114 &23
+--- !u!114 &19
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5071,9 +5183,9 @@ MonoBehaviour:
     m_TextWithWhitespace: "Game\u200B"
   m_Pos:
     serializedVersion: 2
-    x: 827
+    x: 774
     y: 24
-    width: 406
+    width: 380
     height: 416
   m_SerializedDataModeController:
     m_DataMode: 0
@@ -5092,7 +5204,7 @@ MonoBehaviour:
   m_ShowGizmos: 0
   m_TargetDisplay: 0
   m_ClearColor: {r: 0, g: 0, b: 0, a: 0}
-  m_TargetSize: {x: 406, y: 395}
+  m_TargetSize: {x: 380, y: 395}
   m_TextureFilterMode: 0
   m_TextureHideFlags: 61
   m_RenderIMGUI: 1
@@ -5107,8 +5219,8 @@ MonoBehaviour:
     m_VRangeLocked: 0
     hZoomLockedByDefault: 0
     vZoomLockedByDefault: 0
-    m_HBaseRangeMin: -203
-    m_HBaseRangeMax: 203
+    m_HBaseRangeMin: -190
+    m_HBaseRangeMax: 190
     m_VBaseRangeMin: -197.5
     m_VBaseRangeMax: 197.5
     m_HAllowExceedBaseRangeMin: 1
@@ -5128,30 +5240,30 @@ MonoBehaviour:
       serializedVersion: 2
       x: 0
       y: 21
-      width: 406
+      width: 380
       height: 395
     m_Scale: {x: 1, y: 1}
-    m_Translation: {x: 203, y: 197.5}
+    m_Translation: {x: 190, y: 197.5}
     m_MarginLeft: 0
     m_MarginRight: 0
     m_MarginTop: 0
     m_MarginBottom: 0
     m_LastShownAreaInsideMargins:
       serializedVersion: 2
-      x: -203
+      x: -190
       y: -197.5
-      width: 406
+      width: 380
       height: 395
     m_MinimalGUI: 1
   m_defaultScale: 1
-  m_LastWindowPixelSize: {x: 406, y: 416}
+  m_LastWindowPixelSize: {x: 380, y: 416}
   m_ClearInEditMode: 1
   m_NoCameraWarning: 1
   m_LowResolutionForAspectRatios: 01000000000000000000
   m_XRRenderMode: 0
   m_RenderTexture: {fileID: 0}
   m_showToolbar: 1
---- !u!114 &24
+--- !u!114 &20
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5173,9 +5285,9 @@ MonoBehaviour:
     m_TextWithWhitespace: "Inspector\u200B"
   m_Pos:
     serializedVersion: 2
-    x: 1016
-    y: 79
-    width: 903
+    x: 1156
+    y: 24
+    width: 764
     height: 915
   m_SerializedDataModeController:
     m_DataMode: 0

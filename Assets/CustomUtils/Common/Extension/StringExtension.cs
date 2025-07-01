@@ -90,14 +90,7 @@ public static class StringExtension {
 
     public static string GetFileNameFast(this string content) => content.Split('.')?[0];
 
-    public static string AutoSwitchExtension(this string content,  string extension) {
-        if (content.ContainsExtension(extension) == false) {
-            return Path.ChangeExtension(content, extension.FixExtension());
-        }
-
-        return content;
-    }
-
+    public static string AutoSwitchExtension(this string content,  string extension) => content.ContainsExtension(extension) == false ? Path.ChangeExtension(content, extension.FixExtension()) : content;
     public static string FixExtension(this string content) => content.IsExtension() == false ? content.Insert(0, ".") : content;
     public static bool ContainsExtension(this string content, string extension) => Path.HasExtension(content) && Path.GetExtension(content).EqualsFast(extension);
     public static bool IsExtension(this string content) => content.StartsWith('.');

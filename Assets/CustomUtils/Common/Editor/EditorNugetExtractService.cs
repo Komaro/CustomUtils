@@ -107,9 +107,17 @@ public class EditorNugetExtractService : EditorService {
                 if (dragArea.Contains(currentEvent.mousePosition)) {
                     DragAndDrop.AcceptDrag();
                     
-                    var pathGroup = DragAndDrop.paths.GroupBy(path => 
-                        Constants.Regex.FOLDER_PATH_REGEX.IsMatch(path) || Directory.Exists(path) ? GROUP_TYPE.DIRECTORY : 
-                        path.ContainsExtension(Constants.Extension.ZIP) ? GROUP_TYPE.ZIP : GROUP_TYPE.NONE);
+                    var pathGroup = DragAndDrop.paths.GroupBy(path => {
+                        if (Constants.Regex.FOLDER_PATH_REGEX.IsMatch(path) || Directory.Exists(path)) {
+                            return GROUP_TYPE.DIRECTORY;
+                        }
+
+                        if (path.ContainsExtension(Constants.Extension.ZIP) || path.ContainsExtension(Constants.Extension.NUPKG)) {
+                            return GROUP_TYPE.ZIP;
+                        }
+
+                        return GROUP_TYPE.NONE;
+                    });
                     
                     foreach (var grouping in pathGroup) {
                         switch (grouping.Key) {
@@ -123,6 +131,7 @@ public class EditorNugetExtractService : EditorService {
                                     }
                                 }
                                 break;
+                            case GROUP_TYPE.PACKAGE:
                             case GROUP_TYPE.ZIP:
                                 foreach (var path in grouping) {
                                     foreach (var entry in GetValidPaths(ZipFile.Open(path, ZipArchiveMode.Read).Entries.Where(entry => entry.Name.ContainsExtension(Constants.Extension.DLL)))) {
@@ -133,6 +142,17 @@ public class EditorNugetExtractService : EditorService {
                                     }
                                 }
                                 break;
+                                /*foreach (var path in grouping) {
+                                    var copyPath = $"{Constants.Path.PROJECT_TEMP_PATH}/{Path.GetFileName(path).AutoSwitchExtension(Constants.Extension.ZIP)}";
+                                    File.Move(path, copyPath);
+                                    foreach (var entry in GetValidPaths(ZipFile.Open(copyPath, ZipArchiveMode.Read).Entries.Where(entry => entry.Name.ContainsExtension(Constants.Extension.DLL)))) {
+                                        var dllFileName = Path.GetFileNameWithoutExtension(entry.Name);
+                                        if (_extractPluginDic.ContainsKey(dllFileName) == false) {
+                                            _extractPluginDic.Add(dllFileName, new PackageExtractPlugin(entry.Name, dllFileName, copyPath));
+                                        }
+                                    }
+                                }
+                                break;*/
                         }
                     }
 
@@ -142,10 +162,25 @@ public class EditorNugetExtractService : EditorService {
                     }
                     
                     _extractPluginTreeView.Reload();
-
                     currentEvent.Use();
                 }
                 break;
+        }
+    }
+
+    private void Temp(string zipPath, GROUP_TYPE type) {
+        foreach (var entry in GetValidPaths(ZipFile.Open(zipPath, ZipArchiveMode.Read).Entries.Where(entry => entry.Name.ContainsExtension(Constants.Extension.DLL)))) {
+            var dllFileName = Path.GetFileNameWithoutExtension(entry.Name);
+            if (_extractPluginDic.ContainsKey(dllFileName) == false) {
+                switch (type) {
+                    case GROUP_TYPE.ZIP:
+                        _extractPluginDic.Add(dllFileName, new ZipExtractPlugin(entry.Name, dllFileName, zipPath));
+                        break;
+                    case GROUP_TYPE.PACKAGE:
+                        _extractPluginDic.Add(dllFileName, new PackageExtractPlugin(entry.Name, dllFileName, zipPath));
+                        break;
+                }
+            }
         }
     }
     
@@ -197,6 +232,7 @@ public class EditorNugetExtractService : EditorService {
             EditorCommon.ShowCheckDialogue("DLL 추출 완료", $"DLL 파일 임시 추출을 완료했습니다.\n확인시 추출 파일을 Plugins 폴더로 복사하고 임시 파일을 삭제합니다. 취소시에는 복사 없이 임시 파일만 삭제합니다.\n{extractFiles.ToStringCollection(Path.GetFileName, '\n')}", ok: () => {
                 SystemUtil.CopyAllFiles(extractPath, Constants.Path.PLUGINS_FULL_PATH);
                 SystemUtil.DeleteDirectory(extractPath);
+                AssetDatabase.Refresh();
             }, cancel:() => SystemUtil.DeleteDirectory(extractPath));
             
             _extractPluginDic.Clear();
@@ -210,7 +246,8 @@ public class EditorNugetExtractService : EditorService {
     private enum GROUP_TYPE {
         NONE,
         DIRECTORY,
-        ZIP
+        ZIP,
+        PACKAGE,
     }
 }
 
@@ -236,13 +273,23 @@ internal class DirectoryExtractPlugin : ExtractPlugin {
 
 internal class ZipExtractPlugin : ExtractPlugin {
 
-    public readonly string extractTargetEntry;
+    protected readonly string extractTargetEntry;
 
     public ZipExtractPlugin(string extractTargetEntry, string name, string path) : base(name, path) => this.extractTargetEntry = extractTargetEntry;
 
     public override void Extract(string destinationDirectory) {
         var entry = ZipFile.Open(path, ZipArchiveMode.Read).Entries.FirstOrDefault(entry => entry.Name.EqualsFast(extractTargetEntry));
         entry?.ExtractToFile($"{destinationDirectory}/{Path.GetFileName(entry.Name)}");
+    }
+}
+
+internal class PackageExtractPlugin : ZipExtractPlugin {
+
+    public PackageExtractPlugin(string extractTargetEntry, string name, string path) : base(extractTargetEntry, name, path) { }
+
+    public override void Extract(string destinationDirectory) {
+        base.Extract(destinationDirectory);
+        File.Delete(path);
     }
 }
 
@@ -272,6 +319,13 @@ internal class PluginTreeView : EditorServiceTreeView {
         menu.AddItem(new GUIContent("Copy Version"), false, () => {
             if (itemList[GetSelection().First()] is PluginTreeViewItem item) {
                 EditorGUIUtility.systemCopyBuffer = item.version;
+            }
+        });
+        
+        menu.AddItem(new GUIContent("Select File"), false, () => {
+            if (itemList[GetSelection().First()] is PluginTreeViewItem item && AssetDatabaseUtil.TryLoad(item.path, out var asset)) {
+                Selection.activeObject = asset;
+                EditorGUIUtility.PingObject(asset);
             }
         });
     }

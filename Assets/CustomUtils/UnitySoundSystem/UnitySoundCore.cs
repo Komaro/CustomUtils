@@ -54,14 +54,6 @@ public abstract class UnitySoundCore : CustomUtils.Sound.NewSoundSystem.SoundCor
         }
     }
 
-    public virtual void TransitionSnapshot(string transitionName, float transitionTime) {
-        _audioMixer.ThrowIfNull(nameof(_audioMixer));
-        if (snapshotEnum.TryConvert(transitionName, out var snapshotType)) {
-            snapshotEnum.Set(snapshotType);
-            _audioMixer.FindSnapshot(transitionName).TransitionTo(transitionTime);
-        }
-    }
-    
     public virtual void RefreshSnapshot() => TransitionSnapshot(snapshotEnum.Value, 0f);
     
     public virtual void TransitionSnapshot(Enum snapshotType, float transitionTime) {
@@ -71,7 +63,7 @@ public abstract class UnitySoundCore : CustomUtils.Sound.NewSoundSystem.SoundCor
             _audioMixer.FindSnapshot(snapshotType.ToString())?.TransitionTo(transitionTime);
         }
     }
-
+    
     public override float GetVolume(Enum type) {
         if (_audioMixer == null) {
             Logger.TraceError($"{nameof(_audioMixer)} is null");

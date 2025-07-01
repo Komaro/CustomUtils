@@ -37,12 +37,11 @@ public abstract class EditorAutoConfigDrawer<TConfig, TNullConfig> : EditorDrawe
     }
     
     public override void Close() {
+        Service.GetService<SystemWatcherService>().Stop(order);
         if (config?.IsNull() == false) {
             config.StopAutoSave();
             config.Save(CONFIG_PATH);
         }
-        
-        Service.GetService<SystemWatcherService>().Stop(order);
     }
 
     public override void Destroy() {
@@ -52,8 +51,8 @@ public abstract class EditorAutoConfigDrawer<TConfig, TNullConfig> : EditorDrawe
     }
     
     public override void CacheRefresh() {
-        Service.GetService<SystemWatcherService>().Start(order);
         if (JsonUtil.TryLoadJson(CONFIG_PATH, out config)) {
+            Service.GetService<SystemWatcherService>().Start(order);
             config.StartAutoSave(CONFIG_PATH);
         } else {
             if (config == null || config.IsNull() == false) {

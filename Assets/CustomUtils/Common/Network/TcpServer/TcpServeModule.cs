@@ -4,9 +4,11 @@ using System.Collections.Concurrent;
 using System.Drawing;
 using System.IO;
 using System.Net.Sockets;
+using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Channels;
 using System.Threading.Tasks;
+using Microsoft.IO;
 
 public interface ITcpServeModule {
     
@@ -53,7 +55,7 @@ public abstract class TcpServeModule<THeader, TData> : ITcpServeModule, ITcpRece
     ~TcpServeModule() => Dispose();
     public void Dispose() => Close();
 
-    public bool Start(TcpListener listener, CancellationToken token) {
+    public virtual bool Start(TcpListener listener, CancellationToken token) {
         if (listener == null) {
             Logger.TraceError($"The {nameof(listener)} is null");
             return false;
@@ -175,7 +177,7 @@ public abstract class TcpServeModule<THeader, TData> : ITcpServeModule, ITcpRece
             }
         }
     }
-    
+
     private async Task ReadConnectChannelAsync(CancellationToken channelToken) {
         Logger.TraceLog($"Start {nameof(ReadConnectChannelAsync)} {nameof(Task)}", Color.LightGreen);
         while (IsRunning()) {
@@ -211,9 +213,6 @@ public abstract class TcpServeModule<THeader, TData> : ITcpServeModule, ITcpRece
             throw new DisconnectSessionException(client);
         }
     }
-    /*
-     *
-     */
     public virtual async Task<byte[]> ReadBytesAsync(TcpSession session, int length, CancellationToken token) {
         try {
             return await ReadBytesAsync(session.Stream, length, token);
@@ -265,4 +264,64 @@ public abstract class TcpServeModule<THeader, TData> : ITcpServeModule, ITcpRece
     }
 
     public bool IsRunning() => isRunning;
+}
+
+public abstract class TcpFixServeModule<THeader, TData> : TcpServeModule<THeader, TData> {
+
+    protected RecyclableMemoryStreamManager memoryStreamManager = new();
+
+    protected override async Task ReceiveAsync(TcpSession session, CancellationToken token) {
+        Logger.TraceLog($"Start {nameof(ReceiveAsync)} {nameof(Task)}", Color.LightGreen);
+        using (var memoryStream = memoryStreamManager.GetStream("module", RECEIVE_BUFFER_SIZE))
+        using (var owner = memoryPool.Rent(RECEIVE_BUFFER_SIZE)) {
+            while (session.Connected && token.IsCancellationRequested == false) {
+                try {
+                    var buffer = owner.Memory;
+                    var byteLength = await session.Stream.ReadAsync(buffer, token);
+                    await session.Stream.CopyToAsync(memoryStream, token);
+                    if (byteLength == 0) {
+                        throw new DisconnectSessionException();
+                    }
+
+                    var readMemory = await memoryStream.ReadAsync(buffer[..byteLength], token);
+                    // TODO. Read Header
+                    var headerSize = Marshal.SizeOf<TcpHeader>();
+                    
+                } catch (DisconnectSessionException) {
+                    Disconnect(session.ID);
+                } catch (SocketException) {
+                    Disconnect(session.ID);
+                } catch (Exception ex) {
+                    Logger.TraceLog(ex.Message);
+                }
+            }
+        }
+    }
+
+    /*
+    public override Task<THeader> ReceiveHeaderAsync(TcpSession session, CancellationToken token) {
+        
+    }
+    */
+
+    protected override async Task<byte[]> ReadBytesAsync(NetworkStream stream, int length, CancellationToken token) {
+        using (var owner = MemoryPool<byte>.Shared.Rent(1024))
+        using (var memoryStream = memoryStreamManager.GetStream("module", 1024)) {
+            var buffer = owner.Memory;
+            var totalBytesLength = 0;
+            while (totalBytesLength < length) {
+                var bytesLength = await stream.ReadAsync(buffer, token);
+                if (bytesLength == 0) {
+                    throw new DisconnectSessionException();
+                }
+
+                token.ThrowIfCancellationRequested();
+
+                await memoryStream.WriteAsync(buffer[..bytesLength], token);
+                totalBytesLength += bytesLength;
+            }
+
+            return memoryStream.GetBuffer();
+        }
+    }
 }

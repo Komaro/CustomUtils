@@ -12,11 +12,10 @@ public abstract class GlobalEnum {
     protected static readonly ConcurrentDictionary<Type, ImmutableSortedDictionary<Type, ImmutableHashSet<Enum>>> enumSetDic = new();
     protected static readonly ConcurrentDictionary<Type, ImmutableDictionary<int, Enum>> intToEnumDic = new();
     protected static readonly ConcurrentDictionary<Type, ImmutableDictionary<Enum, int>> enumToIntDic = new();
-    protected static readonly ConcurrentDictionary<Type, ImmutableDictionary<string, Enum>> stringToEnumDic = new();
 }
 
-[Serializable]
 [TestRequired("내부 static 구조 변경으로 인한 테스트 필요")]
+[Serializable]
 [DebuggerDisplay("Value = {Value} index = {_index}")]
 public sealed class GlobalEnum<TAttribute> : GlobalEnum, IEnumerable<Enum> where TAttribute : PriorityAttribute {
 
@@ -26,9 +25,6 @@ public sealed class GlobalEnum<TAttribute> : GlobalEnum, IEnumerable<Enum> where
             enumSetDic.TryAdd(typeof(TAttribute), enumerable.ToImmutableSortedDictionary(info => info.enumType, info => info.enumType.GetEnumValues().OfType<Enum>().ToImmutableHashSet(), new GlobalEnumPriorityComparer()));
             intToEnumDic.TryAdd(typeof(TAttribute), enumSetDic[typeof(TAttribute)].Values.SelectMany(enumSet => enumSet).ToImmutableDictionary(_ => index++, enumValue => enumValue));
             enumToIntDic.TryAdd(typeof(TAttribute), intToEnumDic[typeof(TAttribute)].ToImmutableDictionary(pair => pair.Value, pair => pair.Key));
-            
-            // TODO. 키 중복 예외처리 발생
-            stringToEnumDic.TryAdd(typeof(TAttribute), enumToIntDic[typeof(TAttribute)].ToImmutableDictionary(pair => pair.Key.ToString(), pair => pair.Key));
         } else {
             Logger.TraceLog($"Cannot find an enum type with the {nameof(TAttribute)}({typeof(TAttribute).GetCleanFullName()})", Color.Yellow);
         }
@@ -68,24 +64,14 @@ public sealed class GlobalEnum<TAttribute> : GlobalEnum, IEnumerable<Enum> where
     public void Set(Enum enumValue) => Value = enumValue;
     public void Set<TEnum>(TEnum enumValue) where TEnum : struct, Enum => Value = enumValue;
 
-    public void Set(string enumName) {
-        if (stringToEnumDic[typeof(TAttribute)].TryGetValue(enumName, out var enumValue)) {
-            Value = enumValue;
-        }
-    }
-    
     public bool Contains(Enum enumValue) => enumToIntDic[typeof(TAttribute)].ContainsKey(enumValue);
     public bool Contains<TEnum>(TEnum enumValue) where TEnum : struct, Enum => enumSetDic[typeof(TAttribute)].TryGetValue(typeof(TEnum), out var enumSet) && enumSet.Contains(enumValue);
-    public bool Contains(string enumName) => stringToEnumDic[typeof(TAttribute)].ContainsKey(enumName);
     
     public IEnumerator<Enum> GetEnumerator() => intToEnumDic[typeof(TAttribute)].Values.GetEnumerator();
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
-    public bool TryConvert(string enumName, out Enum enumValue) => (enumValue = Convert(enumName)) != null;
-    public Enum Convert(string enumName) => stringToEnumDic[typeof(TAttribute)].TryGetValue(enumName, out var enumValue) ? enumValue : null;
-
     private class GlobalEnumPriorityComparer : IComparer<Type> {
-
+        
         public int Compare(Type xType, Type yType) {
             if (xType == null || yType == null) {
                 return 0;

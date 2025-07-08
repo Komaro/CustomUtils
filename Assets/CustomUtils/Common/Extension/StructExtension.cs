@@ -41,6 +41,14 @@ public static class StructExtension {
         }
     }
 
+    public static T? ToStruct<T>(this ref ReadOnlyMemory<byte> memory) where T : struct {
+        try {
+            return MemoryMarshal.Read<T>(memory.Span);
+        } catch (Exception) {
+            return null;
+        }
+    }
+
     public static T? ToStruct<T>(this ref Span<byte> byteSpan) where T : struct {
         try {
             return MemoryMarshal.Read<T>(byteSpan);

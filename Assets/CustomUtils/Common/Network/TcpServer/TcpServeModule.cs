@@ -4,11 +4,9 @@ using System.Collections.Concurrent;
 using System.Drawing;
 using System.IO;
 using System.Net.Sockets;
-using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Channels;
 using System.Threading.Tasks;
-using Microsoft.IO;
 
 public interface ITcpServeModule {
     
@@ -206,6 +204,7 @@ public abstract class TcpServeModule<THeader, TData> : ITcpServeModule, ITcpRece
 
     public abstract Task<TcpSession> ConnectSessionAsync(TcpClient client, CancellationToken token);
     
+    // TODO. Session 기능으로 이전
     public virtual async Task<byte[]> ReadBytesAsync(TcpClient client, int length, CancellationToken token) {
         try {
             return await ReadBytesAsync(client.GetStream(), length, token);
@@ -213,6 +212,8 @@ public abstract class TcpServeModule<THeader, TData> : ITcpServeModule, ITcpRece
             throw new DisconnectSessionException(client);
         }
     }
+    
+    // TODO. Session 기능으로 이전
     public virtual async Task<byte[]> ReadBytesAsync(TcpSession session, int length, CancellationToken token) {
         try {
             return await ReadBytesAsync(session.Stream, length, token);
@@ -221,6 +222,7 @@ public abstract class TcpServeModule<THeader, TData> : ITcpServeModule, ITcpRece
         }
     }
 
+    // TODO. Session 기능으로 이전
     protected virtual async Task<byte[]> ReadBytesAsync(NetworkStream stream, int length, CancellationToken token) {
         using (var owner = memoryPool.Rent(length))
         using (var memoryStream = new MemoryStream(length)) {
@@ -266,10 +268,13 @@ public abstract class TcpServeModule<THeader, TData> : ITcpServeModule, ITcpRece
     public bool IsRunning() => isRunning;
 }
 
+/*
 public abstract class TcpFixServeModule<THeader, TData> : TcpServeModule<THeader, TData> {
 
-    protected readonly Channel<MemoryStream> memoryChannel = Channel.CreateUnbounded<MemoryStream>();
     protected readonly RecyclableMemoryStreamManager memoryStreamManager = new();
+    
+    protected readonly Channel<MemoryStream> memoryChannel = Channel.CreateUnbounded<MemoryStream>();
+    protected readonly Channel<ReadOnlyMemory<byte>> channel = Channel.CreateUnbounded<ReadOnlyMemory<byte>>();
 
     protected readonly MemoryStream bufferStream;
     
@@ -323,8 +328,13 @@ public abstract class TcpFixServeModule<THeader, TData> : TcpServeModule<THeader
                         throw new DisconnectSessionException();
                     }
 
+                    await channel.Writer.WriteAsync(buffer[..byteLength], token);
+
+                    
+                    
                     var stream = memoryStreamManager.GetStream("chunk");
-                    _ = await stream.ReadAsync(buffer[..byteLength], token);
+                    await stream.WriteAsync(buffer[..byteLength], token);
+
                     await memoryChannel.Writer.WriteAsync(stream, token);
                 } catch (DisconnectSessionException) {
                     Disconnect(session.ID);
@@ -339,13 +349,20 @@ public abstract class TcpFixServeModule<THeader, TData> : TcpServeModule<THeader
         }
     }
 
+    private ReadOnlySequence<byte> _sequence = new();
+
     protected virtual async Task ParseAsync(CancellationToken token) {
         while (token.IsCancellationRequested == false) {
             using var stream = await memoryChannel.Reader.ReadAsync(token);
             stream.Position = 0;
+            
+
+            var memory = stream.GetBuffer().AsMemory(0, (int) stream.Length);
+
+
             await stream.CopyToAsync(bufferStream, token);
             bufferStream.Position = 0;
-                
+            
             // TODO. HEADER, BODY 파싱 처리
             // TODO. 메소드 추출 필요
             if (bufferStream.Length - bufferStream.Position > TCP_HEADER_SIZE) {
@@ -399,4 +416,4 @@ public abstract class TcpFixServeModule<THeader, TData> : TcpServeModule<THeader
 
         throw new NotImplementedException();
     }
-}
+}*/

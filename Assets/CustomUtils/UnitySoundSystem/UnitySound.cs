@@ -6,7 +6,9 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Audio;
 using CustomUtils.Sound.NewSoundSystem;
+using UnityEngine.Pool;
 
+// TODO. Queue 대신 Pool을 사용한 최적화 및 리펙토링 가능한지 검토
 [TestRequired]
 public abstract class UnitySound : SoundBase<UnitySoundCore> {
 

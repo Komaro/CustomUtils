@@ -10,7 +10,7 @@ public abstract class TcpStructHandler<TData> : TcpHandler<TData, TcpHeader> whe
 
     public override TcpHeader CreateHeader(TcpSession session, int length) => new(session.ID, Body, length);
 
-    public override async Task<TData> ReceiveBytesAsync(TcpSession session, byte[] bytes, CancellationToken token) {
+    public override async Task<TData> ReceiveBytesAsync(TcpSession session, ReadOnlyMemory<byte> bytes, CancellationToken token) {
         var data = bytes.ToStruct<TData>();
         if (data.HasValue) {
             return await ReceiveDataAsync(session, data.Value, token);
@@ -32,7 +32,7 @@ public abstract class TcpStructHandler<TData> : TcpHandler<TData, TcpHeader> whe
         return false;
     }
     
-    public override async Task<bool> SendBytesAsync(TcpSession session, byte[] bytes, CancellationToken token) {
+    public override async Task<bool> SendBytesAsync(TcpSession session, ReadOnlyMemory<byte> bytes, CancellationToken token) {
         try {
             var header = CreateHeader(session, bytes.Length);
             await WriteAsyncWithCancellationCheck(session, header.ToBytes(), token);
@@ -98,7 +98,7 @@ public class RequestTestHandler : TcpStructHandler<TcpStructTestRequest> {
 
 public abstract class TcpStructStringHandler<TData> : TcpStructHandler<TData> where TData : struct, ITcpPacket {
 
-    public override async Task ReceiveAsync(TcpSession session, byte[] bytes, CancellationToken token) => await ReceiveStringAsync(session, bytes.GetString(), token);
+    public override async Task ReceiveAsync(TcpSession session, ReadOnlyMemory<byte> bytes, CancellationToken token) => await ReceiveStringAsync(session, bytes.GetString(), token);
 
     public override async Task<TData> ReceiveDataAsync(TcpSession session, TData data, CancellationToken token) {
         await Task.CompletedTask;

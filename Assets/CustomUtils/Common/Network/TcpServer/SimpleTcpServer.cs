@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Buffers;
 using System.Drawing;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.IO;
 
 public class SimpleTcpServer : IDisposable {
 
@@ -102,18 +104,30 @@ public class SimpleTcpServer : IDisposable {
 public class TcpSession : IDisposable {
 
     public TcpClient Client { get; }
-    public uint ID { get; }
+    public uint ID { get; internal set; }
     public bool Connected => IsValid() && Client.Connected;
 
     // TODO. Stream 노출을 제거할 필요가 있음
     public NetworkStream Stream => IsValid() ? Client.GetStream() : null;
 
-    public TcpSession(TcpClient client) {
+    private readonly IMemoryOwner<byte> _buffer;
+    private readonly IMemoryOwner<byte> _leftBuffer;
+    private int _leftLength;
+    
+    private readonly RecyclableMemoryStreamManager _manager;
+
+    private TcpSession() {
+        _buffer = MemoryPool<byte>.Shared.Rent(1024);
+        _leftBuffer = MemoryPool<byte>.Shared.Rent(1024);
+        _manager = new RecyclableMemoryStreamManager();
+    }
+    
+    public TcpSession(TcpClient client) : this() {
         Client = client;
         ID = 0;
     }
 
-    public TcpSession(TcpClient client, uint id) {
+    public TcpSession(TcpClient client, uint id) : this() {
         Client = client;
         ID = id;
     }
@@ -121,11 +135,47 @@ public class TcpSession : IDisposable {
     ~TcpSession() => Dispose();
     
     public void Dispose() => Close();
+
     public void Close() => Client?.Close();
+    
+    public async Task<Memory<byte>> ReadBytesAsync(int length, CancellationToken token) {
+        using var readStream = _manager.GetStream("readStream");
+        var totalBytes = 0;
+        if (_leftLength > 0) {
+            var leftBuffer = _leftBuffer.Memory;
+            var maxReadLength = Math.Min(_leftLength, length);
+            await readStream.WriteAsync(leftBuffer[..maxReadLength], token);
+            totalBytes += maxReadLength;
 
-    // TODO. ReceiveAsync
-    public virtual async Task ReceiveAsync(byte[] bytes, CancellationToken token) => await Client.GetStream().WriteAsync(bytes, token);
+            var remainLength = _leftLength - maxReadLength;
+            if (remainLength > 0) {
+                leftBuffer.Slice(maxReadLength, remainLength).CopyTo(leftBuffer[..remainLength]);
+            }
+            
+            _leftLength = remainLength; 
+        }
 
+        var buffer = _buffer.Memory;
+        while (totalBytes < length) {
+            var readBytes = await Client.GetStream().ReadAsync(buffer, token);
+            if (readBytes == 0) {
+                throw new DisconnectSessionException();
+            }
+            
+            token.ThrowIfCancellationRequested();
+            await readStream.WriteAsync(buffer, token);
+            totalBytes += readBytes;
+        }
+        
+        var bytes = readStream.GetBuffer().AsMemory();
+        if (totalBytes > length) {
+            _leftLength = totalBytes - length;
+            bytes.Slice(length, _leftLength).CopyTo(_leftBuffer.Memory);
+        }
+
+        return bytes[..length];
+    }
+    
     // TODO. SendAsync
     public virtual async Task SendAsync() {
         

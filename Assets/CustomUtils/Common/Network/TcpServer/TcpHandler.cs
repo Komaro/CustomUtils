@@ -5,19 +5,19 @@ using System.Threading.Tasks;
 
 public interface ITcpHandler {
     
-    public Task ReceiveAsync(TcpSession session, byte[] bytes, CancellationToken token);
-    public Task SendAsync(TcpSession session, byte[] bytes, CancellationToken token);
+    public Task ReceiveAsync(TcpSession session, ReadOnlyMemory<byte> bytes, CancellationToken token);
+    public Task SendAsync(TcpSession session, ReadOnlyMemory<byte> bytes, CancellationToken token);
 }
 
 public interface ITcpReceiveHandler<TData> : ITcpHandler {
 
-    public Task<TData> ReceiveBytesAsync(TcpSession session, byte[] bytes, CancellationToken token);
+    public Task<TData> ReceiveBytesAsync(TcpSession session, ReadOnlyMemory<byte> bytes, CancellationToken token);
     public Task<TData> ReceiveDataAsync(TcpSession session, TData data, CancellationToken token);
 }
 
 public interface ITcpSendHandler<in TData> : ITcpHandler {
 
-    public Task<bool> SendBytesAsync(TcpSession session, byte[] bytes, CancellationToken token);
+    public Task<bool> SendBytesAsync(TcpSession session, ReadOnlyMemory<byte> bytes, CancellationToken token);
     public Task<bool> SendDataAsync(TcpSession session, TData send, CancellationToken token);
 }
 
@@ -34,21 +34,21 @@ public abstract class TcpHandler<TData, THeader> : ITcpReceiveHandler<TData>, IT
 
     public abstract THeader CreateHeader(TcpSession session, int length);
 
-    public virtual async Task ReceiveAsync(TcpSession session, byte[] bytes, CancellationToken token) => await ReceiveBytesAsync(session, bytes, token);
-    public virtual async Task SendAsync(TcpSession session, byte[] bytes, CancellationToken token) => await SendBytesAsync(session, bytes, token);
+    public virtual async Task ReceiveAsync(TcpSession session, ReadOnlyMemory<byte> bytes, CancellationToken token) => await ReceiveBytesAsync(session, bytes, token);
+    public virtual async Task SendAsync(TcpSession session, ReadOnlyMemory<byte> bytes, CancellationToken token) => await SendBytesAsync(session, bytes, token);
     
-    public abstract Task<TData> ReceiveBytesAsync(TcpSession session, byte[] bytes, CancellationToken token);
+    public abstract Task<TData> ReceiveBytesAsync(TcpSession session, ReadOnlyMemory<byte> bytes, CancellationToken token);
     public abstract Task<TData> ReceiveDataAsync(TcpSession session, TData data, CancellationToken token);
     
     public abstract Task<bool> SendDataAsync(TcpSession session, TData data, CancellationToken token);
-    public abstract Task<bool> SendBytesAsync(TcpSession session, byte[] bytes, CancellationToken token);
+    public abstract Task<bool> SendBytesAsync(TcpSession session, ReadOnlyMemory<byte> bytes, CancellationToken token);
     
-    protected async Task WriteAsyncWithCancellationCheck(NetworkStream stream, byte[] bytes, CancellationToken token) {
+    protected async Task WriteAsyncWithCancellationCheck(NetworkStream stream, ReadOnlyMemory<byte> bytes, CancellationToken token) {
         await stream.WriteAsync(bytes, token);
         token.ThrowIfCancellationRequested();
     }
     
-    protected async Task WriteAsyncWithCancellationCheck(TcpSession session, byte[] bytes, CancellationToken token) {
+    protected async Task WriteAsyncWithCancellationCheck(TcpSession session, ReadOnlyMemory<byte> bytes, CancellationToken token) {
         await session.Stream.WriteAsync(bytes, token);
         token.ThrowIfCancellationRequested();
     }

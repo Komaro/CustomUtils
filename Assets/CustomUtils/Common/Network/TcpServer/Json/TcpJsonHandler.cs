@@ -12,7 +12,7 @@ public abstract class TcpJsonHandler<TData> : TcpHandler<TData, TcpHeader> where
 
     public override TcpHeader CreateHeader(TcpSession session, int length) => new(session.ID, Body, length);
 
-    public override async Task<TData> ReceiveBytesAsync(TcpSession session, byte[] bytes, CancellationToken token) {
+    public override async Task<TData> ReceiveBytesAsync(TcpSession session, ReadOnlyMemory<byte> bytes, CancellationToken token) {
         if (bytes.GetString().TryToJson<TData>(out var data)) {
             return await ReceiveDataAsync(session, data, token);
         }
@@ -33,7 +33,7 @@ public abstract class TcpJsonHandler<TData> : TcpHandler<TData, TcpHeader> where
         return false;
     }
 
-    public override async Task<bool> SendBytesAsync(TcpSession session, byte[] bytes, CancellationToken token) {
+    public override async Task<bool> SendBytesAsync(TcpSession session, ReadOnlyMemory<byte> bytes, CancellationToken token) {
         try {
             var header = CreateHeader(session, bytes.Length);
             using(var owner = memoryPool.Rent(header.length + bytes.Length)) {

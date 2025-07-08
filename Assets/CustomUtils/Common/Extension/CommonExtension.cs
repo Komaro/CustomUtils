@@ -82,15 +82,18 @@ public static class CommonExtension {
     }
 
     private static string GetNameWithGenericArguments(this Type type) => type.IsGenericType ? $"{type.Name}<{type.GenericTypeArguments.ToStringCollection(genericType => genericType.Name, ", ")}>" : type.Name;
-    
-    public static string GetString(this Memory<byte> memory, ENCODING_FORMAT format = ENCODING_FORMAT.UTF_8) => format switch {
-        ENCODING_FORMAT.UTF_32 => Encoding.UTF32.GetString(memory.Span),
-        ENCODING_FORMAT.UNICODE => Encoding.Unicode.GetString(memory.Span),
-        ENCODING_FORMAT.ASCII => Encoding.ASCII.GetString(memory.Span),
-        _ => Encoding.UTF8.GetString(memory.Span)
+
+    public static string GetString(this ref Memory<byte> memory, ENCODING_FORMAT format = ENCODING_FORMAT.UTF_8) => memory.Span.GetString(format);
+    public static string GetString(this ref ReadOnlyMemory<byte> memory, ENCODING_FORMAT format = ENCODING_FORMAT.UTF_8) => memory.Span.GetString(format);
+
+    public static string GetString(this Span<byte> span, ENCODING_FORMAT format = ENCODING_FORMAT.UTF_8) => format switch {
+        ENCODING_FORMAT.UTF_32 => Encoding.UTF32.GetString(span),
+        ENCODING_FORMAT.UNICODE => Encoding.Unicode.GetString(span),
+        ENCODING_FORMAT.ASCII => Encoding.ASCII.GetString(span),
+        _ => Encoding.UTF8.GetString(span)
     };
-    
-    public static string GetString(this ref Span<byte> span, ENCODING_FORMAT format = ENCODING_FORMAT.UTF_8) => format switch {
+
+    public static string GetString(this ReadOnlySpan<byte> span, ENCODING_FORMAT format = ENCODING_FORMAT.UTF_8)  => format switch {
         ENCODING_FORMAT.UTF_32 => Encoding.UTF32.GetString(span),
         ENCODING_FORMAT.UNICODE => Encoding.Unicode.GetString(span),
         ENCODING_FORMAT.ASCII => Encoding.ASCII.GetString(span),

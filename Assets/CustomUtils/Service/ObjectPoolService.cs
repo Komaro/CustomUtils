@@ -83,7 +83,7 @@ public class ObjectPoolService : IService {
     public int GetCountActive(string name) => _poolDic.TryGetValue(name, out var pool) ? pool.CountActive : 0;
     public int GetCountInactive(string name) => _poolDic.TryGetValue(name, out var pool) ? pool.CountInactive : 0;
     public int GetMaxSize(string name) => _poolDic.TryGetValue(name, out var pool) ? pool.MaxSize : 0;
-} 
+}
 
 public record ObjectPoolBag : IDisposable {
 

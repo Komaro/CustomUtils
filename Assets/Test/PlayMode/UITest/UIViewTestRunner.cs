@@ -40,11 +40,11 @@ public class UIViewTestRunner {
             ui.MethodCallTest("OnClickDecreaseCountButton", flags, () => viewModel.Count == 15);
             
             // Proxy Test
-            Assert.IsTrue(Service.GetService<UIViewModelLocatorService>().TryGetViewModelHandler<TestSimpleUIViewModel>(out var handler));
+            Assert.IsTrue(Service.GetService<UIViewModelLocatorService>().TryGetViewModelResolver<TestSimpleUIViewModel>(out var handler));
             var modelAccessor = Service.GetService<UIViewModelLocatorService>().GetViewModelAccessor<TestSimpleUIViewModel>();
             Assert.IsTrue(modelAccessor.IsValid());
 
-            var proxyViewModel = handler.GetViewModel<TestSimpleUIViewModel>();
+            var proxyViewModel = handler.Resolve<TestSimpleUIViewModel>();
             Assert.IsTrue(viewModel == proxyViewModel);
             
             viewModel.Count.Value = 10;

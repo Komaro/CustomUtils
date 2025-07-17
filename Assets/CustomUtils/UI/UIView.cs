@@ -37,7 +37,7 @@ public abstract class UIView<TViewModel> : UIViewMonoBehaviour where TViewModel 
 
         viewModel ??= new TViewModel();
         
-        Service.GetService<UIViewModelProxyService>().Register(GetViewModelFunc);
+        Service.GetService<UIViewModelLocatorService>().Register(GetViewModelFunc);
     }
 
     protected virtual void OnEnable() {

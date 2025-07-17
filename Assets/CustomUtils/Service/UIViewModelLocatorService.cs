@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-public class UIViewModelProxyService : IService {
+public class UIViewModelLocatorService : IService {
 
     private readonly Dictionary<Type, UIViewModelHandler> _handlerDic = new();
 

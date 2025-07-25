@@ -4,12 +4,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using Microsoft.Extensions.Primitives;
 using UnityEngine;
 
 public static class ReflectionExtension {
 
-    public static string GetAlias(this Type type, string defaultAlias = "") => type.TryGetCustomAttribute<AliasAttribute>(out var attribute) ? attribute.alias : string.IsNullOrEmpty(defaultAlias) ? type.Name : defaultAlias;
-    public static string GetAlias(this MethodInfo info, string defaultAlias = "") => info.TryGetCustomAttribute<AliasAttribute>(out var attribute) ? attribute.alias : string.IsNullOrEmpty(defaultAlias) ? info.Name : defaultAlias;
+    public static string GetAlias(this MemberInfo info, string defaultAlias = "") => info.TryGetCustomAttribute<AliasAttribute>(out var attribute) ? attribute.alias : string.IsNullOrEmpty(defaultAlias) ? info.Name : defaultAlias;
+
+    // public static string GetAlias(this Type type, string defaultAlias = "") => type.TryGetCustomAttribute<AliasAttribute>(out var attribute) ? attribute.alias : string.IsNullOrEmpty(defaultAlias) ? type.Name : defaultAlias;
+    // public static string GetAlias(this MethodInfo info, string defaultAlias = "") => info.TryGetCustomAttribute<AliasAttribute>(out var attribute) ? attribute.alias : string.IsNullOrEmpty(defaultAlias) ? info.Name : defaultAlias;
 
     #region [Info]
     
@@ -110,10 +113,10 @@ public static class ReflectionExtension {
     public static string GetCleanFullName(this Type type) => _typeCleanFullNameDic.GetOrAdd(type, _ => {
         using (StringUtil.StringBuilderPool.Get(out var builder)) {
             builder.Append(type.Name);
-            if (type.IsGenericType) { 
-                builder.Append($"<{type.GenericTypeArguments.ToStringCollection(argumentType => argumentType.GetCleanFullName(), ", ")}>");
+            if (type.IsGenericType) {
+                builder.Append($"<{type.GetGenericArguments().ToStringCollection(argumentType => argumentType.GetCleanFullName(), ", ")}>");
             }
-
+            
             return builder.ToString();
         }
     });

@@ -382,6 +382,17 @@ public static partial class EditorCommon {
         
         return cursor;
     }
+    
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void DrawLoadingBar(EditorAsyncOperation operation, string title) {
+        using (new EditorGUILayout.VerticalScope()) {
+            GUILayout.Label(title, Constants.Draw.TITLE_STYLE);
+            EditorGUI.ProgressBar(EditorGUILayout.GetControlRect(false, 35f), operation.Progress, ((int)(operation.Progress * 100)).ToString());
+        }
+    }
+
+    public static void DrawProgressBar(EditorAsyncOperation operation) {
+    }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void DrawInteractionProgressBar(string text, float value, float maxValue, Action<EventType, float> onEvent = null) {

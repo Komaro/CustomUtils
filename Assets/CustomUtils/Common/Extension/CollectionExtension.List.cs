@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using UnityEngine.UIElements;
 
 public static partial class CollectionExtension {
 
@@ -47,11 +48,27 @@ public static partial class CollectionExtension {
             }
         }
     }
+
+    public static void Sync<T, V>(this IList<T> list, IList<V> sourceList, Func<V, T> creator) {
+        list.ThrowIfNull(nameof(list));
+        sourceList.ThrowIfNull(nameof(sourceList));
+        creator.ThrowIfNull(nameof(creator));
+        
+        var syncCount = sourceList.Count - list.Count;
+        if (syncCount > 0) {
+            for (var i = 0; i < syncCount; i++) {
+                if (creator.TryInvoke(sourceList[i], out var result)) {
+                    list.Add(result);
+                }
+            }
+        }
+    }
     
     [TestRequired]
     public static void Sync<TValue, TResult>(this IList list, IList<TValue> sourceList, Func<TValue, TResult> creator) {
-        ThrowIfInvalidCast<IList<TResult>>(list, nameof(list));
-        ThrowIfNull(creator, nameof(creator));
+        list.ThrowIfNull(nameof(list));
+        sourceList.ThrowIfNull(nameof(sourceList));
+        creator.ThrowIfNull(nameof(creator));
         
         var syncCount = sourceList.Count - list.Count;
         if (syncCount > 0) {
@@ -330,6 +347,16 @@ public static partial class CollectionExtension {
         return false;
     }
 
+    public static bool TryFind<T>(this List<T> list, int index, out T value) {
+        if (list.IsValidIndex(index)) {
+            value = list[index];
+            return true;
+        }
+
+        value = default;
+        return false;
+    }
+    
     public static bool TryFirst<T>(this List<T> list, out T value, Predicate<T> match) => (value = list.Find(match)) != null;
     public static bool TryFindIndex<T>(this List<T> list, out int index, Predicate<T> match) => (index = list.FindIndex(match)) > 0;
 

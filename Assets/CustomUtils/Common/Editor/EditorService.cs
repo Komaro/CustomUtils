@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Linq;
-using System.Reflection;
 using Unity.EditorCoroutines.Editor;
 using UnityEditor;
 using UnityEditor.Callbacks;
@@ -14,11 +13,15 @@ public abstract class EditorService : EditorWindow {
 
     private const string EDITOR_SERVICE_FIRST_OPEN_SESSION_KEY = "EditorServiceFirstOpenKey";
 
-    protected EditorService() => EditorApplication.playModeStateChanged += OnPlayModeStateChanged;
+    protected EditorService() {
+        EditorApplication.playModeStateChanged += OnPlayModeStateChanged;
+    }
 
     protected virtual bool CheckSession() => EditorCommon.TryGetSession(SessionKey, out bool isFirstOpen) == false || isFirstOpen == false;
     
-    private void OnDestroy() => EditorApplication.playModeStateChanged -= OnPlayModeStateChanged;
+    private void OnDestroy() {
+        EditorApplication.playModeStateChanged -= OnPlayModeStateChanged;
+    }
 
     [InitializeOnLoadMethod]
     private static void InitializeOnLoad() {
@@ -30,14 +33,14 @@ public abstract class EditorService : EditorWindow {
     private static void OnEditorFirstOpen() {
         EditorApplication.update -= OnEditorFirstOpen;
         EditorCommon.SetSession(EDITOR_SERVICE_FIRST_OPEN_SESSION_KEY, true);
-        foreach (var type in ReflectionProvider.GetSubTypesOfType<EditorService>()) {
+        foreach (var type in ReflectionProvider.GetSubTypesOfType<EditorService>().Where(type => type.IsAbstract == false)) {
             var objects = Resources.FindObjectsOfTypeAll(type);
             if (objects is { Length: > 0 } && objects.First() is EditorService editorService && editorService.CheckSession()) {
                 EditorApplication.update += editorService.OnEditorOpenUpdate;
             }
         }
     }
-
+    
     private void OnPlayModeStateChanged(PlayModeStateChange state) {
         switch (state) {
             case PlayModeStateChange.EnteredEditMode:

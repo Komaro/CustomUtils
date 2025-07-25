@@ -185,7 +185,7 @@ public abstract class BuildConfig : JsonAutoConfig {
         var type = GetType();
         if (type.TryGetCustomAttribute<BuildConfigAttribute>(out var targetAttribute)) {
             defineSymbols = targetAttribute.buildTargetGroup.GetScriptingDefineSymbolsForGroup();
-            foreach (var (optionAttribute, enumType) in ReflectionProvider.GetAttributeEnumInfos<BuildOptionEnumAttribute>()) {
+            foreach (var (optionAttribute, enumType) in ReflectionProvider.GetAttributeEnumSets<BuildOptionEnumAttribute>()) {
                 if (optionAttribute.buildTargetGroup == BuildTargetGroup.Unknown || optionAttribute.buildTargetGroup == targetAttribute.buildTargetGroup) {
                     foreach (var ob in Enum.GetValues(enumType)) {
                         optionDic.AutoAdd(ob.ToString(), false);

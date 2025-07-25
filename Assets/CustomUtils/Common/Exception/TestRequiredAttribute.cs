@@ -1,21 +1,30 @@
 ﻿using System;
+using System.Diagnostics;
+
+public abstract class TodoRequiredAttribute : Attribute { }
 
 // TODO. Attribute를 수집 관리하는 시스템 개발 필요
-[AttributeUsage(AttributeTargets.Class | AttributeTargets.Method | AttributeTargets.Interface | AttributeTargets.Struct, AllowMultiple = true)]
-public class TestRequiredAttribute : Attribute {
+[Alias("Test")]
+[AttributeUsage(AttributeTargets.Class | AttributeTargets.Method | AttributeTargets.Interface | AttributeTargets.Struct)]
+public class TestRequiredAttribute : TodoRequiredAttribute {
 
     public TEST_TYPE type;
     public string description;
-
-
-    public TestRequiredAttribute(TEST_TYPE type, string description = "No description") {
+    
+    public TestRequiredAttribute() {
+        type = TEST_TYPE.FUNCTIONAL;
+        description = string.Empty;
+    }
+    
+    public TestRequiredAttribute(TEST_TYPE type, string description = "") {
         this.type = type;
         this.description = description;
     }
     
-    public TestRequiredAttribute() : this(default) { }
-    public TestRequiredAttribute(string description) : this(TEST_TYPE.FUNCTIONAL, description) { }
-
+    public TestRequiredAttribute(string description) {
+        type = TEST_TYPE.FUNCTIONAL;
+        description = description;
+    }
 }
 
 [Flags]
@@ -27,7 +36,8 @@ public enum TEST_TYPE {
 }
 
 // TODO. 위와 동일
-public class RefactoringRequiredAttribute : Attribute {
+[Alias("Refactoring")]
+public class RefactoringRequiredAttribute : TodoRequiredAttribute {
 
     public readonly int priority;
     public readonly string description;
@@ -39,7 +49,7 @@ public class RefactoringRequiredAttribute : Attribute {
 }
 
 // TODO. 위와 동일
-public class TempAttribute : Attribute {
+public abstract class TempAttribute : TodoRequiredAttribute {
 
     public readonly string title;
     public readonly string description;
@@ -50,16 +60,16 @@ public class TempAttribute : Attribute {
     }
 }
 
+[Alias("Method")]
 [AttributeUsage(AttributeTargets.Method)]
 public class TempMethodAttribute : TempAttribute {
-
-
+    
     public TempMethodAttribute(string title = "", string description = "") : base(title, description) { }
 }
 
+[Alias("Class")]
 [AttributeUsage(AttributeTargets.Class)]
 public class TempClassAttribute : TempAttribute {
-
-
+    
     public TempClassAttribute(string title = "", string description = "") : base(title, description) { }
 }

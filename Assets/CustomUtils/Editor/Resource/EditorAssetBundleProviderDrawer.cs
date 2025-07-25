@@ -30,7 +30,7 @@ public partial class EditorAssetBundleProviderDrawer : EditorResourceDrawer<Asse
     
     public EditorAssetBundleProviderDrawer(EditorWindow window) : base(window) { }
     
-    public override sealed void CacheRefresh() {
+    public sealed override void CacheRefresh() {
         Service.GetService<SystemWatcherService>().Start(order);
         if (JsonUtil.TryLoadJson(CONFIG_PATH, out config)) {
             _plainEncryptKey = string.IsNullOrEmpty(config.cipherEncryptKey) == false ? EncryptUtil.DecryptDES(config.cipherEncryptKey) : string.Empty;

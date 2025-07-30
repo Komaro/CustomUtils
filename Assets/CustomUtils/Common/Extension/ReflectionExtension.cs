@@ -80,10 +80,31 @@ public static class ReflectionExtension {
         return false;
     }
 
-    public static IEnumerable<Type> GetBaseTypes(this Type type) {
+    public static IEnumerable<Type> GetAllTypes(this Type type) {
+        do {
+            yield return type;
+            foreach (var interfaceType in type.GetInterfaces()) {
+                yield return interfaceType;
+            }
+        } while ((type = type.BaseType) != null);
+    }
+
+    public static IEnumerable<Type> GetBaseTypes(this Type type, bool includeSelf = false) {
+        if (includeSelf) {
+            yield return type;
+        }
+        
         while ((type = type.BaseType) != null) {
             yield return type;
         }
+    }
+
+    public static IEnumerable<Type> GetInterfaceTypes(this Type type) {
+        do {
+            foreach (var interfaceType in type.GetInterfaces()) {
+                yield return interfaceType;
+            }
+        } while ((type = type.BaseType) != null);
     }
 
     public static IEnumerable<Type> GetGenericArguments(this Type type, Type baseDefinitionType) {

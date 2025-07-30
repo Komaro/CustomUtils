@@ -23,7 +23,7 @@ public class SafeDelegateTestRunner {
         OnVoidHandler handler = () => Logger.TraceLog("Handler");
         safeDelegate += handler;
 
-        safeDelegate.handler.Invoke();
+        safeDelegate.Handler.Invoke();
     }
 
     private void OnVoidMethod() {

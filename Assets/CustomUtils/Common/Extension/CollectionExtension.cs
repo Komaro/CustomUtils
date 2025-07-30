@@ -6,6 +6,7 @@ using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using PlasticGui.WorkspaceWindow.Merge;
 using UnityEngine;
 
 [RefactoringRequired(5, "전체적으로 모든 메소드를 점검하고 리팩토링 필요. 메소드 수가 많아지고 기간이 길어지면서 코드의 일관성이 줄어듬")]
@@ -54,15 +55,8 @@ public static partial class CollectionExtension {
     }
 
     public static IEnumerable<T> SelectMany<T>(this IEnumerable<IEnumerable<T>> enumerable) => enumerable.SelectMany(values => values);
-
-    public static IEnumerable<TResult> SelectWithDistinct<TValue, TResult>(this IEnumerable<TValue> enumerable, Func<TValue, TResult> converter, IEqualityComparer<TValue> equalityComparer = null) {
-        var distinctSet = new HashSet<TValue>(equalityComparer);
-        foreach (var value in enumerable) {
-            if (distinctSet.Add(value)) {
-                yield return converter.Invoke(value);
-            }
-        }
-    }
+    public static IEnumerable<TResult> DistinctWithSelect<TValue, TResult>(this IEnumerable<TValue> enumerable, Func<TValue, TResult> converter, IEqualityComparer<TValue> equalityComparer = null) => enumerable.Distinct(equalityComparer).Select(converter.Invoke);
+    public static IEnumerable<TResult> SelectWithDistinct<TValue, TResult>(this IEnumerable<TValue> enumerable, Func<TValue, TResult> converter, IEqualityComparer<TResult> equalityComparer = null) => enumerable.Select(converter.Invoke).Distinct(equalityComparer);
 
     public static bool TryFirst<T>(this IEnumerable<T> enumerable, out T matchItem, Predicate<T> match = null) {
         if (match == null) {
@@ -221,7 +215,7 @@ public static partial class CollectionExtension {
     
     public static HashSet<T> ToHashSetWithDistinct<T>(this IEnumerable<T> enumerable, IEqualityComparer<T> equalityComparer = null) => enumerable.Distinct().ToHashSet(equalityComparer);
     public static ImmutableHashSet<T> ToImmutableHashSetWithDistinct<T>(this IEnumerable<T> enumerable, IEqualityComparer<T> equalityComparer = null) => enumerable.Distinct().ToImmutableHashSet(equalityComparer);
-    public static ImmutableHashSet<TResult> ToImmutableHashSetForLinq<TValue, TResult>(this IEnumerable<TValue> enumerable, Func<TValue, TResult> converter) => enumerable.SelectWithDistinct(converter).ToImmutableHashSet();
+    public static ImmutableHashSet<TResult> ToImmutableHashSetForLinq<TValue, TResult>(this IEnumerable<TValue> enumerable, Func<TValue, TResult> converter) => enumerable.DistinctWithSelect(converter).ToImmutableHashSet();
 
     #endregion
     

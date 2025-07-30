@@ -25,7 +25,7 @@ public static class UnityAssemblyProvider {
         private static ImmutableDictionary<string, string> _cachedSourceFilePathDic;
         
         // TODO. 하나의 소스 파일에 여러 Type이 있는 경우 처리가 불가능
-        public static ImmutableDictionary<string, string> CachedSourceFilePathDic =>  _cachedSourceFilePathDic ??= CachedUnityAssemblySet.Where(assembly => assembly.IsBuiltin() == false).SelectMany(assembly => assembly.sourceFiles).ToImmutableDictionaryWithDistinct(Path.GetFileNameWithoutExtension, path => path);
+        public static ImmutableDictionary<string, string> CachedSourceFilePathDic =>  _cachedSourceFilePathDic ??= CachedUnityAssemblySet.Where(assembly => assembly.IsCustom()).SelectMany(assembly => assembly.sourceFiles).ToImmutableDictionaryWithDistinct(Path.GetFileNameWithoutExtension, path => path);
         
         private static ImmutableDictionary<Type, string> _cachedSourceFileTypePathDic;
         

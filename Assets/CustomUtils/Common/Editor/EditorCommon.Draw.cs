@@ -488,10 +488,9 @@ public static partial class EditorCommon {
 
 public record ToggleDraw {
 
+    public string header;
     public string name;
     public bool isActive;
-
-    public string header;
 
     public ToggleDraw(string name, bool isActive) {
         this.name = name;
@@ -499,6 +498,7 @@ public record ToggleDraw {
     }
         
     public ToggleDraw(string name, bool isActive, string header) : this(name, isActive) => this.header = header;
+    public ToggleDraw() : this(string.Empty, false, string.Empty) { }
 
     public bool HasHeader() => string.IsNullOrEmpty(header) == false;
 

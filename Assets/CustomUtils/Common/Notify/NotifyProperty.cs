@@ -43,7 +43,7 @@ public class NotifyProperty<TValue> : NotifyField, IEqualityComparer<NotifyPrope
         Value = default;
     }
     
-    public override void Refresh() => OnChanged.handler?.Invoke(NotifyFieldChangedEventArgs.Empty);
+    public override void Refresh() => OnChanged.Handler?.Invoke(NotifyFieldChangedEventArgs.Empty);
 
     public static bool operator ==(NotifyProperty<TValue> x, NotifyProperty<TValue> y) => x?.EqualityComparer.Equals(x, y) ?? false;
     public static bool operator !=(NotifyProperty<TValue> x, NotifyProperty<TValue> y) => x == y == false;

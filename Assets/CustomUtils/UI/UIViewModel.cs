@@ -16,7 +16,7 @@ public abstract class UIViewModel : IDisposable {
     public UIViewModel() {
         var notifyDic = GetType().GetFields().Where(info => NOTIFY_TYPE_SET.Contains(info.FieldType.GetGenericTypeDefinition())).ToDictionary(info => info, info => info.GetValue(this) as NotifyField);
         foreach (var (info, notifyField) in notifyDic) {
-            notifyField.OnChanged += args => OnModelChanged.handler?.Invoke(info.Name, args);
+            notifyField.OnChanged += args => OnModelChanged.Handler?.Invoke(info.Name, args);
         }
         
         lazyNotifyFields = new Lazy<ImmutableArray<NotifyField>>(() => GetType().GetFields().Where(info => NOTIFY_TYPE_SET.Contains(info.FieldType.GetGenericTypeDefinition())).Select(info => info.GetValue(this) as NotifyField).ToImmutableArray());

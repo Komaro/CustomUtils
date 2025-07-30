@@ -314,7 +314,7 @@ public abstract class EditorBuildDrawer<TConfig, TNullConfig> : EditorAutoConfig
         }
 
         sceneAssetInfoDic.Clear();
-        foreach (var info in AssetDatabaseUtil.FindAssetInfos<SceneAsset>("t:Scene")) {
+        foreach (var info in AssetDatabaseUtil.FindAssetInfos<SceneAsset>(FilterUtil.CreateFilter(TypeFilter.Scene))) {
             sceneAssetInfoDic.Add(info.path, info);
         }
     }

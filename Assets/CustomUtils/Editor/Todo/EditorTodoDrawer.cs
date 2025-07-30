@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using UnityEditor;
-using UnityEditor.AssetImporters;
 using UnityEditor.IMGUI.Controls;
 using UnityEngine;
 using Attribute = System.Attribute;
@@ -18,13 +17,14 @@ public class EditorTodoDrawerAttribute : Attribute {
 [RequiresAttributeImplementation(typeof(EditorTodoDrawerAttribute))]
 public abstract class EditorTodoDrawer<T> : EditorDrawer where T : EditorServiceTreeView, new() {
 
-    protected readonly T treeView;
+    protected T treeView;
     
     protected EditorTodoDrawer(EditorWindow window) : base(window) {
-        treeView = SystemUtil.SafeCreateInstance<T>();
+        
     }
 
     public override void CacheRefresh() {
+        treeView ??= SystemUtil.SafeCreateInstance<T>();
         treeView.Clear();
     }
 }

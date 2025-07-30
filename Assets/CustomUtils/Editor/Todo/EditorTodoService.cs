@@ -27,7 +27,7 @@ public struct Selector<T> {
             if (_values.IsValidIndex(value)) {
                 var oldIndex = _selectIndex;
                 _selectIndex = value;
-                ChangeHandler.handler?.Invoke(oldIndex);
+                ChangeHandler.Handler?.Invoke(oldIndex);
             }
         }
     }
@@ -151,7 +151,6 @@ public class EditorTodoService : EditorService<EditorTodoService> {
     protected override async Task AsyncRefresh(EditorAsyncOperation operation) {
         operation.Init();
         if (HasOpenInstances()) {
-            Logger.TraceLog(nameof(AsyncRefresh));
             _todoAttributeDic.Clear();
             operation.Report(0.5f);
             

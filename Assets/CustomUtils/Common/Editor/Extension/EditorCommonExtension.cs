@@ -1,4 +1,6 @@
 ﻿using System.Collections.Immutable;
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using UnityEditor;
 using UnityEngine;
 
@@ -9,4 +11,12 @@ public static class EditorCommonExtension {
     public static bool IsProcessableEvent(this EventType eventType) => _ignoreEventTypeSet.Contains(eventType) == false;
 
     public static BuildTargetGroup GetTargetGroup(this BuildTarget type) => BuildPipeline.GetBuildTargetGroup(type);
+}
+
+public static class CSharpExtension {
+
+    public static bool TryGetDeclaredSymbol(this SemanticModel model, BaseTypeDeclarationSyntax syntax, out INamedTypeSymbol symbol) => (symbol = model.GetDeclaredSymbol(syntax) as INamedTypeSymbol) != null;
+
+    public static string GetFilePath(this Location location) => location.SourceTree?.FilePath ?? string.Empty;
+    public static int GetLinePosition(this Location location) => location.GetLineSpan().StartLinePosition.Line + 1;
 }

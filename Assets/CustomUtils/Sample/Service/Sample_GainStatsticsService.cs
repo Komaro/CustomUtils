@@ -38,9 +38,9 @@ public class Sample_GainStatsticsService : IService {
     }
 
     void IService.Start() {
-        _disposableList.Add(_addGainStream.Subscribe(addEvent => OnUpdateGain.handler?.Invoke(addEvent.Key.type, addEvent.Key.id, addEvent.Value)));
-        _disposableList.Add(_replaceGainStream.Subscribe(replaceEvent => OnUpdateGain.handler?.Invoke(replaceEvent.Key.type, replaceEvent.Key.id, replaceEvent.NewValue)));
-        _disposableList.Add(_resetGainStream.Subscribe(_ => OnResetGain.handler?.Invoke()));
+        _disposableList.Add(_addGainStream.Subscribe(addEvent => OnUpdateGain.Handler?.Invoke(addEvent.Key.type, addEvent.Key.id, addEvent.Value)));
+        _disposableList.Add(_replaceGainStream.Subscribe(replaceEvent => OnUpdateGain.Handler?.Invoke(replaceEvent.Key.type, replaceEvent.Key.id, replaceEvent.NewValue)));
+        _disposableList.Add(_resetGainStream.Subscribe(_ => OnResetGain.Handler?.Invoke()));
 
         _recordingDisposable = Observable.EveryLateUpdate().Where(_ => true).Subscribe(_ => {
             try {
@@ -53,7 +53,7 @@ public class Sample_GainStatsticsService : IService {
                 ResetHistory();
             }
             finally {
-                OnUpdateTick.handler?.Invoke(_recordingTick);
+                OnUpdateTick.Handler?.Invoke(_recordingTick);
             }
         }, onError: _ => {
             Service.RestartService<Sample_GainStatsticsService>();

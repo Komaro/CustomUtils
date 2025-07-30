@@ -36,12 +36,12 @@ public class EditorAsyncOperation : IProgress<float> {
         }
     
         if (value > Progress) {
-            OnProgress.handler?.Invoke(Progress);
+            OnProgress.Handler?.Invoke(Progress);
         }
         
         Progress = value;
         if (IsDone) {
-            onComplete.handler?.Invoke(this);
+            onComplete.Handler?.Invoke(this);
         }
     }
 }

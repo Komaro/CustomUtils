@@ -7,15 +7,14 @@ using UnityEditor.IMGUI.Controls;
 using UnityEngine;
 using TreeView = UnityEditor.IMGUI.Controls.TreeView;
 
-public abstract record TreeViewItemData {
+public abstract record TreeViewItemData(int Id) {
 
-    public int id;
-    
-    public TreeViewItemData(int id) => this.id = id;
+    public int Id { get; protected set; } = Id;
 }
 
+[RefactoringRequired("EditorServiceTreeViewItem 종송성 제거 후 대체 예정")]
 public abstract class OptimizeEditorServiceTreeView<TData> : EditorServiceTreeView where TData : TreeViewItemData {
-
+    
     protected readonly List<TreeViewItem> itemList = new();
     protected readonly Dictionary<int, TData> dataDic = new();
 
@@ -37,17 +36,16 @@ public abstract class OptimizeEditorServiceTreeView<TData> : EditorServiceTreeVi
     } 
     
     public void Add(TData data) {
-        if (dataDic.TryAdd(data.id, data)) {
-            Add(new TreeViewItem(data.id));
+        if (dataDic.TryAdd(data.Id, data)) {
+            Add(new TreeViewItem(data.Id));
         }
     }
 
     protected override void Add(TreeViewItem item) => itemList.Add(item);
-
-    // TODO. to private
+    
     protected override void OnSortingChanged(MultiColumnHeader header) {
-        if (autoOverridenMethod.HasOverriden(nameof(Sort)) == false) {
-            Logger.TraceLog($"{nameof(Sort)} has not been overridden.", Color.red);
+        if (autoOverridenMethod.HasOverriden(nameof(ItemComparision)) == false) {
+            Logger.TraceLog($"{nameof(ItemComparision)} has not been overridden.", Color.red);
             return;
         }
         
@@ -63,20 +61,18 @@ public abstract class OptimizeEditorServiceTreeView<TData> : EditorServiceTreeVi
 
         var columnIndex = sortedColumns.First();
         rows.Clear();
-        itemList.Sort((xItem, yItem) => Sort(columnIndex, multiColumnHeader.IsSortedAscending(columnIndex), xItem, yItem));
+        itemList.Sort((xItem, yItem) => ItemComparision(columnIndex, multiColumnHeader.IsSortedAscending(columnIndex), xItem, yItem));
         BuildRows(rootItem);
         Repaint();
     }
 
-    protected virtual int Sort(int index, bool isAscending, TreeViewItem xItem, TreeViewItem yItem) => throw new MissingMethodException(GetType().GetCleanFullName(), MethodBase.GetCurrentMethod().GetCleanFullName());
+    protected virtual int ItemComparision(int index, bool isAscending, TreeViewItem xItem, TreeViewItem yItem) => throw new MissingMethodException(GetType().GetCleanFullName(), MethodBase.GetCurrentMethod().GetCleanFullName());
 
     protected override IEnumerable<TreeViewItem> GetOrderBy(int index, bool isAscending) {
         itemList.Sort();
         return Enumerable.Empty<TreeViewItem>();
     }
 
-    
-    
     protected bool TryFindData(TreeViewItem item, out TData data) => (data = FindData(item)) != null;
     protected TData FindData(TreeViewItem item) => dataDic.TryGetValue(item.id, out var data) ? data : null;
     
@@ -115,7 +111,7 @@ public abstract class EditorServiceTreeView : TreeView {
     }
 
     protected override TreeViewItem BuildRoot() => new() { id = 0, depth = -1, children = itemList };
-    protected override bool DoesItemMatchSearch(TreeViewItem item, string search) => OnDoesItemMatchSearch(item, search);
+    protected sealed override bool DoesItemMatchSearch(TreeViewItem item, string search) => OnDoesItemMatchSearch(item, search);
 
     protected virtual void Add(TreeViewItem item) => itemList.Add(item);
     public void Clear() => itemList.Clear();

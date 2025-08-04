@@ -62,57 +62,6 @@ public struct Selector<T> {
     public void Clear() => ChangeHandler.Clear();
 }
 
-[RequiresStaticMethodImplementation("OpenWindow", typeof(MenuItem))]
-public abstract class EditorService<T> : EditorWindow where T : EditorService<T> {
-
-    private static T _window;
-    protected static T Window => _window == null ? _window = GetWindow<T>(typeof(T).Name) : _window;
-
-    protected virtual void OnEnable() {
-        EditorApplication.playModeStateChanged += OnPlayModeStateChanged;
-        Refresh();
-    }
-
-    protected virtual void OnDisable() => EditorApplication.playModeStateChanged -= OnPlayModeStateChanged;
-
-    protected virtual void Open() {
-        if (_window != null) {
-            _window.Show();
-            _window.Focus();
-        }
-    }
-
-    protected abstract void Refresh();
-    protected virtual EditorAsyncOperation AsyncRefresh() => throw new NotImplementedException();
-    protected virtual Task AsyncRefresh(EditorAsyncOperation operation) => throw new NotImplementedException();
-
-    public bool HasOpenInstances() => HasOpenInstances<T>();
-    
-    protected virtual void OnPlayModeStateChanged(PlayModeStateChange state) {
-        switch (state) {
-            case PlayModeStateChange.EnteredEditMode:
-                OnEnteredEditMode();
-                break;
-            case PlayModeStateChange.ExitingEditMode:
-                OnExitingEditMode();
-                break;
-            case PlayModeStateChange.EnteredPlayMode:
-                OnEnteredPlayMode();
-                break;
-            case PlayModeStateChange.ExitingPlayMode:
-                OnExitingPlayMode();
-                break;
-        }
-    }
-
-    protected virtual void OnEnteredEditMode() { }
-    protected virtual void OnExitingEditMode() { }
-    protected virtual void OnEnteredPlayMode() { }
-    protected virtual void OnExitingPlayMode() { }
-
-    protected EditorCoroutine StartCoroutine(IEnumerator enumerator, object owner = null) => EditorCoroutineUtility.StartCoroutine(enumerator, owner ?? this);
-}
-
 public class EditorTodoService : EditorService<EditorTodoService> {
 
     private readonly Dictionary<MemberInfo, List<TodoRequiredAttribute>> _todoAttributeDic = new();
@@ -128,12 +77,7 @@ public class EditorTodoService : EditorService<EditorTodoService> {
 
     [MenuItem("Service/Todo Service")]
     private static void OpenWindow() => Window.Open();
-
-    protected override void OnEnable() {
-        EditorApplication.playModeStateChanged += OnPlayModeStateChanged;
-        _operation = AsyncRefresh();
-    }
-
+    
     protected override void OnDisable() {
         base.OnDisable();
         _operation?.Clear();
@@ -141,12 +85,6 @@ public class EditorTodoService : EditorService<EditorTodoService> {
     }
 
     protected override void Refresh() => _operation = AsyncRefresh();
-
-    protected override EditorAsyncOperation AsyncRefresh() {
-        var operation = new EditorAsyncOperation();
-        _ = AsyncRefresh(operation);
-        return operation;
-    }
 
     protected override async Task AsyncRefresh(EditorAsyncOperation operation) {
         operation.Init();
@@ -178,7 +116,7 @@ public class EditorTodoService : EditorService<EditorTodoService> {
 
     private void OnGUI() {
         if (_operation is { IsDone: false }) {
-            EditorCommon.DrawLoadingBar(_operation, "데이터 캐싱 중...");
+            EditorCommon.DrawProgressBar(_operation, "데이터 캐싱 중...");
             Repaint();
             return;
         }

@@ -1,9 +1,68 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Linq;
+using System.Threading.Tasks;
 using Unity.EditorCoroutines.Editor;
 using UnityEditor;
 using UnityEditor.Callbacks;
 using UnityEngine;
+
+[RequiresStaticMethodImplementation("OpenWindow", typeof(MenuItem))]
+public abstract class EditorService<T> : EditorWindow where T : EditorService<T> {
+
+    private static T _window;
+    protected static T Window => _window == null ? _window = GetWindow<T>(typeof(T).Name) : _window;
+
+    protected virtual void OnEnable() {
+        EditorApplication.playModeStateChanged += OnPlayModeStateChanged;
+        Refresh();
+    }
+
+    protected virtual void OnDisable() => EditorApplication.playModeStateChanged -= OnPlayModeStateChanged;
+
+    protected virtual void Open() {
+        if (_window != null) {
+            _window.Show();
+            _window.Focus();
+        }
+    }
+
+    protected abstract void Refresh();
+
+    protected virtual EditorAsyncOperation AsyncRefresh() {
+        var operation = new EditorAsyncOperation();
+        _ = AsyncRefresh(operation);
+        return operation;
+    }
+    
+    protected virtual Task AsyncRefresh(EditorAsyncOperation operation) => throw new NotImplementedException();
+
+    public bool HasOpenInstances() => HasOpenInstances<T>();
+    
+    protected virtual void OnPlayModeStateChanged(PlayModeStateChange state) {
+        switch (state) {
+            case PlayModeStateChange.EnteredEditMode:
+                OnEnteredEditMode();
+                break;
+            case PlayModeStateChange.ExitingEditMode:
+                OnExitingEditMode();
+                break;
+            case PlayModeStateChange.EnteredPlayMode:
+                OnEnteredPlayMode();
+                break;
+            case PlayModeStateChange.ExitingPlayMode:
+                OnExitingPlayMode();
+                break;
+        }
+    }
+
+    protected virtual void OnEnteredEditMode() { }
+    protected virtual void OnExitingEditMode() { }
+    protected virtual void OnEnteredPlayMode() { }
+    protected virtual void OnExitingPlayMode() { }
+
+    protected EditorCoroutine StartCoroutine(IEnumerator enumerator, object owner = null) => EditorCoroutineUtility.StartCoroutine(enumerator, owner ?? this);
+}
 
 [RequiresStaticMethodImplementation("OpenWindow", typeof(MenuItem))]
 [RequiresStaticMethodImplementation("CacheRefresh", typeof(DidReloadScripts))]

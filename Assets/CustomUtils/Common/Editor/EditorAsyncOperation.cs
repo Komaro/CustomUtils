@@ -3,7 +3,12 @@
 public class EditorAsyncOperation : IProgress<float> {
     
     public virtual bool IsDone => Progress >= 1;
+    
     public virtual float Progress { get; protected set; }
+    public virtual string ProgressDisplay => ((int) Progress).ToString();
+    
+    public virtual float Percentage => Progress * 100f;
+    public virtual string PercentageDisplay => ((int) Percentage).ToString();
 
     public delegate void CompleteHandler(EditorAsyncOperation operation);
     protected SafeDelegate<CompleteHandler> onComplete;
@@ -43,5 +48,13 @@ public class EditorAsyncOperation : IProgress<float> {
         if (IsDone) {
             onComplete.Handler?.Invoke(this);
         }
+    }
+
+    public virtual void Report(int value, int totalValue) {
+        if (value <= 0 || totalValue <= 0) {
+            throw new DivideByZeroException($"{nameof(value)} = {value} || {nameof(totalValue)} = {totalValue}");
+        }
+        
+        Report(value / (float)totalValue);
     }
 }

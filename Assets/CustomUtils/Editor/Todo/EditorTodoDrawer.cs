@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
 using UnityEditor.IMGUI.Controls;
@@ -12,7 +13,6 @@ public class EditorTodoDrawerAttribute : Attribute {
     
     public EditorTodoDrawerAttribute(Type attributeType) => this.attributeType = attributeType;
 }
-
 
 [RequiresAttributeImplementation(typeof(EditorTodoDrawerAttribute))]
 public abstract class EditorTodoDrawer<T> : EditorDrawer where T : EditorServiceTreeView, new() {
@@ -39,6 +39,8 @@ public class EditorTestRequiredDrawer : EditorTodoDrawer<TodoTestRequiredTreeVie
 
     public override void CacheRefresh() {
         base.CacheRefresh();
+        // TODO. 현재 class type만 캐싱 중. Type이 아닌 MemberInfo 형태로 획득할 수 있도록 수정 필요
+        
         foreach (var (attribute, type) in ReflectionProvider.GetAttributeTypeSets<TestRequiredAttribute>()) {
             treeView.Add(attribute, type);
         }
@@ -124,46 +126,61 @@ public class TodoTestRequiredTreeView : TodoTreeView<TodoTestRequiredTreeView.Da
 
     protected override void RowGUI(RowGUIArgs args) {
         if (dataDic.TryGetValue(args.item.id, out var data)) {
-            EditorGUI.LabelField(args.GetCellRect(0), data.id.ToString(), Constants.Draw.CENTER_LABEL);
-            EditorGUI.LabelField(args.GetCellRect(1), data.type.ToString());
-            EditorGUI.LabelField(args.GetCellRect(2), data.className);
+            EditorGUI.LabelField(args.GetCellRect(0), data.Id.ToString(), Constants.Draw.CENTER_LABEL);
+            EditorGUI.LabelField(args.GetCellRect(1), data.TestType.ToString());
+            EditorGUI.LabelField(args.GetCellRect(2), data.ClassName);
         }
     }
-    protected override string GetDescription(int index) => TryFindData(index, out var data) ? data.description : string.Empty;
+    protected override string GetDescription(int index) => TryFindData(index, out var data) ? data.Description : string.Empty;
 
-    protected override int Sort(int index, bool isAscending, TreeViewItem xItem, TreeViewItem yItem) {
+    protected override int ItemComparision(int index, bool isAscending, TreeViewItem xItem, TreeViewItem yItem) {
         if (isAscending) {
             (xItem, yItem) = (yItem, xItem);
         }
 
         return TryFindData(xItem, out var xData) && TryFindData(yItem, out var yData)
             ? (SORT_TYPE) index switch {
-                SORT_TYPE.NO => xData.id.CompareTo(yData.id),
-                SORT_TYPE.TYPE => xData.type.CompareTo(yData.type),
-                SORT_TYPE.CLASS => string.CompareOrdinal(xData.className, yData.className),
+                SORT_TYPE.NO => xData.Id.CompareTo(yData.Id),
+                SORT_TYPE.TYPE => xData.TestType.CompareTo(yData.TestType),
+                SORT_TYPE.CLASS => string.CompareOrdinal(xData.ClassName, yData.ClassName),
                 _ => 0
             }
             : 1;
     }
 
     protected override void DoubleClickedItem(int id) {
-        if (TryFindDataFromId(id, out var data)) {
-            UnityEditorInternal.InternalEditorUtility.OpenFileAtLineExternal(data.className, 1);
+        if (TryFindDataFromId(id, out var data) == false) {
+            Logger.TraceError($"{nameof(data)} not found for id: {id}");
+            return;
         }
+
+        if (EditorTypeLocationService.IsValid() == false) {
+            Logger.TraceLog($"{nameof(EditorTypeLocationService)} is not valid. To enable the redirect feature, the {nameof(EditorTypeLocationService)} must be enabled.", Color.yellow);
+            return;
+        }
+
+        if (EditorTypeLocationService.TryGetTypeLocation(data.ClassType, out var location) == false) {
+            Logger.TraceError($"{nameof(location)} not found for type: {data.ClassName}");
+            return;
+        }
+
+        UnityEditorInternal.InternalEditorUtility.OpenFileAtLineExternal(location.path, location.line);
     }
 
-    protected override bool OnDoesItemMatchSearch(TreeViewItem item, string search) => TryFindData(item.id, out var data) && data.className.IndexOf(search, StringComparison.OrdinalIgnoreCase) >= 0;
+    protected override bool OnDoesItemMatchSearch(TreeViewItem item, string search) => TryFindData(item.id, out var data) && data.ClassName.IndexOf(search, StringComparison.OrdinalIgnoreCase) >= 0;
 
     public record Data : TreeViewItemData {
 
-        public readonly TEST_TYPE type;
-        public readonly string className;
-        public readonly string description;
+        public TEST_TYPE TestType { get; }
+        public Type ClassType { get; }
+        public string ClassName { get; }
+        public string Description { get; }
 
         public Data(int id, TestRequiredAttribute attribute, Type classType) : base(id) {
-            type = attribute.type;
-            description = attribute.description;
-            className = classType.GetCleanFullName();
+            TestType = attribute.type;
+            ClassType = classType;
+            ClassName = classType.GetCleanFullName();
+            Description = attribute.description;
         }
     }
     

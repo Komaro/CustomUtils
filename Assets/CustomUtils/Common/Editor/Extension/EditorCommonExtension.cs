@@ -15,7 +15,7 @@ public static class EditorCommonExtension {
 
 public static class CSharpExtension {
 
-    public static bool TryGetDeclaredSymbol(this SemanticModel model, BaseTypeDeclarationSyntax syntax, out INamedTypeSymbol symbol) => (symbol = model.GetDeclaredSymbol(syntax) as INamedTypeSymbol) != null;
+    public static bool TryGetDeclaredSymbol(this SemanticModel model, SyntaxNode syntax, out INamedTypeSymbol symbol) => (symbol = model.GetDeclaredSymbol(syntax) as INamedTypeSymbol) != null;
 
     public static string GetFilePath(this Location location) => location.SourceTree?.FilePath ?? string.Empty;
     public static int GetLinePosition(this Location location) => location.GetLineSpan().StartLinePosition.Line + 1;

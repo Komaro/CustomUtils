@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Immutable;
-using System.IO;
-using System.Linq;
+﻿using System.Collections.Immutable;
 using UnityEditor.Compilation;
 using UnityAssembly = UnityEditor.Compilation.Assembly;
 using SystemAssembly = System.Reflection.Assembly;

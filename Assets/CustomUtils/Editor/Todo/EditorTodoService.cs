@@ -62,6 +62,7 @@ public struct Selector<T> {
     public void Clear() => ChangeHandler.Clear();
 }
 
+// TODO. 리다이렉션 구현 시도로 인한 작업 딜레이 발생. 리다이렉션 구현을 동결하고 좀 더 단순한 기능 구현 및 EditorService 개선으로 구현 축소
 public class EditorTodoService : EditorService<EditorTodoService> {
 
     private readonly Dictionary<MemberInfo, List<TodoRequiredAttribute>> _todoAttributeDic = new();

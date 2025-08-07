@@ -65,7 +65,7 @@ public static class AnalyzerGenerator {
         foreach (var path in sourceFiles) {
             // if (SystemUtil.TryReadAllText(Path.Combine(Constants.Path.PROJECT_PATH, path), out var source)) {
             if (SystemUtil.TryReadAllText(path, out var source)) {
-                syntaxTreeList.Add(SyntaxFactory.ParseSyntaxTree(SourceText.From(source)));
+                syntaxTreeList.Add(SyntaxFactory.ParseSyntaxTree(SourceText.From(source), CSharpParseOptions.Default.WithPreprocessorSymbols()));
             }
         }
         

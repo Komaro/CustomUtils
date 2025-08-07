@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Unity.EditorCoroutines.Editor;
 using UnityEditor;
@@ -13,12 +14,19 @@ public abstract class EditorService<T> : EditorWindow where T : EditorService<T>
     private static T _window;
     protected static T Window => _window == null ? _window = GetWindow<T>(typeof(T).Name) : _window;
 
+    protected readonly CancellationTokenSource _tokenSource = new();
+
     protected virtual void OnEnable() {
         EditorApplication.playModeStateChanged += OnPlayModeStateChanged;
         Refresh();
     }
 
-    protected virtual void OnDisable() => EditorApplication.playModeStateChanged -= OnPlayModeStateChanged;
+    protected virtual void OnDisable() {
+        EditorApplication.playModeStateChanged -= OnPlayModeStateChanged;
+        _tokenSource.Cancel();
+    }
+
+    private void OnDestroy() => _tokenSource.Dispose();
 
     protected virtual void Open() {
         if (_window != null) {
@@ -31,11 +39,11 @@ public abstract class EditorService<T> : EditorWindow where T : EditorService<T>
 
     protected virtual EditorAsyncOperation AsyncRefresh() {
         var operation = new EditorAsyncOperation();
-        _ = AsyncRefresh(operation);
+        _ = AsyncRefresh(operation, _tokenSource.Token);
         return operation;
     }
     
-    protected virtual Task AsyncRefresh(EditorAsyncOperation operation) => throw new NotImplementedException();
+    protected virtual Task AsyncRefresh(EditorAsyncOperation operation, CancellationToken token) => throw new NotImplementedException();
 
     public bool HasOpenInstances() => HasOpenInstances<T>();
     

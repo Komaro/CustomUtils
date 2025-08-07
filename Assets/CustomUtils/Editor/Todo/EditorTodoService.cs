@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
 using System.Threading.Tasks;
-using Unity.EditorCoroutines.Editor;
 using UnityEditor;
 
 public struct Selector<T> {
@@ -86,14 +85,17 @@ public class EditorTodoService : EditorService<EditorTodoService> {
 
     protected override void Refresh() => _operation = AsyncRefresh();
 
-    protected override async Task AsyncRefresh(EditorAsyncOperation operation) {
+    protected override async Task AsyncRefresh(EditorAsyncOperation operation, CancellationToken token) {
         operation.Init();
         if (HasOpenInstances()) {
+            await Task.Yield();
+            
             _todoAttributeDic.Clear();
             operation.Report(0.5f);
             
             var types = ReflectionProvider.GetSubTypesOfTypeDefinition(typeof(EditorTodoDrawer<>)).ToArray();
             foreach (var type in types) {
+                token.ThrowIfCancellationRequested();
                 if (type.TryGetCustomAttribute<EditorTodoDrawerAttribute>(out var attribute) && (_drawerDic.TryGetValue(attribute.attributeType, out var drawer) == false || drawer == null)) {
                     if (SystemUtil.TrySafeCreateInstance(out drawer, type, this)) {
                         _drawerDic.Add(attribute.attributeType, drawer);

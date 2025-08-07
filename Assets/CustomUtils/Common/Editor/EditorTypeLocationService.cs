@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using UnityEditor;
 using UnityEditor.IMGUI.Controls;
@@ -9,6 +9,8 @@ using UnityEditorInternal;
 using UnityEngine;
 using Color = System.Drawing.Color;
 
+[Obsolete("Not Implement")]
+// 리다이렉션 기능을 구현하기 위해 너무 많은 작업 소요가 발생. 근본적인 문제 해결에 너무 많은 작업 소요가 발생하여 현 시점에서 중단할 피요가 있음
 public partial class EditorTypeLocationService : EditorService<EditorTypeLocationService> {
 
     private static bool _isActiveAnalyze;
@@ -45,31 +47,32 @@ public partial class EditorTypeLocationService : EditorService<EditorTypeLocatio
     private static void OpenWindow() => Window.Open();
     protected override void Refresh() => _operation = AsyncRefresh();
 
-    protected override async Task AsyncRefresh(EditorAsyncOperation operation) {
+    protected override async Task AsyncRefresh(EditorAsyncOperation operation, CancellationToken token) {
+        await Task.Yield();
         _fullProcessInfoText.SwitchValue = _isActiveFullProcessor;
         
         operation.Init();
-        
+
         _ignoreAssemblyAssets ??= CreateInstance<SerializedAssemblyArray>();
         _treeView ??= new TypeLocationTreeView();
         
         _treeView.Clear();
+
         if (_isActiveAnalyze == false) {
             operation.Done();
             _treeView.Reload();
         } else {
             if (IsValid() == false) {
-                while (IsRunning == false) {
-                    await Task.Delay(50);
-                }
-                
-                while (IsRunning) {
-                    await Task.Delay(50);
-                }
+                await Task.Delay(50, token);
             }
             
+            while (IsRunning) {
+                await Task.Delay(50, token);
+            }
+
             var progress = 0;
             foreach (var (type, (path, line)) in _typeLocationDic) {
+                token.ThrowIfCancellationRequested();
                 _treeView.Add(type, path, line);
                 operation.Report(++progress, _typeLocationDic.Count);
             }
@@ -81,12 +84,18 @@ public partial class EditorTypeLocationService : EditorService<EditorTypeLocatio
         }
     }
 
-
     private void OnGUI() {
         EditorGUILayout.Space(10);
         
         if (_operation is { IsDone: false }) {
-            EditorCommon.DrawProgressBar(_operation);
+            if (Progress.Exists(_taskId)) {
+                var progress = Progress.GetProgress(_taskId);
+                _operation.Report(progress);
+                EditorCommon.DrawProgressBar(_operation, "타입 분석중...");
+            } else {
+                EditorCommon.DrawProgressBar(_operation, "캐싱중...");
+            }
+            
             Repaint();
             return;
         }
@@ -235,19 +244,13 @@ internal class TypeLocationTreeView : OptimizeEditorServiceTreeView<TypeLocation
 
     protected override bool OnDoesItemMatchSearch(TreeViewItem item, string search) => TryFindDataFromId(item.id, out var data) && (data.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) >= 0 || data.AssemblyName.IndexOf(search, StringComparison.OrdinalIgnoreCase) >= 0);
 
-    public record Data : TreeViewItemData {
+    public record Data(int Id, string Name, string AssemblyName, string Path, int Line) : TreeViewItemData(Id) {
 
-        public string Name { get; }
-        public string AssemblyName { get; }
-        public string Path { get; }
-        public int Line { get; }
-        
-        public Data(int id, string name, string assemblyName, string path, int line) : base(id) {
-            Name = name;
-            AssemblyName = assemblyName;
-            Path = path;
-            Line = line;
-        }
+        public string Name { get; } = Name;
+        public string AssemblyName { get; } = AssemblyName;
+        public string Path { get; } = Path;
+        public int Line { get; } = Line;
+
     }
     
 

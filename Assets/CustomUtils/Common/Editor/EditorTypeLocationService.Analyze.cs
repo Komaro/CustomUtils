@@ -5,6 +5,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -14,7 +15,6 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 using UnityEditor;
 using UnityAssembly = UnityEditor.Compilation.Assembly;
 using SystemAssembly = System.Reflection.Assembly;
-
 
 public partial class EditorTypeLocationService {
 
@@ -50,7 +50,7 @@ public partial class EditorTypeLocationService {
 
             EditorPrefsUtil.TryGet(SerializedAssemblyArray.IGNORE_ASSEMBLIES_KEY, out string[] ignoreAssemblies);
             var ignoreAssemblySet = ignoreAssemblies.ToHashSetWithDistinct();
-            var assemblyDic = UnityAssemblyProvider.GetUnityAssemblySet().Where(assembly => UnityAssemblyExtension.IsCustom(assembly) && ignoreAssemblySet.Contains(assembly.name) == false).ToDictionary(assembly => assembly, assembly => assembly.sourceFiles);
+            var assemblyDic = UnityAssemblyProvider.GetUnityAssemblySet().Where(assembly => assembly.IsCustom() && ignoreAssemblySet.Contains(assembly.name) == false).ToDictionary(assembly => assembly, assembly => assembly.sourceFiles);
             try {
                 var processorCount = _isActiveFullProcessor ? Environment.ProcessorCount : Environment.ProcessorCount / 2;
                 await Task.Run(() => assemblyDic.AsParallel().WithDegreeOfParallelism(processorCount).WithCancellation(_tokenSource.Token).ForAll(pair => AnalyzeTypeLocation(pair.Key, pair.Value, _tokenSource.Token)), _tokenSource.Token);
@@ -66,6 +66,7 @@ public partial class EditorTypeLocationService {
         }
     }
 
+    [Obsolete]
     private static void AnalyzeTypeLocation(UnityAssembly assembly, string[] sourceFiles, CancellationToken token) {
         var assemblyId = Progress.Start($"{assembly.name} Type location cache", parentId:_taskId);
         var parsingId = Progress.Start($"{assembly.name} Parsing...", parentId: assemblyId);
@@ -118,6 +119,141 @@ public partial class EditorTypeLocationService {
         Progress.Remove(assemblyId);
     }
     
+    private static void AnalyzeMemberInfoLocation(UnityAssembly assembly, string[] sourceFiles, CancellationToken token) {
+        if (AssemblyProvider.TryGetSystemAssembly(assembly.name, out var systemAssembly) == false) {
+            return;
+        }
+
+        var typeCache = new Dictionary<string, Type>();
+        var fieldCache = new Dictionary<string, FieldInfo>();
+        var propertyCache = new Dictionary<string, PropertyInfo>();
+        var methodCache = new Dictionary<string, MethodInfo>();
+        var typeList = systemAssembly.GetTypes().Where(type => type.IsDefined<CompilerGeneratedAttribute>() == false).ToList();
+        const BindingFlags bindingFlags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static;
+        foreach (var type in typeList) {
+            typeCache.AutoAdd(GetFixName(type), type);
+            
+            foreach (var fieldInfo in type.GetFields(bindingFlags)) {
+                if (fieldInfo.FieldType.IsDefined<CompilerGeneratedAttribute>()) {
+                    continue;
+                }
+                
+                fieldCache.AutoAdd(GetFixName(fieldInfo), fieldInfo);
+            }
+
+            foreach (var propertyInfo in type.GetProperties(bindingFlags)) {
+                propertyCache.AutoAdd(GetFixName(propertyInfo), propertyInfo);
+            }
+
+            foreach (var methodInfo in type.GetMethods(bindingFlags)) {
+                methodCache.AutoAdd(GetFixName(methodInfo), methodInfo);
+            }
+        }
+
+        var syntaxTreeList = new List<SyntaxTree>();
+        foreach (var path in assembly.sourceFiles) {
+            var fullPath = Path.Combine(Constants.Path.PROJECT_PATH, path);
+            syntaxTreeList.Add(CSharpSyntaxTree.ParseText(File.ReadAllTextAsync(fullPath, token).Result, CSharpParseOptions.Default.WithPreprocessorSymbols(assembly.defines), cancellationToken: token).WithFilePath(fullPath));
+        }
+
+        var compilation = CSharpCompilation.Create($"{assembly.name}_Temp")
+            .AddReferences(MetadataReference.CreateFromFile(typeof(object).Assembly.Location))
+            .AddSyntaxTrees(syntaxTreeList);
+        
+        foreach (var syntaxTree in syntaxTreeList) {
+            token.ThrowIfCancellationRequested();
+            var semanticModel = compilation.GetSemanticModel(syntaxTree);
+            foreach (var syntax in syntaxTree.GetRootAsync(token).Result.DescendantNodes()) {
+                switch (syntax) {
+                    case TypeDeclarationSyntax typeSyntax:
+                        if (semanticModel.TryGetDeclaredSymbol(typeSyntax, out var typeSymbol) == false) {
+                            Logger.TraceLog(typeSyntax.GetLocation().ToString());
+                            continue;
+                        }
+
+                        if (typeCache.TryGetValue(GetFixName(typeSymbol), out var type) && typeSymbol.Locations.TryFirst(out var typeLocation)) {
+                            // TODO. Add duplicate check
+                            _memberInfoLocationDic.AutoAdd(type, typeLocation.GetRedirectLocation());
+                        }
+                        break;
+                    case FieldDeclarationSyntax fieldSyntax:
+                        var variable = fieldSyntax.Declaration.Variables.FirstOrDefault();
+                        if (variable == null || semanticModel.TryGetDeclaredSymbol(variable, out var fieldSymbol) == false) {
+                            Logger.TraceLog(fieldSyntax.GetLocation().ToString());
+                            continue;
+                        }
+                        
+                        if (fieldCache.TryGetValue(GetFixName(fieldSymbol), out var fieldInfo) && fieldSymbol.Locations.TryFirst(out var fieldLocation)) {
+                            // TODO. Add duplicate check
+                            _memberInfoLocationDic.AutoAdd(fieldInfo, fieldLocation.GetRedirectLocation());
+                        }
+                        break;
+                    case PropertyDeclarationSyntax propertySyntax:
+                        if (semanticModel.TryGetDeclaredSymbol(propertySyntax, out var propertySymbol) == false) {
+                            Logger.TraceLog(propertySyntax.GetLocation().ToString());
+                            continue;
+                        }
+
+                        if (propertyCache.TryGetValue(GetFixName(propertySymbol), out var propertyInfo) && propertySymbol.Locations.TryFirst(out var propertyLocation)) {
+                            // TODO. Add duplicate check
+                            _memberInfoLocationDic.AutoAdd(propertyInfo, propertyLocation.GetRedirectLocation());
+                        }
+                        break;
+                    case MethodDeclarationSyntax methodSyntax:
+                        if (semanticModel.TryGetDeclaredSymbol(methodSyntax, out var methodSymbol) == false) {
+                            Logger.TraceLog(methodSyntax.GetLocation().ToString());
+                            continue;
+                        }
+                        
+                        if (methodCache.TryGetValue(GetFixName(methodSymbol), out var methodInfo) && methodSymbol.Locations.TryFirst(out var methodLocation)) {
+                            // TODO. Add duplicate check
+                            _memberInfoLocationDic.AutoAdd(methodInfo, methodLocation.GetRedirectLocation());
+                        }
+                        break;
+                }
+            }
+        }
+    }
+    
+    private static string GetFixName(Type type) => type.FullName;
+
+    private static string GetFixName(FieldInfo info) {
+        using (StringUtil.StringBuilderPool.Get(out var builder)) {
+            if (info.DeclaringType != null) {
+                builder.Append(GetFixName(info.DeclaringType));
+                builder.Append("+");
+            }
+            
+            builder.Append(info.Name);
+            return builder.ToString();
+        }
+    }
+
+    private static string GetFixName(PropertyInfo info) {
+        using (StringUtil.StringBuilderPool.Get(out var builder)) {
+            if (info.DeclaringType != null) {
+                builder.Append(GetFixName(info.DeclaringType));
+                builder.Append("+");
+            }
+
+            builder.Append(info.Name);
+            return builder.ToString();
+        }
+    }
+
+    private static string GetFixName(MethodInfo info) {
+        using (StringUtil.StringBuilderPool.Get(out var builder)) {
+            if (info.DeclaringType != null) {
+                builder.Append(GetFixName(info.DeclaringType));
+                builder.Append("+");
+            }
+
+            builder.Append(info.Name);
+            return builder.ToString();
+        }
+    }
+    
+    [Obsolete]
     private static bool TryGetType(ISymbol symbol, SystemAssembly assembly, out Type type) {
         using (StringUtil.StringBuilderConcurrentPool.Get(out var builder)) {
             if (symbol.ContainingNamespace.IsGlobalNamespace == false) {
@@ -129,6 +265,17 @@ public partial class EditorTypeLocationService {
             return assembly.TryGetType(builder.ToString(), out type);
         }
     }
+    
+    private static string GetFixName(ISymbol symbol) {
+        using (StringUtil.StringBuilderConcurrentPool.Get(out var builder)) {
+            if (symbol.ContainingNamespace.IsGlobalNamespace == false) {
+                builder.Append($"{symbol.ContainingNamespace.ToDisplayString()}.");
+            }
+
+            AppendNestedType(builder, symbol);
+            return builder.ToString();
+        }
+    }
 
     private static void AppendNestedType(StringBuilder builder, ISymbol symbol) {
         if (symbol.ContainingType != null) {
@@ -138,25 +285,4 @@ public partial class EditorTypeLocationService {
         
         builder.Append(symbol.MetadataName);
     }
-
-    // TODO. Type 뿐만이 아니라 되도록이면 Memoberinfo에 대한 전체 획득을 할 수 있도록 개선 
-    private static void AnalyzeMemberInfoLocation(UnityAssembly assembly, string[] sourceFiles, CancellationToken token) {
-        // TODO. 우선적으로 필요한 MemberInfo를 특정 string 포멧에 맞춰 캐싱...
-        
-        // TODO. Symbol 분석...
-        
-        // TODO. 쓸모없는 캐시 데이터 정리...
-    }
-    
-    
-// #else
-//
-//     // Coroutine
-//         
-//     public static partial class EditorTypeLocationService {
-//         
-//     }
-//     
-// #endif
-    
 }

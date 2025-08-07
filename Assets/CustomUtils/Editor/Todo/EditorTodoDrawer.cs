@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
 using UnityEditor.IMGUI.Controls;
@@ -39,7 +38,6 @@ public class EditorTestRequiredDrawer : EditorTodoDrawer<TodoTestRequiredTreeVie
 
     public override void CacheRefresh() {
         base.CacheRefresh();
-        // TODO. 현재 class type만 캐싱 중. Type이 아닌 MemberInfo 형태로 획득할 수 있도록 수정 필요
         
         foreach (var (attribute, type) in ReflectionProvider.GetAttributeTypeSets<TestRequiredAttribute>()) {
             treeView.Add(attribute, type);
@@ -147,26 +145,7 @@ public class TodoTestRequiredTreeView : TodoTreeView<TodoTestRequiredTreeView.Da
             }
             : 1;
     }
-
-    protected override void DoubleClickedItem(int id) {
-        if (TryFindDataFromId(id, out var data) == false) {
-            Logger.TraceError($"{nameof(data)} not found for id: {id}");
-            return;
-        }
-
-        if (EditorTypeLocationService.IsValid() == false) {
-            Logger.TraceLog($"{nameof(EditorTypeLocationService)} is not valid. To enable the redirect feature, the {nameof(EditorTypeLocationService)} must be enabled.", Color.yellow);
-            return;
-        }
-
-        if (EditorTypeLocationService.TryGetTypeLocation(data.ClassType, out var location) == false) {
-            Logger.TraceError($"{nameof(location)} not found for type: {data.ClassName}");
-            return;
-        }
-
-        UnityEditorInternal.InternalEditorUtility.OpenFileAtLineExternal(location.path, location.line);
-    }
-
+    
     protected override bool OnDoesItemMatchSearch(TreeViewItem item, string search) => TryFindData(item.id, out var data) && data.ClassName.IndexOf(search, StringComparison.OrdinalIgnoreCase) >= 0;
 
     public record Data : TreeViewItemData {
@@ -183,20 +162,6 @@ public class TodoTestRequiredTreeView : TodoTreeView<TodoTestRequiredTreeView.Da
             Description = attribute.description;
         }
     }
-    
-    // public sealed class Item : TreeViewItem {
-    //
-    //     public readonly TEST_TYPE type;
-    //     public readonly string className;
-    //     public readonly string description;
-    //
-    //     public Item(int id, TestRequiredAttribute attribute, Type classType) {
-    //         this.id = id;
-    //         type = attribute.type;
-    //         description = attribute.description;
-    //         this.className = classType.GetCleanFullName();
-    //     }
-    // }
 
     private enum SORT_TYPE {
         NO,

@@ -106,6 +106,12 @@ public class EditorCustomAnalyzerService : EditorService {
     private void OnDisable() => _activateAssemblyTreeViewFold?.valueChanged.RemoveListener(Repaint);
 
     private void OnGUI() {
+        // TODO. 현재 관련 Type에 대한 소스 코드 경로를 획득하는 로직에 문제가 발생하여 일시적으로 빌드를 금지
+        if (true) {
+            EditorGUILayout.HelpBox("Type과 관련된 소스 코드 획득 로직의 문제로 해결 이전까지는 일시적으로 사용 금지", MessageType.Error);
+            return;
+        }
+        
         if (_isRefreshing) {
             var rect = EditorGUILayout.GetControlRect(false, 40f);
             EditorGUI.ProgressBar(rect, _progress, ((int)(_progress * 100)).ToString());

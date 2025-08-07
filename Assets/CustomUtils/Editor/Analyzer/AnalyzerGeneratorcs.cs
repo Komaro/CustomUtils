@@ -18,28 +18,32 @@ public static class AnalyzerGenerator {
 
     private static readonly Regex PLUGINS_FOLDER = new(string.Format(Constants.Regex.FOLDER_CONTAINS_FORMAT, Constants.Folder.PLUGINS));
 
+    // TODO. 일단 정확도가 낮은 상태로 사용하고 이후 좀더 정확도를 높일 필요가 있음
+    // TODO. 소스 파일 경로를 획득할 완전하게 새로운 방식 필요
+    [Obsolete]
     public static void GenerateCustomAnalyzerDll(string dllName, IEnumerable<Type> types) {
         // TODO. EditorTypeLocationService가 비활성화 되어 있는 경우 예외처리
-        var typePaths = types.SelectMany(type => type.GetAllTypes()).Where(EditorTypeLocationService.ContainsTypeLocation).Select(type => EditorTypeLocationService.GetTypeLocation(type).path).ToArray();
-        if (typePaths.Any() == false) {
-            Logger.TraceError($"{nameof(typePaths)} is empty. Please review the implementation through inheriting {nameof(DiagnosticAnalyzer)} again.");
-            return;
-        }
         
-        GenerateCustomAnalyzerDllOnCompilation(dllName, typePaths.Distinct());
+        // var typePaths = types.SelectMany(type => type.GetAllTypes()).Where(EditorTypeLocationService.ContainsTypeLocation).Select(type => EditorTypeLocationService.GetTypeLocation(type).path).ToArray();
+        // if (typePaths.Any() == false) {
+        //     Logger.TraceError($"{nameof(typePaths)} is empty. Please review the implementation through inheriting {nameof(DiagnosticAnalyzer)} again.");
+        //     return;
+        // }
+        //
+        // GenerateCustomAnalyzerDllOnCompilation(dllName, typePaths.Distinct());
 
         // todo. 정확도 낮음
-        // var typePathDic = new Dictionary<Type, string>();
-        // foreach (var type in types) {
-        //     if (UnityAssemblyProvider.TryGetSourceFilePath(type, out var path)) {
-        //         typePathDic.AutoAdd(type, path);
-        //         foreach (var baseType in type.GetBaseTypes()) {
-        //             if (typePathDic.ContainsKey(baseType) == false && UnityAssemblyProvider.TryGetSourceFilePath(baseType, out path)) {
-        //                 typePathDic.AutoAdd(baseType, path);
-        //             }
-        //         }
-        //     }
-        // }
+        var typePathDic = new Dictionary<Type, string>();
+        foreach (var type in types) {
+            // if (UnityAssemblyProvider.TryGetSourceFilePath(type, out var path)) {
+            //     typePathDic.AutoAdd(type, path);
+            //     foreach (var baseType in type.GetBaseTypes()) {
+            //         if (typePathDic.ContainsKey(baseType) == false && UnityAssemblyProvider.TryGetSourceFilePath(baseType, out path)) {
+            //             typePathDic.AutoAdd(baseType, path);
+            //         }
+            //     }
+            // }
+        }
 
         // SRP에 맞지 않음. 애초에 이전 단계에서 필텅링 되었어야 함.
         // if (typePathDic.Count <= 0) {
@@ -47,12 +51,12 @@ public static class AnalyzerGenerator {
         //     typePathDic = ReflectionProvider.GetSubTypesOfType<DiagnosticAnalyzer>().Where(type => PLUGINS_FOLDER.IsMatch(type.Assembly.Location) == false && type.IsDefined<ObsoleteAttribute>() == false).ToDictionary(type => type, UnityAssemblyProvider.GetSourceFilePath);
         // }
 
-        // if (typePathDic.Any() == false) {
-        //     Logger.TraceError($"{nameof(typePathDic)} is empty. Please review the implementation through inheriting {nameof(DiagnosticAnalyzer)} again.");
-        //     return;
-        // }
-        //
-        // GenerateCustomAnalyzerDllOnCompilation(dllName, typePathDic.Values.ToArray());
+        if (typePathDic.Any() == false) {
+            Logger.TraceError($"{nameof(typePathDic)} is empty. Please review the implementation through inheriting {nameof(DiagnosticAnalyzer)} again.");
+            return;
+        }
+        
+        GenerateCustomAnalyzerDllOnCompilation(dllName, typePathDic.Values.ToArray());
     }
     
     private static void GenerateCustomAnalyzerDllOnCompilation(string dllName, IEnumerable<string> sourceFiles) {

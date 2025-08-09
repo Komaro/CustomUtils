@@ -12,10 +12,9 @@ public class AttributeAbstractAndInterfaceConstraintsAnalyzer : BaseDianosticAna
     private static readonly LocalizableString FORMAT = "{0} must be implemented in an abstract class or interface.";
     private static readonly DiagnosticDescriptor RULE = new(IMPLEMENT_ID, TITLE, FORMAT, "Usage", DiagnosticSeverity.Error, isEnabledByDefault: true);
 
-    private readonly ImmutableHashSet<string> targetAttributes = ImmutableHashSet.Create(
-        "RequiresStaticMethodImplementationAttribute", "RequiresAttributeImplementationAttribute");
+    private readonly ImmutableHashSet<string> targetAttributes = ImmutableHashSet.Create("RequiresStaticMethodImplementationAttribute", "RequiresAttributeImplementationAttribute");
     
-    public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create<DiagnosticDescriptor>(RULE);
+    public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(RULE);
     
     public override void Initialize(AnalysisContext context) {
         context.EnableConcurrentExecution();

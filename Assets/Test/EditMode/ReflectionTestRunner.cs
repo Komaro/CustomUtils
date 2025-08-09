@@ -1,11 +1,18 @@
-﻿using NUnit.Framework;
+﻿using System.IO;
+using System.Linq;
+using System.Reflection.Metadata;
+using System.Reflection.Metadata.Ecma335;
+using NUnit.Framework;
 using Unity.PerformanceTesting;
+using UnityEditor;
+using UnityEditor.Compilation;
+using UnityEditor.SearchService;
 
 [TestFixture]
 [Category("Reflection")]
 [Category("Performance")]
 public class ReflectionTestRunner {
-    
+
     /*
      * Expression 구현과 DynamicMethod 구현이 Default에 비해 수치상 5배 정도 빠름
      * Expression과 DynamicMethod의 경우 DynamicMethod의 경우가 미세하게 우위
@@ -76,6 +83,25 @@ public class ReflectionTestRunner {
         Measure.Method(() => _ = type.GetFieldValueFast(testClass, nameof(ReflectionTestClass.GetInt))).WarmupCount(warmupCount).MeasurementCount(measurementCount).IterationsPerMeasurement(iterationCount).SampleGroup(fastGroup).GC().Run();
         Measure.Method(() => _ = DynamicMethodProvider.GetFieldValueFunc(testClass, info).Invoke(testClass)).WarmupCount(warmupCount).MeasurementCount(measurementCount).IterationsPerMeasurement(iterationCount).SampleGroup(fastInfoCacheGroup).GC().Run();
         Measure.Method(() => _ = func.Invoke(testClass)).WarmupCount(warmupCount).MeasurementCount(measurementCount).IterationsPerMeasurement(iterationCount).SampleGroup(fastFuncCacheGroup).GC().Run();
+    }
+
+    [Test]
+    public void Type2LocationTest() {
+        var type = typeof(AnalyzerGenerator);
+        var assembly = type.Assembly;
+        
+        // Assert.IsTrue(UnityAssemblyProvider.TryGetUnityAssembly(assembly, out var unityAssembly));
+        // foreach (var path in unityAssembly.sourceFiles) {
+        //     Logger.TraceLog(path);
+        // }
+
+        var pdbPath = assembly.Location.AutoSwitchExtension(Constants.Extension.PDB);
+        using var stream = new FileStream(pdbPath, FileMode.Open);
+        using var provider = MetadataReaderProvider.FromPortablePdbStream(stream);
+        var reader = provider.GetMetadataReader();
+
+        var handle = MetadataTokens.Handle(type.MetadataToken);
+        Assert.NotNull(handle);
     }
     
     private class ReflectionTestClass {

@@ -14,6 +14,7 @@ using UnityEngine;
 using SystemAssembly = System.Reflection.Assembly;
 using UnityAssembly = UnityEditor.Compilation.Assembly;
 
+[RefactoringRequired("구조적인 문제점으로 인해 정확도를 보장할 수 없음. 근본적인 해결이 필요할 것으로 보임.")]
 public static class AnalyzerGenerator {
 
     private static readonly Regex PLUGINS_FOLDER = new(string.Format(Constants.Regex.FOLDER_CONTAINS_FORMAT, Constants.Folder.PLUGINS));
@@ -23,7 +24,6 @@ public static class AnalyzerGenerator {
     [Obsolete]
     public static void GenerateCustomAnalyzerDll(string dllName, IEnumerable<Type> types) {
         // TODO. EditorTypeLocationService가 비활성화 되어 있는 경우 예외처리
-        
         // var typePaths = types.SelectMany(type => type.GetAllTypes()).Where(EditorTypeLocationService.ContainsTypeLocation).Select(type => EditorTypeLocationService.GetTypeLocation(type).path).ToArray();
         // if (typePaths.Any() == false) {
         //     Logger.TraceError($"{nameof(typePaths)} is empty. Please review the implementation through inheriting {nameof(DiagnosticAnalyzer)} again.");

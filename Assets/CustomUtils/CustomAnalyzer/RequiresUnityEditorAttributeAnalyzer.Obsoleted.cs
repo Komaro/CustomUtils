@@ -9,7 +9,7 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Diagnostics;
 
-[DiagnosticAnalyzer(LanguageNames.CSharp)]
+// [DiagnosticAnalyzer(LanguageNames.CSharp)]
 [Obsolete("Useless analyzer. Just sample")]
 public abstract class RequiresAttributeAnalyzer : DiagnosticAnalyzer {
 

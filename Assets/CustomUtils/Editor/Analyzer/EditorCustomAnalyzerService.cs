@@ -15,6 +15,8 @@ using UnityEditor.Callbacks;
 using UnityEditor.IMGUI.Controls;
 using UnityEngine;
 
+
+[RefactoringRequired("근본적인 빌드 구조 자체의 결함을 확인하여 일시적으로 기능을 동결.\nType을 키로 경로를 획득하기 위해선 굉장히 복잡한 공정이 필요하여 이를 Symbol 키를 기반으로 변경할 필요가 있음. 또는 직접 소스 코드를 Selection하는 처리가 가장 빠르게 문제를 해결할 수 있는 방법으로 보임")]
 public class EditorCustomAnalyzerService : EditorService {
 
     private static EditorCustomAnalyzerService _window;

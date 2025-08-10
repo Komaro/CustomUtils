@@ -49,7 +49,8 @@ public class RefactoringRequiredAttribute : TodoRequiredAttribute {
 }
 
 // TODO. 위와 동일
-public abstract class TempAttribute : TodoRequiredAttribute {
+[AttributeUsage(AttributeTargets.Class | AttributeTargets.Method | AttributeTargets.Struct)]
+public class TempAttribute : TodoRequiredAttribute {
 
     public readonly string title;
     public readonly string description;
@@ -58,18 +59,4 @@ public abstract class TempAttribute : TodoRequiredAttribute {
         this.title = title;
         this.description = description;
     }
-}
-
-[Alias("Method")]
-[AttributeUsage(AttributeTargets.Method)]
-public class TempMethodAttribute : TempAttribute {
-    
-    public TempMethodAttribute(string title = "", string description = "") : base(title, description) { }
-}
-
-[Alias("Class")]
-[AttributeUsage(AttributeTargets.Class)]
-public class TempClassAttribute : TempAttribute {
-    
-    public TempClassAttribute(string title = "", string description = "") : base(title, description) { }
 }

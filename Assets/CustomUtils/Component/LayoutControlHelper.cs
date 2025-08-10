@@ -377,7 +377,7 @@ public class LayoutControlHelper : MonoBehaviour, ILayoutRecursive {
         return null;
     }
     
-    [TempMethod]
+    [Temp]
     [RefactoringRequired(10)]
     private void DataAction(LayoutItem item, object info) => DataAction(info, item);
 

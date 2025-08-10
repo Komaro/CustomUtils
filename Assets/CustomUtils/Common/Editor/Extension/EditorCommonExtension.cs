@@ -1,5 +1,6 @@
 ﻿using System.Collections.Immutable;
 using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using UnityEditor;
 using UnityEngine;
@@ -15,8 +16,9 @@ public static class EditorCommonExtension {
 
 public static class CSharpExtension {
 
-    public static bool TryGetDeclaredSymbol(this SemanticModel model, SyntaxNode syntax, out INamedTypeSymbol symbol) => (symbol = model.GetDeclaredSymbol(syntax) as INamedTypeSymbol) != null;
+    public static bool TryGetDeclaredSymbol(this SemanticModel model, SyntaxNode syntax, out ISymbol symbol) => (symbol = model.GetDeclaredSymbol(syntax)) != null;
 
+    public static (string path, int line) GetRedirectLocation(this Location location) => (location.GetFilePath(), location.GetLinePosition()); 
     public static string GetFilePath(this Location location) => location.SourceTree?.FilePath ?? string.Empty;
     public static int GetLinePosition(this Location location) => location.GetLineSpan().StartLinePosition.Line + 1;
 }

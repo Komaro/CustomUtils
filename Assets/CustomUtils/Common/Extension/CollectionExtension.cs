@@ -6,6 +6,7 @@ using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using PlasticGui.WorkspaceWindow.Merge;
 using UnityEngine;
 
@@ -74,11 +75,21 @@ public static partial class CollectionExtension {
         matchItem = default;
         return false;
     }
-    
+
     public static void ForEach<T>(this IEnumerable<T> enumerable, Action<T> action) {
         if (enumerable != null) {
             foreach (var item in enumerable) {
                 action?.Invoke(item);
+            }
+        }
+    }
+
+    public static IEnumerable<Task> AsyncForEach<T>(this IEnumerable<T> enumerable, Action<T> action) {
+        action.ThrowIfNull();
+        if (enumerable != null) {
+            foreach (var item in enumerable) {
+                action.Invoke(item);
+                yield return null;
             }
         }
     }
@@ -93,7 +104,7 @@ public static partial class CollectionExtension {
 
     public static Vector2 AverageVector<T>(this IEnumerable<T> source, Func<T, Vector2> selector) => source.SumVector(selector) / source.Count();
     public static Vector3 AverageVector<T>(this IEnumerable<T> source, Func<T, Vector3> selector) => source.SumVector(selector) / source.Count();
-    
+
     public static void SafeClear<TValue>(this ICollection<TValue> collection, Action<TValue> releaseAction) {
         try {
             foreach (var value in collection) {
@@ -177,8 +188,6 @@ public static partial class CollectionExtension {
     public static Dictionary<TKey, TSource> ToDictionary<TSource, TKey>(this IEnumerable<TSource> enumerable, Func<TSource, TKey> keySelector) => enumerable.ToDictionary<Dictionary<TKey, TSource>, TSource, TKey, TSource>(keySelector, source => source);
     public static Dictionary<TKey, TValue> ToDictionary<TSource, TKey, TValue>(this IEnumerable<TSource> enumerable, Func<TSource, TKey> keySelector, Func<TSource, TValue> valueSelector) => enumerable.ToDictionary<Dictionary<TKey, TValue>, TSource, TKey, TValue>(keySelector, valueSelector);
     
-    public static ConcurrentDictionary<TKey, TValue> ToConcurrentDictionary<TSource, TKey, TValue>(this IEnumerable<TSource> enumerable, Func<TSource, TKey> keySelector, Func<TSource, TValue> valueSelector) => enumerable.ToDictionary<ConcurrentDictionary<TKey, TValue>, TSource, TKey, TValue>(keySelector, valueSelector);
-    
     private static TDictionary ToDictionary<TDictionary, TSource, TKey, TValue>(this IEnumerable<TSource> enumerable, Func<TSource, TKey> keySelector, Func<TSource, TValue> valueSelector) where TDictionary : IDictionary<TKey, TValue>, new() {
         var dictionary = new TDictionary();
         foreach (var source in enumerable) {
@@ -187,6 +196,8 @@ public static partial class CollectionExtension {
 
         return dictionary;
     }
+    
+    public static ConcurrentDictionary<TKey, TValue> ToConcurrentDictionary<TSource, TKey, TValue>(this IEnumerable<TSource> enumerable, Func<TSource, TKey> keySelector, Func<TSource, TValue> valueSelector) => enumerable.ToDictionary<ConcurrentDictionary<TKey, TValue>, TSource, TKey, TValue>(keySelector, valueSelector);
 
     public static IEnumerable<IGrouping<TKey, TSource>> GroupBy<TSource, TKey>(this IEnumerable<TSource> enumerable, Func<TSource, TKey> keySelector) => keySelector.ThrowIfNull(nameof(keySelector)).Pipe(_ => enumerable.GroupBy(keySelector, source => source));
 

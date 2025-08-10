@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.CodeAnalysis;
 using SystemAssembly = System.Reflection.Assembly;
 using UnityAssembly = UnityEditor.Compilation.Assembly;
 
@@ -14,10 +15,9 @@ public static class UnityAssemblyExtension {
 
 public static class SystemAssemblyExtension {
 
+    [Obsolete("정확도 낮음")]
     public static bool TryGetType(this SystemAssembly assembly, string name, out Type type) => (type = assembly.GetType(name)) != null;
 
-    public static bool IsBuiltIn(this SystemAssembly assembly) => assembly.Location.Contains(Constants.Folder.SCRIPT_ASSEMBLIES);
-    
-    [TempMethod]
-    public static bool IsCustom(this SystemAssembly assembly) => assembly.IsBuiltIn();
+    public static bool IsPackage(this SystemAssembly assembly) => UnityAssemblyProvider.GetUnityAssembly(assembly)?.IsPackage() ?? false;
+    public static bool IsCustom(this SystemAssembly assembly) => UnityAssemblyProvider.GetUnityAssembly(assembly)?.IsCustom() ?? false;
 }

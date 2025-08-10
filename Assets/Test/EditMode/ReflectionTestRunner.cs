@@ -1,12 +1,5 @@
-﻿using System.IO;
-using System.Linq;
-using System.Reflection.Metadata;
-using System.Reflection.Metadata.Ecma335;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using Unity.PerformanceTesting;
-using UnityEditor;
-using UnityEditor.Compilation;
-using UnityEditor.SearchService;
 
 [TestFixture]
 [Category("Reflection")]
@@ -85,25 +78,6 @@ public class ReflectionTestRunner {
         Measure.Method(() => _ = func.Invoke(testClass)).WarmupCount(warmupCount).MeasurementCount(measurementCount).IterationsPerMeasurement(iterationCount).SampleGroup(fastFuncCacheGroup).GC().Run();
     }
 
-    [Test]
-    public void Type2LocationTest() {
-        var type = typeof(AnalyzerGenerator);
-        var assembly = type.Assembly;
-        
-        // Assert.IsTrue(UnityAssemblyProvider.TryGetUnityAssembly(assembly, out var unityAssembly));
-        // foreach (var path in unityAssembly.sourceFiles) {
-        //     Logger.TraceLog(path);
-        // }
-
-        var pdbPath = assembly.Location.AutoSwitchExtension(Constants.Extension.PDB);
-        using var stream = new FileStream(pdbPath, FileMode.Open);
-        using var provider = MetadataReaderProvider.FromPortablePdbStream(stream);
-        var reader = provider.GetMetadataReader();
-
-        var handle = MetadataTokens.Handle(type.MetadataToken);
-        Assert.NotNull(handle);
-    }
-    
     private class ReflectionTestClass {
 
         public int GetInt;

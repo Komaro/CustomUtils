@@ -1,20 +1,20 @@
 ﻿using System;
-using System.Threading;
+using System.Threading.Tasks;
 
-public class EditorAsyncOperation : IProgress<float> {
-    
+public class AsyncCustomOperation : IProgress<float> {
+
     public virtual bool IsDone => Progress >= 1;
     public virtual bool IsCanceled => false;
-    
+
     public virtual float Progress { get; protected set; }
     public virtual string ProgressDisplay => ((int) Progress).ToString();
-    
+
     public virtual float Percentage => Progress * 100f;
     public virtual string PercentageDisplay => ((int) Percentage).ToString();
 
-    public delegate void CompleteHandler(EditorAsyncOperation operation);
+    public delegate void CompleteHandler(AsyncCustomOperation operation);
     protected SafeDelegate<CompleteHandler> onComplete;
-    
+
     public event CompleteHandler OnComplete {
         add {
             if (IsDone) {
@@ -41,11 +41,11 @@ public class EditorAsyncOperation : IProgress<float> {
         if (IsDone) {
             return;
         }
-    
+
         if (value > Progress) {
             OnProgress.Handler?.Invoke(Progress);
         }
-        
+    
         Progress = value;
         if (IsDone) {
             onComplete.Handler?.Invoke(this);
@@ -56,7 +56,13 @@ public class EditorAsyncOperation : IProgress<float> {
         if (value <= 0 || totalValue <= 0) {
             throw new DivideByZeroException($"{nameof(value)} = {value} || {nameof(totalValue)} = {totalValue}");
         }
-        
+    
         Report(value / (float)totalValue);
+    }
+
+    public Task ToTask() {
+        var completionSource = new TaskCompletionSource<bool>();
+        onComplete += _ => completionSource.SetResult(true);
+        return completionSource.Task;
     }
 }

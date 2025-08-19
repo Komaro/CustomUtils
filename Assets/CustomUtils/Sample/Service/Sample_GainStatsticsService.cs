@@ -5,6 +5,7 @@ using UniRx;
 using UnityEngine;
 
 [Service(DEFAULT_SERVICE_TYPE.PLAY_DURING_AFTER_INIT)]
+[Obsolete]
 public class Sample_GainStatsticsService : IService {
 
     private float _recordingTick;

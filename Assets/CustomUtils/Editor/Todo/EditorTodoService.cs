@@ -71,7 +71,7 @@ public class EditorTodoService : EditorService<EditorTodoService> {
     private int _selectIndex;
     private Selector<Type> _menuSelector;
 
-    private EditorAsyncOperation _operation; 
+    private AsyncCustomOperation _operation; 
 
     private const string SELECT_MENU_SAVE_KEY = nameof(EditorTodoService);
 
@@ -86,7 +86,7 @@ public class EditorTodoService : EditorService<EditorTodoService> {
 
     protected override void Refresh() => _operation = AsyncRefresh();
 
-    protected override async Task AsyncRefresh(EditorAsyncOperation operation, CancellationToken token) {
+    protected override async Task AsyncRefresh(AsyncCustomOperation operation, CancellationToken token) {
         operation.Init();
         if (HasOpenInstances()) {
             await Task.Yield();

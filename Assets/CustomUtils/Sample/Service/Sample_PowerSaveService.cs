@@ -4,6 +4,7 @@ using UnityEngine;
 using UniRx;
 
 [Service(DEFAULT_SERVICE_TYPE.PLAY_DURING, DEFAULT_SERVICE_TYPE.PLAY_FOCUS_DURING)]
+[Obsolete]
 public class Sample_PowerSaveService : IService {
 
     private float _waitTime;

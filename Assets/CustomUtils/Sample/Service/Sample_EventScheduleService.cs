@@ -5,6 +5,7 @@ using UnityEngine;
 using Object = UnityEngine.Object;
 
 [Service(DEFAULT_SERVICE_TYPE.PLAY_DURING)]
+[Obsolete]
 public class Sample_EventScheduleService : IService {
 
     private TimeSyncService _timeSyncService;

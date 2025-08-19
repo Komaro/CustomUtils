@@ -392,7 +392,7 @@ public static partial class EditorCommon {
     }
     
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void DrawProgressBar(EditorAsyncOperation operation, string title = "", float height = 35f) {
+    public static void DrawProgressBar(AsyncCustomOperation operation, string title = "", float height = 35f) {
         using (new EditorGUILayout.VerticalScope()) {
             if (string.IsNullOrEmpty(title) == false) {
                 EditorGUILayout.LabelField(title, Constants.Draw.TITLE_STYLE);

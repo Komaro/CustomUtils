@@ -5,6 +5,7 @@ using UniRx;
 using Random = UnityEngine.Random;
 
 [Service(DEFAULT_SERVICE_TYPE.PLAY_DURING)]
+[Obsolete]
 public class Sample_DamageStatisticsService : IService {
 
     private List<(int stage, Dictionary<int, double> damageDic)> _statisticsHistoryList = new();

@@ -80,3 +80,14 @@ public record ResourcesUnloadAllOrder : ResourceSubOrder {
 
     public Action<AsyncOperation> callback;
 }
+
+[TestRequired("참조 처리에 대한 실험적 구조 테스트")]
+public class WeakRef {
+
+    private readonly WeakReference<Object> _weakReference;
+    public Object Obj => _weakReference.TryGetTarget(out var obj) ? obj : null;
+
+    public WeakRef(Object obj) {
+        _weakReference = new WeakReference<Object>(obj);
+    }
+}

@@ -17,6 +17,7 @@ public static partial class CollectionExtension {
 
     public static IEnumerator CloneEnumerator(this ICollection collection) => new ArrayList(collection).GetEnumerator();
     public static IEnumerable<TSource> OrderBy<TSource, TKey>(this IEnumerable<TSource> enumerable, Func<TSource, TKey> keySelector, bool isAscending) => isAscending ? enumerable.OrderBy(keySelector) : enumerable.OrderByDescending(keySelector) as IEnumerable<TSource>;
+    public static IEnumerable<TResult> SelectNotNull<TSource, TResult>(this IEnumerable<TSource> enumerable, Func<TSource, TResult> selector) where TResult : class => enumerable.Select(selector).WhereNotNull();
     public static IEnumerable<T> WhereNotNull<T>(this IEnumerable<T> enumerable) where T : class => enumerable.Where(source => source != null);
 
     public static IEnumerable<TResult> SelectWhere<TSource, TResult>(this IEnumerable<TSource> enumerable, Func<TSource, TResult> selector, Func<TResult, bool> predicate) {

@@ -37,13 +37,13 @@ public abstract class EditorService<T> : EditorWindow where T : EditorService<T>
 
     protected abstract void Refresh();
 
-    protected virtual EditorAsyncOperation AsyncRefresh() {
-        var operation = new EditorAsyncOperation();
+    protected virtual AsyncCustomOperation AsyncRefresh() {
+        var operation = new AsyncCustomOperation();
         _ = AsyncRefresh(operation, _tokenSource.Token);
         return operation;
     }
     
-    protected virtual Task AsyncRefresh(EditorAsyncOperation operation, CancellationToken token) => throw new NotImplementedException();
+    protected virtual Task AsyncRefresh(AsyncCustomOperation operation, CancellationToken token) => throw new NotImplementedException();
 
     public bool HasOpenInstances() => HasOpenInstances<T>();
     

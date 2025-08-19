@@ -17,7 +17,7 @@ using UnityAssembly = UnityEditor.Compilation.Assembly;
 using SystemAssembly = System.Reflection.Assembly;
 
 // 리다이렉션 기능을 구현하기 위해 너무 많은 작업 소요가 발생하며 이를 해결하기 위해선 계획을 처음부터 다시 세우고 집중적으로 처리할 필요가 있음. 현재로서는 투자한 시간 대비 진척이 되지 않음
-[Category(TestConstants.Category.ANALYZE)]
+[Category(TestConstants.Category.ANALYZER)]
 [Obsolete("Not Implement")]
 public class MemberLocationTestRunner {
 

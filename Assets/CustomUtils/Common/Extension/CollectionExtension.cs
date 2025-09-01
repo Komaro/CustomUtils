@@ -103,8 +103,20 @@ public static partial class CollectionExtension {
     public static Vector2 SumVector<T>(this IEnumerable<T> source, Func<T, Vector2> selector) => source.Select(selector).Aggregate((x, y) => x + y);
     public static Vector3 SumVector<T>(this IEnumerable<T> source, Func<T, Vector3> selector) => source.Select(selector).Aggregate((x, y) => x + y);
 
-    public static Vector2 AverageVector<T>(this IEnumerable<T> source, Func<T, Vector2> selector) => source.SumVector(selector) / source.Count();
-    public static Vector3 AverageVector<T>(this IEnumerable<T> source, Func<T, Vector3> selector) => source.SumVector(selector) / source.Count();
+    public static bool All(this IEnumerable<bool> enumerable) => enumerable.All(result => result);
+
+    [TestRequired]
+    [RefactoringRequired("코드 최적화 필요")]
+    public static bool LateAll<TSource>(this IEnumerable<TSource> enumerable, Func<TSource, bool> predicate) {
+        var lateResult = true;
+        foreach (var source in enumerable) {
+            if (predicate.Invoke(source) == false) {
+                lateResult = false;
+            }
+        }
+
+        return lateResult;
+    }
 
     public static void SafeClear<TValue>(this ICollection<TValue> collection, Action<TValue> releaseAction) {
         try {

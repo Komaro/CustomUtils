@@ -44,9 +44,10 @@ public partial class EditorCodeLocationService : EditorService<EditorCodeLocatio
     protected override void Refresh() => _operation = AsyncRefresh();
 
     protected override AsyncCustomOperation AsyncRefresh() {
-        var operation = Service.IsActiveService<CodeLocationService>() ? new AsyncCustomOperation() : Service.StartOperationService<CodeLocationService>();
-        _ = AsyncRefresh(operation, _tokenSource.Token);
-        return operation;
+        // var operation = Service.IsActiveService<CodeLocationService>() ? new AsyncCustomOperation() : Service.StartOperationService<CodeLocationService>();
+        // _ = AsyncRefresh(operation, _tokenSource.Token);
+        // return operation;
+        return new ServiceOperation();
     }
 
     protected override async Task AsyncRefresh(AsyncCustomOperation operation, CancellationToken token) {

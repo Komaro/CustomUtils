@@ -80,6 +80,11 @@ public static partial class CollectionExtension {
         }
     }
 
+    public static TValue ReturnAdd<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key, TValue value) {
+        dictionary.Add(key, value);
+        return value;
+    }
+
     public static void AutoAdd<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, KeyValuePair<TKey, TValue> pair) => dictionary.AutoAdd(pair.Key, pair.Value);
 
     public static List<TValue> AutoAdd<TKey, TValue>(this IDictionary<TKey, List<TValue>> dictionary, TKey key) => dictionary.AutoAdd<List<TValue>, TKey, TValue>(key)[key];

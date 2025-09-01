@@ -60,7 +60,7 @@ public class AsyncCustomOperation : IProgress<float> {
         Report(value / (float)totalValue);
     }
 
-    public Task ToTask() {
+    public virtual Task ToTask() {
         var completionSource = new TaskCompletionSource<bool>();
         onComplete += _ => completionSource.SetResult(true);
         return completionSource.Task;

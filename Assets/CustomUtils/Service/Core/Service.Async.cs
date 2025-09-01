@@ -1,102 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public class ServiceOperation : AsyncCustomOperation {
-    
-    public ServiceOperation(bool isDone = false) {
-        if (isDone) {
-            Done();
-        }
-    }
-}
-
-public class ServiceBatchOperation : ServiceOperation {
-
-    public override bool IsDone => _operations.Any(operation => operation.IsDone == false) == false;
-
-    private readonly ServiceOperation[] _operations;
-
-    public ServiceBatchOperation(IEnumerable<ServiceOperation> operations) : this(operations.ToArray()) { }
-
-    public ServiceBatchOperation(params ServiceOperation[] operations) {
-        operations.ThrowIfNull();
-        _operations = operations;
-        foreach (var operation in _operations) {
-            operation.OnProgress += _ => OnReport();
-        }
-    }
-
-    private void OnReport() => Report(_operations.Average(operation => operation.Progress));
-}
-
 public static partial class Service {
 
-    public static ServiceOperation StartOperationService<TService>() where TService : IOperationService => StartOperationService(typeof(TService));
-    public static ServiceOperation StartOperationService(Enum serviceType) => new ServiceBatchOperation(GetTypes(serviceType).Select(StartOperationService));
-
-    private static ServiceOperation StartOperationService(Type type) {
-        if (_serviceDic.TryGetValue(type, out var service) == false || service is not IOperationService operationService) {
-            return CreateAndStartOperationService(type);
-        }
-
-        return StartOperationService(operationService);
-    }
-
-    private static ServiceOperation CreateAndStartOperationService(Type type) {
-        var createOperation = CreateOperationService(type);
-        var startOperation = StartOperationService(type);
-        var batchOperation = new ServiceBatchOperation(createOperation, startOperation);
-        _ = CreateAnsStartOperationService(createOperation, startOperation);
-        return batchOperation;
-    }
-
-    private static async Task CreateAnsStartOperationService(params ServiceOperation[] operations) {
-        foreach (var operation in operations) {
-            await operation.ToTask();
-        }
-    }
-    
-    private static ServiceOperation StartOperationService(IOperationService service) {
-        try {
-            if (service == null) {
-                Logger.TraceError($"{nameof(service)} is null");
-                return new ServiceOperation(true);
-            }
-
-            if (service.IsServing() == false) {
-                var operation = service.StartOperation();
-                Logger.TraceLog($"{nameof(StartServiceAsync)} || {service.GetType().Name}", Color.cyan);
-                return operation;
-            }
-
-            Logger.TraceLog($"{service.GetType().Name} is already serving", Color.yellow);
-        } catch (Exception ex) {
-            Logger.TraceError(ex);
-            Logger.TraceError($"{nameof(StartServiceAsync)} failed || {service?.GetType().Name}");
-        }
-        
-        return new ServiceOperation(true);
-    }
-    
-    private static ServiceOperation CreateOperationService<TService>() where TService : class, IOperationService, new() => CreateOperationService(typeof(TService));
-
-    private static ServiceOperation CreateOperationService(Type type) {
-        if (typeof(IOperationService).IsAssignableFrom(type) == false) {
-            Logger.TraceError($"{type.FullName} is not assignable from {typeof(IOperationService).FullName}");
-            return new ServiceOperation(true);
-        }
-        
-        if (_cachedServiceTypeSet.Contains(type) && SystemUtil.TryCreateInstance<IOperationService>(out var service, type)) {
-            _serviceDic.Add(type, service);
-            return service.InitOperation();
-        }
-
-        Logger.TraceError($"{nameof(CreateOperationService)} failed || {type.Name}");
-        return new ServiceOperation(true);
-    }
     
     #region [StartAsync]
     

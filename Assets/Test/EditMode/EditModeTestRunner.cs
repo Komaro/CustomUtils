@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Reflection;
+using System.Reflection.Metadata;
+using System.Reflection.PortableExecutable;
 using System.Runtime.InteropServices;
 using System.Text;
 using Newtonsoft.Json;
@@ -12,8 +12,8 @@ using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using Unity.EditorCoroutines.Editor;
 using Unity.PerformanceTesting;
-using UnityEditor.Build.Profile;
 using UnityEngine;
+using ModuleDefinition = Mono.Cecil.ModuleDefinition;
 
 [Category(TestConstants.Category.FUNCTIONAL)]
 public class EditModeTestRunner {
@@ -60,9 +60,13 @@ public class EditModeTestRunner {
 
     [Test]
     public void TempTest_03() {
-        foreach (var profile in AssetDatabaseUtil.FindAssets<BuildProfile>(FilterUtil.CreateFilter(TypeFilter.ScriptableObject))) {
-            Logger.TraceLog(profile.name);
-        }
+        var data = new[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+        var result = data.Select(value => {
+            var returnValue = value * 2; 
+            Logger.TraceLog($"{value} || {returnValue}");
+            return returnValue;
+        }).LateAll(result => result < data.Length);
+        Assert.IsFalse(result);
     }
     
     [Test]

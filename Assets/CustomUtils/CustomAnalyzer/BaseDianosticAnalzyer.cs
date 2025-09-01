@@ -24,7 +24,10 @@ public abstract class BaseDianosticAnalzyer : DiagnosticAnalyzer {
     protected bool TryFindAttribute(INamedTypeSymbol namedTypeSymbol, string attributeName, out AttributeData attributeData) => (attributeData = FindAttribute(namedTypeSymbol, attributeName)) != null;
     protected AttributeData FindAttribute(INamedTypeSymbol namedTypeSymbol, string attributeName) => FindAttributes(namedTypeSymbol, attributeName).FirstOrDefault();
     
+    // TODO. IEnumerable 로 전환 검토
     protected bool TryFindAttributes(INamedTypeSymbol namedTypeSymbol, string attributeName, out ImmutableArray<AttributeData> attributeData) => (attributeData = FindAttributes(namedTypeSymbol, attributeName)) != null || attributeData.Length <= 0;
+    
+    // TODO. IEnumerable 로 전환 검토
     protected ImmutableArray<AttributeData> FindAttributes(INamedTypeSymbol namedTypeSymbol, string attributeName) => GetAllInheritedClassAndInterfaces(namedTypeSymbol)
         .SelectMany(symbol => symbol.GetAttributes())
         .Where(attribute => attribute.AttributeClass?.Name.Equals(attributeName, StringComparison.Ordinal) ?? false)

@@ -13,7 +13,7 @@ using UnityEngine;
 using Color = System.Drawing.Color;
 using UnityAssembly = UnityEditor.Compilation.Assembly;
 
-public class CodeLocationService : IOperationService {
+public class CodeLocationService : IAsyncService {
 
     public bool IsActiveAnalyze { get; private set; }
     public bool IsActiveFullProcessor { get; private set; }
@@ -29,7 +29,10 @@ public class CodeLocationService : IOperationService {
     private const string ACTIVE_ANALYZE = "ActiveAnalzye";
     private const string ACTIVE_FULL_PROCESSOR = "ActiveFullProcessor";
 
-    async Task IOperationService.InitAsync(ServiceOperation operation) {
+    Task IAsyncService.StartAsync() => Task.CompletedTask;
+    Task IAsyncService.StopAsync() => Task.CompletedTask;
+
+    async Task IAsyncService.InitAsync(ServiceOperation operation) {
         IsActiveAnalyze = EditorPrefsUtil.GetBool(ACTIVE_ANALYZE);
         IsActiveFullProcessor = EditorPrefsUtil.GetBool(ACTIVE_FULL_PROCESSOR);
         
@@ -41,18 +44,18 @@ public class CodeLocationService : IOperationService {
         operation.Done();
     }
 
-    async Task IOperationService.StartAsync(ServiceOperation operation) {
+    async Task IAsyncService.StartAsync(ServiceOperation operation) {
         await AssemblyAnalyze(operation);
         operation.Done();
     }
 
-    async Task IOperationService.StopAsync(ServiceOperation operation) {
+    async Task IAsyncService.StopAsync(ServiceOperation operation) {
         _compilation.RemoveAllSyntaxTrees();
         operation.Done();
         await Task.CompletedTask;
     }
 
-    async Task IOperationService.RefreshAsync(ServiceOperation operation) {
+    async Task IAsyncService.RefreshAsync(ServiceOperation operation) {
         _compilation.RemoveAllSyntaxTrees();
         await AssemblyAnalyze(operation);
         operation.Done();

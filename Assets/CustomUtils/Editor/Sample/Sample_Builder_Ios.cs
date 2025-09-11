@@ -69,7 +69,7 @@ public class Sample_Builder_Ios : Builder {
         SetTargetOSVersion(DEFAULT_TARGET_OS_VERSION);
         
         // Set Symbols
-        SetDefineSymbols(BuildTargetGroup.iOS, BuildSettings.Instance.GetValue<string>("defineSymbols"));
+        SetDefineSymbols(BuildTargetGroup.iOS, BuildConfigProvider.GetValue<string>("defineSymbols"));
  
         // Set Common Option
         SetApplicationIdentifier(BuildTargetGroup.iOS, DEFAULT_APPLICATION_IDENTIFIER);

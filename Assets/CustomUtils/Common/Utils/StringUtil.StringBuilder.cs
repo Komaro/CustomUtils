@@ -23,5 +23,4 @@ public static partial class StringUtil {
 
         stringBuilder.Clear();
     }
-
 }

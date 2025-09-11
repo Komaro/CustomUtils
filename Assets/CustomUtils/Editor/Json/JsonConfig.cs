@@ -6,7 +6,7 @@ using System.Reflection;
 using Newtonsoft.Json;
 using UniRx;
 using UnityEditor;
-
+ 
 public abstract class JsonConfig : IDisposable {
 
     [JsonIgnore] protected DateTime lastSaveTime;
@@ -70,6 +70,7 @@ public abstract class JsonConfig : IDisposable {
 }
 
 // static 필드에서 new()로 생성하지 말 것.
+// TODO. UniRx 제거하기 위해선 주기적으로 saveFlag의 값을 확인하는 외부 감시자가 또 필요함. 일반적으로 이런 작업은 Observable이 처리하나 UniRx를 제거하기 위해선 별개의 기능 구현이 필요
 public abstract class JsonAutoConfig : JsonConfig {
     
     [JsonIgnore] protected string savePath;
@@ -155,7 +156,9 @@ public abstract class JsonAutoConfig : JsonConfig {
             StartAutoSave(savePath);
         }
     }
-    
+
+    #region [Comparer]
+
     private class ArrayComparer : IEqualityComparer<Array> {
 
         public bool Equals(Array x, Array y) {
@@ -168,7 +171,7 @@ public abstract class JsonAutoConfig : JsonConfig {
 
         public int GetHashCode(Array array) => array.GetHashCode();
     }
-
+    
     private class CollectionComparer : IEqualityComparer<IEnumerator> {
 
         public bool Equals(IEnumerator x, IEnumerator y) {
@@ -204,4 +207,6 @@ public abstract class JsonAutoConfig : JsonConfig {
             }
         }
     }
+    
+    #endregion
 }

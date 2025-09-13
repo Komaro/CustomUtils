@@ -5,7 +5,9 @@
         "GUID:cfb6063ef43c4c4da20a2093012689dc",
         "GUID:6b5494e695d3e884cbc61e80bf23aa9c"
     ],
-    "includePlatforms": [],
+    "includePlatforms": [
+        "Editor"
+    ],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": true,
@@ -16,7 +18,7 @@
         "Google.Apis.Drive.v3.dll",
         "Google.Apis.Sheets.v4.dll"
     ],
-    "autoReferenced": true,
+    "autoReferenced": false,
     "defineConstraints": [],
     "versionDefines": [],
     "noEngineReferences": false

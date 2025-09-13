@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
@@ -29,7 +28,7 @@ public class LocalizeService : IService {
                 _provider.Value = provider;
             }
         }
-        
+
         _provider.OnChanged += _ => Load();
         _languageType.OnChanged += _ => Load();
     }

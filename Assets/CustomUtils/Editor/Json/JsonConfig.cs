@@ -1,5 +1,4 @@
 ﻿using System;
-using System.CodeDom.Compiler;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -80,7 +79,7 @@ public abstract class JsonConfig : IDisposable {
     public abstract bool IsNull();
 }
 
-public abstract class JsonAutoConfigWitchCoroutine : JsonConfig {
+public abstract class JsonCoroutineAutoConfig : JsonConfig {
 
     [JsonIgnore]
     protected string savePath;
@@ -90,9 +89,6 @@ public abstract class JsonAutoConfigWitchCoroutine : JsonConfig {
 
     [JsonIgnore]
     private EditorCoroutine _coroutine;
-
-    [JsonIgnore]
-    private ImmutableArray<NotifyField> _notifyFields;
 
     // TODO. Constants화 필요
     private static readonly ImmutableHashSet<Type> NOTIFY_TYPE_SET = ReflectionProvider.GetSubTypesOfType(typeof(NotifyField)).ToImmutableHashSet();
@@ -104,7 +100,7 @@ public abstract class JsonAutoConfigWitchCoroutine : JsonConfig {
 
         isDisposed = true;
     }
-
+    
     public override T Clone<T>() {
         StopAutoSave();
         return base.Clone<T>();
@@ -121,10 +117,11 @@ public abstract class JsonAutoConfigWitchCoroutine : JsonConfig {
         if (type.IsAbstract == false) {
             try {
                 var cloneConfig = Activator.CreateInstance(type);
-                if (cloneConfig is not JsonAutoConfigWitchCoroutine) {
+                if (cloneConfig is not JsonCoroutineAutoConfig) {
                     return null;
                 }
 
+                // TODO. 참조형에 대한 처리를 추가할 필요가 있음
                 foreach (var info in type.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)) {
                     info.SetValue(cloneConfig, info.GetValue(this));
                 }
@@ -151,27 +148,6 @@ public abstract class JsonAutoConfigWitchCoroutine : JsonConfig {
             return;
         }
         
-        // TODO. Temp
-        _notifyFields = GetType().GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic).WhereSelect(info => {
-            foreach (var baseType in info.FieldType.GetBaseTypes()) {
-                if (baseType.IsGenericType == false) {
-                    continue;
-                }
-
-                if (NOTIFY_TYPE_SET.Contains(baseType.GetGenericTypeDefinition())) {
-                    return true;
-                }
-            }
-
-            return false;
-        }, info => info.GetValue(this) as NotifyField).ToImmutableArray();
-        
-        foreach (var notifyField in _notifyFields) {
-            if (notifyField != null) {
-                notifyField.OnChanged += _ => saveFlag = true;
-            }
-        }
-        
         _coroutine = EditorCoroutineUtility.StartCoroutine(SaveCoroutine(), this);
     }
     
@@ -180,18 +156,21 @@ public abstract class JsonAutoConfigWitchCoroutine : JsonConfig {
         var observerList = new List<FieldObserver>();
         foreach (var info in GetType().GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic).Where(info => info.IsDefined<JsonIgnoreAttribute>() == false)) {
             var func = DynamicMethodProvider.GetFieldValueFunc(GetType(), info);
-            if (info.FieldType.IsArray) {
-                // TODO. Here
-                // observerList.Add(new FieldObserver(info.GetValue(this), () => func.Invoke(this));
-                
-                
-            }
-            
+            observerList.Add(info.FieldType.GetBaseTypes().Contains(typeof(IEnumerable))
+                ? new FieldObserver(info.GetValue(this), () => func.Invoke(this), new EnumerableEqualityComparer())
+                : new FieldObserver(info.GetValue(this), () => func.Invoke(this)));
         }
         
         while (true) {
             yield return new EditorWaitForSeconds(5f);
-            
+            foreach (var fieldObserver in observerList) {
+                if (fieldObserver.Observe()) {
+                    saveFlag = true;
+                    break;
+                }
+                
+                yield return null;
+            }
             
             if (saveFlag) {
                 saveFlag = false;
@@ -203,7 +182,6 @@ public abstract class JsonAutoConfigWitchCoroutine : JsonConfig {
     public virtual void StopAutoSave() {
         if (_coroutine != null) {
             EditorCoroutineUtility.StopCoroutine(_coroutine);
-            _notifyFields.SafeClear();
             _coroutine = null;
         }
     }
@@ -215,12 +193,11 @@ public abstract class JsonAutoConfigWitchCoroutine : JsonConfig {
         }
     }
 
-    // TODO. 필드를 감시하는 구조를 만들어야 함. 되도록이면 여러 타입을 래핑할 수 있도록 구현할 필요가 있으나 쉽지 않음
     private class FieldObserver {
 
         private object _value;
-        private Func<object> _getter;
-        private IEqualityComparer _comparer;
+        private readonly Func<object> _getter;
+        private readonly IEqualityComparer _comparer;
 
         public FieldObserver(object value, Func<object> getter) {
             _value = value;
@@ -232,12 +209,12 @@ public abstract class JsonAutoConfigWitchCoroutine : JsonConfig {
         public bool Observe() {
             var value = _getter.Invoke();
             if (_comparer != null) {
-                if (_comparer.Equals(_value, value)) {
+                if (_comparer.Equals(_value, value) == false) {
                     _value = value;
                     return true;
                 }
             } else {
-                if (_value.Equals(value)) {
+                if (Equals(_value, value) == false) {
                     _value = value;
                     return true;
                 }
@@ -249,9 +226,35 @@ public abstract class JsonAutoConfigWitchCoroutine : JsonConfig {
     
     
     #region [Comparer]
+ 
+    private class EnumerableEqualityComparer : IEqualityComparer {
 
-    // TODO. object용으로 새로 만들자요 
-    
+        bool IEqualityComparer.Equals(object x, object y) {
+            if (x is not IEnumerable xEnumerable || y is not IEnumerable yEnumerable) {
+                return false;
+            }
+
+            var xEnumerator = xEnumerable.GetEnumerator();
+            xEnumerator.Reset();
+
+            var yEnumerator = yEnumerable.GetEnumerator();
+            yEnumerator.Reset();
+
+            while (xEnumerator.MoveNext()) {
+                if (yEnumerator.MoveNext() == false || xEnumerator.Current?.Equals(yEnumerator.Current) == false) {
+                    return false;
+                }
+            }
+
+            if (yEnumerator.MoveNext()) {
+                return false;
+            }
+
+            return true;
+        }
+
+        public int GetHashCode(object obj) => obj.GetHashCode();
+    }
     #endregion
 }
 

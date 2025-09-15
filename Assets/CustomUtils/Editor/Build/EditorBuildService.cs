@@ -213,9 +213,11 @@ public abstract class BuildConfig : JsonCoroutineAutoConfig {
 
 [BuildOptionEnum]
 public enum DEFAULT_CUSTOM_BUILD_OPTION {
-    ignoreResourcesReimport,
     cleanBurstDebug,
     cleanIL2CPPSludge,
     revealInFinder,
+    
+    // TODO. 예외 작업
+    ignoreResourcesReimport,
     refreshAssetDatabase,
 }

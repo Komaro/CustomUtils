@@ -80,17 +80,20 @@ public abstract partial class BuilderBase : IDisposable {
         SetDeepProfilingSupport(BuildConfigProvider.GetValue<bool>(nameof(BuildConfig.deepProfilingSupport)));
         SetScriptDebugging(BuildConfigProvider.GetValue<bool>(nameof(BuildConfig.scriptDebugging)));
 
-        if (BuildConfigProvider.TryGetValue<Dictionary<string, bool>>(nameof(BuildConfig.optionDic), out var optionDic)) {
-            if (optionDic.IsTrue(nameof(DEFAULT_CUSTOM_BUILD_OPTION.ignoreResourcesReimport))) {
-                AssetBundle.UnloadAllAssetBundles(true);
-                AssetDatabase.Refresh(ImportAssetOptions.ForceUpdate);
-            }
-        }
+        // TODO. 임시 주석 처리(제거 권장)
+        // if (BuildConfigProvider.TryGetValue<Dictionary<string, bool>>(nameof(BuildConfig.optionDic), out var optionDic)) {
+        //     if (optionDic.IsTrue(nameof(DEFAULT_CUSTOM_BUILD_OPTION.ignoreResourcesReimport))) {
+        //         AssetBundle.UnloadAllAssetBundles(true);
+        //         AssetDatabase.Refresh(ImportAssetOptions.ForceUpdate);
+        //     }
+        // }
         
         OnPreProcess(ref options);
-        if (BuildConfigProvider.IsTrue(DEFAULT_CUSTOM_BUILD_OPTION.refreshAssetDatabase)) {
-            AssetDatabase.Refresh();
-        }
+        
+        // TODO. 임시 주석 처리(제거 권장)
+        // if (BuildConfigProvider.IsTrue(DEFAULT_CUSTOM_BUILD_OPTION.refreshAssetDatabase)) {
+        //     AssetDatabase.Refresh();
+        // }
     }
     
     protected abstract void OnPreProcess(ref BuildPlayerOptions options);

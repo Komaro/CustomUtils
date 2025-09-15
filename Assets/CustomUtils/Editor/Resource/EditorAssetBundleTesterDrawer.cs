@@ -132,7 +132,7 @@ public partial class EditorAssetBundleTesterDrawer : EditorResourceDrawer<AssetB
     }
 }
 
-public class AssetBundleTesterConfig : JsonAutoConfig {
+public class AssetBundleTesterConfig : JsonCoroutineAutoConfig {
 
     public BuildTarget selectBuildTarget = EditorUserBuildSettings.activeBuildTarget;
     public string downloadDirectory; 

@@ -89,6 +89,14 @@ public static partial class CollectionExtension {
         }
     }
 
+    public static IEnumerable<T> Select<T>(this ICollection collection, Func<object, T> selector) {
+        collection.ThrowIfNull(nameof(collection));
+        selector.ThrowIfNull(nameof(selector));
+        foreach (var obj in collection) {
+            yield return selector.Invoke(obj);
+        }
+    }
+    
     public static bool TryCast<T>(this IEnumerable enumerable, out IEnumerable<T> cast) {
         cast = enumerable?.Cast<T>();
         return cast != null;

@@ -71,7 +71,7 @@ public class EditorResourcesProviderDrawer : EditorResourceDrawer<ResourcesProvi
     }
 }
 
-public class ResourcesProviderConfig : JsonAutoConfig {
+public class ResourcesProviderConfig : JsonCoroutineAutoConfig {
 
     // TODO. implement
     

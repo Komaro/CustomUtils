@@ -1,20 +1,30 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using System.Reflection;
 using Newtonsoft.Json;
 using UniRx;
+using Unity.EditorCoroutines.Editor;
 using UnityEditor;
  
 public abstract class JsonConfig : IDisposable {
 
     [JsonIgnore] protected DateTime lastSaveTime;
     [JsonIgnore] public ref DateTime LastSaveTime => ref lastSaveTime;
+    
+    [JsonIgnore] protected bool isDisposed;
 
-    public JsonConfig() => lastSaveTime = DateTime.Now;
+    public JsonConfig() => lastSaveTime = DateTime.Now; 
 
-    public abstract void Dispose(); 
+    ~JsonConfig() {
+        if (isDisposed == false) {
+            Dispose();
+        }
+    }
+
+    public abstract void Dispose();
     
     public virtual void Save(string path) {
         lastSaveTime = DateTime.Now;
@@ -48,7 +58,7 @@ public abstract class JsonConfig : IDisposable {
         if (type.IsAbstract == false) {
             try {
                 var cloneConfig = Activator.CreateInstance(type);
-                if (cloneConfig is JsonAutoConfig == false) {
+                if (cloneConfig is JsonUniRxAutoConfig == false) {
                     return null;
                 }
 
@@ -69,9 +79,195 @@ public abstract class JsonConfig : IDisposable {
     public abstract bool IsNull();
 }
 
-// static 필드에서 new()로 생성하지 말 것.
-// TODO. UniRx 제거하기 위해선 주기적으로 saveFlag의 값을 확인하는 외부 감시자가 또 필요함. 일반적으로 이런 작업은 Observable이 처리하나 UniRx를 제거하기 위해선 별개의 기능 구현이 필요
 public abstract class JsonAutoConfig : JsonConfig {
+
+    public abstract void StartAutoSave(string savePath);
+    public abstract void StopAutoSave();
+}
+
+public abstract class JsonCoroutineAutoConfig : JsonAutoConfig {
+
+    [JsonIgnore]
+    protected string savePath;
+    
+    [JsonIgnore] 
+    protected bool saveFlag;
+
+    [JsonIgnore]
+    private EditorCoroutine _coroutine;
+
+    // TODO. Constants 혹은 NotifyField에서 소유할 필요가 있음
+    private static readonly ImmutableHashSet<Type> NOTIFY_TYPE_SET = ReflectionProvider.GetSubTypesOfType(typeof(NotifyField)).ToImmutableHashSet();
+
+    public override void Dispose() {
+        if (IsNull() == false) {
+            StopAutoSave();
+        }
+
+        isDisposed = true;
+    }
+    
+    public override T Clone<T>() {
+        StopAutoSave();
+        return base.Clone<T>();
+    }
+
+    public override object Clone(Type type) {
+        StopAutoSave();
+        
+        if (type == null) {
+            Logger.TraceError($"{nameof(type)} is Null");
+            return null;
+        }
+
+        if (type.IsAbstract == false) {
+            try {
+                var cloneConfig = Activator.CreateInstance(type);
+                if (cloneConfig is not JsonCoroutineAutoConfig) {
+                    return null;
+                }
+
+                // TODO. 참조형에 대한 처리를 추가할 필요가 있음
+                foreach (var info in type.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)) {
+                    info.SetValue(cloneConfig, info.GetValue(this));
+                }
+
+                return cloneConfig;
+            } catch (Exception ex) {
+                Logger.TraceError(ex);
+                throw;
+            }
+        }
+
+        return null;
+    }
+    
+    public override void StartAutoSave(string savePath) {
+        savePath.ThrowIfNull(nameof(savePath));
+        
+        if (_coroutine != null) {
+            EditorCoroutineUtility.StopCoroutine(_coroutine);
+            _coroutine = null;
+        }
+
+        this.savePath = savePath;
+        if (EditorApplication.isPlayingOrWillChangePlaymode) {
+            EditorApplication.playModeStateChanged += OnPlayModeStateChanged;
+            return;
+        }
+        
+        _coroutine = EditorCoroutineUtility.StartCoroutine(SaveCoroutine(), this);
+    }
+    
+    
+    private IEnumerator SaveCoroutine() {
+        var observerList = new List<FieldObserver>();
+        foreach (var info in GetType().GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic).Where(info => info.IsDefined<JsonIgnoreAttribute>() == false)) {
+            var func = DynamicMethodProvider.GetFieldValueFunc(GetType(), info);
+            observerList.Add(info.FieldType.GetBaseTypes().Contains(typeof(IEnumerable))
+                ? new FieldObserver(info.GetValue(this), () => func.Invoke(this), new EnumerableEqualityComparer())
+                : new FieldObserver(info.GetValue(this), () => func.Invoke(this)));
+        }
+        
+        while (true) {
+            yield return new EditorWaitForSeconds(5f);
+            foreach (var fieldObserver in observerList) {
+                if (fieldObserver.Observe()) {
+                    saveFlag = true;
+                    break;
+                }
+                
+                yield return null;
+            }
+            
+            if (saveFlag) {
+                saveFlag = false;
+                Save(savePath);
+            }
+        }
+    }
+
+    public override void StopAutoSave() {
+        if (_coroutine != null) {
+            EditorCoroutineUtility.StopCoroutine(_coroutine);
+            _coroutine = null;
+        }
+    }
+
+    protected virtual void OnPlayModeStateChanged(PlayModeStateChange state) {
+        if (state == PlayModeStateChange.EnteredPlayMode || state == PlayModeStateChange.EnteredEditMode) {
+            EditorApplication.playModeStateChanged -= OnPlayModeStateChanged;
+            StartAutoSave(savePath);
+        }
+    }
+
+    private class FieldObserver {
+
+        private object _value;
+        private readonly Func<object> _getter;
+        private readonly IEqualityComparer _comparer;
+
+        public FieldObserver(object value, Func<object> getter) {
+            _value = value;
+            _getter = getter;
+        }
+        
+        public FieldObserver(object value, Func<object> getter, IEqualityComparer comparer) : this(value, getter) => _comparer = comparer;
+
+        public bool Observe() {
+            var value = _getter.Invoke();
+            if (_comparer != null) {
+                if (_comparer.Equals(_value, value) == false) {
+                    _value = value;
+                    return true;
+                }
+            } else {
+                if (Equals(_value, value) == false) {
+                    _value = value;
+                    return true;
+                }
+            }
+
+            return false;
+        }
+    }
+    
+    
+    #region [Comparer]
+ 
+    private class EnumerableEqualityComparer : IEqualityComparer {
+
+        bool IEqualityComparer.Equals(object x, object y) {
+            if (x is not IEnumerable xEnumerable || y is not IEnumerable yEnumerable) {
+                return false;
+            }
+
+            var xEnumerator = xEnumerable.GetEnumerator();
+            xEnumerator.Reset();
+
+            var yEnumerator = yEnumerable.GetEnumerator();
+            yEnumerator.Reset();
+
+            while (xEnumerator.MoveNext()) {
+                if (yEnumerator.MoveNext() == false || xEnumerator.Current?.Equals(yEnumerator.Current) == false) {
+                    return false;
+                }
+            }
+
+            if (yEnumerator.MoveNext()) {
+                return false;
+            }
+
+            return true;
+        }
+
+        public int GetHashCode(object obj) => obj.GetHashCode();
+    }
+    #endregion
+}
+
+// static 필드에서 new()로 생성하지 말 것.
+public abstract class JsonUniRxAutoConfig : JsonAutoConfig {
     
     [JsonIgnore] protected string savePath;
     [JsonIgnore] protected readonly List<IDisposable> disposableList = new();
@@ -90,8 +286,8 @@ public abstract class JsonAutoConfig : JsonConfig {
         Dispose();
         return base.Clone(type);
     }
-
-    public virtual void StartAutoSave(string savePath) {
+    
+    public override void StartAutoSave(string savePath) {
         if (IsAutoSaving()) {
             StopAutoSave();
         }
@@ -135,12 +331,12 @@ public abstract class JsonAutoConfig : JsonConfig {
         }));
     }
 
-    public virtual void StopAutoSave() {
+    public override void StopAutoSave() {
         disposableList?.SafeClear(x => x.Dispose());
         intervalDisposable?.Dispose();
     }
 
-    ~JsonAutoConfig() => Dispose();
+    ~JsonUniRxAutoConfig() => Dispose();
     
     public override void Dispose() {
         if (IsNull() == false) {

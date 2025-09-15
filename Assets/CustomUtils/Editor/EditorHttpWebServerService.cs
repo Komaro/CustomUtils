@@ -203,7 +203,7 @@ public class EditorHttpWebServerService : EditorService {
         }
     }
     
-    private class Config : JsonAutoConfig {
+    private class Config : JsonUniRxAutoConfig {
         
         public string targetDirectory = "";
         public string url = "http://localhost:8000/";

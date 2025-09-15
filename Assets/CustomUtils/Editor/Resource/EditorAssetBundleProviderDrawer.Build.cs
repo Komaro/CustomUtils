@@ -49,7 +49,7 @@ public partial class EditorAssetBundleProviderDrawer {
         info.buildSuccess = manifest != null;
         info.buildTarget = config.selectBuildTarget;
         info.buildEndTime = DateTime.Now;
-        info.memo = config.isLogBuildSetting == false ? _buildInfoMemo : $"{_buildInfoMemo}\n\n===================\n\n" +
+        info.memo = config.isLogBuildSetting == false ? _buildInfoMemo : $"{_buildInfoMemo ?? string.Empty}\n\n===================\n\n" +
                                                                          $"{config.ToStringAllFields()}\n\n===================\n\n" +
                                                                          $"{service?.Copy().ToStringCollection("\n")}";
         

@@ -7,6 +7,7 @@ using UnityEditor.Build.Reporting;
 using UnityEditor.Callbacks;
 using UnityEngine;
 
+// TODO. 임시 상속. 향후 EditorService<T>로 상속으로 전환 예정
 public class EditorBuildService : EditorService {
 
     private static EditorWindow _window;
@@ -135,7 +136,7 @@ public struct BuildRecord {
 }
 
 [RequiresAttributeImplementation(typeof(BuildConfigAttribute))]
-public abstract class BuildConfig : JsonAutoConfig {
+public abstract class BuildConfig : JsonCoroutineAutoConfig {
 
     public string buildDirectory = string.Empty;
     public readonly Dictionary<string, bool> optionDic = new();

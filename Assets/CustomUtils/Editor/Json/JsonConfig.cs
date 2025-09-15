@@ -16,7 +16,7 @@ public abstract class JsonConfig : IDisposable {
     
     [JsonIgnore] protected bool isDisposed;
 
-    public JsonConfig() => lastSaveTime = DateTime.Now;
+    public JsonConfig() => lastSaveTime = DateTime.Now; 
 
     ~JsonConfig() {
         if (isDisposed == false) {
@@ -58,7 +58,7 @@ public abstract class JsonConfig : IDisposable {
         if (type.IsAbstract == false) {
             try {
                 var cloneConfig = Activator.CreateInstance(type);
-                if (cloneConfig is JsonAutoConfig == false) {
+                if (cloneConfig is JsonUniRxAutoConfig == false) {
                     return null;
                 }
 
@@ -79,7 +79,13 @@ public abstract class JsonConfig : IDisposable {
     public abstract bool IsNull();
 }
 
-public abstract class JsonCoroutineAutoConfig : JsonConfig {
+public abstract class JsonAutoConfig : JsonConfig {
+
+    public abstract void StartAutoSave(string savePath);
+    public abstract void StopAutoSave();
+}
+
+public abstract class JsonCoroutineAutoConfig : JsonAutoConfig {
 
     [JsonIgnore]
     protected string savePath;
@@ -90,7 +96,7 @@ public abstract class JsonCoroutineAutoConfig : JsonConfig {
     [JsonIgnore]
     private EditorCoroutine _coroutine;
 
-    // TODO. Constants화 필요
+    // TODO. Constants 혹은 NotifyField에서 소유할 필요가 있음
     private static readonly ImmutableHashSet<Type> NOTIFY_TYPE_SET = ReflectionProvider.GetSubTypesOfType(typeof(NotifyField)).ToImmutableHashSet();
 
     public override void Dispose() {
@@ -136,7 +142,9 @@ public abstract class JsonCoroutineAutoConfig : JsonConfig {
         return null;
     }
     
-    public virtual void StartAutoSave(string savePath) {
+    public override void StartAutoSave(string savePath) {
+        savePath.ThrowIfNull(nameof(savePath));
+        
         if (_coroutine != null) {
             EditorCoroutineUtility.StopCoroutine(_coroutine);
             _coroutine = null;
@@ -179,7 +187,7 @@ public abstract class JsonCoroutineAutoConfig : JsonConfig {
         }
     }
 
-    public virtual void StopAutoSave() {
+    public override void StopAutoSave() {
         if (_coroutine != null) {
             EditorCoroutineUtility.StopCoroutine(_coroutine);
             _coroutine = null;
@@ -258,10 +266,8 @@ public abstract class JsonCoroutineAutoConfig : JsonConfig {
     #endregion
 }
 
-
 // static 필드에서 new()로 생성하지 말 것.
-// TODO. UniRx 제거하기 위해선 주기적으로 saveFlag의 값을 확인하는 외부 감시자가 또 필요함. 일반적으로 이런 작업은 Observable이 처리하나 UniRx를 제거하기 위해선 별개의 기능 구현이 필요. 그러나 UniRx 없이 구현은 현실적으로 어려움. 내부 구현만으로는 필드를 관찰하는 구현이 비대할 것으로 보임
-public abstract class JsonAutoConfig : JsonConfig {
+public abstract class JsonUniRxAutoConfig : JsonAutoConfig {
     
     [JsonIgnore] protected string savePath;
     [JsonIgnore] protected readonly List<IDisposable> disposableList = new();
@@ -281,7 +287,7 @@ public abstract class JsonAutoConfig : JsonConfig {
         return base.Clone(type);
     }
     
-    public virtual void StartAutoSave(string savePath) {
+    public override void StartAutoSave(string savePath) {
         if (IsAutoSaving()) {
             StopAutoSave();
         }
@@ -325,12 +331,12 @@ public abstract class JsonAutoConfig : JsonConfig {
         }));
     }
 
-    public virtual void StopAutoSave() {
+    public override void StopAutoSave() {
         disposableList?.SafeClear(x => x.Dispose());
         intervalDisposable?.Dispose();
     }
 
-    ~JsonAutoConfig() => Dispose();
+    ~JsonUniRxAutoConfig() => Dispose();
     
     public override void Dispose() {
         if (IsNull() == false) {

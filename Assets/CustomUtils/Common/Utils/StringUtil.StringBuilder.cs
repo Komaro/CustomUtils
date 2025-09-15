@@ -17,10 +17,9 @@ public static partial class StringUtil {
     }
 
     private static void OnReleaseStringBuilder(StringBuilder stringBuilder) {
+        stringBuilder.Clear();
         if (stringBuilder.Capacity > MAX_CAPACITY) {
             stringBuilder.Capacity = DEFAULT_CAPACITY;
         }
-
-        stringBuilder.Clear();
     }
 }

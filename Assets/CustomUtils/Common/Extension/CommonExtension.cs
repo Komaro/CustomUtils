@@ -63,7 +63,7 @@ public static class CommonExtension {
                 builder.Append($"{prefix} [{memberType.GetNameWithGenericArguments()}] ");
                 if (memberType.IsArray && value is Array array) {
                     builder.AppendLine($"{name} || {array.Cast<object>()?.ToStringCollection(", ")}");
-                } else if (memberType.IsGenericCollectionType() && value is ICollection collection) {
+                } else if (memberType.IsGenericCollectionType() && value is ICollection { Count: > 0 } collection) {
                     builder.AppendLine($"{name} || {collection.Cast<object>().ToStringCollection(", ")}");
                 } else if (memberType.IsEnum == false && memberType.IsStruct()) {
                     builder.AppendLine($"{name} {value.ToStringAllFields("\t", true, bindingFlags)}");
@@ -72,13 +72,15 @@ public static class CommonExtension {
                 }
             }
         
+            return builder.ToString();
         } catch (Exception ex) {
             Logger.TraceLog(ex);
+            Logger.TraceError(builder.ToString());
         } finally {
             StringUtil.StringBuilderPool.Release(builder);
         }
 
-        return builder.ToString();
+        return string.Empty;
     }
 
     private static string GetNameWithGenericArguments(this Type type) => type.IsGenericType ? $"{type.Name}<{type.GenericTypeArguments.ToStringCollection(genericType => genericType.Name, ", ")}>" : type.Name;

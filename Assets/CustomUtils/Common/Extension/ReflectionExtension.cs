@@ -33,7 +33,20 @@ public static class ReflectionExtension {
 
     public static IEnumerable<(string name, object value)> GetAllDataMemberNameWithValue(this Type type, object obj, BindingFlags bindingFlags = default) => type.GetFields(bindingFlags)
             .Select(info => (info.Name, info.GetValue(obj)))
-            .Concat(type.GetProperties(bindingFlags).Where(info => info.GetIndexParameters().Length <= 0).Select(info => (info.Name, info.GetValue(obj))));
+            .Concat(type.GetProperties(bindingFlags).Where(info => {
+                    if (info.GetIndexParameters().Length > 0) {
+                        return false;
+                    }
+
+                    var methodInfo = info.GetGetMethod();
+                    if (methodInfo == null || methodInfo.ReturnType.IsByRef) {
+                        return false;
+                    }
+                    
+                    return true;
+                    // return info.GetIndexParameters().Length <= 0 && info.GetGetMethod()?.ReturnType.IsByRef == false;
+                })
+                .Select(info => (info.Name, info.GetValue(obj))));
     
     public static bool TryGetFieldValue(this Type type, out object value, object obj, string name) => (value = type.GetFieldValue(obj, name)) != null;
     public static bool TryGetFieldValue(this Type type, out object value, object obj, string name, BindingFlags bindingFlags) => (value = type.GetFieldValue(obj, name, bindingFlags)) != null;

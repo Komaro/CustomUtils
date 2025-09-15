@@ -289,7 +289,7 @@ public struct AssetBundleBuildInfo {
 }
 
 
-public class AssetBundleProviderConfig : JsonAutoConfig {
+public class AssetBundleProviderConfig : JsonCoroutineAutoConfig {
 
     public string cipherEncryptKey = "";
     public string buildDirectory = "";
@@ -312,7 +312,7 @@ public class AssetBundleProviderConfig : JsonAutoConfig {
     #region [AssetBundle Build Info]
     
     [JsonProperty("lastBuildInfoList")]
-    private readonly List<AssetBundleBuildInfo> _lastBuildInfoList = new();
+    public readonly List<AssetBundleBuildInfo> _lastBuildInfoList = new();
     
     private const int MAX_BUILD_LOG = 20;
     

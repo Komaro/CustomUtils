@@ -1,30 +1,37 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using System.Reflection;
 using Newtonsoft.Json;
 using UniRx;
+using Unity.EditorCoroutines.Editor;
 using UnityEditor;
-
+ 
 public abstract class JsonConfig : IDisposable {
 
     [JsonIgnore] protected DateTime lastSaveTime;
     [JsonIgnore] public ref DateTime LastSaveTime => ref lastSaveTime;
+    
+    [JsonIgnore] protected bool isDisposed;
 
-    public JsonConfig() => lastSaveTime = DateTime.Now;
+    public JsonConfig() => lastSaveTime = DateTime.Now; 
 
-    public abstract void Dispose(); 
+    ~JsonConfig() {
+        if (isDisposed == false) {
+            Dispose();
+        }
+    }
+
+    public abstract void Dispose();
     
     public virtual void Save(string path) {
         lastSaveTime = DateTime.Now;
         JsonUtil.SaveJson(path, this);
     }
 
-    public bool TryClone<T>(out T config) where T : JsonConfig, new() {
-        config = Clone<T>();
-        return config != null;
-    }
+    public bool TryClone<T>(out T config) where T : JsonConfig, new() => (config = Clone<T>()) != null;
 
     public virtual T Clone<T>() where T : JsonConfig, new() {
         if (Clone(typeof(T)) is T cloneConfig) {
@@ -34,10 +41,7 @@ public abstract class JsonConfig : IDisposable {
         return null;
     }
 
-    public bool TryClone(Type type, out object config) {
-        config = Clone(type);
-        return config != null;
-    }
+    public bool TryClone(Type type, out object config) => (config = Clone(type)) != null;
 
     public virtual object Clone(Type type) {
         if (type == null) {
@@ -45,32 +49,226 @@ public abstract class JsonConfig : IDisposable {
             return null;
         }
 
-        if (type.IsAbstract == false) {
-            try {
-                var cloneConfig = Activator.CreateInstance(type);
-                if (cloneConfig is JsonAutoConfig == false) {
-                    return null;
-                }
-
-                foreach (var info in type.GetFields(BindingFlags.Instance | BindingFlags.Public)) {
-                    info.SetValue(cloneConfig, info.GetValue(this));
-                }
-
-                return cloneConfig;
-            } catch (Exception ex) {
-                Logger.TraceError(ex);
-                throw;
-            }
+        if (GetType().IsSubclassOf(type) == false) {
+            Logger.TraceError($"{type.Name} is not subclass {GetType().Name}");
+            return null;
         }
 
-        return null;
+        if (type.IsAbstract) {
+            Logger.TraceError($"{type.Name} is abstract class");
+            return null;
+        }
+        
+        try {
+            var cloneConfig = Activator.CreateInstance(type);
+            if (cloneConfig is JsonAutoConfig == false) {
+                return null;
+            }
+
+            foreach (var info in type.GetFields(BindingFlags.Instance | BindingFlags.Public)) {
+                info.SetValue(cloneConfig, info.GetValue(this));
+            }
+
+            return cloneConfig;
+        } catch (Exception ex) {
+            Logger.TraceError(ex);
+            throw;
+        }
     }
 
     public abstract bool IsNull();
 }
 
-// static 필드에서 new()로 생성하지 말 것.
 public abstract class JsonAutoConfig : JsonConfig {
+
+    public abstract void StartAutoSave(string savePath);
+    public abstract void StopAutoSave();
+}
+
+public abstract class JsonCoroutineAutoConfig : JsonAutoConfig {
+
+    [JsonIgnore]
+    protected string savePath;
+    
+    [JsonIgnore] 
+    protected bool saveFlag;
+
+    [JsonIgnore]
+    private EditorCoroutine _coroutine;
+
+    public override void Dispose() {
+        if (IsNull() == false) {
+            StopAutoSave();
+        }
+
+        isDisposed = true;
+    }
+    
+    public override T Clone<T>() {
+        StopAutoSave();
+        return base.Clone<T>();
+    }
+
+    public override object Clone(Type type) {
+        if (type == null) {
+            Logger.TraceError($"{nameof(type)} is Null");
+            return null;
+        }
+
+        if (GetType().IsSubclassOf(type) == false) {
+            Logger.TraceError($"{type.Name} is not subclass {GetType().Name}");
+            return null;
+        }
+
+        if (type.IsAbstract) {
+            Logger.TraceError($"{type.Name} is abstract class");
+            return null;
+        }
+        
+        StopAutoSave();
+        try {
+            var cloneConfig = Activator.CreateInstance(type);
+            if (cloneConfig is not JsonCoroutineAutoConfig) {
+                return null;
+            }
+
+            // TODO. 참조형에 대한 처리를 추가할 필요가 있음
+            foreach (var info in type.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)) {
+                info.SetValue(cloneConfig, info.GetValue(this));
+            }
+
+            return cloneConfig;
+        } catch (Exception ex) {
+            Logger.TraceError(ex);
+            throw;
+        }
+    }
+    
+    public override void StartAutoSave(string savePath) {
+        savePath.ThrowIfNull(nameof(savePath));
+        
+        if (_coroutine != null) {
+            EditorCoroutineUtility.StopCoroutine(_coroutine);
+            _coroutine = null;
+        }
+
+        this.savePath = savePath;
+        if (EditorApplication.isPlayingOrWillChangePlaymode) {
+            EditorApplication.playModeStateChanged += OnPlayModeStateChanged;
+            return;
+        }
+        
+        _coroutine = EditorCoroutineUtility.StartCoroutine(SaveCoroutine(), this);
+    }
+    
+    
+    private IEnumerator SaveCoroutine() {
+        var observerList = new List<FieldObserver>();
+        foreach (var info in GetType().GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic).Where(info => info.IsDefined<JsonIgnoreAttribute>() == false)) {
+            var func = DynamicMethodProvider.GetFieldValueFunc(GetType(), info);
+            observerList.Add(info.FieldType.GetBaseTypes().Contains(typeof(IEnumerable))
+                ? new FieldObserver(info.GetValue(this), () => func.Invoke(this), EnumerableEqualityComparer.Default)
+                : new FieldObserver(info.GetValue(this), () => func.Invoke(this)));
+        }
+        
+        while (true) {
+            yield return new EditorWaitForSeconds(5f);
+            foreach (var fieldObserver in observerList) {
+                if (fieldObserver.Observe()) {
+                    saveFlag = true;
+                    break;
+                }
+                
+                yield return null;
+            }
+            
+            if (saveFlag) {
+                saveFlag = false;
+                Save(savePath);
+            }
+        }
+    }
+
+    public override void StopAutoSave() {
+        if (_coroutine != null) {
+            EditorCoroutineUtility.StopCoroutine(_coroutine);
+            _coroutine = null;
+        }
+    }
+
+    protected virtual void OnPlayModeStateChanged(PlayModeStateChange state) {
+        if (state == PlayModeStateChange.EnteredPlayMode || state == PlayModeStateChange.EnteredEditMode) {
+            EditorApplication.playModeStateChanged -= OnPlayModeStateChanged;
+            StartAutoSave(savePath);
+        }
+    }
+
+    private class FieldObserver {
+
+        private object _value;
+        private readonly Func<object> _getter;
+        private readonly IEqualityComparer _comparer;
+
+        public FieldObserver(object value, Func<object> getter) {
+            _value = value;
+            _getter = getter;
+        }
+        
+        public FieldObserver(object value, Func<object> getter, IEqualityComparer comparer) : this(value, getter) => _comparer = comparer;
+
+        public bool Observe() {
+            var value = _getter.Invoke();
+            if (_comparer != null) {
+                if (_comparer.Equals(_value, value) == false) {
+                    _value = value;
+                    return true;
+                }
+            } else {
+                if (Equals(_value, value) == false) {
+                    _value = value;
+                    return true;
+                }
+            }
+
+            return false;
+        }
+    }
+    
+    
+    #region [Comparer]
+ 
+    private class EnumerableEqualityComparer : IEqualityComparer {
+
+        public static EnumerableEqualityComparer Default = new();
+
+        bool IEqualityComparer.Equals(object x, object y) {
+            if (x is not IEnumerable xEnumerable || y is not IEnumerable yEnumerable) {
+                return false;
+            }
+
+            var xEnumerator = xEnumerable.GetEnumerator();
+            xEnumerator.Reset();
+
+            var yEnumerator = yEnumerable.GetEnumerator();
+            yEnumerator.Reset();
+
+            while (xEnumerator.MoveNext()) {
+                if (yEnumerator.MoveNext() == false || xEnumerator.Current?.Equals(yEnumerator.Current) == false) {
+                    return false;
+                }
+            }
+
+            return yEnumerator.MoveNext() == false;
+
+        }
+
+        public int GetHashCode(object obj) => obj.GetHashCode();
+    }
+    #endregion
+}
+
+// static 필드에서 new()로 생성하지 말 것.
+public abstract class JsonUniRxAutoConfig : JsonAutoConfig {
     
     [JsonIgnore] protected string savePath;
     [JsonIgnore] protected readonly List<IDisposable> disposableList = new();
@@ -89,8 +287,8 @@ public abstract class JsonAutoConfig : JsonConfig {
         Dispose();
         return base.Clone(type);
     }
-
-    public virtual void StartAutoSave(string savePath) {
+    
+    public override void StartAutoSave(string savePath) {
         if (IsAutoSaving()) {
             StopAutoSave();
         }
@@ -134,12 +332,12 @@ public abstract class JsonAutoConfig : JsonConfig {
         }));
     }
 
-    public virtual void StopAutoSave() {
+    public override void StopAutoSave() {
         disposableList?.SafeClear(x => x.Dispose());
         intervalDisposable?.Dispose();
     }
 
-    ~JsonAutoConfig() => Dispose();
+    ~JsonUniRxAutoConfig() => Dispose();
     
     public override void Dispose() {
         if (IsNull() == false) {
@@ -155,7 +353,9 @@ public abstract class JsonAutoConfig : JsonConfig {
             StartAutoSave(savePath);
         }
     }
-    
+
+    #region [Comparer]
+
     private class ArrayComparer : IEqualityComparer<Array> {
 
         public bool Equals(Array x, Array y) {
@@ -168,7 +368,7 @@ public abstract class JsonAutoConfig : JsonConfig {
 
         public int GetHashCode(Array array) => array.GetHashCode();
     }
-
+    
     private class CollectionComparer : IEqualityComparer<IEnumerator> {
 
         public bool Equals(IEnumerator x, IEnumerator y) {
@@ -204,4 +404,6 @@ public abstract class JsonAutoConfig : JsonConfig {
             }
         }
     }
+    
+    #endregion
 }

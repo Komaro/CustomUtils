@@ -38,12 +38,12 @@ public static class ReflectionProvider {
             return false;
         }
 
-        while ((subType = subType.BaseType) != null) {
-            if (subType.IsGenericType && subType.GetGenericTypeDefinition() == typeDefinition) {
+        foreach (var type in subType.GetBaseTypes()) {
+            if (type.IsGenericType && type.GetGenericTypeDefinition() == typeDefinition) {
                 return true;
             }
         }
-
+        
         return false;
     });
 

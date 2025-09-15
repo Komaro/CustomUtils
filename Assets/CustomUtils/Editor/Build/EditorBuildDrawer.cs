@@ -69,7 +69,7 @@ public abstract class EditorBuildDrawer<TConfig, TNullConfig> : EditorAutoConfig
         if (config != null) {
             _editorWindowScrollViewPosition = EditorGUILayout.BeginScrollView(_editorWindowScrollViewPosition, GUILayout.ExpandWidth(true), GUILayout.ExpandHeight(true));
             if (buildTarget != EditorUserBuildSettings.activeBuildTarget) {
-                EditorGUILayout.HelpBox($"현재 활성화된 {nameof(BuildTarget)}({EditorUserBuildSettings.activeBuildTarget})과 {nameof(Builder)}의 {nameof(BuildTarget)}({buildTarget})이 일치하지 않습니다", MessageType.Warning);
+                EditorGUILayout.HelpBox($"현재 활성화된 {nameof(BuildTarget)}({EditorUserBuildSettings.activeBuildTarget})과 {nameof(BuilderBase)}의 {nameof(BuildTarget)}({buildTarget})이 일치하지 않습니다", MessageType.Warning);
                 if (GUILayout.Button($"{nameof(BuildTarget)} 전환\n[{EditorUserBuildSettings.activeBuildTarget} ==> {buildTarget}]")) {
                     SwitchPlatform();
                 }
@@ -362,27 +362,27 @@ public class EditorBuildDrawerAttribute : Attribute {
     public readonly Enum buildType;
 
     public EditorBuildDrawerAttribute(Type builderType) {
-        if (builderType.IsSubclassOf(typeof(Builder))) {
+        if (builderType.IsSubclassOf(typeof(BuilderBase))) {
             this.builderType = builderType;
             if (builderType.TryGetCustomAttribute<BuilderAttribute>(out var attribute)) {
                 buildType = attribute.buildType;
             }
         } else {
-            Logger.TraceError($"{builderType.Name} is Invalid {nameof(builderType)}. {nameof(builderType)} must inherit from {nameof(Builder)}.");
+            Logger.TraceError($"{builderType.Name} is Invalid {nameof(builderType)}. {nameof(builderType)} must inherit from {nameof(BuilderBase)}.");
         }
     }
 
     public EditorBuildDrawerAttribute(object buildType) {
         if (buildType is Enum enumValue) {
             this.buildType = enumValue;
-            foreach (var type in ReflectionProvider.GetSubTypesOfType<Builder>()) {
+            foreach (var type in ReflectionProvider.GetSubTypesOfType<BuilderBase>()) {
                 if (type.TryGetCustomAttribute<BuilderAttribute>(out var attribute) && attribute.buildType.Equals(this.buildType)) {
                     builderType = type;
                     return;
                 }
             }
             
-            Logger.TraceError($"{nameof(enumValue)} is invalid || {enumValue}. Missing target {nameof(Builder)}");
+            Logger.TraceError($"{nameof(enumValue)} is invalid || {enumValue}. Missing target {nameof(BuilderBase)}");
         }
     }
 }

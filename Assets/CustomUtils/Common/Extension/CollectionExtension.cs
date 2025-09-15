@@ -85,6 +85,14 @@ public static partial class CollectionExtension {
         }
     }
 
+    public static IEnumerable<T> Select<T>(this ICollection collection, Func<object, T> selector) {
+        collection.ThrowIfNull(nameof(collection));
+        selector.ThrowIfNull(nameof(selector));
+        foreach (var obj in collection) {
+            yield return selector.Invoke(obj);
+        }
+    }
+    
     public static IEnumerable<Task> AsyncForEach<T>(this IEnumerable<T> enumerable, Action<T> action) {
         action.ThrowIfNull();
         if (enumerable != null) {

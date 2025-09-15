@@ -15,7 +15,7 @@ public static class EncryptUtil {
                 return md.ComputeHash(bytes);
             }
         } catch (Exception ex) {
-            Console.WriteLine(ex);
+            Logger.TraceError(ex);
             return Array.Empty<byte>();
         }
     }

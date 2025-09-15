@@ -30,7 +30,7 @@ public struct SafeDelegate<T> where T : Delegate {
             if (events == null || events.GetInvocationList().Contains(addEvent) == false) {
                 events = Delegate.Combine(events, addEvent) as T;
             } else {
-                Logger.TraceLog($"Already delegate Type || {nameof(addSafeDelegate)} Type = {typeof(T).Name} || {nameof(addEvent)} Type = {addEvent.GetType().Name}", Color.yellow);
+                Logger.TraceLog($"Already delegate {nameof(Type)} || {nameof(addSafeDelegate)} {nameof(Type)} = {typeof(T).Name} || {nameof(addEvent)} Type = {addEvent.GetType().Name}", Color.yellow);
             }
         }
         
@@ -41,7 +41,7 @@ public struct SafeDelegate<T> where T : Delegate {
         if (safeDelegate.Handler == null || safeDelegate.GetInvocationList().Contains(addEvent) == false) {
             safeDelegate.Handler = Delegate.Combine(safeDelegate.Handler, addEvent) as T;
         } else {
-            Logger.TraceLog($"Already delegate Type || {nameof(safeDelegate)} Type = {typeof(T).Name} || {nameof(addEvent)} Type = {addEvent.GetType().Name}", Color.yellow);
+            Logger.TraceLog($"Already delegate {nameof(Type)} || {nameof(safeDelegate)} {nameof(Type)} = {typeof(T).Name} || {nameof(addEvent)} {nameof(Type)} = {addEvent.GetType().Name}", Color.yellow);
         }
         
         return safeDelegate;
@@ -75,7 +75,7 @@ public struct SafeDelegate<T> where T : Delegate {
                 safeDelegate.Handler = Delegate.Combine(safeDelegate.Handler, addEvent) as T;
             }
         } else {
-            Logger.TraceError($"Invalid delegate Type || {nameof(safeDelegate)} Type = {typeof(T).Name} || {nameof(addEvent)} Type = {addEvent.GetType().Name}");
+            Logger.TraceError($"Invalid delegate {nameof(Type)} || {nameof(safeDelegate)} {nameof(Type)} = {typeof(T).Name} || {nameof(addEvent)} {nameof(Type)} = {addEvent.GetType().Name}");
         }
         
         return safeDelegate;
@@ -123,7 +123,7 @@ public struct SafeDelegate<T> where T : Delegate {
                 safeDelegate.Handler = Delegate.Remove(safeDelegate.Handler, removeEvent) as T;
             }
         } else {
-            Logger.TraceError($"Invalid delegate Type || {nameof(safeDelegate)} Type = {typeof(T).Name} || {nameof(removeEvent)} Type = {removeEvent.GetType().Name}");
+            Logger.TraceError($"Invalid delegate {nameof(Type)} || {nameof(safeDelegate)} {nameof(Type)} = {typeof(T).Name} || {nameof(removeEvent)} {nameof(Type)} = {removeEvent.GetType().Name}");
         }
     
         return safeDelegate;

@@ -8,33 +8,21 @@ public static class BuildConfigProvider {
     private static JObject _jObject;
 
     public static void AddValue(string key, string value) {
-        if (_jObject == null) {
-            throw new NullReferenceException($"{nameof(_jObject)} is Null");
-        }
-        
+        _jObject.ThrowIfNull(nameof(_jObject));
         _jObject.Remove(key);
         _jObject.Add(key, value);
     }
 
     public static void AddValue(string key, bool value) {
-        if (_jObject == null) {
-            throw new NullReferenceException($"{nameof(_jObject)} is Null");
-        }
-        
+        _jObject.ThrowIfNull(nameof(_jObject));
         _jObject.Remove(key);
         _jObject.Add(key, value);
     }
     
-    public static bool TryGetValue<T>(string key, out T outValue) {
-        outValue = GetValue<T>(key);
-        return outValue != null;
-    }
+    public static bool TryGetValue<T>(string key, out T outValue) => (outValue = GetValue<T>(key)) != null;
 
     public static T GetValue<T>(string key) {
-        if (_jObject == null) {
-            throw new NullReferenceException($"{nameof(_jObject)} is Null");
-        }
-
+        _jObject.ThrowIfNull(nameof(_jObject));
         return _jObject.TryGetValue(key, out var token) ? token.ToObject<T>() : default;
     }
 
@@ -46,7 +34,6 @@ public static class BuildConfigProvider {
     
     public static JObject Load(string path) {
         try {
-            _jObject ??= new JObject();
             return _jObject = JsonUtil.LoadJObject(path);
         } catch (Exception ex) {
             throw new JsonException(ex.Message);

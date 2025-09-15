@@ -7,6 +7,7 @@ using UnityEditor.Build.Reporting;
 using UnityEditor.Callbacks;
 using UnityEngine;
 
+// TODO. 임시 상속. 향후 EditorService<T>로 상속으로 전환 예정
 public class EditorBuildService : EditorService {
 
     private static EditorWindow _window;
@@ -34,7 +35,7 @@ public class EditorBuildService : EditorService {
     [DidReloadScripts(99999)]
     public static void CacheRefresh() {
         if (HasOpenInstances<EditorBuildService>()) {
-            _builderTypes = ReflectionProvider.GetSubTypesOfType<Builder>().OrderBy(type => type.TryGetCustomAttribute<PriorityAttribute>(out var attribute) ? attribute.priority : 99999).ToArray();
+            _builderTypes = ReflectionProvider.GetSubTypesOfType<BuilderBase>().OrderBy(type => type.TryGetCustomAttribute<PriorityAttribute>(out var attribute) ? attribute.priority : 99999).ToArray();
             if (_builderTypes.Any()) {
                 _builderTypeNames = _builderTypes.Select(type => type.TryGetCustomAttribute<AliasAttribute>(out var attribute) ? attribute.alias : type.Name).ToArray();
             }
@@ -61,7 +62,7 @@ public class EditorBuildService : EditorService {
 
     private void OnGUI() {
         if (_builderTypes == null || _builderTypes.Any() == false) {
-            EditorGUILayout.HelpBox($"{nameof(Builder)}를 상속받은 구현이 존재하지 않습니다.", MessageType.Error);
+            EditorGUILayout.HelpBox($"{nameof(BuilderBase)}를 상속받은 구현이 존재하지 않습니다.", MessageType.Error);
             return;
         }
         
@@ -135,7 +136,7 @@ public struct BuildRecord {
 }
 
 [RequiresAttributeImplementation(typeof(BuildConfigAttribute))]
-public abstract class BuildConfig : JsonAutoConfig {
+public abstract class BuildConfig : JsonCoroutineAutoConfig {
 
     public string buildDirectory = string.Empty;
     public readonly Dictionary<string, bool> optionDic = new();
@@ -182,8 +183,7 @@ public abstract class BuildConfig : JsonAutoConfig {
     #endregion
     
     public BuildConfig() {
-        var type = GetType();
-        if (type.TryGetCustomAttribute<BuildConfigAttribute>(out var targetAttribute)) {
+        if (GetType().TryGetCustomAttribute<BuildConfigAttribute>(out var targetAttribute)) {
             defineSymbols = targetAttribute.buildTargetGroup.GetScriptingDefineSymbolsForGroup();
             foreach (var (optionAttribute, enumType) in ReflectionProvider.GetAttributeEnumSets<BuildOptionEnumAttribute>()) {
                 if (optionAttribute.buildTargetGroup == BuildTargetGroup.Unknown || optionAttribute.buildTargetGroup == targetAttribute.buildTargetGroup) {

@@ -4,7 +4,7 @@ using UnityEditor.Build.Reporting;
 
 [Alias("Sample Standalone Build")]
 [Builder(SAMPLE_BUILD_TYPE.STANDALONE, BuildTarget.StandaloneWindows64, BuildTargetGroup.Standalone)]
-public class Sample_Builder_Standalone : Builder {
+public class Sample_Builder_Standalone : BuilderBase {
 
     protected override void OnPreProcess(ref BuildPlayerOptions options) {
         if (options.locationPathName.IsExtension() == false) {

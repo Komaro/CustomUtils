@@ -1,9 +1,12 @@
-﻿using Unity.Android.Types;
-using UnityEditor;
+﻿#if UNITY_6000_0_OR_NEWER
+using Unity.Android.Types;
 using UnityEditor.Android;
+#endif
+
+using UnityEditor;
 using UnityEngine;
 
-public partial class Builder {
+public partial class BuilderBase {
     
     protected void SetVersionCode(int code) {
         PlayerSettings.Android.bundleVersionCode = code;

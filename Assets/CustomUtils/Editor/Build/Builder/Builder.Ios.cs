@@ -2,7 +2,7 @@
 using UnityEditor;
 using UnityEngine;
 
-public partial class Builder {
+public partial class BuilderBase {
     
     protected void SetBuildNumber(string buildNumber) {
         PlayerSettings.iOS.buildNumber = buildNumber;

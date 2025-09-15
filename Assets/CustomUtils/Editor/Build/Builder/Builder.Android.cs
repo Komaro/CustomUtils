@@ -6,7 +6,7 @@ using UnityEditor.Android;
 using UnityEditor;
 using UnityEngine;
 
-public partial class Builder {
+public partial class BuilderBase {
     
     protected void SetVersionCode(int code) {
         PlayerSettings.Android.bundleVersionCode = code;

@@ -35,7 +35,7 @@ public class EditorBuildService : EditorService {
     [DidReloadScripts(99999)]
     public static void CacheRefresh() {
         if (HasOpenInstances<EditorBuildService>()) {
-            _builderTypes = ReflectionProvider.GetSubTypesOfType<Builder>().OrderBy(type => type.TryGetCustomAttribute<PriorityAttribute>(out var attribute) ? attribute.priority : 99999).ToArray();
+            _builderTypes = ReflectionProvider.GetSubTypesOfType<BuilderBase>().OrderBy(type => type.TryGetCustomAttribute<PriorityAttribute>(out var attribute) ? attribute.priority : 99999).ToArray();
             if (_builderTypes.Any()) {
                 _builderTypeNames = _builderTypes.Select(type => type.TryGetCustomAttribute<AliasAttribute>(out var attribute) ? attribute.alias : type.Name).ToArray();
             }
@@ -62,7 +62,7 @@ public class EditorBuildService : EditorService {
 
     private void OnGUI() {
         if (_builderTypes == null || _builderTypes.Any() == false) {
-            EditorGUILayout.HelpBox($"{nameof(Builder)}를 상속받은 구현이 존재하지 않습니다.", MessageType.Error);
+            EditorGUILayout.HelpBox($"{nameof(BuilderBase)}를 상속받은 구현이 존재하지 않습니다.", MessageType.Error);
             return;
         }
         
@@ -183,8 +183,7 @@ public abstract class BuildConfig : JsonCoroutineAutoConfig {
     #endregion
     
     public BuildConfig() {
-        var type = GetType();
-        if (type.TryGetCustomAttribute<BuildConfigAttribute>(out var targetAttribute)) {
+        if (GetType().TryGetCustomAttribute<BuildConfigAttribute>(out var targetAttribute)) {
             defineSymbols = targetAttribute.buildTargetGroup.GetScriptingDefineSymbolsForGroup();
             foreach (var (optionAttribute, enumType) in ReflectionProvider.GetAttributeEnumInfos<BuildOptionEnumAttribute>()) {
                 if (optionAttribute.buildTargetGroup == BuildTargetGroup.Unknown || optionAttribute.buildTargetGroup == targetAttribute.buildTargetGroup) {

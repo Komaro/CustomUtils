@@ -31,10 +31,7 @@ public abstract class JsonConfig : IDisposable {
         JsonUtil.SaveJson(path, this);
     }
 
-    public bool TryClone<T>(out T config) where T : JsonConfig, new() {
-        config = Clone<T>();
-        return config != null;
-    }
+    public bool TryClone<T>(out T config) where T : JsonConfig, new() => (config = Clone<T>()) != null;
 
     public virtual T Clone<T>() where T : JsonConfig, new() {
         if (Clone(typeof(T)) is T cloneConfig) {
@@ -44,10 +41,7 @@ public abstract class JsonConfig : IDisposable {
         return null;
     }
 
-    public bool TryClone(Type type, out object config) {
-        config = Clone(type);
-        return config != null;
-    }
+    public bool TryClone(Type type, out object config) => (config = Clone(type)) != null;
 
     public virtual object Clone(Type type) {
         if (type == null) {
@@ -55,25 +49,31 @@ public abstract class JsonConfig : IDisposable {
             return null;
         }
 
-        if (type.IsAbstract == false) {
-            try {
-                var cloneConfig = Activator.CreateInstance(type);
-                if (cloneConfig is JsonUniRxAutoConfig == false) {
-                    return null;
-                }
-
-                foreach (var info in type.GetFields(BindingFlags.Instance | BindingFlags.Public)) {
-                    info.SetValue(cloneConfig, info.GetValue(this));
-                }
-
-                return cloneConfig;
-            } catch (Exception ex) {
-                Logger.TraceError(ex);
-                throw;
-            }
+        if (GetType().IsSubclassOf(type) == false) {
+            Logger.TraceError($"{type.Name} is not subclass {GetType().Name}");
+            return null;
         }
 
-        return null;
+        if (type.IsAbstract) {
+            Logger.TraceError($"{type.Name} is abstract class");
+            return null;
+        }
+        
+        try {
+            var cloneConfig = Activator.CreateInstance(type);
+            if (cloneConfig is JsonAutoConfig == false) {
+                return null;
+            }
+
+            foreach (var info in type.GetFields(BindingFlags.Instance | BindingFlags.Public)) {
+                info.SetValue(cloneConfig, info.GetValue(this));
+            }
+
+            return cloneConfig;
+        } catch (Exception ex) {
+            Logger.TraceError(ex);
+            throw;
+        }
     }
 
     public abstract bool IsNull();
@@ -96,9 +96,6 @@ public abstract class JsonCoroutineAutoConfig : JsonAutoConfig {
     [JsonIgnore]
     private EditorCoroutine _coroutine;
 
-    // TODO. Constants 혹은 NotifyField에서 소유할 필요가 있음
-    private static readonly ImmutableHashSet<Type> NOTIFY_TYPE_SET = ReflectionProvider.GetSubTypesOfType(typeof(NotifyField)).ToImmutableHashSet();
-
     public override void Dispose() {
         if (IsNull() == false) {
             StopAutoSave();
@@ -113,33 +110,38 @@ public abstract class JsonCoroutineAutoConfig : JsonAutoConfig {
     }
 
     public override object Clone(Type type) {
-        StopAutoSave();
-        
         if (type == null) {
             Logger.TraceError($"{nameof(type)} is Null");
             return null;
         }
 
-        if (type.IsAbstract == false) {
-            try {
-                var cloneConfig = Activator.CreateInstance(type);
-                if (cloneConfig is not JsonCoroutineAutoConfig) {
-                    return null;
-                }
-
-                // TODO. 참조형에 대한 처리를 추가할 필요가 있음
-                foreach (var info in type.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)) {
-                    info.SetValue(cloneConfig, info.GetValue(this));
-                }
-
-                return cloneConfig;
-            } catch (Exception ex) {
-                Logger.TraceError(ex);
-                throw;
-            }
+        if (GetType().IsSubclassOf(type) == false) {
+            Logger.TraceError($"{type.Name} is not subclass {GetType().Name}");
+            return null;
         }
 
-        return null;
+        if (type.IsAbstract) {
+            Logger.TraceError($"{type.Name} is abstract class");
+            return null;
+        }
+        
+        StopAutoSave();
+        try {
+            var cloneConfig = Activator.CreateInstance(type);
+            if (cloneConfig is not JsonCoroutineAutoConfig) {
+                return null;
+            }
+
+            // TODO. 참조형에 대한 처리를 추가할 필요가 있음
+            foreach (var info in type.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)) {
+                info.SetValue(cloneConfig, info.GetValue(this));
+            }
+
+            return cloneConfig;
+        } catch (Exception ex) {
+            Logger.TraceError(ex);
+            throw;
+        }
     }
     
     public override void StartAutoSave(string savePath) {
@@ -165,7 +167,7 @@ public abstract class JsonCoroutineAutoConfig : JsonAutoConfig {
         foreach (var info in GetType().GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic).Where(info => info.IsDefined<JsonIgnoreAttribute>() == false)) {
             var func = DynamicMethodProvider.GetFieldValueFunc(GetType(), info);
             observerList.Add(info.FieldType.GetBaseTypes().Contains(typeof(IEnumerable))
-                ? new FieldObserver(info.GetValue(this), () => func.Invoke(this), new EnumerableEqualityComparer())
+                ? new FieldObserver(info.GetValue(this), () => func.Invoke(this), EnumerableEqualityComparer.Default)
                 : new FieldObserver(info.GetValue(this), () => func.Invoke(this)));
         }
         
@@ -237,6 +239,8 @@ public abstract class JsonCoroutineAutoConfig : JsonAutoConfig {
  
     private class EnumerableEqualityComparer : IEqualityComparer {
 
+        public static EnumerableEqualityComparer Default = new();
+
         bool IEqualityComparer.Equals(object x, object y) {
             if (x is not IEnumerable xEnumerable || y is not IEnumerable yEnumerable) {
                 return false;
@@ -254,11 +258,8 @@ public abstract class JsonCoroutineAutoConfig : JsonAutoConfig {
                 }
             }
 
-            if (yEnumerator.MoveNext()) {
-                return false;
-            }
+            return yEnumerator.MoveNext() == false;
 
-            return true;
         }
 
         public int GetHashCode(object obj) => obj.GetHashCode();

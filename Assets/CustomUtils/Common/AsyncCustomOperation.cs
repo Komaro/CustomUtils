@@ -5,6 +5,7 @@ public class AsyncCustomOperation : IProgress<float> {
 
     public virtual bool IsDone => Progress >= 1;
     public virtual bool IsCanceled => false;
+    public virtual bool IsFailed => false;
 
     public virtual float Progress { get; protected set; }
     public virtual string ProgressDisplay => ((int) Progress).ToString();

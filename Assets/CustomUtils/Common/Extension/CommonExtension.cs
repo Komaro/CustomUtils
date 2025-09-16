@@ -10,6 +10,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Codice.Client.BaseCommands.FastExport;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.Pool;
@@ -34,6 +35,9 @@ public static class CommonExtension {
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static T ThrowIfUnexpectedNull<T>(this T instance, string name) where T : class => instance ?? throw new NullReferenceException<T>(name);
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static Type ThrowIfInvalidCast<T>(this Type type) => typeof(T).IsSubclassOf(type) == false ? throw new InvalidCastException<T>(type) : type;
 
     public static string ToStringAllFields(this object ob, string prefix = "", bool ignoreRootName = false, BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.Public) {
         if (ob == null) {

@@ -24,9 +24,9 @@ public interface IAsyncService : IService {
     protected internal async Task RefreshAsync() => await Task.CompletedTask;
     protected internal async Task RemoveAsync() => await Task.CompletedTask;
     
-    protected internal async Task InitAsync(ServiceOperation operation) => await Task.CompletedTask;
-    protected internal Task StartAsync(ServiceOperation operation);
-    protected internal Task StopAsync(ServiceOperation operation);
-    protected internal async Task RefreshAsync(ServiceOperation operation) => await Task.CompletedTask;
-    protected internal async Task RemoveAsync(ServiceOperation operation) => await Task.CompletedTask;
+    // protected internal async Task InitAsync(ServiceOperation operation) => await Task.CompletedTask;
+    // protected internal Task StartAsync(ServiceOperation operation);
+    // protected internal Task StopAsync(ServiceOperation operation);
+    // protected internal async Task RefreshAsync(ServiceOperation operation) => await Task.CompletedTask;
+    // protected internal async Task RemoveAsync(ServiceOperation operation) => await Task.CompletedTask;
 }

@@ -32,34 +32,35 @@ public class CodeLocationService : IAsyncService {
     Task IAsyncService.StartAsync() => Task.CompletedTask;
     Task IAsyncService.StopAsync() => Task.CompletedTask;
 
-    async Task IAsyncService.InitAsync(ServiceOperation operation) {
-        IsActiveAnalyze = EditorPrefsUtil.GetBool(ACTIVE_ANALYZE);
-        IsActiveFullProcessor = EditorPrefsUtil.GetBool(ACTIVE_FULL_PROCESSOR);
-        
-        await Task.Yield();
-        lock (_compilation) {
-            _compilation = CSharpCompilation.Create($"{nameof(CodeLocationService)}Assembly").AddReferences(AssemblyProvider.GetSystemAssemblySet().Select(assembly => MetadataReference.CreateFromFile(assembly.Location)));
-        }
-        
-        operation.Done();
-    }
-
-    async Task IAsyncService.StartAsync(ServiceOperation operation) {
-        await AssemblyAnalyze(operation);
-        operation.Done();
-    }
-
-    async Task IAsyncService.StopAsync(ServiceOperation operation) {
-        _compilation.RemoveAllSyntaxTrees();
-        operation.Done();
-        await Task.CompletedTask;
-    }
-
-    async Task IAsyncService.RefreshAsync(ServiceOperation operation) {
-        _compilation.RemoveAllSyntaxTrees();
-        await AssemblyAnalyze(operation);
-        operation.Done();
-    }
+    // TODO. Service Operation 작업을 동결함으로서 주석 처리
+    // async Task IAsyncService.InitAsync(ServiceOperation operation) {
+    //     IsActiveAnalyze = EditorPrefsUtil.GetBool(ACTIVE_ANALYZE);
+    //     IsActiveFullProcessor = EditorPrefsUtil.GetBool(ACTIVE_FULL_PROCESSOR);
+    //     
+    //     await Task.Yield();
+    //     lock (_compilation) {
+    //         _compilation = CSharpCompilation.Create($"{nameof(CodeLocationService)}Assembly").AddReferences(AssemblyProvider.GetSystemAssemblySet().Select(assembly => MetadataReference.CreateFromFile(assembly.Location)));
+    //     }
+    //     
+    //     operation.Done();
+    // }
+    //
+    // async Task IAsyncService.StartAsync(ServiceOperation operation) {
+    //     await AssemblyAnalyze(operation);
+    //     operation.Done();
+    // }
+    //
+    // async Task IAsyncService.StopAsync(ServiceOperation operation) {
+    //     _compilation.RemoveAllSyntaxTrees();
+    //     operation.Done();
+    //     await Task.CompletedTask;
+    // }
+    //
+    // async Task IAsyncService.RefreshAsync(ServiceOperation operation) {
+    //     _compilation.RemoveAllSyntaxTrees();
+    //     await AssemblyAnalyze(operation);
+    //     operation.Done();
+    // }
 
     // async Task IAsyncService.InitAsync() {
     //     IsActiveAnalyze = EditorPrefsUtil.GetBool(ACTIVE_ANALYZE);

@@ -209,9 +209,7 @@ public static partial class ServiceEx {
     private static bool TryCreate(Type type, out IService service) => (service = Create(type)) != null;
 
     private static IService Create(Type type) {
-        if (typeof(IAsyncService).IsAssignableFrom(type) == false) {
-            throw new ArgumentException($"{type.FullName} is not assignable from {typeof(IService).FullName}");
-        }
+        type.ThrowIfInvalidCast<IService>();
 
         if (_cachedServiceTypeSet.Contains(type) == false || SystemUtil.TrySafeCreateInstance<IService>(out var service, type) == false) {
             throw new NotSupportedException($"{nameof(Create)} failed. {type.Name} is not support");
@@ -438,6 +436,12 @@ public static partial class ServiceEx {
 
     #region [GetAsync]
     
+    public static async Task<IEnumerable<IService>> GetServiceAsync<TEnum>(TEnum serviceType) where TEnum : Enum => await Task.WhenAll(GetTypes(serviceType).Select(GetAsync));
+    public static async Task<IEnumerable<IService>> GetServiceAsync(Enum serviceType) => await Task.WhenAll(GetTypes(serviceType).Select(GetAsync));
+    
+    public static async Task<IEnumerable<IService>> GetServiceAsync<TEnum>(params TEnum[] serviceTypes) where TEnum : Enum => await Task.WhenAll(GetTypes(serviceTypes).Select(GetAsync));
+    public static async Task<IEnumerable<IService>> GetServiceAsync(params Enum[] serviceTypes) => await Task.WhenAll(GetTypes(serviceTypes).Select(GetAsync));
+    
     public static async Task<TService> GetAsync<TService>() where TService : class, IService => await GetAsync(typeof(TService)) as TService;
     public static async Task<TService> GetAsync<TService>(Type type) where TService : class, IService => await GetAsync(type) as TService;
     
@@ -448,7 +452,6 @@ public static partial class ServiceEx {
 
         return TryCreate(type, out service) ? await InitAsync(service as IAsyncService) : null;
     }
-
     
     #endregion
 
@@ -499,100 +502,202 @@ public static partial class ServiceEx {
     }
     
     #endregion
-
 }
 
-public partial class ServiceEx {
-    
-    
-    // public static ServiceOperation StartOperation(Type type) {
-    //     var operation = new ServiceOperation();
-    //     if (_serviceDic.TryGetValue(type, out var service) && service is IAsyncService asyncService) {
-    //         _ = asyncService.StartAsync(operation);
-    //     } else {
-    //         asyncService = _CreateServiceAsync(type).Result;
-    //         
-    //         var sequenceOperation = new ServiceSequentiallyOperation();
-    //         sequenceOperation.Append(asyncService.InitAsync);
-    //         sequenceOperation.Append(asyncService.StartAsync);
-    //         _ = sequenceOperation.ToTask();
-    //         return sequenceOperation;
-    //     }
-    //
-    //     return operation;
-    // }
-    //
-    // public static async Task _StartServiceAsync(Type type) {
-    //     if (_serviceDic.TryGetValue(type, out var service) && service is IAsyncService asyncService) {
-    //         await asyncService.StartAsync();
-    //     } else {
-    //         asyncService = CreateService(type);
-    //         await _InitServiceAsync(asyncService);
-    //     }
-    // }
-    
-    private static async Task _InitServiceAsync(IAsyncService service) => await service.InitAsync();
+//
+// public static partial class ServiceEx {
+//     
+//     
+//     public static ServiceOperation StartOperation(Type type) {
+//         var operation = new ServiceSequentiallyOperation();
+//         
+//         if (_serviceDic.TryGetValue(type, out var service) && service is IAsyncService asyncService) {
+//             _ = asyncService.StartAsync(operation);
+//         } else {
+//             if (TryCreate(type, out service)) {
+//                 
+//             }
+//             asyncService = Create(type) as IAsyncService;
+//             operation.Append(InitAsyncOperation(asyncService));
+//             operation.Append(asyncService.StartAsync);
+//             
+//             
+//             var sequenceOperation = new ServiceSequentiallyOperation();
+//             sequenceOperation.Append(asyncService.InitAsync);
+//             sequenceOperation.Append(asyncService.StartAsync);
+//             _ = sequenceOperation.ToTask();
+//             return sequenceOperation;
+//         }
+//     
+//         return operation;
+//     }
+//     //
+//     // public static async Task _StartServiceAsync(Type type) {
+//     //     if (_serviceDic.TryGetValue(type, out var service) && service is IAsyncService asyncService) {
+//     //         await asyncService.StartAsync();
+//     //     } else {
+//     //         asyncService = CreateService(type);
+//     //         await _InitServiceAsync(asyncService);
+//     //     }
+//     // }
+//
+//     // public static ServiceOperation StartAsyncOperation<TService>() where TService : class, IAsyncService, new() {
+//     //     if (_serviceDic.TryGetValue(typeof(TService), out var service) == false) {
+//     //         var sequenceOperation = new ServiceSequentiallyOperation();
+//     //         return null;
+//     //     }
+//     //
+//     //     if (service is not IAsyncService asyncService) {
+//     //         return null;
+//     //     }
+//     //
+//     //     var operation = new ServiceOperation();
+//     //     asyncService.StartAsync(operation);
+//     //     return operation;
+//     // }
+//
+//     private static ServiceOperation StartAsyncOperation(Type type) {
+//         type.ThrowIfInvalidCast<IAsyncService>();
+//
+//         var operation = new ServiceSequentiallyOperation();
+//         if (_serviceDic.ContainsKey(type) == false) {
+//             // TODO. CREATE & INIT
+//             operation.Append(CreateAsyncOperation(type));
+//             operation.Append(InitAsyncOperation());
+//         }
+//         
+//         
+//         return operation;
+//     }
+//     
+//     private static ServiceOperation StartAsyncOperation(IAsyncService service) {
+//         var operation = new ServiceOperation();
+//         try {
+//             if (service.IsServing() == false) {
+//                 _ = service.StartAsync();
+//                 Logger.TraceLog($"{service.GetType().Name} {nameof(Service)} async operation start", Color.DeepSkyBlue);
+//             } else {
+//                 Logger.TraceLog($"{service.GetType().Name} is already serving", Color.Yellow);    
+//             }
+//         } catch (Exception) {
+//             operation.Cancel();
+//         }
+//
+//         return operation;
+//     }
+//     
+//     private static ServiceOperation StopAsyncOperation(IAsyncService service) {
+//         service.ThrowIfNull();
+//         var operation = new ServiceOperation();
+//         try {
+//             _ = service.StopAsync(operation);
+//             Logger.TraceLog($"{service.GetType().Name} {nameof(Service)} stop", Color.DeepSkyBlue);
+//         } catch (Exception) {
+//             operation.Cancel();
+//         }
+//         
+//         return operation;
+//     }
+//
+//     private static ServiceOperation GetAsyncOperation(Type type) {
+//         var operation = new ServiceOperation();
+//         if (_serviceDic.TryGetValue(type, out var service) && service is IAsyncService) {
+//             operation.Done();
+//         } else {
+//             if (TryCreate(type, out service) && service is IAsyncService asyncService) {
+//                 _ = asyncService.InitAsync(operation);
+//             }
+//         }
+//
+//         return operation;
+//     }
+//
+//     private static ServiceOperation InitAsyncOperation(Type type) {
+//         type.ThrowIfInvalidCast<IAsyncService>();
+//         var operation = new ServiceOperation();
+//         try {
+//             
+//             operation.Append();
+//             
+//         } catch (Exception) {
+//             operation.Cancel();
+//         }
+//
+//         return operation;
+//     }
+//
+//     private static ServiceOperation InitAsyncOperation(IAsyncService service) {
+//         
+//     }
+//     
+//     public static ServiceOperation RemoveAsyncOperation(Type type) {
+//         type.ThrowIfInvalidCast<IService>();
+//
+//         try {
+//
+//         }
+//         catch (Exception ex) {
+//             Console.WriteLine(ex);
+//             throw;
+//         }
+//     }
+// }
+//
+public class ServiceOperation : AsyncCustomOperation {
 
+    private bool _isCanceled;
+    public override bool IsCanceled => _isCanceled;
 
-    public static ServiceOperation StartOperationService<TService>() where TService : class, IAsyncService, new() {
-        if (_serviceDic.TryGetValue(typeof(TService), out var service) == false) {
-            var sequenceOperation = new ServiceSequentiallyOperation();
-            return null;
-        }
-
-        if (service is not IAsyncService asyncService) {
-            return null;
-        }
-
-        var operation = new ServiceOperation();
-        asyncService.StartAsync(operation);
-        return operation;
-    }
+    public void Cancel() => _isCanceled = true;
 }
-
-public class ServiceOperation : AsyncCustomOperation { }
-
-public class ServiceSequentiallyOperation : ServiceOperation {
-
-    public override float Progress => _operationList.Average(operation => operation.Progress);
-    public override bool IsDone => _operationList.All(operation => operation.IsDone);
-
-    private readonly List<ServiceOperation> _operationList = new();
-    private readonly List<Func<ServiceOperation, Task>> _taskList = new();
-    
-    public void Append(Func<ServiceOperation, Task> task) {
-        var operation = new ServiceOperation();
-        operation.OnProgress += _ => OnReport();
-        _operationList.Add(operation);
-        _taskList.Add(task);
-    }
-
-    public override async Task ToTask() {
-        for (var i = 0; i < _taskList.Count; i++) {
-            await _taskList[i].Invoke(_operationList[i]);
-        }
-    }
-
-    private void OnReport() => Report(_operationList.Average(operation => operation.Progress));
-}
-
-
-public class ServiceBatchOperation : ServiceOperation {
-
-    public override float Progress => _operations.Average(operation => operation.Progress);
-    public override bool IsDone => _operations.All(operation => operation.IsDone);
-
-    private readonly ServiceOperation[] _operations;
-
-    public ServiceBatchOperation(IEnumerable<ServiceOperation> operations) : this(operations.ToArray()) { }
-
-    public ServiceBatchOperation(params ServiceOperation[] operations) {
-        operations.ThrowIfNull();
-        _operations = operations;
-        foreach (var operation in _operations) {
-            operation.OnProgress += _ => OnReport();
-        }
-    }
-
-    private void OnReport() => Report(_operations.Average(operation => operation.Progress));
-}
+//
+// public class ServiceSequentiallyOperation : ServiceOperation {
+//
+//     public override float Progress => _operationList.Average(operation => operation.Progress);
+//     public override bool IsDone => _operationList.All(operation => operation.IsDone);
+//
+//     private readonly List<ServiceOperation> _operationList = new();
+//     private readonly List<Func<ServiceOperation, Task>> _taskList = new();
+//     
+//     public void Append(Func<ServiceOperation, Task> task) {
+//         var operation = new ServiceOperation();
+//         operation.OnProgress += _ => OnReport();
+//         _operationList.Add(operation);
+//         _taskList.Add(task);
+//     }
+//
+//     public void Append(ServiceOperation operation) {
+//         operation.OnProgress += _ => OnReport();
+//         _operationList.Add(operation);
+//     }
+//
+//     public override async Task ToTask() {
+//         // for (var i = 0; i < _taskList.Count; i++) {
+//         //     await _taskList[i].Invoke(_operationList[i]);
+//         // }
+//
+//         await Task.WhenAll(_operationList.Select(operation => operation.ToTask()));
+//     }
+//
+//     private void OnReport() => Report(_operationList.Average(operation => operation.Progress));
+// }
+//
+// public class ServiceBatchOperation : ServiceOperation {
+//
+//     public override float Progress => _operations.Average(operation => operation.Progress);
+//     public override bool IsDone => _operations.All(operation => operation.IsDone);
+//
+//     private readonly ServiceOperation[] _operations;
+//
+//     public ServiceBatchOperation(IEnumerable<ServiceOperation> operations) : this(operations.ToArray()) { }
+//
+//     public ServiceBatchOperation(params ServiceOperation[] operations) {
+//         operations.ThrowIfNull();
+//         _operations = operations;
+//         foreach (var operation in _operations) {
+//             operation.OnProgress += _ => OnReport();
+//         }
+//     }
+//
+//     private void OnReport() => Report(_operations.Average(operation => operation.Progress));
+// }

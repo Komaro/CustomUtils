@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics;
@@ -9,9 +8,9 @@ using System.Linq;
 
 public abstract class GlobalEnum {
 
-    protected static readonly ConcurrentDictionary<Type, ImmutableSortedDictionary<Type, ImmutableHashSet<Enum>>> enumSetDic = new();
-    protected static readonly ConcurrentDictionary<Type, ImmutableDictionary<int, Enum>> intToEnumDic = new();
-    protected static readonly ConcurrentDictionary<Type, ImmutableDictionary<Enum, int>> enumToIntDic = new();
+    protected static readonly Dictionary<Type, ImmutableSortedDictionary<Type, ImmutableHashSet<Enum>>> enumSetDic = new();
+    protected static readonly Dictionary<Type, ImmutableDictionary<int, Enum>> intToEnumDic = new();
+    protected static readonly Dictionary<Type, ImmutableDictionary<Enum, int>> enumToIntDic = new();
 }
 
 [TestRequired("내부 static 구조 변경으로 인한 테스트 필요")]

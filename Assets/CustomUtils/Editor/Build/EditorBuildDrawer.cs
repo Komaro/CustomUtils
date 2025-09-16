@@ -67,45 +67,45 @@ public abstract class EditorBuildDrawer<TConfig, TNullConfig> : EditorAutoConfig
     public override void Draw() {
         base.Draw();
         if (config != null) {
-            _editorWindowScrollViewPosition = EditorGUILayout.BeginScrollView(_editorWindowScrollViewPosition, GUILayout.ExpandWidth(true), GUILayout.ExpandHeight(true));
+            using var scope = new EditorGUILayout.ScrollViewScope(_editorWindowScrollViewPosition, GUILayout.ExpandWidth(true), GUILayout.ExpandHeight(true));
+            _editorWindowScrollViewPosition = scope.scrollPosition;
+                
             if (buildTarget != EditorUserBuildSettings.activeBuildTarget) {
                 EditorGUILayout.HelpBox($"현재 활성화된 {nameof(BuildTarget)}({EditorUserBuildSettings.activeBuildTarget})과 {nameof(BuilderBase)}의 {nameof(BuildTarget)}({buildTarget})이 일치하지 않습니다", MessageType.Warning);
                 if (GUILayout.Button($"{nameof(BuildTarget)} 전환\n[{EditorUserBuildSettings.activeBuildTarget} ==> {buildTarget}]")) {
                     SwitchPlatform();
                 }
             }
-            
+                
             using (new GUILayout.VerticalScope(Constants.Draw.BOX)) {
                 EditorCommon.DrawFolderOpenSelector("빌드 폴더", "선택", ref config.buildDirectory);
             }
-            
+                
             EditorCommon.DrawSeparator();
-            
+                
             GUILayout.Label("빌드 옵션", Constants.Draw.AREA_TITLE_STYLE);
             using (new EditorGUILayout.VerticalScope(Constants.Draw.BOX)) {
                 EditorCommon.DrawLabelTextFieldWithRefresh(nameof(config.applicationIdentifier), config.applicationIdentifier, () => config.applicationIdentifier = PlayerSettings.applicationIdentifier);
                 EditorCommon.DrawLabelTextField(nameof(config.bundleVersion), ref config.bundleVersion, 150f);
             }
-            
+                
             DrawStackTrace();
             DrawBuildOptions();
-            
+                
             EditorCommon.DrawSeparator();
             DrawDefineSymbol();
-            
+                
             EditorCommon.DrawSeparator();
             DrawCustomOption();
-            
+                
             EditorCommon.DrawSeparator();
             DrawScene();
 
             EditorCommon.DrawSeparator();
             DrawBuildButton();
-            
+                
             EditorCommon.DrawSeparator();
             DrawBuildResultRecord();
-        
-            EditorGUILayout.EndScrollView();
         }
     }
     
@@ -145,10 +145,11 @@ public abstract class EditorBuildDrawer<TConfig, TNullConfig> : EditorAutoConfig
     protected virtual void DrawDefineSymbol() {
         GUILayout.Label("디파인 심볼 (Define Symbols)", Constants.Draw.AREA_TITLE_STYLE);
         using (new EditorGUILayout.VerticalScope(Constants.Draw.BOX)) {
-            _defineSymbolScrollViewPosition = EditorGUILayout.BeginScrollView(_defineSymbolScrollViewPosition, GUILayout.ExpandWidth(true), GUILayout.MinHeight(100f), GUILayout.MaxHeight(250f));
-            EditorCommon.DrawToggleBox(defineSymbols, () => config.defineSymbols = string.Join(Constants.Separator.DEFINE_SYMBOL, defineSymbols.Where(x => x.isActive)));
-            EditorGUILayout.EndScrollView();
-            
+            using (var scope = new EditorGUILayout.ScrollViewScope(_defineSymbolScrollViewPosition, GUILayout.ExpandWidth(true), GUILayout.MinHeight(100f), GUILayout.MaxHeight(250f))) {
+                _defineSymbolScrollViewPosition = scope.scrollPosition;
+                EditorCommon.DrawToggleBox(defineSymbols, () => config.defineSymbols = string.Join(Constants.Separator.DEFINE_SYMBOL, defineSymbols.Where(x => x.isActive)));
+            }
+
             EditorCommon.DrawLabelTextFieldWithRefresh("Define Symbol", config.defineSymbols, () => {
                 config.defineSymbols = buildTargetGroup.GetScriptingDefineSymbolsForGroup();
                 var defineSymbolSet = config.defineSymbols.Split(Constants.Separator.DEFINE_SYMBOL).ToHashSet();
@@ -178,37 +179,36 @@ public abstract class EditorBuildDrawer<TConfig, TNullConfig> : EditorAutoConfig
         }
 
         using (new EditorGUILayout.VerticalScope(Constants.Draw.BOX)) {
-            _activateSceneFoldOut = EditorGUILayout.BeginFoldoutHeaderGroup(_activateSceneFoldOut, "활성화 된 씬");
-            if (_activateSceneFoldOut) {
-                foreach (var (path, scene) in activateSceneDic) {
-                    using (new EditorGUILayout.HorizontalScope()) {
-                        EditorGUILayout.Space(15f, false);
-                        if (EditorCommon.DrawFitToggle(scene.enabled) != scene.enabled) {
-                            scene.enabled = scene.enabled == false;
-                            EditorBuildSettings.scenes = activateSceneDic.Values.ToArray();
-                        }
+            using (new FoldoutHeaderGroupScope(ref _activateSceneFoldOut, "활성화 된 씬")) {
+                if (_activateSceneFoldOut) {
+                    foreach (var (path, scene) in activateSceneDic) {
+                        using (new EditorGUILayout.HorizontalScope()) {
+                            EditorGUILayout.Space(15f, false);
+                            if (EditorCommon.DrawFitToggle(scene.enabled) != scene.enabled) {
+                                scene.enabled = scene.enabled == false;
+                                EditorBuildSettings.scenes = activateSceneDic.Values.ToArray();
+                            }
                         
-                        EditorGUILayout.TextField(path);
-                    }
-                }
-            }
-
-            EditorGUILayout.EndFoldoutHeaderGroup();
-            if (_activateSceneFoldOut) {
-                EditorGUILayout.Space(15f);
-            }
-
-            _sceneAssetFoldOut = EditorGUILayout.BeginFoldoutHeaderGroup(_sceneAssetFoldOut, "프로젝트 전체 씬 에셋");
-            if (_sceneAssetFoldOut) {
-                foreach (var (path, info) in sceneAssetInfoDic) {
-                    using (new EditorGUILayout.HorizontalScope()) {
-                        EditorGUILayout.Space(15f, false);
-                        EditorCommon.DrawLabelTextField(info.Name, path);
+                            EditorGUILayout.TextField(path);
+                        }
                     }
                 }
             }
             
-            EditorGUILayout.EndFoldoutHeaderGroup();
+            if (_activateSceneFoldOut) {
+                EditorGUILayout.Space(15f);
+            }
+
+            using (new FoldoutHeaderGroupScope(ref _sceneAssetFoldOut, "프로젝트 전체 씬 에셋")) {
+                if (_sceneAssetFoldOut) {
+                    foreach (var (path, info) in sceneAssetInfoDic) {
+                        using (new EditorGUILayout.HorizontalScope()) {
+                            EditorGUILayout.Space(15f, false);
+                            EditorCommon.DrawLabelTextField(info.Name, path);
+                        }
+                    }
+                }
+            }
         }
     }
 
@@ -274,10 +274,11 @@ public abstract class EditorBuildDrawer<TConfig, TNullConfig> : EditorAutoConfig
                 EditorCommon.DrawLabelTextField("시간", info.buildTime.ToString());
 
                 GUILayout.Space(5f);
-                
-                _buildInfoMemoScrollViewPosition = GUILayout.BeginScrollView(_buildInfoMemoScrollViewPosition, false, false, GUILayout.Height(200f));
-                EditorGUILayout.TextArea(info.memo, GUILayout.ExpandHeight(true), GUILayout.ExpandWidth(true));
-                GUILayout.EndScrollView();
+
+                using (var scope = new GUILayout.ScrollViewScope(_buildInfoMemoScrollViewPosition, false, false, GUILayout.Height(200f))) {
+                    _buildInfoMemoScrollViewPosition = scope.scrollPosition;
+                    EditorGUILayout.TextArea(info.memo, GUILayout.ExpandHeight(true), GUILayout.ExpandWidth(true));
+                }
             }
         }
     }
@@ -385,4 +386,11 @@ public class EditorBuildDrawerAttribute : Attribute {
             Logger.TraceError($"{nameof(enumValue)} is invalid || {enumValue}. Missing target {nameof(BuilderBase)}");
         }
     }
+}
+
+// TODO. 향후 적당한 곳으로 위치 변경
+public struct FoldoutHeaderGroupScope : IDisposable {
+    
+    public FoldoutHeaderGroupScope(ref bool foldOut, string content) => foldOut = EditorGUILayout.BeginFoldoutHeaderGroup(foldOut, content);
+    public void Dispose() => EditorGUILayout.EndFoldoutHeaderGroup();
 }

@@ -10,10 +10,8 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using Codice.Client.BaseCommands.FastExport;
 using UnityEngine;
 using UnityEngine.Networking;
-using UnityEngine.Pool;
 
 public static class CommonExtension {
 

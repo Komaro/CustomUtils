@@ -4,11 +4,9 @@ using System.Linq;
 using Newtonsoft.Json;
 using UnityEditor;
 using UnityEditor.Build.Reporting;
-using UnityEditor.Callbacks;
 using UnityEngine;
 
-// TODO. 임시 상속. 향후 EditorService<T>로 상속으로 전환 예정
-public class EditorBuildService : EditorService {
+public class EditorBuildService : EditorService<EditorBuildService> {
 
     private static EditorWindow _window;
     private static EditorWindow Window => _window == null ? _window = GetWindow<EditorBuildService>("Build Service") : _window;
@@ -23,17 +21,13 @@ public class EditorBuildService : EditorService {
     
     private static readonly string SELECT_DRAWER_KEY = $"{nameof(EditorBuildService)}_{nameof(EditorDrawer)}";
 
-    protected override void OnEditorOpenInitialize() => CacheRefresh();
-    
     [MenuItem("Service/Build/Build Service")]
     public static void OpenWindow() {
         Window.Show();
-        CacheRefresh();
         Window.Focus();
     }
 
-    [DidReloadScripts(99999)]
-    public static void CacheRefresh() {
+    protected override void Refresh() {
         if (HasOpenInstances<EditorBuildService>()) {
             _builderTypes = ReflectionProvider.GetSubTypesOfType<BuilderBase>().OrderBy(type => type.TryGetCustomAttribute<PriorityAttribute>(out var attribute) ? attribute.priority : 99999).ToArray();
             if (_builderTypes.Any()) {
@@ -59,7 +53,7 @@ public class EditorBuildService : EditorService {
             DrawerCacheRefresh();
         }
     }
-
+    
     private void OnGUI() {
         if (_builderTypes == null || _builderTypes.Any() == false) {
             EditorGUILayout.HelpBox($"{nameof(BuilderBase)}를 상속받은 구현이 존재하지 않습니다.", MessageType.Error);

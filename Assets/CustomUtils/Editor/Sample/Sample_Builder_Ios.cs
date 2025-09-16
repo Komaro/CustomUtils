@@ -110,6 +110,8 @@ public class Sample_Builder_Ios : BuilderBase {
 
     protected override void OnPostProcess(BuildSummary summary) {
 #if UNITY_IOS
+        return;
+
         try {
             #region [Pod]
 

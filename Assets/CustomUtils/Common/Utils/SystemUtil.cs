@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
@@ -15,14 +16,47 @@ public static class SystemUtil {
     
     private const string WINDOWS_CMD = "cmd.exe";
 
+    public static void UnZip(string zipPath, string destinationDirectory = "", bool overwriteFiles = true, bool removeZip = false) {
+        try {
+            zipPath.ThrowIfNull(nameof(zipPath));
+            if (File.Exists(zipPath) == false) {
+                throw new FileNotFoundException($"{nameof(zipPath)} is missing. Check {nameof(zipPath)} || {zipPath}");
+            }
+
+            if (string.IsNullOrEmpty(destinationDirectory) || Directory.Exists(destinationDirectory) == false) {
+                destinationDirectory = Path.GetDirectoryName(zipPath);
+            }
+
+            if (Directory.Exists(destinationDirectory) == false) {
+                throw new DirectoryNotFoundException($"{nameof(destinationDirectory)} is missing. Check {nameof(destinationDirectory)} || {destinationDirectory}");
+            }
+
+            using (var zipArchive = ZipFile.Open(zipPath, ZipArchiveMode.Read)) {
+                if (zipArchive == null) {
+                    Logger.TraceError($"{nameof(zipArchive)} is null");
+                    return;
+                }
+                
+                zipArchive.ExtractToDirectory(destinationDirectory, overwriteFiles);
+                Logger.TraceLog($"Unzip || {zipPath} to {destinationDirectory}", Color.green);
+            }
+            
+            if (removeZip) {
+                SafeDelete(zipPath);
+            }
+        } catch (Exception ex) {
+            Logger.TraceError(ex);
+        }
+    }
+
     public static void ExecuteScript(string scriptPath, string workPath, params string[] args) {
         if (string.IsNullOrEmpty(scriptPath)) {
-            Logger.TraceError($"{nameof(scriptPath)} is Null or Empty");
+            Logger.TraceError($"{nameof(scriptPath)} is null or empty");
             return;
         }
         
         if (File.Exists(scriptPath) == false) {
-            throw new FileNotFoundException($"{nameof(scriptPath)} is Missing. Check {nameof(scriptPath)} || {scriptPath}");
+            throw new FileNotFoundException($"{nameof(scriptPath)} is missing. Check {nameof(scriptPath)} || {scriptPath}");
         }
         
         if (string.IsNullOrEmpty(workPath)) {
@@ -30,7 +64,7 @@ public static class SystemUtil {
         }
         
         if (Directory.Exists(workPath) == false) {
-            throw new DirectoryNotFoundException($"{nameof(workPath)} is Missing. Check {nameof(workPath)} || {workPath}");
+            throw new DirectoryNotFoundException($"{nameof(workPath)} is missing. Check {nameof(workPath)} || {workPath}");
         }
         
         if (EnumUtil.TryConvertAllCase<VALID_EXECUTE_EXTENSION>(Path.GetExtension(scriptPath).Remove(0, 1), out var executeType)) {
@@ -159,8 +193,7 @@ public static class SystemUtil {
 
     public static void EnsureDirectoryExists(string path, bool isHidden = false) {
         try {
-            path.GetAfter(Path.AltDirectorySeparatorChar);
-            var folder = path.Split(Path.AltDirectorySeparatorChar).Last();
+            var folder = path.GetAfter(Path.AltDirectorySeparatorChar);
             if (folder.StartsWith(".") == false && Path.HasExtension(folder)) {
                 path = Directory.GetParent(path)?.FullName ?? path;
             }
@@ -364,10 +397,10 @@ public static class SystemUtil {
     }
     
     public static object SafeCreateInstance(Type type, params object[] args) {
-        if (args is { Length: <= 0 }) {
-            Logger.TraceError($"{nameof(args)} is null or empty");
-            return default;
-        }
+        // if (args == null) {
+        //     Logger.TraceError($"{nameof(args)} is null or empty");
+        //     return default;
+        // }
     
 #if UNITY_EDITOR
         if (EditorApplication.isPlayingOrWillChangePlaymode) {

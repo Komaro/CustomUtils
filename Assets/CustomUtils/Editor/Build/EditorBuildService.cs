@@ -8,24 +8,18 @@ using UnityEngine;
 
 public class EditorBuildService : EditorService<EditorBuildService> {
 
-    private static EditorWindow _window;
-    private static EditorWindow Window => _window == null ? _window = GetWindow<EditorBuildService>("Build Service") : _window;
+    private int _selectBuilderIndex;
+    private Type _selectBuilderType;
     
-    private static int _selectBuilderIndex;
-    private static Type _selectBuilderType;
-    
-    private static Type[] _builderTypes;
-    private static string[] _builderTypeNames;
+    private Type[] _builderTypes;
+    private string[] _builderTypeNames;
 
-    private static readonly Dictionary<Type, EditorDrawer> _drawerDic = new();
+    private readonly Dictionary<Type, EditorDrawer> _drawerDic = new();
     
-    private static readonly string SELECT_DRAWER_KEY = $"{nameof(EditorBuildService)}_{nameof(EditorDrawer)}";
+    private readonly string SELECT_DRAWER_KEY = $"{nameof(EditorBuildService)}_{nameof(EditorDrawer)}";
 
     [MenuItem("Service/Build/Build Service")]
-    public static void OpenWindow() {
-        Window.Show();
-        Window.Focus();
-    }
+    public static void OpenWindow() => Window.Show();
 
     protected override void Refresh() {
         if (HasOpenInstances<EditorBuildService>()) {
@@ -79,13 +73,13 @@ public class EditorBuildService : EditorService<EditorBuildService> {
         }
     }
     
-    private static void DrawerCacheRefresh() {
+    private void DrawerCacheRefresh() {
         if (_drawerDic.TryGetValue(_selectBuilderType, out var drawer)) {
             drawer?.CacheRefresh();
         }
     }
 
-    private static void DrawerClose() {
+    private void DrawerClose() {
         if (_drawerDic.TryGetValue(_selectBuilderType, out var drawer)) {
             drawer?.Close();
         }

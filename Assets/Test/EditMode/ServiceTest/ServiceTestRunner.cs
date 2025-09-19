@@ -1,39 +1,42 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using NUnit.Framework;
 
 [Category(TestConstants.Category.SERVICE)]
 public class ServiceTestRunner {
 
-    // private CancellationTokenSource _tokenSource = new();
-    //
-    // [OneTimeSetUp]
-    // public void OneTimeSetUp() {
-    // }
-    //
+    private CancellationTokenSource _tokenSource = new();
+    
+    [OneTimeSetUp]
+    public void OneTimeSetUp() {
+    }
+    
     // [OneTimeTearDown]
     // public void OneTimeTearDown() {
     //     _tokenSource.Cancel();
-    //     if (Service.IsActiveService<OperationTestService>()) {
-    //         Service.RemoveService<OperationTestService>();
+    //     if (ServiceEx.IsActiveService<OperationTestService>()) {
+    //         ServiceEx.Remove<OperationTestService>();
     //     }
     // }
     //
     // [Test]
-    // public async Task ServiceOperationTest() {
+    // public async Task ServiceExAsyncOperationTest() {
     //     var token = _tokenSource.Token;
-    //     Assert.IsNotNull(await Service.StartServiceAsync<OperationTestService>());
-    //     Service.GetService<OperationTestService>();
     //     
-    //     
+    //     var operation = ServiceEx.StartAsyncOperation(typeof(OperationTestService));
     //     while (operation.IsDone == false) {
     //         token.ThrowIfCancellationRequested();
-    //         await Task.Delay(250, token);
+    //         await Task.Delay(50, token);
     //     }
-    //     
-    //     Assert.IsTrue(Service.TryGetService<OperationTestService>(out _));
-    //     Assert.IsTrue(Service.RemoveService<OperationTestService>());
+    //
+    //     var service = await ServiceEx.GetAsync<OperationTestService>();
+    //     Assert.IsNotNull(service);
+    //     operation = ServiceEx.StopAsyncOperation(typeof(OperationTestService));
+    //
+    //     while (operation.IsDone == false) {
+    //         token.ThrowIfCancellationRequested();
+    //         await Task.Delay(50, token);
+    //     }
     // }
 }
 
@@ -55,7 +58,7 @@ public class ServiceTestRunner {
 //         for (var i = 1; i <= MAX_COUNT; i++) {
 //             Logger.TraceLog($"InitAsync || {i} || {(i / 10f).ToPercent()}%");
 //             operation.Report(i, MAX_COUNT);
-//             await Task.Delay(500);
+//             await Task.Delay(200);
 //         }
 //     }
 //
@@ -65,7 +68,7 @@ public class ServiceTestRunner {
 //         for (var i = 1; i <= MAX_COUNT; i++) {
 //             Logger.TraceLog($"StartAsync || {i} || {(i / 10f).ToPercent()}%");
 //             operation.Report(i, MAX_COUNT);
-//             await Task.Delay(500);
+//             await Task.Delay(200);
 //         }
 //     }
 //
@@ -75,7 +78,7 @@ public class ServiceTestRunner {
 //         for (var i = 1; i <= MAX_COUNT; i++) {
 //             Logger.TraceLog($"StopAsync || {i} || {(i / 10f).ToPercent()}%");
 //             operation.Report(i, MAX_COUNT);
-//             await Task.Delay(500);
+//             await Task.Delay(200);
 //         }
 //     }
 //
@@ -85,7 +88,7 @@ public class ServiceTestRunner {
 //         for (var i = 1; i <= MAX_COUNT; i++) {
 //             Logger.TraceLog($"RefreshAsync || {i} || {(i / 10f).ToPercent(1)}%");
 //             operation.Report(i, MAX_COUNT);
-//             await Task.Delay(500);
+//             await Task.Delay(200);
 //         }
 //     }
 //
@@ -95,7 +98,7 @@ public class ServiceTestRunner {
 //         for (var i = 1; i <= MAX_COUNT; i++) {
 //             Logger.TraceLog($"RemoveAsync || {i} || {(i / 10f).ToPercent(1)}%");
 //             operation.Report(i, MAX_COUNT);
-//             await Task.Delay(500);
+//             await Task.Delay(200);
 //         }
 //     }
 // }

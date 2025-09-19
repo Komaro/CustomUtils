@@ -3,31 +3,26 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using UnityEditor;
-using UnityEditor.Callbacks;
 using UnityEngine;
 
-public class EditorResourceService : EditorService {
-
-    private static EditorWindow _window;
-    private static EditorWindow Window => _window == null ? _window = GetWindow<EditorResourceService>("Resource Service") : _window;
-
-    private static int _selectProviderTypeIndex;
-    private static Type _selectProviderType;
-
-    private static Type[] _providerTypes = { };
-    private static string[] _providerTypeNames = { };
+public class EditorResourceService : EditorService<EditorResourceService> {
     
-    private static int _selectMenuIndex;
-    private static RESOURCE_SERVICE_MENU_TYPE _selectMenuType;
+    private int _selectProviderTypeIndex;
+    private Type _selectProviderType;
+
+    private Type[] _providerTypes = { };
+    private string[] _providerTypeNames = { };
     
-    private static readonly Dictionary<(RESOURCE_SERVICE_MENU_TYPE, Type), EditorDrawer> _drawerDic = new();
+    private int _selectMenuIndex;
+    private RESOURCE_SERVICE_MENU_TYPE _selectMenuType;
+    
+    private readonly Dictionary<(RESOURCE_SERVICE_MENU_TYPE, Type), EditorDrawer> _drawerDic = new();
 
-    private static readonly string[] EDITOR_MENUS = EnumUtil.AsSpan<RESOURCE_SERVICE_MENU_TYPE>().ToArray(x => x.ToString());
-    private static readonly string SELECT_MENU_SAVE_KEY = $"{nameof(EditorResourceService)}_Menu";
-    private static readonly string SELECT_DRAWER_SAVE_KEY = $"{nameof(EditorResourceService)}_Drawer";
+    private readonly string[] EDITOR_MENUS = EnumUtil.AsSpan<RESOURCE_SERVICE_MENU_TYPE>().ToArray(x => x.ToString());
+    private readonly string SELECT_MENU_SAVE_KEY = $"{nameof(EditorResourceService)}_Menu";
+    private readonly string SELECT_DRAWER_SAVE_KEY = $"{nameof(EditorResourceService)}_Drawer";
 
-    protected override void OnEditorOpenInitialize() => CacheRefresh();
-    protected override void OnExitingPlayMode() => CacheRefresh();
+    protected override void OnExitingPlayMode() => Refresh();
 
     private void OnDestroy() {
         if (_selectProviderType != null && _drawerDic.TryGetValue((_selectMenuType, _selectProviderType), out var drawer)) {
@@ -35,16 +30,8 @@ public class EditorResourceService : EditorService {
             drawer.Destroy();
         }
     }
-    
-    [MenuItem("Service/Resource/Resource Service")]
-    private static void OpenWindow() {
-        Window.Show();
-        CacheRefresh();
-        Window.Focus();
-    }
 
-    [DidReloadScripts(99999)]
-    private static void CacheRefresh() {
+    protected override void Refresh() {
         if (HasOpenInstances<EditorResourceService>()) {
             var providerTypeList = ReflectionProvider.GetInterfaceTypes<IResourceProvider>()?.OrderBy(x => x.GetCustomAttribute<ResourceProviderAttribute>()?.priority ?? 999).ToList();
             if (providerTypeList?.Any() ?? false) {
@@ -77,7 +64,13 @@ public class EditorResourceService : EditorService {
             DrawerCacheRefresh();
         }
     }
-    
+
+    [MenuItem("Service/Resource/Resource Service")]
+    private static void OpenWindow() {
+        Window.Show();
+        Window.Focus();
+    }
+
     private void OnGUI() {
         EditorCommon.DrawTopToolbar(ref _selectMenuIndex, index => EditorCommon.Set(SELECT_MENU_SAVE_KEY, index), EDITOR_MENUS);
         
@@ -108,13 +101,13 @@ public class EditorResourceService : EditorService {
         }
     }
 
-    private static void DrawerCacheRefresh() {
+    private void DrawerCacheRefresh() {
         if (_drawerDic.TryGetValue((_selectMenuType, _selectProviderType), out var drawer)) {
             drawer.CacheRefresh();
         }
     }
 
-    private static void DrawerClose() {
+    private void DrawerClose() {
         if (_drawerDic.TryGetValue((_selectMenuType, _selectProviderType), out var drawer)) {
             drawer.Close();
         }

@@ -64,4 +64,24 @@ public partial class BuilderBase {
         Debug.Log($"{BuildCount} - {nameof(EditorUserBuildSettings.androidCreateSymbolsZip)} || {EditorUserBuildSettings.androidCreateSymbolsZip}");
     }
 #endif
+
+    protected void SetMinSdkVersion(AndroidSdkVersions versions) {
+        PlayerSettings.Android.minSdkVersion = versions;
+        Debug.Log($"{BuildCount} - {nameof(PlayerSettings.Android.minSdkVersion)} || {PlayerSettings.Android.minSdkVersion}");
+    }
+    
+    protected void SetMinSdkVersion(int version) {
+        PlayerSettings.Android.minSdkVersion = (AndroidSdkVersions)version;
+        Debug.Log($"{BuildCount} - {nameof(PlayerSettings.Android.minSdkVersion)} || {PlayerSettings.Android.minSdkVersion}");
+    }
+
+    protected void SetTargetSdkVersion(AndroidSdkVersions versions) {
+        PlayerSettings.Android.targetSdkVersion = versions;
+        Debug.Log($"{BuildCount} - {nameof(PlayerSettings.Android.targetSdkVersion)} || {PlayerSettings.Android.targetSdkVersion}");
+    }
+    
+    protected void SetTargetSdkVersion(int versions) {
+        PlayerSettings.Android.targetSdkVersion = (AndroidSdkVersions)versions;
+        Debug.Log($"{BuildCount} - {nameof(PlayerSettings.Android.targetSdkVersion)} || {PlayerSettings.Android.targetSdkVersion}");
+    }
 }

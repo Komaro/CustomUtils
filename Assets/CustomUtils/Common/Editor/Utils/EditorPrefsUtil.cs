@@ -31,6 +31,28 @@ public static class EditorPrefsUtil {
         return false;
     }
 
+    public static bool TryGet(string key, out float value, float defaultValue = 0f) {
+        try {
+            value = GetFloat(key);
+            return true;
+        } catch (Exception ex) {
+            value = defaultValue;
+        }
+
+        return false;
+    }
+
+    public static bool TryGet(string key, out bool value, bool defaultValue = false) {
+        try {
+            value = GetBool(key);
+            return true;
+        } catch (Exception) {
+            value = defaultValue;
+        }
+
+        return false;
+    }
+
     public static bool TryGet<TEnum>(string key, out TEnum value, TEnum defaultValue = default) where TEnum : struct, Enum {
         try {
             if (TryGet(key, out int rawValue) && EnumUtil.TryConvert<TEnum>(rawValue, out value)) {
@@ -112,6 +134,24 @@ public static class EditorPrefsUtil {
     public static void SetInt(string key, int value) {
         try {
             EditorPrefs.SetInt(key, value);
+        } catch (Exception ex) {
+            Logger.TraceError(ex);
+        }
+    }
+
+    public static float GetFloat(string key, float defaultValue = 0f) {
+        try {
+            return EditorPrefs.GetFloat(key);
+        } catch (Exception ex) {
+            Logger.TraceError(ex);
+        }
+
+        return defaultValue;
+    }
+    
+    public static void SetFloat(string key, float value) {
+        try {
+            EditorPrefs.SetFloat(key, value);
         } catch (Exception ex) {
             Logger.TraceError(ex);
         }

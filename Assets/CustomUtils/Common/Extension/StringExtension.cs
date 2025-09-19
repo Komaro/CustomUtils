@@ -33,19 +33,11 @@ public static class StringExtension {
 
     public static string GetBefore(this string content, char matchChar, bool includeMatch = false) => content.TryIndexOf(out var index, matchChar, includeMatch) ? content[..index] : string.Empty;
     public static string GetBeforeFirst(this string content, char matchChar, bool includeMatch = false) => content.TryIndexOfFirst(out var index, matchChar, includeMatch) ? content[..index] : string.Empty;
-    
-    public static string GetBefore(this string content, string matchContent, bool includeMatch = false, StringComparison comp = StringComparison.Ordinal) {
-        if (content.Contains(matchContent)) {
-            var endIndex = content.IndexOf(matchContent, comp);
-            return content.Substring(0, endIndex);
-        }
 
-        return string.Empty;
-    }
-
+    public static string GetBefore(this string content, string matchContent, bool includeMatch = false, StringComparison comp = StringComparison.Ordinal) => content.TryIndexOf(out var index, matchContent, includeMatch, comp) ? content[..index] : string.Empty;
     public static string GetBeforeFirst(this string content, string matchContent, bool includeMatch = false, StringComparison comp = StringComparison.Ordinal) => content.TryIndexOfFirst(out var index, matchContent, includeMatch, comp) ? content[..index] : string.Empty;
 
-    public static string GetUpperBeforeSpace(this string content) => Constants.Regex.UPPER_UNICODE_REGEX.Replace(content, "$1").Trim();
+    public static string GetUpperBeforeSpace(this string content) => Constants.Regex.UPPER_UNICODE_REGEX.Replace(content, "1$1").Trim();
 
     public static IEnumerable<string> GetCaseVariation(this string content) {
         yield return content;

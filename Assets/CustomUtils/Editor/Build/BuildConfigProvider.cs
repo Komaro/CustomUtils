@@ -25,7 +25,12 @@ public static class BuildConfigProvider {
         _jObject.ThrowIfNull(nameof(_jObject));
         return _jObject.TryGetValue(key, out var token) ? token.ToObject<T>() : default;
     }
-
+    
+    public static string GetValue(string key) {
+        _jObject.ThrowIfNull(nameof(_jObject));
+        return _jObject.TryGetValue(key, out var token) ? token.ToString() : string.Empty;
+    }
+    
     public static bool IsTrue<T>(T key) where T : struct, Enum => TryGetValue<bool>(key.ToString(), out var isTrue) && isTrue;
     public static bool IsTrue(string key) => TryGetValue<bool>(key, out var isTrue) && isTrue;
     public static bool IsContains(string key) => _jObject.ContainsKey(key);

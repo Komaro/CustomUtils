@@ -60,13 +60,11 @@ public class EditModeTestRunner {
 
     [Test]
     public void TempTest_03() {
-        var data = new[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
-        var result = data.Select(value => {
-            var returnValue = value * 2; 
-            Logger.TraceLog($"{value} || {returnValue}");
-            return returnValue;
-        }).LateAll(result => result < data.Length);
-        Assert.IsFalse(result);
+        var path = Path.Combine(Constants.Path.PROJECT_TEMP_PATH, "TestDirectory");
+        Logger.TraceLog(path);
+        
+        path = path.GetAfter(Path.AltDirectorySeparatorChar);
+        Logger.TraceLog(path);
     }
     
     [Test]

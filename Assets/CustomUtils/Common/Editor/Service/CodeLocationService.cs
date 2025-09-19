@@ -31,8 +31,10 @@ public class CodeLocationService : IAsyncService {
 
     Task IAsyncService.StartAsync() => Task.CompletedTask;
     Task IAsyncService.StopAsync() => Task.CompletedTask;
+    // Task IAsyncService.StartAsync(ServiceOperation operation) => throw new NotImplementedException();
+    // Task IAsyncService.StopAsync(ServiceOperation operation) => throw new NotImplementedException();
 
-    // TODO. Service Operation 작업을 동결함으로서 주석 처리
+    // TODO. Service Operation 작업을 동결함으로서 주석 처리. Operation 반환을 하지 않는 선에서는 정상적으로 처리할 수 있음
     // async Task IAsyncService.InitAsync(ServiceOperation operation) {
     //     IsActiveAnalyze = EditorPrefsUtil.GetBool(ACTIVE_ANALYZE);
     //     IsActiveFullProcessor = EditorPrefsUtil.GetBool(ACTIVE_FULL_PROCESSOR);
@@ -84,47 +86,47 @@ public class CodeLocationService : IAsyncService {
     //     await AssemblyAnalyze();
     // }
     
-    private async Task AssemblyAnalyze(ServiceOperation operation) {
-        if (IsActiveAnalyze == false) {
-            return;
-        }
-
-        if (IsAnalyzing) {
-            Logger.TraceLog("Already analyzing code location", Color.Yellow);
-            if (Progress.Cancel(_taskId) == false) {
-                await Task.FromException(new InvalidOperationException($"{_taskId} {nameof(Progress)} cancellation failed"));
-            }
-            
-            _tokenSource.Cancel();    
-        }
-
-        try {
-            _taskId = Progress.Start("Code Location Analyzing");
-            operation.Init();
-            IsAnalyzing = true;
-            
-            await Task.Run(() => {
-                var processorCount = IsActiveFullProcessor ? Environment.ProcessorCount : Environment.ProcessorCount / 2;
-                AssemblyProvider.GetSystemAssemblySet().Where(assembly => assembly.IsCustom()).SelectNotNull(UnityAssemblyProvider.GetUnityAssembly)
-                    .AsParallel().WithDegreeOfParallelism(processorCount).WithCancellation(_tokenSource.Token)
-                    .ForAll(assembly => {
-                        var id = Progress.Start($"{assembly.name} Analyzing", parentId: _taskId);
-                        var syntaxTreeList = ParseAssemblySourceFiles(assembly, _tokenSource.Token);
-                        lock (_compilation) {
-                            _compilation.AddSyntaxTrees(syntaxTreeList);
-                        }
-
-                        Progress.Finish(id);
-                    });
-            });
-        } catch (Exception ex) {
-            Logger.TraceError(ex);
-        } finally {
-            Progress.Finish(_taskId);
-            operation.Done();
-            IsAnalyzing = false;
-        }
-    }
+    // private async Task AssemblyAnalyze(ServiceOperation operation) {
+    //     if (IsActiveAnalyze == false) {
+    //         return;
+    //     }
+    //
+    //     if (IsAnalyzing) {
+    //         Logger.TraceLog("Already analyzing code location", Color.Yellow);
+    //         if (Progress.Cancel(_taskId) == false) {
+    //             await Task.FromException(new InvalidOperationException($"{_taskId} {nameof(Progress)} cancellation failed"));
+    //         }
+    //         
+    //         _tokenSource.Cancel();    
+    //     }
+    //
+    //     try {
+    //         _taskId = Progress.Start("Code Location Analyzing");
+    //         operation.Init();
+    //         IsAnalyzing = true;
+    //         
+    //         await Task.Run(() => {
+    //             var processorCount = IsActiveFullProcessor ? Environment.ProcessorCount : Environment.ProcessorCount / 2;
+    //             AssemblyProvider.GetSystemAssemblySet().Where(assembly => assembly.IsCustom()).SelectNotNull(UnityAssemblyProvider.GetUnityAssembly)
+    //                 .AsParallel().WithDegreeOfParallelism(processorCount).WithCancellation(_tokenSource.Token)
+    //                 .ForAll(assembly => {
+    //                     var id = Progress.Start($"{assembly.name} Analyzing", parentId: _taskId);
+    //                     var syntaxTreeList = ParseAssemblySourceFiles(assembly, _tokenSource.Token);
+    //                     lock (_compilation) {
+    //                         _compilation.AddSyntaxTrees(syntaxTreeList);
+    //                     }
+    //
+    //                     Progress.Finish(id);
+    //                 });
+    //         });
+    //     } catch (Exception ex) {
+    //         Logger.TraceError(ex);
+    //     } finally {
+    //         Progress.Finish(_taskId);
+    //         operation.Done();
+    //         IsAnalyzing = false;
+    //     }
+    // }
 
     private List<SyntaxTree> ParseAssemblySourceFiles(UnityAssembly assembly, CancellationToken token) {
         var id = Progress.Start($"{assembly.name} Analyzing", parentId: _taskId);

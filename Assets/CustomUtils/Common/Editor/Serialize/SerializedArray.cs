@@ -18,12 +18,16 @@ public abstract class SerializedArray<T> : SerializedObject<T[]> {
     }
 
     protected override void OnEnable() {
-        base.OnEnable();
-        if (isInitialized) {
+        if (isInitialized == false) {
+            serializedObj = new SerializedObject(this);
+            serializedProperty = serializedObj.FindProperty(nameof(Value));
+            
             list = new ReorderableList(serializedObj, serializedProperty, false, false, true, true);
             list.onAddCallback += OnAdd;
             list.onRemoveCallback += OnRemove;
             list.drawElementCallback += OnElementDraw;
+            
+            isInitialized = true;
         }
     }
 

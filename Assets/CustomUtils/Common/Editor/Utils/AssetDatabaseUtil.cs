@@ -25,7 +25,6 @@ public static class AssetDatabaseUtil {
     
     public static bool TryFindAssets<T>(out IEnumerable<T> assets, string filter) where T : Object => (assets = FindAssets<T>(filter)).Any();
     
-    // TODO. ignorePackages 파라메터 정리하는쪽으로 작업. 필터를 통해 컨트롤 하도록 변경하도록 수정 필요
     public static IEnumerable<T> FindAssets<T>(string filter) where T : Object {
         foreach (var guid in AssetDatabase.FindAssets(filter)) {
             var path = AssetDatabase.GUIDToAssetPath(guid);
@@ -49,15 +48,8 @@ public static class AssetDatabaseUtil {
 
     public static T LoadAssetFromGuid<T>(string guid) where T : Object => AssetDatabase.LoadAssetAtPath<T>(AssetDatabase.GUIDToAssetPath(guid));
 
-    public static bool TryLoad(string path, out DefaultAsset asset) {
-        asset = AssetDatabase.LoadAssetAtPath<DefaultAsset>(path) ?? AssetDatabase.LoadAssetAtPath<DefaultAsset>(GetCollectionPath(path));
-        return asset != null;
-    }
-
-    public static bool TryLoad<T>(string path, out T asset) where T : Object {
-        asset = AssetDatabase.LoadAssetAtPath<T>(path) ?? AssetDatabase.LoadAssetAtPath<T>(GetCollectionPath(path));
-        return asset != null;
-    }
+    public static bool TryLoad(string path, out Object asset) => (asset = AssetDatabase.LoadAssetAtPath<Object>(path) ?? AssetDatabase.LoadAssetAtPath<Object>(GetCollectionPath(path))) != null;
+    public static bool TryLoad<T>(string path, out T asset) where T : Object => (asset = AssetDatabase.LoadAssetAtPath<T>(path) ?? AssetDatabase.LoadAssetAtPath<T>(GetCollectionPath(path))) != null;
 
     public static bool TryGetLabels(string path, out string[] labels) {
         var guid = AssetDatabase.GUIDFromAssetPath(path);

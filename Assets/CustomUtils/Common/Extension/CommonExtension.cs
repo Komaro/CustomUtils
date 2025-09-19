@@ -35,7 +35,7 @@ public static class CommonExtension {
     public static T ThrowIfUnexpectedNull<T>(this T instance, string name) where T : class => instance ?? throw new NullReferenceException<T>(name);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static Type ThrowIfInvalidCast<T>(this Type type) => typeof(T).IsSubclassOf(type) == false ? throw new InvalidCastException<T>(type) : type;
+    public static Type ThrowIfInvalidCast<T>(this Type type) => typeof(T).IsAssignableFrom(type) == false ? throw new InvalidCastException<T>(type) : type;
 
     public static string ToStringAllFields(this object ob, string prefix = "", bool ignoreRootName = false, BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.Public) {
         if (ob == null) {
@@ -76,13 +76,12 @@ public static class CommonExtension {
         
             return builder.ToString();
         } catch (Exception ex) {
-            Logger.TraceLog(ex);
-            Logger.TraceError(builder.ToString());
+            Logger.TraceLog(builder.ToString());
+            Logger.TraceError(ex);
+            return builder.ToString();
         } finally {
             StringUtil.StringBuilderPool.Release(builder);
         }
-
-        return string.Empty;
     }
 
     private static string GetNameWithGenericArguments(this Type type) => type.IsGenericType ? $"{type.Name}<{type.GenericTypeArguments.ToStringCollection(genericType => genericType.Name, ", ")}>" : type.Name;

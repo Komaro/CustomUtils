@@ -14,7 +14,7 @@ public partial class EditorCodeLocationService : EditorService<EditorCodeLocatio
     private static bool _isActiveFullProcessor;
 
     private readonly BoolSwitchText _fullProcessInfoText = new($"사용 가능한 모든 프로세서를 사용합니다\n프로세서의 갯수 : {Environment.ProcessorCount}", $"사용 가능한 모든 프로세서 중 절반만 사용합니다\n프로세서의 갯수 : {Environment.ProcessorCount / 2}");
-    
+
     private SerializedAssemblyArray _ignoreAssemblyAssets;
 
     private AsyncCustomOperation _operation;
@@ -44,13 +44,17 @@ public partial class EditorCodeLocationService : EditorService<EditorCodeLocatio
     protected override void Refresh() => _operation = AsyncRefresh();
 
     protected override async Task AsyncRefresh(AsyncCustomOperation operation, CancellationToken token) {
-        await operation.ToTask();
         token.ThrowIfCancellationRequested();
         
         if (Service.TryGetService<CodeLocationService>(out var service)) {
             _isActiveAnalyze = service.IsActiveAnalyze;
             _isActiveFullProcessor = service.IsActiveFullProcessor;
         }
+
+        _ignoreAssemblyAssets = new();
+        
+        await Task.CompletedTask;
+        operation.Done();
     }
 
     private void OnGUI() {
@@ -84,10 +88,8 @@ public partial class EditorCodeLocationService : EditorService<EditorCodeLocatio
             Refresh();
         }
         
-        if (_ignoreAssemblyAssets.Value != null) {
-            EditorGUILayout.LabelField("어셈블리 제외 리스트", Constants.Draw.AREA_TITLE_STYLE);
-            _ignoreAssemblyAssets.Draw();
-        }
+        EditorGUILayout.LabelField("어셈블리 제외 리스트", Constants.Draw.AREA_TITLE_STYLE);
+        _ignoreAssemblyAssets.Draw();
         
         if (_operation.IsDone) {
             EditorCommon.DrawSeparator();

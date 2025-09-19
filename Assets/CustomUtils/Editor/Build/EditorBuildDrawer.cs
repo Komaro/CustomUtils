@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -322,31 +323,37 @@ public abstract class EditorBuildDrawer<TConfig, TNullConfig> : EditorAutoConfig
     
     protected virtual void Build(string memo = "") {
         BuildConfigProvider.Load(config);
-        if (BuildInteractionInterface.TryAttachBuilder(builderType, out var builder)) {
-            var report = builder.StartBuild();
-            if (report != null && config.isLogBuildReport) {
-                if (Service.TryGetServiceWithRestart<LogCollectorService>(out var service)) {
-                    service.ClearLog();
-                    service.SetFilter(LogType.Error);
+        try {
+            if (BuildInteractionInterface.TryAttachBuilder(builderType, out var builder)) {
+                var report = builder.StartBuild();
+                if (report != null && config.isLogBuildReport) {
+                    if (Service.TryGetServiceWithRestart<LogCollectorService>(out var service)) {
+                        service.ClearLog();
+                        service.SetFilter(LogType.Error);
+                    }
+
+                    config.AddBuildRecord(new BuildRecord {
+                        result = report.summary.result,
+                        buildTarget = report.summary.platform,
+                        outputPath = report.summary.outputPath,
+                        startTime = report.summary.buildStartedAt,
+                        endTime = report.summary.buildEndedAt,
+                        buildTime = report.summary.totalTime,
+                        memo = $"{memo}\n\n===================\n\n" +
+                               $"{config.ToStringAllFields()}\n\n===================\n\n" +
+                               $"{service?.Copy().ToStringCollection('\n')}",
+                    });
                 }
-
-                config.AddBuildRecord(new BuildRecord {
-                    result = report.summary.result,
-                    buildTarget = report.summary.platform,
-                    outputPath = report.summary.outputPath,
-                    startTime = report.summary.buildStartedAt,
-                    endTime = report.summary.buildEndedAt,
-                    buildTime = report.summary.totalTime,
-                    memo = $"{memo}\n\n===================\n\n" +
-                           $"{config.ToStringAllFields()}\n\n===================\n\n" +
-                           $"{service?.Copy().ToStringCollection('\n')}",
-                });
-                
-                config.Save(CONFIG_PATH);
-                config.ResetCursor();
-
-                Service.StopService<LogCollectorService>();
             }
+        }
+        catch (Exception ex) {
+            Logger.TraceError(ex);
+        } finally {
+            config.Save(CONFIG_PATH);
+            config.ResetCursor();
+
+            Service.StopService<LogCollectorService>();
+            
         }
     }
     

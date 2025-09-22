@@ -62,9 +62,6 @@ public class EditorResourceService : EditorService<EditorResourceService> {
             }
 
             DrawerCacheRefresh();
-
-            _menuTypes ??= CreateInstance<SerializedServiceMenuGlobalEnum>();
-            _resourceTypes ??= CreateInstance<SerializedServiceTypeGlobalEnum>();
         }
     }
 
@@ -80,9 +77,6 @@ public class EditorResourceService : EditorService<EditorResourceService> {
     }
 
     private void OnGUI() {
-        _menuTypes.Draw();
-        _resourceTypes.Draw();
-        
         EditorCommon.DrawTopToolbar(ref _selectMenuIndex, index => EditorCommon.Set(SELECT_MENU_SAVE_KEY, index), EDITOR_MENUS);
         
         GUILayout.Space(10f);

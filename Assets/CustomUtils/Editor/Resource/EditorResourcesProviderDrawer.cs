@@ -3,7 +3,7 @@ using Newtonsoft.Json.Linq;
 using UnityEditor;
 using UnityEngine;
 
-[EditorResourceDrawer(RESOURCE_SERVICE_MENU_TYPE.Provider, typeof(ResourcesProvider))]
+[EditorResourceDrawer(RESOURCE_SERVICE_MENU_TYPE.Provider, RESOURCE_SERVICE_TYPE.Resources)]
 public class EditorResourcesProviderDrawer : EditorResourceDrawer<ResourcesProviderConfig, ResourcesProviderConfig.NullConfig> {
 
     private JObject _resourcesListJson;

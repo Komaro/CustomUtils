@@ -31,6 +31,18 @@ public sealed class GlobalEnum<TAttribute> : GlobalEnum, IEnumerable<Enum> where
     
     private int _index;
 
+    public int Index {
+        get => _index;
+        set {
+            if (intToEnumDic[typeof(TAttribute)].ContainsKey(value)) {
+                _index = value;
+            } else {
+                _index = 0;
+                throw new ArgumentOutOfRangeException(nameof(value));
+            }
+        }
+    }
+
     public Enum Value {
         get => intToEnumDic[typeof(TAttribute)][_index];
         set {

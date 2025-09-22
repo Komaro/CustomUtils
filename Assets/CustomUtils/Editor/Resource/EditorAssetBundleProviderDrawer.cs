@@ -8,7 +8,7 @@ using UnityEditor;
 using UnityEditor.IMGUI.Controls;
 using UnityEngine;
 
-[EditorResourceDrawer(RESOURCE_SERVICE_MENU_TYPE.Provider, typeof(AssetBundleProvider))]
+[EditorResourceDrawer(RESOURCE_SERVICE_MENU_TYPE.Provider, RESOURCE_SERVICE_TYPE.AssetBundle)]
 public partial class EditorAssetBundleProviderDrawer : EditorResourceDrawer<AssetBundleProviderConfig, AssetBundleProviderConfig.NullConfig> {
 
     private int _buildInfoCursor;

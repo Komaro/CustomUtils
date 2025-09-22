@@ -62,6 +62,9 @@ public class EditorResourceService : EditorService<EditorResourceService> {
             }
 
             DrawerCacheRefresh();
+
+            _menuTypes ??= CreateInstance<SerializedServiceMenuGlobalEnum>();
+            _resourceTypes ??= CreateInstance<SerializedServiceTypeGlobalEnum>();
         }
     }
 
@@ -71,7 +74,15 @@ public class EditorResourceService : EditorService<EditorResourceService> {
         Window.Focus();
     }
 
+    [MenuItem("Service/Resource/Resource Service Test Force Close")]
+    private static void ForceClose() {
+        Window?.Close();
+    }
+
     private void OnGUI() {
+        _menuTypes.Draw();
+        _resourceTypes.Draw();
+        
         EditorCommon.DrawTopToolbar(ref _selectMenuIndex, index => EditorCommon.Set(SELECT_MENU_SAVE_KEY, index), EDITOR_MENUS);
         
         GUILayout.Space(10f);
@@ -114,9 +125,20 @@ public class EditorResourceService : EditorService<EditorResourceService> {
     }
 }
 
+public class EditorResourceServiceMenuEnum : PriorityAttribute { }
+public class EditorResourceServiceTypeEnum : PriorityAttribute { }
+
+[EditorResourceServiceMenuEnum]
 public enum RESOURCE_SERVICE_MENU_TYPE {
     Provider,
     Test,
+}
+
+[EditorResourceServiceTypeEnum]
+public enum RESOURCE_SERVICE_TYPE {
+    Android,
+    Resources,
+    Addressable,
 }
 
 [AttributeUsage(AttributeTargets.Class)]

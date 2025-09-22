@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using System.Reflection;
@@ -26,9 +26,10 @@ public class EditorGlobalEnumInstance : PropertyDrawer {
                 }
             
                 foreach (var baseType in obj.GetType().GetBaseTypes()) {
-                    if (baseType == typeof(GlobalEnum) && baseType.TryGetFieldInfo(out info, "intToEnumDic", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static)) {
-                        if (info.GetValue(obj) is ConcurrentDictionary<Type, ImmutableDictionary<int, Enum>> intToEnumDic) {
-                            _enumStrings = intToEnumDic.Values.SelectMany(pair => pair.Values).Select(enumValue => enumValue.GetType().GetAlias($"{enumValue.GetType()}.{enumValue}")).ToArray();
+                    if (baseType == typeof(GlobalEnum) && baseType.TryGetFieldInfo(out info, "intToEnumDic", BindingFlags.NonPublic | BindingFlags.FlattenHierarchy | BindingFlags.Static)) {
+                        if (info.GetValue(obj) is Dictionary<Type, ImmutableDictionary<int, Enum>> intToEnumDic && intToEnumDic.TryGetValue(obj.GetType().GetGenericArguments().First(), out var enumDic)) {
+                            _enumStrings = enumDic.Values.Select(enumValue => enumValue.GetType().GetAlias($"{enumValue.GetType()}.{enumValue}")).ToArray();
+                            // _enumStrings = intToEnumDic.Values.SelectMany(pair => pair.Values).Select(enumValue => enumValue.GetType().GetAlias($"{enumValue.GetType()}.{enumValue}")).ToArray();
                         }
                     
                         break;
@@ -46,6 +47,7 @@ public class EditorGlobalEnumInstance : PropertyDrawer {
     public override void OnGUI(Rect position, SerializedProperty property, GUIContent label) {
         if (_isInitialize == false) {
             Init(property);
+            return;
         }
 
         if (_exception != null) {

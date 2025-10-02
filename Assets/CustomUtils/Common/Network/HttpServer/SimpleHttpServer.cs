@@ -106,6 +106,7 @@ public class SimpleHttpServer : IDisposable {
         }
     }
 
+    // TODO. StatusCode 후처리 수정 필요. 정상 처리 되어 write 처리된 경우 Header를 더이상 수저할 수 없기 때문에 일괄적으로 처리하기 어려움 다른 방안 혹은 반환 처리를 통합하는 방안 강구 필요
     private void Serve(HttpListenerContext context, CancellationToken token) {
         try {
             if (_serveModuleDic.Count <= 0) {
@@ -117,7 +118,6 @@ public class SimpleHttpServer : IDisposable {
             if (context.Request != null) {
                 foreach (var module in _serveModuleDic.Values) {
                     if (module.Serve(context)) {
-                        context.Response.StatusCode = (int) HttpStatusCode.OK;
                         return;
                     }
                 }

@@ -8,7 +8,7 @@ using UnityEditor;
 using UnityEditor.IMGUI.Controls;
 using UnityEngine;
 
-[EditorResourceDrawer(RESOURCE_SERVICE_MENU_TYPE.Provider, RESOURCE_SERVICE_TYPE.AssetBundle)]
+[EditorResourceDrawer(RESOURCE_SERVICE_MENU_TYPE.Provider, RESOURCE_TYPE.AssetBundle)]
 public partial class EditorAssetBundleProviderDrawer : EditorResourceDrawer<AssetBundleProviderConfig, AssetBundleProviderConfig.NullConfig> {
 
     private int _buildInfoCursor;
@@ -287,7 +287,6 @@ public struct AssetBundleBuildInfo {
     public TimeSpan GetBuildTime() => buildEndTime - buildStartTime;
     public override string ToString() => $"{buildStartTime} ==> {buildEndTime} [{buildSuccess.ToString()}]";
 }
-
 
 public class AssetBundleProviderConfig : JsonCoroutineAutoConfig {
 

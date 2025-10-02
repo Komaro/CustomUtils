@@ -5,7 +5,7 @@ using System.IO;
 using UnityEditor;
 using UnityEngine;
 
-[EditorResourceDrawer(RESOURCE_SERVICE_MENU_TYPE.Test, RESOURCE_SERVICE_TYPE.AssetBundle)]
+[EditorResourceDrawer(RESOURCE_SERVICE_MENU_TYPE.Test, RESOURCE_TYPE.AssetBundle)]
 public partial class EditorAssetBundleTesterDrawer : EditorResourceDrawer<AssetBundleTesterConfig, AssetBundleTesterConfig.NullConfig> {
     
     private CachingService _cachingService;

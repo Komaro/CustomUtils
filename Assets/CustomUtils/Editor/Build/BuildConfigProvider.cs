@@ -19,12 +19,14 @@ public static class BuildConfigProvider {
         _jObject.Add(key, value);
     }
     
-    public static bool TryGetValue<T>(string key, out T outValue) => (outValue = GetValue<T>(key)) != null;
+    public static bool TryGetValue<T>(string key, out T value) => (value = GetValue<T>(key)) != null;
 
     public static T GetValue<T>(string key) {
         _jObject.ThrowIfNull(nameof(_jObject));
         return _jObject.TryGetValue(key, out var token) ? token.ToObject<T>() : default;
     }
+
+    public static bool TryGetValue(string key, out string value) => string.IsNullOrEmpty(value = GetValue(key)) == false;
     
     public static string GetValue(string key) {
         _jObject.ThrowIfNull(nameof(_jObject));
@@ -62,6 +64,8 @@ public static class BuildConfigProvider {
         }
     }
 
+    // -name value → ("name", "value")
+    // -flag → ("flag", true)
     public static JObject LoadOnCLI() {
         try {
             _jObject ??= new JObject();

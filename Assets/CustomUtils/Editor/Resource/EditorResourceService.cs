@@ -117,7 +117,7 @@ public enum RESOURCE_SERVICE_MENU_TYPE {
 }
 
 [EditorResourceServiceTypeEnum]
-public enum RESOURCE_SERVICE_TYPE {
+public enum RESOURCE_TYPE {
     Resources,
     AssetBundle,
     Addressable,

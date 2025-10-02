@@ -1,44 +1,33 @@
-﻿using System.Collections.Generic;
-using System.Collections.Immutable;
+﻿using System.Collections.Immutable;
 using System.Linq;
 using UnityEditor;
-using UnityEditor.Callbacks;
 using UnityEngine;
 
-public class EditorCachingService : EditorService {
+public class EditorCachingService : EditorService<EditorCachingService> {
     
-    private static EditorWindow _window;
-    private static EditorWindow Window => _window == null ? _window = GetWindow<EditorCachingService>("CachingService") : _window;
-
+    
     private static CachingService _service;
     private static ImmutableList<Cache> _cacheList;
 
     private string _createDirectoryName;
     
     private Vector2 _cachingScrollViewPosition;
-
-    protected override void OnEditorOpenInitialize() => CacheRefresh();
     
     [MenuItem("Service/Caching Service")]
-    public static void OpenWindow() {
-        Window.Show();
-        CacheRefresh();
-        Window.Focus();
-    }
+    public static void OpenWindow() => Window.Open();
 
-    [DidReloadScripts(99999)]
-    private static void CacheRefresh() {
-        if (HasOpenInstances<EditorCachingService>() && Service.TryGetService(out _service)) {
+    protected override void Refresh() {
+        if (HasOpenInstances() && Service.TryGetService(out _service)) {
             _cacheList = _service.GetAllCacheList().ToImmutableList();
         }
     }
-
+    
     private void OnGUI() {
         GUILayout.Space(10);
         EditorCommon.DrawLabelTextField("현재 활성화된 Cache", Caching.currentCacheForWriting.path, 180f);
         EditorCommon.DrawSeparator();
         if (_cacheList?.Any() ?? false) {
-            GUILayout.BeginVertical("box");
+            GUILayout.BeginVertical(Constants.Draw.BOX);
             _cachingScrollViewPosition = EditorGUILayout.BeginScrollView(_cachingScrollViewPosition, false, false, GUILayout.MaxHeight(300));
             foreach (var cache in _cacheList) {
                 using (new GUILayout.HorizontalScope()) {
@@ -70,7 +59,7 @@ public class EditorCachingService : EditorService {
         _createDirectoryName = EditorCommon.DrawLabelTextField("폴더명", _createDirectoryName);
         if (GUILayout.Button("Caching 추가", GUILayout.Height(50f)) && string.IsNullOrEmpty(_createDirectoryName) == false) {
             _service.Add(_createDirectoryName);
-            CacheRefresh();
+            Refresh();
         }
         
         if (GUILayout.Button($"{nameof(Caching)} 전체 비우기", GUILayout.Height(50f))) {

@@ -40,9 +40,16 @@ public static class AssetDatabaseUtil {
     public static bool TryFindAssetInfos<T>(out IEnumerable<EditorAssetInfo<T>> infos, string filter) where T : Object => (infos = FindAssetInfos<T>(filter)).Any(); 
     
     public static IEnumerable<EditorAssetInfo<T>> FindAssetInfos<T>(string filter) where T : Object {
-        foreach (var guid in AssetDatabase.FindAssets(filter)) {
+        var guids = AssetDatabase.FindAssets(filter);
+        if (guids.Length <= 0) {
+            yield break;
+        }
+        
+        foreach (var guid in guids) {
             var path = AssetDatabase.GUIDToAssetPath(guid);
-            yield return new EditorAssetInfo<T>(guid, path);
+            if (TryLoad<T>(path, out var asset)) {
+                yield return new EditorAssetInfo<T>(asset, guid, path);
+            }
         }
     }
 
@@ -93,7 +100,7 @@ public static class AssetDatabaseUtil {
     public static bool ContainsLabel(string path, string label) => TryGetLabels(path, out var labels) && labels.Contains(label);
 }
 
-public record EditorAssetInfo<T> where T : Object {
+public readonly struct EditorAssetInfo<T> where T : Object {
 
     public readonly T asset;
     public readonly string guid;
@@ -118,6 +125,8 @@ public record EditorAssetInfo<T> where T : Object {
         guid = AssetDatabase.GUIDFromAssetPath(path).ToString();
         this.path = path;
     }
+    
+    public bool IsValid() => asset != null && string.IsNullOrEmpty(guid) == false && string.IsNullOrEmpty(path) == false;
 }
 
 public static class FilterUtil {

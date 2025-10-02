@@ -358,7 +358,7 @@ public static partial class CollectionExtension {
     }
     
     public static bool TryFirst<T>(this List<T> list, out T value, Predicate<T> match) => (value = list.Find(match)) != null;
-    public static bool TryFindIndex<T>(this List<T> list, out int index, Predicate<T> match) => (index = list.FindIndex(match)) > 0;
+    public static bool TryFindIndex<T>(this List<T> list, out int index, Predicate<T> match) => (index = list.FindIndex(match)) >= 0;
 
     public static void RemoveFirst<TValue>(this IList<TValue> list) {
         if (list.Count > 1) {

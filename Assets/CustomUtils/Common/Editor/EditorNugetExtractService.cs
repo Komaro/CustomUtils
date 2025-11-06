@@ -123,7 +123,7 @@ public class EditorNugetExtractService : EditorService {
                         switch (grouping.Key) {
                             case GROUP_TYPE.DIRECTORY:
                                 foreach (var path in grouping) {
-                                    foreach (var dllFilePath in GetValidPaths(SystemUtil.FindFiles(path, Constants.Extension.DLL_FILTER))) {
+                                    foreach (var dllFilePath in GetValidPaths(SystemUtil.FindFiles(path, Constants.Extension.DLL_FILTER, SearchOption.AllDirectories))) {
                                         var dllFileName = Path.GetFileNameWithoutExtension(dllFilePath);
                                         if (_extractPluginDic.ContainsKey(dllFileName) == false) {
                                             _extractPluginDic.Add(dllFileName, new DirectoryExtractPlugin(dllFileName, dllFilePath));

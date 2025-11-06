@@ -151,7 +151,7 @@ public static class SystemUtil {
     }
     
     #endregion
-
+    
     public static bool SafeDelete(string path) {
         try {
             if (File.Exists(path)) {
@@ -164,15 +164,16 @@ public static class SystemUtil {
         
         return false;
     }
+
+    public static bool TryFindFiles(out string[] files, string directoryPath, string searchPattern, SearchOption searchOption = SearchOption.TopDirectoryOnly) => (files = FindFiles(directoryPath, searchPattern, searchOption)) != Array.Empty<string>();
     
-    public static string[] FindFiles(string directoryPath, string searchPattern) {
+    public static string[] FindFiles(string directoryPath, string searchPattern, SearchOption searchOption = SearchOption.TopDirectoryOnly) {
         try {
             if (Directory.Exists(directoryPath)) {
-                return Directory.GetFiles(directoryPath, searchPattern, SearchOption.AllDirectories);
+                return Directory.GetFiles(directoryPath, searchPattern, searchOption);
             }
         } catch (Exception ex) {
             Logger.TraceError(ex);
-            throw;
         }
 
         return Array.Empty<string>();
@@ -187,7 +188,6 @@ public static class SystemUtil {
             }
         } catch (Exception ex) {
             Logger.TraceError(ex);
-            throw;
         }
     }
 
@@ -209,7 +209,6 @@ public static class SystemUtil {
             }
         } catch (Exception ex) {
             Logger.TraceError(ex);
-            throw;
         }
     }
     
@@ -237,19 +236,19 @@ public static class SystemUtil {
         }
     }
 
-    public static void ClearDirectory(string path) {
-        if (Directory.Exists(path)) {
-            Logger.TraceLog($"Clear Directory || {path}", Color.red);
-            foreach (var filePath in Directory.GetFiles(path)) {
-                File.Delete(filePath);
+    public static void ClearDirectory(string path, string searchPattern = "*.*", SearchOption searchOption = SearchOption.TopDirectoryOnly) {
+        try {
+            if (Directory.Exists(path) && TryFindFiles(out var files, path, searchPattern, searchOption)) {
+                Logger.TraceLog($"Clear directory || {path}", Color.yellow);
+                foreach (var file in files) {
+                    File.Delete(file);
+                }
             }
-
-            foreach (var directoryPath in Directory.GetDirectories(path)) {
-                DeleteDirectory(directoryPath);
-            }
+        } catch (Exception ex) {
+            Logger.TraceError(ex);
         }
     }
-
+    
     public static bool TryReadAllText(string path, out string text) {
         try {
             if (File.Exists(path)) {
@@ -333,8 +332,7 @@ public static class SystemUtil {
             }
         }
     }
-
-
+    
     #region [Create Instance]
 
     public static bool TryCreateInstance<T>(out T instance) where T : class {

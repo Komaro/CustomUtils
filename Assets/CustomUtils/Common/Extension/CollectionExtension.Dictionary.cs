@@ -169,10 +169,11 @@ public static partial class CollectionExtension {
     }
 
     public static void AutoAccumulateAdd<TKey>(this IDictionary<TKey, long> dictionary, TKey key, long value) {
-        if (dictionary.ContainsKey(key))
+        if (dictionary.ContainsKey(key)) {
             dictionary[key] += value;
-        else
+        } else {
             dictionary.Add(key, value);
+        }
     }
 
     public static void AutoAccumulateAdd<TKey>(this IDictionary<TKey, double> dictionary, TKey key, double value) {

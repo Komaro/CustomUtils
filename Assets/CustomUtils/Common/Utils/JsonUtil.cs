@@ -6,14 +6,37 @@ using UnityEngine;
 
 public static class JsonUtil {
 
-    public static bool TryDeserialize(string text, Type type, out object ob) {
+    public static bool TrySerialize(object obj, out string text) {
         try {
-            return (ob = JsonConvert.DeserializeObject(text, type)) != null;
+            return string.IsNullOrEmpty(text = JsonConvert.SerializeObject(obj)) == false;
         } catch (Exception ex) {
             Logger.TraceError(ex);
-            ob = null;
-            return false;
         }
+
+        text = string.Empty;
+        return false;
+    }
+    
+    public static bool TryDeserialize<T>(string text, out T obj) {
+        try {
+            return (obj = JsonConvert.DeserializeObject<T>(text)) != null;
+        } catch (Exception ex) {
+            Logger.TraceError(ex);
+            obj = default;
+        }
+        
+        return false;
+    }
+
+    public static bool TryDeserialize(string text, Type type, out object obj) {
+        try {
+            return (obj = JsonConvert.DeserializeObject(text, type)) != null;
+        } catch (Exception ex) {
+            Logger.TraceError(ex);
+            obj = null;
+        }
+        
+        return false;
     }
 
     public static bool TryLoadJsonOrDecrypt<T>(out T json, string path, string key, ENCRYPT_TYPE type = default) {

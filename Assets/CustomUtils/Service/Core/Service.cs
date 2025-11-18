@@ -9,12 +9,12 @@ public static partial class Service {
     private static ImmutableHashSet<Type> _cachedServiceTypeSet;
     private static readonly Dictionary<Type, IService> _serviceDic = new ();
 
-    private static bool _isInitialized = false;
+    private static bool _isInitialized;
     
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterAssembliesLoaded)]
     private static void Initialize() {
         if (_isInitialized == false) {
-            _cachedServiceTypeSet = ReflectionProvider.GetClassTypes().Where(type => type.IsAbstract == false && typeof(IService).IsAssignableFrom(type) && type.Name.StartsWith("Sample_") == false).ToImmutableHashSetWithDistinct();
+            _cachedServiceTypeSet = ReflectionProvider.GetClassTypes().Where(type => type.IsAbstract == false && typeof(IService).IsAssignableFrom(type) && type.IsDefined<ObsoleteAttribute>() == false).ToImmutableHashSetWithDistinct();
             _isInitialized = true;
         }
     }
@@ -222,6 +222,8 @@ public static partial class Service {
             
             service.Stop();
             service.Remove();
+
+            _serviceDic.Remove(type);
             Logger.TraceLog($"{nameof(RemoveService)} || {type.Name}", Color.yellow);
             return true;
         } catch (Exception ex) {
@@ -261,6 +263,8 @@ public static partial class Service {
     private static bool ContainsType(Type type, params Enum[] serviceTypes) => type.TryGetCustomAttribute<ServiceAttribute>(out var attribute) && attribute.Contains(serviceTypes);
     private static bool ContainsType<TEnum>(Type type, TEnum serviceType) where TEnum : struct, Enum => type.TryGetCustomAttribute<ServiceAttribute>(out var attribute) && attribute.Contains(serviceType);
     private static bool ContainsType<TEnum>(Type type, params TEnum[] serviceTypes) where TEnum : struct, Enum => type.TryGetCustomAttribute<ServiceAttribute>(out var attribute) && attribute.Contains(serviceTypes);
+
+    public static bool IsActiveService<TService>() => _serviceDic.ContainsKey(typeof(TService));
 }
 
 public enum DEFAULT_SERVICE_TYPE {

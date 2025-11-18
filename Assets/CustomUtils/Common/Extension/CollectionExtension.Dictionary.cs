@@ -80,6 +80,11 @@ public static partial class CollectionExtension {
         }
     }
 
+    public static TValue ReturnAdd<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key, TValue value) {
+        dictionary.Add(key, value);
+        return value;
+    }
+
     public static void AutoAdd<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, KeyValuePair<TKey, TValue> pair) => dictionary.AutoAdd(pair.Key, pair.Value);
 
     public static List<TValue> AutoAdd<TKey, TValue>(this IDictionary<TKey, List<TValue>> dictionary, TKey key) => dictionary.AutoAdd<List<TValue>, TKey, TValue>(key)[key];
@@ -164,10 +169,11 @@ public static partial class CollectionExtension {
     }
 
     public static void AutoAccumulateAdd<TKey>(this IDictionary<TKey, long> dictionary, TKey key, long value) {
-        if (dictionary.ContainsKey(key))
+        if (dictionary.ContainsKey(key)) {
             dictionary[key] += value;
-        else
+        } else {
             dictionary.Add(key, value);
+        }
     }
 
     public static void AutoAccumulateAdd<TKey>(this IDictionary<TKey, double> dictionary, TKey key, double value) {

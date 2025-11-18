@@ -21,7 +21,7 @@ public abstract class NotifyDictionary<TDictionary, TKey, TValue> : NotifyCollec
         }
         
         collection.Add(key, value);
-        OnChanged.handler?.Invoke(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add));
+        OnChanged.Handler?.Invoke(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add));
     }
 
     public virtual void AddWithDetails([NotNull]TKey key, TValue value) {
@@ -30,14 +30,14 @@ public abstract class NotifyDictionary<TDictionary, TKey, TValue> : NotifyCollec
         }
         
         collection.Add(key, value);
-        OnChanged.handler?.Invoke(new NotifyDictionaryChangedEventArgs<TKey,TValue>(key, value, NotifyCollectionChangedAction.Add));
+        OnChanged.Handler?.Invoke(new NotifyDictionaryChangedEventArgs<TKey,TValue>(key, value, NotifyCollectionChangedAction.Add));
     }
 
     public bool ContainsKey(TKey key) => collection.ContainsKey(key);
     
     public bool Remove(TKey key) {
         if (collection.Remove(key)) {
-            OnChanged.handler?.Invoke(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove));
+            OnChanged.Handler?.Invoke(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove));
             return true;
         }
 
@@ -46,7 +46,7 @@ public abstract class NotifyDictionary<TDictionary, TKey, TValue> : NotifyCollec
 
     public virtual void RemoveWithDetails([NotNull]TKey key) {
         if (collection.Remove(key, out var value)) {
-            OnChanged.handler?.Invoke(new NotifyDictionaryChangedEventArgs<TKey,TValue>(key, value, NotifyCollectionChangedAction.Remove));
+            OnChanged.Handler?.Invoke(new NotifyDictionaryChangedEventArgs<TKey,TValue>(key, value, NotifyCollectionChangedAction.Remove));
         }
     }
 
@@ -57,10 +57,10 @@ public abstract class NotifyDictionary<TDictionary, TKey, TValue> : NotifyCollec
         set {
             if (collection.ContainsKey(key)) {
                 collection[key] = value;
-                OnChanged.handler?.Invoke(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Replace));
+                OnChanged.Handler?.Invoke(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Replace));
             } else {
                 collection.Add(key, value);
-                OnChanged.handler?.Invoke(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add));
+                OnChanged.Handler?.Invoke(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add));
             }
         }
     }

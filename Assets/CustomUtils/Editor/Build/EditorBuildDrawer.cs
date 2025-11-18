@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -57,7 +58,7 @@ public abstract class EditorBuildDrawer<TConfig, TNullConfig> : EditorAutoConfig
             })).ToArray();
         }
         
-        buildOptionSet = ReflectionProvider.GetAttributeEnumInfos<BuildOptionEnumAttribute>()
+        buildOptionSet = ReflectionProvider.GetAttributeEnumSets<BuildOptionEnumAttribute>()
             .Where(info => info.attribute.buildTargetGroup == BuildTargetGroup.Unknown || info.attribute.buildTargetGroup == buildTargetGroup)
             .SelectMany(info => Enum.GetValues(info.enumType).Cast<object>()).Select(ob => ob.ToString()).ToHashSetWithDistinct();
         
@@ -67,50 +68,50 @@ public abstract class EditorBuildDrawer<TConfig, TNullConfig> : EditorAutoConfig
     public override void Draw() {
         base.Draw();
         if (config != null) {
-            _editorWindowScrollViewPosition = EditorGUILayout.BeginScrollView(_editorWindowScrollViewPosition, GUILayout.ExpandWidth(true), GUILayout.ExpandHeight(true));
+            using var scope = new EditorGUILayout.ScrollViewScope(_editorWindowScrollViewPosition, GUILayout.ExpandWidth(true), GUILayout.ExpandHeight(true));
+            _editorWindowScrollViewPosition = scope.scrollPosition;
+                
             if (buildTarget != EditorUserBuildSettings.activeBuildTarget) {
-                EditorGUILayout.HelpBox($"현재 활성화된 {nameof(BuildTarget)}({EditorUserBuildSettings.activeBuildTarget})과 {nameof(Builder)}의 {nameof(BuildTarget)}({buildTarget})이 일치하지 않습니다", MessageType.Warning);
+                EditorGUILayout.HelpBox($"현재 활성화된 {nameof(BuildTarget)}({EditorUserBuildSettings.activeBuildTarget})과 {nameof(BuilderBase)}의 {nameof(BuildTarget)}({buildTarget})이 일치하지 않습니다", MessageType.Warning);
                 if (GUILayout.Button($"{nameof(BuildTarget)} 전환\n[{EditorUserBuildSettings.activeBuildTarget} ==> {buildTarget}]")) {
                     SwitchPlatform();
                 }
             }
-            
+                
             using (new GUILayout.VerticalScope(Constants.Draw.BOX)) {
                 EditorCommon.DrawFolderOpenSelector("빌드 폴더", "선택", ref config.buildDirectory);
             }
-            
+                
             EditorCommon.DrawSeparator();
-            
+                
             GUILayout.Label("빌드 옵션", Constants.Draw.AREA_TITLE_STYLE);
             using (new EditorGUILayout.VerticalScope(Constants.Draw.BOX)) {
                 EditorCommon.DrawLabelTextFieldWithRefresh(nameof(config.applicationIdentifier), config.applicationIdentifier, () => config.applicationIdentifier = PlayerSettings.applicationIdentifier);
                 EditorCommon.DrawLabelTextField(nameof(config.bundleVersion), ref config.bundleVersion, 150f);
             }
-            
-            DrawStackTrace();
-            DrawBuildOptions();
-            
+                
+            DrawStackTraceArea();
+            DrawBuildOptionsArea();
+                
             EditorCommon.DrawSeparator();
-            DrawDefineSymbol();
-            
+            DrawDefineSymbolArea();
+                
             EditorCommon.DrawSeparator();
-            DrawCustomOption();
-            
+            DrawCustomOptionArea();
+                
             EditorCommon.DrawSeparator();
-            DrawScene();
+            DrawSceneArea();
 
             EditorCommon.DrawSeparator();
-            DrawBuildButton();
-            
+            DrawBuildArea();
+                
             EditorCommon.DrawSeparator();
-            DrawBuildResultRecord();
-        
-            EditorGUILayout.EndScrollView();
+            DrawBuildResultRecordArea();
         }
     }
     
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    protected virtual void DrawStackTrace() {
+    protected virtual void DrawStackTraceArea() {
         using (new EditorGUILayout.VerticalScope(Constants.Draw.BOX)) {
             GUILayout.Label("스택 트레이스 (Stack Trace)", Constants.Draw.BOLD_CENTER_LABEL);
             using (new EditorGUILayout.HorizontalScope()) {
@@ -132,7 +133,7 @@ public abstract class EditorBuildDrawer<TConfig, TNullConfig> : EditorAutoConfig
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    protected virtual void DrawBuildOptions() {
+    protected virtual void DrawBuildOptionsArea() {
         using (new EditorGUILayout.VerticalScope(Constants.Draw.BOX)) {
             EditorCommon.DrawLabelToggle(ref config.developmentBuild, nameof(config.developmentBuild), 150f);
             EditorCommon.DrawLabelToggle(ref config.autoConnectProfile, nameof(config.autoConnectProfile), 150f);
@@ -142,13 +143,14 @@ public abstract class EditorBuildDrawer<TConfig, TNullConfig> : EditorAutoConfig
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    protected virtual void DrawDefineSymbol() {
+    protected virtual void DrawDefineSymbolArea() {
         GUILayout.Label("디파인 심볼 (Define Symbols)", Constants.Draw.AREA_TITLE_STYLE);
         using (new EditorGUILayout.VerticalScope(Constants.Draw.BOX)) {
-            _defineSymbolScrollViewPosition = EditorGUILayout.BeginScrollView(_defineSymbolScrollViewPosition, GUILayout.ExpandWidth(true), GUILayout.MinHeight(100f), GUILayout.MaxHeight(250f));
-            EditorCommon.DrawToggleBox(defineSymbols, () => config.defineSymbols = string.Join(Constants.Separator.DEFINE_SYMBOL, defineSymbols.Where(x => x.isActive)));
-            EditorGUILayout.EndScrollView();
-            
+            using (var scope = new EditorGUILayout.ScrollViewScope(_defineSymbolScrollViewPosition, GUILayout.ExpandWidth(true), GUILayout.MinHeight(100f), GUILayout.MaxHeight(250f))) {
+                _defineSymbolScrollViewPosition = scope.scrollPosition;
+                EditorCommon.DrawToggleBox(defineSymbols, () => config.defineSymbols = string.Join(Constants.Separator.DEFINE_SYMBOL, defineSymbols.Where(x => x.isActive)));
+            }
+
             EditorCommon.DrawLabelTextFieldWithRefresh("Define Symbol", config.defineSymbols, () => {
                 config.defineSymbols = buildTargetGroup.GetScriptingDefineSymbolsForGroup();
                 var defineSymbolSet = config.defineSymbols.Split(Constants.Separator.DEFINE_SYMBOL).ToHashSet();
@@ -160,7 +162,7 @@ public abstract class EditorBuildDrawer<TConfig, TNullConfig> : EditorAutoConfig
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    protected virtual void DrawCustomOption() {
+    protected virtual void DrawCustomOptionArea() {
         GUILayout.Label("커스텀 옵션", Constants.Draw.AREA_TITLE_STYLE);
         using (new EditorGUILayout.VerticalScope(Constants.Draw.BOX)) {
             foreach (var buildOption in buildOptionSet) {
@@ -172,48 +174,47 @@ public abstract class EditorBuildDrawer<TConfig, TNullConfig> : EditorAutoConfig
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    protected virtual void DrawScene() {
+    protected virtual void DrawSceneArea() {
         if (EditorCommon.DrawLabelButton("씬 (Scene)", Constants.Draw.REFRESH_ICON, Constants.Draw.AREA_TITLE_STYLE)) {
             RefreshScenes();
         }
 
         using (new EditorGUILayout.VerticalScope(Constants.Draw.BOX)) {
-            _activateSceneFoldOut = EditorGUILayout.BeginFoldoutHeaderGroup(_activateSceneFoldOut, "활성화 된 씬");
-            if (_activateSceneFoldOut) {
-                foreach (var (path, scene) in activateSceneDic) {
-                    using (new EditorGUILayout.HorizontalScope()) {
-                        EditorGUILayout.Space(15f, false);
-                        if (EditorCommon.DrawFitToggle(scene.enabled) != scene.enabled) {
-                            scene.enabled = scene.enabled == false;
-                            EditorBuildSettings.scenes = activateSceneDic.Values.ToArray();
-                        }
+            using (new FoldoutHeaderGroupScope(ref _activateSceneFoldOut, "활성화 된 씬")) {
+                if (_activateSceneFoldOut) {
+                    foreach (var (path, scene) in activateSceneDic) {
+                        using (new EditorGUILayout.HorizontalScope()) {
+                            EditorGUILayout.Space(15f, false);
+                            if (EditorCommon.DrawFitToggle(scene.enabled) != scene.enabled) {
+                                scene.enabled = scene.enabled == false;
+                                EditorBuildSettings.scenes = activateSceneDic.Values.ToArray();
+                            }
                         
-                        EditorGUILayout.TextField(path);
-                    }
-                }
-            }
-
-            EditorGUILayout.EndFoldoutHeaderGroup();
-            if (_activateSceneFoldOut) {
-                EditorGUILayout.Space(15f);
-            }
-
-            _sceneAssetFoldOut = EditorGUILayout.BeginFoldoutHeaderGroup(_sceneAssetFoldOut, "프로젝트 전체 씬 에셋");
-            if (_sceneAssetFoldOut) {
-                foreach (var (path, info) in sceneAssetInfoDic) {
-                    using (new EditorGUILayout.HorizontalScope()) {
-                        EditorGUILayout.Space(15f, false);
-                        EditorCommon.DrawLabelTextField(info.Name, path);
+                            EditorGUILayout.TextField(path);
+                        }
                     }
                 }
             }
             
-            EditorGUILayout.EndFoldoutHeaderGroup();
+            if (_activateSceneFoldOut) {
+                EditorGUILayout.Space(15f);
+            }
+
+            using (new FoldoutHeaderGroupScope(ref _sceneAssetFoldOut, "프로젝트 전체 씬 에셋")) {
+                if (_sceneAssetFoldOut) {
+                    foreach (var (path, info) in sceneAssetInfoDic) {
+                        using (new EditorGUILayout.HorizontalScope()) {
+                            EditorGUILayout.Space(15f, false);
+                            EditorCommon.DrawLabelTextField(info.Name, path);
+                        }
+                    }
+                }
+            }
         }
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    protected virtual void DrawBuildButton() {
+    protected virtual void DrawBuildArea() {
         GUILayout.Label("빌드 (Build)", Constants.Draw.AREA_TITLE_STYLE);
         using (new EditorGUILayout.VerticalScope(Constants.Draw.BOX)) {
             EditorCommon.DrawLabelToggle(ref config.isLogBuildReport, "빌드 결과 기록", 150f);
@@ -256,7 +257,7 @@ public abstract class EditorBuildDrawer<TConfig, TNullConfig> : EditorAutoConfig
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    protected virtual void DrawBuildResultRecord() {
+    protected virtual void DrawBuildResultRecordArea() {
         if (config.GetRecordCount() > 0) {
             GUILayout.Label("빌드 결과", Constants.Draw.AREA_TITLE_STYLE);
             using (new EditorGUILayout.VerticalScope(Constants.Draw.BOX)) {
@@ -274,10 +275,11 @@ public abstract class EditorBuildDrawer<TConfig, TNullConfig> : EditorAutoConfig
                 EditorCommon.DrawLabelTextField("시간", info.buildTime.ToString());
 
                 GUILayout.Space(5f);
-                
-                _buildInfoMemoScrollViewPosition = GUILayout.BeginScrollView(_buildInfoMemoScrollViewPosition, false, false, GUILayout.Height(200f));
-                EditorGUILayout.TextArea(info.memo, GUILayout.ExpandHeight(true), GUILayout.ExpandWidth(true));
-                GUILayout.EndScrollView();
+
+                using (var scope = new GUILayout.ScrollViewScope(_buildInfoMemoScrollViewPosition, false, false, GUILayout.Height(200f))) {
+                    _buildInfoMemoScrollViewPosition = scope.scrollPosition;
+                    EditorGUILayout.TextArea(info.memo, GUILayout.ExpandHeight(true), GUILayout.ExpandWidth(true));
+                }
             }
         }
     }
@@ -314,38 +316,44 @@ public abstract class EditorBuildDrawer<TConfig, TNullConfig> : EditorAutoConfig
         }
 
         sceneAssetInfoDic.Clear();
-        foreach (var info in AssetDatabaseUtil.FindAssetInfos<SceneAsset>("t:Scene")) {
+        foreach (var info in AssetDatabaseUtil.FindAssetInfos<SceneAsset>(FilterUtil.CreateFilter(TypeFilter.Scene))) {
             sceneAssetInfoDic.Add(info.path, info);
         }
     }
     
     protected virtual void Build(string memo = "") {
         BuildConfigProvider.Load(config);
-        if (BuildInteractionInterface.TryAttachBuilder(builderType, out var builder)) {
-            var report = builder.StartBuild();
-            if (report != null && config.isLogBuildReport) {
-                if (Service.TryGetServiceWithRestart<LogCollectorService>(out var service)) {
-                    service.ClearLog();
-                    service.SetFilter(LogType.Error);
+        try {
+            if (BuildInteractionInterface.TryAttachBuilder(builderType, out var builder)) {
+                var report = builder.StartBuild();
+                if (report != null && config.isLogBuildReport) {
+                    if (Service.TryGetServiceWithRestart<LogCollectorService>(out var service)) {
+                        service.ClearLog();
+                        service.SetFilter(LogType.Error);
+                    }
+
+                    config.AddBuildRecord(new BuildRecord {
+                        result = report.summary.result,
+                        buildTarget = report.summary.platform,
+                        outputPath = report.summary.outputPath,
+                        startTime = report.summary.buildStartedAt,
+                        endTime = report.summary.buildEndedAt,
+                        buildTime = report.summary.totalTime,
+                        memo = $"{memo}\n\n===================\n\n" +
+                               $"{config.ToStringAllFields()}\n\n===================\n\n" +
+                               $"{service?.Copy().ToStringCollection('\n')}",
+                    });
                 }
-
-                config.AddBuildRecord(new BuildRecord {
-                    result = report.summary.result,
-                    buildTarget = report.summary.platform,
-                    outputPath = report.summary.outputPath,
-                    startTime = report.summary.buildStartedAt,
-                    endTime = report.summary.buildEndedAt,
-                    buildTime = report.summary.totalTime,
-                    memo = $"{memo}\n\n===================\n\n" +
-                           $"{config.ToStringAllFields()}\n\n===================\n\n" +
-                           $"{service?.Copy().ToStringCollection('\n')}",
-                });
-                
-                config.Save(CONFIG_PATH);
-                config.ResetCursor();
-
-                Service.StopService<LogCollectorService>();
             }
+        }
+        catch (Exception ex) {
+            Logger.TraceError(ex);
+        } finally {
+            config.Save(CONFIG_PATH);
+            config.ResetCursor();
+
+            Service.StopService<LogCollectorService>();
+            
         }
     }
     
@@ -362,27 +370,34 @@ public class EditorBuildDrawerAttribute : Attribute {
     public readonly Enum buildType;
 
     public EditorBuildDrawerAttribute(Type builderType) {
-        if (builderType.IsSubclassOf(typeof(Builder))) {
+        if (builderType.IsSubclassOf(typeof(BuilderBase))) {
             this.builderType = builderType;
             if (builderType.TryGetCustomAttribute<BuilderAttribute>(out var attribute)) {
                 buildType = attribute.buildType;
             }
         } else {
-            Logger.TraceError($"{builderType.Name} is Invalid {nameof(builderType)}. {nameof(builderType)} must inherit from {nameof(Builder)}.");
+            Logger.TraceError($"{builderType.Name} is Invalid {nameof(builderType)}. {nameof(builderType)} must inherit from {nameof(BuilderBase)}.");
         }
     }
 
     public EditorBuildDrawerAttribute(object buildType) {
         if (buildType is Enum enumValue) {
             this.buildType = enumValue;
-            foreach (var type in ReflectionProvider.GetSubTypesOfType<Builder>()) {
+            foreach (var type in ReflectionProvider.GetSubTypesOfType<BuilderBase>()) {
                 if (type.TryGetCustomAttribute<BuilderAttribute>(out var attribute) && attribute.buildType.Equals(this.buildType)) {
                     builderType = type;
                     return;
                 }
             }
             
-            Logger.TraceError($"{nameof(enumValue)} is invalid || {enumValue}. Missing target {nameof(Builder)}");
+            Logger.TraceError($"{nameof(enumValue)} is invalid || {enumValue}. Missing target {nameof(BuilderBase)}");
         }
     }
+}
+
+// TODO. 향후 적당한 곳으로 위치 변경
+public struct FoldoutHeaderGroupScope : IDisposable {
+    
+    public FoldoutHeaderGroupScope(ref bool foldOut, string content) => foldOut = EditorGUILayout.BeginFoldoutHeaderGroup(foldOut, content);
+    public void Dispose() => EditorGUILayout.EndFoldoutHeaderGroup();
 }

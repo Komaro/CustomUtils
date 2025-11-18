@@ -20,5 +20,5 @@ public sealed class ServiceAttribute : Attribute {
     public bool Contains(Enum serviceType) => serviceTypeSet.Contains(serviceType);
     public bool Contains(params Enum[] serviceTypes) => serviceTypes.Any(type => serviceTypeSet.Contains(type));
     public bool Contains<TEnum>(TEnum serviceType) where TEnum : struct, Enum => serviceTypeSet.Contains(serviceType);
-    public bool Contains<TEnum>(params TEnum[] serviceTypes) where TEnum : struct, Enum => serviceTypes.Any(type => serviceTypeSet.Contains(type));
+    public bool Contains<TEnum>(params TEnum[] serviceTypes) where TEnum : Enum => serviceTypes.Any(type => serviceTypeSet.Contains(type));
 }

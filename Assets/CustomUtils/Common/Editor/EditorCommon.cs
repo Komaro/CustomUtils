@@ -7,9 +7,6 @@ using UnityEngine;
 
 public static partial class EditorCommon {
     
-    private static string _unityProjectPath;
-    public static string UNITY_PROJECT_PATH => string.IsNullOrEmpty(_unityProjectPath) ? _unityProjectPath = Application.dataPath.Replace("/Assets", string.Empty) : _unityProjectPath;
-
     [MenuItem("GameObject/Tool/Copy Path", false, 99)]
     public static void CopyPath() {
         var go = Selection.activeGameObject;
@@ -92,17 +89,17 @@ public static partial class EditorCommon {
     
     #region [Editor PlayerPrefs]
     
-    public static bool TryGet(string key, out string value) => PlayerPrefsUtil.TryGet($"EditorString_{key}", out value); 
-    public static bool TryGet(string key, out bool value) => PlayerPrefsUtil.TryGet($"EditorBool_{key}", out value);
-    public static bool TryGet(string key, out int value) => PlayerPrefsUtil.TryGet($"EditorInt_{key}", out value);
-    public static bool TryGet(string key, out float value) => PlayerPrefsUtil.TryGet($"EditorFloat_{key}", out value);
-    public static bool TryGet<TEnum>(string key, out TEnum value) where TEnum : struct, Enum => PlayerPrefsUtil.TryGet($"EditorEnum_{key}", out value);
+    public static bool TryGet(string key, out string value) => EditorPrefsUtil.TryGet($"EditorString_{key}", out value); 
+    public static bool TryGet(string key, out bool value) => EditorPrefsUtil.TryGet($"EditorBool_{key}", out value);
+    public static bool TryGet(string key, out int value) => EditorPrefsUtil.TryGet($"EditorInt_{key}", out value);
+    public static bool TryGet(string key, out float value) => EditorPrefsUtil.TryGet($"EditorFloat_{key}", out value);
+    public static bool TryGet<TEnum>(string key, out TEnum value) where TEnum : struct, Enum => EditorPrefsUtil.TryGet($"EditorEnum_{key}", out value);
 
-    public static void Set(string key, string value) => PlayerPrefsUtil.SetString($"EditorString_{key}", value);
-    public static void Set(string key, bool value) => PlayerPrefsUtil.Set($"EditorBool_{key}", value);
-    public static void Set(string key, int value) => PlayerPrefsUtil.SetInt($"EditorInt_{key}", value);
-    public static void Set(string key, float value) => PlayerPrefs.SetFloat($"EditorFloat_{key}", value);
-    public static void Set<TEnum>(string key, TEnum value) where TEnum : struct, Enum => PlayerPrefsUtil.Set($"EditorEnum_{key}", value);
+    public static void Set(string key, string value) => EditorPrefsUtil.SetString($"EditorString_{key}", value);
+    public static void Set(string key, bool value) => EditorPrefsUtil.Set($"EditorBool_{key}", value);
+    public static void Set(string key, int value) => EditorPrefsUtil.SetInt($"EditorInt_{key}", value);
+    public static void Set(string key, float value) => EditorPrefsUtil.SetFloat($"EditorFloat_{key}", value);
+    public static void Set<TEnum>(string key, TEnum value) where TEnum : struct, Enum => EditorPrefsUtil.Set($"EditorEnum_{key}", value);
 
     #endregion
 
@@ -119,4 +116,12 @@ public static partial class EditorCommon {
     public static void SetSession(string key, float value) => SessionStateUtil.Set($"EditorSessionFloat_{key}", value);
 
     #endregion
+
+    public static void LookUp(string assetPath) {
+        assetPath.ThrowIfNull(nameof(assetPath));
+        if (AssetDatabaseUtil.TryLoad(assetPath, out var asset)) {
+            Selection.activeObject = asset;
+            EditorGUIUtility.PingObject(asset);
+        }
+    }
 }

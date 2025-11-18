@@ -1,4 +1,5 @@
 ﻿using System;
+using Newtonsoft.Json;
 using UnityEngine;
 
 public static class PlayerPrefsUtil {
@@ -103,7 +104,7 @@ public static class PlayerPrefsUtil {
             Logger.TraceError(ex);
         }
     }
-    
+
     public static int GetInt(string key, int defaultValue = 0) {
         try { 
             return PlayerPrefs.GetInt(key, defaultValue);

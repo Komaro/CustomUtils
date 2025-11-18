@@ -18,8 +18,8 @@ public class SampleIosEditorBuildSettingDrawer : Sample_IosEditorBuildDrawer {
         EditorCommon.DrawSeparator();
     }
 
-    protected override void DrawBuildOptions() {
-        base.DrawBuildOptions();
+    protected override void DrawBuildOptionsArea() {
+        base.DrawBuildOptionsArea();
         
         EditorGUILayout.LabelField("iOS 옵션", Constants.Draw.AREA_TITLE_STYLE);
         using (new EditorGUILayout.VerticalScope(Constants.Draw.BOX)) {

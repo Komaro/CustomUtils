@@ -1,4 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Collections.Immutable;
+using System.Linq;
+using Newtonsoft.Json;
 using UnityEditor;
 
 public static class EditorPrefsUtil {
@@ -27,9 +31,31 @@ public static class EditorPrefsUtil {
         return false;
     }
 
-    public static bool TryGet<T>(string key, out T value, T defaultValue = default) where T : struct, Enum {
+    public static bool TryGet(string key, out float value, float defaultValue = 0f) {
         try {
-            if (TryGet(key, out int rawValue) && EnumUtil.TryConvert<T>(rawValue, out value)) {
+            value = GetFloat(key);
+            return true;
+        } catch (Exception ex) {
+            value = defaultValue;
+        }
+
+        return false;
+    }
+
+    public static bool TryGet(string key, out bool value, bool defaultValue = false) {
+        try {
+            value = GetBool(key);
+            return true;
+        } catch (Exception) {
+            value = defaultValue;
+        }
+
+        return false;
+    }
+
+    public static bool TryGet<TEnum>(string key, out TEnum value, TEnum defaultValue = default) where TEnum : struct, Enum {
+        try {
+            if (TryGet(key, out int rawValue) && EnumUtil.TryConvert<TEnum>(rawValue, out value)) {
                 return true;
             }
         } catch (Exception ex) {
@@ -40,9 +66,42 @@ public static class EditorPrefsUtil {
         return false;
     }
 
+    public static bool TryGet<T>(string key, out HashSet<T> value) {
+        try {
+            if (TryGet(key, out string text) && JsonUtil.TryDeserialize(text, out value)) {
+                return true;
+            }
+        } catch (Exception ex) {
+            Logger.TraceError(ex);
+        }
+        
+        value = CollectionUtil.HashSet.Empty<T>();
+        return false;
+    }
+
+    public static bool TryGet<T>(string key, out T[] value) {
+        try {
+            if (TryGet(key, out string text) && JsonUtil.TryDeserialize(text, out value)) {
+                return true;
+            }
+        } catch (Exception ex) {
+            Logger.TraceError(ex);
+        }
+        
+        value = Array.Empty<T>();
+        return false;
+    }
+
     public static void Set(string key, string value) => SetString(key, value);
     public static void Set(string key, int value) => SetInt(key, value);
-    public static void Set<T>(string key, T value) where T : struct, Enum => SetInt(key, EnumUtil.Convert(value));
+    public static void Set(string key, bool value) => SetBool(key, value);
+    public static void Set<TEnum>(string key, TEnum value) where TEnum : struct, Enum => SetInt(key, EnumUtil.Convert(value));
+    
+    public static void Set<T>(string key, IEnumerable<T> value) {
+        if (JsonUtil.TrySerialize(value, out var json)) {
+            SetString(key, json);
+        }
+    }
 
     public static string GetString(string key, string defaultValue = "") {
         try {
@@ -78,5 +137,67 @@ public static class EditorPrefsUtil {
         } catch (Exception ex) {
             Logger.TraceError(ex);
         }
+    }
+
+    public static float GetFloat(string key, float defaultValue = 0f) {
+        try {
+            return EditorPrefs.GetFloat(key);
+        } catch (Exception ex) {
+            Logger.TraceError(ex);
+        }
+
+        return defaultValue;
+    }
+    
+    public static void SetFloat(string key, float value) {
+        try {
+            EditorPrefs.SetFloat(key, value);
+        } catch (Exception ex) {
+            Logger.TraceError(ex);
+        }
+    }
+
+    public static bool GetBool(string key, bool defaultValue = false) {
+        try {
+            return EditorPrefs.GetBool(key);
+        } catch (Exception ex) {
+            Logger.TraceError(ex);
+        }
+
+        return defaultValue;
+    }
+
+    public static void SetBool(string key, bool value) {
+        try {
+            EditorPrefs.SetBool(key, value);
+        } catch (Exception ex) {
+            Logger.TraceError(ex);
+        }
+    }
+
+    public static void Delete(string key) {
+        try {
+            EditorPrefs.DeleteKey(key);
+        } catch (Exception ex) {
+            Logger.TraceError(ex);
+        }
+    }
+
+    public static void Clear() {
+        try {
+            EditorPrefs.DeleteAll();
+        } catch (Exception ex) {
+            Logger.TraceError(ex);
+        }
+    }
+
+    public static bool ContainsKey(string key) {
+        try {
+            return EditorPrefs.HasKey(key);
+        } catch (Exception ex) {
+            Logger.TraceError(ex);
+        }
+        
+        return false;
     }
 }

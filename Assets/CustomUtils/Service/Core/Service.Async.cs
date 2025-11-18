@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 
 public static partial class Service {
-
+    
     #region [StartAsync]
     
     public static async Task<bool> StartServiceAsync(Enum serviceType) => TryGetTypes(serviceType, out var types) && (await Task.WhenAll(types.Select(StartServiceAsync))).All(result => result);
@@ -151,6 +152,30 @@ public static partial class Service {
 
     #endregion
 
+    #region [GetAsync]
+    
+    public static async Task<IEnumerable<IService>> GetServiceAsync(Enum serviceType) => TryGetTypes(serviceType, out var types) ? await Task.WhenAll(types.Select(GetServiceAsync)) : Enumerable.Empty<IService>();
+    public static async Task<IEnumerable<IService>> GetServiceAsync(params Enum[] serviceTypes) => TryGetTypes(out var types, serviceTypes) ? await Task.WhenAll(types.Select(GetServiceAsync)) : Enumerable.Empty<IService>();
+    public static async Task<TService> GetServiceAsync<TService>() where TService : class, IAsyncService, new() => await GetServiceAsync(typeof(TService)) as TService;
+    public static async Task<TService> GetServiceAsync<TService>(Type type) where TService : class, IAsyncService, new() => await GetServiceAsync(type) as TService;
+
+    public static async Task<IService> GetServiceAsync(Type type) {
+        if (typeof(IAsyncService).IsAssignableFrom(type) == false) {
+            Logger.TraceError($"{type.FullName} is not assignable from {typeof(IAsyncService).FullName}");
+            return null;
+        }
+        
+        if (_serviceDic.TryGetValue(type, out var service)) {
+            return service;
+        }
+
+        var asyncService = await CreateServiceAsync(type);
+        await StartServiceAsync(asyncService);
+        return asyncService;
+    }
+
+    #endregion
+
     #region [CreateAsync]
     
     private static async Task<TService> CreateServiceAsync<TService>() where TService : class, IAsyncService, new() => await CreateServiceAsync(typeof(TService)) as TService;
@@ -201,4 +226,8 @@ public static partial class Service {
     }
 
     #endregion
+}
+
+public static partial class Service {
+    
 }

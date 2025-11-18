@@ -8,8 +8,10 @@ using UnityEngine;
 
 public static class ReflectionExtension {
 
-    public static string GetAlias(this Type type, string defaultAlias = "") => type.TryGetCustomAttribute<AliasAttribute>(out var attribute) ? attribute.alias : string.IsNullOrEmpty(defaultAlias) ? type.Name : defaultAlias;
-    public static string GetAlias(this MethodInfo info, string defaultAlias = "") => info.TryGetCustomAttribute<AliasAttribute>(out var attribute) ? attribute.alias : string.IsNullOrEmpty(defaultAlias) ? info.Name : defaultAlias;
+    public static string GetAlias(this MemberInfo info, string defaultAlias = "") => info.TryGetCustomAttribute<AliasAttribute>(out var attribute) ? attribute.alias : string.IsNullOrEmpty(defaultAlias) ? info.Name : defaultAlias;
+
+    // public static string GetAlias(this Type type, string defaultAlias = "") => type.TryGetCustomAttribute<AliasAttribute>(out var attribute) ? attribute.alias : string.IsNullOrEmpty(defaultAlias) ? type.Name : defaultAlias;
+    // public static string GetAlias(this MethodInfo info, string defaultAlias = "") => info.TryGetCustomAttribute<AliasAttribute>(out var attribute) ? attribute.alias : string.IsNullOrEmpty(defaultAlias) ? info.Name : defaultAlias;
 
     #region [Info]
     
@@ -30,7 +32,7 @@ public static class ReflectionExtension {
 
     public static IEnumerable<(string name, object value)> GetAllDataMemberNameWithValue(this Type type, object obj, BindingFlags bindingFlags = default) => type.GetFields(bindingFlags)
             .Select(info => (info.Name, info.GetValue(obj)))
-            .Concat(type.GetProperties(bindingFlags).Where(info => info.GetIndexParameters().Length <= 0).Select(info => (info.Name, info.GetValue(obj))));
+            .Concat(type.GetProperties(bindingFlags).Where(info => info.GetIndexParameters().Length <= 0 && info.GetGetMethod()?.ReturnType is { IsByRef: false }).Select(info => (info.Name, info.GetValue(obj))));
     
     public static bool TryGetFieldValue(this Type type, out object value, object obj, string name) => (value = type.GetFieldValue(obj, name)) != null;
     public static bool TryGetFieldValue(this Type type, out object value, object obj, string name, BindingFlags bindingFlags) => (value = type.GetFieldValue(obj, name, bindingFlags)) != null;
@@ -77,10 +79,31 @@ public static class ReflectionExtension {
         return false;
     }
 
-    public static IEnumerable<Type> GetBaseTypes(this Type type) {
+    public static IEnumerable<Type> GetAllTypes(this Type type) {
+        do {
+            yield return type;
+            foreach (var interfaceType in type.GetInterfaces()) {
+                yield return interfaceType;
+            }
+        } while ((type = type.BaseType) != null);
+    }
+
+    public static IEnumerable<Type> GetBaseTypes(this Type type, bool includeSelf = false) {
+        if (includeSelf) {
+            yield return type;
+        }
+        
         while ((type = type.BaseType) != null) {
             yield return type;
         }
+    }
+
+    public static IEnumerable<Type> GetInterfaceTypes(this Type type) {
+        do {
+            foreach (var interfaceType in type.GetInterfaces()) {
+                yield return interfaceType;
+            }
+        } while ((type = type.BaseType) != null);
     }
 
     public static IEnumerable<Type> GetGenericArguments(this Type type, Type baseDefinitionType) {
@@ -110,10 +133,10 @@ public static class ReflectionExtension {
     public static string GetCleanFullName(this Type type) => _typeCleanFullNameDic.GetOrAdd(type, _ => {
         using (StringUtil.StringBuilderPool.Get(out var builder)) {
             builder.Append(type.Name);
-            if (type.IsGenericType) { 
-                builder.Append($"<{type.GenericTypeArguments.ToStringCollection(argumentType => argumentType.GetCleanFullName(), ", ")}>");
+            if (type.IsGenericType) {
+                builder.Append($"<{type.GetGenericArguments().ToStringCollection(argumentType => argumentType.GetCleanFullName(), ", ")}>");
             }
-
+            
             return builder.ToString();
         }
     });

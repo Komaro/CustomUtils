@@ -98,7 +98,9 @@ public abstract class EditorAutoConfigDrawer<TConfig, TNullConfig> : EditorDrawe
         
         switch (args.ChangeType) {
             case WatcherChangeTypes.Created:
-                if (config.IsNull()) {
+                if (config == null) {
+                    config = new TConfig();
+                } else if (config.IsNull()) {
                     config = config.Clone<TConfig>();
                 }
                 break;

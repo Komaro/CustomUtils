@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using UnityEditor;
-using UnityEditor.Build.Profile;
 using UnityEditor.Build.Reporting;
 using UnityEngine;
 
 [RequiresAttributeImplementation(typeof(BuilderAttribute))]
-public abstract partial class Builder : IDisposable {
+public abstract partial class BuilderBase : IDisposable {
 
     protected Enum buildType;
     protected BuildTarget buildTarget;
@@ -18,7 +17,7 @@ public abstract partial class Builder : IDisposable {
     private int CountNum => ++_countNum;
     protected string BuildCount => $"[{GetType().Name}.{buildType}] ({CountNum})";
 
-    public Builder() {
+    public BuilderBase() {
         if (GetType().TryGetCustomAttribute<BuilderAttribute>(out var attribute)) {
             buildType = attribute.buildType;
             buildTarget = attribute.buildTarget;
@@ -26,13 +25,13 @@ public abstract partial class Builder : IDisposable {
         }
     }
 
-    ~Builder() => Dispose();
+    ~BuilderBase() => Dispose();
     public virtual void Dispose() => GC.SuppressFinalize(this);
 
-    public static bool TryCreateBuilder(Enum buildType, out Builder builder) => (builder = CreateBuilder(buildType)) != null;
+    public static bool TryCreateBuilder(Enum buildType, out BuilderBase builder) => (builder = CreateBuilder(buildType)) != null;
 
-    public static Builder CreateBuilder(Enum buildType) {
-        foreach (var type in ReflectionProvider.GetSubTypesOfType<Builder>()) {
+    public static BuilderBase CreateBuilder(Enum buildType) {
+        foreach (var type in ReflectionProvider.GetSubTypesOfType<BuilderBase>()) {
             if (type.TryGetCustomAttribute<BuilderAttribute>(out var attribute) && attribute.buildType.Equals(buildType)) {
                 return CreateBuilder(type);
             }
@@ -41,11 +40,11 @@ public abstract partial class Builder : IDisposable {
         return null;
     }
     
-    public static bool TryCreateBuilder(Type builderType, out Builder builder) => (builder = CreateBuilder(builderType)) != null;
+    public static bool TryCreateBuilder(Type builderType, out BuilderBase builder) => (builder = CreateBuilder(builderType)) != null;
     
-    public static Builder CreateBuilder(Type builderType) {
-        if (builderType.IsSubclassOf(typeof(Builder))) {
-            return SystemUtil.SafeCreateInstance<Builder>(builderType);
+    public static BuilderBase CreateBuilder(Type builderType) {
+        if (builderType.IsSubclassOf(typeof(BuilderBase))) {
+            return SystemUtil.SafeCreateInstance<BuilderBase>(builderType);
         }
 
         return null;
@@ -80,11 +79,21 @@ public abstract partial class Builder : IDisposable {
         SetAutoConnectProfile(BuildConfigProvider.GetValue<bool>(nameof(BuildConfig.autoConnectProfile)));
         SetDeepProfilingSupport(BuildConfigProvider.GetValue<bool>(nameof(BuildConfig.deepProfilingSupport)));
         SetScriptDebugging(BuildConfigProvider.GetValue<bool>(nameof(BuildConfig.scriptDebugging)));
+
+        // TODO. 임시 주석 처리(제거 권장)
+        // if (BuildConfigProvider.TryGetValue<Dictionary<string, bool>>(nameof(BuildConfig.optionDic), out var optionDic)) {
+        //     if (optionDic.IsTrue(nameof(DEFAULT_CUSTOM_BUILD_OPTION.ignoreResourcesReimport))) {
+        //         AssetBundle.UnloadAllAssetBundles(true);
+        //         AssetDatabase.Refresh(ImportAssetOptions.ForceUpdate);
+        //     }
+        // }
         
         OnPreProcess(ref options);
-        if (BuildConfigProvider.IsTrue(DEFAULT_CUSTOM_BUILD_OPTION.refreshAssetDatabase)) {
-            AssetDatabase.Refresh();
-        }
+        
+        // TODO. 임시 주석 처리(제거 권장)
+        // if (BuildConfigProvider.IsTrue(DEFAULT_CUSTOM_BUILD_OPTION.refreshAssetDatabase)) {
+        //     AssetDatabase.Refresh();
+        // }
     }
     
     protected abstract void OnPreProcess(ref BuildPlayerOptions options);
@@ -93,25 +102,21 @@ public abstract partial class Builder : IDisposable {
         Debug.Log($"{BuildCount} - Start {nameof(OnPostProcess)}");
         OnPostProcess(summary);
 
-        var optionDic = BuildConfigProvider.GetValue<Dictionary<string, bool>>(nameof(BuildConfig.optionDic));
-        var path = Directory.GetParent(summary.outputPath)?.FullName;
-        if (string.IsNullOrEmpty(path) == false) {
-            if (optionDic.IsTrue(DEFAULT_CUSTOM_BUILD_OPTION.cleanBurstDebug.ToString())) {
-                ClearBurstDebug(path);
+        if (BuildConfigProvider.TryGetValue<Dictionary<string, bool>>(nameof(BuildConfig.optionDic), out var optionDic)) {
+            var path = Directory.GetParent(summary.outputPath)?.FullName;
+            if (string.IsNullOrEmpty(path) == false) {
+                if (optionDic.IsTrue(DEFAULT_CUSTOM_BUILD_OPTION.cleanBurstDebug.ToString())) {
+                    ClearBurstDebug(path);
+                }
+
+                if (optionDic.IsTrue(DEFAULT_CUSTOM_BUILD_OPTION.cleanIL2CPPSludge.ToString())) {
+                    ClearIL2CPPSludge(path);
+                }
             }
 
-            if (optionDic.IsTrue(DEFAULT_CUSTOM_BUILD_OPTION.cleanIL2CPPSludge.ToString())) {
-                ClearIL2CPPSludge(path);
+            if (optionDic.IsTrue(DEFAULT_CUSTOM_BUILD_OPTION.revealInFinder.ToString())) {
+                EditorUtility.RevealInFinder(summary.outputPath);
             }
-        }
-
-        if (optionDic.IsTrue(DEFAULT_CUSTOM_BUILD_OPTION.ignoreResourcesReimport.ToString())) {
-            AssetBundle.UnloadAllAssetBundles(true);
-            AssetDatabase.Refresh(ImportAssetOptions.ForceUpdate);
-        }
-        
-        if (optionDic.IsTrue(DEFAULT_CUSTOM_BUILD_OPTION.revealInFinder.ToString())) {
-            EditorUtility.RevealInFinder(summary.outputPath);
         }
     }
     

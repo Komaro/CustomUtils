@@ -19,11 +19,14 @@ public static partial class Constants {
         public const string CSV = ".csv";
         public const string EXE = ".exe";
         public const string NUPKG = ".nupkg";
+        public const string AAB = ".aab";
+        public const string APK = ".apk";
 
         public const string JSON_FILTER = "*.json";
         public const string SOLUTION_FILTER = "*.sln";
         public const string TEST_CASE_FILTER = "*.tc";
         public const string DLL_FILTER = "*.dll";
+        public const string ZIP_FILTER = "*.zip";
     }
 
     public static class Culture {

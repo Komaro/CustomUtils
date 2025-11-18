@@ -8,36 +8,31 @@ public static class BuildConfigProvider {
     private static JObject _jObject;
 
     public static void AddValue(string key, string value) {
-        if (_jObject == null) {
-            throw new NullReferenceException($"{nameof(_jObject)} is Null");
-        }
-        
+        _jObject.ThrowIfNull(nameof(_jObject));
         _jObject.Remove(key);
         _jObject.Add(key, value);
     }
 
     public static void AddValue(string key, bool value) {
-        if (_jObject == null) {
-            throw new NullReferenceException($"{nameof(_jObject)} is Null");
-        }
-        
+        _jObject.ThrowIfNull(nameof(_jObject));
         _jObject.Remove(key);
         _jObject.Add(key, value);
     }
     
-    public static bool TryGetValue<T>(string key, out T outValue) {
-        outValue = GetValue<T>(key);
-        return outValue != null;
-    }
+    public static bool TryGetValue<T>(string key, out T value) => (value = GetValue<T>(key)) != null;
 
     public static T GetValue<T>(string key) {
-        if (_jObject == null) {
-            throw new NullReferenceException($"{nameof(_jObject)} is Null");
-        }
-
+        _jObject.ThrowIfNull(nameof(_jObject));
         return _jObject.TryGetValue(key, out var token) ? token.ToObject<T>() : default;
     }
 
+    public static bool TryGetValue(string key, out string value) => string.IsNullOrEmpty(value = GetValue(key)) == false;
+    
+    public static string GetValue(string key) {
+        _jObject.ThrowIfNull(nameof(_jObject));
+        return _jObject.TryGetValue(key, out var token) ? token.ToString() : string.Empty;
+    }
+    
     public static bool IsTrue<T>(T key) where T : struct, Enum => TryGetValue<bool>(key.ToString(), out var isTrue) && isTrue;
     public static bool IsTrue(string key) => TryGetValue<bool>(key, out var isTrue) && isTrue;
     public static bool IsContains(string key) => _jObject.ContainsKey(key);
@@ -46,7 +41,6 @@ public static class BuildConfigProvider {
     
     public static JObject Load(string path) {
         try {
-            _jObject ??= new JObject();
             return _jObject = JsonUtil.LoadJObject(path);
         } catch (Exception ex) {
             throw new JsonException(ex.Message);
@@ -70,6 +64,8 @@ public static class BuildConfigProvider {
         }
     }
 
+    // -name value → ("name", "value")
+    // -flag → ("flag", true)
     public static JObject LoadOnCLI() {
         try {
             _jObject ??= new JObject();

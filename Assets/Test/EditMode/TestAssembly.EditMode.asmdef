@@ -38,7 +38,8 @@
         "Microsoft.EntityFrameworkCore.dll",
         "Microsoft.EntityFrameworkCore.InMemory.dll",
         "System.ComponentModel.Annotations.dll",
-        "Mono.Cecil.dll"
+        "Mono.Cecil.dll",
+        "System.Reflection.Metadata.dll"
     ],
     "autoReferenced": false,
     "defineConstraints": [

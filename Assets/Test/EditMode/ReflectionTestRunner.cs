@@ -5,7 +5,7 @@ using Unity.PerformanceTesting;
 [Category("Reflection")]
 [Category("Performance")]
 public class ReflectionTestRunner {
-    
+
     /*
      * Expression 구현과 DynamicMethod 구현이 Default에 비해 수치상 5배 정도 빠름
      * Expression과 DynamicMethod의 경우 DynamicMethod의 경우가 미세하게 우위
@@ -77,7 +77,7 @@ public class ReflectionTestRunner {
         Measure.Method(() => _ = DynamicMethodProvider.GetFieldValueFunc(testClass, info).Invoke(testClass)).WarmupCount(warmupCount).MeasurementCount(measurementCount).IterationsPerMeasurement(iterationCount).SampleGroup(fastInfoCacheGroup).GC().Run();
         Measure.Method(() => _ = func.Invoke(testClass)).WarmupCount(warmupCount).MeasurementCount(measurementCount).IterationsPerMeasurement(iterationCount).SampleGroup(fastFuncCacheGroup).GC().Run();
     }
-    
+
     private class ReflectionTestClass {
 
         public int GetInt;

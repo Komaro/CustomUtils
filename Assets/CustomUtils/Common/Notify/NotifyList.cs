@@ -30,7 +30,7 @@ public class NotifyList<TValue> : NotifyCollection<List<TValue>, TValue>, IList<
         }
         
         collection.Insert(index, item);
-        OnChanged.handler?.Invoke(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add));
+        OnChanged.Handler?.Invoke(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add));
     }
 
     public virtual void InsertWithDetails(int index, [CanBeNull]TValue item) {
@@ -43,7 +43,7 @@ public class NotifyList<TValue> : NotifyCollection<List<TValue>, TValue>, IList<
         }
         
         collection.Insert(index, item);
-        OnChanged.handler?.Invoke(new NotifyListChangedEventArgs<TValue>(index, item, NotifyCollectionChangedAction.Add));
+        OnChanged.Handler?.Invoke(new NotifyListChangedEventArgs<TValue>(index, item, NotifyCollectionChangedAction.Add));
     }
 
     public void RemoveAt(int index) {
@@ -52,7 +52,7 @@ public class NotifyList<TValue> : NotifyCollection<List<TValue>, TValue>, IList<
         }
         
         collection.RemoveAt(index);
-        OnChanged.handler?.Invoke(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove));
+        OnChanged.Handler?.Invoke(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove));
     }
 
     public virtual void RemoveAtWithDetails(int index) {
@@ -61,7 +61,7 @@ public class NotifyList<TValue> : NotifyCollection<List<TValue>, TValue>, IList<
         }
 
         collection.RemoveAt(index, out var item);
-        OnChanged.handler?.Invoke(new NotifyListChangedEventArgs<TValue>(index, item, NotifyCollectionChangedAction.Remove));
+        OnChanged.Handler?.Invoke(new NotifyListChangedEventArgs<TValue>(index, item, NotifyCollectionChangedAction.Remove));
     }
     
     public TValue this[int index] {
@@ -79,7 +79,7 @@ public class NotifyList<TValue> : NotifyCollection<List<TValue>, TValue>, IList<
         }
 
         collection[index] = value;
-        OnChanged.handler?.Invoke(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Replace));
+        OnChanged.Handler?.Invoke(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Replace));
     }
 
     public virtual void ReplaceWithDetails(int index, [CanBeNull]TValue value) {
@@ -93,10 +93,10 @@ public class NotifyList<TValue> : NotifyCollection<List<TValue>, TValue>, IList<
 
         var oldValue = collection[index];
         collection[index] = value;
-        OnChanged.handler?.Invoke(new NotifyListChangedEventArgs<TValue>(index, value, oldValue, NotifyCollectionChangedAction.Replace));
+        OnChanged.Handler?.Invoke(new NotifyListChangedEventArgs<TValue>(index, value, oldValue, NotifyCollectionChangedAction.Replace));
     }
 
-    public override void Refresh() => OnChanged.handler?.Invoke(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Replace));
+    public override void Refresh() => OnChanged.Handler?.Invoke(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Replace));
 }
 
 // record 형식과 동일하게 Reference 대신 데이터를 비교 

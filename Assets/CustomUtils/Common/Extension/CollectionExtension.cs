@@ -6,6 +6,7 @@ using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using UnityEngine;
 
 [RefactoringRequired(5, "전체적으로 모든 메소드를 점검하고 리팩토링 필요. 메소드 수가 많아지고 기간이 길어지면서 코드의 일관성이 줄어듬")]
@@ -15,6 +16,7 @@ public static partial class CollectionExtension {
 
     public static IEnumerator CloneEnumerator(this ICollection collection) => new ArrayList(collection).GetEnumerator();
     public static IEnumerable<TSource> OrderBy<TSource, TKey>(this IEnumerable<TSource> enumerable, Func<TSource, TKey> keySelector, bool isAscending) => isAscending ? enumerable.OrderBy(keySelector) : enumerable.OrderByDescending(keySelector) as IEnumerable<TSource>;
+    public static IEnumerable<TResult> SelectNotNull<TSource, TResult>(this IEnumerable<TSource> enumerable, Func<TSource, TResult> selector) where TResult : class => enumerable.Select(selector).WhereNotNull();
     public static IEnumerable<T> WhereNotNull<T>(this IEnumerable<T> enumerable) where T : class => enumerable.Where(source => source != null);
 
     public static IEnumerable<TResult> SelectWhere<TSource, TResult>(this IEnumerable<TSource> enumerable, Func<TSource, TResult> selector, Func<TResult, bool> predicate) {
@@ -54,15 +56,8 @@ public static partial class CollectionExtension {
     }
 
     public static IEnumerable<T> SelectMany<T>(this IEnumerable<IEnumerable<T>> enumerable) => enumerable.SelectMany(values => values);
-
-    public static IEnumerable<TResult> SelectWithDistinct<TValue, TResult>(this IEnumerable<TValue> enumerable, Func<TValue, TResult> converter, IEqualityComparer<TValue> equalityComparer = null) {
-        var distinctSet = new HashSet<TValue>(equalityComparer);
-        foreach (var value in enumerable) {
-            if (distinctSet.Add(value)) {
-                yield return converter.Invoke(value);
-            }
-        }
-    }
+    public static IEnumerable<TResult> DistinctWithSelect<TValue, TResult>(this IEnumerable<TValue> enumerable, Func<TValue, TResult> converter, IEqualityComparer<TValue> equalityComparer = null) => enumerable.Distinct(equalityComparer).Select(converter.Invoke);
+    public static IEnumerable<TResult> SelectWithDistinct<TValue, TResult>(this IEnumerable<TValue> enumerable, Func<TValue, TResult> converter, IEqualityComparer<TResult> equalityComparer = null) => enumerable.Select(converter.Invoke).Distinct(equalityComparer);
 
     public static bool TryFirst<T>(this IEnumerable<T> enumerable, out T matchItem, Predicate<T> match = null) {
         if (match == null) {
@@ -80,11 +75,29 @@ public static partial class CollectionExtension {
         matchItem = default;
         return false;
     }
-    
+
     public static void ForEach<T>(this IEnumerable<T> enumerable, Action<T> action) {
         if (enumerable != null) {
             foreach (var item in enumerable) {
                 action?.Invoke(item);
+            }
+        }
+    }
+
+    public static IEnumerable<T> Select<T>(this ICollection collection, Func<object, T> selector) {
+        collection.ThrowIfNull(nameof(collection));
+        selector.ThrowIfNull(nameof(selector));
+        foreach (var obj in collection) {
+            yield return selector.Invoke(obj);
+        }
+    }
+    
+    public static IEnumerable<Task> AsyncForEach<T>(this IEnumerable<T> enumerable, Action<T> action) {
+        action.ThrowIfNull();
+        if (enumerable != null) {
+            foreach (var item in enumerable) {
+                action.Invoke(item);
+                yield return null;
             }
         }
     }
@@ -97,9 +110,21 @@ public static partial class CollectionExtension {
     public static Vector2 SumVector<T>(this IEnumerable<T> source, Func<T, Vector2> selector) => source.Select(selector).Aggregate((x, y) => x + y);
     public static Vector3 SumVector<T>(this IEnumerable<T> source, Func<T, Vector3> selector) => source.Select(selector).Aggregate((x, y) => x + y);
 
-    public static Vector2 AverageVector<T>(this IEnumerable<T> source, Func<T, Vector2> selector) => source.SumVector(selector) / source.Count();
-    public static Vector3 AverageVector<T>(this IEnumerable<T> source, Func<T, Vector3> selector) => source.SumVector(selector) / source.Count();
-    
+    public static bool All(this IEnumerable<bool> enumerable) => enumerable.All(result => result);
+
+    [TestRequired]
+    [RefactoringRequired("코드 최적화 필요")]
+    public static bool LateAll<TSource>(this IEnumerable<TSource> enumerable, Func<TSource, bool> predicate) {
+        var lateResult = true;
+        foreach (var source in enumerable) {
+            if (predicate.Invoke(source) == false) {
+                lateResult = false;
+            }
+        }
+
+        return lateResult;
+    }
+
     public static void SafeClear<TValue>(this ICollection<TValue> collection, Action<TValue> releaseAction) {
         try {
             foreach (var value in collection) {
@@ -183,8 +208,6 @@ public static partial class CollectionExtension {
     public static Dictionary<TKey, TSource> ToDictionary<TSource, TKey>(this IEnumerable<TSource> enumerable, Func<TSource, TKey> keySelector) => enumerable.ToDictionary<Dictionary<TKey, TSource>, TSource, TKey, TSource>(keySelector, source => source);
     public static Dictionary<TKey, TValue> ToDictionary<TSource, TKey, TValue>(this IEnumerable<TSource> enumerable, Func<TSource, TKey> keySelector, Func<TSource, TValue> valueSelector) => enumerable.ToDictionary<Dictionary<TKey, TValue>, TSource, TKey, TValue>(keySelector, valueSelector);
     
-    public static ConcurrentDictionary<TKey, TValue> ToConcurrentDictionary<TSource, TKey, TValue>(this IEnumerable<TSource> enumerable, Func<TSource, TKey> keySelector, Func<TSource, TValue> valueSelector) => enumerable.ToDictionary<ConcurrentDictionary<TKey, TValue>, TSource, TKey, TValue>(keySelector, valueSelector);
-    
     private static TDictionary ToDictionary<TDictionary, TSource, TKey, TValue>(this IEnumerable<TSource> enumerable, Func<TSource, TKey> keySelector, Func<TSource, TValue> valueSelector) where TDictionary : IDictionary<TKey, TValue>, new() {
         var dictionary = new TDictionary();
         foreach (var source in enumerable) {
@@ -193,6 +216,8 @@ public static partial class CollectionExtension {
 
         return dictionary;
     }
+    
+    public static ConcurrentDictionary<TKey, TValue> ToConcurrentDictionary<TSource, TKey, TValue>(this IEnumerable<TSource> enumerable, Func<TSource, TKey> keySelector, Func<TSource, TValue> valueSelector) => enumerable.ToDictionary<ConcurrentDictionary<TKey, TValue>, TSource, TKey, TValue>(keySelector, valueSelector);
 
     public static IEnumerable<IGrouping<TKey, TSource>> GroupBy<TSource, TKey>(this IEnumerable<TSource> enumerable, Func<TSource, TKey> keySelector) => keySelector.ThrowIfNull(nameof(keySelector)).Pipe(_ => enumerable.GroupBy(keySelector, source => source));
 
@@ -221,7 +246,7 @@ public static partial class CollectionExtension {
     
     public static HashSet<T> ToHashSetWithDistinct<T>(this IEnumerable<T> enumerable, IEqualityComparer<T> equalityComparer = null) => enumerable.Distinct().ToHashSet(equalityComparer);
     public static ImmutableHashSet<T> ToImmutableHashSetWithDistinct<T>(this IEnumerable<T> enumerable, IEqualityComparer<T> equalityComparer = null) => enumerable.Distinct().ToImmutableHashSet(equalityComparer);
-    public static ImmutableHashSet<TResult> ToImmutableHashSetForLinq<TValue, TResult>(this IEnumerable<TValue> enumerable, Func<TValue, TResult> converter) => enumerable.SelectWithDistinct(converter).ToImmutableHashSet();
+    public static ImmutableHashSet<TResult> ToImmutableHashSetForLinq<TValue, TResult>(this IEnumerable<TValue> enumerable, Func<TValue, TResult> converter) => enumerable.DistinctWithSelect(converter).ToImmutableHashSet();
 
     #endregion
     

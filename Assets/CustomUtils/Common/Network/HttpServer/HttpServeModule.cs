@@ -27,6 +27,7 @@ public class AssetBundleDistributionServeModule : HttpServeModule {
             Logger.TraceLog($"Serve || {context.Request.HttpMethod} || {path}", Color.Magenta);
             using (var fileStream = new FileStream(path, FileMode.Open, FileAccess.Read)) {
                 context.Response.ContentLength64 = fileStream.Length;
+                context.Response.StatusCode = (int) HttpStatusCode.OK;
 
                 Span<byte> buffer = new byte[bufferSize];
                 var bytesLength = 0;

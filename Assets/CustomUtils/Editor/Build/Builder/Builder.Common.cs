@@ -1,7 +1,7 @@
 ﻿using UnityEditor;
 using UnityEngine;
 
-public partial class Builder {
+public partial class BuilderBase {
     
     protected void SetApplicationId(string appId) {
         if (string.IsNullOrEmpty(appId)) {

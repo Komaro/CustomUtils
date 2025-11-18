@@ -101,6 +101,7 @@ public class GameDBTestRunner {
                 JsonUtil.SaveJson(JSON_DB_LIST_JSON_FULL_PATH, data);
             }
 
+            // TODO. 저장한 데이터와  원본 데이터간의 비교 테스트가 없음. JsonUtil.Load()를 통해 저장된 데이터 획득 후 추가 확인 필요
             if (File.Exists(TEST_GAME_DB_JSON_01_FULL_PATH) == false) {
                 var data = new SampleRawGameDB<TestSampleGameDB_01.TestData>(TestSampleGameDB_01.CreateSamples());
                 JsonUtil.SaveJson(TEST_GAME_DB_JSON_01_FULL_PATH, data);

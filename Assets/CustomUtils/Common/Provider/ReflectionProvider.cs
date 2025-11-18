@@ -11,6 +11,7 @@ public static class ReflectionProvider {
         public static readonly ImmutableArray<Type> CachedTypes = AppDomain.CurrentDomain.GetAssemblies().Where(assembly => assembly.IsDynamic == false).SelectMany(assembly => assembly.GetExportedTypes()).ToImmutableArray();
         public static readonly ImmutableArray<Type> CachedClasses = CachedTypes.Where(type => type.IsClass).ToImmutableArray();
         public static readonly ImmutableArray<Type> CachedEnums = CachedTypes.Where(type => type.IsEnum && type.ContainsGenericParameters == false).ToImmutableArray();
+        public static readonly ImmutableArray<MethodInfo> CachedMethods = CachedTypes.SelectMany(type => type.GetMethods()).ToImmutableArray();
     }
     
     public static IEnumerable<Type> GetTypes() => Cache.CachedTypes;
@@ -37,12 +38,12 @@ public static class ReflectionProvider {
             return false;
         }
 
-        while ((subType = subType.BaseType) != null) {
-            if (subType.IsGenericType && subType.GetGenericTypeDefinition() == typeDefinition) {
+        foreach (var type in subType.GetBaseTypes()) {
+            if (type.IsGenericType && type.GetGenericTypeDefinition() == typeDefinition) {
                 return true;
             }
         }
-
+        
         return false;
     });
 
@@ -64,7 +65,7 @@ public static class ReflectionProvider {
     /// </summary>
     public static IEnumerable<Type> GetAttributeTypes(Type attributeType) => Cache.CachedClasses.Where(type => type.IsDefined(attributeType, false));
 
-    public static IEnumerable<(T attribute, Type type)> GetAttributeTypeInfos<T>() where T : Attribute => Cache.CachedClasses.Where(type => type.IsDefined<T>()).Select(type => (type.GetCustomAttribute<T>(), type));
+    public static IEnumerable<(T attribute, Type type)> GetAttributeTypeSets<T>() where T : Attribute => Cache.CachedClasses.Where(type => type.IsDefined<T>()).Select(type => (type.GetCustomAttribute<T>(), type));
     
     #endregion
     
@@ -86,11 +87,21 @@ public static class ReflectionProvider {
     public static bool TryGetAttributeEnumTypes(Type type, out IEnumerable<Type> enumerable) => (enumerable = GetAttributeEnumTypes(type))?.Any() ?? false;
     public static IEnumerable<Type> GetAttributeEnumTypes(Type type) => Cache.CachedEnums.Where(enumType => enumType.IsDefined(type, false));
 
-    public static bool TryGetAttributeEnumInfos<T>(out IEnumerable<(T attribute, Type enumType)> infos) where T : Attribute => (infos = GetAttributeEnumInfos<T>())?.Any() ?? false;
-    public static IEnumerable<(T attribute, Type enumType)> GetAttributeEnumInfos<T>() where T : Attribute => Cache.CachedEnums.Where(type => type.IsDefined(typeof(T), false)).Select(type => (type.GetCustomAttribute<T>(false), type));
+    public static bool TryGetAttributeEnumInfos<T>(out IEnumerable<(T attribute, Type enumType)> infos) where T : Attribute => (infos = GetAttributeEnumSets<T>())?.Any() ?? false;
+    public static IEnumerable<(T attribute, Type enumType)> GetAttributeEnumSets<T>() where T : Attribute => Cache.CachedEnums.Where(type => type.IsDefined(typeof(T), false)).Select(type => (type.GetCustomAttribute<T>(false), type));
 
-    public static bool TryGetAttributeEnumInfos<T>(Type type, out IEnumerable<(T attribute, Type type)> enumerable) where T : Attribute => (enumerable = GetAttributeEnumInfos<T>(type))?.Any() ?? false; 
-    public static IEnumerable<(T attribute, Type type)> GetAttributeEnumInfos<T>(Type type) where T : Attribute => Cache.CachedEnums.Where(enumType => enumType.IsEnumDefined(type)).Select(enumType => (enumType.GetCustomAttribute(type) as T, enumType));
+    public static bool TryGetAttributeEnumInfos<T>(Type type, out IEnumerable<(T attribute, Type type)> enumerable) where T : Attribute => (enumerable = GetAttributeEnumSets<T>(type))?.Any() ?? false; 
+    public static IEnumerable<(T attribute, Type type)> GetAttributeEnumSets<T>(Type type) where T : Attribute => Cache.CachedEnums.Where(enumType => enumType.IsEnumDefined(type)).Select(enumType => (enumType.GetCustomAttribute(type) as T, enumType));
     
+    #endregion
+
+    #region [Method]
+
+    public static bool TryGetAttributeMethodInfos<T>(out IEnumerable<MethodInfo> enumerable) where T : Attribute => (enumerable = GetAttributeMethodInfos<T>())?.Any() ?? false;
+    public static IEnumerable<MethodInfo> GetAttributeMethodInfos<T>() where T : Attribute => Cache.CachedMethods.Where(info => info.IsDefined<T>());
+
+    public static bool TryGetAttributeMethodSets<T>(out IEnumerable<(T attribute, MethodInfo info)> enumerable) where T : Attribute => (enumerable = GetAttributeMethodSets<T>())?.Any() ?? false;
+    public static IEnumerable<(T attribute, MethodInfo info)> GetAttributeMethodSets<T>() where T : Attribute => Cache.CachedMethods.Where(info => info.IsDefined(typeof(T), false)).Select(info => (info.GetCustomAttribute<T>(), info));
+
     #endregion
 }

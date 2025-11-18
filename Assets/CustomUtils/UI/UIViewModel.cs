@@ -13,13 +13,14 @@ public abstract class UIViewModel : IDisposable {
     
     private static readonly ImmutableHashSet<Type> NOTIFY_TYPE_SET = ReflectionProvider.GetSubTypesOfType(typeof(NotifyField)).ToImmutableHashSet();
     
-    public UIViewModel() {
+    [RefactoringRequired("필드 필터링과 NotifyField에 대한 OnModelChanged 등록에 대한 최적화 및 리팩토링 필요")]
+    protected UIViewModel() {
         var notifyDic = GetType().GetFields().Where(info => NOTIFY_TYPE_SET.Contains(info.FieldType.GetGenericTypeDefinition())).ToDictionary(info => info, info => info.GetValue(this) as NotifyField);
         foreach (var (info, notifyField) in notifyDic) {
-            notifyField.OnChanged += args => OnModelChanged.handler?.Invoke(info.Name, args);
+            notifyField.OnChanged += args => OnModelChanged.Handler?.Invoke(info.Name, args);
         }
         
-        lazyNotifyFields = new Lazy<ImmutableArray<NotifyField>>(() => GetType().GetFields().Where(info => NOTIFY_TYPE_SET.Contains(info.FieldType.GetGenericTypeDefinition())).Select(info => info.GetValue(this) as NotifyField).ToImmutableArray());
+        lazyNotifyFields = new Lazy<ImmutableArray<NotifyField>>(() => notifyDic.Values.ToImmutableArray());
     }
 
     public virtual void Dispose() {

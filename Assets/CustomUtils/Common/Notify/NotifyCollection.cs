@@ -37,7 +37,7 @@ public abstract class NotifyCollection<TCollection, TValue> : NotifyField, IColl
         }
         
         collection.Add(item);
-        OnChanged.handler?.Invoke(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add));
+        OnChanged.Handler?.Invoke(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add));
     }
 
     public virtual void AddWithDetails([CanBeNull]TValue item) {
@@ -46,12 +46,12 @@ public abstract class NotifyCollection<TCollection, TValue> : NotifyField, IColl
         }
         
         collection.Add(item);
-        OnChanged.handler?.Invoke(new NotifyCollectionChangedEventArgs<TValue>(item, NotifyCollectionChangedAction.Add));
+        OnChanged.Handler?.Invoke(new NotifyCollectionChangedEventArgs<TValue>(item, NotifyCollectionChangedAction.Add));
     }
 
     public void Clear() {
         collection.Clear();
-        OnChanged.handler?.Invoke(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+        OnChanged.Handler?.Invoke(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
     }
 
     public bool Contains(TValue item) {
@@ -78,7 +78,7 @@ public abstract class NotifyCollection<TCollection, TValue> : NotifyField, IColl
         }
 
         if (collection.Remove(item)) {
-            OnChanged.handler?.Invoke(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove));
+            OnChanged.Handler?.Invoke(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove));
             return true;
         }
 
@@ -91,14 +91,14 @@ public abstract class NotifyCollection<TCollection, TValue> : NotifyField, IColl
         }
 
         if (collection.Remove(item)) {
-            OnChanged.handler?.Invoke(new NotifyCollectionChangedEventArgs<TValue>(item, NotifyCollectionChangedAction.Remove));
+            OnChanged.Handler?.Invoke(new NotifyCollectionChangedEventArgs<TValue>(item, NotifyCollectionChangedAction.Remove));
             return true;
         }
 
         return false;
     }
 
-    public override void Refresh() => OnChanged.handler?.Invoke(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Replace));
+    public override void Refresh() => OnChanged.Handler?.Invoke(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Replace));
 
     public IEnumerator<TValue> GetEnumerator() => collection.GetEnumerator();
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
@@ -175,7 +175,7 @@ public class NotifyCollection<TValue> : NotifyCollection<Collection<TValue>, TVa
         }
 
         collection.Insert(index, item);
-        OnChanged.handler?.Invoke(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add));
+        OnChanged.Handler?.Invoke(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add));
     }
 
     public void RemoveAt(int index) {
@@ -184,14 +184,14 @@ public class NotifyCollection<TValue> : NotifyCollection<Collection<TValue>, TVa
         }
         
         collection.RemoveAt(index);
-        OnChanged.handler?.Invoke(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove));
+        OnChanged.Handler?.Invoke(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove));
     }
 
     public TValue this[int index] {
         get => collection[index];
         set {
             collection[index] = value;
-            OnChanged.handler?.Invoke(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Replace));
+            OnChanged.Handler?.Invoke(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Replace));
         }
     }
 }

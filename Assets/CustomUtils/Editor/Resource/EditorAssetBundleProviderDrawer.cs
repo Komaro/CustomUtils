@@ -8,7 +8,7 @@ using UnityEditor;
 using UnityEditor.IMGUI.Controls;
 using UnityEngine;
 
-[EditorResourceDrawer(RESOURCE_SERVICE_MENU_TYPE.Provider, typeof(AssetBundleProvider))]
+[EditorResourceDrawer(RESOURCE_SERVICE_MENU_TYPE.Provider, RESOURCE_TYPE.AssetBundle)]
 public partial class EditorAssetBundleProviderDrawer : EditorResourceDrawer<AssetBundleProviderConfig, AssetBundleProviderConfig.NullConfig> {
 
     private int _buildInfoCursor;
@@ -30,7 +30,7 @@ public partial class EditorAssetBundleProviderDrawer : EditorResourceDrawer<Asse
     
     public EditorAssetBundleProviderDrawer(EditorWindow window) : base(window) { }
     
-    public override sealed void CacheRefresh() {
+    public sealed override void CacheRefresh() {
         Service.GetService<SystemWatcherService>().Start(order);
         if (JsonUtil.TryLoadJson(CONFIG_PATH, out config)) {
             _plainEncryptKey = string.IsNullOrEmpty(config.cipherEncryptKey) == false ? EncryptUtil.DecryptDES(config.cipherEncryptKey) : string.Empty;
@@ -288,8 +288,7 @@ public struct AssetBundleBuildInfo {
     public override string ToString() => $"{buildStartTime} ==> {buildEndTime} [{buildSuccess.ToString()}]";
 }
 
-
-public class AssetBundleProviderConfig : JsonAutoConfig {
+public class AssetBundleProviderConfig : JsonCoroutineAutoConfig {
 
     public string cipherEncryptKey = "";
     public string buildDirectory = "";
@@ -312,7 +311,7 @@ public class AssetBundleProviderConfig : JsonAutoConfig {
     #region [AssetBundle Build Info]
     
     [JsonProperty("lastBuildInfoList")]
-    private readonly List<AssetBundleBuildInfo> _lastBuildInfoList = new();
+    public readonly List<AssetBundleBuildInfo> _lastBuildInfoList = new();
     
     private const int MAX_BUILD_LOG = 20;
     

@@ -15,6 +15,8 @@ using UnityEditor.Callbacks;
 using UnityEditor.IMGUI.Controls;
 using UnityEngine;
 
+
+[RefactoringRequired("근본적인 빌드 구조 자체의 결함을 확인하여 일시적으로 기능을 동결.\nType을 키로 경로를 획득하기 위해선 굉장히 복잡한 공정이 필요하여 이를 Symbol 키를 기반으로 변경할 필요가 있음. 또는 직접 소스 코드를 Selection하는 처리가 가장 빠르게 문제를 해결할 수 있는 방법으로 보임")]
 public class EditorCustomAnalyzerService : EditorService {
 
     private static EditorCustomAnalyzerService _window;
@@ -106,6 +108,12 @@ public class EditorCustomAnalyzerService : EditorService {
     private void OnDisable() => _activateAssemblyTreeViewFold?.valueChanged.RemoveListener(Repaint);
 
     private void OnGUI() {
+        // TODO. 현재 관련 Type에 대한 소스 코드 경로를 획득하는 로직에 문제가 발생하여 일시적으로 빌드를 금지
+        if (true) {
+            EditorGUILayout.HelpBox("Type과 관련된 소스 코드 획득 로직의 문제로 해결 이전까지는 일시적으로 사용 금지", MessageType.Error);
+            return;
+        }
+        
         if (_isRefreshing) {
             var rect = EditorGUILayout.GetControlRect(false, 40f);
             EditorGUI.ProgressBar(rect, _progress, ((int)(_progress * 100)).ToString());

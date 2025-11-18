@@ -12,7 +12,6 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Networking;
-using UnityEngine.Pool;
 
 public static class CommonExtension {
 
@@ -34,6 +33,9 @@ public static class CommonExtension {
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static T ThrowIfUnexpectedNull<T>(this T instance, string name) where T : class => instance ?? throw new NullReferenceException<T>(name);
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static Type ThrowIfInvalidCast<T>(this Type type) => typeof(T).IsAssignableFrom(type) == false ? throw new InvalidCastException<T>(type) : type;
 
     public static string ToStringAllFields(this object ob, string prefix = "", bool ignoreRootName = false, BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.Public) {
         if (ob == null) {
@@ -63,7 +65,7 @@ public static class CommonExtension {
                 builder.Append($"{prefix} [{memberType.GetNameWithGenericArguments()}] ");
                 if (memberType.IsArray && value is Array array) {
                     builder.AppendLine($"{name} || {array.Cast<object>()?.ToStringCollection(", ")}");
-                } else if (memberType.IsGenericCollectionType() && value is ICollection collection) {
+                } else if (memberType.IsGenericCollectionType() && value is ICollection { Count: > 0 } collection) {
                     builder.AppendLine($"{name} || {collection.Cast<object>().ToStringCollection(", ")}");
                 } else if (memberType.IsEnum == false && memberType.IsStruct()) {
                     builder.AppendLine($"{name} {value.ToStringAllFields("\t", true, bindingFlags)}");
@@ -72,13 +74,14 @@ public static class CommonExtension {
                 }
             }
         
+            return builder.ToString();
         } catch (Exception ex) {
-            Logger.TraceLog(ex);
+            Logger.TraceLog(builder.ToString());
+            Logger.TraceError(ex);
+            return builder.ToString();
         } finally {
             StringUtil.StringBuilderPool.Release(builder);
         }
-
-        return builder.ToString();
     }
 
     private static string GetNameWithGenericArguments(this Type type) => type.IsGenericType ? $"{type.Name}<{type.GenericTypeArguments.ToStringCollection(genericType => genericType.Name, ", ")}>" : type.Name;

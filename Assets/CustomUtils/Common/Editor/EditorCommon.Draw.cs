@@ -235,11 +235,19 @@ public static partial class EditorCommon {
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static bool DrawLabelToggle(bool toggle, string label, float labelWidth = 300f) => DrawLabelToggle(toggle, new GUIContent(label), GUILayout.Width(labelWidth));
+    public static bool DrawLabelToggle(bool toggle, string label, float labelWidth = 300f) => DrawLabelToggle(toggle, label, GUILayout.Width(labelWidth));
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void DrawLabelToggle(ref bool toggle, string label, float labelWidth = 300f) => toggle = DrawLabelToggle(toggle, new GUIContent(label), GUILayout.Width(labelWidth));
+    public static void DrawLabelToggle(ref bool toggle, string label, float labelWidth = 300f) => toggle = DrawLabelToggle(toggle, label, GUILayout.Width(labelWidth));
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static bool DrawLabelToggle(bool toggle, string label, params GUILayoutOption[] labelOptions) {
+        using (new GUILayout.HorizontalScope(Constants.Draw.TOGGLE_HORIZONTAL_SCOPE)) {
+            EditorGUILayout.LabelField(label, Constants.Draw.LABEL, labelOptions);
+            return EditorGUILayout.Toggle(toggle, Constants.Draw.TOGGLE, GetCachedFixWidthOption(Constants.Draw.TOGGLE));
+        }
+    }
+    
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static bool DrawLabelToggle(bool toggle, string label, string tooltip, float labelWidth = 300f) => DrawLabelToggle(toggle, new GUIContent(label, tooltip), GUILayout.Width(labelWidth));
 
@@ -247,24 +255,24 @@ public static partial class EditorCommon {
     public static void DrawLabelToggle(ref bool toggle, string label, string tooltip, float labelWidth = 300f) => toggle = DrawLabelToggle(toggle, new GUIContent(label, tooltip), GUILayout.Width(labelWidth));
     
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static bool DrawLabelToggle(bool toggle, GUIContent labelContent, params GUILayoutOption[] options) {
+    public static bool DrawLabelToggle(bool toggle, GUIContent labelContent, params GUILayoutOption[] labelOptions) {
         using (new GUILayout.HorizontalScope(Constants.Draw.TOGGLE_HORIZONTAL_SCOPE)) {
-            EditorGUILayout.LabelField(labelContent, Constants.Draw.LABEL, options);
+            EditorGUILayout.LabelField(labelContent, Constants.Draw.LABEL, labelOptions);
             return EditorGUILayout.Toggle(toggle, Constants.Draw.TOGGLE, GetCachedFixWidthOption(Constants.Draw.TOGGLE));
         }
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void DrawLabelToggle(ref bool toggle, string label, Action onChange, params GUILayoutOption[] options) => DrawLabelToggle(ref toggle, new GUIContent(label, string.Empty), onChange, options);
+    public static void DrawLabelToggle(ref bool toggle, string label, Action onChanged, float labelWidth = 300f) => DrawLabelToggle(ref toggle, new GUIContent(label, string.Empty), onChanged, GUILayout.Width(labelWidth));
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void DrawLabelToggle(ref bool toggle, GUIContent labelContent, Action onChange, params GUILayoutOption[] options) {
+    public static void DrawLabelToggle(ref bool toggle, GUIContent labelContent, Action onChanged, params GUILayoutOption[] labelOptions) {
         using (new GUILayout.HorizontalScope(Constants.Draw.TOGGLE_HORIZONTAL_SCOPE)) {
             EditorGUI.BeginChangeCheck();
-            EditorGUILayout.LabelField(labelContent, Constants.Draw.LABEL, options);
+            EditorGUILayout.LabelField(labelContent, Constants.Draw.LABEL, labelOptions);
             toggle = EditorGUILayout.Toggle(toggle, Constants.Draw.TOGGLE, GetCachedFixWidthOption(Constants.Draw.TOGGLE));
             if (EditorGUI.EndChangeCheck()) {
-                onChange?.Invoke();
+                onChanged?.Invoke();
             }
         }
     }
@@ -382,6 +390,17 @@ public static partial class EditorCommon {
         
         return cursor;
     }
+    
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void DrawProgressBar(AsyncCustomOperation operation, string title = "", float height = 35f) {
+        using (new EditorGUILayout.VerticalScope()) {
+            if (string.IsNullOrEmpty(title) == false) {
+                EditorGUILayout.LabelField(title, Constants.Draw.TITLE_STYLE);
+            }
+                
+            EditorGUI.ProgressBar(EditorGUILayout.GetControlRect(false, height), operation.Progress, operation.PercentageDisplay);
+        }
+    }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void DrawInteractionProgressBar(string text, float value, float maxValue, Action<EventType, float> onEvent = null) {
@@ -477,10 +496,9 @@ public static partial class EditorCommon {
 
 public record ToggleDraw {
 
+    public string header;
     public string name;
     public bool isActive;
-
-    public string header;
 
     public ToggleDraw(string name, bool isActive) {
         this.name = name;
@@ -488,6 +506,7 @@ public record ToggleDraw {
     }
         
     public ToggleDraw(string name, bool isActive, string header) : this(name, isActive) => this.header = header;
+    public ToggleDraw() : this(string.Empty, false, string.Empty) { }
 
     public bool HasHeader() => string.IsNullOrEmpty(header) == false;
 

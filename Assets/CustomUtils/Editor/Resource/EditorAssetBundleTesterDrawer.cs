@@ -5,7 +5,7 @@ using System.IO;
 using UnityEditor;
 using UnityEngine;
 
-[EditorResourceDrawer(RESOURCE_SERVICE_MENU_TYPE.Test, typeof(AssetBundleProvider))]
+[EditorResourceDrawer(RESOURCE_SERVICE_MENU_TYPE.Test, RESOURCE_TYPE.AssetBundle)]
 public partial class EditorAssetBundleTesterDrawer : EditorResourceDrawer<AssetBundleTesterConfig, AssetBundleTesterConfig.NullConfig> {
     
     private CachingService _cachingService;
@@ -132,7 +132,7 @@ public partial class EditorAssetBundleTesterDrawer : EditorResourceDrawer<AssetB
     }
 }
 
-public class AssetBundleTesterConfig : JsonAutoConfig {
+public class AssetBundleTesterConfig : JsonCoroutineAutoConfig {
 
     public BuildTarget selectBuildTarget = EditorUserBuildSettings.activeBuildTarget;
     public string downloadDirectory; 

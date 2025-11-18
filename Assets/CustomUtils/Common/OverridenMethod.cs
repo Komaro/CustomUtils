@@ -28,11 +28,22 @@ public readonly struct OverridenMethod {
 
 public readonly struct AutoOverridenMethod {
 
+    private readonly Type _baseType;
     private readonly ImmutableHashSet<MethodBase> _overridenMethodBaseSet;
+    private readonly ImmutableHashSet<string> _overridenMethodNameSet;
 
-    public AutoOverridenMethod(Type type) => _overridenMethodBaseSet = type.GetMethods().Where(info => info.IsVirtual && info.DeclaringType == type).Select(info => info as MethodBase).ToImmutableHashSetWithDistinct();
-
+    public AutoOverridenMethod(Type type) {
+        _baseType = type;
+        _overridenMethodBaseSet = type.GetMethods(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).Where(info => info.IsVirtual && info.DeclaringType == type).Select(info => info as MethodBase).ToImmutableHashSetWithDistinct();
+        _overridenMethodNameSet = _overridenMethodBaseSet.Select(methodBase => methodBase.GetAlias()).ToImmutableHashSetWithDistinct();
+    }
+    
     public bool HasOverriden(MethodBase methodBase, bool throwException = false) => throwException
-        ? _overridenMethodBaseSet.Contains(methodBase) ? true : throw new MissingMethodException(methodBase.ReflectedType?.Name, methodBase.GetCleanFullName())
+        ? _overridenMethodBaseSet.Contains(methodBase) ? true : throw new MissingMethodException(_baseType.GetCleanFullName(), methodBase.GetCleanFullName())
         : _overridenMethodBaseSet.Contains(methodBase);
+
+    public bool HasOverriden(string methodName, bool throwException = false) => throwException
+        ? _overridenMethodNameSet.Contains(methodName) ? true : throw new MissingMethodException(_baseType.GetCleanFullName(), methodName)
+        : _overridenMethodNameSet.Contains(methodName);
+
 }

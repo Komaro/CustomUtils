@@ -5,6 +5,7 @@ using UnityEngine;
 using Object = UnityEngine.Object;
 
 [Service(DEFAULT_SERVICE_TYPE.PLAY_DURING)]
+[Obsolete]
 public class Sample_EventScheduleService : IService {
 
     private TimeSyncService _timeSyncService;
@@ -174,7 +175,7 @@ public class Sample_EventScheduleService : IService {
             // Refresh Daily Info
         }
 
-        OnTomorrowStart.handler?.Invoke();
+        OnTomorrowStart.Handler?.Invoke();
     }
     
     #region [DEBUG]
@@ -281,7 +282,7 @@ public class Sample_EventScheduleService : IService {
 
         public void Start() {
             if (IsValid()) {
-                OnStartEvent.handler?.Invoke(_info.id);
+                OnStartEvent.Handler?.Invoke(_info.id);
             }
         }
         
@@ -291,10 +292,10 @@ public class Sample_EventScheduleService : IService {
             }
 
             _remainEventTime = _info.shopEndDate - Service.GetService<TimeSyncService>().GetUTCTime();
-            OnUpdateEventTime.handler?.Invoke(_info.id, _remainEventTime);
+            OnUpdateEventTime.Handler?.Invoke(_info.id, _remainEventTime);
             if (_remainEventTime.TotalSeconds <= 0) {
                 _eventTimeOut = true;
-                OnTimeOutEvent.handler?.Invoke(_info.id);
+                OnTimeOutEvent.Handler?.Invoke(_info.id);
             }
         }
 
@@ -345,14 +346,14 @@ public class Sample_EventScheduleService : IService {
         private void Update() {
             _remainTick -= Time.unscaledDeltaTime;
             if (_remainTick <= 0) {
-                OnTomorrowStartTime.handler?.Invoke();
+                OnTomorrowStartTime.Handler?.Invoke();
                 RefreshTick();
             }
 
-            OnUpdateTime.handler?.Invoke(Time.deltaTime);
+            OnUpdateTime.Handler?.Invoke(Time.deltaTime);
         }
 
-        private void FixedUpdate() => OnFixedUpdateTime.handler?.Invoke(Time.fixedDeltaTime);
+        private void FixedUpdate() => OnFixedUpdateTime.Handler?.Invoke(Time.fixedDeltaTime);
         private void OnDestroy() => Stop();
 
         public void Stop() {

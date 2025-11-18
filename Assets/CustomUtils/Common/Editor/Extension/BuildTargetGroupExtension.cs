@@ -1,6 +1,7 @@
-﻿
-using UnityEditor;
+﻿using UnityEditor;
+#if UNITY_6000_0_OR_NEWER
 using UnityEditor.Build;
+#endif
 
 public static class BuildTargetGroupExtension {
 

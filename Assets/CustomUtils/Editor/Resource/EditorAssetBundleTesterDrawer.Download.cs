@@ -249,7 +249,7 @@ public partial class EditorAssetBundleTesterDrawer {
         }
     }
 
-    private IEnumerator WaitAsyncOperationComplete(AsyncOperation operation) {
+    private IEnumerator WaitAsyncOperationComplete(UnityEngine.AsyncOperation operation) {
         if (_ensureRepaintCoroutine != null) {
             while (operation.isDone == false) {
                 yield return null;
@@ -268,7 +268,7 @@ public partial class EditorAssetBundleTesterDrawer {
         _ensureRepaintCoroutine = null;
     }
 
-    private IEnumerator RepaintProgressBar(AsyncOperation operation, float interval = 0.1f) {
+    private IEnumerator RepaintProgressBar(UnityEngine.AsyncOperation operation, float interval = 0.1f) {
         while (operation.isDone == false) {
             yield return new EditorWaitForSeconds(interval);
             Repaint();

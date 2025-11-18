@@ -6,6 +6,7 @@ using UnityEngine.Pool;
 using Object = UnityEngine.Object;
 
 // Test
+[RefactoringRequired("GameObject 전용 Poll 로 재명명 필요")]
 public class ObjectPoolService : IService {
 
     private GameObject _poolRoot;

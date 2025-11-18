@@ -50,7 +50,7 @@ namespace CustomUtils.Sound.NewSoundSystem {
 
         [RefactoringRequired]
         [TestRequired]
-        protected virtual ImmutableDictionary<Enum, SoundType> LoadSoundTypeDic() => GetEnums<MasterSoundEnumTypeAttribute>().ToDictionary(enumValue => enumValue, enumValue => new MasterType(enumValue) as SoundType).Pipe(dictionary => dictionary.Concat(ReflectionProvider.GetAttributeEnumInfos<ControlSoundEnumTypeAttribute>()
+        protected virtual ImmutableDictionary<Enum, SoundType> LoadSoundTypeDic() => GetEnums<MasterSoundEnumTypeAttribute>().ToDictionary(enumValue => enumValue, enumValue => new MasterType(enumValue) as SoundType).Pipe(dictionary => dictionary.Concat(ReflectionProvider.GetAttributeEnumSets<ControlSoundEnumTypeAttribute>()
             .WhereSelectMany(info => dictionary.ContainsKey(info.attribute.masterType), info => EnumUtil.GetValues(info.attribute.masterType).Select(enumValue => new KeyValuePair<Enum, SoundType>(enumValue, new ControlType(dictionary[enumValue], enumValue))))).ToImmutableDictionary());
 
         [TestRequired]

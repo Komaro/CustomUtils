@@ -3,18 +3,28 @@ using System.Linq;
 using UnityEngine;
 
 public struct SafeDelegate<T> where T : Delegate {
-    
-    public T handler;
+
+    public T Handler { get; private set; }
     public int Count => GetInvocationList()?.Length ?? 0;
     
     public void Clear() {
-        if (handler != null) {
-            handler = Delegate.RemoveAll(handler, handler) as T;
+        if (Handler != null) {
+            Handler = Delegate.RemoveAll(Handler, Handler) as T;
         }
     }
 
-    public Delegate[] GetInvocationList() => handler?.GetInvocationList();
-    
+    public readonly bool Contains(T events) {
+        foreach (var checkEvent in events.GetInvocationList()) {
+            if (GetInvocationList().Contains(checkEvent)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public readonly Delegate[] GetInvocationList() => Handler?.GetInvocationList() ?? Array.Empty<Delegate>();
+
     public static T operator +(T events, SafeDelegate<T> addSafeDelegate) {
         foreach (var addEvent in addSafeDelegate.GetInvocationList()) {
             if (events == null || events.GetInvocationList().Contains(addEvent) == false) {
@@ -28,8 +38,8 @@ public struct SafeDelegate<T> where T : Delegate {
     }
     
     public static SafeDelegate<T> operator +(SafeDelegate<T> safeDelegate, T addEvent) {
-        if (safeDelegate.handler == null || safeDelegate.handler.GetInvocationList().Contains(addEvent) == false) {
-            safeDelegate.handler = Delegate.Combine(safeDelegate.handler, addEvent) as T;
+        if (safeDelegate.Handler == null || safeDelegate.GetInvocationList().Contains(addEvent) == false) {
+            safeDelegate.Handler = Delegate.Combine(safeDelegate.Handler, addEvent) as T;
         } else {
             Logger.TraceLog($"Already delegate {nameof(Type)} || {nameof(safeDelegate)} {nameof(Type)} = {typeof(T).Name} || {nameof(addEvent)} {nameof(Type)} = {addEvent.GetType().Name}", Color.yellow);
         }
@@ -61,8 +71,8 @@ public struct SafeDelegate<T> where T : Delegate {
 
     public static SafeDelegate<T> operator +(SafeDelegate<T> safeDelegate, Delegate addEvent) {
         if (addEvent is T) {
-            if (safeDelegate.handler == null || safeDelegate.handler.GetInvocationList().Contains(addEvent) == false) {
-                safeDelegate.handler = Delegate.Combine(safeDelegate.handler, addEvent) as T;
+            if (safeDelegate.Handler == null || safeDelegate.GetInvocationList().Contains(addEvent) == false) {
+                safeDelegate.Handler = Delegate.Combine(safeDelegate.Handler, addEvent) as T;
             }
         } else {
             Logger.TraceError($"Invalid delegate {nameof(Type)} || {nameof(safeDelegate)} {nameof(Type)} = {typeof(T).Name} || {nameof(addEvent)} {nameof(Type)} = {addEvent.GetType().Name}");
@@ -99,18 +109,18 @@ public struct SafeDelegate<T> where T : Delegate {
     }
     
     public static SafeDelegate<T> operator -(SafeDelegate<T> safeDelegate, T removeEvent) {
-        if (safeDelegate.handler == null) {
+        if (safeDelegate.Handler == null) {
             return safeDelegate;
         }
 
-        safeDelegate.handler = Delegate.Remove(safeDelegate.handler, removeEvent) as T;
+        safeDelegate.Handler = Delegate.Remove(safeDelegate.Handler, removeEvent) as T;
         return safeDelegate;
     }
 
     public static SafeDelegate<T> operator -(SafeDelegate<T> safeDelegate, Delegate removeEvent) {
         if (removeEvent is T) {
-            if (safeDelegate.handler != null) {
-                safeDelegate.handler = Delegate.Remove(safeDelegate.handler, removeEvent) as T;
+            if (safeDelegate.Handler != null) {
+                safeDelegate.Handler = Delegate.Remove(safeDelegate.Handler, removeEvent) as T;
             }
         } else {
             Logger.TraceError($"Invalid delegate {nameof(Type)} || {nameof(safeDelegate)} {nameof(Type)} = {typeof(T).Name} || {nameof(removeEvent)} {nameof(Type)} = {removeEvent.GetType().Name}");

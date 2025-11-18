@@ -5,14 +5,14 @@ using UnityEngine;
 
 public class BuildInteractionInterface : IPostprocessBuildWithReport {
 
-    private static Builder _builder;
+    private static BuilderBase _builder;
 
     public int callbackOrder => 1000;
 
-    public static bool TryAttachBuilder(Type type, out Builder builder) => (builder = AttachBuilder(type)) != null;
+    public static bool TryAttachBuilder(Type type, out BuilderBase builder) => (builder = AttachBuilder(type)) != null;
 
-    public static Builder AttachBuilder(Type type) {
-        if (Builder.TryCreateBuilder(type, out _builder)) {
+    public static BuilderBase AttachBuilder(Type type) {
+        if (BuilderBase.TryCreateBuilder(type, out _builder)) {
             return _builder;
         }
 
@@ -30,7 +30,7 @@ public class BuildInteractionInterface : IPostprocessBuildWithReport {
         BuildConfigProvider.LoadOnCLI();
         if (BuildConfigProvider.TryGetValue<string>("buildType", out var enumText)) {
             foreach (var type in ReflectionProvider.GetAttributeEnumTypes<BuildTypeEnumAttribute>()) {
-                if (Enum.TryParse(type, enumText, out var ob) && ob is Enum enumValue && Builder.TryCreateBuilder(enumValue, out _builder)) {
+                if (Enum.TryParse(type, enumText, out var ob) && ob is Enum enumValue && BuilderBase.TryCreateBuilder(enumValue, out _builder)) {
                     if (BuildConfigProvider.TryGetValue<string>("configPath", out var path)) {
                         BuildConfigProvider.Load(path);
                     } else {
@@ -51,7 +51,7 @@ public class BuildInteractionInterface : IPostprocessBuildWithReport {
         }
 
         if (_builder == null) {
-            throw new BuildFailedException($"Fail to create {nameof(Builder)}");
+            throw new BuildFailedException($"Fail to create {nameof(BuilderBase)}");
         }
     }
 }

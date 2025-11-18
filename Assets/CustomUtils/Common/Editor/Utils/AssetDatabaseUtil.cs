@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using JetBrains.Annotations;
 using UnityEditor;
 using UnityEngine;
 using Object = UnityEngine.Object;
@@ -25,16 +23,11 @@ public static class AssetDatabaseUtil {
         return AssetDatabase.IsValidFolder(path) ? path : string.Empty;
     }
     
-    public static bool TryFindAssets<T>(out IEnumerable<T> assets, string filter, bool ignorePackages = true) where T : Object => (assets = FindAssets<T>(filter, ignorePackages)).Any();
+    public static bool TryFindAssets<T>(out IEnumerable<T> assets, string filter) where T : Object => (assets = FindAssets<T>(filter)).Any();
     
-    // TODO. ignorePackages 파라메터 정리하는쪽으로 작업. 필터를 통해 컨트롤 하도록 변경하도록 수정 필요
-    public static IEnumerable<T> FindAssets<T>(string filter, bool ignorePackages = true) where T : Object {
-        foreach (var guid in AssetDatabase.FindAssets(ignorePackages ? string.Intern($"a:assets {filter}") : filter)) {
+    public static IEnumerable<T> FindAssets<T>(string filter) where T : Object {
+        foreach (var guid in AssetDatabase.FindAssets(filter)) {
             var path = AssetDatabase.GUIDToAssetPath(guid);
-            if (ignorePackages && path.StartsWith(Constants.Folder.ASSETS) == false) {
-                continue;
-            }
-
             var obj = AssetDatabase.LoadAssetAtPath<T>(path);
             if (obj == null) {
                 continue;
@@ -44,30 +37,26 @@ public static class AssetDatabaseUtil {
         }
     }
 
-    public static bool TryFindAssetInfos<T>(out IEnumerable<EditorAssetInfo<T>> infos, string filter, bool ignorePackage = true) where T : Object => (infos = FindAssetInfos<T>(filter, ignorePackage)).Any(); 
+    public static bool TryFindAssetInfos<T>(out IEnumerable<EditorAssetInfo<T>> infos, string filter) where T : Object => (infos = FindAssetInfos<T>(filter)).Any(); 
     
-    public static IEnumerable<EditorAssetInfo<T>> FindAssetInfos<T>(string filter, bool ignorePackage = true) where T : Object {
-        foreach (var guid in AssetDatabase.FindAssets(filter)) {
+    public static IEnumerable<EditorAssetInfo<T>> FindAssetInfos<T>(string filter) where T : Object {
+        var guids = AssetDatabase.FindAssets(filter);
+        if (guids.Length <= 0) {
+            yield break;
+        }
+        
+        foreach (var guid in guids) {
             var path = AssetDatabase.GUIDToAssetPath(guid);
-            if (ignorePackage && path.StartsWith(Constants.Folder.ASSETS) == false) {
-                continue;
+            if (TryLoad<T>(path, out var asset)) {
+                yield return new EditorAssetInfo<T>(asset, guid, path);
             }
-
-            yield return new EditorAssetInfo<T>(guid, path);
         }
     }
 
     public static T LoadAssetFromGuid<T>(string guid) where T : Object => AssetDatabase.LoadAssetAtPath<T>(AssetDatabase.GUIDToAssetPath(guid));
 
-    public static bool TryLoad(string path, out DefaultAsset asset) {
-        asset = AssetDatabase.LoadAssetAtPath<DefaultAsset>(path) ?? AssetDatabase.LoadAssetAtPath<DefaultAsset>(GetCollectionPath(path));
-        return asset != null;
-    }
-
-    public static bool TryLoad<T>(string path, out T asset) where T : Object {
-        asset = AssetDatabase.LoadAssetAtPath<T>(path) ?? AssetDatabase.LoadAssetAtPath<T>(GetCollectionPath(path));
-        return asset != null;
-    }
+    public static bool TryLoad(string path, out Object asset) => (asset = AssetDatabase.LoadAssetAtPath<Object>(path) ?? AssetDatabase.LoadAssetAtPath<Object>(GetCollectionPath(path))) != null;
+    public static bool TryLoad<T>(string path, out T asset) where T : Object => (asset = AssetDatabase.LoadAssetAtPath<T>(path) ?? AssetDatabase.LoadAssetAtPath<T>(GetCollectionPath(path))) != null;
 
     public static bool TryGetLabels(string path, out string[] labels) {
         var guid = AssetDatabase.GUIDFromAssetPath(path);
@@ -111,7 +100,7 @@ public static class AssetDatabaseUtil {
     public static bool ContainsLabel(string path, string label) => TryGetLabels(path, out var labels) && labels.Contains(label);
 }
 
-public record EditorAssetInfo<T> where T : Object {
+public readonly struct EditorAssetInfo<T> where T : Object {
 
     public readonly T asset;
     public readonly string guid;
@@ -136,11 +125,14 @@ public record EditorAssetInfo<T> where T : Object {
         guid = AssetDatabase.GUIDFromAssetPath(path).ToString();
         this.path = path;
     }
+    
+    public bool IsValid() => asset != null && string.IsNullOrEmpty(guid) == false && string.IsNullOrEmpty(path) == false;
 }
 
 public static class FilterUtil {
 
     public static string CreateFilter(TypeFilter type) => string.Intern(string.Concat("t:", type.ToString()));
+    public static string CreateFilter(AreaFilter area) => string.Intern(string.Concat("a:", area.ToString()));
     public static string CreateFilter(TypeFilter type, AreaFilter area) => string.Intern(string.Concat(CreateFilter(type), " a:", area.ToString()));
 }
 
@@ -148,6 +140,7 @@ public enum TypeFilter {
     Texture,
     AssemblyDefinitionAsset,
     ScriptableObject,
+    Scene,
 }
 
 public enum AreaFilter {

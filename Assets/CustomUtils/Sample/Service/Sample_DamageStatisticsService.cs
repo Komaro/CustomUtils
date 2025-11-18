@@ -5,6 +5,7 @@ using UniRx;
 using Random = UnityEngine.Random;
 
 [Service(DEFAULT_SERVICE_TYPE.PLAY_DURING)]
+[Obsolete]
 public class Sample_DamageStatisticsService : IService {
 
     private List<(int stage, Dictionary<int, double> damageDic)> _statisticsHistoryList = new();
@@ -32,8 +33,8 @@ public class Sample_DamageStatisticsService : IService {
     }
 
     void IService.Start() {
-        _disposableList.Add(_addSkillStream.Subscribe(addEvent => OnAddSkill.handler?.Invoke(addEvent.Key, addEvent.Value)));
-        _disposableList.Add(_damageReplaceStream.Subscribe(replaceEvent => OnReplaceCount.handler?.Invoke(replaceEvent.Key, replaceEvent.NewValue - replaceEvent.OldValue)));
+        _disposableList.Add(_addSkillStream.Subscribe(addEvent => OnAddSkill.Handler?.Invoke(addEvent.Key, addEvent.Value)));
+        _disposableList.Add(_damageReplaceStream.Subscribe(replaceEvent => OnReplaceCount.Handler?.Invoke(replaceEvent.Key, replaceEvent.NewValue - replaceEvent.OldValue)));
         
         _isServing = true;
     }

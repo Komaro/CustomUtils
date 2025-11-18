@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.Rendering;
 
 [Service(DEFAULT_SERVICE_TYPE.PLAY_DURING_AFTER_INIT)]
+[Obsolete]
 public class Sample_GraphicQualityService : IService {
 
     private ReactiveProperty<SAMPLE_GRAPHIC_QUALITY_TYPE> _graphicQualityType = new ();

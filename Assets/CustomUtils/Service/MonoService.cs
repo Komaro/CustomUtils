@@ -17,7 +17,7 @@ public class MonoService : IService {
         Object.DontDestroyOnLoad(go);
         _root = go.transform;
         
-        _pool = new ObjectPool<MonoObject>(OnCreate, OnGet, OnRelease, OnDestroy, defaultCapacity:3, maxSize:10);
+        _pool = new ObjectPool<MonoObject>(OnCreate, OnGet, OnRelease, OnDestroy, true, 3, 10);
     }
 
     void IService.Start() {
@@ -44,7 +44,7 @@ public class MonoService : IService {
 }
 
 [TestRequired]
-public class MonoObject : MonoBehaviour, IDisposable {
+public class MonoObject : MonoBehaviour {
     
     private SafeDelegate<Action> OnUpdate;
     private SafeDelegate<Action> OnFixedUpdate;
@@ -62,12 +62,11 @@ public class MonoObject : MonoBehaviour, IDisposable {
         return go.GetOrAddComponent<MonoObject>();
     }
 
-    private void Update() => OnUpdate.handler?.Invoke();
-    private void FixedUpdate() => OnFixedUpdate.handler?.Invoke();
-    private void LateUpdate() => OnLateUpdate.handler?.Invoke();
+    private void Update() => OnUpdate.Handler?.Invoke();
+    private void FixedUpdate() => OnFixedUpdate.Handler?.Invoke();
+    private void LateUpdate() => OnLateUpdate.Handler?.Invoke();
 
-    private void OnDestroy() => Dispose();
-    public void Dispose() => GC.SuppressFinalize(this);
+    private void OnDestroy() => ClearAllUpdate();
 
     public void StartUpdate() => gameObject.SetActive(true);
     public void StopUpdate() => gameObject.SetActive(false);

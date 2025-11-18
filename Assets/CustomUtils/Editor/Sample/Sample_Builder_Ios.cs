@@ -15,7 +15,7 @@ using UnityEditor.iOS.Xcode;
 #endif
 
 [Builder(SAMPLE_BUILD_TYPE.IOS, BuildTarget.iOS, BuildTargetGroup.iOS)]
-public class Sample_Builder_Ios : Builder {
+public class Sample_Builder_Ios : BuilderBase {
 
     // Ex) "Assets/Plugins/..."
     private List<string> _removeDirectoryList = new ();
@@ -110,6 +110,8 @@ public class Sample_Builder_Ios : Builder {
 
     protected override void OnPostProcess(BuildSummary summary) {
 #if UNITY_IOS
+        return;
+
         try {
             #region [Pod]
 

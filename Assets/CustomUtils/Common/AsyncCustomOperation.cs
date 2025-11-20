@@ -2,19 +2,33 @@
 using System.Collections;
 using System.Threading.Tasks;
 
-public class AsyncCustomOperation : IProgress<float> {
+public interface IAsyncCustomOperation : IEnumerator, IProgress<float> {
+    
+    public bool IsDone { get; }
+    public bool IsCanceled { get; }
+    public bool IsFailed { get; }
+    
+    public void Init();
+    public void Done();
+    
+    public Task ToTask();
+    public IEnumerator ToCoroutine();
+}
+
+public class AsyncCustomOperation : IAsyncCustomOperation {
 
     public virtual bool IsDone => Progress >= 1;
     public virtual bool IsCanceled => false;
     public virtual bool IsFailed => false;
 
     public virtual float Progress { get; protected set; }
-    public virtual string ProgressDisplay => ((int) Progress).ToString();
+    public virtual string ProgressDisplay => ((int)Progress).ToString();
 
     public virtual float Percentage => Progress * 100f;
-    public virtual string PercentageDisplay => ((int) Percentage).ToString();
+    public virtual string PercentageDisplay => ((int)Percentage).ToString();
 
     public delegate void CompleteHandler(AsyncCustomOperation operation);
+
     protected SafeDelegate<CompleteHandler> onComplete;
 
     public event CompleteHandler OnComplete {
@@ -29,6 +43,7 @@ public class AsyncCustomOperation : IProgress<float> {
     }
 
     public delegate void ProgressHandler(float progress);
+
     public SafeDelegate<ProgressHandler> OnProgress;
 
     public virtual void Init() => Progress = 0f;
@@ -47,8 +62,9 @@ public class AsyncCustomOperation : IProgress<float> {
         if (value > Progress) {
             OnProgress.Handler?.Invoke(Progress);
         }
-    
+
         Progress = value;
+
         if (IsDone) {
             onComplete.Handler?.Invoke(this);
         }
@@ -58,7 +74,7 @@ public class AsyncCustomOperation : IProgress<float> {
         if (value <= 0 || totalValue <= 0) {
             throw new DivideByZeroException($"{nameof(value)} = {value} || {nameof(totalValue)} = {totalValue}");
         }
-    
+
         Report(value / (float)totalValue);
     }
 
@@ -79,4 +95,8 @@ public class AsyncCustomOperation : IProgress<float> {
             yield return enumerator;
         }
     }
+
+    bool IEnumerator.MoveNext() => IsDone;
+    void IEnumerator.Reset() => Init();
+    object IEnumerator.Current => this;
 }

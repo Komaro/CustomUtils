@@ -10,7 +10,7 @@ public static partial class Service {
     
     public static async Task<bool> StartServiceAsync(Enum serviceType) => TryGetTypes(serviceType, out var types) && (await Task.WhenAll(types.Select(StartServiceAsync))).All(result => result);
     public static async Task<bool> StartServiceAsync(params Enum[] serviceTypes) => TryGetTypes(out var types, serviceTypes) && (await Task.WhenAll(types.Select(StartServiceAsync))).All(result => result);
-    public static async Task<bool> StartServiceAsync<TService>() where TService : class, IAsyncService, new() => await StartServiceAsync(typeof(TService));
+    public static async Task<bool> StartServiceAsync<TService>() where TService : class, IAsyncService => await StartServiceAsync(typeof(TService));
     
     public static async Task<bool> StartServiceAsync(Type type) {
         if (_serviceDic.TryGetValue(type, out var service) == false) {
@@ -48,7 +48,7 @@ public static partial class Service {
     
     public static async Task<bool> StopServiceAsync(Enum serviceType) => TryGetTypes(serviceType, out var types) && (await Task.WhenAll(types.Select(StopServiceAsync))).All(result => result);
     public static async Task<bool> StopServiceAsync(params Enum[] serviceTypes) => TryGetTypes(out var types, serviceTypes) && (await Task.WhenAll(types.Select(StopServiceAsync))).All(result => result);
-    public static async Task<bool> StopServiceAsync<TService>() where TService : class, IAsyncService, new() => await StopServiceAsync(typeof(TService));
+    public static async Task<bool> StopServiceAsync<TService>() where TService : class, IAsyncService => await StopServiceAsync(typeof(TService));
     
     public static async Task<bool> StopServiceAsync(Type type) {
         if (_serviceDic.TryGetValue(type, out var service) == false) {
@@ -156,8 +156,8 @@ public static partial class Service {
     
     public static async Task<IEnumerable<IService>> GetServiceAsync(Enum serviceType) => TryGetTypes(serviceType, out var types) ? await Task.WhenAll(types.Select(GetServiceAsync)) : Enumerable.Empty<IService>();
     public static async Task<IEnumerable<IService>> GetServiceAsync(params Enum[] serviceTypes) => TryGetTypes(out var types, serviceTypes) ? await Task.WhenAll(types.Select(GetServiceAsync)) : Enumerable.Empty<IService>();
-    public static async Task<TService> GetServiceAsync<TService>() where TService : class, IAsyncService, new() => await GetServiceAsync(typeof(TService)) as TService;
-    public static async Task<TService> GetServiceAsync<TService>(Type type) where TService : class, IAsyncService, new() => await GetServiceAsync(type) as TService;
+    public static async Task<TService> GetServiceAsync<TService>() where TService : class, IAsyncService => await GetServiceAsync(typeof(TService)) as TService;
+    public static async Task<TService> GetServiceAsync<TService>(Type type) where TService : class, IAsyncService => await GetServiceAsync(type) as TService;
 
     public static async Task<IService> GetServiceAsync(Type type) {
         if (typeof(IAsyncService).IsAssignableFrom(type) == false) {
@@ -178,7 +178,7 @@ public static partial class Service {
 
     #region [CreateAsync]
     
-    private static async Task<TService> CreateServiceAsync<TService>() where TService : class, IAsyncService, new() => await CreateServiceAsync(typeof(TService)) as TService;
+    private static async Task<TService> CreateServiceAsync<TService>() where TService : class, IAsyncService => await CreateServiceAsync(typeof(TService)) as TService;
 
     private static async Task<IAsyncService> CreateServiceAsync(Type type) {
         if (typeof(IAsyncService).IsAssignableFrom(type) == false) {

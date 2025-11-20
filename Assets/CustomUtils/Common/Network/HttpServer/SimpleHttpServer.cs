@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Threading;
+using System.Threading.Channels;
 using System.Threading.Tasks;
+using UnityEngine;
+using Color = System.Drawing.Color;
 
 public class SimpleHttpServer : IDisposable {
     
@@ -72,7 +75,7 @@ public class SimpleHttpServer : IDisposable {
         Logger.TraceLog($"{nameof(SimpleHttpServer)} {nameof(Close)}", Color.Red);
     }
 
-    private async void Run(CancellationToken token) {
+    private async Task Run(CancellationToken token) {
         try {
             while (_listener.IsListening && token.IsCancellationRequested == false) {
                 try {
@@ -106,7 +109,53 @@ public class SimpleHttpServer : IDisposable {
         }
     }
 
-    // TODO. StatusCode 후처리 수정 필요. 정상 처리 되어 write 처리된 경우 Header를 더이상 수저할 수 없기 때문에 일괄적으로 처리하기 어려움 다른 방안 혹은 반환 처리를 통합하는 방안 강구 필요
+    private readonly Channel<HttpListenerContext> _requestChannel = Channel.CreateBounded<HttpListenerContext>(200);
+    
+    private async Task AcceptRequestAsync(CancellationToken token) {
+        try {
+            while (_listener.IsListening && token.IsCancellationRequested == false) {
+                try {
+                    var task = _listener.GetContextAsync();
+                    var context = await task;
+                    token.ThrowIfCancellationRequested();
+                    await _requestChannel.Writer.WriteAsync(context, token);
+                } catch (OperationCanceledException) {
+                    Logger.TraceLog($"Receive {nameof(OperationCanceledException)}", Color.Red);
+                    break;
+                } catch (HttpListenerException ex) {
+                    Logger.TraceError(ex);
+                    break;
+                } catch (InvalidOperationException ex) {
+                    Logger.TraceError(ex);
+                    break;
+                } catch (Exception ex){
+                    Logger.TraceLog(ex, Color.Yellow);
+                }
+            }
+        } catch (Exception ex) {
+            Logger.TraceError(ex);
+        } finally {
+            if (_listener.IsListening) {
+                _listener.Stop();
+                _listener.Close();
+                Logger.TraceLog($"{nameof(SimpleHttpServer)} {nameof(Exception)} {nameof(Close)}", Color.Red);
+            }
+        }
+    }
+
+    private async Task HandleRequestAsync(CancellationToken token) {
+        try {
+            while (_listener.IsListening && token.IsCancellationRequested == false) {
+                var context = await _requestChannel.Reader.ReadAsync(token);
+                token.ThrowIfCancellationRequested();
+                _ = Task.Run(() => Serve(context, token), token);
+            }
+        }catch (Exception ex) {
+            Logger.TraceError(ex);
+        }
+    }
+
+    // TODO. StatusCode 후처리 수정 필요. 정상 처리 되어 write 처리된 경우 Header를 더이상 수정할 수 없기 때문에 일괄적으로 처리하기 어려움 다른 방안 혹은 반환 처리를 통합하는 방안 강구 필요
     private void Serve(HttpListenerContext context, CancellationToken token) {
         try {
             if (_serveModuleDic.Count <= 0) {
@@ -114,8 +163,12 @@ public class SimpleHttpServer : IDisposable {
             }
 
             token.ThrowIfCancellationRequested();
-
+            
             if (context.Request != null) {
+                if (context.Request.HttpMethod == HttpMethod.Head.Method) {
+                    return;
+                }
+                
                 foreach (var module in _serveModuleDic.Values) {
                     if (module.Serve(context)) {
                         return;

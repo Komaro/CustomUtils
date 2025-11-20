@@ -15,8 +15,12 @@ public abstract class GameDB<TKey, TData> : IEnumerable<KeyValuePair<TKey, TData
     public GameDB(GameDBProvider provider) => Init(provider);
 
     ~GameDB() => Dispose();
-    public void Dispose() => _dictionary.Clear();
     
+    public void Dispose() {
+        _dictionary.Clear();
+        GC.SuppressFinalize(this);
+    }
+
     private void Init(GameDBProvider provider) { 
         foreach (var data in provider.GetDataList<TData>()) {
             var key = CreateKey(data);

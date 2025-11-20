@@ -1,10 +1,14 @@
 ﻿using System;
+using System.Buffers;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Threading;
+using System.Threading.Tasks;
 using UnityEngine;
-using Debug = UnityEngine.Debug;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -297,6 +301,55 @@ public static class SystemUtil {
 
         bytes = Array.Empty<byte>();
         return false;
+    }
+    
+    public static async Task<IEnumerable<byte[]>> ReadAllBytesParallelAsync(IEnumerable<string> paths, int bufferSize = 65536, CancellationToken token = default) {
+        var bytesList = new List<byte[]>(); 
+        using var semaphore = new SemaphoreSlim(Environment.ProcessorCount / 2);
+        foreach (var path in paths) {
+            await semaphore.WaitAsync(token);
+            var bytes = await Task.Run(async () => {
+                try {
+                    return await ReadBytesAsync(path, bufferSize, token);
+                } catch (Exception ex) {
+                    Logger.TraceError(ex);
+                    return Array.Empty<byte>();
+                } finally {
+                    semaphore.Release();
+                }
+            }, token);
+
+            lock (bytesList) {
+                if (bytes.Length > 0) {
+                    bytesList.Add(bytes);
+                }
+            }
+        }
+
+        return bytesList;
+    }
+
+    public static async IAsyncEnumerable<byte[]> ReadAllBytesAsync(IEnumerable<string> paths, int bufferSize = 65536, [EnumeratorCancellation] CancellationToken token = default) {
+        foreach (var task in paths.Select(async path => await ReadBytesAsync(path, bufferSize, token))) {
+            yield return await task;
+        }
+    }
+
+    public static async Task<byte[]> ReadBytesAsync(string path, int bufferSize = 65536, CancellationToken token = default) {
+        if (File.Exists(path)) {
+            await using var fileStream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.None);
+            await using var memoryStream = new MemoryStream();
+            
+            int readByte;
+            var memory = MemoryPool<byte>.Shared.Rent(bufferSize).Memory;
+            while ((readByte = await fileStream.ReadAsync(memory, token)) > 0) {
+                await memoryStream.WriteAsync(memory[..readByte], token);
+            }
+
+            return memoryStream.GetBuffer();
+        }
+
+        return Array.Empty<byte>();
     }
 
     public static bool TryWriteAllBytes(string path, byte[] bytes, out FileInfo info) => (info = WriteAllBytes(path, bytes)) != null;

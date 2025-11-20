@@ -47,6 +47,11 @@ public partial class BuilderBase {
         Debug.Log($"{BuildCount} - {nameof(PlayerSettings.SetScriptingDefineSymbols)} || {PlayerSettings.GetScriptingDefineSymbolsForGroup(targetGroup)}");
 #endif
     }
+
+    protected void SetStackTraceLogType(LogType logType, StackTraceLogType stackTraceLogType) {
+        PlayerSettings.SetStackTraceLogType(logType, stackTraceLogType);
+        Debug.Log($"{BuildCount} - {nameof(PlayerSettings.SetStackTraceLogType)} || {PlayerSettings.GetStackTraceLogType(logType)}");
+    }
     
     protected void SetDevelopmentBuild(bool isActive) {
         EditorUserBuildSettings.development = isActive;

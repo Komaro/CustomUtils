@@ -114,6 +114,51 @@ public class EditModeTestRunner {
         }).WarmupCount(1).MeasurementCount(10).IterationsPerMeasurement(2).SampleGroup(group_Predicate).Run();
     }
 
+    [TestCase(1000)]
+    [TestCase(2000)]
+    [TestCase(5000)]
+    [TestCase(10000)]
+    [TestCase(20000)]
+    [Performance]
+    public void NewPerformanceTest(int count) {
+        var newListGroup = new SampleGroup("New_List_Group", SampleUnit.Microsecond);
+        var enumeratorGroup = new SampleGroup("Enumerator_Group", SampleUnit.Microsecond);
+
+        var list = new List<int>();
+        for (var i = 0; i < count; i++) {
+            list.Add(RandomUtil.GetRandom(int.MinValue, int.MaxValue));
+        }
+        
+        var value = RandomUtil.GetRandom(int.MinValue, int.MaxValue);
+        
+        Measure.Method(() => {
+            _ = GetList(list, value);
+        }).WarmupCount(1).MeasurementCount(10).IterationsPerMeasurement(10).SampleGroup(newListGroup).GC().Run();
+        
+        Measure.Method(() => {
+            _ = GetLists(list, value).ToList();
+        }).WarmupCount(1).MeasurementCount(10).IterationsPerMeasurement(10).SampleGroup(enumeratorGroup).GC().Run();
+
+        List<int> GetList(List<int> list, int value) {
+            var returnList = new List<int>();
+            for (var i = 0; i < list.Count; i++) {
+                if (list[i] <= value) {
+                    returnList.Add(list[i]);
+                }
+            }
+
+            return returnList;
+        }
+
+        IEnumerable<int> GetLists(List<int> list, int value) {
+            foreach (var i in list) {
+                if (i <= value) {
+                    yield return i;
+                }
+            }
+        }
+    }
+
     #region [Json]
 
     [TestCase(2500)]

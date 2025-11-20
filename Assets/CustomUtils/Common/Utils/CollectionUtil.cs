@@ -11,9 +11,9 @@ public static class CollectionUtil {
 
     private static readonly Dictionary<Type, ICollection> _emptyDic = new();
 
-    internal static IEnumerable EmptyEnumerable<TCollection, TValue>() where TCollection : IEnumerable, new() {
+    private static IEnumerable EmptyEnumerable<TCollection, TValue>() where TCollection : IEnumerable, new() {
         if (emptyDic.TryGetValue(typeof(TCollection).GetGenericTypeDefinition(), out var dic) == false) {
-            emptyDic.Add(typeof(TCollection), dic = new Dictionary<Type, IEnumerable>());
+            emptyDic.Add(typeof(TCollection).GetGenericTypeDefinition(), dic = new Dictionary<Type, IEnumerable>());
         }
 
         if (dic.TryGetValue(typeof(TValue), out var enumerable) == false) {

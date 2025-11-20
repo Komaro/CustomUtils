@@ -49,7 +49,7 @@ public class EditorBuildService : EditorService<EditorBuildService> {
     }
     
     private void OnGUI() {
-        if (_builderTypes == null || _builderTypes.Any() == false) {
+        if (_builderTypes is not { Length: > 0 }) {
             EditorGUILayout.HelpBox($"{nameof(BuilderBase)}를 상속받은 구현이 존재하지 않습니다.", MessageType.Error);
             return;
         }

@@ -75,10 +75,17 @@ public abstract partial class BuilderBase : IDisposable {
 
     protected virtual void PreProcess(ref BuildPlayerOptions options) {
         Debug.Log($"{BuildCount} - Start {nameof(OnPreProcess)}");
+        
         SetDevelopmentBuild(BuildConfigProvider.GetValue<bool>(nameof(BuildConfig.developmentBuild)));
         SetAutoConnectProfile(BuildConfigProvider.GetValue<bool>(nameof(BuildConfig.autoConnectProfile)));
         SetDeepProfilingSupport(BuildConfigProvider.GetValue<bool>(nameof(BuildConfig.deepProfilingSupport)));
         SetScriptDebugging(BuildConfigProvider.GetValue<bool>(nameof(BuildConfig.scriptDebugging)));
+
+        if (BuildConfigProvider.TryGetValue<Dictionary<LogType, StackTraceLogType>>(nameof(BuildConfig.stackTraceDic), out var dic)) {
+            foreach (var (logType, stackTraceLogType) in dic) {
+                SetStackTraceLogType(logType, stackTraceLogType);
+            }
+        }
 
         // TODO. 임시 주석 처리(제거 권장)
         // if (BuildConfigProvider.TryGetValue<Dictionary<string, bool>>(nameof(BuildConfig.optionDic), out var optionDic)) {

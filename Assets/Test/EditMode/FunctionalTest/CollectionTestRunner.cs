@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
@@ -56,5 +55,23 @@ public class CollectionTestRunner {
         
         Measure.Method(() => _ = intArray.Select(value => _ = (long) value).ToArray()).WarmupCount(5).MeasurementCount(measurementCount).IterationsPerMeasurement(count).SampleGroup(selectGroup).GC().Run();
         Measure.Method(() => _ = intArray.ToArray(value => (long) value)).WarmupCount(5).MeasurementCount(measurementCount).IterationsPerMeasurement(count).SampleGroup(forGroup).GC().Run();
+    }
+
+    [Test]
+    public void EmptyCollectionUtilTest() {
+        var empty_01 = CollectionUtil.Empty<List<int>, int>();
+        Assert.IsNotNull(empty_01);
+
+        var empty_02 = CollectionUtil.Empty<List<int>, int>();
+        Assert.IsNotNull(empty_02);
+
+        Assert.AreEqual(empty_01, empty_02);
+        Assert.AreEqual(empty_01.GetHashCode(), empty_02.GetHashCode());
+
+        var empty_03 = CollectionUtil.List.Empty<int>();
+        Assert.IsNotNull(empty_03);
+        
+        Assert.AreEqual(empty_01, empty_03);
+        Assert.AreEqual(empty_01.GetHashCode(), empty_03.GetHashCode());
     }
 }

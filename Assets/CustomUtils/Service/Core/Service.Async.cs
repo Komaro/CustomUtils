@@ -118,7 +118,7 @@ public static partial class Service {
 
     #endregion
 
-    #region [Refresh]
+    #region [RefreshAsync]
    
     public static async Task<bool> RefreshServiceAsync(Enum serviceType) => TryGetTypes(serviceType, out var types) && (await Task.WhenAll(types.Select(RefreshServiceAsync))).All(result => result);
     public static async Task<bool> RefreshServiceAsync(params Enum[] serviceTypes) => TryGetTypes(out var types, serviceTypes) && (await Task.WhenAll(types.Select(RefreshServiceAsync))).All(result => result);
@@ -226,8 +226,4 @@ public static partial class Service {
     }
 
     #endregion
-}
-
-public static partial class Service {
-    
 }

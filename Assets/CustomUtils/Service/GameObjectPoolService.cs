@@ -5,12 +5,11 @@ using UnityEngine;
 using UnityEngine.Pool;
 using Object = UnityEngine.Object;
 
-// Test
-[RefactoringRequired("GameObject 전용 Poll 로 재명명 필요")]
-public class ObjectPoolService : IService {
+[TestRequired]
+public class GameObjectPoolService : IService {
 
     private GameObject _poolRoot;
-    private ConcurrentDictionary<string, ObjectPoolBag> _poolDic = new();
+    private ConcurrentDictionary<string, GameObjectPoolBag> _poolDic = new();
 
     private bool _isServing = false;
 
@@ -59,8 +58,8 @@ public class ObjectPoolService : IService {
             return;
         }
         
-        if (go.TryGetComponent<ObjectPool>(out var objectPool) == false) {
-            Logger.TraceError($"{nameof(go)}({go.name}) is not a type managed by {nameof(ObjectPoolService)}");
+        if (go.TryGetComponent<GameObjectPool>(out var objectPool) == false) {
+            Logger.TraceError($"{nameof(go)}({go.name}) is not a type managed by {nameof(GameObjectPoolService)}");
             return;
         }
 
@@ -78,7 +77,7 @@ public class ObjectPoolService : IService {
         }
     }
 
-    private ObjectPoolBag CreatePool(string name) => new(_poolRoot, name, 50);
+    private GameObjectPoolBag CreatePool(string name) => new(_poolRoot, name, 50);
 
     public int GetCountAll(string name) => _poolDic.TryGetValue(name, out var pool) ? pool.CountAll : 0;
     public int GetCountActive(string name) => _poolDic.TryGetValue(name, out var pool) ? pool.CountActive : 0;
@@ -86,7 +85,7 @@ public class ObjectPoolService : IService {
     public int GetMaxSize(string name) => _poolDic.TryGetValue(name, out var pool) ? pool.MaxSize : 0;
 } 
 
-public record ObjectPoolBag : IDisposable {
+public record GameObjectPoolBag : IDisposable {
 
     private readonly GameObject _prefab;
 
@@ -98,11 +97,11 @@ public record ObjectPoolBag : IDisposable {
     public int CountInactive => _pool.CountInactive;
     public int MaxSize { get; }
     
-    public ObjectPoolBag(GameObject root, string name, int max) {
+    public GameObjectPoolBag(GameObject root, string name, int max) {
         _prefab = Service.GetService<ResourceService>().Instantiate(name);
         if (_prefab != null) {
             _prefab.name = name;
-            var pool = _prefab.GetOrAddComponent<ObjectPool>();
+            var pool = _prefab.GetOrAddComponent<GameObjectPool>();
             if (pool != null) {
                 pool.SetName(name);
             }
@@ -118,7 +117,7 @@ public record ObjectPoolBag : IDisposable {
         _prefab.transform.SetParent(root.transform);
 
         MaxSize = max;
-        _pool = new ObjectPool<GameObject>(OnCreateObject, OnGetGameObject, OnReleaseGameObject, OnDestroyGameObject, maxSize:MaxSize);
+        _pool = new ObjectPool<GameObject>(OnCreateGameObject, OnGetGameObject, OnReleaseGameObject, OnDestroyGameObject, maxSize:MaxSize);
     }
 
     public void Dispose() {
@@ -132,9 +131,9 @@ public record ObjectPoolBag : IDisposable {
     public void Release(GameObject go) => _pool?.Release(go);
     public void Clear() => _pool?.Clear();
 
-    public bool IsValid() => _prefab != null && _prefab.TryGetComponent<ObjectPool>(out _);
+    public bool IsValid() => _prefab != null && _prefab.TryGetComponent<GameObjectPool>(out _);
     
-    private GameObject OnCreateObject() {
+    private GameObject OnCreateGameObject() {
         if (_prefab != null) {
             var go = Object.Instantiate(_prefab);
             go.name = $"{go.name}_{_pool.CountActive:D3}"; 
@@ -154,7 +153,7 @@ public record ObjectPoolBag : IDisposable {
     private void OnDestroyGameObject(GameObject go) => Object.Destroy(go);
 }
 
-public class ObjectPool : MonoBehaviour {
+public class GameObjectPool : MonoBehaviour {
 
     [SerializeReference]
     private string _name;

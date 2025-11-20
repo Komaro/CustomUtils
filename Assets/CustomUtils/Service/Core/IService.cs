@@ -23,10 +23,33 @@ public interface IAsyncService : IService {
     protected internal Task StopAsync();
     protected internal async Task RefreshAsync() => await Task.CompletedTask;
     protected internal async Task RemoveAsync() => await Task.CompletedTask;
-    
-    // protected internal async Task InitAsync(ServiceOperation operation) => await Task.CompletedTask;
-    // protected internal Task StartAsync(ServiceOperation operation);
-    // protected internal Task StopAsync(ServiceOperation operation);
-    // protected internal async Task RefreshAsync(ServiceOperation operation) => await Task.CompletedTask;
-    // protected internal async Task RemoveAsync(ServiceOperation operation) => await Task.CompletedTask;
 }
+
+// TODO. Service 흐름에 맞는 Operation을 우선 개발하여야 함
+// public interface IAsyncOperationService : IService {
+//     
+//     void IService.Init() => _ = InitAsync(new AsyncCustomOperation());
+//
+//     void IService.Start() => _ = StartAsync(new AsyncCustomOperation());
+//     void IService.Stop() => _ = StopAsync(new AsyncCustomOperation());
+//     void IService.Refresh() => _ = RefreshAsync(new AsyncCustomOperation());
+//     void IService.Remove() => _ = RemoveAsync(new AsyncCustomOperation());
+//
+//     protected internal async Task InitAsync(AsyncCustomOperation operation) {
+//         operation.Done();
+//         await Task.CompletedTask;
+//     }
+//
+//     protected internal Task StartAsync(AsyncCustomOperation operation);
+//     protected internal Task StopAsync(AsyncCustomOperation operation);
+//
+//     protected internal async Task RefreshAsync(AsyncCustomOperation operation) {
+//         operation.Done();
+//         await Task.CompletedTask;
+//     }
+//
+//     protected internal async Task RemoveAsync(AsyncCustomOperation operation) {
+//         operation.Done();
+//         await Task.CompletedTask;
+//     }
+// }

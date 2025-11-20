@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Threading.Tasks;
 
 public class AsyncCustomOperation : IProgress<float> {
@@ -65,5 +66,17 @@ public class AsyncCustomOperation : IProgress<float> {
         var completionSource = new TaskCompletionSource<bool>();
         onComplete += _ => completionSource.SetResult(true);
         return completionSource.Task;
+    }
+
+    public virtual IEnumerator ToCoroutine() {
+        while (IsDone == false) {
+            yield return null;
+        }
+    }
+
+    public virtual IEnumerator ToCoroutine(IEnumerator enumerator) {
+        while (IsDone == false) {
+            yield return enumerator;
+        }
     }
 }

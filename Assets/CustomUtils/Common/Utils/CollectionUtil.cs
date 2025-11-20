@@ -7,9 +7,9 @@ using System.Collections.ObjectModel;
 
 public static class CollectionUtil {
 
-    internal static readonly Dictionary<Type, Dictionary<Type, IEnumerable>> emptyDic = new();
+    private static readonly Dictionary<Type, Dictionary<Type, IEnumerable>> emptyDic = new();
 
-    private static readonly Dictionary<Type, ICollection> _emptyDic = new();
+    public static TCollection Empty<TCollection, TValue>() where TCollection : class, ICollection<TValue>, IEnumerable, new() => EmptyEnumerable<TCollection, TValue>() as TCollection;
 
     private static IEnumerable EmptyEnumerable<TCollection, TValue>() where TCollection : IEnumerable, new() {
         if (emptyDic.TryGetValue(typeof(TCollection).GetGenericTypeDefinition(), out var dic) == false) {
@@ -25,16 +25,16 @@ public static class CollectionUtil {
 
     public class Collection {
         
-        public static Collection<T> Empty<T>() => EmptyEnumerable<Collection<T>, T>() as Collection<T>;
+        public static Collection<T> Empty<T>() => Empty<Collection<T>, T>();
     }
 
     public static class List {
 
-        public static List<T> Empty<T>() => EmptyEnumerable<List<T>, T>() as List<T>;
+        public static List<T> Empty<T>() => Empty<List<T>, T>();
     }
 
     public static class HashSet {
 
-        public static HashSet<T> Empty<T>() => EmptyEnumerable<HashSet<T>, T>() as HashSet<T>;
+        public static HashSet<T> Empty<T>() => Empty<HashSet<T>, T>();
     }
 }

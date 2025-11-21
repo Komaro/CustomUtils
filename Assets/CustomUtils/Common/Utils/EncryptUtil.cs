@@ -157,38 +157,19 @@ public static class EncryptUtil {
     
     #region [AES]
 
-    public static bool TryEncryptAES(out string cipherText, string plainText, string key = nameof(EncryptUtil)) {
-        cipherText = EncryptAES(plainText, key);
-        return string.IsNullOrEmpty(cipherText) == false;
-    }
-    
+    public static bool TryEncryptAES(out string cipherText, string plainText, string key = nameof(EncryptUtil)) => string.IsNullOrEmpty(cipherText = EncryptAES(plainText, key)) == false;
     public static string EncryptAES(string plainText, string key = nameof(EncryptUtil)) => EncryptAESBytes(plainText, key).GetRawString();
 
-    public static bool TryDecryptAES(out string plainText, string cipherText, string key = nameof(EncryptUtil)) {
-        plainText = DecryptAES(cipherText, key);
-        return string.IsNullOrEmpty(plainText) == false;
-    }
-    
+    public static bool TryDecryptAES(out string plainText, string cipherText, string key = nameof(EncryptUtil)) => string.IsNullOrEmpty(plainText = DecryptAES(cipherText, key)) == false;
     public static string DecryptAES(string cipherText, string key = nameof(EncryptUtil)) => DecryptAESBytes(cipherText, key).GetString();
 
-    public static bool TryEncryptAESBytes(out byte[] cipherBytes, string plainText, string key = nameof(EncryptUtil)) {
-        cipherBytes = EncryptAESBytes(plainText.ToBytes(), key);
-        return cipherBytes is { Length: > 0 };
-    }
-    
+    public static bool TryEncryptAESBytes(out byte[] cipherBytes, string plainText, string key = nameof(EncryptUtil)) => (cipherBytes = EncryptAESBytes(plainText.ToBytes(), key))?.Length > 0;
     public static byte[] EncryptAESBytes(string plainText, string key = nameof(EncryptUtil)) => EncryptAESBytes(plainText.ToBytes(), key);
     
-    public static bool TryDecryptAESBytes(out byte[] plainBytes, string cipherText, string key = nameof(EncryptUtil)) {
-        plainBytes = DecryptAESBytes(cipherText.ToRawBytes(), key);
-        return plainBytes is { Length: > 0 };
-    }
-
+    public static bool TryDecryptAESBytes(out byte[] plainBytes, string cipherText, string key = nameof(EncryptUtil)) => (plainBytes = DecryptAESBytes(cipherText.ToRawBytes(), key))?.Length > 0;
     public static byte[] DecryptAESBytes(string cipherText, string key = nameof(EncryptUtil)) => DecryptAESBytes(cipherText.ToRawBytes(), key);
 
-    public static bool TryEncryptAESBytes(out byte[] cipherBytes, byte[] bytes, string key = nameof(EncryptUtil)) {
-        cipherBytes = EncryptAESBytes(bytes, key);
-        return cipherBytes is { Length: > 0 };
-    }
+    public static bool TryEncryptAESBytes(out byte[] cipherBytes, byte[] bytes, string key = nameof(EncryptUtil)) => (cipherBytes = EncryptAESBytes(bytes, key))?.Length > 0;
 
     public static byte[] EncryptAESBytes(byte[] bytes, string key = nameof(EncryptUtil)) {
         try {
@@ -206,10 +187,7 @@ public static class EncryptUtil {
         }
     }
 
-    public static bool TryDecryptAESBytes(out byte[] plainBytes, byte[] bytes, string key = nameof(EncryptUtil)) {
-        plainBytes = DecryptAESBytes(bytes, key);
-        return plainBytes is { Length: > 0 };
-    }
+    public static bool TryDecryptAESBytes(out byte[] plainBytes, byte[] bytes, string key = nameof(EncryptUtil)) => (plainBytes = DecryptAESBytes(bytes, key))?.Length > 0;
 
     public static byte[] DecryptAESBytes(byte[] bytes, string key = nameof(EncryptUtil)) {
         try {
@@ -229,11 +207,8 @@ public static class EncryptUtil {
 
     #endregion
 
-    public static bool TryDecrypt(out string plainText, string cipherText, string key = nameof(EncryptUtil), ENCRYPT_TYPE type = default) {
-        plainText = Decrypt(cipherText, key, type);
-        return string.IsNullOrEmpty(plainText) == false;
-    }
-    
+    public static bool TryDecrypt(out string plainText, string cipherText, string key = nameof(EncryptUtil), ENCRYPT_TYPE type = default) => string.IsNullOrEmpty(plainText = Decrypt(cipherText, key, type)) == false;
+
     public static string Decrypt(string cipherText, string key = nameof(EncryptUtil), ENCRYPT_TYPE type = default) {
         switch (type) { 
             case ENCRYPT_TYPE.AES:
@@ -246,10 +221,7 @@ public static class EncryptUtil {
         return string.Empty;
     }
 
-    public static bool TryDecrypt(out byte[] plainBytes, byte[] bytes, string key = nameof(EncryptUtil), ENCRYPT_TYPE type = default) {
-        plainBytes = Decrypt(bytes, key, type);
-        return plainBytes != Array.Empty<byte>();
-    }
+    public static bool TryDecrypt(out byte[] plainBytes, byte[] bytes, string key = nameof(EncryptUtil), ENCRYPT_TYPE type = default) => (plainBytes = Decrypt(bytes, key, type)) != Array.Empty<byte>();
 
     public static byte[] Decrypt(byte[] bytes, string key = nameof(EncryptUtil), ENCRYPT_TYPE type = default) {
         switch (type) {

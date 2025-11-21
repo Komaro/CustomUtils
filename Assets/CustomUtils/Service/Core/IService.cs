@@ -29,7 +29,6 @@ public interface IAsyncService : IService {
 // public interface IAsyncOperationService : IService {
 //     
 //     void IService.Init() => _ = InitAsync(new AsyncCustomOperation());
-//
 //     void IService.Start() => _ = StartAsync(new AsyncCustomOperation());
 //     void IService.Stop() => _ = StopAsync(new AsyncCustomOperation());
 //     void IService.Refresh() => _ = RefreshAsync(new AsyncCustomOperation());

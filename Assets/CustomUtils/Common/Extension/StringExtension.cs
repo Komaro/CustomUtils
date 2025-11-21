@@ -81,11 +81,14 @@ public static class StringExtension {
     public static string ToNoSpace(this string content) => content.Replace(" ", string.Empty);
 
     public static string GetFileNameFast(this string content) => content.Split('.')?[0];
-
+    
     public static string AutoSwitchExtension(this string content,  string extension) => content.ContainsExtension(extension) == false ? Path.ChangeExtension(content, extension.FixExtension()) : content;
     public static string FixExtension(this string content) => content.IsExtension() == false ? content.Insert(0, ".") : content;
     public static bool ContainsExtension(this string content, string extension) => Path.HasExtension(content) && Path.GetExtension(content).EqualsFast(extension);
     public static bool IsExtension(this string content) => content.StartsWith('.');
+    
+    public static string FixSeparator(this string content) => content.Replace(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
+    public static string FixLineBreak(this string content) => content.Replace("\r\n", "\n").Replace("\r", "\n");
 
     public static bool TryIndexOf(this string content, out int index, char matchChar, bool includeMatch = false) => (index = content.LastIndexOf(matchChar) + (includeMatch ? 0 : 1)) >= 0 && content.Length > index;
     public static bool TryIndexOfFirst(this string content, out int index, char matchChar, bool includeMatch = false) => (index = content.IndexOf(matchChar) + (includeMatch ? 0 : 1)) >= 0 && content.Length > index;

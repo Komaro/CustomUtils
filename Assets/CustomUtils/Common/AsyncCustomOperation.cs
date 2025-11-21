@@ -80,7 +80,18 @@ public class AsyncCustomOperation : IAsyncCustomOperation {
 
     public virtual Task ToTask() {
         var completionSource = new TaskCompletionSource<bool>();
-        onComplete += _ => completionSource.SetResult(true);
+        if (IsDone) {
+            completionSource.SetResult(true);
+        } else {
+            onComplete += operation => {
+                if (operation.IsCanceled) {
+                    completionSource.SetCanceled();
+                } else {
+                    completionSource.TrySetResult(true);
+                }
+            };
+        }
+        
         return completionSource.Task;
     }
 
@@ -99,4 +110,44 @@ public class AsyncCustomOperation : IAsyncCustomOperation {
     bool IEnumerator.MoveNext() => IsDone;
     void IEnumerator.Reset() => Init();
     object IEnumerator.Current => this;
+}
+
+public class AsyncCustomOperation<TValue> : AsyncCustomOperation {
+
+    private TValue _result;
+    
+    public TValue Result {
+        get {
+            if (IsDone == false) {
+                throw new InvalidOperationException($"{nameof(AsyncCustomOperation<TValue>)} already completed");
+            }
+
+            return _result ?? throw new NullReferenceException<TValue>(nameof(AsyncCustomOperation<TValue>));
+        }
+
+        protected set => _result = value;
+    }
+
+    public override void Report(float value) {
+        if (IsDone) {
+            return;
+        }
+
+        if (value > Progress) {
+            OnProgress.Handler?.Invoke(Progress);
+        }
+
+        Progress = value;
+
+        if (IsDone) {
+            onComplete.Handler?.Invoke(this);
+        }
+    }
+
+    public void Complete(TValue result) {
+        Result = result;
+        if (IsDone == false) {
+            Done();
+        }
+    }
 }

@@ -156,7 +156,7 @@ public static class EncryptUtil {
     #endregion
     
     #region [AES]
-
+    
     public static bool TryEncryptAES(out string cipherText, string plainText, string key = nameof(EncryptUtil)) => string.IsNullOrEmpty(cipherText = EncryptAES(plainText, key)) == false;
     public static string EncryptAES(string plainText, string key = nameof(EncryptUtil)) => EncryptAESBytes(plainText, key).GetRawString();
 
@@ -177,7 +177,7 @@ public static class EncryptUtil {
                 aes.Key = GetSHA256LimitBytes(key, 16);
                 aes.IV = new byte[16];
 
-                using (var encryptor = aes.CreateEncryptor(aes.Key, aes.IV)) {
+                using (var encryptor = aes.CreateEncryptor()) {
                     return PerformCryptography(bytes, encryptor);
                 }
             }
@@ -195,7 +195,7 @@ public static class EncryptUtil {
                 aes.Key = GetSHA256LimitBytes(key, 16);
                 aes.IV = new byte[16];
 
-                using (var decryptor = aes.CreateDecryptor(aes.Key, aes.IV)) {
+                using (var decryptor = aes.CreateDecryptor()) {
                     return PerformCryptography(bytes, decryptor);
                 }
             }

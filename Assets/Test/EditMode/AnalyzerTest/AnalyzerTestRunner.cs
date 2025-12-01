@@ -63,15 +63,15 @@ internal static class AnalyzerRunner {
         }
     }
 
-    public static List<Task<TestCaseLog>> GetTestCaseTaskList(Type type, string testCaseCodeFolder) {
+    public static List<Task<AnalyzerTestCaseLog>> GetTestCaseTaskList(Type type, string testCaseCodeFolder) {
         if (Activator.CreateInstance(type) is not DiagnosticAnalyzer analyzer) {
             Logger.TraceError($"{type.Name} is an invalid {nameof(Type)}");
-            return new List<Task<TestCaseLog>>();
+            return new List<Task<AnalyzerTestCaseLog>>();
         }
         
-        var testCaseCodeList = Directory.GetFiles(testCaseCodeFolder, Constants.Extension.TEST_CASE_FILTER, SearchOption.AllDirectories).ToList(TestCaseCode.Create);
+        var testCaseCodeList = Directory.GetFiles(testCaseCodeFolder, Constants.Extension.TEST_CASE_FILTER, SearchOption.AllDirectories).ToList(AnalyzerTestCaseCode.Create);
         var metaDataReferences = AssemblyProvider.GetSystemAssemblySet().Select(assembly => MetadataReference.CreateFromFile(assembly.Location)).Cast<MetadataReference>().ToList();
-        var taskList = new List<Task<TestCaseLog>>();
+        var taskList = new List<Task<AnalyzerTestCaseLog>>();
         foreach (var testCaseCode in testCaseCodeList.Where(x => x.HasValue).OrderBy(x => x.Value.type)) {
             taskList.Add(Task.Run(async () => {
                 var compilationOptions = new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary);
@@ -82,10 +82,10 @@ internal static class AnalyzerRunner {
                     case TEST_RESULT_CASE_TYPE.SUCCESS when diagnostics.Any(diagnostic => diagnostic.Severity == DiagnosticSeverity.Error):
                     case TEST_RESULT_CASE_TYPE.FAIL when diagnostics.Any(diagnostic => diagnostic.Severity == DiagnosticSeverity.Error) == false:
                     case TEST_RESULT_CASE_TYPE.WARNING when diagnostics.Any(diagnostic => diagnostic.Severity == DiagnosticSeverity.Warning) == false:
-                        return new TestCaseLog(LogType.Error, $"[Script Test] Failed || {testCaseCode.Value.name}\n\t{diagnostics.ToStringCollection(x => $"[{x.Id}] {x.Location.ToPositionString()} || {x.GetMessage()}", "\n\t")}");
+                        return new AnalyzerTestCaseLog(LogType.Error, $"[Script Test] Failed || {testCaseCode.Value.name}\n\t{diagnostics.ToStringCollection(x => $"[{x.Id}] {x.Location.ToPositionString()} || {x.GetMessage()}", "\n\t")}");
                 }
 
-                return new TestCaseLog($"[Script Test] Success || {testCaseCode.Value.name}");
+                return new AnalyzerTestCaseLog($"[Script Test] Success || {testCaseCode.Value.name}");
                 // return new TestCaseLog($"[Script Test] Success || {testCaseCode.Value.name}\n{diagnostics.ToStringCollection(dig => dig.ToString(), "\n")}");
             }));
         }

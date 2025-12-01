@@ -18,4 +18,37 @@ public class EncryptTestRunner {
         Logger.TraceLog(plainText == decryptText);
         Logger.TraceLog($"Pass string Test || {plainText} == {decryptText}");
     }
+    
+    [Test]
+    public void SHATest() {
+        var randomKey = RandomUtil.GetRandom(128);
+        Logger.TraceLog($"{nameof(randomKey)} || {randomKey}");
+
+        var encryptKey = EncryptUtil.GetSHA1LimitBytes(randomKey, 8);
+        Logger.TraceLog($"{nameof(encryptKey)} || {encryptKey.GetRawString()}");
+
+        encryptKey = EncryptUtil.GetSHA1LimitBytes(randomKey, 16);
+        Logger.TraceLog($"{nameof(encryptKey)} || {encryptKey.GetRawString()}");
+        
+        encryptKey = EncryptUtil.GetSHA1LimitBytes(randomKey, 32);
+        Logger.TraceLog($"{nameof(encryptKey)} || {encryptKey.GetRawString()}");
+        
+        encryptKey = EncryptUtil.GetSHA256LimitBytes(randomKey, 8);
+        Logger.TraceLog($"{nameof(encryptKey)} || {encryptKey.GetRawString()}");
+        
+        encryptKey = EncryptUtil.GetSHA256LimitBytes(randomKey, 16);
+        Logger.TraceLog($"{nameof(encryptKey)} || {encryptKey.GetRawString()}");
+        
+        encryptKey = EncryptUtil.GetSHA256LimitBytes(randomKey, 32);
+        Logger.TraceLog($"{nameof(encryptKey)} || {encryptKey.GetRawString()}");
+        
+        encryptKey = EncryptUtil.GetSHA512LimitBytes(randomKey, 8);
+        Logger.TraceLog($"{nameof(encryptKey)} || {encryptKey.GetRawString()}");
+        
+        encryptKey = EncryptUtil.GetSHA512LimitBytes(randomKey, 16);
+        Logger.TraceLog($"{nameof(encryptKey)} || {encryptKey.GetRawString()}");
+        
+        encryptKey = EncryptUtil.GetSHA512LimitBytes(randomKey, 32);
+        Logger.TraceLog($"{nameof(encryptKey)} || {encryptKey.GetRawString()}");
+    }
 }

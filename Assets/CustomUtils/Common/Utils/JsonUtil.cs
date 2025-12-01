@@ -59,7 +59,7 @@ public static class JsonUtil {
                 throw new FileNotFoundException();
             }
 
-            if (SystemUtil.TryReadAllText(path, out var text)) {
+            if (IOUtil.TryReadText(path, out var text)) {
                 return JsonConvert.DeserializeObject<T>(text);
             }
         }  catch (Exception ex) {
@@ -84,7 +84,7 @@ public static class JsonUtil {
                 throw new FileNotFoundException();
             }
 
-            if (SystemUtil.TryReadAllText(path, out var cipherText) && EncryptUtil.TryDecrypt(out var plainText, cipherText, key, type)) {
+            if (IOUtil.TryReadText(path, out var cipherText) && EncryptUtil.TryDecrypt(out var plainText, cipherText, key, type)) {
                 return JsonConvert.DeserializeObject<T>(plainText);
             }
         } catch (Exception ex) {
@@ -169,7 +169,7 @@ public static class JsonUtil {
                 throw new FileNotFoundException();
             }
 
-            if (SystemUtil.TryReadAllText(path, out var jsonText)) {
+            if (IOUtil.TryReadText(path, out var jsonText)) {
                 return JObject.Parse(jsonText);
             }
         } catch (Exception ex) {

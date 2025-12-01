@@ -29,6 +29,11 @@ public class LogCollectorService : IService {
         Application.logMessageReceived -= OnLogMessageReceived;
         _isServing = false;
     }
+    
+    void IService.Refresh() {
+        ClearFilter();
+        ClearLog();
+    }
 
     void IService.Remove() {
         ClearFilter();

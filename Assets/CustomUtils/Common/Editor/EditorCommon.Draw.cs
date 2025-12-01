@@ -52,6 +52,20 @@ public static partial class EditorCommon {
         }
     }
 
+    public static int DrawLabelIntField(string label, int value, float labelWidth = 120f, GUIStyle intFieldStyle = null) {
+        using (new GUILayout.HorizontalScope()) {
+            EditorGUILayout.LabelField(label, Constants.Draw.TITLE_STYLE, GUILayout.Width(labelWidth));
+            return EditorGUILayout.IntField(value, intFieldStyle ?? Constants.Draw.TEXT_FIELD);
+        }
+    }
+
+    public static void DrawLabelIntField(string label, ref int value, float labelWidth = 120f) {
+        using (new GUILayout.HorizontalScope()) {
+            EditorGUILayout.LabelField(label, Constants.Draw.TITLE_STYLE, GUILayout.Width(labelWidth));
+            value = EditorGUILayout.IntField(value, Constants.Draw.TEXT_FIELD);
+        }
+    }
+
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static string DrawButtonTextField(string buttonText, ref string text, Action onClick = null, float buttonWidth = 0f) {
         using (new GUILayout.HorizontalScope()) {
@@ -338,18 +352,18 @@ public static partial class EditorCommon {
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static string DrawWideTextArea(string label, string text, float height = 100f) {
+    public static string DrawWideTextArea(string label, string text, float height = 100f, GUIStyle style = null) {
         using (new GUILayout.HorizontalScope()) {
             GUILayout.Label(label, Constants.Draw.TITLE_STYLE, GetCachedFixWidthOption(label, Constants.Draw.TITLE_STYLE), GUILayout.Height(height));
-            return EditorGUILayout.TextArea(text, GUILayout.Height(height), GUILayout.ExpandWidth(true));
+            return EditorGUILayout.TextArea(text, style ?? Constants.Draw.TEXT_AREA, GUILayout.Height(height), GUILayout.ExpandWidth(true));
         }
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void DrawWideTextArea(string label, ref string text, float height = 100f) {
+    public static void DrawWideTextArea(string label, ref string text, float height = 100f, GUIStyle style = null) {
         using (new GUILayout.HorizontalScope()) {
             GUILayout.Label(label, Constants.Draw.TITLE_STYLE, GetCachedFixWidthOption(label, Constants.Draw.TITLE_STYLE), GUILayout.Height(height));
-            text = EditorGUILayout.TextArea(text, GUILayout.Height(height), GUILayout.ExpandWidth(true));
+            text = EditorGUILayout.TextArea(text, style ?? Constants.Draw.TEXT_AREA, GUILayout.Height(height), GUILayout.ExpandWidth(true));
         }
     }
 

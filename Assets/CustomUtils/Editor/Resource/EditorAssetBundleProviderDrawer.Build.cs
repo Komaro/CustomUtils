@@ -82,7 +82,7 @@ public partial class EditorAssetBundleProviderDrawer {
             
             if (config.isAssetBundleManifestEncrypted) {
                 var manifestPath = Path.Combine(buildPath, config.selectBuildTarget.ToString());
-                if (SystemUtil.TryReadAllBytes(manifestPath, out var plainBytes) && EncryptUtil.TryEncryptAESBytes(out var cipherBytes, plainBytes, _plainEncryptKey)) { {
+                if (IOUtil.TryReadBytes(manifestPath, out var plainBytes) && EncryptUtil.TryEncryptAESBytes(out var cipherBytes, plainBytes, _plainEncryptKey)) { {
                     File.WriteAllBytes(manifestPath, cipherBytes);
                 }}
             }

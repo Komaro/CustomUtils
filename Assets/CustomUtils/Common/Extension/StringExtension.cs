@@ -25,6 +25,18 @@ public static class StringExtension {
         return string.Empty;
     }
 
+    public static ReadOnlySpan<char> GetAfterSpan(this string content, char matchChar, bool includeMatch = false) => content.TryIndexOf(out var index, matchChar, includeMatch) ? content.AsSpan(index) : ReadOnlySpan<char>.Empty;
+    public static ReadOnlySpan<char> GetAfterSpanFirst(this string content, char matchChar, bool includeMatch = false) => content.TryIndexOfFirst(out var index, matchChar, includeMatch) ? content.AsSpan(index) : ReadOnlySpan<char>.Empty;
+
+    public static ReadOnlySpan<char> GetAfterSpan(this string content, string matchContent, bool includeMatch = false, StringComparison comp = StringComparison.Ordinal) => content.TryIndexOf(out var index, matchContent, includeMatch, comp) ? content.AsSpan(index) : ReadOnlySpan<char>.Empty;
+    public static ReadOnlySpan<char> GetAfterSpanFirst(this string content, string matchContent, bool includeMatch = false, StringComparison comp = StringComparison.Ordinal) => content.TryIndexOfFirst(out var index, matchContent, includeMatch, comp) ? content.AsSpan(index) : ReadOnlySpan<char>.Empty;
+    
+    public static ReadOnlySpan<char> GetBeforeSpan(this string content, char matchChar, bool includeMatch = false) => content.TryIndexOf(out var index, matchChar, includeMatch) ? content.AsSpan(0, index) : ReadOnlySpan<char>.Empty;
+    public static ReadOnlySpan<char> GetBeforeSpanFirst(this string content, char matchChar, bool includeMatch = false) => content.TryIndexOfFirst(out var index, matchChar, includeMatch) ? content.AsSpan(0, index) : ReadOnlySpan<char>.Empty;
+    
+    public static ReadOnlySpan<char> GetBeforeSpan(this string content, string matchContent, bool includeMatch = false, StringComparison comp = StringComparison.Ordinal) => content.TryIndexOf(out var index, matchContent, includeMatch) ? content.AsSpan(0, index) : ReadOnlySpan<char>.Empty;
+    public static ReadOnlySpan<char> GetBeforeSpanFirst(this string content, string matchContent, bool includeMatch = false, StringComparison comp = StringComparison.Ordinal) => content.TryIndexOfFirst(out var index, matchContent, includeMatch) ? content.AsSpan(0, index) : ReadOnlySpan<char>.Empty;
+
     public static string GetAfter(this string content, char matchChar, bool includeMatch = false) => content.TryIndexOf(out var index, matchChar, includeMatch) ? content[index..] : string.Empty;
     public static string GetAfterFirst(this string content, char matchChar, bool includeMatch = false) => content.TryIndexOfFirst(out var index, matchChar, includeMatch) ? content[index..] : string.Empty;
 

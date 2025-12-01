@@ -345,15 +345,13 @@ public abstract class EditorBuildDrawer<TConfig, TNullConfig> : EditorAutoConfig
                     });
                 }
             }
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             Logger.TraceError(ex);
         } finally {
             config.Save(CONFIG_PATH);
             config.ResetCursor();
 
             Service.StopService<LogCollectorService>();
-            
         }
     }
     

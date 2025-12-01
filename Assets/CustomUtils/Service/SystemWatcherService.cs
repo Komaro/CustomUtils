@@ -29,9 +29,9 @@ public class SystemWatcherService : IService {
         _isServing = false;
     }
 
-    void IService.Remove() => _fileSystemWatcherDic.SafeClear(watcher => watcher.Dispose());
+    void IService.Remove() => _fileSystemWatcherDic.SafeClear();
 
-    public FileSystemWatcher this[SystemWatcherServiceOrder order] => _fileSystemWatcherDic.TryGetValue(order, out var watcher) ? watcher : null;
+    public FileSystemWatcher this[SystemWatcherServiceOrder order] => _fileSystemWatcherDic.GetValueOrDefault(order);
 
     public SystemWatcherServiceOrder Start(SystemWatcherServiceOrder order) {
         if (order == null || order.Invalid()) {

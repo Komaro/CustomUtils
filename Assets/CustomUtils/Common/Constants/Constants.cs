@@ -9,6 +9,7 @@ public static partial class Constants {
     
     public static class Extension {
 
+        public const string TEXT = ".txt";
         public const string JSON = ".json";
         public const string MANIFEST = ".manifest";
         public const string ASSET = ".asset";
@@ -21,7 +22,7 @@ public static partial class Constants {
         public const string NUPKG = ".nupkg";
         public const string AAB = ".aab";
         public const string APK = ".apk";
-
+        
         public const string JSON_FILTER = "*.json";
         public const string SOLUTION_FILTER = "*.sln";
         public const string TEST_CASE_FILTER = "*.tc";

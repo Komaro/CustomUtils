@@ -257,14 +257,14 @@ public partial class EditorAssetBundleProviderDrawer : EditorResourceDrawer<Asse
 
     private void EncryptAssetBundle(string buildPath, string name) {
         var assetBundlePath = Path.Combine(buildPath, name);
-        if (SystemUtil.TryReadAllBytes(assetBundlePath, out var plainBytes)) {
+        if (IOUtil.TryReadBytes(assetBundlePath, out var plainBytes)) {
             if (EncryptUtil.TryEncryptAESBytes(out var cipherBytes, plainBytes, _plainEncryptKey)) {
                 File.WriteAllBytes(assetBundlePath, cipherBytes);
             } else {
                 Logger.TraceError($"{nameof(EncryptUtil.TryEncryptAESBytes)} Failed.\n{assetBundlePath}");
             }
         } else {
-            Logger.TraceError($"{nameof(SystemUtil.TryReadAllBytes)} Failed.\n{assetBundlePath}");
+            Logger.TraceError($"{nameof(IOUtil.TryReadBytes)} Failed.\n{assetBundlePath}");
         }
     }
     

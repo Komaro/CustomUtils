@@ -11,7 +11,7 @@ public abstract class HttpServeModule {
 
     protected SimpleHttpServer server;
 
-    public void AddServer(SimpleHttpServer server) => this.server = server;
+    public void AttachServer(SimpleHttpServer server) => this.server = server;
     
     public abstract bool Serve(HttpListenerContext context);
 

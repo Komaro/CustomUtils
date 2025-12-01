@@ -22,12 +22,21 @@ public class SimpleHttpServer : IDisposable {
     public SimpleHttpServer(string prefix) => _listener.Prefixes.Add(prefix);
     public SimpleHttpServer() : this(Constants.Network.DEFAULT_LOCAL_HOST) { }
     
-    ~SimpleHttpServer() => Dispose();
+    private bool _isDisposed;
     
+    ~SimpleHttpServer() => Dispose();
+
     public void Dispose() {
+        if (_isDisposed) {
+            return;
+        }
+        
         if (IsRunning()) {
             Close();
         }
+
+        _isDisposed = true;
+        GC.SuppressFinalize(this);
     }
     
     public void Start(string targetDirectory) {
@@ -199,7 +208,7 @@ public class SimpleHttpServer : IDisposable {
         }
         
         if (Activator.CreateInstance(type) is HttpServeModule module) {
-            module.AddServer(this);
+            module.AttachServer(this);
             _serveModuleDic.Add(type, module);
             Logger.TraceLog($"Add {type.Name}", Color.Cyan);
         }
@@ -217,7 +226,7 @@ public class SimpleHttpServer : IDisposable {
             return;
         }
         
-        module.AddServer(this);
+        module.AttachServer(this);
         _serveModuleDic.Add(type, module);
         Logger.TraceLog($"Add {type.Name}", Color.Cyan);
     }

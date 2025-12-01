@@ -11,21 +11,6 @@ public class DownloadService : IService {
     void IService.Start() { }
     void IService.Stop() { }
 
-    public void DownloadHeader(string url, Action<Result, ulong> callback) {
-        var request = UnityWebRequest.Head(url);
-        request.SendWebRequest().completed += _ => {
-            if (request.result != Result.Success) {
-                Logger.TraceErrorExpensive($"Already ResponseCode || {request.responseCode}");
-                return;
-            }
-            
-            Logger.TraceLog(request.GetResponseHeaders().ToStringCollection(x => $"{x.Key} | {x.Value}", '\n'));
-            if (ulong.TryParse(request.GetResponseHeader(HttpResponseHeader.ContentLength.GetName()), out var length)) {
-                callback?.Invoke(request.result, length);
-            }
-        };
-    }
-
     public UnityWebRequestAsyncOperation DownloadHeader(string url, Action<Result, UnityWebRequest> callback = null) {
         var operation = UnityWebRequest.Head(url).SendWebRequest();
         operation.completed += _ => {
@@ -38,6 +23,13 @@ public class DownloadService : IService {
         };
 
         return operation;
+    }
+
+    [TestRequired]
+    public async Task<Header> DownloadHeaderAsync(string url) {
+        var operation = UnityWebRequest.Head(url).SendWebRequest();
+        await operation;
+        return operation.webRequest.result != Result.Success ? throw new InvalidOperationException($"{operation.webRequest.result} || {operation.webRequest.error}") : new Header(operation);
     }
 
     public UnityWebRequestAsyncOperation Download(string url, Action<Result, byte[]> callback) => Download<DownloadHandler>(CreateGet(url), (result, handler) => callback?.Invoke(result, result != Result.Success ? Array.Empty<byte>() : handler.data));
@@ -74,31 +66,29 @@ public class DownloadService : IService {
         return operation;
     }
     
-    public UnityWebRequestAsyncOperation Download<THandler>(THandler handler) where THandler : DownloadHandler, IDownloadHandlerModule => Download<THandler>(handler.CreateWebRequest());
-    public UnityWebRequestAsyncOperation Download<THandler>(string url, THandler handler) where THandler : DownloadHandler => Download<THandler>(CreateGet(url, handler));
-    public UnityWebRequestAsyncOperation Download<THandler>(UnityWebRequest request) where THandler : DownloadHandler => request.SendWebRequest();
+    public UnityWebRequestAsyncOperation Download<THandler>(THandler handler) where THandler : DownloadHandler, IDownloadHandlerModule => handler.CreateWebRequest().SendWebRequest();
+    public UnityWebRequestAsyncOperation Download<THandler>(string url, THandler handler) where THandler : DownloadHandler => CreateGet(url, handler).SendWebRequest();
     
-    public Task<THandler> DownloadAsync<THandler>(THandler handler) where THandler : DownloadHandler, IDownloadHandlerModule => DownloadAsync<THandler>(handler.CreateWebRequest());
-    public Task<THandler> DownloadAsync<THandler, TReturn>(THandler handler) where THandler : DownloadHandlerModule<TReturn> => DownloadAsync<THandler>(handler.CreateWebRequest());
-    public Task<THandler> DownloadAsync<THandler>(string url, THandler handler) where THandler : DownloadHandler => DownloadAsync<THandler>(new UnityWebRequest(url, "GET", handler, null));
-
-    public Task<THandler> DownloadAsync<THandler>(UnityWebRequest request) where THandler : DownloadHandler {
-        var completionSource = new TaskCompletionSource<THandler>();
-        request.SendWebRequest().completed += _ => {
-            if (request.downloadHandler is THandler handler) {
-                completionSource.SetResult(handler);
-            } else {
-                completionSource.SetResult(null);
-                completionSource.SetCanceled();
-            }
-        };
-
-        return completionSource.Task;
+    public async Task<THandler> DownloadAsync<THandler>(THandler handler) where THandler : DownloadHandler, IDownloadHandlerModule => await DownloadAsync<THandler>(handler.CreateWebRequest());
+    public async Task<THandler> DownloadAsync<THandler, TReturn>(THandler handler) where THandler : DownloadHandlerModule<TReturn> => await DownloadAsync<THandler>(handler.CreateWebRequest());
+    public async Task<THandler> DownloadAsync<THandler>(string url, THandler handler) where THandler : DownloadHandler => await DownloadAsync<THandler>(new UnityWebRequest(url, "GET", handler, null));
+    
+    public async Task<THandler> DownloadAsync<THandler>(UnityWebRequest request) where THandler : DownloadHandler {
+        var operation = request.SendWebRequest();
+        await operation;
+        return operation.webRequest.result != Result.Success ? throw new InvalidOperationException($"{operation.webRequest.result} || {operation.webRequest.error}") : operation.webRequest.downloadHandler as THandler;
     }
 
     #region [Texture]
     
     public void DownloadTexture(string url, Action<Result, Texture> callback) => Download(url, new DownloadHandlerTexture(false), (result, handler) => callback?.Invoke(result, handler.texture));
+
+    public async Task<Texture2D> DownloadTextureAsync(string url) {
+        var handler = new DownloadHandlerTexture(false);
+        var operation = Download(url, handler);
+        await operation;
+        return operation.webRequest.result == Result.Success ? handler.texture : throw new InvalidOperationException($"{operation.webRequest.result} || {operation.webRequest.error}");
+    }
     
     #endregion
     
@@ -119,7 +109,7 @@ public class DownloadService : IService {
             }
 #if UNITY_EDITOR
             else if (request.responseCode == 0) {
-                Logger.TraceLog($"Resource was obtained through the caching system.", Color.magenta);
+                Logger.TraceLog("Resource was obtained through the caching system.", Color.magenta);
             } 
 #endif
             else {
@@ -153,10 +143,22 @@ public class DownloadService : IService {
         return completionSource.Task;
     }
     
+    
     #endregion
     
     public UnityWebRequest CreateGet(string url) => UnityWebRequest.Get(url);
     public UnityWebRequest CreateGet(string url, DownloadHandler handler) => new(url, HttpMethod.Get.Method, handler, null);
 
     public DownloadHandlerAssetBundle CreateDownloadHandlerAssetBundle(string url, Hash128? hash, uint crc = 0) => hash.HasValue ? new DownloadHandlerAssetBundle(url, hash.Value, crc) : new DownloadHandlerAssetBundle(url, crc);
+}
+
+public struct Header {
+
+    public ulong contentLength;
+    public string contentType;
+
+    public Header(UnityWebRequestAsyncOperation operation) {
+        contentLength = operation.GetContentLength();
+        contentType = operation.webRequest.GetResponseHeader(HttpResponseHeader.ContentType.GetName());
+    }
 }

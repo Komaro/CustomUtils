@@ -2,30 +2,24 @@
 using System.Collections;
 using System.Threading.Tasks;
 
-public interface IAsyncCustomOperation : IEnumerator, IProgress<float> {
-    
-    public bool IsDone { get; }
-    public bool IsCanceled { get; }
-    public bool IsFailed { get; }
-    
-    public void Init();
-    public void Done();
-    
-    public Task ToTask();
-    public IEnumerator ToCoroutine();
-}
+public class AsyncCustomOperation : IEnumerator, IProgress<float> {
 
-public class AsyncCustomOperation : IAsyncCustomOperation {
+    public virtual bool IsDone => Status != OperationStatus.NONE;
+    
+    public OperationStatus Status { get; protected set; }
 
-    public virtual bool IsDone => Progress >= 1;
-    public virtual bool IsCanceled => false;
-    public virtual bool IsFailed => false;
+    public virtual bool Success => Status == OperationStatus.SUCCESS;
+    public virtual bool Canceled => Status == OperationStatus.CANCELED;
+    public virtual bool Failed => Status == OperationStatus.FAILED;
+    public virtual bool Excepted => Status == OperationStatus.EXCEPTION;
 
     public virtual float Progress { get; protected set; }
     public virtual string ProgressDisplay => ((int)Progress).ToString();
 
     public virtual float Percentage => Progress * 100f;
     public virtual string PercentageDisplay => ((int)Percentage).ToString();
+    
+    public Exception[] Exceptions { get; protected set; }
 
     public delegate void CompleteHandler(AsyncCustomOperation operation);
 
@@ -46,7 +40,11 @@ public class AsyncCustomOperation : IAsyncCustomOperation {
 
     public SafeDelegate<ProgressHandler> OnProgress;
 
-    public virtual void Init() => Progress = 0f;
+    public virtual void Init() {
+        Progress = 0f;
+        Status = OperationStatus.NONE;
+    }
+
     public virtual void Done() => Report(1f);
 
     public virtual void Clear() {
@@ -66,6 +64,7 @@ public class AsyncCustomOperation : IAsyncCustomOperation {
         Progress = value;
 
         if (IsDone) {
+            Status = OperationStatus.SUCCESS;
             onComplete.Handler?.Invoke(this);
         }
     }
@@ -78,21 +77,38 @@ public class AsyncCustomOperation : IAsyncCustomOperation {
         Report(value / (float)totalValue);
     }
 
+    public virtual void Cancel() => Status = OperationStatus.CANCELED;
+    public virtual void Fail() => Status = OperationStatus.FAILED;
+
+    public virtual void Exception(params Exception[] exceptions) {
+        Status = OperationStatus.EXCEPTION;
+        Exceptions = exceptions;
+    }
+    
     public virtual Task ToTask() {
         var completionSource = new TaskCompletionSource<bool>();
         if (IsDone) {
-            completionSource.SetResult(true);
+            CompleteTaskFromStatus(this, completionSource);
         } else {
-            onComplete += operation => {
-                if (operation.IsCanceled) {
-                    completionSource.SetCanceled();
-                } else {
-                    completionSource.TrySetResult(true);
-                }
-            };
+            onComplete += operation => CompleteTaskFromStatus(operation, completionSource);
         }
         
         return completionSource.Task;
+    }
+
+    protected virtual void CompleteTaskFromStatus(AsyncCustomOperation operation, TaskCompletionSource<bool> completionSource) {
+        switch (operation.Status) {
+            case OperationStatus.CANCELED:
+            case OperationStatus.FAILED:
+                completionSource.TrySetCanceled();
+                break;
+            case OperationStatus.EXCEPTION:
+                completionSource.TrySetException(operation.Exceptions);
+                break;
+            default:
+                completionSource.TrySetResult(true);
+                break;
+        }
     }
 
     public virtual IEnumerator ToCoroutine() {
@@ -128,26 +144,18 @@ public class AsyncCustomOperation<TValue> : AsyncCustomOperation {
         protected set => _result = value;
     }
 
-    public override void Report(float value) {
-        if (IsDone) {
-            return;
-        }
-
-        if (value > Progress) {
-            OnProgress.Handler?.Invoke(Progress);
-        }
-
-        Progress = value;
-
-        if (IsDone) {
-            onComplete.Handler?.Invoke(this);
-        }
-    }
-
     public void Complete(TValue result) {
         Result = result;
         if (IsDone == false) {
             Done();
         }
     }
+}
+
+public enum OperationStatus {
+    NONE,
+    SUCCESS,
+    CANCELED,
+    FAILED,
+    EXCEPTION,
 }

@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Buffers;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
 
@@ -20,19 +15,87 @@ public static class SystemUtil {
     
     private const string WINDOWS_CMD = "cmd.exe";
 
-    public static void UnZip(string zipPath, string destinationDirectory = "", bool overwriteFiles = true, bool removeZip = false) {
+    public static void Zip(string zipPath, string destinationPath, string searchPattern = "*.*", SearchOption option = SearchOption.AllDirectories) {
+        try {
+            zipPath.ThrowIfNull(nameof(zipPath));
+            if (Directory.Exists(zipPath) == false) {
+                throw new DirectoryNotFoundException($"{nameof(zipPath)} is missing. Check {nameof(zipPath)} || {zipPath}");
+            }
+
+            if (string.IsNullOrEmpty(destinationPath) || Path.HasExtension(destinationPath) == false) {
+                destinationPath = zipPath;
+            }
+
+            destinationPath.AutoSwitchExtension(Constants.Extension.ZIP);
+
+            var isUpdate = File.Exists(destinationPath);
+            using var zipArchive = ZipFile.Open(destinationPath, isUpdate ? ZipArchiveMode.Update : ZipArchiveMode.Create);
+            foreach (var fileInfo in new DirectoryInfo(zipPath).EnumerateFiles(searchPattern, option)) {
+                var bytes = File.ReadAllBytes(fileInfo.FullName);
+                if (bytes == Array.Empty<byte>()) {
+                    throw new NullReferenceException<byte[]>(nameof(bytes));
+                }
+
+                var fileRelativePath = fileInfo.FullName[(zipPath.Length + 1)..];
+                if (isUpdate) {
+                    zipArchive.GetEntry(fileRelativePath)?.Delete();
+                }
+                
+                using var stream = zipArchive.CreateEntry(fileRelativePath).Open();
+                stream.Write(bytes);
+            }
+        } catch (Exception ex) {
+            Logger.TraceError(ex);
+        }
+    }
+    
+    public static async Task ZipAsync(string zipPath, string destinationPath, string searchPattern = "*.*", SearchOption option = SearchOption.AllDirectories) {
+        try {
+            zipPath.ThrowIfNull(nameof(zipPath));
+            if (Directory.Exists(zipPath) == false) {
+                throw new DirectoryNotFoundException($"{nameof(zipPath)} is missing. Check {nameof(zipPath)} || {zipPath}");
+            }
+
+            if (string.IsNullOrEmpty(destinationPath) || Path.HasExtension(destinationPath) == false) {
+                destinationPath = zipPath;
+            }
+
+            destinationPath.AutoSwitchExtension(Constants.Extension.ZIP);
+
+            var isUpdate = File.Exists(destinationPath);
+            using var zipArchive = ZipFile.Open(destinationPath, isUpdate ? ZipArchiveMode.Update : ZipArchiveMode.Create);
+            foreach (var fileInfo in new DirectoryInfo(zipPath).EnumerateFiles(searchPattern, option)) {
+                var bytes = await IOUtil.ReadBytesAsync(fileInfo.FullName);
+                if (bytes == Array.Empty<byte>()) {
+                    throw new NullReferenceException<byte[]>(nameof(bytes));
+                }
+
+                var fileRelativePath = fileInfo.FullName[(zipPath.Length + 1)..];
+                if (isUpdate) {
+                    zipArchive.GetEntry(fileRelativePath)?.Delete();
+                }
+                
+                await using var stream = zipArchive.CreateEntry(fileRelativePath).Open();
+                await stream.WriteAsync(bytes, 0, bytes.Length);
+            }
+        } catch (Exception ex) {
+            Logger.TraceError(ex);
+        }
+    }
+    
+    public static void UnZip(string zipPath, string destinationPath = "", bool overwriteFiles = true, bool removeZip = false) {
         try {
             zipPath.ThrowIfNull(nameof(zipPath));
             if (File.Exists(zipPath) == false) {
                 throw new FileNotFoundException($"{nameof(zipPath)} is missing. Check {nameof(zipPath)} || {zipPath}");
             }
 
-            if (string.IsNullOrEmpty(destinationDirectory) || Directory.Exists(destinationDirectory) == false) {
-                destinationDirectory = Path.GetDirectoryName(zipPath);
+            if (string.IsNullOrEmpty(destinationPath) || Directory.Exists(destinationPath) == false) {
+                destinationPath = Path.GetDirectoryName(zipPath);
             }
 
-            if (Directory.Exists(destinationDirectory) == false) {
-                throw new DirectoryNotFoundException($"{nameof(destinationDirectory)} is missing. Check {nameof(destinationDirectory)} || {destinationDirectory}");
+            if (Directory.Exists(destinationPath) == false) {
+                throw new DirectoryNotFoundException($"{nameof(destinationPath)} is missing. Check {nameof(destinationPath)} || {destinationPath}");
             }
 
             using (var zipArchive = ZipFile.Open(zipPath, ZipArchiveMode.Read)) {
@@ -41,8 +104,8 @@ public static class SystemUtil {
                     return;
                 }
                 
-                zipArchive.ExtractToDirectory(destinationDirectory, overwriteFiles);
-                Logger.TraceLog($"Unzip || {zipPath} to {destinationDirectory}", Color.green);
+                zipArchive.ExtractToDirectory(destinationPath, overwriteFiles);
+                Logger.TraceLog($"Unzip || {zipPath} to {destinationPath}", Color.green);
             }
             
             if (removeZip) {
@@ -252,140 +315,8 @@ public static class SystemUtil {
             Logger.TraceError(ex);
         }
     }
-    
-    public static bool TryReadAllText(string path, out string text) {
-        try {
-            if (File.Exists(path)) {
-                text = File.ReadAllText(path);
-                return true;
-            }
-        } catch (Exception ex) {
-            Logger.TraceError(ex);
-        }
 
-        text = string.Empty;
-        return false;
-    }
 
-    public static bool TryWriteAllText(string path, string text, out FileInfo info) {
-        try {
-            return (info = WriteAllText(path, text)) != null;
-        } catch (Exception) {
-            info = null;
-            return false;
-        }
-    }
-
-    public static FileInfo WriteAllText(string path, string text) {
-        text.ThrowIfNull(nameof(text));
-        try {
-            EnsureDirectoryExists(path);
-            File.WriteAllText(path, text);
-            return new FileInfo(path);
-        } catch (Exception ex) {
-            Logger.TraceError(ex);
-        }
-
-        return null;
-    }
-
-    public static bool TryReadAllBytes(string path, out byte[] bytes) {
-        try {
-            if (File.Exists(path)) {
-                bytes = File.ReadAllBytes(path);
-                return bytes is { Length: > 0 };
-            }
-        } catch (Exception ex) {
-            Logger.TraceError(ex);
-        }
-
-        bytes = Array.Empty<byte>();
-        return false;
-    }
-    
-    public static async Task<IEnumerable<byte[]>> ReadAllBytesParallelAsync(IEnumerable<string> paths, int bufferSize = 65536, CancellationToken token = default) {
-        var bytesList = new List<byte[]>(); 
-        using var semaphore = new SemaphoreSlim(Environment.ProcessorCount / 2);
-        foreach (var path in paths) {
-            await semaphore.WaitAsync(token);
-            var bytes = await Task.Run(async () => {
-                try {
-                    return await ReadBytesAsync(path, bufferSize, token);
-                } catch (Exception ex) {
-                    Logger.TraceError(ex);
-                    return Array.Empty<byte>();
-                } finally {
-                    semaphore.Release();
-                }
-            }, token);
-
-            lock (bytesList) {
-                if (bytes.Length > 0) {
-                    bytesList.Add(bytes);
-                }
-            }
-        }
-
-        return bytesList;
-    }
-
-    public static async IAsyncEnumerable<byte[]> ReadAllBytesAsync(IEnumerable<string> paths, int bufferSize = 65536, [EnumeratorCancellation] CancellationToken token = default) {
-        foreach (var task in paths.Select(async path => await ReadBytesAsync(path, bufferSize, token))) {
-            yield return await task;
-        }
-    }
-
-    public static async Task<byte[]> ReadBytesAsync(string path, int bufferSize = 65536, CancellationToken token = default) {
-        if (File.Exists(path)) {
-            await using var fileStream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.None);
-            await using var memoryStream = new MemoryStream();
-            
-            int readByte;
-            var memory = MemoryPool<byte>.Shared.Rent(bufferSize).Memory;
-            while ((readByte = await fileStream.ReadAsync(memory, token)) > 0) {
-                await memoryStream.WriteAsync(memory[..readByte], token);
-            }
-
-            return memoryStream.GetBuffer();
-        }
-
-        return Array.Empty<byte>();
-    }
-
-    public static bool TryWriteAllBytes(string path, byte[] bytes, out FileInfo info) => (info = WriteAllBytes(path, bytes)) != null;
-
-    public static FileInfo WriteAllBytes(string path, byte[] bytes) {
-        if (bytes == null) {
-            return null;
-        }
-        
-        try {
-            EnsureDirectoryExists(Directory.GetParent(path)?.FullName);
-            File.WriteAllBytes(path, bytes);
-            return new FileInfo(path);
-        } catch (Exception ex) {
-            Logger.TraceError(ex);
-        }
-
-        return null;
-    }
-
-    public static void CopyAllFiles(string sourceFolder, string targetFolder, params string[] suffixes) {
-        if (Directory.Exists(sourceFolder) && Directory.Exists(targetFolder)) {
-            Logger.TraceLog($"Copy Files || {sourceFolder} => {targetFolder}\n{nameof(suffixes)} || {suffixes.ToStringCollection(", ")}", Color.green);
-            var filePaths = Directory.GetFiles(sourceFolder);
-            if (filePaths.Length > 0) {
-                foreach (var filePath in filePaths) {
-                    if (suffixes.Length > 0 && suffixes.Any(suffix => filePath.EndsWith(suffix)) == false) {
-                        continue;
-                    }
-                    
-                    File.Copy(filePath, Path.Combine(targetFolder, Path.GetFileName(filePath)));
-                }
-            }
-        }
-    }
-    
     #region [Create Instance]
 
     public static bool TryCreateInstance<T>(out T instance) where T : class {

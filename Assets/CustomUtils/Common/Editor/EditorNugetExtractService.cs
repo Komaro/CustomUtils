@@ -230,7 +230,7 @@ public class EditorNugetExtractService : EditorService {
         var extractFiles = Directory.GetFiles(extractPath);
         if (extractFiles.Length > 0) {
             EditorCommon.ShowCheckDialogue("DLL 추출 완료", $"DLL 파일 임시 추출을 완료했습니다.\n확인시 추출 파일을 Plugins 폴더로 복사하고 임시 파일을 삭제합니다. 취소시에는 복사 없이 임시 파일만 삭제합니다.\n{extractFiles.ToStringCollection(Path.GetFileName, '\n')}", ok: () => {
-                SystemUtil.CopyAllFiles(extractPath, Constants.Path.PLUGINS_FULL_PATH);
+                IOUtil.CopyAllFiles(extractPath, Constants.Path.PLUGINS_FULL_PATH);
                 SystemUtil.DeleteDirectory(extractPath);
                 AssetDatabase.Refresh();
             }, cancel:() => SystemUtil.DeleteDirectory(extractPath));

@@ -4,7 +4,7 @@ using Unity.PerformanceTesting;
 using UnityEngine;
 
 [Category(TestConstants.Category.SERVICE)]
-public class ObjectPoolServiceTestRunner {
+public class GameObjectPoolServiceTestRunner {
     
     private const string TEST_PREFAB = "TestPrefab";
     private const string TEST_PREFAB_1 = "TestPrefab_1";

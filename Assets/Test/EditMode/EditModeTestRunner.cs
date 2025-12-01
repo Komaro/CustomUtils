@@ -120,7 +120,7 @@ public class EditModeTestRunner {
     [TestCase(10000)]
     [TestCase(20000)]
     [Performance]
-    public void NewPerformanceTest(int count) {
+    public void NewListPerformanceTest(int count) {
         var newListGroup = new SampleGroup("New_List_Group", SampleUnit.Microsecond);
         var enumeratorGroup = new SampleGroup("Enumerator_Group", SampleUnit.Microsecond);
 
@@ -136,7 +136,9 @@ public class EditModeTestRunner {
         }).WarmupCount(1).MeasurementCount(10).IterationsPerMeasurement(10).SampleGroup(newListGroup).GC().Run();
         
         Measure.Method(() => {
-            _ = GetLists(list, value).ToList();
+            foreach (var item in GetLists(list, value)) {
+                _ = item;
+            }
         }).WarmupCount(1).MeasurementCount(10).IterationsPerMeasurement(10).SampleGroup(enumeratorGroup).GC().Run();
 
         List<int> GetList(List<int> list, int value) {
@@ -214,20 +216,26 @@ public class EditModeTestRunner {
     [Test]
     [Performance]
     public void UnsafePerformanceTest() {
-        var unsafeGroup = new SampleGroup("Unsafe");
-        var covertGroup = new SampleGroup("Convert");
-        var duplicateCastGroup = new SampleGroup("DuplicateCast");
-        var enumToIntLambdaGroup = new SampleGroup("LambdaExpressEnumToInt");
-        var intToEnumLambdaGroup = new SampleGroup("LambdaExpressIntToEnum");
+        var unsafeGroup = new SampleGroup("Unsafe", SampleUnit.Microsecond);
+        var covertGroup = new SampleGroup("Convert", SampleUnit.Microsecond);
+        
+        var duplicateCastGroup = new SampleGroup("DuplicateCast", SampleUnit.Microsecond);
+        var enumToIntLambdaGroup = new SampleGroup("LambdaExpressEnumToInt", SampleUnit.Microsecond);
+        
+        var intToEnumCastGroup = new SampleGroup("ConvertIntToEnum", SampleUnit.Microsecond);
+        var intToEnumLambdaGroup = new SampleGroup("LambdaExpressIntToEnum", SampleUnit.Microsecond);
 
-        var test = ExpressionProvider.GetIntToEnumFunc<TCP_BODY>().Invoke(102);
+        var test = ExpressionProvider.GetIntToEnumFunc<TCP_BODY>().Invoke(50);
         Logger.TraceLog(test.ToString());
 
-        Measure.Method(() => TCP_BODY.TEST_REQUEST.ToIntUnsafe()).MeasurementCount(20).IterationsPerMeasurement(5000).SampleGroup(unsafeGroup).Run();
-        Measure.Method(() => _ = EnumUtil.Convert(TCP_BODY.TEST_REQUEST)).MeasurementCount(20).IterationsPerMeasurement(5000).SampleGroup(covertGroup).Run();
-        Measure.Method(() => _ = (int)(object)TCP_BODY.TEST_REQUEST).MeasurementCount(20).IterationsPerMeasurement(5000).SampleGroup(duplicateCastGroup).Run();
-        Measure.Method(() => _ = ExpressionProvider.GetEnumToIntFun<TCP_BODY>().Invoke(TCP_BODY.TEST_REQUEST)).MeasurementCount(20).IterationsPerMeasurement(5000).SampleGroup(enumToIntLambdaGroup).Run();
-        Measure.Method(() => _ = ExpressionProvider.GetIntToEnumFunc<TCP_BODY>().Invoke(102)).MeasurementCount(20).IterationsPerMeasurement(5000).SampleGroup(intToEnumLambdaGroup).Run();
+        Measure.Method(() => TCP_BODY.TEST_REQUEST.ToIntUnsafe()).WarmupCount(2).MeasurementCount(20).IterationsPerMeasurement(5000).SampleGroup(unsafeGroup).Run();
+        Measure.Method(() => _ = EnumUtil.Convert(TCP_BODY.TEST_REQUEST)).WarmupCount(2).MeasurementCount(20).IterationsPerMeasurement(5000).SampleGroup(covertGroup).Run();
+        
+        Measure.Method(() => _ = (int)(object)TCP_BODY.TEST_REQUEST).WarmupCount(2).MeasurementCount(20).IterationsPerMeasurement(5000).SampleGroup(duplicateCastGroup).Run();
+        Measure.Method(() => _ = ExpressionProvider.GetEnumToIntFun<TCP_BODY>().Invoke(TCP_BODY.TEST_REQUEST)).WarmupCount(2).MeasurementCount(20).IterationsPerMeasurement(5000).SampleGroup(enumToIntLambdaGroup).Run();
+        
+        Measure.Method(() => _ = EnumUtil.Convert<TCP_BODY>(50)).WarmupCount(2).MeasurementCount(20).IterationsPerMeasurement(5000).SampleGroup(intToEnumCastGroup).Run();
+        Measure.Method(() => _ = ExpressionProvider.GetIntToEnumFunc<TCP_BODY>().Invoke(50)).WarmupCount(2).MeasurementCount(20).IterationsPerMeasurement(5000).SampleGroup(intToEnumLambdaGroup).Run();
     }
     
     [Test]

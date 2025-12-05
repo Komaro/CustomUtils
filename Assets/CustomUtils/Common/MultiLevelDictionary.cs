@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using System.Runtime.CompilerServices;
 
 public abstract class MultiLayerDictionary<TDictionary, TCollection, TKey, TValue> : IDictionary<TKey, TCollection> 
@@ -12,8 +11,8 @@ public abstract class MultiLayerDictionary<TDictionary, TCollection, TKey, TValu
 
     protected TDictionary dictionary;
     
-    private readonly bool KEY_IS_CLASS = typeof(TKey).IsClass;
-    private readonly bool VALUE_IS_CLASS = typeof(TValue).IsClass;
+    protected readonly bool KEY_IS_CLASS = typeof(TKey).IsClass;
+    protected readonly bool VALUE_IS_CLASS = typeof(TValue).IsClass;
 
     protected MultiLayerDictionary() => dictionary = new TDictionary();
 
@@ -134,19 +133,144 @@ public abstract class MultiLayerDictionary<TDictionary, TCollection, TKey, TValu
     #endregion
 }
 
-public abstract class NewMultiLevelDictionary<TDictionary, TIDictionary, TKey, TIKey, TValue> : MultiLayerDictionary<TDictionary, TIDictionary, TKey, KeyValuePair<TIKey, TValue>>
+public abstract class MultiLayerDictionary<TDictionary, TIDictionary, TKey, TIKey, TValue> : MultiLayerDictionary<TDictionary, TIDictionary, TKey, KeyValuePair<TIKey, TValue>>
     where TDictionary : IDictionary<TKey, TIDictionary>, new()
     where TIDictionary : IDictionary<TIKey, TValue>, new() {
     
     protected readonly bool INNER_KEY_IS_CLASS = typeof(TIKey).IsClass;
     
+    public MultiLayerDictionary(TDictionary dictionary) : base(dictionary) { }
+    public MultiLayerDictionary(params KeyValuePair<TKey, TIDictionary>[] pairs) : base(pairs) { }
+    public MultiLayerDictionary(IEnumerable<KeyValuePair<TKey, TIDictionary>> enumerable) : base(enumerable) { }
     
+    public virtual TValue this[TKey outKey, TIKey innerKey] {
+        get => dictionary[outKey][innerKey];
+        set => Add(outKey, innerKey, value);
+    }
+    
+    public virtual void Add(TKey key, TIKey innerKey, TValue value) {
+        ValidateOrThrowKeyValue(ref key, ref innerKey, ref value);
+        if (dictionary.TryGetValue(key, out var innerDic) == false) {
+            dictionary.Add(key, innerDic = new TIDictionary());
+        }
+        
+        innerDic.Add(innerKey, value);
+    }
+    
+    public bool ContainsKey(TKey key, TIKey innerKey) => dictionary.TryGetValue(key, out var innerDic) && innerDic.ContainsKey(innerKey);
+
+    public virtual void Remove(TKey key, TIKey innerKey) {
+        if (dictionary.TryGetValue(key, out var innerDic)) {
+            innerDic.Remove(innerKey);
+        }
+    }
+
+    public bool TryGetValue(TKey key, TIKey innerKey, out TValue value) {
+        if (dictionary.TryGetValue(key, out var innerDic) && innerDic.TryGetValue(innerKey, out value)) {
+            return true;
+        }
+
+        value = default;
+        return false;
+    }
+
+
+    #region [ValidateOrThrow]
+    
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    protected void ValidateOrThrowKeyValue(ref TKey outKey, ref TIKey innerKey, ref TValue value) {
+        if (KEY_IS_CLASS && outKey == null) {
+            throw new NullReferenceException($"{nameof(outKey)} is null");
+        }
+
+        if (INNER_KEY_IS_CLASS && innerKey == null) {
+            throw new NullReferenceException($"{nameof(innerKey)} is null");
+        }
+
+        if (VALUE_IS_CLASS && value == null) {
+            throw new NullReferenceException($"{nameof(value)} is null");
+        }
+    }
+    
+    #endregion
 }
 
-public class NewMultiLevelDictionary<TKey, TIKey, TValue> : NewMultiLevelDictionary<Dictionary<TKey, Dictionary<TIKey, TValue>>, Dictionary<TIKey, TValue>, TKey, TIKey, TValue> {
+[TestRequired]
+public class MultiLayerDictionary<TKey, TIKey, TValue> : MultiLayerDictionary<Dictionary<TKey, Dictionary<TIKey, TValue>>, Dictionary<TIKey, TValue>, TKey, TIKey, TValue> {
 
+    public MultiLayerDictionary(Dictionary<TKey, Dictionary<TIKey, TValue>> dictionary) : base(dictionary) { }
+    public MultiLayerDictionary(params KeyValuePair<TKey, Dictionary<TIKey, TValue>>[] pairs) : base(pairs) { }
+    public MultiLayerDictionary(IEnumerable<KeyValuePair<TKey, Dictionary<TIKey, TValue>>> enumerable) : base(enumerable) { }
 }
 
+[TestRequired]
+public class MultiLayerConcurrentDictionary<TKey, TIKey, TValue> : MultiLayerDictionary<ConcurrentDictionary<TKey, ConcurrentDictionary<TIKey, TValue>>, ConcurrentDictionary<TIKey, TValue>, TKey, TIKey, TValue> {
+    
+    public MultiLayerConcurrentDictionary(Dictionary<TKey, Dictionary<TIKey, TValue>> dictionary) {
+        foreach (var (key, value) in dictionary) {
+            this.dictionary.TryAdd(key, new ConcurrentDictionary<TIKey, TValue>(value));
+        }
+    }
+    
+    public MultiLayerConcurrentDictionary(ConcurrentDictionary<TKey, ConcurrentDictionary<TIKey, TValue>> dictionary) : base(dictionary) { }
+    public MultiLayerConcurrentDictionary(params KeyValuePair<TKey, ConcurrentDictionary<TIKey, TValue>>[] pairs) : base(pairs) { }
+    public MultiLayerConcurrentDictionary(IEnumerable<KeyValuePair<TKey, ConcurrentDictionary<TIKey, TValue>>> enumerable) : base(enumerable) { }
+}
+
+public abstract class ListDictionary<TDictionary, TList, TKey, TValue> : MultiLayerDictionary<TDictionary, TList, TKey, TValue> where TDictionary : IDictionary<TKey, TList>, new() where TList : IList<TValue>, ICollection<TValue>, new() {
+    
+    protected ListDictionary() { }
+    protected ListDictionary(TDictionary dictionary) : base(dictionary) { }
+    protected ListDictionary(params KeyValuePair<TKey, TList>[] pairs) : base(pairs) { }
+    protected ListDictionary(IEnumerable<KeyValuePair<TKey, TList>> enumerable) : base(enumerable) { }
+    
+    public virtual void Add(TKey key, TValue value) {
+        if (dictionary.TryGetValue(key, out var list) == false) {
+            dictionary.Add(key, list = new TList());
+        }
+        
+        list.Add(value);
+    }
+
+    public virtual bool TryGetValue(TKey key, int index, out TValue value) {
+        if (dictionary.TryGetValue(key, out var list) && list.IsValidIndex(index)) {
+            value = list[index];
+            return true;
+        }
+
+        value = default;
+        return false;
+    }
+
+    public virtual bool TryGetValue(out TValue value, TKey key, Predicate<TValue> predicate) {
+        predicate.ThrowIfNull(nameof(predicate));
+        if (dictionary.TryGetValue(key, out var list) && list.TryFirst(out value, predicate)) {
+            return true;
+        }
+
+        value = default;
+        return false;
+    }
+}
+
+public class ListDictionary<TKey, TValue> : ListDictionary<Dictionary<TKey, List<TValue>>, List<TValue>, TKey, TValue> {
+    
+    public ListDictionary() { }
+    public ListDictionary(Dictionary<TKey, List<TValue>> dictionary) : base(dictionary) { }
+    public ListDictionary(params KeyValuePair<TKey, List<TValue>>[] pairs) : base(pairs) { }
+    public ListDictionary(IEnumerable<KeyValuePair<TKey, List<TValue>>> enumerable) : base(enumerable) { }
+}
+
+
+
+
+
+
+
+
+
+// Legacy
+[Obsolete]
 public abstract class MultiLevelDictionary<TDictionary, TIDictionary, TKey, TIKey, TValue> : IDictionary<TKey, TIDictionary> 
     where TDictionary : IDictionary<TKey, TIDictionary>, new()
     where TIDictionary : IDictionary<TIKey, TValue>, new() {
@@ -312,6 +436,7 @@ public abstract class MultiLevelDictionary<TDictionary, TIDictionary, TKey, TIKe
     #endregion
 }
 
+[Obsolete]
 public class MultiLevelDictionary<TKey, TIKey, TValue> : MultiLevelDictionary<Dictionary<TKey, Dictionary<TIKey, TValue>>, Dictionary<TIKey, TValue>, TKey, TIKey, TValue> {
     
     public MultiLevelDictionary(Dictionary<TKey, Dictionary<TIKey, TValue>> dictionary) : base(dictionary) { }
@@ -319,6 +444,7 @@ public class MultiLevelDictionary<TKey, TIKey, TValue> : MultiLevelDictionary<Di
     public MultiLevelDictionary(IEnumerable<KeyValuePair<TKey, Dictionary<TIKey, TValue>>> enumerable) : base(enumerable) {    }
 }
 
+[Obsolete]
 public class ConcurrentMultiLevelDictionary<TKey, TIKey, TValue> : MultiLevelDictionary<ConcurrentDictionary<TKey, ConcurrentDictionary<TIKey, TValue>>, ConcurrentDictionary<TIKey, TValue>, TKey, TIKey, TValue> {
 
     public ConcurrentMultiLevelDictionary(Dictionary<TKey, Dictionary<TIKey, TValue>> dictionary) {

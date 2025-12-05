@@ -61,6 +61,52 @@ public class DictionaryTestRunner {
                 Assert.IsTrue(value == innerValue);
             }
         }
+        
+        var newMultiLevelDic = new MultiLayerDictionary<int, string, MultiLevelTestClass>(originDic);
+        Assert.NotNull(newMultiLevelDic);
+        foreach (var pair in originDic) {
+            Assert.IsTrue(newMultiLevelDic.TryGetValue(pair.Key, out var innerDic));
+            foreach (var (key, value) in pair.Value) {
+                Assert.IsTrue(innerDic.TryGetValue(key, out var innerValue));
+                Assert.IsTrue(value == innerValue);
+                Assert.IsTrue(value.testInt == innerValue.testInt);
+            }
+        }
+        
+        var newMultiLayerConcurrentDic = new MultiLayerConcurrentDictionary<int, string, MultiLevelTestClass>(originDic);
+        // TODO. Test Logic
+    }
+
+    [TestCase(10, 10)]
+    [TestCase(10, 50)]
+    public void ListDictionaryTest(int outCapacity, int innerCapacity) {
+        var originListDic = new Dictionary<int, List<MultiLevelTestClass>>();
+        for (var i = 0; i < outCapacity; i++) {
+            var outKey = RandomUtil.GetRandom(0, 100000);
+            originListDic.Add(outKey, new List<MultiLevelTestClass>());
+            for (var j = 0; j < innerCapacity; j++) {
+                originListDic[outKey].Add(new MultiLevelTestClass());
+            }
+        }
+        
+        var listDic = new ListDictionary<int, MultiLevelTestClass>(originListDic);
+        Assert.NotNull(listDic);
+        foreach (var pair in originListDic) {
+            Assert.IsTrue(listDic.TryGetValue(pair.Key, out var list));
+            Assert.IsTrue(list.SequenceEqual(pair.Value));
+        }
+
+        var randomInt = RandomUtil.GetRandom(1, 10000);
+        listDic.Add(randomInt, new MultiLevelTestClass());
+        Assert.IsTrue(listDic.TryGetValue(randomInt, out var randomList));
+        Assert.IsTrue(listDic.TryGetValue(randomInt, 0, out var randomClass));
+        Assert.IsTrue(listDic.TryGetValue(out randomClass, randomInt, value => value.testInt == randomClass.testInt));
+        
+        Assert.IsFalse(listDic.TryGetValue(randomInt - 1, out randomList));
+        Assert.IsFalse(listDic.TryGetValue(randomInt - 1, 0, out randomClass));
+        Assert.IsFalse(listDic.TryGetValue(randomInt - 1, 1, out randomClass));
+        Assert.IsFalse(listDic.TryGetValue(out randomClass, randomInt, value => value.testInt == 0));
+        Assert.IsFalse(listDic.TryGetValue(out randomClass, randomInt - 1, value => value.testInt == 0));
     }
 
     private class MultiLevelTestClass {

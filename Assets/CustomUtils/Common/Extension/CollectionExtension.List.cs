@@ -357,6 +357,12 @@ public static partial class CollectionExtension {
         return false;
     }
     
+    public static bool TryFind<T>(this List<T> list, Predicate<T> predicate, out T value) {
+        predicate.ThrowIfNull(nameof(predicate));
+        value = list.Find(predicate);
+        return value != null;
+    }
+    
     public static bool TryFirst<T>(this List<T> list, out T value, Predicate<T> match) => (value = list.Find(match)) != null;
     public static bool TryFindIndex<T>(this List<T> list, out int index, Predicate<T> match) => (index = list.FindIndex(match)) >= 0;
 

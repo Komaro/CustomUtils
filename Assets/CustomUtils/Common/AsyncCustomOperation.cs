@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
+// TODO. Need Awaiter
 public class AsyncCustomOperation : IEnumerator, IProgress<float> {
 
     public virtual bool IsDone => Status != OperationStatus.NONE;
@@ -150,6 +152,32 @@ public class AsyncCustomOperation<TValue> : AsyncCustomOperation {
             Done();
         }
     }
+
+    public new virtual Task<TValue> ToTask() {
+        var completionSource = new TaskCompletionSource<TValue>();
+        if (IsDone) {
+            CompleteTaskFromStatus(this, completionSource);
+        } else {
+            onComplete += operation => CompleteTaskFromStatus(operation as AsyncCustomOperation<TValue>, completionSource);
+        }
+        
+        return completionSource.Task;
+    }
+    
+    protected virtual void CompleteTaskFromStatus(AsyncCustomOperation<TValue> operation, TaskCompletionSource<TValue> completionSource) {
+        switch (operation.Status) {
+            case OperationStatus.CANCELED:
+            case OperationStatus.FAILED:
+                completionSource.TrySetCanceled();
+                break;
+            case OperationStatus.EXCEPTION:
+                completionSource.TrySetException(operation.Exceptions);
+                break;
+            default:
+                completionSource.TrySetResult(operation.Result);
+                break;
+        }
+    }
 }
 
 public enum OperationStatus {
@@ -158,4 +186,10 @@ public enum OperationStatus {
     CANCELED,
     FAILED,
     EXCEPTION,
+}
+
+public static class AsyncCustomOperationExtension {
+    
+    public static TaskAwaiter GetAwaiter(this AsyncCustomOperation operation) => operation.ToTask().GetAwaiter();
+    public static TaskAwaiter<T> GetAwaiter<T>(this AsyncCustomOperation<T> operation) => operation.ToTask().GetAwaiter();
 }

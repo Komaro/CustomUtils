@@ -13,6 +13,8 @@ public class GameObjectPoolService : IService {
 
     private bool _isServing = false;
 
+    bool IService.IsServing() => _isServing;
+
     void IService.Init() {
         _poolRoot = new GameObject("ObjectPoolService") {
             hideFlags = HideFlags.DontSave | HideFlags.NotEditable

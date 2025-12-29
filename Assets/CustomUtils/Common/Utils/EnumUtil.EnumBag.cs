@@ -50,7 +50,7 @@ public static partial class EnumUtil {
                 }
                 
                 _values = Enum.GetValues(type).ToArray<Enum>().OrderBy(enumValue => enumValue).ToImmutableArray();
-                _ignoreObsoleteValues = _values.Where(enumValue => type.TryGetFieldInfo(out var info, enumValue.ToString()) && info.IsDefined<ObsoleteAttribute>() == false)
+                _ignoreObsoleteValues = _values.Where(enumValue => type.TryGetFieldInfo(enumValue.ToString(), out var info) && info.IsDefined<ObsoleteAttribute>() == false)
                     .ToImmutableArray();
                 _stringToEnumDic = _values.ToImmutableDictionary(value => string.Intern(value.ToString()), value => value);
             }
@@ -77,7 +77,7 @@ public static partial class EnumUtil {
             _values = valuesSpan.ToImmutableArray(type => (TEnum) type);
 
             _values = valuesSpan.ToArray().ToArray<TEnum>().ToImmutableArray();
-            _ignoreObsoleteValues = _values.Where(enumValue => typeof(TEnum).TryGetFieldInfo(out var info, enumValue.ToString()) && info.IsDefined<ObsoleteAttribute>() == false).ToImmutableArray();
+            _ignoreObsoleteValues = _values.Where(enumValue => typeof(TEnum).TryGetFieldInfo(enumValue.ToString(), out var info) && info.IsDefined<ObsoleteAttribute>() == false).ToImmutableArray();
             _stringToEnumDic = _values.ToImmutableDictionary(value => string.Intern(value.ToString()), value => value);
         }
 

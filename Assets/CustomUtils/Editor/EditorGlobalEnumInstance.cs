@@ -19,14 +19,14 @@ public class EditorGlobalEnumInstance : PropertyDrawer {
         try {
             var obj = fieldInfo.GetValue(property.serializedObject.targetObject);
             if (obj != null) {
-                if (obj.GetType().TryGetFieldInfo(out var info, "_index", BindingFlags.NonPublic | BindingFlags.Instance)) {
+                if (obj.GetType().TryGetFieldInfo("_index", BindingFlags.NonPublic | BindingFlags.Instance, out var info)) {
                     if (info.GetValue(obj) is int index) {
                         _index = index;
                     }
                 }
             
                 foreach (var baseType in obj.GetType().GetBaseTypes()) {
-                    if (baseType == typeof(GlobalEnum) && baseType.TryGetFieldInfo(out info, "intToEnumDic", BindingFlags.NonPublic | BindingFlags.FlattenHierarchy | BindingFlags.Static)) {
+                    if (baseType == typeof(GlobalEnum) && baseType.TryGetFieldInfo("intToEnumDic", BindingFlags.NonPublic | BindingFlags.FlattenHierarchy | BindingFlags.Static, out info)) {
                         if (info.GetValue(obj) is Dictionary<Type, ImmutableDictionary<int, Enum>> intToEnumDic && intToEnumDic.TryGetValue(obj.GetType().GetGenericArguments().First(), out var enumDic)) {
                             _enumStrings = enumDic.Values.Select(enumValue => enumValue.GetType().GetAlias($"{enumValue.GetType()}.{enumValue}")).ToArray();
                             // _enumStrings = intToEnumDic.Values.SelectMany(pair => pair.Values).Select(enumValue => enumValue.GetType().GetAlias($"{enumValue.GetType()}.{enumValue}")).ToArray();
@@ -65,7 +65,7 @@ public class EditorGlobalEnumInstance : PropertyDrawer {
 
     public void SetIndex(SerializedProperty property, int index) {
         var obj = fieldInfo.GetValue(property.serializedObject.targetObject); 
-        if (obj != null && obj.GetType().TryGetFieldInfo(out var info, "_index", BindingFlags.NonPublic | BindingFlags.Instance)) {
+        if (obj != null && obj.GetType().TryGetFieldInfo("_index", BindingFlags.NonPublic | BindingFlags.Instance, out var info)) {
             info.SetValue(obj, index);
         }
     }

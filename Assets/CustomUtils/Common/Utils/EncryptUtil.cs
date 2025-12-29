@@ -215,6 +215,8 @@ public static class EncryptUtil {
                 return DecryptAES(cipherText, key);
             case ENCRYPT_TYPE.DES:
                 return DecryptDES(cipherText, key);
+            case ENCRYPT_TYPE.TRIPLE_DES:
+                return DecryptTripleDES(cipherText, key);
         }
 
         Logger.TraceLog($"{type} is Invalid {nameof(ENCRYPT_TYPE)}");
@@ -229,6 +231,8 @@ public static class EncryptUtil {
                 return DecryptAESBytes(bytes, key);
             case ENCRYPT_TYPE.DES:
                 return DecryptDESBytes(bytes, key);
+            case ENCRYPT_TYPE.TRIPLE_DES:
+                return DecryptTripleDESBytes(bytes, key);
         }
         
         Logger.TraceLog($"{type} is Invalid {nameof(ENCRYPT_TYPE)}");
@@ -245,7 +249,7 @@ public static class EncryptUtil {
         }
     }
 
-    private static byte[] TrimBytes(byte[] bytes, int byteLength) {
+    public static byte[] TrimBytes(byte[] bytes, int byteLength) {
         var trimBytes = new byte[byteLength];
         Array.Copy(bytes, trimBytes, Math.Min(byteLength, bytes.Length));
         return trimBytes;
@@ -255,6 +259,9 @@ public static class EncryptUtil {
 public enum ENCRYPT_TYPE {
     AES,
     DES,
-    SHA,
+    TRIPLE_DES,
+    SHA1,
+    SHA256,
+    SHA512,
     MD5,
 }

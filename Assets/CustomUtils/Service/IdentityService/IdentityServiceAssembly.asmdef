@@ -1,0 +1,17 @@
+{
+    "name": "IdentityServiceAssembly",
+    "rootNamespace": "",
+    "references": [
+        "GUID:cfb6063ef43c4c4da20a2093012689dc",
+        "GUID:0f665d077b1d4593830c5598782726bf"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

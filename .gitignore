@@ -62,3 +62,6 @@ sysinfo.txt
 crashlytics-build.propertie
 
 .fleet/
+
+# Mac OS Ignore
+.DS_Store

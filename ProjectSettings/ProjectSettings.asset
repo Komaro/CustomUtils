@@ -164,8 +164,8 @@ PlayerSettings:
   androidMinAspectRatio: 1
   applicationIdentifier:
     Android: com.kaka.CustomUtils
-    Standalone: com.DefaultCompany.CustomUtils
-    iPhone: com.DefaultCompany.CustomUtils
+    Standalone: com.kaka.CustomUtils
+    iPhone: com.kaka.CustomUtils
   buildNumber:
     Standalone: 0
     VisionOS: 0

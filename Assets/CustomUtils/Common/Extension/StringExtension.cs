@@ -10,11 +10,13 @@ public static class StringExtension {
 
     private static readonly TextInfo _textInfo = new CultureInfo("en-US", false).TextInfo;
 
+    // TODO. Need Modernize
     public static bool TryGetBetween(this string content, string startMatch, string endMatch, out string betweenText, StringComparison comp = StringComparison.Ordinal) {
         betweenText = content.GetBetween(startMatch, endMatch, comp);
         return string.IsNullOrEmpty(betweenText) == false;
     }
 
+    // TODO. Need Modernize
     public static string GetBetween(this string content, string startMatch, string endMatch, StringComparison comp = StringComparison.Ordinal) {
         if (content.Contains(startMatch) && content.Contains(endMatch)) {
             var startIndex = content.IndexOf(startMatch, comp) + startMatch.Length;
@@ -25,6 +27,22 @@ public static class StringExtension {
         return string.Empty;
     }
 
+    public static bool TryGetBetweenSpan(this string content, out ReadOnlySpan<char> span, string startMatch, string endMatch, StringComparison comp = StringComparison.Ordinal) => (span = content.GetBetweenSpan(startMatch, endMatch, comp)) != ReadOnlySpan<char>.Empty;
+    public static ReadOnlySpan<char> GetBetweenSpan(this string content, string startMatch, string endMatch, StringComparison comp = StringComparison.Ordinal) => content.TryIndexOfFirst(out var startIndex, startMatch, false, comp) && content.TryIndexOfFirst(out var endIndex, endMatch, false, comp) ? content.AsSpan(startIndex, endIndex - startIndex) : ReadOnlySpan<char>.Empty;
+
+    public static ReadOnlySpan<char> GetAfterSpan(this ReadOnlySpan<char> content, char matchChar, bool includeMatch = false) => content.TryIndexOf(out var index, matchChar, includeMatch) ? content[index..] : ReadOnlySpan<char>.Empty;
+    public static ReadOnlySpan<char> GetAfterSpanFirst(this ReadOnlySpan<char> content, char matchChar, bool includeMatch = false) => content.TryIndexOfFirst(out var index, matchChar, includeMatch) ? content[index..] : ReadOnlySpan<char>.Empty;
+
+    public static ReadOnlySpan<char> GetAfterSpan(this ReadOnlySpan<char> content, string matchContent, bool includeMatch = false) => content.TryIndexOf(out var index, matchContent, includeMatch) ? content[index..] : ReadOnlySpan<char>.Empty;
+    public static ReadOnlySpan<char> GetAfterSpanFirst(this ReadOnlySpan<char> content, string matchContent, bool includeMatch = false) => content.TryIndexOfFirst(out var index, matchContent, includeMatch) ? content[index..] : ReadOnlySpan<char>.Empty;
+    
+    public static ReadOnlySpan<char> GetBeforeSpan(this ReadOnlySpan<char> content, char matchChar, bool includeMatch = false) => content.TryIndexOf(out var index, matchChar, includeMatch) ? content[..index] : ReadOnlySpan<char>.Empty;
+    public static ReadOnlySpan<char> GetBeforeSpanFirst(this ReadOnlySpan<char> content, char matchChar, bool includeMatch = false) => content.TryIndexOfFirst(out var index, matchChar, includeMatch) ? content[..index] : ReadOnlySpan<char>.Empty;
+    
+    public static ReadOnlySpan<char> GetBeforeSpan(this ReadOnlySpan<char> content, string matchContent, bool includeMatch = false) => content.TryIndexOf(out var index, matchContent, includeMatch) ? content[..index] : ReadOnlySpan<char>.Empty;
+    public static ReadOnlySpan<char> GetBeforeSpanFirst(this ReadOnlySpan<char> content, string matchContent, bool includeMatch = false) => content.TryIndexOfFirst(out var index, matchContent, includeMatch) ? content[..index] : ReadOnlySpan<char>.Empty;
+    
+    
     public static ReadOnlySpan<char> GetAfterSpan(this string content, char matchChar, bool includeMatch = false) => content.TryIndexOf(out var index, matchChar, includeMatch) ? content.AsSpan(index) : ReadOnlySpan<char>.Empty;
     public static ReadOnlySpan<char> GetAfterSpanFirst(this string content, char matchChar, bool includeMatch = false) => content.TryIndexOfFirst(out var index, matchChar, includeMatch) ? content.AsSpan(index) : ReadOnlySpan<char>.Empty;
 
@@ -37,6 +55,7 @@ public static class StringExtension {
     public static ReadOnlySpan<char> GetBeforeSpan(this string content, string matchContent, bool includeMatch = false, StringComparison comp = StringComparison.Ordinal) => content.TryIndexOf(out var index, matchContent, includeMatch) ? content.AsSpan(0, index) : ReadOnlySpan<char>.Empty;
     public static ReadOnlySpan<char> GetBeforeSpanFirst(this string content, string matchContent, bool includeMatch = false, StringComparison comp = StringComparison.Ordinal) => content.TryIndexOfFirst(out var index, matchContent, includeMatch) ? content.AsSpan(0, index) : ReadOnlySpan<char>.Empty;
 
+    
     public static string GetAfter(this string content, char matchChar, bool includeMatch = false) => content.TryIndexOf(out var index, matchChar, includeMatch) ? content[index..] : string.Empty;
     public static string GetAfterFirst(this string content, char matchChar, bool includeMatch = false) => content.TryIndexOfFirst(out var index, matchChar, includeMatch) ? content[index..] : string.Empty;
 
@@ -87,14 +106,20 @@ public static class StringExtension {
     public static string GetColorString(this string content, Color color) => string.IsNullOrEmpty(content) == false ? $"<color=#{color.ToHex()}>{content}</color>" : content;
 
     public static bool WrappedIn(this string content, string matchContent, StringComparison comparison = StringComparison.Ordinal) => content.StartsWith(matchContent, comparison) && content.EndsWith(matchContent, comparison);
+    public static bool WrappedIn(this ReadOnlySpan<char> content, string matchContent, StringComparison comparison = StringComparison.Ordinal) => content.StartsWith(matchContent, comparison) && content.EndsWith(matchContent, comparison);
+    
     public static bool EqualsFast(this string content, string comparedString) => content.Equals(comparedString, StringComparison.Ordinal);
+    public static bool EqualsFast(this ReadOnlySpan<char> content, string comparedString) => content.Equals(comparedString, StringComparison.Ordinal);
+    
     public static bool ContainsFast(this string content, string containedContent) => content.Contains(containedContent, StringComparison.Ordinal);
+    public static bool ContainsFast(this ReadOnlySpan<char> content, string containedContent) => content.Contains(containedContent, StringComparison.Ordinal);
+
 
     public static string ToNoSpace(this string content) => content.Replace(" ", string.Empty);
 
     public static string GetFileNameFast(this string content) => content.Split('.')?[0];
     
-    public static string AutoSwitchExtension(this string content,  string extension) => content.ContainsExtension(extension) == false ? Path.ChangeExtension(content, extension.FixExtension()) : content;
+    public static string AutoSwitchExtension(this string content, string extension) => content.ContainsExtension(extension) == false ? Path.ChangeExtension(content, extension.FixExtension()) : content;
     public static string FixExtension(this string content) => content.IsExtension() == false ? content.Insert(0, ".") : content;
     public static bool ContainsExtension(this string content, string extension) => Path.HasExtension(content) && Path.GetExtension(content).EqualsFast(extension);
     public static bool IsExtension(this string content) => content.StartsWith('.');
@@ -107,6 +132,12 @@ public static class StringExtension {
     
     public static bool TryIndexOf(this string content, out int index, string matchContent, bool includeMatch = false, StringComparison comp = StringComparison.Ordinal) => (index = content.LastIndexOf(matchContent, comp) + (includeMatch ? 0 : matchContent.Length)) >= 0 && content.Length > index;
     public static bool TryIndexOfFirst(this string content, out int index, string matchContent, bool includeMatch = false, StringComparison comp = StringComparison.Ordinal) => (index = content.IndexOf(matchContent, comp) + (includeMatch ? 0 : matchContent.Length)) >= 0 && content.Length > index;
+
+    public static bool TryIndexOf(this ReadOnlySpan<char> content, out int index, char matchChar, bool includeMatch = false) => (index = content.LastIndexOf(matchChar) + (includeMatch ? 0 : 1)) >= 0 && content.Length > index;
+    public static bool TryIndexOfFirst(this ReadOnlySpan<char> content, out int index, char matchChar, bool includeMatch = false) => (index = content.IndexOf(matchChar) + (includeMatch ? 0 : 1)) >= 0 && content.Length > index;
+    
+    public static bool TryIndexOf(this ReadOnlySpan<char> content, out int index, string matchString, bool includeMatch = false) => (index = content.LastIndexOf(matchString) + (includeMatch ? 0 : 1)) >= 0 && content.Length > index;
+    public static bool TryIndexOfFirst(this ReadOnlySpan<char> content, out int index, string matchString, bool includeMatch = false) => (index = content.IndexOf(matchString) + (includeMatch ? 0 : 1)) >= 0 && content.Length > index;
 
     #region [ToString]
 

@@ -33,13 +33,7 @@ public class SampleCsvGameDBProvider : GameDBProvider {
         return false;
     }
 
-    public override List<TData> GetDataList<TData>() {
-        if (_dbDic.TryGetValue(typeof(TData), out var ob) && ob is SampleRawGameDB<TData> rawData) {
-            return rawData.data.ToList();
-        }
-
-        return new List<TData>();
-    }
+    public override IEnumerable<TData> GetData<TData>() => _dbDic.TryGetValue(typeof(TData), out var obj) && obj is SampleRawGameDB<TData> rawData ? rawData.data : Enumerable.Empty<TData>();
 
     public override void Clear() => _dbDic?.Clear();
 }

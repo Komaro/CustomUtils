@@ -39,7 +39,7 @@ public static class UIComponentExtension {
     }
 	
     public static bool TryFindTransform(this Transform transform, string objectName, out Transform findTransform) {
-        findTransform = transform.FindTransform(objectName);
+        findTransform = transform.Find(objectName);
         return findTransform != null;
     }
 	

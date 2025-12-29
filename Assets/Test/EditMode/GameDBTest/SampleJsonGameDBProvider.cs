@@ -38,13 +38,7 @@ public class SampleJsonGameDBProvider : GameDBProvider {
         return false;
     }
 
-    public override List<T> GetDataList<T>() {
-        if (dbDic.TryGetValue(typeof(T), out var obj) && obj is SampleRawGameDB<T> rawData) {
-            return rawData.data.ToList();
-        }
-
-        return new List<T>();
-    }
+    public override IEnumerable<TData> GetData<TData>() => dbDic.TryGetValue(typeof(TData), out var obj) && obj is SampleRawGameDB<TData> rawData ? rawData.data : Enumerable.Empty<TData>();
 
     public override void Clear() => dbDic.Clear();
 }

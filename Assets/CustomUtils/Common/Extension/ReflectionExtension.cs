@@ -15,14 +15,14 @@ public static class ReflectionExtension {
 
     #region [Info]
     
-    public static bool TryGetFieldInfo(this Type type, out FieldInfo info, string name) => (info = type.GetField(name)) != null;
-    public static bool TryGetFieldInfo(this Type type, out FieldInfo info, string name, BindingFlags bindingFlags) => (info = type.GetField(name, bindingFlags)) != null;
+    public static bool TryGetFieldInfo(this Type type, string name, out FieldInfo info) => (info = type.GetField(name)) != null;
+    public static bool TryGetFieldInfo(this Type type, string name, BindingFlags bindingFlags, out FieldInfo info) => (info = type.GetField(name, bindingFlags)) != null;
     
-    public static bool TryGetMethodInfo(this Type type, out MethodInfo info, string name) => (info = type.GetMethod(name)) != null;
-    public static bool TryGetMethodInfo(this Type type, out MethodInfo info, string name, BindingFlags bindingFlags) => (info = type.GetMethod(name, bindingFlags)) != null;
+    public static bool TryGetMethodInfo(this Type type, string name, out MethodInfo info) => (info = type.GetMethod(name)) != null;
+    public static bool TryGetMethodInfo(this Type type, string name, BindingFlags bindingFlags, out MethodInfo info) => (info = type.GetMethod(name, bindingFlags)) != null;
     
-    public static bool TryGetPropertyInfo(this Type type, out PropertyInfo info, string name) => (info = type.GetProperty(name)) != null;
-    public static bool TryGetPropertyInfo(this Type type, out PropertyInfo info, string name, BindingFlags bindingFlags) => (info = type.GetProperty(name, bindingFlags)) != null;
+    public static bool TryGetPropertyInfo(this Type type, string name, out PropertyInfo info) => (info = type.GetProperty(name)) != null;
+    public static bool TryGetPropertyInfo(this Type type, string name, BindingFlags bindingFlags, out PropertyInfo info) => (info = type.GetProperty(name, bindingFlags)) != null;
 
     public static bool TryGetGetGetMethod(this PropertyInfo propertyInfo, out MethodInfo methodInfo) => (methodInfo = propertyInfo.GetGetMethod()) != null;
     
@@ -39,14 +39,14 @@ public static class ReflectionExtension {
 
     public static object GetFieldValueFast(this Type type, object obj, string name) => DynamicMethodProvider.GetFieldValueFunc(type, name)?.Invoke(obj);
     
-    public static object GetFieldValue(this Type type, object obj, string name) => type.TryGetFieldInfo(out var info, name) ? info.GetValue(obj) : null;
-    public static object GetFieldValue(this Type type, object obj, string name, BindingFlags bindingFlags) => type.TryGetFieldInfo(out var info, name, bindingFlags) ? info.GetValue(obj) : null;
+    public static object GetFieldValue(this Type type, object obj, string name) => type.TryGetFieldInfo(name, out var info) ? info.GetValue(obj) : null;
+    public static object GetFieldValue(this Type type, object obj, string name, BindingFlags bindingFlags) => type.TryGetFieldInfo(name, bindingFlags, out var info) ? info.GetValue(obj) : null;
 
     public static bool TryGetPropertyValue(this Type type, out object value, object obj, string name) => (value = type.GetPropertyValue(obj, name)) != null;
     public static bool TryGetPropertyValue(this Type type, out object value, object obj, string name, BindingFlags bindingFlags) => (value = type.GetPropertyValue(obj, name, bindingFlags)) != null;
     
-    public static object GetPropertyValue(this Type type, object obj, string name) => type.TryGetPropertyInfo(out var info, name) ? info.GetValue(obj) : null;
-    public static object GetPropertyValue(this Type type, object obj, string name, BindingFlags bindingFlags) => type.TryGetPropertyInfo(out var info, name, bindingFlags) ? info.GetValue(obj) : null;
+    public static object GetPropertyValue(this Type type, object obj, string name) => type.TryGetPropertyInfo(name, out var info) ? info.GetValue(obj) : null;
+    public static object GetPropertyValue(this Type type, object obj, string name, BindingFlags bindingFlags) => type.TryGetPropertyInfo(name, bindingFlags, out var info) ? info.GetValue(obj) : null;
 
     #endregion
     

@@ -3,6 +3,7 @@ using UnityEngine.Pool;
 
 public static partial class StringUtil {
     
+    // TODO. 자체 Pool 시스템으로 전환
     public static readonly ObjectPool<StringBuilder> StringBuilderPool = new(OnCreateStringBuilder, actionOnRelease: OnReleaseStringBuilder, defaultCapacity:20);
     public static readonly ConcurrentObjectPool<StringBuilder> StringBuilderConcurrentPool = new(OnCreateStringBuilder, actionOnRelease: OnReleaseStringBuilder, defaultCapacity:10);
 

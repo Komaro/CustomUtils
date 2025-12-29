@@ -1,0 +1,21 @@
+{
+    "name": "IdentityServiceAssembly.Editor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:cfb6063ef43c4c4da20a2093012689dc",
+        "GUID:6b5494e695d3e884cbc61e80bf23aa9c",
+        "GUID:c289b6307b36a4be9adbf70d11f6f416",
+        "GUID:0f665d077b1d4593830c5598782726bf"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

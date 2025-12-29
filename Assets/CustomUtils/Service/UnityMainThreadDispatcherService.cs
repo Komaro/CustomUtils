@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -33,8 +34,8 @@ public class UnityMainThreadDispatcherService : IService {
         _context = SynchronizationContext.Current;
     }
 
-    void IService.Start() { }
-    void IService.Stop() { }
+    void IService.Start() => _threadObject?.Run();
+    void IService.Stop() => _threadObject?.Stop();
     void IService.Remove() => Object.Destroy(_threadObject);
 
     public void Enqueue(Action action, THREAD_TYPE type) {
@@ -63,10 +64,9 @@ public class UnityMainThreadDispatcherService : IService {
     public bool IsMainThread() => Thread.CurrentThread.ManagedThreadId == _mainThreadId;
     
     private class MainThreadDispatcherObject : MonoBehaviour, IDisposable {
-
-        private readonly Object _queueLock = new();
-        private readonly ConcurrentQueue<Action> _workQueue = new();
-        private readonly ConcurrentQueue<IEnumerator> _coroutineQueue = new();
+        
+        private readonly Queue<Action> _workQueue = new();
+        private readonly Queue<IEnumerator> _coroutineQueue = new();
 
         private bool _isRunning;
 
@@ -81,41 +81,31 @@ public class UnityMainThreadDispatcherService : IService {
         private void OnDestroy() => Dispose();
 
         public void Dispose() {
-            lock (_queueLock) {
-                _workQueue.Clear();
-                
-                StopAllCoroutines();
-                _coroutineQueue.Clear();
-            }
+            _workQueue.Clear();
+            
+            StopAllCoroutines();
+            _coroutineQueue.Clear();
             
             GC.SuppressFinalize(this);
         }
 
         private void Update() {
-            lock (_queueLock) {
-                if (_isRunning) {
-                    if (_workQueue.TryDequeue(out var action)) {
-                        action?.Invoke();
-                    }
+            if (_isRunning) {
+                if (_workQueue.TryDequeue(out var action)) {
+                    action?.Invoke();
+                }
 
-                    if (_coroutineQueue.TryDequeue(out var enumerator)) {
-                        StartCoroutine(enumerator);
-                    }
+                if (_coroutineQueue.TryDequeue(out var enumerator)) {
+                    StartCoroutine(enumerator);
                 }
             }
         }
 
-        public void Enqueue(Action action) {
-            lock (_queueLock) {
-                _workQueue.Enqueue(action);
-            }
-        }
+        public void Run() => _isRunning = true;
+        public void Stop() => _isRunning = false;
 
-        public void Enqueue(IEnumerator enumerator) {
-            lock (_queueLock) {
-                _coroutineQueue.Enqueue(enumerator);
-            }
-        }
+        public void Enqueue(Action action) => _workQueue.Enqueue(action);
+        public void Enqueue(IEnumerator enumerator) => _coroutineQueue.Enqueue(enumerator);
     }
 }
 

@@ -19,7 +19,7 @@ public static class RandomUtil {
         FixMinMax(ref min, ref max);
         return UnityRandom.Range(min, max);
     }
-
+    
     public static string GetRandom(int length, char min = 'A', char max = 'z') {
         CheckRandomCount();
         FixMinMax(ref min, ref max);
@@ -31,7 +31,7 @@ public static class RandomUtil {
             return stringBuilder.ToString();
         }
     }
-
+        
     public static void GetRandom(ref Span<byte> bytes) {
         CheckRandomCount();
         _random.NextBytes(bytes);
@@ -41,7 +41,12 @@ public static class RandomUtil {
         CheckRandomCount();
         _random.NextBytes(bytes);
     }
-    
+
+    public static void GetRandom(int min, int max, out byte[] bytes) {
+        bytes = new byte[GetRandom(min, max)];
+        _random.NextBytes(bytes);
+    }
+
     public static int GetRandomInt() {
         CheckRandomCount();
         return _random.Next();
@@ -52,6 +57,12 @@ public static class RandomUtil {
         return _random.NextDouble();
     }
     
+    public static byte[] GetRandomBytes(int maxLength = 100) {
+        var bytes = new byte[GetRandom(1, maxLength)];
+        _random.NextBytes(bytes);
+        return bytes;
+    }
+
     public static IEnumerable<int> GetRandoms(int length, int min = 0, int max = 10000) {
         CheckRandomCount();
         for (var i = 0; i < length; i++) {
@@ -65,18 +76,18 @@ public static class RandomUtil {
             yield return createFunc.Invoke(index);
         }
     }
-
+    
     private static void CheckRandomCount() {
         _count++;
         if (_count > 100) {
-            var seed = DateTime.Now.GetHashCode();
+            var seed = DateTime.Now.GetHashCode() + Environment.TickCount;
             _random = new Random(seed);
             UnityRandom.InitState(seed);
             
             _count = 0;
         }
     }
-
+    
     private static void FixMinMax(ref int min, ref int max) {
         if (min == max) {
             max++;

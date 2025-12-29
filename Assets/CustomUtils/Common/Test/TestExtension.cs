@@ -16,7 +16,7 @@ public static class TestExtension {
     }
 
     public static void MethodCallTest(this object ui, string methodName, BindingFlags flags, Func<bool> check = null, params object[] param) {
-        if (ui.GetType().TryGetMethodInfo(out var info, methodName, flags) == false) {
+        if (ui.GetType().TryGetMethodInfo(methodName, flags, out var info) == false) {
             Assert.Fail($"Method call failed || {methodName}");
             return;
         }

@@ -161,7 +161,6 @@ public abstract class JsonCoroutineAutoConfig : JsonAutoConfig {
         _coroutine = EditorCoroutineUtility.StartCoroutine(SaveCoroutine(), this);
     }
     
-    
     private IEnumerator SaveCoroutine() {
         var observerList = new List<FieldObserver>();
         foreach (var info in GetType().GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic).Where(info => info.IsDefined<JsonIgnoreAttribute>() == false)) {

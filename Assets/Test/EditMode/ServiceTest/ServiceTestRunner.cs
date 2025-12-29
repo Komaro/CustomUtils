@@ -1,14 +1,64 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using NUnit.Framework;
+using Unity.PerformanceTesting;
 
 [Category(TestConstants.Category.SERVICE)]
+[Category(TestConstants.Category.PERFORMANCE)]
 public class ServiceTestRunner {
 
     private CancellationTokenSource _tokenSource = new();
     
     [OneTimeSetUp]
     public void OneTimeSetUp() {
+    }
+    
+    [Test]
+    public async Task TimeCacheServiceTest() {
+        Assert.IsTrue(Service.TryGetService<TimeCacheService>(out var service));
+
+        Assert.IsTrue(service.CheckAndUpdateElapsed(TIME_CACHE_TEST.TIME, 4));
+        await Task.Delay(5000);
+        Assert.IsTrue(service.CheckAndUpdateElapsed(TIME_CACHE_TEST.TIME, 4));
+        Logger.TraceLog($"Pass || {DateTime.Now}");
+        
+        Assert.IsTrue(service.CheckAndUpdateElapsed(TIME_CACHE_TEST.CACHE, 3));
+        await Task.Delay(1000);
+        Assert.IsFalse(service.CheckAndUpdateElapsed(TIME_CACHE_TEST.CACHE, 3));
+        await Task.Delay(2500);
+        Assert.IsTrue(service.CheckAndUpdateElapsed(TIME_CACHE_TEST.CACHE, 3));
+        Logger.TraceLog($"Pass || {DateTime.Now}");
+        
+        Assert.IsFalse(service.CheckAndUpdateElapsed(TIME_CACHE_TEST.TIME, 4));
+        await Task.Delay(1500);
+        Assert.IsTrue(service.CheckAndUpdateElapsed(TIME_CACHE_TEST.TIME, 4));
+        Logger.TraceLog($"Pass || {DateTime.Now}");
+        
+        Logger.TraceLog($"Test all pass");
+    }
+
+    [Performance]
+    [TestCase(10000)]
+    [TestCase(50000)]
+    [TestCase(100000)]
+    [TestCase(500000)]
+    public void TimeCacheServicePerformanceTest(int count) {
+        Assert.IsTrue(Service.TryGetService<TimeCacheService>(out var service));
+
+        var before = new SampleGroup("Before Allocate Memory", SampleUnit.Megabyte);
+        var group = new SampleGroup("TimeCache GC");
+        var after = new SampleGroup("After Allocate Memory", SampleUnit.Megabyte);
+        
+        Measure.Custom(before, UnityEngine.Profiling.Profiler.GetTotalAllocatedMemoryLong() / 1048576f);
+        Measure.Method(() => _ = service.CheckAndUpdateElapsed(TIME_CACHE_TEST.TIME, 4)).SampleGroup(group).WarmupCount(1).MeasurementCount(20).IterationsPerMeasurement(count).GC().Run();
+        Measure.Custom(after, UnityEngine.Profiling.Profiler.GetTotalAllocatedMemoryLong() / 1048576f);
+    }
+
+    public enum TIME_CACHE_TEST {
+        TIME,
+        CACHE,
+        TEST
     }
     
     // [OneTimeTearDown]

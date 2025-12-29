@@ -32,13 +32,7 @@ public class SampleXmlGameDBProvider : GameDBProvider {
         return false;
     }
 
-    public override List<T> GetDataList<T>() {
-        if (_dbDic.TryGetValue(typeof(T), out var db) && db is SampleRawGameDB<T> data) {
-            return data.data.ToList();
-        }
-
-        return new List<T>();
-    }
+    public override IEnumerable<TData> GetData<TData>() => _dbDic.TryGetValue(typeof(TData), out var obj) && obj is SampleRawGameDB<TData> rawData ? rawData.data : Enumerable.Empty<TData>();
 
     public override void Clear() => _dbDic?.Clear();
 }

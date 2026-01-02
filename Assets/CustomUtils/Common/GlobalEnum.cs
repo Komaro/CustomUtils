@@ -13,17 +13,18 @@ public abstract class GlobalEnum {
     protected static readonly Dictionary<Type, ImmutableDictionary<Enum, int>> enumToIntDic = new();
 }
 
-[TestRequired("내부 static 구조 변경으로 인한 테스트 필요")]
 [Serializable]
 [DebuggerDisplay("Value = {Value} index = {_index}")]
 public sealed class GlobalEnum<TAttribute> : GlobalEnum, IEnumerable<Enum> where TAttribute : PriorityAttribute {
 
     static GlobalEnum() {
         if (ReflectionProvider.TryGetAttributeEnumInfos<TAttribute>(out var enumerable)) {
-            var index = 0;
-            enumSetDic.TryAdd(typeof(TAttribute), enumerable.ToImmutableSortedDictionary(info => info.enumType, info => info.enumType.GetEnumValues().OfType<Enum>().ToImmutableHashSet(), new GlobalEnumPriorityComparer()));
-            intToEnumDic.TryAdd(typeof(TAttribute), enumSetDic[typeof(TAttribute)].Values.SelectMany(enumSet => enumSet).ToImmutableDictionary(_ => index++, enumValue => enumValue));
-            enumToIntDic.TryAdd(typeof(TAttribute), intToEnumDic[typeof(TAttribute)].ToImmutableDictionary(pair => pair.Value, pair => pair.Key));
+            if (enumSetDic.ContainsKey(typeof(TAttribute)) == false) {
+                var index = 0;
+                enumSetDic.Add(typeof(TAttribute), enumerable.ToImmutableSortedDictionary(info => info.enumType, info => info.enumType.GetEnumValues().OfType<Enum>().ToImmutableHashSet(), new GlobalEnumPriorityComparer()));
+                intToEnumDic.TryAdd(typeof(TAttribute), enumSetDic[typeof(TAttribute)].Values.SelectMany(enumSet => enumSet).ToImmutableDictionary(_ => index++, enumValue => enumValue));
+                enumToIntDic.TryAdd(typeof(TAttribute), intToEnumDic[typeof(TAttribute)].ToImmutableDictionary(pair => pair.Value, pair => pair.Key));
+            }
         } else {
             Logger.TraceLog($"Cannot find an enum type with the {nameof(TAttribute)}({typeof(TAttribute).GetCleanFullName()})", Color.Yellow);
         }

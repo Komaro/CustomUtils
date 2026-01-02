@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
 using UnityEngine;
 using Object = UnityEngine.Object;
@@ -8,8 +9,8 @@ using Object = UnityEngine.Object;
 [ResourceSubProvider(10)]
 public class ResourcesProvider : IResourceProvider {
 
-    private readonly ConcurrentDictionary<string, string> _pathDic = new(new IgnoreCaseStringComparer());
-    private readonly ConcurrentDictionary<string, Object> _cacheDic = new(new IgnoreCaseStringComparer());
+    private readonly Dictionary<string, string> _pathDic = new(new IgnoreCaseStringComparer());
+    private readonly Dictionary<string, Object> _cacheDic = new(new IgnoreCaseStringComparer());
 
     public void Init() {
         _pathDic.Clear();

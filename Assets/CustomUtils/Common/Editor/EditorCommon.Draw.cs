@@ -335,12 +335,12 @@ public static partial class EditorCommon {
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static bool DrawToggleBox(IEnumerable<ToggleDraw> toggleDraws, Action onChange = null) {
         EditorGUI.BeginChangeCheck();
-        foreach (var defineSymbol in toggleDraws) {
-            if (defineSymbol.HasHeader()) {
-                DrawFitLabel(defineSymbol.header);
+        foreach (var toggleDraw in toggleDraws) {
+            if (toggleDraw.HasHeader()) {
+                DrawFitLabel(toggleDraw.header);
             }
 
-            DrawLabelToggle(ref defineSymbol.isActive, defineSymbol.name, 150f);
+            DrawLabelToggle(ref toggleDraw.isActive, toggleDraw.name, 150f);
         }
         
         if (EditorGUI.EndChangeCheck()) {
@@ -518,7 +518,7 @@ public record ToggleDraw {
         this.name = name;
         this.isActive = isActive;
     }
-        
+    
     public ToggleDraw(string name, bool isActive, string header) : this(name, isActive) => this.header = header;
     public ToggleDraw() : this(string.Empty, false, string.Empty) { }
 

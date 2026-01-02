@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -27,9 +26,9 @@ public abstract class EditorBuildDrawer<TConfig, TNullConfig> : EditorAutoConfig
     private bool _sceneAssetFoldOut;
     private Vector2 _buildInfoMemoScrollViewPosition;
     
-    protected static HashSet<string> buildOptionSet;
-    protected static Dictionary<string, EditorBuildSettingsScene> activateSceneDic = new();
-    protected static Dictionary<string, EditorAssetInfo<SceneAsset>> sceneAssetInfoDic = new();
+    protected HashSet<string> buildOptionSet;
+    protected readonly Dictionary<string, EditorBuildSettingsScene> activateSceneDic = new();
+    protected readonly Dictionary<string, EditorAssetInfo<SceneAsset>> sceneAssetInfoDic = new();
 
     protected override string CONFIG_NAME => $"{typeof(TConfig).Name}{Constants.Extension.JSON}";
     protected override string CONFIG_PATH => $"{Constants.Path.COMMON_CONFIG_PATH}/{nameof(EditorBuildService)}/{CONFIG_NAME}";
@@ -50,7 +49,7 @@ public abstract class EditorBuildDrawer<TConfig, TNullConfig> : EditorAutoConfig
         
         if (ReflectionProvider.TryGetAttributeEnumTypes<DefineSymbolEnumAttribute>(out var types)) {
             var configDefineSymbolSet = config.defineSymbols.Split(Constants.Separator.DEFINE_SYMBOL).ToHashSet();
-            defineSymbols = types.SelectMany(type => Enum.GetValues(type).Cast<Enum>().Select(enumValue => {
+            defineSymbols = types.SelectMany(type => Enum.GetValues(type).OfType<Enum>().Select(enumValue => {
                 var name = enumValue.ToString();
                 return type.TryGetFieldInfo(name, BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public, out var info) && info.TryGetCustomAttribute<EnumValueAttribute>(out var attribute)
                     ? new ToggleDraw(name, configDefineSymbolSet.Contains(name), attribute.header)
@@ -311,8 +310,8 @@ public abstract class EditorBuildDrawer<TConfig, TNullConfig> : EditorAutoConfig
 
     private void RefreshScenes() {
         activateSceneDic.Clear();
-        if (EditorBuildSettings.scenes.Any()) {
-            activateSceneDic = EditorBuildSettings.scenes.ToDictionary(scene => scene.path, scene => scene);
+        foreach (var scene in EditorBuildSettings.scenes) {
+            activateSceneDic.Add(scene.path, scene);
         }
 
         sceneAssetInfoDic.Clear();
@@ -325,13 +324,22 @@ public abstract class EditorBuildDrawer<TConfig, TNullConfig> : EditorAutoConfig
         BuildConfigProvider.Load(config);
         try {
             if (BuildInteractionInterface.TryAttachBuilder(builderType, out var builder)) {
+                if (Service.TryGetServiceWithRestart<LogCollectorService>(out var service)) {
+                    service.ClearLog();
+                    service.SetFilter(LogType.Error);
+                }
+                
                 var report = builder.StartBuild();
                 if (report != null && config.isLogBuildReport) {
-                    if (Service.TryGetServiceWithRestart<LogCollectorService>(out var service)) {
-                        service.ClearLog();
-                        service.SetFilter(LogType.Error);
+                    // TODO. LogCollectorService와 기능적으로 겹치는 지 확인 필요
+                    foreach (var step in report.steps) {
+                        Logger.TraceLog($"{step.name} || {nameof(step.duration)} = {step.duration}");
+                        foreach (var message in step.messages) {
+                            if (message.type == LogType.Error)
+                                Logger.TraceError($"{step.name} || {message.content}");
+                        }
                     }
-
+                    
                     config.AddBuildRecord(new BuildRecord {
                         result = report.summary.result,
                         buildTarget = report.summary.platform,

@@ -33,7 +33,7 @@ public class DictionaryTestRunner {
 
     [TestCase(10, 10)]
     [TestCase(10, 50)]
-    public void MultiLevelDictionaryTest(int outCapacity, int innerCapacity) {
+    public void MultiLayerDictionaryTest(int outCapacity, int innerCapacity) {
         var originDic = new Dictionary<int, Dictionary<string, MultiLevelTestClass>>();
         for (var i = 0; i < outCapacity; i++) {
             var outKey = RandomUtil.GetRandom(0, 100000);
@@ -42,39 +42,25 @@ public class DictionaryTestRunner {
             }
         }
 
-        var multiLevelDic = new MultiLevelDictionary<int, string, MultiLevelTestClass>(originDic);
-        Assert.NotNull(multiLevelDic);
+        var multiLayerDic = new MultiLayerDictionary<int, string, MultiLevelTestClass>(originDic);
+        Assert.NotNull(multiLayerDic);
         foreach (var pair in originDic) {
-            Assert.IsTrue(multiLevelDic.TryGetValue(pair.Key, out var innerDic));
+            Assert.IsTrue(multiLayerDic.TryGetValue(pair.Key, out var innerDic));
             foreach (var (key, value) in pair.Value) {
                 Assert.IsTrue(innerDic.TryGetValue(key, out var innerValue));
                 Assert.IsTrue(value == innerValue);
             }
         }
         
-        var concurrentMultiLevelDic = new ConcurrentMultiLevelDictionary<int, string, MultiLevelTestClass>(originDic);
-        Assert.NotNull(concurrentMultiLevelDic);
+        var concurrentMultiLayerDic = new MultiLayerConcurrentDictionary<int, string, MultiLevelTestClass>(originDic);
+        Assert.NotNull(concurrentMultiLayerDic);
         foreach (var pair in originDic) {
-            Assert.IsTrue(concurrentMultiLevelDic.TryGetValue(pair.Key, out var innerDic));
+            Assert.IsTrue(concurrentMultiLayerDic.TryGetValue(pair.Key, out var innerDic));
             foreach (var (key, value) in pair.Value) {
                 Assert.IsTrue(innerDic.TryGetValue(key, out var innerValue));
                 Assert.IsTrue(value == innerValue);
             }
         }
-        
-        var newMultiLevelDic = new MultiLayerDictionary<int, string, MultiLevelTestClass>(originDic);
-        Assert.NotNull(newMultiLevelDic);
-        foreach (var pair in originDic) {
-            Assert.IsTrue(newMultiLevelDic.TryGetValue(pair.Key, out var innerDic));
-            foreach (var (key, value) in pair.Value) {
-                Assert.IsTrue(innerDic.TryGetValue(key, out var innerValue));
-                Assert.IsTrue(value == innerValue);
-                Assert.IsTrue(value.testInt == innerValue.testInt);
-            }
-        }
-        
-        var newMultiLayerConcurrentDic = new MultiLayerConcurrentDictionary<int, string, MultiLevelTestClass>(originDic);
-        // TODO. Test Logic
     }
 
     [TestCase(10, 10)]

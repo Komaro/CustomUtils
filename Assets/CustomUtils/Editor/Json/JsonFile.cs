@@ -1,24 +1,23 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Collections.Immutable;
 using System.Linq;
 using System.Reflection;
 using Newtonsoft.Json;
 using UniRx;
 using Unity.EditorCoroutines.Editor;
 using UnityEditor;
- 
-public abstract class JsonConfig : IDisposable {
+
+public abstract class JsonFile : IDisposable {
 
     [JsonIgnore] protected DateTime lastSaveTime;
     [JsonIgnore] public ref DateTime LastSaveTime => ref lastSaveTime;
     
     [JsonIgnore] protected bool isDisposed;
 
-    public JsonConfig() => lastSaveTime = DateTime.Now; 
+    public JsonFile() => lastSaveTime = DateTime.Now; 
 
-    ~JsonConfig() {
+    ~JsonFile() {
         if (isDisposed == false) {
             Dispose();
         }
@@ -31,9 +30,9 @@ public abstract class JsonConfig : IDisposable {
         JsonUtil.SaveJson(path, this);
     }
 
-    public bool TryClone<T>(out T config) where T : JsonConfig, new() => (config = Clone<T>()) != null;
+    public bool TryClone<T>(out T config) where T : JsonFile, new() => (config = Clone<T>()) != null;
 
-    public virtual T Clone<T>() where T : JsonConfig, new() {
+    public virtual T Clone<T>() where T : JsonFile, new() {
         if (Clone(typeof(T)) is T cloneConfig) {
             return cloneConfig;
         }
@@ -79,7 +78,7 @@ public abstract class JsonConfig : IDisposable {
     public abstract bool IsNull();
 }
 
-public abstract class JsonAutoConfig : JsonConfig {
+public abstract class JsonAutoConfig : JsonFile {
 
     public abstract void StartAutoSave(string savePath);
     public abstract void StopAutoSave();
@@ -97,11 +96,12 @@ public abstract class JsonCoroutineAutoConfig : JsonAutoConfig {
     private EditorCoroutine _coroutine;
 
     public override void Dispose() {
-        if (IsNull() == false) {
+        if (isDisposed == false && IsNull() == false) {
             StopAutoSave();
+            isDisposed = true;
+            
+            GC.SuppressFinalize(this);
         }
-
-        isDisposed = true;
     }
     
     public override T Clone<T>() {
@@ -263,6 +263,7 @@ public abstract class JsonCoroutineAutoConfig : JsonAutoConfig {
 
         public int GetHashCode(object obj) => obj.GetHashCode();
     }
+    
     #endregion
 }
 
@@ -276,6 +277,15 @@ public abstract class JsonUniRxAutoConfig : JsonAutoConfig {
 
     [JsonIgnore] private readonly ArrayComparer ARRAY_COMPARER = new();
     [JsonIgnore] private readonly CollectionComparer COLLECTION_COMPARER = new();
+    
+    public override void Dispose() {
+        if (isDisposed == false && IsNull() == false) {
+            StopAutoSave();
+            isDisposed = true;
+            
+            GC.SuppressFinalize(this);
+        }
+    }
     
     public override T Clone<T>() {
         Dispose();
@@ -334,14 +344,6 @@ public abstract class JsonUniRxAutoConfig : JsonAutoConfig {
     public override void StopAutoSave() {
         disposableList?.SafeClear(x => x.Dispose());
         intervalDisposable?.Dispose();
-    }
-
-    ~JsonUniRxAutoConfig() => Dispose();
-    
-    public override void Dispose() {
-        if (IsNull() == false) {
-            StopAutoSave();
-        }
     }
 
     public virtual bool IsAutoSaving() => disposableList.Any();

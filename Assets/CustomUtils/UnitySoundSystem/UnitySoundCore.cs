@@ -9,7 +9,7 @@ public abstract class UnitySoundCore : CustomUtils.Sound.NewSoundSystem.SoundCor
     
     private AudioMixer _audioMixer;
 
-    protected readonly ConcurrentMultiLevelDictionary<SoundType, SoundType, AudioMixerGroup> mixerGroupDic = new();
+    protected readonly MultiLayerConcurrentDictionary<SoundType, SoundType, AudioMixerGroup> mixerGroupDic = new();
     protected readonly GlobalEnum<SnapshotEnumTypeAttribute> snapshotEnum = new();
     
     private const float DEFAULT_MIN_SOUND_VALUE = 0.0001f;

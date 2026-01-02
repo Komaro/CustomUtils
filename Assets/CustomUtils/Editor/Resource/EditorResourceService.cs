@@ -12,7 +12,7 @@ public class EditorResourceService : EditorService<EditorResourceService> {
     private readonly GlobalEnum<EditorResourceServiceTypeEnum> _serviceTypes = new();
     private string[] _serviceTypeNames;
     
-    private readonly Dictionary<(Enum, Enum), EditorDrawer> _drawerDic = new();
+    private readonly MultiLayerDictionary<Enum, Enum, EditorDrawer> _drawerDic = new();
 
     private readonly string SELECT_MENU_SAVE_KEY = $"{nameof(EditorResourceService)}_Menu";
     private readonly string SELECT_DRAWER_SAVE_KEY = $"{nameof(EditorResourceService)}_Drawer";
@@ -20,7 +20,7 @@ public class EditorResourceService : EditorService<EditorResourceService> {
     protected override void OnExitingPlayMode() => Refresh();
 
     private void OnDestroy() {
-        if (_menuTypes != null && _serviceTypes != null && _drawerDic.TryGetValue((_menuTypes.Value, _serviceTypes.Value), out var drawer)) {
+        if (_menuTypes != null && _serviceTypes != null && _drawerDic.TryGetValue(_menuTypes.Value, _serviceTypes.Value, out var drawer)) {
             drawer.Close();
             drawer.Destroy();
         }
@@ -31,10 +31,13 @@ public class EditorResourceService : EditorService<EditorResourceService> {
             var typeDefinition = typeof(EditorResourceDrawer<,>);
             foreach (var type in ReflectionProvider.GetSubTypesOfTypeDefinition(typeDefinition)) {
                 if (type.TryGetCustomAttribute<EditorResourceDrawerAttribute>(out var attribute)) {
-                    var key = (_menuType:attribute.menuType, _serviceType:attribute.resourceType);
-                    if (_drawerDic.TryGetValue(key, out var drawer) == false || drawer == null) {
+                    if (_drawerDic.TryGetValue(attribute.menuType, out var innerDic) == false) {
+                        _drawerDic.Add(attribute.menuType, innerDic = new Dictionary<Enum, EditorDrawer>());
+                    }
+
+                    if (innerDic.TryGetValue(attribute.resourceType, out var drawer) == false) {
                         if (SystemUtil.TrySafeCreateInstance(out drawer, type, Window)) {
-                            _drawerDic.AutoAdd(key, drawer);
+                            innerDic.Add(attribute.resourceType, drawer);
                         }
                     }
                 }
@@ -85,7 +88,7 @@ public class EditorResourceService : EditorService<EditorResourceService> {
             }
         }
         
-        if (_drawerDic.TryGetValue((_menuTypes.Value, _serviceTypes.Value), out var drawer)) {
+        if (_drawerDic.TryGetValue(_menuTypes.Value, _serviceTypes.Value, out var drawer)) {
             drawer.Draw();
         } else {
             EditorGUILayout.HelpBox($"유효한 {typeof(EditorResourceDrawer<,>).Name}를 찾을 수 없습니다.", MessageType.Warning);
@@ -93,13 +96,13 @@ public class EditorResourceService : EditorService<EditorResourceService> {
     }
 
     private void DrawerRefresh() {
-        if (_drawerDic.TryGetValue((_menuTypes.Value, _serviceTypes.Value), out var drawer)) {
+        if (_drawerDic.TryGetValue(_menuTypes.Value, _serviceTypes.Value, out var drawer)) {
             drawer.CacheRefresh();
         }
     }
 
     private void DrawerClose() {
-        if (_drawerDic.TryGetValue((_menuTypes.Value, _serviceTypes.Value), out var drawer)) {
+        if (_drawerDic.TryGetValue(_menuTypes.Value, _serviceTypes.Value, out var drawer)) {
             drawer.Close();
         }
     }

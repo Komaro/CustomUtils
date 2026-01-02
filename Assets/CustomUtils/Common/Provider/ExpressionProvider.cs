@@ -48,7 +48,7 @@ public static class ExpressionProvider {
         }
     }
 
-    private static readonly MultiLevelDictionary<Type, string, Func<object, object>> _getFieldValueFuncDic = new();
+    private static readonly MultiLayerDictionary<Type, string, Func<object, object>> _getFieldValueFuncDic = new();
 
     public static Func<object, object> GetFieldValueFunc(object obj, string name) => obj.GetType().TryGetFieldInfo(name, out var info) ? GetFieldValueFunc(info, obj) : null;
 

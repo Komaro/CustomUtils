@@ -6,6 +6,12 @@ using UnityEngine.UIElements;
 
 public static partial class CollectionExtension {
 
+    public static void ThrowIfInvalidKey<T>(this IList<T> list, int index) {
+        if (list.IsValidIndex(index) == false) {
+            throw new KeyNotFoundException($"{nameof(index)} is invalid || Range = 0 ~ {list.Count} || {nameof(index)} = {index}");
+        }
+    }
+
     [TestRequired]
     public static void Sync<T>(this IList<T> list, IList sourceList, Func<T> creator) {
         ThrowIfInvalidCast<IList<T>>(sourceList, nameof(sourceList));

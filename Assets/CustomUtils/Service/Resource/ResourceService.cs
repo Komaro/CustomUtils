@@ -121,7 +121,7 @@ public class ResourceService : IService {
         var obj = _mainProvider?.Get(name) ?? _subProvider?.Get(name);
         if (obj == null) {
             Logger.TraceError($"{nameof(obj)} is null. missing resource || {name}");
-            return default;
+            return null;
         }
         
         return obj;
@@ -133,11 +133,11 @@ public class ResourceService : IService {
     public bool TryGet<T>(ResourceOrder order, out T obj) where T : Object => (obj = Get<T>(order)) != null;
     public T Get<T>(ResourceOrder order) where T : Object => GetObject(order) as T;
 
-    public object GetObject(ResourceOrder order) {
+    public Object GetObject(ResourceOrder order) {
         var ob = GetSwitchProvider(order).Get(order);
         if (ob == null) {
             Logger.TraceError($"{nameof(ob)} is null. missing resource || {order.GetType().Name}");
-            return default;
+            return null;
         }
 
         return ob;

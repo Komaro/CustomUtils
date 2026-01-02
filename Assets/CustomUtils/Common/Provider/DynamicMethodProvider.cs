@@ -40,7 +40,7 @@ public static class DynamicMethodProvider {
 
     #region [Property]
     
-    private static readonly MultiLevelDictionary<Type, string, Func<object, object>> _getPropertyValueDic = new();
+    private static readonly MultiLayerDictionary<Type, string, Func<object, object>> _getPropertyValueDic = new();
 
     public static Func<object, object> GetPropertyValueFunc(object obj, string name) => _getPropertyValueDic.TryGetValue(obj.GetType(), out var funcDic) && funcDic.TryGetValue(name, out var func) ? func : obj.GetType().TryGetPropertyInfo(name, out var info) ? GetPropertyValueFunc(obj, info) : null;
     public static Func<object, object> GetPropertyValueFunc(Type type, string name) => _getPropertyValueDic.TryGetValue(type, out var funcDic) && funcDic.TryGetValue(name, out var func) ? func : type.TryGetPropertyInfo(name, out var info) ? GetPropertyValueFunc(type, info) : null;

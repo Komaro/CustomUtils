@@ -167,8 +167,8 @@ public abstract class AssetBundleWrapperBase {
 public class AssetBundleWrapper : AssetBundleWrapperBase {
     
     private AssetBundle assetBundle;
-    private readonly ConcurrentDictionary<string, string> _assetPathDic = new();
-    private readonly ConcurrentDictionary<string, Object> _assetCacheDic = new();
+    private readonly Dictionary<string, string> _assetPathDic = new();
+    private readonly Dictionary<string, Object> _assetCacheDic = new();
 
     public AssetBundleWrapper(string name, AssetBundleChecksumInfo checksumInfo) : base(name, checksumInfo) { }
 
@@ -185,7 +185,7 @@ public class AssetBundleWrapper : AssetBundleWrapperBase {
                 return;
             }
             
-            if (_assetPathDic.IsEmpty) {
+            if (_assetPathDic.IsEmpty()) {
                 RefreshPath();
             }
         }
@@ -200,7 +200,7 @@ public class AssetBundleWrapper : AssetBundleWrapperBase {
                     return;
                 }
                 
-                if (_assetPathDic.IsEmpty) {
+                if (_assetPathDic.IsEmpty()) {
                     RefreshPath();
                 }
             };

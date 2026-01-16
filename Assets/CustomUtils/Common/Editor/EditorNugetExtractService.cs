@@ -323,7 +323,7 @@ internal class PluginTreeView : EditorServiceTreeView {
         });
         
         menu.AddItem(new GUIContent("Select File"), false, () => {
-            if (itemList[GetSelection().First()] is PluginTreeViewItem item && AssetDatabaseUtil.TryLoad(item.path, out var asset)) {
+            if (itemList[GetSelection().First()] is PluginTreeViewItem item && AssetDatabaseUtil.TryLoadFromPath(item.path, out var asset)) {
                 Selection.activeObject = asset;
                 EditorGUIUtility.PingObject(asset);
             }

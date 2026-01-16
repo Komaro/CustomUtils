@@ -1,8 +1,6 @@
-﻿
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Collections.Immutable;
 using System.Collections.ObjectModel;
 
 public static class CollectionUtil {
@@ -11,7 +9,7 @@ public static class CollectionUtil {
 
     public static TCollection Empty<TCollection, TValue>() where TCollection : class, ICollection<TValue>, IEnumerable, new() => EmptyEnumerable<TCollection, TValue>() as TCollection;
 
-    private static IEnumerable EmptyEnumerable<TCollection, TValue>() where TCollection : IEnumerable, new() {
+    private static IEnumerable EmptyEnumerable<TCollection, TValue>() where TCollection : class, ICollection<TValue>, IEnumerable, new() {
         if (emptyDic.TryGetValue(typeof(TCollection).GetGenericTypeDefinition(), out var dic) == false) {
             emptyDic.Add(typeof(TCollection).GetGenericTypeDefinition(), dic = new Dictionary<Type, IEnumerable>());
         }

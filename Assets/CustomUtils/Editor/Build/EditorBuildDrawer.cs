@@ -323,35 +323,33 @@ public abstract class EditorBuildDrawer<TConfig, TNullConfig> : EditorAutoConfig
     protected virtual void Build(string memo = "") {
         BuildConfigProvider.Load(config);
         try {
-            if (BuildInteractionInterface.TryAttachBuilder(builderType, out var builder)) {
-                if (Service.TryGetServiceWithRestart<LogCollectorService>(out var service)) {
-                    service.ClearLog();
-                    service.SetFilter(LogType.Error);
+            if (Service.TryGetServiceWithRestart<LogCollectorService>(out var service)) {
+                service.ClearLog();
+                service.SetFilter(LogType.Error);
+            }
+            
+            var report = BuildInteractionInterface.StartBuild(builderType);
+            if (report != null && config.isLogBuildReport) {
+                // TODO. LogCollectorService와 기능적으로 겹치는 지 확인 필요
+                foreach (var step in report.steps) {
+                    Logger.TraceLog($"{step.name} || {nameof(step.duration)} = {step.duration}");
+                    foreach (var message in step.messages) {
+                        if (message.type == LogType.Error)
+                            Logger.TraceError($"{step.name} || {message.content}");
+                    }
                 }
                 
-                var report = builder.StartBuild();
-                if (report != null && config.isLogBuildReport) {
-                    // TODO. LogCollectorService와 기능적으로 겹치는 지 확인 필요
-                    foreach (var step in report.steps) {
-                        Logger.TraceLog($"{step.name} || {nameof(step.duration)} = {step.duration}");
-                        foreach (var message in step.messages) {
-                            if (message.type == LogType.Error)
-                                Logger.TraceError($"{step.name} || {message.content}");
-                        }
-                    }
-                    
-                    config.AddBuildRecord(new BuildRecord {
-                        result = report.summary.result,
-                        buildTarget = report.summary.platform,
-                        outputPath = report.summary.outputPath,
-                        startTime = report.summary.buildStartedAt,
-                        endTime = report.summary.buildEndedAt,
-                        buildTime = report.summary.totalTime,
-                        memo = $"{memo}\n\n===================\n\n" +
-                               $"{config.ToStringAllFields()}\n\n===================\n\n" +
-                               $"{service?.Copy().ToStringCollection('\n')}",
-                    });
-                }
+                config.AddBuildRecord(new BuildRecord {
+                    result = report.summary.result,
+                    buildTarget = report.summary.platform,
+                    outputPath = report.summary.outputPath,
+                    startTime = report.summary.buildStartedAt,
+                    endTime = report.summary.buildEndedAt,
+                    buildTime = report.summary.totalTime,
+                    memo = $"{memo}\n\n===================\n\n" +
+                           $"{config.ToStringAllFields()}\n\n===================\n\n" +
+                           $"{service?.Copy().ToStringCollection('\n')}",
+                });
             }
         } catch (Exception ex) {
             Logger.TraceError(ex);

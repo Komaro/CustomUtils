@@ -151,7 +151,7 @@ public static class SystemUtil {
             throw new PlatformNotSupportedException($"Invalid Platform. Check current Platform || {Environment.OSVersion.Platform}");
         }
         
-        var startInfo = new ProcessStartInfo() {
+        var startInfo = new ProcessStartInfo {
             FileName = WINDOWS_CMD,
             WorkingDirectory = workPath,
             UseShellExecute = false,
@@ -173,7 +173,7 @@ public static class SystemUtil {
             throw new PlatformNotSupportedException($"Invalid Platform. Check current Platform || {Environment.OSVersion.Platform}");
         }
 
-        var startInfo = new ProcessStartInfo() {
+        var startInfo = new ProcessStartInfo {
             FileName = shellPath,
             WorkingDirectory = workPath,
             UseShellExecute = false,

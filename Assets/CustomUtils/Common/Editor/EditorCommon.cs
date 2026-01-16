@@ -119,7 +119,7 @@ public static partial class EditorCommon {
 
     public static void LookUp(string assetPath) {
         assetPath.ThrowIfNull(nameof(assetPath));
-        if (AssetDatabaseUtil.TryLoad(assetPath, out var asset)) {
+        if (AssetDatabaseUtil.TryLoadFromPath(assetPath, out var asset)) {
             Selection.activeObject = asset;
             EditorGUIUtility.PingObject(asset);
         }

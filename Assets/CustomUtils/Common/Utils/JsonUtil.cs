@@ -5,7 +5,7 @@ using Newtonsoft.Json.Linq;
 using UnityEngine;
 
 public static class JsonUtil {
-
+    
     public static bool TrySerialize(object obj, out string text) {
         try {
             return string.IsNullOrEmpty(text = JsonConvert.SerializeObject(obj)) == false;

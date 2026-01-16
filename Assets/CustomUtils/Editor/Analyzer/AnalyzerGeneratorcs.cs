@@ -163,7 +163,7 @@ public static class AnalyzerGenerator {
         
         AssetDatabase.ImportAsset(assetPath, ImportAssetOptions.ForceUpdate | ImportAssetOptions.ForceSynchronousImport);
         
-        if (AssetDatabaseUtil.TryLoad(copyPath, out var dllAsset)) {
+        if (AssetDatabaseUtil.TryLoadFromPath(copyPath, out var dllAsset)) {
             var labels = AssetDatabase.GetLabels(dllAsset);
             Logger.TraceLog(labels.ToStringCollection(", "));
             if (labels.Contains(Constants.Analyzer.ROSLYN_ANALYZER_LABEL) == false) {

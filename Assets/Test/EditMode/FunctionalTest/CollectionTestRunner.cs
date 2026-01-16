@@ -9,7 +9,7 @@ using Unity.PerformanceTesting;
 public class CollectionTestRunner {
 
     public class SelectManyTest {
-        
+
         public int[] values;
     }
 
@@ -22,13 +22,14 @@ public class CollectionTestRunner {
     public void CollectionPerformanceTest(int measurementCount, int count) {
         var whileGroup = new SampleGroup("While", SampleUnit.Microsecond);
         var forGroup = new SampleGroup("For", SampleUnit.Microsecond);
-        
+
         Measure.Method(() => {
             var syncCount = 10;
             while (syncCount-- > 0) {
                 _ = syncCount + 1;
             }
         }).WarmupCount(5).MeasurementCount(measurementCount).IterationsPerMeasurement(count).SampleGroup(whileGroup).GC().Run();
+
         Measure.Method(() => {
             var syncCount = 10;
             for (var i = 0; i < syncCount; i++) {
@@ -36,7 +37,7 @@ public class CollectionTestRunner {
             }
         }).WarmupCount(5).MeasurementCount(measurementCount).IterationsPerMeasurement(count).SampleGroup(forGroup).GC().Run();
     }
-    
+
     [TestCase(100, 100)]
     [Performance]
     public void ToArrayPerformanceTest(int measurementCount, int count) {
@@ -46,19 +47,32 @@ public class CollectionTestRunner {
         var randomList = RandomUtil.GetRandoms(20).ToList();
         var intArray = randomList.ToArray();
         Assert.IsNotEmpty(intArray);
-        
-        var longArray = intArray.Select(value => (long) value).ToArray();
+
+        var longArray = intArray.Select(value => (long)value).ToArray();
         Assert.IsNotEmpty(longArray);
 
-        longArray = intArray.ToArray(value => (long) value);
+        longArray = intArray.ToArray(value => (long)value);
         Assert.IsNotNull(longArray);
-        
-        Measure.Method(() => _ = intArray.Select(value => _ = (long) value).ToArray()).WarmupCount(5).MeasurementCount(measurementCount).IterationsPerMeasurement(count).SampleGroup(selectGroup).GC().Run();
-        Measure.Method(() => _ = intArray.ToArray(value => (long) value)).WarmupCount(5).MeasurementCount(measurementCount).IterationsPerMeasurement(count).SampleGroup(forGroup).GC().Run();
+
+        Measure.Method(() => _ = intArray.Select(value => _ = (long)value).ToArray()).WarmupCount(5).MeasurementCount(measurementCount).IterationsPerMeasurement(count).SampleGroup(selectGroup).GC().Run();
+        Measure.Method(() => _ = intArray.ToArray(value => (long)value)).WarmupCount(5).MeasurementCount(measurementCount).IterationsPerMeasurement(count).SampleGroup(forGroup).GC().Run();
     }
 
+    [TestCase(10, 100)]
+    [Performance]
+    public void FindAllPerformanceTest(int measurementCount, int count) {
+        var findAllGroup = new SampleGroup("FindAll");
+        var whereToArrayGroup = new SampleGroup("WhereToArray");
+        var whereToListGroup = new SampleGroup("WhereToList");
+        
+        var originList = new List<int>(RandomUtil.GetRandoms(100, 1, 10));
+        Measure.Method(() => _ = originList.FindAll(x => x > 5)).WarmupCount(1).MeasurementCount(measurementCount).IterationsPerMeasurement(count).SampleGroup(findAllGroup).GC().Run();
+        Measure.Method(() => _ = originList.Where(x => x > 5).ToArray()).WarmupCount(1).MeasurementCount(measurementCount).IterationsPerMeasurement(count).SampleGroup(whereToArrayGroup).GC().Run();
+        Measure.Method(() => _ = originList.Where(x => x > 5).ToList()).WarmupCount(1).MeasurementCount(measurementCount).IterationsPerMeasurement(count).SampleGroup(whereToListGroup).GC().Run();
+    }
+    
     [Test]
-    public void EmptyCollectionUtilTest() {
+    public void CollectionUtilTest() {
         var empty_01 = CollectionUtil.Empty<List<int>, int>();
         Assert.IsNotNull(empty_01);
 
@@ -70,7 +84,7 @@ public class CollectionTestRunner {
 
         var empty_03 = CollectionUtil.List.Empty<int>();
         Assert.IsNotNull(empty_03);
-        
+
         Assert.AreEqual(empty_01, empty_03);
         Assert.AreEqual(empty_01.GetHashCode(), empty_03.GetHashCode());
     }

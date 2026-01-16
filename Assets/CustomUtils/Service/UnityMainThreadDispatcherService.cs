@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading;
-using System.Threading.Tasks;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
 [Service(DEFAULT_SERVICE_TYPE.START_MAIN_THREAD)]
 public class UnityMainThreadDispatcherService : IService {
-
+    
     private int _mainThreadId;
     
     private MainThreadDispatcherObject _threadObject;
@@ -21,16 +19,18 @@ public class UnityMainThreadDispatcherService : IService {
 
     void IService.Init() {
         _mainThreadId = Thread.CurrentThread.ManagedThreadId;
-        
-        if (_threadObject != null) {
+
+        if (_threadObject) {
             Object.Destroy(_threadObject);
         }
-
+        
         _threadObject = MainThreadDispatcherObject.Create();
-        if (_threadObject == null) {
+        if (_threadObject) {
+            Object.DontDestroyOnLoad(_threadObject);
+        } else {
             Logger.TraceError($"{nameof(_threadObject)} is Null");
         }
-
+        
         _context = SynchronizationContext.Current;
     }
 
@@ -50,43 +50,24 @@ public class UnityMainThreadDispatcherService : IService {
     }
 
     public void Enqueue(Action action) => _context.Post(_ => action.Invoke(), null);
-    
-    public void Enqueue(IEnumerator enumerator) {
-#if UNITY_EDITOR
-        if (Application.isPlaying == false) {
-            throw new InvalidOperationException($"The {nameof(Coroutine)} handling of the {nameof(UnityMainThreadDispatcherService)} must only operate during Play Mode.");
-        }
-#endif
-        
-        _threadObject.Enqueue(enumerator);
-    }
+    public void Enqueue(IEnumerator enumerator) => _threadObject.Enqueue(enumerator);
 
     public bool IsMainThread() => Thread.CurrentThread.ManagedThreadId == _mainThreadId;
     
-    private class MainThreadDispatcherObject : MonoBehaviour, IDisposable {
+    private class MainThreadDispatcherObject : MonoBehaviour {
         
         private readonly Queue<Action> _workQueue = new();
         private readonly Queue<IEnumerator> _coroutineQueue = new();
 
         private bool _isRunning;
 
-        public static MainThreadDispatcherObject Create() {
-            var go = new GameObject(nameof(MainThreadDispatcherObject)) {
-                hideFlags = HideFlags.HideAndDontSave
-            };
+        public static MainThreadDispatcherObject Create() => new GameObject(nameof(MainThreadDispatcherObject)) { hideFlags = HideFlags.HideAndDontSave }.AddComponent<MainThreadDispatcherObject>();
 
-            return go.AddComponent<MainThreadDispatcherObject>();
-        }
-
-        private void OnDestroy() => Dispose();
-
-        public void Dispose() {
+        private void OnDestroy() {
             _workQueue.Clear();
             
             StopAllCoroutines();
             _coroutineQueue.Clear();
-            
-            GC.SuppressFinalize(this);
         }
 
         private void Update() {

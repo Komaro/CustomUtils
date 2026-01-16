@@ -64,11 +64,11 @@ public abstract partial class BuilderBase : IDisposable {
     }
 
     public virtual BuildReport StartBuild(BuildPlayerOptions options) {
+        Debug.Log($"{BuildCount} - Start {nameof(OnPreProcess)}");
+        
         options.target = buildTarget;
         options.targetGroup = buildTargetGroup;
-
-        Debug.Log($"{BuildCount} - Start {nameof(OnPreProcess)}");
-
+        
         PreProcess(ref options);
         return BuildPipeline.BuildPlayer(options);
     }
@@ -87,20 +87,7 @@ public abstract partial class BuilderBase : IDisposable {
             }
         }
 
-        // TODO. 임시 주석 처리(제거 권장)
-        // if (BuildConfigProvider.TryGetValue<Dictionary<string, bool>>(nameof(BuildConfig.optionDic), out var optionDic)) {
-        //     if (optionDic.IsTrue(nameof(DEFAULT_CUSTOM_BUILD_OPTION.ignoreResourcesReimport))) {
-        //         AssetBundle.UnloadAllAssetBundles(true);
-        //         AssetDatabase.Refresh(ImportAssetOptions.ForceUpdate);
-        //     }
-        // }
-        
         OnPreProcess(ref options);
-        
-        // TODO. 임시 주석 처리(제거 권장)
-        // if (BuildConfigProvider.IsTrue(DEFAULT_CUSTOM_BUILD_OPTION.refreshAssetDatabase)) {
-        //     AssetDatabase.Refresh();
-        // }
     }
     
     protected abstract void OnPreProcess(ref BuildPlayerOptions options);

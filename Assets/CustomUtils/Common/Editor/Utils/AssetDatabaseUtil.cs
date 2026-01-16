@@ -23,40 +23,32 @@ public static class AssetDatabaseUtil {
         return AssetDatabase.IsValidFolder(path) ? path : string.Empty;
     }
     
-    public static bool TryFindAssets<T>(out IEnumerable<T> assets, string filter) where T : Object => (assets = FindAssets<T>(filter)).Any();
-    
-    public static IEnumerable<T> FindAssets<T>(string filter) where T : Object {
-        foreach (var guid in AssetDatabase.FindAssets(filter)) {
-            var path = AssetDatabase.GUIDToAssetPath(guid);
-            var obj = AssetDatabase.LoadAssetAtPath<T>(path);
-            if (obj == null) {
-                continue;
-            }
+    public static bool TryFindAssets<T>(out IEnumerable<T> assets, string filter, params string[] searchInFolder) where T : Object => (assets = FindAssets<T>(filter, searchInFolder))?.Any() ?? false;
 
-            yield return obj;
+    public static IEnumerable<T> FindAssets<T>(string filter, params string[] searchInFolders) where T : Object {
+        foreach (var guid in AssetDatabase.FindAssets(filter, searchInFolders)) {
+            if (TryLoadAssetFromGUID<T>(guid, out var asset)) {
+                yield return asset;
+            }
         }
     }
 
-    public static bool TryFindAssetInfos<T>(out IEnumerable<EditorAssetInfo<T>> infos, string filter) where T : Object => (infos = FindAssetInfos<T>(filter)).Any(); 
-    
-    public static IEnumerable<EditorAssetInfo<T>> FindAssetInfos<T>(string filter) where T : Object {
-        var guids = AssetDatabase.FindAssets(filter);
-        if (guids.Length <= 0) {
-            yield break;
-        }
-        
-        foreach (var guid in guids) {
+    public static bool TryFindAssetInfos<T>(out IEnumerable<EditorAssetInfo<T>> infos, string filter, params string[] searchInFolders) where T : Object => (infos = FindAssetInfos<T>(filter, searchInFolders))?.Any() ?? false;
+
+    public static IEnumerable<EditorAssetInfo<T>> FindAssetInfos<T>(string filter, params string[] searchInFolders) where T : Object {
+        foreach (var guid in AssetDatabase.FindAssets(filter, searchInFolders)) {
             var path = AssetDatabase.GUIDToAssetPath(guid);
-            if (TryLoad<T>(path, out var asset)) {
+            if (TryLoadFromPath<T>(path, out var asset)) {
                 yield return new EditorAssetInfo<T>(asset, guid, path);
             }
         }
     }
 
+    public static bool TryLoadAssetFromGUID<T>(string guid, out T asset) where T : Object => (asset = LoadAssetFromGuid<T>(guid)) != null;
     public static T LoadAssetFromGuid<T>(string guid) where T : Object => AssetDatabase.LoadAssetAtPath<T>(AssetDatabase.GUIDToAssetPath(guid));
-
-    public static bool TryLoad(string path, out Object asset) => (asset = AssetDatabase.LoadAssetAtPath<Object>(path) ?? AssetDatabase.LoadAssetAtPath<Object>(GetCollectionPath(path))) != null;
-    public static bool TryLoad<T>(string path, out T asset) where T : Object => (asset = AssetDatabase.LoadAssetAtPath<T>(path) ?? AssetDatabase.LoadAssetAtPath<T>(GetCollectionPath(path))) != null;
+    
+    public static bool TryLoadFromPath(string path, out Object asset) => (asset = AssetDatabase.LoadAssetAtPath<Object>(path) ?? AssetDatabase.LoadAssetAtPath<Object>(GetCollectionPath(path))) != null;
+    public static bool TryLoadFromPath<T>(string path, out T asset) where T : Object => (asset = AssetDatabase.LoadAssetAtPath<T>(path) ?? AssetDatabase.LoadAssetAtPath<T>(GetCollectionPath(path))) != null;
 
     public static bool TryGetLabels(string path, out string[] labels) {
         var guid = AssetDatabase.GUIDFromAssetPath(path);
@@ -74,7 +66,7 @@ public static class AssetDatabaseUtil {
     }
 
     public static bool TrySetLabels(string path, params string[] labels) {
-        if (TryLoad(path, out var asset)) {
+        if (TryLoadFromPath(path, out var asset)) {
             AssetDatabase.SetLabels(asset, labels);
             return true;
         }
@@ -83,7 +75,7 @@ public static class AssetDatabaseUtil {
     }
 
     public static bool TryClearLabels(string path) {
-        if (TryLoad(path, out var asset)) {
+        if (TryLoadFromPath(path, out var asset)) {
             AssetDatabase.ClearLabels(asset);
             return true;
         }

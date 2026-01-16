@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using UnityEngine.UIElements;
 
 public static partial class CollectionExtension {
 
@@ -311,7 +310,7 @@ public static partial class CollectionExtension {
 
                 return;
             }
-
+            
             dataAction?.Invoke(sourceList[i], workList[i]);
         }
     }

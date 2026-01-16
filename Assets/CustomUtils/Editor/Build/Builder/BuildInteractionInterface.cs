@@ -8,6 +8,16 @@ public class BuildInteractionInterface : IPostprocessBuildWithReport {
     private static BuilderBase _builder;
 
     public int callbackOrder => 1000;
+    
+    public static void StartBuild<TBuilder>() where TBuilder : BuilderBase => StartBuild(typeof(TBuilder));
+
+    public static BuildReport StartBuild(Type builderType) {
+        if (BuilderBase.TryCreateBuilder(builderType, out _builder) == false) {
+            throw new BuildFailedException($"{builderType.Name} is not a valid instance of type {typeof(BuilderBase)}");
+        }
+
+        return _builder == null ? throw new NullReferenceException<BuilderBase>(nameof(_builder)) : _builder.StartBuild();
+    }
 
     public static bool TryAttachBuilder(Type type, out BuilderBase builder) => (builder = AttachBuilder(type)) != null;
 

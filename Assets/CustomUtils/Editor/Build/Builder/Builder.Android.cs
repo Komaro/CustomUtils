@@ -5,6 +5,7 @@ using UnityEditor.Android;
 
 using UnityEditor;
 using UnityEngine;
+using AndroidArchitecture = UnityEditor.AndroidArchitecture;
 
 public partial class BuilderBase {
     
@@ -83,5 +84,20 @@ public partial class BuilderBase {
     protected void SetTargetSdkVersion(int versions) {
         PlayerSettings.Android.targetSdkVersion = (AndroidSdkVersions)versions;
         Debug.Log($"{BuildCount} - {nameof(PlayerSettings.Android.targetSdkVersion)} || {PlayerSettings.Android.targetSdkVersion}");
+    }
+
+    protected void SetTargetArchitectures(AndroidArchitecture androidArchitectures) {
+        PlayerSettings.Android.targetArchitectures = androidArchitectures;
+        Debug.Log($"{BuildCount} - {nameof(PlayerSettings.Android.targetArchitectures)} || {PlayerSettings.Android.targetArchitectures}");
+    }
+
+    protected void SetSplitApplicationBinary(bool isActive) {
+#if UNITY_6000_0_OR_NEWER
+        PlayerSettings.Android.splitApplicationBinary = isActive;
+        Debug.Log($"{BuildCount} - {nameof(PlayerSettings.Android.splitApplicationBinary)} || {PlayerSettings.Android.splitApplicationBinary}");
+#else
+        PlayerSettings.Android.useAPKExpansionFiles = isActive;
+        Debug.Log($"{BuildCount} - {nameof(PlayerSettings.Android.useAPKExpansionFiles)} || {PlayerSettings.Android.useAPKExpansionFiles}");
+#endif
     }
 }

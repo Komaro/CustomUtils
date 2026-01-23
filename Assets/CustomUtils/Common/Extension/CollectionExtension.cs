@@ -224,6 +224,9 @@ public static partial class CollectionExtension {
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static TResult Pipe<T, TResult>(this T value, Func<T, TResult> func) => func.Invoke(value);
     
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void Pipe<T>(this T value, Action<T> action) => action.Invoke(value);
+    
     #endregion
 
     #region [Queue]

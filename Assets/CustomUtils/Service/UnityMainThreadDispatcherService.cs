@@ -7,7 +7,8 @@ using Object = UnityEngine.Object;
 
 [Service(DEFAULT_SERVICE_TYPE.START_MAIN_THREAD)]
 public class UnityMainThreadDispatcherService : IService {
-    
+
+    private bool _isPlayMode;
     private int _mainThreadId;
     
     private MainThreadDispatcherObject _threadObject;
@@ -18,34 +19,56 @@ public class UnityMainThreadDispatcherService : IService {
     bool IService.IsServing() => _isServing;
 
     void IService.Init() {
+        _isPlayMode = Application.isPlaying;
         _mainThreadId = Thread.CurrentThread.ManagedThreadId;
 
-        if (_threadObject) {
-            Object.Destroy(_threadObject);
-        }
-        
-        _threadObject = MainThreadDispatcherObject.Create();
-        if (_threadObject) {
-            Object.DontDestroyOnLoad(_threadObject);
-        } else {
-            Logger.TraceError($"{nameof(_threadObject)} is Null");
+        if (_isPlayMode) {
+            if (_threadObject) {
+                Object.Destroy(_threadObject);
+            }
+            
+            _threadObject = MainThreadDispatcherObject.Create();
+            if (_threadObject) {
+                Object.DontDestroyOnLoad(_threadObject);
+            } else {
+                Logger.TraceError($"{nameof(_threadObject)} is Null");
+            }
         }
         
         _context = SynchronizationContext.Current;
     }
 
-    void IService.Start() => _threadObject?.Run();
-    void IService.Stop() => _threadObject?.Stop();
-    void IService.Remove() => Object.Destroy(_threadObject);
+    void IService.Start() {
+        _threadObject.ThrowIfNull(nameof(_threadObject));
+        _threadObject.Run();
+    }
 
-    public void Enqueue(Action action, THREAD_TYPE type) {
+    void IService.Stop() {
+        _threadObject.ThrowIfNull(nameof(_threadObject));
+        _threadObject.Stop();
+    }
+
+    void IService.Remove() {
+        if (!_threadObject) {
+            Object.Destroy(_threadObject);
+        }
+    }
+
+    public void Enqueue(Action action, DISPATCH_TYPE type) {
+        if (_isPlayMode == false || !_threadObject) {
+            Enqueue(action);
+            return;
+        }
+        
         switch (type) {
-            case THREAD_TYPE.UNITY:
+            case DISPATCH_TYPE.GAME_OBJECT:
                 _threadObject.Enqueue(action);
                 break;
-            case THREAD_TYPE.CONTEXT:
+            case DISPATCH_TYPE.CONTEXT:
                 Enqueue(action);
                 break;
+            default:
+                throw new ArgumentOutOfRangeException($"{type} is invalid");
         }
     }
 
@@ -90,8 +113,8 @@ public class UnityMainThreadDispatcherService : IService {
     }
 }
 
-public enum THREAD_TYPE {
+public enum DISPATCH_TYPE {
     NONE,
-    UNITY,
+    GAME_OBJECT,
     CONTEXT,
 }

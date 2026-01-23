@@ -17,7 +17,7 @@ public class SystemWatcherService : IService {
         foreach (var watcher in _fileSystemWatcherDic.Values) {
             watcher.EnableRaisingEvents = true;
         }
-
+        
         _isServing = true;
     }
 

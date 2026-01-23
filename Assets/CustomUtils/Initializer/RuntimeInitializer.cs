@@ -9,13 +9,13 @@ public class RuntimeInitializer {
     private static void OnInitializeOnLoadAfterAssembliesLoaded() { }
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
-    private static void OnInitializeOnLoadSubsystemRegistration() {
-        Service.StartService(DEFAULT_SERVICE_TYPE.START_MAIN_THREAD);
-    }
+    private static void OnInitializeOnLoadSubsystemRegistration() { }
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
-    private static void OnInitializeOnLoadBeforeSceneLoad() { } 
-    
+    private static void OnInitializeOnLoadBeforeSceneLoad() { }
+
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
-    private static void OnInitializeOnLoadAfterSceneLoad() { } 
+    private static void OnInitializeOnLoadAfterSceneLoad() {
+        Service.StartService(DEFAULT_SERVICE_TYPE.START_MAIN_THREAD);
+    } 
 }

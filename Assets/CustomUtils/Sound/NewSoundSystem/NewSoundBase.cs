@@ -20,9 +20,9 @@ namespace CustomUtils.Sound.NewSoundSystem {
     
         protected bool isMute;
 
-        protected readonly char PATH_SEPARATOR = '/';
-        protected readonly char NAME_SEPARATOR = '_';
-        protected readonly char EXTENSION_SEPARATOR = '.';
+        protected const char PATH_SEPARATOR = '/';
+        protected const char NAME_SEPARATOR = '_';
+        protected const char EXTENSION_SEPARATOR = '.';
 
         public SoundBase(TSoundCore soundCore) {
             this.soundCore = soundCore.ThrowIfUnexpectedNull(nameof(this.soundCore));

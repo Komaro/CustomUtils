@@ -14,9 +14,9 @@ public abstract class EditorDrawer {
     public virtual void Destroy() { }
     public virtual void CacheRefresh() { }
     public abstract void Draw();
+    protected virtual void Repaint() => window.Repaint();
     
     public EditorCoroutine StartCoroutine(IEnumerator enumerator, object owner = null) => EditorCoroutineUtility.StartCoroutine(enumerator, owner ?? window);
-    protected void Repaint() => window.Repaint();
 }
 
 public abstract class EditorAutoConfigDrawer<TConfig, TNullConfig> : EditorDrawer

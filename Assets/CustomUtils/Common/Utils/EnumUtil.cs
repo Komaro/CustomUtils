@@ -243,5 +243,27 @@ public static class EnumExtension {
     public static IEnumerable<Enum> GetValues(this Type type, bool ignoreDefault = false, bool ignoreObsolete = false) => EnumUtil.GetValues(type, ignoreDefault, ignoreObsolete);
     public static IEnumerable<Enum> GetValues(this Enum enumValue, bool ignoreDefault = false, bool ignoreObsolete = false) => EnumUtil.GetValues(enumValue, ignoreDefault, ignoreObsolete);
 
+    public static IEnumerable<(TEnum enumValue, int index)> GetValueInfos<TEnum, TUnderlying>(this TEnum enumValue) where TEnum : struct, Enum {
+        if (enumValue.IsInt()) {
+            foreach (var value in enumValue.GetValues()) {
+                yield return (value, ToInt32(value));
+            }
+        }
+    }
+
+    public static bool IsByte<TEnum>(this TEnum enumValue) where TEnum : struct, Enum => IsValueType<byte>(enumValue.GetType());
+    public static bool IsSByte<TEnum>(this TEnum enumValue) where TEnum : struct, Enum => IsValueType<sbyte>(enumValue.GetType());
+    
+    public static bool IsShort<TEnum>(this TEnum enumValue) where TEnum : struct, Enum => IsValueType<short>(enumValue.GetType());
+    public static bool IsUShort<TEnum>(this TEnum enumValue) where TEnum : struct, Enum => IsValueType<ushort>(enumValue.GetType());
+    
+    public static bool IsInt<TEnum>(this TEnum enumValue) where TEnum : struct, Enum => IsValueType<int>(enumValue.GetType());
+    public static bool IsUInt<TEnum>(this TEnum enumValue) where TEnum : struct, Enum => IsValueType<uint>(enumValue.GetType());
+    
+    public static bool IsLong<TEnum>(this TEnum enumValue) where TEnum : struct, Enum => IsValueType<long>(enumValue.GetType());
+    public static bool IsULong<TEnum>(this TEnum enumValue) where TEnum : struct, Enum => IsValueType<ulong>(enumValue.GetType());
+    
+    public static bool IsValueType<T>(this Type type) where T : struct => type.IsEnum && Enum.GetUnderlyingType(type) == typeof(T);
+
     public static List<TEnum> GetValueList<TEnum>(this TEnum _, bool ignoreDefault = false, bool ignoreObsolete = false) where TEnum : struct, Enum => EnumUtil.GetValueList<TEnum>(ignoreDefault, ignoreObsolete);
 }

@@ -169,9 +169,9 @@ public class EnumTestRunner {
         var legacyGroup = new SampleGroup("Legacy");
         var newGroup = new SampleGroup("New");
         
-        // Measure.Method(() => _ = Enum.GetValues(typeof(TCP_BODY))).WarmupCount(5).MeasurementCount(measurementCount).IterationsPerMeasurement(count).SampleGroup(enumGroup).Run();
-        // Measure.Method(() => _ = EnumUtil.GetValues(typeof(TCP_BODY))).WarmupCount(5).MeasurementCount(measurementCount).IterationsPerMeasurement(count).SampleGroup(typeGroup).Run();
-        // Measure.Method(() => _ = EnumUtil.GetValues<TCP_BODY>()).WarmupCount(5).MeasurementCount(measurementCount).IterationsPerMeasurement(count).SampleGroup(genericGroup).Run();
+        Measure.Method(() => _ = Enum.GetValues(typeof(TCP_BODY))).WarmupCount(5).MeasurementCount(measurementCount).IterationsPerMeasurement(count).SampleGroup(enumGroup).Run();
+        Measure.Method(() => _ = EnumUtil.GetValues(typeof(TCP_BODY))).WarmupCount(5).MeasurementCount(measurementCount).IterationsPerMeasurement(count).SampleGroup(typeGroup).Run();
+        Measure.Method(() => _ = EnumUtil.GetValues<TCP_BODY>()).WarmupCount(5).MeasurementCount(measurementCount).IterationsPerMeasurement(count).SampleGroup(genericGroup).Run();
     }
 
     [Test]
@@ -208,6 +208,19 @@ public class EnumTestRunner {
         Measure.Method(() => _ = enumValue.GetValues(true, true)).WarmupCount(10).MeasurementCount(15).IterationsPerMeasurement(count).SampleGroup(getValuesGroup).GC().Run();
         Measure.Method(() => _ = enumValue.GetValueList(true, true)).WarmupCount(10).MeasurementCount(15).IterationsPerMeasurement(count).SampleGroup(getValueListGroup).GC().Run();
         Measure.Method(() => _ = EnumUtil.GetValueList<TCP_BODY>(true, true)).WarmupCount(10).MeasurementCount(15).IterationsPerMeasurement(count).SampleGroup(getUtilsValueListGroup).GC().Run();
+    }
+
+    [Test]
+    [Performance]
+    public void EnumToIntPerformanceTest() {
+        var castGroup = new SampleGroup("Cast", SampleUnit.Microsecond);
+        var convertGroup = new SampleGroup("Convert", SampleUnit.Microsecond);
+        var convertFastGroup = new SampleGroup("ConvertFast", SampleUnit.Microsecond);
+        
+        var enumValue = TCP_BODY.TEST_REQUEST;
+        Measure.Method(() => _ = (int)enumValue).WarmupCount(10).MeasurementCount(15).IterationsPerMeasurement(1000).SampleGroup(castGroup).Run();
+        Measure.Method(() => _ = EnumUtil.Convert(enumValue)).WarmupCount(10).MeasurementCount(15).IterationsPerMeasurement(1000).SampleGroup(convertGroup).Run();
+        Measure.Method(() => _ = EnumUtil.ConvertFast(enumValue)).WarmupCount(10).MeasurementCount(15).IterationsPerMeasurement(1000).SampleGroup(convertFastGroup).Run();
     }
 
     [Test]

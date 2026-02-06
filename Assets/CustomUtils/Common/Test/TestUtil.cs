@@ -5,6 +5,8 @@ using UnityEngine.TestTools;
 
 public static class TestUtil {
 
+    public static void SetIgnoreFailingMessages(bool ignoreMessages) => LogAssert.ignoreFailingMessages = ignoreMessages;
+
     public static void EvaluateCodeCoverageResult() {
         if (Coverage.enabled) {
             Events.onCoverageSessionFinished += OnFinishCodeCoverageRecord;

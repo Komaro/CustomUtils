@@ -43,6 +43,7 @@ public class MonoService : IService {
     private void OnDestroy(MonoObject monoObject) => Object.Destroy(monoObject);
 }
 
+// TODO. Active, DeActive 기능 추가 필요
 [TestRequired]
 public class MonoObject : MonoBehaviour {
     

@@ -4,7 +4,6 @@ using UnityEditor;
 using UnityEditorInternal;
 using UnityEngine;
 using SystemPath = System.IO.Path;
-using SystemRegex = System.Text.RegularExpressions.Regex;
 
 public static partial class Constants {
    

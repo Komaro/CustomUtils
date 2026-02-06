@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Codice.CM.Common;
 using Newtonsoft.Json;
 using UniRx;
 using Unity.EditorCoroutines.Editor;
@@ -24,7 +25,7 @@ public abstract class JsonFile : IDisposable {
     }
 
     public abstract void Dispose();
-    
+
     public virtual void Save(string path) {
         lastSaveTime = DateTime.Now;
         JsonUtil.SaveJson(path, this);

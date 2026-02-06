@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-[Priority(5)]
+[Priority(12)]
 public class SampleXmlGameDBProvider : GameDBProvider {
     
     private Dictionary<Type, object> _dbDic = new();
+
+    public override int Count => _dbDic.Count;
 
     public override bool Init(IEnumerable<Type> dbTypes) {
         var typeDic = dbTypes.ToDictionary(type => type.Name, type => type);
@@ -36,12 +38,3 @@ public class SampleXmlGameDBProvider : GameDBProvider {
 
     public override void Clear() => _dbDic?.Clear();
 }
-//
-// public record SampleXmlGameData<T> {
-//
-//     [XmlElement]
-//     public List<T> dataList = new();
-//
-//     public SampleXmlGameData() { }
-//     public SampleXmlGameData(List<T> dataList) => this.dataList = dataList;
-// }

@@ -48,8 +48,8 @@ public class GameDBService : IService {
     public bool TryGet<TGameDB>(out TGameDB db) where TGameDB : class => (db = Get<TGameDB>()) != null;
 
     public TGameDB Get<TGameDB>() where TGameDB : class {
-        if (_dbDic.TryGetValue(typeof(TGameDB), out var db)) {
-            return db as TGameDB;
+        if (_dbDic.TryGetValue(typeof(TGameDB), out var obj)) {
+            return obj as TGameDB;
         }
 
         return null;

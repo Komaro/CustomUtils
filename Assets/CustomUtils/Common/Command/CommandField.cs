@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 
+// TODO. Stop work
 public abstract class CommandField {
     
     public abstract void Pase(string text);

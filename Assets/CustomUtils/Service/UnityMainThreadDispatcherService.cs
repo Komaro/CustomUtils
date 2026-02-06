@@ -49,7 +49,7 @@ public class UnityMainThreadDispatcherService : IService {
     }
 
     void IService.Remove() {
-        if (!_threadObject) {
+        if (_threadObject) {
             Object.Destroy(_threadObject);
         }
     }

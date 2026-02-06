@@ -58,6 +58,34 @@ public class CollectionTestRunner {
         Measure.Method(() => _ = intArray.ToArray(value => (long)value)).WarmupCount(5).MeasurementCount(measurementCount).IterationsPerMeasurement(count).SampleGroup(forGroup).GC().Run();
     }
 
+    [Performance]
+    [TestCase(10, 50, 100)]
+    [TestCase(10, 50, 200)]
+    [TestCase(10, 50, 400)]
+    [TestCase(10, 50, 600)]
+    [TestCase(10, 50, 1200)]
+    [TestCase(10, 50, 2400)]
+    public void ValueCollectionCopyPerformanceTest(int measurementCount, int count, int length) {
+        var toArrayGroup = new SampleGroup("ToArray", SampleUnit.Microsecond);
+        var copyToGroup = new SampleGroup("CopyTo", SampleUnit.Microsecond);
+
+        var dictionary = new Dictionary<int, int>();
+        foreach (var random in RandomUtil.GetRandoms(length)) {
+            dictionary.AutoAdd(random, random);
+        }
+
+        // Warmup
+        _ = dictionary.Keys;
+        _ = dictionary.Values;
+        
+        Measure.Method(() => _ = dictionary.Values.ToArray()).WarmupCount(1).MeasurementCount(measurementCount).IterationsPerMeasurement(count).SampleGroup(toArrayGroup).GC().Run();
+        
+        Measure.Method(() => {
+            var array = new int[dictionary.Count];
+            dictionary.Values.CopyTo(array, 0);
+        }).WarmupCount(1).MeasurementCount(measurementCount).IterationsPerMeasurement(count).SampleGroup(copyToGroup).GC().Run();
+    }
+
     [TestCase(10, 100)]
     [Performance]
     public void FindAllPerformanceTest(int measurementCount, int count) {
@@ -87,5 +115,36 @@ public class CollectionTestRunner {
 
         Assert.AreEqual(empty_01, empty_03);
         Assert.AreEqual(empty_01.GetHashCode(), empty_03.GetHashCode());
+    }
+
+    [Performance]
+    [TestCase(10, 1000)]
+    public void CountPerformanceTest(int measurementCount, int count) {
+        var listGroup = new SampleGroup("List", SampleUnit.Microsecond);
+        var enumerableGroup = new SampleGroup("Enumerable", SampleUnit.Microsecond);
+
+        var list = new List<int>(RandomUtil.GetRandoms(100, 1, 1000));
+        Measure.Method(() => {
+            var outList = GetRemoveAllList(list);
+            outList.RemoveAll(value => value < 500);
+            _ = outList.Count;
+        }).WarmupCount(1).MeasurementCount(measurementCount).IterationsPerMeasurement(count).SampleGroup(listGroup).GC().Run();
+        
+        Measure.Method(() => {
+            var enumerable = GetRemoveAlls(list);
+            _ = enumerable.Count(value => value >= 500);
+        }).WarmupCount(1).MeasurementCount(measurementCount).IterationsPerMeasurement(count).SampleGroup(enumerableGroup).GC().Run();
+    }
+
+    private List<int> GetRemoveAllList(List<int> list) {
+        var outList = new List<int>();
+        outList.AddRange(list);
+        return outList;
+    }
+
+    private IEnumerable<int> GetRemoveAlls(List<int> list) {
+        foreach (var value in list) {
+            yield return value;
+        }
     }
 }

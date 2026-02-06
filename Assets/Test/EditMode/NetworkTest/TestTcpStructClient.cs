@@ -4,6 +4,7 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 
+// TODO. 정상 테스트 진행되지 않음
 internal class TestTcpStructClient : SimpleTcpClient<TcpHeader, ITcpPacket>, ITestHandler {
 
     private static readonly int TCP_HEADER_SIZE = Marshal.SizeOf<TcpHeader>();

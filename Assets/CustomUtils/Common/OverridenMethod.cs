@@ -34,7 +34,20 @@ public readonly struct AutoOverridenMethod {
 
     public AutoOverridenMethod(Type type, BindingFlags flags = BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public) {
         _baseType = type;
-        _overridenMethodBaseSet = type.GetMethods(flags).Where(info => info.IsVirtual && info.DeclaringType == type).Select(info => info as MethodBase).ToImmutableHashSetWithDistinct();
+        _overridenMethodBaseSet = type.GetMethods(flags).Where(info => info.IsVirtual && info.DeclaringType == type).OfType<MethodBase>().ToImmutableHashSetWithDistinct();
+        _overridenMethodNameSet = _overridenMethodBaseSet.Select(methodBase => methodBase.GetAlias()).ToImmutableHashSetWithDistinct();
+    }
+
+    public AutoOverridenMethod(Type type, Type ignoreType, BindingFlags flags = BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public) {
+        using var _ = HashSetPool<Type>.Get(out var typeSet);
+        foreach (var baseType in type.GetBaseTypes(true)) {
+            if (baseType != ignoreType) {
+                typeSet.Add(baseType);
+            }
+        }
+        
+        _baseType = type;
+        _overridenMethodBaseSet = type.GetMethods(flags).Where(info => info.IsVirtual && typeSet.Contains(type.DeclaringType)).OfType<MethodBase>().ToImmutableHashSetWithDistinct();
         _overridenMethodNameSet = _overridenMethodBaseSet.Select(methodBase => methodBase.GetAlias()).ToImmutableHashSetWithDistinct();
     }
     

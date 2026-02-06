@@ -55,7 +55,7 @@ public static class DynamicMethodProvider {
     }
 
     private static Func<object, object> CreatePropertyValueFunc(Type type, PropertyInfo info) {
-        if (info.TryGetGetGetMethod(out var methodInfo) == false) {
+        if (info.TryGetGetMethod(out var methodInfo) == false) {
             Logger.TraceError($"Property {info.Name} does not have a getter implemented.");
             return null;
         }

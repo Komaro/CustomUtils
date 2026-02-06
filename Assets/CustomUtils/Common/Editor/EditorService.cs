@@ -16,7 +16,7 @@ public abstract class EditorService<T> : EditorWindow where T : EditorService<T>
     protected static T Window => _window == null ? _window = GetWindow<T>(typeof(T).Name) : _window;
 
     protected readonly CancellationTokenSource _tokenSource = new();
-    
+
     // TODO. PlayMode -> EditMode 전환시와 같은 경우 호출되지 않음. EditMode -> PlayMode로 전환 시 도메인을 새롭게 로드하기 때문에 전체 Service가 무효화 됨
     // TODO. PlayMode 시에도 동작해야 하는 경우와 아닌 경우를 나눠 새롭게 구조를 재편할 필요가 있음 
     protected virtual void OnEnable() {
@@ -67,7 +67,7 @@ public abstract class EditorService<T> : EditorWindow where T : EditorService<T>
         }
     }
 
-    protected virtual void OnEnteredEditMode() { }
+    protected virtual void OnEnteredEditMode() => Refresh();
     protected virtual void OnExitingEditMode() { }
     protected virtual void OnEnteredPlayMode() { }
     protected virtual void OnExitingPlayMode() { }
@@ -75,6 +75,7 @@ public abstract class EditorService<T> : EditorWindow where T : EditorService<T>
     protected EditorCoroutine StartCoroutine(IEnumerator enumerator, object owner = null) => EditorCoroutineUtility.StartCoroutine(enumerator, owner ?? this);
 }
 
+[Obsolete("EditorService<T> 전환 필요하나 OnEnable 처리 플로우에 문제가 있음")]
 [RequiresStaticMethodImplementation("OpenWindow", typeof(MenuItem))]
 [RequiresStaticMethodImplementation("CacheRefresh", typeof(DidReloadScripts))]
 public abstract class EditorService : EditorWindow {

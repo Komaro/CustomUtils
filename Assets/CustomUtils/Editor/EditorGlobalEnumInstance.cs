@@ -19,10 +19,8 @@ public class EditorGlobalEnumInstance : PropertyDrawer {
         try {
             var obj = fieldInfo.GetValue(property.serializedObject.targetObject);
             if (obj != null) {
-                if (obj.GetType().TryGetFieldInfo("_index", BindingFlags.NonPublic | BindingFlags.Instance, out var info)) {
-                    if (info.GetValue(obj) is int index) {
-                        _index = index;
-                    }
+                if (obj.GetType().TryGetFieldInfo("_index", BindingFlags.NonPublic | BindingFlags.Instance, out var info) && info.GetValue(obj) is int index) {
+                    _index = index;
                 }
             
                 foreach (var baseType in obj.GetType().GetBaseTypes()) {
@@ -36,7 +34,7 @@ public class EditorGlobalEnumInstance : PropertyDrawer {
                     }
                 }
 
-                _isInitialize = _enumStrings != null && _enumStrings.Any();
+                _isInitialize = _enumStrings != null && _enumStrings.Length > 0;
             }
         } catch (Exception ex) {
             _isInitialize = false;
@@ -64,7 +62,7 @@ public class EditorGlobalEnumInstance : PropertyDrawer {
     }
 
     public void SetIndex(SerializedProperty property, int index) {
-        var obj = fieldInfo.GetValue(property.serializedObject.targetObject); 
+        var obj = fieldInfo.GetValue(property.serializedObject.targetObject);
         if (obj != null && obj.GetType().TryGetFieldInfo("_index", BindingFlags.NonPublic | BindingFlags.Instance, out var info)) {
             info.SetValue(obj, index);
         }

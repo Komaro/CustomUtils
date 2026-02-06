@@ -41,11 +41,11 @@ public class ScriptableObjectService : IAsyncService {
             foreach (var provider in _providers) {
                 obj = provider.Get<T>();
                 if (obj != null) {
-                    break;
+                    return obj as T;
                 }
             }
         }
-        
-        return obj as T;
+
+        return null;
     }
 }

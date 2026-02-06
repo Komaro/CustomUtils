@@ -203,6 +203,7 @@ public static partial class CollectionExtension {
 
     public static ImmutableDictionary<TKey, TValue> ToImmutableDictionaryWithDistinct<TSource, TKey, TValue>(this IEnumerable<TSource> enumerable, Func<TSource, TKey> keySelector, Func<TSource, TValue> valueSelector) => enumerable.ToDictionaryWithDistinct(keySelector, valueSelector).ToImmutableDictionary();
 
+    // TODO. Distinct 구현이 없음
     public static Dictionary<TKey, TValue> ToDictionaryWithDistinct<TSource, TKey, TValue>(this IEnumerable<TSource> enumerable, Func<TSource, TKey> keySelector, Func<TSource, TValue> valueSelector) => enumerable.ToDictionary<Dictionary<TKey, TValue>, TSource, TKey, TValue>(keySelector, valueSelector);
 
     public static Dictionary<TKey, TSource> ToDictionary<TSource, TKey>(this IEnumerable<TSource> enumerable, Func<TSource, TKey> keySelector) => enumerable.ToDictionary<Dictionary<TKey, TSource>, TSource, TKey, TSource>(keySelector, source => source);

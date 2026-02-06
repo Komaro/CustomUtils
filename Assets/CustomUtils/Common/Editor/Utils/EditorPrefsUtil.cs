@@ -55,7 +55,7 @@ public static class EditorPrefsUtil {
 
     public static bool TryGet<TEnum>(string key, out TEnum value, TEnum defaultValue = default) where TEnum : struct, Enum {
         try {
-            if (TryGet(key, out int rawValue) && EnumUtil.TryConvert<TEnum>(rawValue, out value)) {
+            if (TryGet(key, out int rawValue) && EnumUtil.TryConvert(rawValue, out value)) {
                 return true;
             }
         } catch (Exception ex) {

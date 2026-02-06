@@ -232,8 +232,8 @@ public static class SystemUtil {
         return false;
     }
 
-    public static bool TryFindFiles(out string[] files, string directoryPath, string searchPattern, SearchOption searchOption = SearchOption.TopDirectoryOnly) => (files = FindFiles(directoryPath, searchPattern, searchOption)) != Array.Empty<string>();
-    
+    public static bool TryFindFiles(out string[] files, string directoryPath, string searchPattern, SearchOption searchOption = SearchOption.TopDirectoryOnly) => (files = FindFiles(directoryPath, searchPattern, searchOption)) != Array.Empty<string>() && files.IsNotEmpty();
+
     public static string[] FindFiles(string directoryPath, string searchPattern, SearchOption searchOption = SearchOption.TopDirectoryOnly) {
         try {
             if (Directory.Exists(directoryPath)) {
@@ -406,17 +406,10 @@ public static class SystemUtil {
         return false;
     }
 
-    public static bool IsWindowsBasePlatform() {
-        switch (Environment.OSVersion.Platform) {
-            case PlatformID.Win32NT:
-            case PlatformID.Win32S:
-            case PlatformID.Win32Windows:
-            case PlatformID.WinCE:
-                return true;
-        }
-
-        return false;
-    }
+    public static bool IsWindowsBasePlatform() => Environment.OSVersion.Platform switch {
+        PlatformID.Win32NT or PlatformID.Win32S or PlatformID.Win32Windows or PlatformID.WinCE => true,
+        _ => false
+    };
 }
 
 public enum VALID_EXECUTE_EXTENSION {

@@ -10,9 +10,6 @@ public static class ReflectionExtension {
 
     public static string GetAlias(this MemberInfo info, string defaultAlias = "") => info.TryGetCustomAttribute<AliasAttribute>(out var attribute) ? attribute.alias : string.IsNullOrEmpty(defaultAlias) ? info.Name : defaultAlias;
 
-    // public static string GetAlias(this Type type, string defaultAlias = "") => type.TryGetCustomAttribute<AliasAttribute>(out var attribute) ? attribute.alias : string.IsNullOrEmpty(defaultAlias) ? type.Name : defaultAlias;
-    // public static string GetAlias(this MethodInfo info, string defaultAlias = "") => info.TryGetCustomAttribute<AliasAttribute>(out var attribute) ? attribute.alias : string.IsNullOrEmpty(defaultAlias) ? info.Name : defaultAlias;
-
     #region [Info]
     
     public static bool TryGetFieldInfo(this Type type, string name, out FieldInfo info) => (info = type.GetField(name)) != null;
@@ -24,7 +21,8 @@ public static class ReflectionExtension {
     public static bool TryGetPropertyInfo(this Type type, string name, out PropertyInfo info) => (info = type.GetProperty(name)) != null;
     public static bool TryGetPropertyInfo(this Type type, string name, BindingFlags bindingFlags, out PropertyInfo info) => (info = type.GetProperty(name, bindingFlags)) != null;
 
-    public static bool TryGetGetGetMethod(this PropertyInfo propertyInfo, out MethodInfo methodInfo) => (methodInfo = propertyInfo.GetGetMethod()) != null;
+    public static bool TryGetGetMethod(this PropertyInfo propertyInfo, out MethodInfo methodInfo) => (methodInfo = propertyInfo.GetGetMethod()) != null;
+    public static bool TryGetSetMethod(this PropertyInfo propertyInfo, out MethodInfo methodInfo) => (methodInfo = propertyInfo.GetSetMethod()) != null;
     
     #endregion
 

@@ -99,4 +99,49 @@ public class PerformanceTestRunner {
             addValue += 1;
         }).WarmupCount(2).MeasurementCount(measurementCount).IterationsPerMeasurement(count).SampleGroup(addGroup).CleanUp(() => addValue = 0).Run();
     }
+
+    [Performance]
+    [TestCase(10, 100, 100)]
+    public void DictionaryPerformanceTest(int measurementCount, int count, int length) {
+        var stringGroup = new SampleGroup("String", SampleUnit.Microsecond);
+        var intGroup = new SampleGroup("Int", SampleUnit.Microsecond);
+
+        var stringDictionary = new Dictionary<string, string>();
+        for (var i = 0; i < length; i++) {
+            var randomKey = RandomUtil.GetRandom(100);
+            stringDictionary.AutoAdd(randomKey, randomKey);
+        }
+
+        var intDictionary = new Dictionary<int, int>();
+        for (var i = 0; i < length; i++) {
+            var randomKey = RandomUtil.GetRandom(1, 1000000);
+            intDictionary.Add(randomKey, randomKey);
+        }
+
+        var stringKey = RandomUtil.GetRandom(100);
+        Measure.Method(() => _ = stringDictionary.ContainsKey(stringKey)).WarmupCount(1).MeasurementCount(measurementCount).IterationsPerMeasurement(count).GC().SampleGroup(stringGroup).Run();
+
+        var intKey = RandomUtil.GetRandom(1, 1000000);
+        Measure.Method(() => _ = intDictionary.ContainsKey(intKey)).WarmupCount(1).MeasurementCount(measurementCount).IterationsPerMeasurement(count).GC().SampleGroup(intGroup).Run();
+    }
+
+    [Performance]
+    [TestCase(10, 1000)]
+    [TestCase(10, 2000)]
+    [TestCase(10, 5000)]
+    [TestCase(10, 10000)]
+    [TestCase(10, 100000)]
+    public void GetHashPerformanceTest(int measurementCount, int count) {
+        var stringGroup = new SampleGroup("String");
+        var intGroup = new SampleGroup("Int");
+        
+        var stringEqualityComparer = EqualityComparer<string>.Default;
+        var intEqualityComparer = EqualityComparer<int>.Default;
+
+        var stringKey = RandomUtil.GetRandom(50);
+        var intKey = 1;
+        
+        Measure.Method(() => _ = stringEqualityComparer.GetHashCode(stringKey)).WarmupCount(1).MeasurementCount(measurementCount).IterationsPerMeasurement(count).SampleGroup(stringGroup).Run();
+        Measure.Method(() => _ = intEqualityComparer.GetHashCode(intKey)).WarmupCount(1).MeasurementCount(measurementCount).IterationsPerMeasurement(count).SampleGroup(intGroup).Run();
+    }
 }

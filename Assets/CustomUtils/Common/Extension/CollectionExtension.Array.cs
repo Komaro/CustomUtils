@@ -82,8 +82,30 @@ public static partial class CollectionExtension {
         return default;
     }
 
+    public static IEnumerable<T> GetRandoms<T>(this T[] array, int count = 10) {
+        if (array is not { Length: > 0 }) {
+            yield break;
+        }
+
+        while (--count > 0) {
+            yield return array[RandomUtil.GetRandom(0, array.Length)];
+        }
+    }
+
+    public static bool IsNotEmpty<TValue>(this TValue[] array) {
+        try {
+            array.ThrowIfNull(nameof(array));
+            return array.Length > 0;
+        } catch (Exception ex) {
+            Logger.TraceError(ex);
+        }
+
+        return false;
+    }
+    
     public static bool IsEmpty<TValue>(this TValue[] array) {
         try {
+            array.ThrowIfNull(nameof(array));
             return array.Length <= 0;
         } catch (Exception ex) {
             Logger.TraceError(ex);

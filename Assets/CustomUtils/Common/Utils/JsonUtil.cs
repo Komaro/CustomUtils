@@ -39,6 +39,17 @@ public static class JsonUtil {
         return false;
     }
 
+    public static bool TryPopulate(string text, object obj) {
+        try {
+            JsonConvert.PopulateObject(text, obj);
+            return true;
+        } catch (Exception ex) {
+            Logger.TraceError(ex);
+        }
+
+        return false;
+    }
+
     public static bool TryLoadJsonOrDecrypt<T>(out T json, string path, string key, ENCRYPT_TYPE type = default) {
         json = LoadJsonOrDecrypt<T>(path, key, type);
         return json != null;
@@ -94,6 +105,21 @@ public static class JsonUtil {
         return default;
     }
 
+    public static void LoadPopulateJson<T>(string path, T target) {
+        try {
+            path = FixJsonExtensionPath(path);
+            if (File.Exists(path) == false) {
+                throw new FileNotFoundException();
+            }
+
+            if (IOUtil.TryReadText(path, out var text)) {
+                JsonConvert.PopulateObject(text, target);
+            }
+        } catch (Exception ex) {
+            Logger.TraceError(ex);
+        }
+    }
+    
     public static void SaveJson(string path, JObject json) {
         try {
             if (json == null) {
@@ -107,13 +133,13 @@ public static class JsonUtil {
         }
     }
 
-    public static void SaveJson(string path, object ob) {
+    public static void SaveJson(string path, object obj) {
         try {
-            if (ob == null) {
-                throw new NullReferenceException($"{nameof(ob)} is Null");
+            if (obj == null) {
+                throw new NullReferenceException($"{nameof(obj)} is Null");
             }
             
-            var json = JsonConvert.SerializeObject(ob, Formatting.Indented);
+            var json = JsonConvert.SerializeObject(obj, Formatting.Indented);
             if (string.IsNullOrEmpty(json)) {
                 throw new JsonException("Serialization failed. An empty result was returned.");
             }
@@ -161,7 +187,7 @@ public static class JsonUtil {
         }
     }
 
-    public static JObject LoadJObject(string path) {
+    public static JObject LoadJObject(string path, JsonLoadSettings settings = null) {
         try {
             path = FixJsonExtensionPath(path);
             if (File.Exists(path) == false) {
@@ -170,13 +196,13 @@ public static class JsonUtil {
             }
 
             if (IOUtil.TryReadText(path, out var jsonText)) {
-                return JObject.Parse(jsonText);
+                return JObject.Parse(jsonText, settings);
             }
         } catch (Exception ex) {
             Logger.TraceError(ex);
         }
 
-        return default;
+        return null;
     }
 
     public static string FixJsonExtensionPath(string path) => Path.HasExtension(path) == false ? Path.ChangeExtension(path, Constants.Extension.JSON) : path;

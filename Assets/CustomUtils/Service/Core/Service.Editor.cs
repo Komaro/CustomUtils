@@ -9,8 +9,6 @@ public static partial class Service {
         if (EditorApplication.isPlayingOrWillChangePlaymode == false) {
             Initialize();
         }
-        
-        StartService(DEFAULT_SERVICE_TYPE.START_MAIN_THREAD);
     }
 }
 

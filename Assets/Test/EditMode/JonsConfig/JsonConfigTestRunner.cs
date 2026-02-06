@@ -2,7 +2,6 @@
 using System.IO;
 using System.Linq;
 using NUnit.Framework;
-using UnityEditor.VersionControl;
 using Task = System.Threading.Tasks.Task;
 
 [Category(TestConstants.Category.FUNCTIONAL)]

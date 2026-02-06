@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-[Priority(10)]
+[Priority(11)]
 public class SampleJsonGameDBProvider : GameDBProvider {
 
     private Dictionary<Type, object> dbDic = new();
+
+    public override int Count => dbDic.Count;
 
     public override bool Init(IEnumerable<Type> dbTypes) {
         var typeDic = dbTypes.ToDictionary(type => type.Name, type => type);

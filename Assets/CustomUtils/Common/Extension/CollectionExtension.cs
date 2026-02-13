@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.Immutable;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
@@ -13,7 +12,7 @@ using UnityEngine;
 public static partial class CollectionExtension {
 
     #region [Common]
-
+    
     public static IEnumerator CloneEnumerator(this ICollection collection) => new ArrayList(collection).GetEnumerator();
     public static IEnumerable<TSource> OrderBy<TSource, TKey>(this IEnumerable<TSource> enumerable, Func<TSource, TKey> keySelector, bool isAscending) => isAscending ? enumerable.OrderBy(keySelector) : enumerable.OrderByDescending(keySelector) as IEnumerable<TSource>;
     public static IEnumerable<TResult> SelectNotNull<TSource, TResult>(this IEnumerable<TSource> enumerable, Func<TSource, TResult> selector) where TResult : class => enumerable.Select(selector).WhereNotNull();
@@ -232,7 +231,7 @@ public static partial class CollectionExtension {
 
     #region [Queue]
 
-    public static void Clear<T>(this Queue<T> queue, [NotNull]Func<T, bool> match) {
+    public static void Clear<T>(this Queue<T> queue, [System.Diagnostics.CodeAnalysis.NotNull]Func<T, bool> match) {
         if (match == null) {
             return;
         }

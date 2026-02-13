@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using UnityEngine;
 
@@ -278,14 +280,19 @@ public static class SystemUtil {
             Logger.TraceError(ex);
         }
     }
-    
-    public static DirectoryInfo CreateDirectory(string path) {
+
+    public static DirectoryInfo CreateDirectory(string path, bool isHidden = false) {
         if (Directory.Exists(path) == false) {
-            Logger.TraceLog($"Create Directory || {path}", Color.green);
-            return Directory.CreateDirectory(path);
+            Logger.TraceLog($"Create directory || {path}", Color.green);
+            var info = Directory.CreateDirectory(path);
+            if (isHidden && IsWindowsBasePlatform()) {
+                File.SetAttributes(path, FileAttributes.Hidden);
+            }
+            
+            return info;
         }
         
-        Logger.TraceLog($"Already Directory Path || {path}", Color.yellow);
+        Logger.TraceLog($"Already directory path || {path}", Color.yellow);
         return null;
     }
     

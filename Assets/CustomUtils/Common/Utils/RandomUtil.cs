@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnityEngine.Pool;
 using Random = System.Random;
 using UnityRandom = UnityEngine.Random;
 
@@ -69,7 +70,7 @@ public static class RandomUtil {
             yield return _random.Next(min, max);
         }
     }
-
+    
     public static IEnumerable<TValue> GetRandoms<TValue>(int length, Func<int, TValue> createFunc) {
         CheckRandomCount();
         for (var index = 0; index < length; index++) {

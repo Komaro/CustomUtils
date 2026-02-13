@@ -29,7 +29,7 @@ public static partial class EditorCommon {
         EditorGUI.DrawRect(EditorGUILayout.GetControlRect(false, GUILayout.ExpandHeight(true), GUILayout.Width(2f)), Color.gray);
         GUILayout.Space(rightSpace);
     }
-
+    
     public static bool DrawButton(string text, bool disabled = false, params GUILayoutOption[] options) {
         using (new EditorGUI.DisabledGroupScope(disabled)) {
             return GUILayout.Button(text, options);
@@ -316,6 +316,12 @@ public static partial class EditorCommon {
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static int DrawIntPopup(string label, int selected, string[] displayOptions, int[] optionValues, params GUILayoutOption[] options) => EditorGUILayout.IntPopup(label, selected, displayOptions, optionValues, options);
+    
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void DrawIntPopup(string label, ref int selected, string[] displayOptions, int[] optionValues, params GUILayoutOption[] options) => selected = EditorGUILayout.IntPopup(label, selected, displayOptions, optionValues, options);
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static int DrawTopToolbar(int index, Action<int> onChange = null, params string[] texts) {
         using (new EditorGUILayout.HorizontalScope()) {
             GUILayout.FlexibleSpace();
@@ -525,4 +531,48 @@ public record ToggleDraw {
     public bool HasHeader() => string.IsNullOrEmpty(header) == false;
 
     public override string ToString() => name;
+}
+
+public record IntPopupDrawer {
+
+    public int SelectIndex { get; set; }
+
+    private readonly string _header;
+    
+    private readonly string[] _displayOptions;
+    public string[] DisplayOptions => _displayOptions;
+    
+    private readonly int[] _optionValues;
+    public int[] OptionValues => _optionValues;
+    
+    private readonly Action<int> _onChanged;
+
+    public IntPopupDrawer(int selectIndex, string header, string[] displayOptions, Action<int> onChanged) {
+        SelectIndex = selectIndex;
+        _header = header;
+        _displayOptions = displayOptions;
+        _onChanged = onChanged;
+        
+        _optionValues = new int[displayOptions.Length];
+        _optionValues.IncreaseFill(0, displayOptions.Length);
+    }
+
+    public IntPopupDrawer(int selectIndex, string header, string[] displayOptions, int[] optionValues, Action<int> onChanged) {
+        SelectIndex = selectIndex;
+        _header = header;
+
+        _displayOptions = displayOptions;
+        _optionValues = optionValues;
+        
+        _onChanged = onChanged;
+    }
+
+    public void Draw() {
+        using (var scope = new EditorGUI.ChangeCheckScope()) {
+            SelectIndex = EditorCommon.DrawIntPopup(_header, SelectIndex, _displayOptions, _optionValues);
+            if (scope.changed) {
+                _onChanged?.Invoke(SelectIndex);
+            }
+        }
+    }
 }

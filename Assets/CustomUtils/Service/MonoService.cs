@@ -10,7 +10,7 @@ public class MonoService : IService {
     private ObjectPool<MonoObject> _pool;
 
     void IService.Init() {
-        var go = new GameObject("MonoService") {
+        var go = new GameObject(nameof(MonoService)) {
             hideFlags = HideFlags.HideAndDontSave,
         };
 
@@ -26,6 +26,17 @@ public class MonoService : IService {
     }
     
     void IService.Stop() { }
+
+    void IService.Remove() {
+        if (!_root) {
+            Object.Destroy(_root);
+        }
+
+        if (_pool != null) {
+            _pool.Dispose();
+            _pool = null;
+        }
+    }
 
     public MonoObject Get() => _pool.Get();
     public PooledObject<MonoObject> Get(out MonoObject monoObject) => _pool.Get(out monoObject);
@@ -43,7 +54,6 @@ public class MonoService : IService {
     private void OnDestroy(MonoObject monoObject) => Object.Destroy(monoObject);
 }
 
-// TODO. Active, DeActive 기능 추가 필요
 [TestRequired]
 public class MonoObject : MonoBehaviour {
     

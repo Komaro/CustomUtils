@@ -34,8 +34,8 @@ public class SystemWatcherService : IService {
     public FileSystemWatcher this[SystemWatcherServiceOrder order] => _fileSystemWatcherDic.GetValueOrDefault(order);
 
     public SystemWatcherServiceOrder Start(SystemWatcherServiceOrder order) {
-        if (order == null || order.Invalid()) {
-            Logger.TraceError($"{nameof(order)} is Null or Invalid");
+        if (order == null || order.IsValid() == false) {
+            Logger.TraceError($"{nameof(order)} is null or invalid");
             return order;
         }
 
@@ -51,13 +51,13 @@ public class SystemWatcherService : IService {
         
         watcher.Path = order.path;
         watcher.Filter = order.filter;
-        watcher.NotifyFilter = order.filters;
+        watcher.NotifyFilter = order.notifyFilter;
         watcher.IncludeSubdirectories = order.includeSubDirectories;
         
         AddHandler(watcher, order.handler);
         AddHandler(watcher, order.errorHandler);
         AddHandler(watcher, order.renamedHandler);
-            
+        
         watcher.EndInit();
         watcher.EnableRaisingEvents = true;
         
@@ -65,7 +65,7 @@ public class SystemWatcherService : IService {
     }
 
     public SystemWatcherServiceOrder Stop(SystemWatcherServiceOrder order) {
-        if (order?.Invalid() == false && _fileSystemWatcherDic.TryGetValue(order, out var watcher)) {
+        if (order?.IsValid() == false && _fileSystemWatcherDic.TryGetValue(order, out var watcher)) {
             watcher.EnableRaisingEvents = false;
         }
         
@@ -73,7 +73,7 @@ public class SystemWatcherService : IService {
     }
     
     public void Remove(SystemWatcherServiceOrder order) {
-        if (order?.Invalid() == false) {
+        if (order?.IsValid() == false) {
             _fileSystemWatcherDic.SafeRemove(order, watcher => {
                 watcher.EnableRaisingEvents = false;
                 watcher.Dispose();
@@ -111,7 +111,7 @@ public record SystemWatcherServiceOrder : IEqualityComparer<SystemWatcherService
     
     public string path;
     public string filter;
-    public NotifyFilters filters = NotifyFilters.LastWrite | NotifyFilters.FileName | NotifyFilters.LastAccess;
+    public NotifyFilters notifyFilter = NotifyFilters.LastWrite | NotifyFilters.FileName | NotifyFilters.LastAccess;
     public bool includeSubDirectories = false;
     
     public FileSystemEventHandler handler;
@@ -128,21 +128,9 @@ public record SystemWatcherServiceOrder : IEqualityComparer<SystemWatcherService
     
     public SystemWatcherServiceOrder(string path, string filter, FileSystemEventHandler handler) : this(path, handler) => this.filter = filter;
 
-    public bool Invalid() {
-        if (string.IsNullOrEmpty(path)) {
-            return true;
-        }
-        
-        return false;
-    }
-
-    public bool Equals(SystemWatcherServiceOrder xOrder, SystemWatcherServiceOrder yOrder) {
-        if (xOrder == null || yOrder == null) {
-            return false;
-        }
-
-        return xOrder.path.EqualsFast(yOrder.path) && xOrder.filter.EqualsFast(yOrder.filter);
-    }
+    public bool IsValid() => string.IsNullOrEmpty(path) == false;
     
+    // TODO. Record 타입은 기본적으로 Equals 처리시 각 Filed 끼리 체크하도록 처리됨. 여기서 path, filter 만 따로 처리해서 비교하는 건 정확도도 낮고 중복 구현으로 보일 수 있음. 확장 혹은 IEqualityComparer 제거를 통해 정확도를 높이면서 코드를 정리할 필요성이 있음
+    public bool Equals(SystemWatcherServiceOrder xOrder, SystemWatcherServiceOrder yOrder) => xOrder != null && yOrder != null && xOrder.path.EqualsFast(yOrder.path) && xOrder.filter.EqualsFast(yOrder.filter);
     public int GetHashCode(SystemWatcherServiceOrder order) => HashCode.Combine(order.path, order.filter);
 }

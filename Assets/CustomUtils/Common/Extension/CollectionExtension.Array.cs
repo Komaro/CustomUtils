@@ -5,6 +5,22 @@ using System.Runtime.CompilerServices;
 
 public static partial class CollectionExtension {
 
+    public static void IncreaseFill(this int[] array, int startIndex, int count) {
+        array.ThrowIfNull(nameof(array));
+        if (array.IsValidIndex(startIndex) == false || count <= 0) {
+            throw new IndexOutOfRangeException();
+        }
+
+        var span = array.AsSpan(startIndex);
+        for (var index = 0; index < span.Length; index++) {
+            if (count <= index) {
+                break;
+            }
+
+            span[index] = index;
+        }
+    }
+    
     public static List<T> ToList<T>(this Array array) {
         var list = new List<T>();
         foreach (var obj in array) {

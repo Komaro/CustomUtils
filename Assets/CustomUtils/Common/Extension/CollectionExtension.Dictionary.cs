@@ -21,14 +21,22 @@ public static partial class CollectionExtension {
                 removeSet.Add(key);
             }
         }
-
-        removeSet.ForEach(key => workDictionary.Remove((TKey) key));
-        sourceSet.ForEach(key => workDictionary.TryAdd<TKey, TValue>(key, creator.Invoke(key)));
+        
+        foreach (var key in removeSet) {
+            workDictionary.Remove(key);
+        }
+        
+        foreach (var key in sourceSet) {
+            workDictionary.TryAdd(key, creator(key));
+        }
     }
 
     public static void SafeClear<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, Action<TKey, TValue> releaseAction) {
         try {
-            dictionary.ForEach(x => releaseAction?.Invoke(x.Key, x.Value));
+            foreach (var (key, value) in dictionary) {
+                releaseAction?.Invoke(key, value);
+            }
+            
             dictionary.Clear();
         } catch (Exception ex) {
             Logger.TraceError(ex);
@@ -37,7 +45,10 @@ public static partial class CollectionExtension {
 
     public static void SafeClear<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, Action<TValue> releaseAction) {
         try {
-            dictionary.Values.ForEach(x => releaseAction?.Invoke(x));
+            foreach (var value in dictionary.Values) {
+                releaseAction?.Invoke(value);
+            }
+            
             dictionary.Clear();
         } catch (Exception ex) {
             Logger.TraceError(ex);
@@ -46,14 +57,16 @@ public static partial class CollectionExtension {
 
     public static void SafeClear<TKey, TValue>(this IDictionary<TKey, TValue> dictionary) where TValue : IDisposable {
         try {
-            dictionary.Values.ForEach(x => x.Dispose());
+            foreach (var value in dictionary.Values) {
+                value.Dispose();
+            }
+            
             dictionary.Clear();
         } catch (Exception ex) {
             Logger.TraceError(ex);
         }
     }
     
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private static IDictionary<TKey, TCollection> AutoAdd<TCollection, TKey, TValue>(this IDictionary<TKey, TCollection> dictionary, TKey key) where TCollection : IEnumerable<TValue>, new() {
         if (dictionary.ContainsKey(key) == false) {
             dictionary.Add(key, new TCollection());
@@ -62,7 +75,6 @@ public static partial class CollectionExtension {
         return dictionary;
     }
     
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private static IDictionary<TKey, TDictionary> AutoAdd<TDictionary, TKey, TIKey, TValue>(this IDictionary<TKey, TDictionary> dictionary, TKey key) where TDictionary : IDictionary<TIKey, TValue>, new() {
         if (dictionary.ContainsKey(key) == false) {
             dictionary.Add(key, new TDictionary());
@@ -71,7 +83,8 @@ public static partial class CollectionExtension {
         return dictionary;
     }
 
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    // TODO. 어차피 반드시 덮어씌우게 되는데 확장해서 처리할 필요성도 존재할 필요도 없음
+    [Obsolete("Use dictionary[key] = value")]
     public static void AutoAdd<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key, TValue value) {
         if (dictionary.ContainsKey(key)) {
             dictionary[key] = value;
@@ -119,8 +132,7 @@ public static partial class CollectionExtension {
 
     public static TValue GetOrAdd<TKey, TValue>(this Dictionary<TKey, TValue> dictionary, TKey key) where TValue : new() {
         if (dictionary.TryGetValue(key, out var value) == false) {
-            value = new TValue();
-            dictionary.Add(key, value);
+            dictionary.Add(key, value = new TValue());
         }
 
         return value;
@@ -128,8 +140,7 @@ public static partial class CollectionExtension {
 
     public static TValue GetOrAdd<TKey, TValue>(this Dictionary<TKey, TValue> dictionary, TKey key, Func<TValue> creator) {
         if (dictionary.TryGetValue(key, out var value) == false) {
-            value = creator.Invoke();
-            dictionary.Add(key, value);
+            dictionary.Add(key, value = creator.Invoke());
         }
         
         return value;
@@ -138,10 +149,9 @@ public static partial class CollectionExtension {
     public static void AddOrUpdate<TKey, TValue>(this Dictionary<TKey, TValue> dictionary, TKey key, Func<TValue> creator, Action<TKey, TValue> updater) {
         if (dictionary.TryGetValue(key, out var value)) {
             updater.Invoke(key, value);
-            return;
+        } else {
+            dictionary.Add(key, creator.Invoke());
         }
-        
-        dictionary.Add(key, creator.Invoke());
     }
 
     public static void AutoCountingAdd<TKey, TValue>(this Dictionary<TKey, Dictionary<int, TValue>> dictionary, TKey key, TValue value) {
@@ -153,34 +163,26 @@ public static partial class CollectionExtension {
     }
 
     public static void AutoIncreaseAdd<TKey>(this IDictionary<TKey, int> dictionary, TKey key) {
-        if (dictionary.ContainsKey(key)) {
+        if (dictionary.TryAdd(key, 1) == false) {
             dictionary[key] += 1;
-        } else {
-            dictionary.Add(key, 1);
         }
     }
 
     public static void AutoAccumulateAdd<TKey>(this IDictionary<TKey, int> dictionary, TKey key, int value) {
-        if (dictionary.ContainsKey(key)) {
+        if (dictionary.TryAdd(key, value) == false) {
             dictionary[key] += value;
-        } else {
-            dictionary.Add(key, value);
         }
     }
 
     public static void AutoAccumulateAdd<TKey>(this IDictionary<TKey, long> dictionary, TKey key, long value) {
-        if (dictionary.ContainsKey(key)) {
+        if (dictionary.TryAdd(key, value) == false) {
             dictionary[key] += value;
-        } else {
-            dictionary.Add(key, value);
         }
     }
 
     public static void AutoAccumulateAdd<TKey>(this IDictionary<TKey, double> dictionary, TKey key, double value) {
-        if (dictionary.ContainsKey(key)) {
+        if (dictionary.TryAdd(key, value) == false) {
             dictionary[key] += value;
-        } else {
-            dictionary.Add(key, value);
         }
     }
 
@@ -192,6 +194,8 @@ public static partial class CollectionExtension {
         }
     }
 
+    // TODO. 필요 없음
+    [Obsolete("Use Remove")]
     public static void AutoRemove<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key) {
         if (dictionary.ContainsKey(key)) {
             dictionary.Remove(key);
@@ -199,16 +203,15 @@ public static partial class CollectionExtension {
     }
 
     public static void SafeRemove<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key, Action<TValue> releaseAction) {
-        if (dictionary.TryGetValue(key, out var value)) {
+        if (dictionary.Remove(key, out var value)) {
             releaseAction?.Invoke(value);
-            dictionary.Remove(key);
         }
     }
 
     public static void SafeRemove<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key) where TValue : IDisposable {
-        if (dictionary.TryGetValue(key, out var value)) {
+        dictionary.ThrowIfNull();
+        if (dictionary.Remove(key, out var value)) {
             value.Dispose();
-            dictionary.Remove(key);
         }
     }
 
@@ -224,26 +227,39 @@ public static partial class CollectionExtension {
     }
     
     public static bool TryGetValue<TKey, TIKey, TValue>(this IDictionary<TKey, Dictionary<TIKey, TValue>> dictionary, TKey outKey, TIKey innerKey, out TValue outValue) {
-        outValue = default;
-        return dictionary.TryGetValue(outKey, out var innerDic) && innerDic.TryGetValue(innerKey, out outValue);
+        if (dictionary.TryGetValue(outKey, out var innerDic) == false) {
+            outValue = default;
+            return false;
+        }
+
+        return innerDic.TryGetValue(innerKey, out outValue);
     }
     
-    public static bool TryFindValue<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, out TValue value, Func<TValue, bool> match) {
-        value = dictionary.FindValue(match);
-        return value != null;
-    }
+    public static bool TryFindValue<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, out TValue value, Func<TValue, bool> match) => (value = dictionary.FindValue(match)) != null;
 
     public static TValue FindValue<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, Func<TValue, bool> match) {
-        var pair = dictionary.FirstOrDefault(x => match?.Invoke(x.Value) ?? false);
-        return pair.Equals(default(KeyValuePair<TKey, TValue>)) ? default : pair.Value;
+        dictionary.ThrowIfNull(nameof(dictionary));
+        foreach (var value in dictionary.Values) {
+            if (match?.Invoke(value) ?? false) {
+                return value;
+            }
+        }
+
+        return default;
     }
 
-    public static bool TryFindAllValueList<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, out List<TValue> list, Func<TValue, bool> match) {
-        list = dictionary.FindAllValueList(match);
-        return list is { Count: > 0 };
-    }
+    public static bool TryFindAllValueList<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, out List<TValue> list, Func<TValue, bool> match) => (list = dictionary.FindAllValueList(match)) is { Count: > 0 };
 
-    public static List<TValue> FindAllValueList<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, Func<TValue, bool> match) => dictionary.Where(x => match?.Invoke(x.Value) ?? false).Select(x => x.Value).ToList();
+    public static List<TValue> FindAllValueList<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, Func<TValue, bool> match) => dictionary.Values.Where(value => match?.Invoke(value) ?? false).ToList();
+
+    public static IEnumerable<TValue> FindValues<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, Func<TValue, bool> match) {
+        dictionary.ThrowIfNull();
+        foreach (var value in dictionary.Values) {
+            if (match?.Invoke(value) ?? false) {
+                yield return value;
+            }
+        }
+    } 
 
     public static int FindKeyIndex<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key) {
         var index = 0;
@@ -258,10 +274,7 @@ public static partial class CollectionExtension {
         return -1;
     }
 
-    public static bool TryFindKeyIndex<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key, out int index) {
-        index = FindKeyIndex(dictionary, key);
-        return index >= 0;
-    }
+    public static bool TryFindKeyIndex<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key, out int index) => (index = dictionary.FindKeyIndex(key)) >= 0;
 
     public static TKey FindKey<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, Predicate<TValue> match) {
         foreach (var pair in dictionary) {
@@ -289,18 +302,16 @@ public static partial class CollectionExtension {
         return true;
     }
 
-    public static bool TryGetRandomKey<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, out TKey key) {
-        key = dictionary.GetRandomKey();
-        return key != null;
-    }
+    // TODO. To Expansive
+    public static bool TryGetRandomKey<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, out TKey key) => (key = dictionary.GetRandomKey()) != null;
 
+    // TODO. To Expansive
     public static TKey GetRandomKey<TKey, TValue>(this IDictionary<TKey, TValue> dictionary) => dictionary.Keys.ToList().Shuffle().FirstOrDefault();
+    
+    // TODO. To Expansive
+    public static bool TryGetRandomValue<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, out TValue value) => (value = dictionary.GetRandomValue()) != null;
 
-    public static bool TryGetRandomValue<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, out TValue value) {
-        value = dictionary.GetRandomValue();
-        return value != null;
-    }
-
+    // TODO. To Expansive
     public static TValue GetRandomValue<TKey, TValue>(this IDictionary<TKey, TValue> dictionary) => dictionary.Values.ToList().Shuffle().FirstOrDefault();
 
     public static IEnumerable<TValue> ToValues<TKey, TValue>(this IEnumerable<KeyValuePair<TKey, TValue>> enumerable) {

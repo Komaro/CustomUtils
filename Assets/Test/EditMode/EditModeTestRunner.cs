@@ -161,6 +161,18 @@ public class EditModeTestRunner {
         }
     }
 
+    [Test]
+    public void IntPopupDrawerTest() {
+        var stringArray = RandomUtil.GetRandoms(20, index => RandomUtil.GetRandom(10)).ToArray();
+        var popup = new IntPopupDrawer(0, "Temp Header", stringArray, index => Logger.TraceLog(index.ToString()));
+        Assert.IsNotNull(popup);
+        Assert.IsNotEmpty(popup.DisplayOptions);
+        Assert.IsNotEmpty(popup.OptionValues);
+
+        Logger.TraceLog(popup.DisplayOptions.ToStringCollection());
+        Logger.TraceLog(popup.OptionValues.ToStringCollection());
+    }
+
     #region [Json]
 
     [TestCase(2500)]

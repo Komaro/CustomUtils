@@ -27,7 +27,7 @@ public abstract class Command {
     #endregion
     
     public abstract Task ExecuteAsync();
-    public virtual Task ExecuteAsync(ref CancellationToken token) => Task.CompletedTask;
+    public virtual Task ExecuteAsync(CancellationToken token) => Task.CompletedTask;
     public virtual Task UndoAsync() => Task.CompletedTask;
 
     static Command() => _commandTypeCacheDic = ReflectionProvider.GetSubTypesOfType<Command>().ToDictionary(type => type.TryGetCustomAttribute<CommandAliasAttribute>(out var attribute) && string.IsNullOrEmpty(attribute.Alias) == false ? attribute.Alias : type.Name, type => type);

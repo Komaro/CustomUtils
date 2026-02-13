@@ -1,6 +1,7 @@
 using UnityEditor;
 using System;
 using Newtonsoft.Json;
+using UnityEngine;
 
 // TODO.
 public class EditorKeyGenerator : EditorService<EditorKeyGenerator>
@@ -10,11 +11,11 @@ public class EditorKeyGenerator : EditorService<EditorKeyGenerator>
 
     private KeyGeneratorDrawer _drawer;
     
-    [MenuItem("Service/Native/EditorKeyGenerator")]
+    [MenuItem("Service/Security/" + nameof(EditorKeyGenerator))]
     public static void OpenWindow() => Window.Show();
 
     protected override void Refresh() {
-        if (HasOpenInstances<EditorKeyGenerator>()) {
+        if (HasOpenInstances()) {
             _drawer ??= new KeyGeneratorDrawer(Window);
             _drawer.CacheRefresh();
         }
@@ -42,9 +43,12 @@ public class KeyGeneratorDrawer : EditorAutoConfigDrawer<KeyGeneratorConfig, Key
 
         EditorCommon.DrawEnumPopup("Generator", ref config.generatorType);
         EditorCommon.DrawLabelTextField("Seed", ref config.seed);
-        EditorCommon.DrawLabelIntField("Length", ref config.length);
         
-        if (EditorCommon.DrawButton("Generate", string.IsNullOrEmpty(config.seed) && config.length > 0)) {
+        if (config.generatorType != KEY_GENERATOR_TYPE.MD5) {
+            EditorCommon.DrawLabelIntField("Length", ref config.length);
+        }
+        
+        if (EditorCommon.DrawButton("Generate", string.IsNullOrEmpty(config.seed) && config.length > 0, GUILayout.Height(35f))) {
             var bytes = config.generatorType switch {
                 KEY_GENERATOR_TYPE.MD5 => EncryptUtil.GetMD5Bytes(config.seed),
                 KEY_GENERATOR_TYPE.SHA1 => EncryptUtil.GetSHA1LimitBytes(config.seed, config.length),
@@ -66,8 +70,8 @@ public class KeyGeneratorDrawer : EditorAutoConfigDrawer<KeyGeneratorConfig, Key
             using (new EditorGUILayout.VerticalScope(Constants.Draw.BOX)) {
                 EditorCommon.DrawWideTextArea("Raw", config.generatedKey, 80f, Constants.Draw.CLIPPING_TEXT_AREA);
                 EditorCommon.DrawWideTextArea("Hex", config.generatedHexKey, 80f, Constants.Draw.CLIPPING_TEXT_AREA);
-                if (EditorCommon.DrawButton("Copy")) {
-                    // TODO.
+                if (GUILayout.Button("Copy Generated Key", GUILayout.Height(35f))) {
+                    EditorGUIUtility.systemCopyBuffer = config.generatedKey;
                 }
             }
         }

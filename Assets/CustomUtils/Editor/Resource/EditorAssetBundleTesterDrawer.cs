@@ -32,7 +32,7 @@ public partial class EditorAssetBundleTesterDrawer : EditorResourceDrawer<AssetB
 
     public EditorAssetBundleTesterDrawer(EditorWindow window) : base(window) {
         _infoAutoTrackingOrder = new(Constants.Extension.JSON_FILTER) {
-            filters = NotifyFilters.CreationTime | NotifyFilters.LastWrite | NotifyFilters.Size | NotifyFilters.FileName,
+            notifyFilter = NotifyFilters.CreationTime | NotifyFilters.LastWrite | NotifyFilters.Size | NotifyFilters.FileName,
             includeSubDirectories = true,
             handler = OnFileSystemEventHandler
         };

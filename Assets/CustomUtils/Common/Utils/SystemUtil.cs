@@ -194,7 +194,8 @@ public static class SystemUtil {
         StringUtil.StringBuilderPool.Get(out var stdOutBuilder);
         StringUtil.StringBuilderPool.Get(out var stdErrorBuilder);
         try {
-            using var process = new Process { StartInfo = startInfo };
+            using var process = new Process();
+            process.StartInfo = startInfo;
             process.Start();
 
             while (process.StandardOutput.EndOfStream == false) {

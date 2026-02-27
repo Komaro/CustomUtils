@@ -55,7 +55,7 @@ public class GameObjectPoolService : IService {
     public GameObject Get(string name) => _poolDic.GetOrAdd(name, CreatePool)?.Get();
 
     public void Release(GameObject go) {
-        if (go == null) {
+        if (!go) {
             Logger.TraceError($"{nameof(go)}({go.name}) is null");
             return;
         }
@@ -87,6 +87,7 @@ public class GameObjectPoolService : IService {
     public int GetMaxSize(string name) => _poolDic.TryGetValue(name, out var pool) ? pool.MaxSize : 0;
 } 
 
+// TODO. Prefab을 수정하는 큰 하자가 존재함. UnitTest에서 걸리지지 않은 케이스
 public record GameObjectPoolBag : IDisposable {
 
     private readonly GameObject _prefab;
@@ -101,10 +102,10 @@ public record GameObjectPoolBag : IDisposable {
     
     public GameObjectPoolBag(GameObject root, string name, int max) {
         _prefab = Service.GetService<ResourceService>().Instantiate(name);
-        if (_prefab != null) {
+        if (_prefab) {
             _prefab.name = name;
             var pool = _prefab.GetOrAddComponent<GameObjectPool>();
-            if (pool != null) {
+            if (pool) {
                 pool.SetName(name);
             }
             
@@ -124,8 +125,14 @@ public record GameObjectPoolBag : IDisposable {
 
     public void Dispose() {
         _pool?.Dispose();
-        Object.Destroy(_prefab);
-        Object.Destroy(_poolRoot);
+
+        if (_prefab) {
+            Object.Destroy(_prefab);
+        }
+
+        if (_poolRoot) {
+            Object.Destroy(_poolRoot);
+        }
     }
 
     public GameObject Get() => _pool?.Get();
@@ -133,10 +140,10 @@ public record GameObjectPoolBag : IDisposable {
     public void Release(GameObject go) => _pool?.Release(go);
     public void Clear() => _pool?.Clear();
 
-    public bool IsValid() => _prefab != null && _prefab.TryGetComponent<GameObjectPool>(out _);
+    public bool IsValid() => _prefab && _prefab.TryGetComponent<GameObjectPool>(out _);
     
     private GameObject OnCreateGameObject() {
-        if (_prefab != null) {
+        if (_prefab) {
             var go = Object.Instantiate(_prefab);
             go.name = $"{go.name}_{_pool.CountActive:D3}"; 
             return go;
@@ -160,6 +167,8 @@ public class GameObjectPool : MonoBehaviour {
     [SerializeReference]
     private string _name;
 
+    private void OnDestroy() => Service.GetService<GameObjectPoolService>().Release(gameObject);
+    
     public void SetName(string name) => _name = name;
     public string GetName() => _name;
 }

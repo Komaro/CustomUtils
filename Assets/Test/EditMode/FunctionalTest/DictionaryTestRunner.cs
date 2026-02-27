@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
+using Unity.PerformanceTesting;
 
 [Category(TestConstants.Category.FUNCTIONAL)]
 public class DictionaryTestRunner {
@@ -93,6 +94,45 @@ public class DictionaryTestRunner {
         Assert.IsFalse(listDic.TryGetValue(randomInt - 1, 1, out randomClass));
         Assert.IsFalse(listDic.TryGetValue(out randomClass, randomInt, value => value.testInt == 0));
         Assert.IsFalse(listDic.TryGetValue(out randomClass, randomInt - 1, value => value.testInt == 0));
+    }
+
+    [Performance]
+    [TestCase(10, 10)]
+    public void DictionaryLoopTest(int measurementCount, int count) {
+        var lookUpSample = new SampleGroup("LookUp", SampleUnit.Microsecond);
+        var lookUpOptimizeSample = new SampleGroup("LookUpOptimize", SampleUnit.Microsecond);
+        var entrySample = new SampleGroup("Entry", SampleUnit.Microsecond);
+        var valueCollectionSample = new SampleGroup("ValueCollection", SampleUnit.Microsecond);
+        
+        var dictionary = new Dictionary<int, int>();
+        foreach (var random in RandomUtil.GetRandoms(1000)) {
+            dictionary.TryAdd(random, RandomUtil.GetRandom(1, 999999));
+        }
+        
+        Measure.Method(() => {
+            var keys = dictionary.Keys.ToList();
+            for (var i = 0; i < keys.Count; i++) {
+                _ = dictionary[i];
+            }
+        }).WarmupCount(2).MeasurementCount(measurementCount).IterationsPerMeasurement(count).SampleGroup(lookUpSample).GC().Run();
+        
+        Measure.Method(() => {
+            foreach (var key in dictionary.Keys) {
+                _ = dictionary[key];
+            }
+        }).WarmupCount(2).MeasurementCount(measurementCount).IterationsPerMeasurement(count).SampleGroup(lookUpOptimizeSample).GC().Run();
+        
+        Measure.Method(() => {
+            foreach (var (_, value) in dictionary) {
+                _ = value;
+            }
+        }).WarmupCount(2).MeasurementCount(measurementCount).IterationsPerMeasurement(count).SampleGroup(entrySample).GC().Run();
+        
+        Measure.Method(() => {
+            foreach (var value in dictionary.Values) {
+                _ = value;
+            }
+        }).WarmupCount(2).MeasurementCount(measurementCount).IterationsPerMeasurement(count).SampleGroup(valueCollectionSample).GC().Run();
     }
 
     private class MultiLevelTestClass {

@@ -12,6 +12,7 @@ public abstract record TreeViewItemData(int Id) {
     public int Id { get; protected set; } = Id;
 }
 
+// TODO. EditorServiceTreeView 와의 통합 및 수정 필요
 [RefactoringRequired("EditorServiceTreeViewItem 종송성 제거 후 대체 예정")]
 public abstract class OptimizeEditorServiceTreeView<TData> : EditorServiceTreeView where TData : TreeViewItemData {
     
@@ -33,7 +34,7 @@ public abstract class OptimizeEditorServiceTreeView<TData> : EditorServiceTreeVi
         isForceReload = true;
         Reload();
         isForceReload = false;
-    } 
+    }
     
     public void Add(TData data) {
         if (dataDic.TryAdd(data.Id, data)) {
@@ -74,13 +75,13 @@ public abstract class OptimizeEditorServiceTreeView<TData> : EditorServiceTreeVi
     }
 
     protected bool TryFindData(TreeViewItem item, out TData data) => (data = FindData(item)) != null;
-    protected TData FindData(TreeViewItem item) => dataDic.TryGetValue(item.id, out var data) ? data : null;
+    protected TData FindData(TreeViewItem item) => dataDic.GetValueOrDefault(item.id);
     
     protected bool TryFindData(int index, out TData data) => (data = FindData(index)) != null;
     protected TData FindData(int index) => itemList.TryFind(index, out var item) && dataDic.TryGetValue(item.id, out var data) ? data : null;
 
     protected bool TryFindDataFromId(int id, out TData data) => (data = FindDataFromId(id)) != null;
-    protected TData FindDataFromId(int id) => dataDic.TryGetValue(id, out var data) ? data : null;
+    protected TData FindDataFromId(int id) => dataDic.GetValueOrDefault(id);
 }
 
 
@@ -158,7 +159,7 @@ public abstract class EditorServiceTreeView : TreeView {
             return true;
         }
 
-        return item.displayName.IndexOf(search, StringComparison.OrdinalIgnoreCase)>= 0;
+        return item.displayName.IndexOf(search, StringComparison.OrdinalIgnoreCase) >= 0;
     }
 
     public static MultiColumnHeaderState.Column CreateColumn(string headerContent, float minWidth = 20f, float maxWidth = 1000000f, TextAlignment textAlignment = TextAlignment.Center) => new() {

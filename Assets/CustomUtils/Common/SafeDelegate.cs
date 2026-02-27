@@ -2,6 +2,8 @@ using System;
 using System.Linq;
 using UnityEngine;
 
+// TODO. to Class and optimize GetInvocationList
+[RefactoringRequired("Need Optimize")]
 public struct SafeDelegate<T> where T : Delegate {
 
     public T Handler { get; private set; }

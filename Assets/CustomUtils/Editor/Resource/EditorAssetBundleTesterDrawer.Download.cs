@@ -286,6 +286,7 @@ public partial class EditorAssetBundleTesterDrawer {
         }
     }
     
+    // TODO. AsyncCustomOperation으로 전환이 가능한지 확인 후 전환
     #region [Progress]
     
     private abstract record AsyncProgressOperation : IDisposable {

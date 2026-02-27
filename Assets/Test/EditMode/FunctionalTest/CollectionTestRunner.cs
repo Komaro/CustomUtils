@@ -86,8 +86,8 @@ public class CollectionTestRunner {
         }).WarmupCount(1).MeasurementCount(measurementCount).IterationsPerMeasurement(count).SampleGroup(copyToGroup).GC().Run();
     }
 
-    [TestCase(10, 100)]
     [Performance]
+    [TestCase(10, 100)]
     public void FindAllPerformanceTest(int measurementCount, int count) {
         var findAllGroup = new SampleGroup("FindAll");
         var whereToArrayGroup = new SampleGroup("WhereToArray");
@@ -146,5 +146,56 @@ public class CollectionTestRunner {
         foreach (var value in list) {
             yield return value;
         }
+    }
+    
+    [Test]
+    public void CircularBufferTest() {
+        var randomArray = RandomUtil.GetRandoms(50).ToArray();
+        var buffer = new CircularBuffer<int>(randomArray);
+        Assert.IsNotNull(buffer);
+        Assert.IsTrue(randomArray.SequenceEqual(buffer));
+        Logger.TraceLog(buffer.ToStringCollection(", "));
+        
+        var randomInt = RandomUtil.GetRandom(1, 99999999);
+        randomArray.AsSpan(1).CopyTo(randomArray.AsSpan());
+        randomArray[^1] = randomInt;
+        
+        buffer.Add(randomInt);
+        
+        Assert.IsTrue(randomArray.SequenceEqual(buffer));
+        Logger.TraceLog(buffer.ToStringCollection(", "));
+        
+        Assert.AreEqual(buffer.GetFirst(), randomArray[0]);
+        Logger.TraceLog($"{buffer.GetFirst()} || {randomArray[0]}");
+        
+        Assert.AreEqual(buffer.Get(49), randomArray[^1]);
+        Logger.TraceLog($"{buffer.Get(49)} || {randomArray[^1]}");
+        
+        Assert.AreEqual(buffer.GetLast(), randomArray[^1]);
+        Logger.TraceLog($"{buffer.GetLast()} || {randomArray[^1]}");
+
+        buffer = new CircularBuffer<int>(10);
+        Assert.IsNotNull(buffer);
+        
+        randomArray = RandomUtil.GetRandoms(RandomUtil.GetRandom(3, 7)).ToArray();
+        Assert.IsNotNull(randomArray);
+        Logger.TraceLog(randomArray.ToStringCollection(", "));
+        
+        buffer.AddRange(randomArray);
+        Assert.AreEqual(buffer.Count, randomArray.Length);
+        
+        Assert.IsTrue(randomArray.SequenceEqual(buffer.GetRange(0, randomArray.Length)));
+        Assert.IsTrue(randomArray.SequenceEqual(buffer.GetRange(0, buffer.Count)));
+        
+        Logger.TraceLog(buffer.ToStringCollection(", "));
+        
+        Assert.IsTrue(buffer.IsValid());
+        
+        buffer.Clear();
+        Assert.IsTrue(buffer.Count == 0);
+        Assert.IsTrue(buffer.All(item => item == 0));
+        Assert.IsFalse(buffer.IsValid());
+        
+        Logger.TraceLog($"{nameof(CircularBufferTest)} success");
     }
 }

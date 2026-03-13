@@ -50,7 +50,7 @@ public class UIService : IService {
     }
 
     private void AttachInitializeProvider() {
-        foreach (var type in ReflectionProvider.GetSubTypesOfType<UIInitializeProvider>().OrderByDescending(type => type.TryGetCustomInheritedAttribute<PriorityAttribute>(out var attribute) ? attribute.priority : 99999)) {
+        foreach (var type in ReflectionProvider.GetSubTypesOfType<UIInitializeProvider>().OrderByDescending(type => type.GetOrderByPriority())) {
             if (SystemUtil.TryCreateInstance<UIInitializeProvider>(out var provider, type) && provider.IsReady()) {
                 _initializeProvider = provider;
             }

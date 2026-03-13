@@ -22,9 +22,9 @@ public class EditorNugetExtractService : EditorService {
     private static readonly Dictionary<string, ExtractPlugin> _extractPluginDic = new();
 
     private static readonly List<Regex> NETSTANDARD_REGEX_LIST = new() {
-        new(string.Format(Constants.Regex.FOLDER_CONTAINS_FORMAT, "netstandard2.1")),
-        new(string.Format(Constants.Regex.FOLDER_CONTAINS_FORMAT, "netstandard2.0")),
-        new(string.Format(Constants.Regex.FOLDER_CONTAINS_FORMAT, "netstandard1.3")),
+        new Regex(string.Format(Constants.Regex.FOLDER_CONTAINS_FORMAT, "netstandard2.1")),
+        new Regex(string.Format(Constants.Regex.FOLDER_CONTAINS_FORMAT, "netstandard2.0")),
+        new Regex(string.Format(Constants.Regex.FOLDER_CONTAINS_FORMAT, "netstandard1.3")),
     };
 
     private const string NUGET_TEMP_FOLDER = ".nuget_temp";

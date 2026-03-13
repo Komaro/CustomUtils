@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using UnityEngine;
 
@@ -116,6 +115,41 @@ public static class SystemUtil {
         } catch (Exception ex) {
             Logger.TraceError(ex);
         }
+    }
+
+    [TestRequired("테스트 환경 조성 후 단위 테스트 진행 필요")]
+    public static void DeleteZipEntry(string zipPath, params string[] keys) => UpdateZipArchive(zipPath, entries => {
+        foreach (var entry in entries) {
+            foreach (var path in keys) {
+                if (entry.FullName.Contains(path)) {
+                    entry.Delete();
+                }
+            }
+        }
+    });
+
+    [TestRequired("테스트 환경 조성 후 단위 테스트 진행 필요")]
+    public static ZipArchive UpdateZipArchive(string zipPath, Action<IEnumerable<ZipArchiveEntry>> onUpdate) {
+        try {
+            zipPath.ThrowIfNull(nameof(zipPath));
+            onUpdate.ThrowIfNull(nameof(onUpdate));
+            if (File.Exists(zipPath) == false) {
+                throw new FileNotFoundException($"{nameof(zipPath)} is missing. Check {nameof(zipPath)} || {zipPath}");
+            }
+
+            using (var zipArchive = ZipFile.Open(zipPath, ZipArchiveMode.Update)) {
+                if (zipArchive == null) {
+                    Logger.TraceError($"{nameof(zipArchive)} is null || {zipPath}");
+                    return null;
+                }
+                
+                onUpdate.Invoke(zipArchive.Entries);
+            }
+        } catch (Exception ex) {
+            Logger.TraceError(ex);
+        }
+
+        return null;
     }
 
     public static void ExecuteScript(string scriptPath, string workPath, params string[] args) {

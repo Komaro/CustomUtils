@@ -95,6 +95,7 @@ public static class ReflectionProvider {
     
     #endregion
 
+    // TODO. 최적화 방안을 강구하거나 제거 필요. Method 정보를 캐싱하기 위해 필요한 메모리 혹은 Alloc 비용이 예상 이상으로 비대함
     #region [Method]
 
     public static bool TryGetAttributeMethodInfos<T>(out IEnumerable<MethodInfo> enumerable) where T : Attribute => (enumerable = GetAttributeMethodInfos<T>())?.Any() ?? false;

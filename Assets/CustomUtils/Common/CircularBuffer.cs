@@ -20,6 +20,8 @@ public class CircularBuffer<T> : IEnumerable<T>, IDisposable {
         Count = _array.Length;
     }
 
+    public T this[int index] => Get(index);
+
     public void Dispose() => _enumerator?.Dispose();
 
     public void Add(T item) {
@@ -37,20 +39,7 @@ public class CircularBuffer<T> : IEnumerable<T>, IDisposable {
         }
     }
 
-    public T Get(int index) {
-        if (Count == 0) {
-            throw new IndexOutOfRangeException();
-        }
-        
-        index = Math.Clamp(index, 0, Count - 1);
-        var realIndex = _writeIndex - Count + index;
-        if (realIndex < 0) {
-            realIndex += _array.Length;
-        }
-        
-        return _array[realIndex];
-    }
-
+    public T Get(int index) => Count == 0 ? throw new IndexOutOfRangeException() : _array[GetRealIndex(index)];
     public T GetFirst() => Get(0);
     public T GetLast() => Get(Count - 1);
 
@@ -71,6 +60,15 @@ public class CircularBuffer<T> : IEnumerable<T>, IDisposable {
     public IEnumerator<T> GetEnumerator() {
         _enumerator.Reset();
         return _enumerator;
+    }
+    
+    private int GetRealIndex(int index) {
+        index = _writeIndex - Count + Math.Clamp(index, 0, Count - 1);
+        if (index < 0) {
+            index += _array.Length;
+        }
+
+        return index;
     }
 
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();

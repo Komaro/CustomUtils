@@ -32,8 +32,8 @@ public class TimeCacheService : IService {
     public void SetRequestTime(Enum type, DateTime time) => _requestTimeTableDic.AutoAdd(type, time);
     public void SetRequestTime<TEnum>(TEnum type, DateTime time) where TEnum : Enum => _requestTimeTableDic.AutoAdd(type, time); 
     
-    public void RemoveRequestTime(Enum type) => _requestTimeTableDic.AutoRemove(type);
-    public void RemoveRequestTime<TEnum>(TEnum type) where TEnum : Enum => _requestTimeTableDic.AutoRemove(type); 
+    public void RemoveRequestTime(Enum type) => _requestTimeTableDic.Remove(type);
+    public void RemoveRequestTime<TEnum>(TEnum type) where TEnum : Enum => _requestTimeTableDic.Remove(type); 
 
     public bool IsOverSeconds(Enum type, float seconds = 300f) => IsOverSeconds(type, seconds, DateTime.Now);
     public bool IsOverSeconds<TEnum>(TEnum type, float seconds = 300) where TEnum : Enum => IsOverSeconds(type, seconds, DateTime.Now);

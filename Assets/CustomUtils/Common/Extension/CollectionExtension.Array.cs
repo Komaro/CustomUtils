@@ -5,12 +5,15 @@ using System.Runtime.CompilerServices;
 
 public static partial class CollectionExtension {
 
+    public static T[] ThrowIfInvalidKey<T>(this T[] array, int index) => array.IsValidIndex(index) == false ? throw new IndexOutOfRangeException($"{nameof(index)} is invalid || Range = 0 ~ {array.Length - 1} || {nameof(index)} = {index}") : array;
+
     public static void IncreaseFill(this int[] array, int startIndex, int count) {
         array.ThrowIfNull(nameof(array));
-        if (array.IsValidIndex(startIndex) == false || count <= 0) {
-            throw new IndexOutOfRangeException();
+        array.ThrowIfInvalidKey(startIndex);
+        if (count <= 0) {
+            return;
         }
-
+        
         var span = array.AsSpan(startIndex);
         for (var index = 0; index < span.Length; index++) {
             if (count <= index) {
@@ -68,6 +71,20 @@ public static partial class CollectionExtension {
         }
 
         return dictionary;
+    }
+
+    public static bool Contains<T>(this T[] array, T value) {
+        if (array == null) {
+            return false;
+        }
+
+        foreach (var item in array) {
+            if (item.Equals(value)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public static bool TryFindIndex<T>(this T[] array, T value, out int index) {

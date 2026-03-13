@@ -63,7 +63,7 @@ public class KeyGeneratorDrawer : EditorAutoConfigDrawer<KeyGeneratorConfig, Key
             Logger.TraceLog(config.generatedKey);
             Logger.TraceLog(config.generatedHexKey);
         }
-        
+
         EditorCommon.DrawSeparator();
 
         if (config.generatedBytes != null && config.generatedBytes.Length > 0) {
@@ -78,8 +78,7 @@ public class KeyGeneratorDrawer : EditorAutoConfigDrawer<KeyGeneratorConfig, Key
         
         // TODO. Native Generator 코드 생성 로직 추가
     }
-    
-    
+
 //     void Generate()
 //     {
 //         byte[] key = HexToBytes(aesKeyHex);

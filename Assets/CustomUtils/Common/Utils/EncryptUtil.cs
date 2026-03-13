@@ -1,12 +1,17 @@
 ﻿using System;
+using System.Buffers;
 using System.IO;
 using System.Security.Cryptography;
+using System.Threading;
+using System.Threading.Tasks;
 
 public static class EncryptUtil {
 
     #region [MD5]
 
     public static string GetMD5(string text) => GetMD5Bytes(text).GetRawString();
+    public static string GetMD5(Stream stream) => GetMD5Bytes(stream).GetRawString();
+    
     public static byte[] GetMD5Bytes(string text) => GetMD5Bytes(text.ToBytes());
 
     public static byte[] GetMD5Bytes(byte[] bytes) {
@@ -20,8 +25,51 @@ public static class EncryptUtil {
         }
     }
 
-    #endregion
+    public static byte[] GetMD5Bytes(Stream stream) {
+        try {
+            using (var md = MD5.Create()) {
+                return md.ComputeHash(stream);
+            }
+        } catch (Exception ex) {
+            Logger.TraceError(ex);
+            return Array.Empty<byte>();
+        }
+    }
 
+    #endregion
+    
+    #region [MD5.Async]
+    
+    public static async Task<string> GetMD5Async(string text, CancellationToken token = default) => (await GetMD5BytesAsync(text, token)).GetRawString();
+    public static async Task<string> GetMD5Async(Stream stream, CancellationToken token = default) => (await GetMD5BytesAsync(stream, token)).GetRawString();
+
+    public static async Task<byte[]> GetMD5BytesAsync(string text, CancellationToken token = default) {
+        using var stream = new MemoryStream(text.ToBytes());
+        return await GetMD5BytesAsync(stream, token);
+    }
+
+    public static async Task<byte[]> GetMD5BytesAsync(Stream stream, CancellationToken token = default) {
+        var buffer = ArrayPool<byte>.Shared.Rent(4096);
+        try {
+            using (var md = MD5.Create()) {
+                int readBytes;
+                while ((readBytes = await stream.ReadAsync(buffer, 0, buffer.Length, token)) > 0) {
+                    md.TransformBlock(buffer, 0, readBytes, null, 0);
+                }
+
+                md.TransformFinalBlock(Array.Empty<byte>(), 0, 0);
+                return md.Hash;
+            }
+        } catch (Exception ex) {
+            Logger.TraceError(ex);
+            return Array.Empty<byte>();
+        } finally {
+            ArrayPool<byte>.Shared.Return(buffer);
+        }
+    }
+    
+    #endregion
+    
     #region [SHA]
 
     public static string GetSHA1(string text) => GetSHA1Bytes(text).GetRawString();

@@ -1,4 +1,4 @@
-﻿using System.Collections.Immutable;
+﻿using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
@@ -6,25 +6,23 @@ public class EditorSystemPathService : EditorService<EditorSystemPathService> {
 
     [MenuItem("Service/System Path Service")]
     private static void OpenWindow() => Window.Open();
-
-    private ImmutableDictionary<string, string> _pathDic;
+    
+    private Dictionary<string, string> _pathDic = new();
 
     protected override void Refresh() {
-        var builder = ImmutableDictionary.CreateBuilder<string, string>();
-        builder.Add(nameof(Application.dataPath), Application.dataPath);
-        builder.Add(nameof(Application.persistentDataPath), Application.persistentDataPath);
-        builder.Add(nameof(Application.consoleLogPath), Application.consoleLogPath);
-        builder.Add(nameof(Application.streamingAssetsPath), Application.streamingAssetsPath);
-        builder.Add(nameof(Application.temporaryCachePath), Application.temporaryCachePath);
-
-        _pathDic = builder.ToImmutable();
+        _pathDic.Clear();
+        _pathDic.Add(nameof(Application.dataPath), Application.dataPath);
+        _pathDic.Add(nameof(Application.persistentDataPath), Application.persistentDataPath);
+        _pathDic.Add(nameof(Application.consoleLogPath), Application.consoleLogPath);
+        _pathDic.Add(nameof(Application.streamingAssetsPath), Application.streamingAssetsPath);
+        _pathDic.Add(nameof(Application.temporaryCachePath), Application.temporaryCachePath);
     }
 
     private void OnGUI() {
         using (new EditorGUILayout.VerticalScope()) {
             if (_pathDic.Count > 0) {
-                foreach (var (pathName, path) in _pathDic) {
-                    EditorCommon.DrawLabelLinkButton(pathName, path, EditorUtility.RevealInFinder, 150f);
+                foreach (var pair in _pathDic) {
+                    EditorCommon.DrawLabelLinkButton(pair.Key, pair.Value, EditorUtility.RevealInFinder, 150f);
                 }
             }
         }

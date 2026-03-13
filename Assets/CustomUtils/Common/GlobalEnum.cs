@@ -89,11 +89,7 @@ public sealed class GlobalEnum<TAttribute> : GlobalEnum, IEnumerable<Enum> where
                 return 0;
             }
 
-            if (xType.TryGetCustomInheritedAttribute<PriorityAttribute>(out var xAttribute) && yType.TryGetCustomInheritedAttribute<PriorityAttribute>(out var yAttribute)) {
-                return xAttribute.priority.CompareTo(yAttribute.priority);
-            }
-            
-            return 0;
+            return xType.TryGetCustomAttribute<PriorityAttribute>(out var xAttribute) && yType.TryGetCustomAttribute<PriorityAttribute>(out var yAttribute) ? xAttribute.priority.CompareTo(yAttribute.priority) : 0;
         }
     }
 }

@@ -2,7 +2,38 @@ using System;
 using System.Linq;
 using UnityEngine;
 
-// TODO. to Class and optimize GetInvocationList
+// TODO. 부분 최적화 샘플
+public class OptimizeSafeDelegate<T> where T : Delegate {
+
+    private T _handler;
+    
+    public T Handler {
+        get => _handler;
+        private set {
+            _handler = value;
+            _isDirty = true;
+        }
+    }
+
+    private Delegate[] _invocationList;
+
+    public Delegate[] InvocationList {
+        get {
+            if (_isDirty) {
+                _invocationList = _handler?.GetInvocationList();
+                _isDirty = false;
+            }
+
+            return _invocationList;
+        }
+    }
+
+    private bool _isDirty;
+
+    public bool Contains(T containsDelegate) => containsDelegate.GetInvocationList().Any(d => InvocationList.Contains(d));
+}
+
+// TODO. GetInvocationList 에 대한 부분적인 최적화가 필요
 [RefactoringRequired("Need Optimize")]
 public struct SafeDelegate<T> where T : Delegate {
 

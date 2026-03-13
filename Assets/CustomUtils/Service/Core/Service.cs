@@ -9,6 +9,8 @@ public static partial class Service {
     private static ImmutableHashSet<Type> _cachedServiceTypeSet;
     private static readonly Dictionary<Type, IService> _serviceDic = new ();
 
+    private static readonly AttributeCacheHelper<ServiceAttribute> _attributeCacheHelper = new();
+    
     private static bool _isInitialized;
     
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterAssembliesLoaded)]
@@ -23,7 +25,7 @@ public static partial class Service {
 
     public static bool StartService(Enum serviceType) => TryGetTypes(serviceType, out var types) && types.All(StartService);
     public static bool StartService(params Enum[] serviceTypes) => TryGetTypes(out var types, serviceTypes) && types.All(StartService);
-    public static bool StartService<TService>() where TService : class, IService, new() => StartService(typeof(TService));
+    public static bool StartService<TService>() where TService : class, IService => StartService(typeof(TService));
 
     public static bool StartService(Type type) {
         if (_serviceDic.TryGetValue(type, out var service) == false && TryCreateService(type, out service) == false) {
@@ -61,7 +63,7 @@ public static partial class Service {
     
     public static bool StopService(Enum serviceType) => TryGetTypes(serviceType, out var types) && types.All(StopService);
     public static bool StopService(params Enum[] serviceTypes) => TryGetTypes(out var types, serviceTypes) && types.All(StopService);
-    public static bool StopService<TService>() where TService : class, IService, new() => StopService(typeof(TService));
+    public static bool StopService<TService>() where TService : class, IService => StopService(typeof(TService));
 
     public static bool StopService(Type type) {
         if (_serviceDic.TryGetValue(type, out var service) == false) {
@@ -95,7 +97,7 @@ public static partial class Service {
     
     public static bool RestartService(Enum serviceType) => TryGetTypes(serviceType, out var types) && types.All(RestartService);
     public static bool RestartService(params Enum[] serviceTypes) => TryGetTypes(out var types, serviceTypes) && types.All(RestartService);
-    public static bool RestartService<TService>() where TService : class, IService, new() => RestartService(typeof(TService));
+    public static bool RestartService<TService>() where TService : class, IService => RestartService(typeof(TService));
     
     public static bool RestartService(Type type) {
         if (TryGetService(type, out var service) == false) {
@@ -130,7 +132,7 @@ public static partial class Service {
    
     public static bool RefreshService(Enum serviceType) => TryGetTypes(serviceType, out var types) && types.All(RefreshService);
     public static bool RefreshService(params Enum[] serviceTypes) => TryGetTypes(out var types, serviceTypes) && types.All(RefreshService);
-    public static bool RefreshService<TService>() where TService : class, IService, new() => RefreshService(typeof(TService));
+    public static bool RefreshService<TService>() where TService : class, IService => RefreshService(typeof(TService));
     
     public static bool RefreshService(Type type) {
         if (TryGetService(type, out var service) == false) {
@@ -162,7 +164,7 @@ public static partial class Service {
     
     #region [Get]
     
-    public static bool TryGetServiceWithRestart<TService>(out TService service) where TService : class, IService, new() => TryGetService(out service) && RestartService(service);
+    public static bool TryGetServiceWithRestart<TService>(out TService service) where TService : class, IService => TryGetService(out service) && RestartService(service);
     
     public static bool TryGetService(Enum serviceType, out IEnumerable<IService> services) => (services = GetService(serviceType)).Any();
     public static IEnumerable<IService> GetService(Enum serviceType) => GetTypes(serviceType).Select(GetService);
@@ -170,11 +172,11 @@ public static partial class Service {
     public static bool TryGetService(out IEnumerable<IService> services, params Enum[] serviceTypes) => (services = GetService(serviceTypes)).Any();
     public static IEnumerable<IService> GetService(params Enum[] serviceTypes) => GetTypes(serviceTypes).Select(GetService);
     
-    public static bool TryGetService<TService>(out TService service) where TService : class, IService, new() => (service = GetService<TService>()) != null;
-    public static TService GetService<TService>() where TService : class, IService, new() => GetService(typeof(TService)) as TService;
+    public static bool TryGetService<TService>(out TService service) where TService : class, IService => (service = GetService<TService>()) != null;
+    public static TService GetService<TService>() where TService : class, IService => GetService(typeof(TService)) as TService;
 
-    public static bool TryGetService<TService>(Type type, out TService service) where TService : class, IService, new() => (service = GetService<TService>(type)) != null;
-    public static TService GetService<TService>(Type type) where TService : class, IService, new() => GetService(type) as TService;
+    public static bool TryGetService<TService>(Type type, out TService service) where TService : class, IService => (service = GetService<TService>(type)) != null;
+    public static TService GetService<TService>(Type type) where TService : class, IService => GetService(type) as TService;
 
     public static bool TryGetService(Type type, out IService service) => (service = GetService(type)) != null;
     public static IService GetService(Type type) => _serviceDic.TryGetValue(type, out var service) ? service : TryCreateService(type, out service) && StartService(service) ? service : null;
@@ -183,10 +185,10 @@ public static partial class Service {
 
     #region [Create]
     
-    private static bool TryCreateService<TService>(out TService service) where TService : class, IService, new() => (service = CreateService<TService>()) != null;
-    private static TService CreateService<TService>() where TService : class, IService, new() => CreateService(typeof(TService)) as TService;
+    private static bool TryCreateService<TService>(out TService service) where TService : class, IService => (service = CreateService<TService>()) != null;
+    private static TService CreateService<TService>() where TService : class, IService => CreateService(typeof(TService)) as TService;
 
-    private static bool TryCreateService<TService>(Type type, out TService service) where TService : class, IService, new() => (service = CreateService(type) as TService) != null;
+    private static bool TryCreateService<TService>(Type type, out TService service) where TService : class, IService => (service = CreateService(type) as TService) != null;
     private static bool TryCreateService(Type type, out IService service) => (service = CreateService(type)) != null;
 
     private static IService CreateService(Type type) {
@@ -259,12 +261,41 @@ public static partial class Service {
     public static bool TryGetTypes<TEnum>(out IEnumerable<Type> types, params TEnum[] serviceTypes) where TEnum : struct, Enum => (types = GetTypes(serviceTypes))?.Any() ?? false;
     public static IEnumerable<Type> GetTypes<TEnum>(params TEnum[] serviceTypes) where TEnum : struct, Enum => _cachedServiceTypeSet?.Where(type => ContainsType(type, serviceTypes)) ?? Enumerable.Empty<Type>();
     
-    private static bool ContainsType(Type type, Enum serviceType) => type.TryGetCustomAttribute<ServiceAttribute>(out var attribute) && attribute.Contains(serviceType);
-    private static bool ContainsType(Type type, params Enum[] serviceTypes) => type.TryGetCustomAttribute<ServiceAttribute>(out var attribute) && attribute.Contains(serviceTypes);
-    private static bool ContainsType<TEnum>(Type type, TEnum serviceType) where TEnum : struct, Enum => type.TryGetCustomAttribute<ServiceAttribute>(out var attribute) && attribute.Contains(serviceType);
-    private static bool ContainsType<TEnum>(Type type, params TEnum[] serviceTypes) where TEnum : struct, Enum => type.TryGetCustomAttribute<ServiceAttribute>(out var attribute) && attribute.Contains(serviceTypes);
+    private static bool ContainsType(Type type, Enum serviceType) => _attributeCacheHelper.TryGet(type, out var attribute) && attribute.Contains(serviceType);
+    private static bool ContainsType(Type type, params Enum[] serviceTypes) => _attributeCacheHelper.TryGet(type, out var attribute) && attribute.Contains(serviceTypes);
+    private static bool ContainsType<TEnum>(Type type, TEnum serviceType) where TEnum : struct, Enum => _attributeCacheHelper.TryGet(type, out var attribute) && attribute.Contains(serviceType);
+    private static bool ContainsType<TEnum>(Type type, params TEnum[] serviceTypes) where TEnum : struct, Enum => _attributeCacheHelper.TryGet(type, out var attribute) && attribute.Contains(serviceTypes);
 
     public static bool IsActiveService<TService>() => _serviceDic.ContainsKey(typeof(TService));
+
+    private class AttributeCacheHelper<TAttribute> where TAttribute : Attribute {
+
+        private readonly Dictionary<Type, TAttribute> _cachedAttributeDic = new();
+        private readonly HashSet<Type> _cachedNonAttributeSet = new();
+
+        public bool TryGet(Type type, out TAttribute attribute) => (attribute = Get(type)) != null;
+
+        public TAttribute Get(Type type) {
+            if (_cachedNonAttributeSet.Contains(type)) {
+                return null;
+            }
+
+            if (_cachedAttributeDic.TryGetValue(type, out var attribute) == false) {
+                if (type.TryGetCustomAttribute(out attribute)) {
+                    _cachedAttributeDic.Add(type, attribute);
+                } else {
+                    _cachedNonAttributeSet.Add(type);
+                }
+            }
+
+            return attribute;
+        }
+
+        public void Clear() {
+            _cachedAttributeDic.Clear();
+            _cachedNonAttributeSet.Clear();
+        }
+    }
 }
 
 public enum DEFAULT_SERVICE_TYPE {

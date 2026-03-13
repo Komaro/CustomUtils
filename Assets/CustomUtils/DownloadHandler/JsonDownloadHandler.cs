@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-public class JsonDownloadHandler<TReturn> : DownloadHandlerModule<TReturn> where TReturn : class{
+public class JsonDownloadHandler<TReturn> : DownloadHandlerModule<TReturn> where TReturn : class {
 
     private string _encryptKey;
     private string _text;

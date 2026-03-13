@@ -43,7 +43,7 @@ public class ResourceService : IService {
                 return type.IsDefined<ResourceSubProviderAttribute>() ? typeof(ResourceSubProviderAttribute) : typeof(ResourceProviderAttribute);
             });
             
-            var moduleDic = grouping.ToDictionary(group => group.Key, group => group.OrderBy(type => type.TryGetCustomAttribute<PriorityAttribute>(group.Key, out var attribute) ? attribute.priority : uint.MaxValue).ToList());
+            var moduleDic = grouping.ToDictionary(group => group.Key, group => group.OrderBy(type => type.TryGetCustomAttribute<PriorityAttribute>(out var attribute, group.Key) ? attribute.priority : uint.MaxValue).ToList());
             if (moduleDic.TryGetValue(typeof(ResourceSubProviderAttribute), out var typeList) && typeList.Count > 0) {
                 _isActiveSubProvider = true;
                 _subProvider = GetValidProvider(typeList);

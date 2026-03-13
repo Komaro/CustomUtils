@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 
+// TODO. 일부 메소드 MemberInfo 통합 작업 필요
 public static class ReflectionExtension {
 
     public static string GetAlias(this MemberInfo info, string defaultAlias = "") => info.TryGetCustomAttribute<AliasAttribute>(out var attribute) ? attribute.alias : string.IsNullOrEmpty(defaultAlias) ? info.Name : defaultAlias;
@@ -47,21 +48,25 @@ public static class ReflectionExtension {
     public static object GetPropertyValue(this Type type, object obj, string name, BindingFlags bindingFlags) => type.TryGetPropertyInfo(name, bindingFlags, out var info) ? info.GetValue(obj) : null;
 
     #endregion
-    
+
+    #region [Attribute]
+
     public static bool IsDefinedInEnvironment<TAttribute>(this MemberInfo info) where TAttribute : Attribute => info.IsDefined<TAttribute>() && (Application.isEditor == false || info.IsDefined<OnlyEditorEnvironmentAttribute>() == false);
     public static bool IsDefinedInEnvironment<TAttribute>(this Type type) where TAttribute : Attribute => type.IsDefined<TAttribute>() && (Application.isEditor == false || type.IsDefined<OnlyEditorEnvironmentAttribute>() == false);
 
-    public static bool IsDefined<TAttribute>(this MemberInfo info) where TAttribute : Attribute => info.IsDefined(typeof(TAttribute));
-    public static bool IsDefined<TAttribute>(this MethodInfo info) where TAttribute : Attribute => info.IsDefined(typeof(TAttribute));
-    public static bool IsDefined<TAttribute>(this Type type) where TAttribute : Attribute => type.IsDefined(typeof(TAttribute));
+    public static bool TryGetCustomAttribute<TAttribute>(this MemberInfo info, out TAttribute attribute, Type attributeType, bool inherit = false) where TAttribute : Attribute => (attribute = info.GetCustomAttribute<TAttribute>(attributeType, inherit)) != null;
+    public static bool TryGetCustomAttribute<TAttribute>(this MemberInfo info, out TAttribute attribute, bool inherit = false) where TAttribute : Attribute => (attribute = info.GetCustomAttribute<TAttribute>(inherit)) != null;
     
-    public static bool TryGetCustomAttribute<TAttribute>(this Type type, out TAttribute attribute) where TAttribute : Attribute => (attribute = type.GetCustomAttribute<TAttribute>()) != null;
-    public static bool TryGetCustomAttribute<TAttribute>(this Type type, Type attributeType, out TAttribute attribute) where TAttribute : Attribute => (attribute = type.GetCustomAttribute(attributeType) as TAttribute) != null;
-    public static bool TryGetCustomInheritedAttribute<TAttribute>(this Type type, out TAttribute attribute) where TAttribute : Attribute => (attribute = type.GetCustomAttributes().FirstOrDefault(attribute => attribute.GetType().IsSubclassOf(typeof(TAttribute))) as TAttribute) != null;
-    public static bool TryGetCustomAttributeList<TAttribute>(this Type type, out List<TAttribute> attributeList) where TAttribute : Attribute => (attributeList = type.GetCustomAttributes<TAttribute>().ToList()) is { Count: > 0 };
+    private static TAttribute GetCustomAttribute<TAttribute>(this MemberInfo info, bool inherit = false) where TAttribute : Attribute => info.GetCustomAttribute<TAttribute>(typeof(TAttribute), inherit);
+    private static TAttribute GetCustomAttribute<TAttribute>(this MemberInfo info, Type attributeType, bool inherit = false) where TAttribute : Attribute => info.IsDefined(attributeType, inherit) ? info.GetCustomAttribute(attributeType, inherit) as TAttribute : null;
+    
+    public static bool TryGetCustomAttributes<TAttribute>(this MemberInfo info, out IEnumerable<TAttribute> enumerable, bool inherit = false) where TAttribute : Attribute => (enumerable = info.GetCustomAttributes<TAttribute>(inherit))!.Any();
+    
+    public static bool IsDefined<TAttribute>(this MemberInfo info, bool inherit = false) where TAttribute : Attribute => info.IsDefined(typeof(TAttribute), inherit);
+    
+    public static bool IsContains<TAttribute>(this MemberInfo info) where TAttribute : Attribute => CustomAttributeData.GetCustomAttributes(info).Any(data => data.AttributeType == typeof(TAttribute));
 
-    public static bool TryGetCustomAttributeList<TAttribute>(this MemberInfo info, out List<TAttribute> attributeList) where TAttribute : Attribute => (attributeList = info.GetCustomAttributes<TAttribute>().ToList()) is { Count: > 0 };
-    public static bool TryGetCustomAttribute<TAttribute>(this MemberInfo info, out TAttribute attribute) where TAttribute : Attribute => (attribute = info.GetCustomAttribute<TAttribute>()) != null;
+    #endregion
     
     public static bool IsGenericCollectionType(this Type type) {
         if (type.IsGenericType == false) {
@@ -164,13 +169,7 @@ public static class ReflectionExtension {
     
     #region [PriorityExtension]
     
-    public static uint GetOrderByPriority(this Type type) {
-        if (type.TryGetCustomInheritedAttribute<PriorityAttribute>(out var attribute)) {
-            return attribute.priority;
-        }
+    public static uint GetOrderByPriority(this Type type) => type.TryGetCustomAttribute<PriorityAttribute>(out var attribute, true) ? attribute.priority : 99999;
 
-        return 99999;
-    }
-    
     #endregion
 }

@@ -35,6 +35,11 @@ public abstract class EditorAutoConfigDrawer<TConfig, TNullConfig> : EditorDrawe
         config = new TNullConfig();
         order = CreateWatcherOrder();
     }
+
+    protected EditorAutoConfigDrawer(EditorWindow window, SystemWatcherServiceOrder order) : base(window) {
+        config = new TNullConfig();
+        this.order = order;
+    }
     
     public override void Close() {
         Service.GetService<SystemWatcherService>().Stop(order);
@@ -88,7 +93,7 @@ public abstract class EditorAutoConfigDrawer<TConfig, TNullConfig> : EditorDrawe
         }
     }
 
-    protected SystemWatcherServiceOrder CreateWatcherOrder() => new(Path.GetDirectoryName(CONFIG_PATH), CONFIG_NAME, OnSystemWatcherEventHandler);
+    private SystemWatcherServiceOrder CreateWatcherOrder() => new(Path.GetDirectoryName(CONFIG_PATH), CONFIG_NAME, OnSystemWatcherEventHandler);
     
     protected virtual void OnSystemWatcherEventHandler(object ob, FileSystemEventArgs args) {
         if (config == null) {

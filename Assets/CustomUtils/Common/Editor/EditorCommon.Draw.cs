@@ -533,7 +533,50 @@ public record ToggleDraw {
     public override string ToString() => name;
 }
 
-public record IntPopupDrawer {
+public struct PopupDrawer<TReturn> {
+
+    public int SelectIndex { get; set; }
+    public string SelectOption => DisplayOptions[SelectIndex];
+    public TReturn SelectValue => OptionValues[SelectIndex];
+    public TReturn PreviousValue { get; private set; }
+    public string[] DisplayOptions { get; }
+    public TReturn[] OptionValues { get; }
+    
+    public int ValueCount => OptionValues.Length;
+
+    private readonly string _header;
+    private readonly Action<TReturn, TReturn> _onChanged;
+    
+    public PopupDrawer(int selectIndex, string header, string[] displayOptions, TReturn[] optionValues, Action<TReturn, TReturn> onChanged) {
+        if (displayOptions.Length != optionValues.Length) {
+            throw new IndexOutOfRangeException($"{nameof(displayOptions)} must have the same length as the {nameof(optionValues)}");
+        }
+        
+        SelectIndex = selectIndex;
+        PreviousValue = optionValues[SelectIndex];
+        DisplayOptions = displayOptions;
+        OptionValues = optionValues;
+        
+        _header = header;
+        _onChanged = onChanged;
+    }
+
+    public void Draw() {
+        using (var scope = new EditorGUI.ChangeCheckScope()) {
+            var index = EditorGUILayout.Popup(_header, SelectIndex, DisplayOptions);
+            if (scope.changed == false) {
+                return;
+            }
+
+            var previousValue = OptionValues[SelectIndex];
+            PreviousValue = previousValue;
+            SelectIndex = index;
+            _onChanged?.Invoke(previousValue, SelectValue);
+        }
+    }
+}
+
+public struct IntPopupDrawer {
 
     public int SelectIndex { get; set; }
 

@@ -11,10 +11,13 @@ using Color = System.Drawing.Color;
 
 public class SimpleHttpServer : IDisposable {
     
-    private HttpListener _listener = new();
+    private readonly HttpListener _listener = new();
+    
     private Task _listenerTask;
-    private CancellationTokenSource _listenerCancelToken;
+    private CancellationTokenSource _tokenSource;
+    
     private readonly Dictionary<Type, HttpServeModule> _serveModuleDic = new();
+    private readonly Channel<HttpListenerContext> _requestChannel = Channel.CreateBounded<HttpListenerContext>(200);
 
     private string _targetDirectory;
 
@@ -46,14 +49,14 @@ public class SimpleHttpServer : IDisposable {
     
     public void Start() {
         if (IsRunning()) {
-            Logger.TraceLog($"{nameof(_listener)} is Already Listening", Color.Yellow);
+            Logger.TraceLog($"{nameof(_listener)} is already listening", Color.Yellow);
             return;
         }
         
         _listener.Start();
         try {
-            _listenerCancelToken = new CancellationTokenSource();
-            _ = Task.Run(() => Run(_listenerCancelToken.Token), _listenerCancelToken.Token);
+            _tokenSource = new CancellationTokenSource();
+            _ = Task.Run(() => Run(_tokenSource.Token), _tokenSource.Token);
             Logger.TraceLog($"{nameof(SimpleHttpServer)} {nameof(Start)} || {_listener.Prefixes.ToStringCollection(", ")}", Color.GreenYellow);
         } catch (Exception ex) {
             Logger.TraceError(ex);
@@ -66,9 +69,9 @@ public class SimpleHttpServer : IDisposable {
     }
 
     public void Stop() {
-        if (_listenerCancelToken.IsCancellationRequested == false) {
-            _listenerCancelToken.Cancel(); 
-            _listenerCancelToken.Dispose();
+        if (_tokenSource.IsCancellationRequested == false) {
+            _tokenSource.Cancel(); 
+            _tokenSource.Dispose();
         }
 
         _listener.Stop();
@@ -118,8 +121,7 @@ public class SimpleHttpServer : IDisposable {
         }
     }
 
-    private readonly Channel<HttpListenerContext> _requestChannel = Channel.CreateBounded<HttpListenerContext>(200);
-    
+    // TODO. Channel 누적 및 Worker 처리로 전환 필요
     private async Task AcceptRequestAsync(CancellationToken token) {
         try {
             while (_listener.IsListening && token.IsCancellationRequested == false) {
@@ -152,6 +154,7 @@ public class SimpleHttpServer : IDisposable {
         }
     }
 
+    // TODO. Channel 누적 및 Worker 처리로 전환 필요
     private async Task HandleRequestAsync(CancellationToken token) {
         try {
             while (_listener.IsListening && token.IsCancellationRequested == false) {
@@ -198,7 +201,7 @@ public class SimpleHttpServer : IDisposable {
 
     public void AddServeModule(Type type) {
         if (type == null) {
-            Logger.TraceError($"{nameof(type)} is Null");
+            Logger.TraceError($"{nameof(type)} is null");
             return;
         }
         
@@ -206,8 +209,8 @@ public class SimpleHttpServer : IDisposable {
             Logger.TraceLog($"Already {nameof(HttpServeModule)}. {nameof(type)} : {nameof(type.Name)}", Color.Yellow);
             return;
         }
-        
-        if (Activator.CreateInstance(type) is HttpServeModule module) {
+
+        if (SystemUtil.TryCreateInstance<HttpServeModule>(out var module)) {
             module.AttachServer(this);
             _serveModuleDic.Add(type, module);
             Logger.TraceLog($"Add {type.Name}", Color.Cyan);
@@ -216,7 +219,7 @@ public class SimpleHttpServer : IDisposable {
 
     public void AddServeModule(HttpServeModule module) {
         if (module == null) {
-            Logger.TraceError($"{nameof(module)} is Null");
+            Logger.TraceError($"{nameof(module)} is null");
             return;
         }
         

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 public class AsyncCustomOperation : IEnumerator, IProgress<float> {
 
     public virtual bool IsDone => Status != OperationStatus.NONE;
+    public virtual bool IsCompleted => Progress >= 1f && Success;
     
     public OperationStatus Status { get; protected set; }
 
@@ -65,7 +66,7 @@ public class AsyncCustomOperation : IEnumerator, IProgress<float> {
 
         Progress = value;
 
-        if (IsDone) {
+        if (Progress >= 1f && Status == OperationStatus.NONE) {
             Status = OperationStatus.SUCCESS;
             onComplete.Handler?.Invoke(this);
         }

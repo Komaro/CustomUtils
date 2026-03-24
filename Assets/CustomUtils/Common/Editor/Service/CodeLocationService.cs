@@ -28,42 +28,10 @@ public class CodeLocationService : IAsyncService {
     
     private const string ACTIVE_ANALYZE = "ActiveAnalzye";
     private const string ACTIVE_FULL_PROCESSOR = "ActiveFullProcessor";
-
-    Task IAsyncService.StartAsync() => Task.CompletedTask;
-    Task IAsyncService.StopAsync() => Task.CompletedTask;
-    // Task IAsyncService.StartAsync(ServiceOperation operation) => throw new NotImplementedException();
-    // Task IAsyncService.StopAsync(ServiceOperation operation) => throw new NotImplementedException();
-
-    // TODO. Service Operation 작업을 동결함으로서 주석 처리. Operation 반환을 하지 않는 선에서는 정상적으로 처리할 수 있음
-    // async Task IAsyncService.InitAsync(ServiceOperation operation) {
-    //     IsActiveAnalyze = EditorPrefsUtil.GetBool(ACTIVE_ANALYZE);
-    //     IsActiveFullProcessor = EditorPrefsUtil.GetBool(ACTIVE_FULL_PROCESSOR);
-    //     
-    //     await Task.Yield();
-    //     lock (_compilation) {
-    //         _compilation = CSharpCompilation.Create($"{nameof(CodeLocationService)}Assembly").AddReferences(AssemblyProvider.GetSystemAssemblySet().Select(assembly => MetadataReference.CreateFromFile(assembly.Location)));
-    //     }
-    //     
-    //     operation.Done();
-    // }
-    //
-    // async Task IAsyncService.StartAsync(ServiceOperation operation) {
-    //     await AssemblyAnalyze(operation);
-    //     operation.Done();
-    // }
-    //
-    // async Task IAsyncService.StopAsync(ServiceOperation operation) {
-    //     _compilation.RemoveAllSyntaxTrees();
-    //     operation.Done();
-    //     await Task.CompletedTask;
-    // }
-    //
-    // async Task IAsyncService.RefreshAsync(ServiceOperation operation) {
-    //     _compilation.RemoveAllSyntaxTrees();
-    //     await AssemblyAnalyze(operation);
-    //     operation.Done();
-    // }
-
+    
+    Task IAsyncService.StartAsync() => throw new NotImplementedException();
+    Task IAsyncService.StopAsync() => throw new NotImplementedException();
+    
     // async Task IAsyncService.InitAsync() {
     //     IsActiveAnalyze = EditorPrefsUtil.GetBool(ACTIVE_ANALYZE);
     //     IsActiveFullProcessor = EditorPrefsUtil.GetBool(ACTIVE_FULL_PROCESSOR);
@@ -73,19 +41,19 @@ public class CodeLocationService : IAsyncService {
     //     
     //     await Task.CompletedTask;
     // }
-
+    //
     // async Task IAsyncService.StartAsync() => await AssemblyAnalyze();
-
+    //
     // Task IAsyncService.StopAsync() {
     //     _compilation.RemoveAllSyntaxTrees();
     //     return Task.CompletedTask;
     // }
-
+    //
     // async Task IAsyncService.RefreshAsync() {
     //     _compilation.RemoveAllSyntaxTrees();
     //     await AssemblyAnalyze();
     // }
-    
+    //
     // private async Task AssemblyAnalyze(ServiceOperation operation) {
     //     if (IsActiveAnalyze == false) {
     //         return;
@@ -265,6 +233,7 @@ public class CodeLocationService : IAsyncService {
         
         throw new KeyNotFoundException($"{info.GetCleanFullName()} is invalid key");
     }
+
 }
 
 public readonly ref struct LocationResolver {

@@ -75,8 +75,6 @@ public static partial class EnumUtil {
             }
 
             _values = valuesSpan.ToImmutableArray(type => (TEnum) type);
-
-            _values = valuesSpan.ToArray().ToArray<TEnum>().ToImmutableArray();
             _ignoreObsoleteValues = _values.Where(enumValue => typeof(TEnum).TryGetFieldInfo(enumValue.ToString(), out var info) && info.IsDefined<ObsoleteAttribute>() == false).ToImmutableArray();
             _stringToEnumDic = _values.ToImmutableDictionary(value => string.Intern(value.ToString()), value => value);
         }

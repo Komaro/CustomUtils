@@ -2,6 +2,7 @@
 using System.Collections.Immutable;
 using System.Linq;
 using NUnit.Framework;
+using Unity.PerformanceTesting;
 using UnityEngine.TestTools;
 
 public class GlobalEnumTestRunner {
@@ -73,6 +74,25 @@ public class GlobalEnumTestRunner {
 
         Logger.TraceLog("Pass Contains Test");
     }
+
+    // GlobalEnum 캐싱 규격화 이후 단위 테스트 진행
+    [Performance]
+    [TestCase(10, 2000)]
+    public void GetPerformanceTest(int measurementCount, int count) {
+        var unsafeGroup = new SampleGroup("Unsafe", SampleUnit.Microsecond);
+        var beforeGroup = new SampleGroup("Before", SampleUnit.Microsecond);
+        var afterGroup = new SampleGroup("After", SampleUnit.Microsecond);
+        var afterCacheGroup = new SampleGroup("AfterCache", SampleUnit.Microsecond);
+        
+        var globalEnum = new GlobalEnum<SoundTrackEnumAttribute> {
+            Index = 2
+        };
+
+        // Measure.Method(() => _ = globalEnum.Get_Unsafe<TEST_GLOBAL_ENUM_01>()).WarmupCount(1).MeasurementCount(measurementCount).IterationsPerMeasurement(count).SampleGroup(unsafeGroup).GC().Run();
+        // Measure.Method(() => _ = globalEnum.Get_Before<TEST_GLOBAL_ENUM_01>()).WarmupCount(1).MeasurementCount(measurementCount).IterationsPerMeasurement(count).SampleGroup(beforeGroup).GC().Run();
+        // Measure.Method(() => _ = globalEnum.Get_After<TEST_GLOBAL_ENUM_01>()).WarmupCount(1).MeasurementCount(measurementCount).IterationsPerMeasurement(count).SampleGroup(afterGroup).GC().Run();
+        // Measure.Method(() => _ = globalEnum.Get_CacheAfter<TEST_GLOBAL_ENUM_01>()).WarmupCount(1).MeasurementCount(measurementCount).IterationsPerMeasurement(count).SampleGroup(afterCacheGroup).GC().Run();
+    } 
 }
 
 [SoundTrackEnum(priority = 25)]

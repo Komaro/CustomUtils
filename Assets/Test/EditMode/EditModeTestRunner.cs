@@ -53,7 +53,7 @@ public class EditModeTestRunner {
     [Test]
     public void TempTest_02() {
         var server = new SimpleHttpServer(); // Default local host
-        server.AddServeModule<AssetBundleDistributionServeModule>();
+        server.AddServeModule<DistributionServeModule>();
         server.Start();
         // Start Any http request
     }

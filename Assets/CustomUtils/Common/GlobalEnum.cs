@@ -8,7 +8,10 @@ using System.Linq;
 
 public abstract class GlobalEnum {
 
+    // TODO. 캐싱 종류가 많고 Key, Value 타입들이 구체적이지 않아 이해가 어려움
+    // TODO. 규격화 된 캐싱 구조가 필요
     protected static readonly Dictionary<Type, ImmutableSortedDictionary<Type, ImmutableHashSet<Enum>>> enumSetDic = new();
+    // protected static readonly Dictionary<Type, ImmutableHashSet<Type>> enumTypeSetDic = new();
     protected static readonly Dictionary<Type, ImmutableDictionary<int, Enum>> intToEnumDic = new();
     protected static readonly Dictionary<Type, ImmutableDictionary<Enum, int>> enumToIntDic = new();
 }
@@ -17,18 +20,7 @@ public abstract class GlobalEnum {
 [DebuggerDisplay("Value = {Value} index = {_index}")]
 public sealed class GlobalEnum<TAttribute> : GlobalEnum, IEnumerable<Enum> where TAttribute : PriorityAttribute {
 
-    static GlobalEnum() {
-        if (ReflectionProvider.TryGetAttributeEnumInfos<TAttribute>(out var enumerable)) {
-            if (enumSetDic.ContainsKey(typeof(TAttribute)) == false) {
-                var index = 0;
-                enumSetDic.Add(typeof(TAttribute), enumerable.ToImmutableSortedDictionary(info => info.enumType, info => info.enumType.GetEnumValues().OfType<Enum>().ToImmutableHashSet(), new GlobalEnumPriorityComparer()));
-                intToEnumDic.TryAdd(typeof(TAttribute), enumSetDic[typeof(TAttribute)].Values.SelectMany(enumSet => enumSet).ToImmutableDictionary(_ => index++, enumValue => enumValue));
-                enumToIntDic.TryAdd(typeof(TAttribute), intToEnumDic[typeof(TAttribute)].ToImmutableDictionary(pair => pair.Value, pair => pair.Key));
-            }
-        } else {
-            Logger.TraceLog($"Cannot find an enum type with the {nameof(TAttribute)}({typeof(TAttribute).GetCleanFullName()})", Color.Yellow);
-        }
-    }
+    private readonly HashSet<Type> _enumTypeSet = new();
     
     private int _index;
 
@@ -61,7 +53,21 @@ public sealed class GlobalEnum<TAttribute> : GlobalEnum, IEnumerable<Enum> where
     
     public static explicit operator Enum(GlobalEnum<TAttribute> globalEnum) => globalEnum.Value;
     public static explicit operator GlobalEnum<TAttribute>(Enum enumValue) => new(enumValue);
-
+    
+    static GlobalEnum() {
+        if (ReflectionProvider.TryGetAttributeEnumInfos<TAttribute>(out var enumerable)) {
+            if (enumSetDic.ContainsKey(typeof(TAttribute)) == false) {
+                var index = 0;
+                enumSetDic.Add(typeof(TAttribute), enumerable.ToImmutableSortedDictionary(info => info.enumType, info => info.enumType.GetEnumValues().OfType<Enum>().ToImmutableHashSet(), new GlobalEnumPriorityComparer()));
+                // enumTypeSetDic.TryAdd(typeof(TAttribute), enumSetDic[typeof(TAttribute)].Keys.ToImmutableHashSet());
+                intToEnumDic.TryAdd(typeof(TAttribute), enumSetDic[typeof(TAttribute)].Values.SelectMany(enumSet => enumSet).ToImmutableDictionary(_ => index++, enumValue => enumValue));
+                enumToIntDic.TryAdd(typeof(TAttribute), intToEnumDic[typeof(TAttribute)].ToImmutableDictionary(pair => pair.Value, pair => pair.Key));
+            }
+        } else {
+            Logger.TraceLog($"Cannot find an enum type with the {nameof(TAttribute)}({typeof(TAttribute).GetCleanFullName()})", Color.Yellow);
+        }
+    }
+    
     public GlobalEnum() {
         if (intToEnumDic[typeof(TAttribute)].TryGetValue(0, out var enumValue)) {
             Value = enumValue;
@@ -72,6 +78,12 @@ public sealed class GlobalEnum<TAttribute> : GlobalEnum, IEnumerable<Enum> where
 
     public Enum Get() => Value;
     public TEnum Get<TEnum>() where TEnum : struct, Enum => Value.Convert<TEnum>();
+    
+    // TODO. 캐싱 규격화 이후 제거
+    // public TEnum Get_Unsafe<TEnum>() where TEnum : struct, Enum => (TEnum)Value;
+    // public TEnum Get_Before<TEnum>() where TEnum : struct, Enum => Value.Convert<TEnum>();
+    // public TEnum Get_After<TEnum>() where TEnum : struct, Enum => enumSetDic[typeof(TAttribute)].Keys.Contains(typeof(TEnum)) ? (TEnum)Value : default;
+    // public TEnum Get_CacheAfter<TEnum>() where TEnum : struct, Enum => enumTypeSetDic[typeof(TAttribute)].Contains(typeof(TEnum)) ? (TEnum)Value : default;
 
     public void Set(Enum enumValue) => Value = enumValue;
     public void Set<TEnum>(TEnum enumValue) where TEnum : struct, Enum => Value = enumValue;

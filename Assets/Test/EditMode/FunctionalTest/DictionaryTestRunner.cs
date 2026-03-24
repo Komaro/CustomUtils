@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
 using Unity.PerformanceTesting;
+using UnityEditor;
 
 [Category(TestConstants.Category.FUNCTIONAL)]
 public class DictionaryTestRunner {
@@ -97,7 +98,7 @@ public class DictionaryTestRunner {
     }
 
     [Performance]
-    [TestCase(10, 10)]
+    [TestCase(10, 100)]
     public void DictionaryLoopTest(int measurementCount, int count) {
         var lookUpSample = new SampleGroup("LookUp", SampleUnit.Microsecond);
         var lookUpOptimizeSample = new SampleGroup("LookUpOptimize", SampleUnit.Microsecond);
@@ -112,7 +113,7 @@ public class DictionaryTestRunner {
         Measure.Method(() => {
             var keys = dictionary.Keys.ToList();
             for (var i = 0; i < keys.Count; i++) {
-                _ = dictionary[i];
+                _ = dictionary[keys[i]];
             }
         }).WarmupCount(2).MeasurementCount(measurementCount).IterationsPerMeasurement(count).SampleGroup(lookUpSample).GC().Run();
         

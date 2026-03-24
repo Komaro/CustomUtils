@@ -1,9 +1,13 @@
-﻿using System.Buffers;
+﻿using System;
+using System.Buffers;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using NUnit.Framework;
 using Unity.PerformanceTesting;
+using UnityEngine;
+using UnityEngine.U2D;
 
 [Category(TestConstants.Category.PERFORMANCE)]
 public class PerformanceTestRunner {
@@ -143,5 +147,66 @@ public class PerformanceTestRunner {
         
         Measure.Method(() => _ = stringEqualityComparer.GetHashCode(stringKey)).WarmupCount(1).MeasurementCount(measurementCount).IterationsPerMeasurement(count).SampleGroup(stringGroup).Run();
         Measure.Method(() => _ = intEqualityComparer.GetHashCode(intKey)).WarmupCount(1).MeasurementCount(measurementCount).IterationsPerMeasurement(count).SampleGroup(intGroup).Run();
+    }
+
+    // 30배 성능 향상이 확인되나 Microsecond 수준의 성능 개선이기 때문에 과도한 호출이 아닌 경우 의미 있는 최적화로 볼 수 없음
+    [Performance]
+    [TestCase(10, 1000)]
+    public void TypeGetHashCodePerformanceTest(int measurementCount, int count) {
+        var getHashCodeGroup = new SampleGroup("GetHashCode", SampleUnit.Microsecond);
+        var typeEqualGroup = new SampleGroup("TypeEqual", SampleUnit.Microsecond);
+        
+        var type = typeof(GameObject);
+        Assert.AreEqual(_TYPE_PREFAB_HASH, type.Name.GetHashCode());
+        Assert.AreEqual(_EXT_PREFAB, GetSuffixFromHash(type));
+        Assert.AreEqual(_EXT_PREFAB, GetSuffixFromType(type));
+        Assert.AreEqual(GetSuffixFromHash(type), GetSuffixFromType(type));
+
+        type = typeof(Sprite);
+        Assert.AreEqual(_TYPE_SPRITE_HASH, type.Name.GetHashCode());
+        Assert.AreEqual(_EXT_SPRITE, GetSuffixFromHash(type));
+        Assert.AreEqual(_EXT_SPRITE, GetSuffixFromType(type));
+        Assert.AreEqual(GetSuffixFromHash(type), GetSuffixFromType(type));
+
+        type = typeof(SpriteAtlas);
+        Assert.AreEqual(_TYPE_SPRITE_ATLAS_HASH, type.Name.GetHashCode());
+        Assert.AreEqual(_EXT_SPRITE_ATLAS, GetSuffixFromHash(type));
+        Assert.AreEqual(_EXT_SPRITE_ATLAS, GetSuffixFromType(type));
+        Assert.AreEqual(GetSuffixFromHash(type), GetSuffixFromType(type));
+        
+        Measure.Method(() => _ = GetSuffixFromHash(type)).WarmupCount(1).MeasurementCount(measurementCount).IterationsPerMeasurement(count).SampleGroup(getHashCodeGroup).GC().Run();
+        Measure.Method(() => _ = GetSuffixFromType(type)).WarmupCount(1).MeasurementCount(measurementCount).IterationsPerMeasurement(count).SampleGroup(typeEqualGroup).GC().Run();
+    }
+    
+    // Test Code
+    private const int _TYPE_PREFAB_HASH = -2058854141;
+    private const int _TYPE_SPRITE_HASH = 1988690285;
+    private const int _TYPE_SPRITE_ATLAS_HASH = 1534358922;
+    
+    private const string _EXT_PREFAB = "prefab";
+    private const string _EXT_SPRITE = "png";
+    private const string _EXT_SPRITE_ATLAS = "spriteatlas";
+
+    public string GetSuffixFromHash(Type type) => type.Name.GetHashCode() switch {
+        _TYPE_PREFAB_HASH => _EXT_PREFAB,
+        _TYPE_SPRITE_HASH => _EXT_SPRITE,
+        _TYPE_SPRITE_ATLAS_HASH => _EXT_SPRITE_ATLAS,
+        _ => string.Empty
+    };
+
+    public string GetSuffixFromType(Type type) {
+        if (type == typeof(GameObject)) {
+            return _EXT_PREFAB;
+        }
+
+        if (type == typeof(Sprite)) {
+            return _EXT_SPRITE;
+        }
+
+        if (type == typeof(SpriteAtlas)) {
+            return _EXT_SPRITE_ATLAS;
+        }
+
+        return string.Empty;
     }
 }

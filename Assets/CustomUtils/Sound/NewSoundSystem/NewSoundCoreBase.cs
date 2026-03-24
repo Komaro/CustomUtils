@@ -19,7 +19,7 @@ namespace CustomUtils.Sound.NewSoundSystem {
 
         protected static Action<bool> _onChangeAudioConfiguration;
 
-        public static global::SoundCoreBase Create<T>(Action<bool> onChangeAudioConfiguration = null) where T : global::SoundCoreBase {
+        public static SoundCoreBase Create<T>(Action<bool> onChangeAudioConfiguration = null) where T : SoundCoreBase {
             _onChangeAudioConfiguration = onChangeAudioConfiguration;
             var go = new GameObject(typeof(T).Name);
             return go.AddComponent<T>();

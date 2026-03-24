@@ -23,15 +23,15 @@ public abstract class HttpServeModule {
     public virtual void Close() { }
 }
 
-public class AssetBundleDistributionServeModule : HttpServeModule {
+public class DistributionServeModule : HttpServeModule {
 
-    private const int bufferSize = 1024 * 32;
+    private const int bufferSize = 1024 * 64;
     
     public override bool Serve(HttpListenerContext context) {
         if (context.Request.HttpMethod == HttpMethod.Head.Method) {
             return false;
         }
-
+        
         var path = Path.Combine(server.GetTargetDirectory(), context.Request.RawUrl.TrimStart('/'));
         if (File.Exists(path) == false) {
             Logger.TraceLog($"Not exists {nameof(path)} || {path}", Color.Red);
@@ -39,7 +39,7 @@ public class AssetBundleDistributionServeModule : HttpServeModule {
         }
         
         Logger.TraceLog($"Serve || {context.Request.HttpMethod} || {path}", Color.Magenta);
-        using (var fileStream = new FileStream(path, FileMode.Open, FileAccess.Read)) {
+        using (var fileStream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read, bufferSize)) {
             context.Response.ContentLength64 = fileStream.Length;
             context.Response.StatusCode = (int) HttpStatusCode.OK;
 

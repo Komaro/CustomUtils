@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using UnityEngine;
 
-public static class JsonUtil {
+public static partial class JsonUtil {
     
     public static bool TrySerialize(object obj, out string text) {
         try {

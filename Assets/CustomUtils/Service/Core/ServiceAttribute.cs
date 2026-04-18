@@ -10,7 +10,7 @@ public sealed class ServiceAttribute : Attribute {
     public ServiceAttribute(params object[] serviceTypes) => this.serviceTypes = serviceTypes.OfType<Enum>().ToArray();
 
     public bool Contains(Enum serviceType) => serviceTypes.Contains(serviceType);
-    public bool Contains(params Enum[] serviceTypes) => serviceTypes.Any(serviceTypes.Contains);
+    public bool Contains(params Enum[] serviceTypes) => serviceTypes.Any(Contains);
     public bool Contains<TEnum>(TEnum serviceType) where TEnum : struct, Enum => serviceTypes.Contains(serviceType);
-    public bool Contains<TEnum>(params TEnum[] serviceTypes) where TEnum : Enum => serviceTypes.Any(serviceTypes.Contains);
+    public bool Contains<TEnum>(params TEnum[] serviceTypes) where TEnum : Enum => serviceTypes.Any(serviceType => Contains(serviceType));
 }

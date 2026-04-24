@@ -26,10 +26,10 @@ public abstract class EditorService<T> : EditorWindow where T : EditorService<T>
 
     protected virtual void OnDisable() {
         EditorApplication.playModeStateChanged -= OnPlayModeStateChanged;
-        _tokenSource.Cancel();
+        _tokenSource?.Cancel();
     }
 
-    private void OnDestroy() => _tokenSource.Dispose();
+    private void OnDestroy() => _tokenSource?.Dispose();
 
     protected virtual void Open() {
         if (_window != null) {

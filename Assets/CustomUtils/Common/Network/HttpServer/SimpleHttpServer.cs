@@ -21,10 +21,23 @@ public class SimpleHttpServer : IDisposable {
 
     private string _targetDirectory;
 
-    public SimpleHttpServer(string prefix, HttpServeModule module) : this(prefix) => AddServeModule(module);
-    public SimpleHttpServer(string prefix) => _listener.Prefixes.Add(prefix);
     public SimpleHttpServer() : this(Constants.Network.DEFAULT_LOCAL_HOST) { }
+    public SimpleHttpServer(string prefix, HttpServeModule module) : this(prefix) => AddServeModule(module);
+    public SimpleHttpServer(IEnumerable<string> prefixes, HttpServeModule module) : this(prefixes) => AddServeModule(module);
+    public SimpleHttpServer(HttpServeModule module, params string[] prefixes) : this(prefixes) => AddServeModule(module);
     
+    public SimpleHttpServer(IEnumerable<string> prefixes) {
+        foreach (var prefix in prefixes) {
+            _listener.Prefixes.Add(prefix);
+        }
+    }
+    
+    public SimpleHttpServer(params string[] prefixes) {
+        foreach (var prefix in prefixes) {
+            _listener.Prefixes.Add(prefix);
+        }
+    }
+
     private bool _isDisposed;
     
     ~SimpleHttpServer() => Dispose();
@@ -248,9 +261,18 @@ public class SimpleHttpServer : IDisposable {
         _serveModuleDic.SafeClear(module => module.Close());
         Logger.TraceLog("Clear Serve Module", Color.Red);
     }
+    
+    public void AddPrefix(string prefix) {
+        if (_listener.Prefixes.Contains(prefix) == false) {
+            _listener.Prefixes.Add(prefix);
+        }
+    }
 
-    public string GetURL() => _listener?.Prefixes.FirstOrDefault() ?? string.Empty;
+    public void RemovePrefix(string prefix) => _listener.Prefixes.Remove(prefix);
+    public bool ContainsPrefix(string prefix) => _listener.Prefixes.Contains(prefix);
+    
     public string GetTargetDirectory() => _targetDirectory;
+    public IEnumerable<Type> GetServeModuleTypes => _serveModuleDic.Keys;
     public List<Type> GetServeModuleTypeList() => _serveModuleDic.Keys.ToList();
     public bool IsRunning() => _listener?.IsListening ?? false;
     public bool IsContainsServeModule(Type type) => _serveModuleDic.ContainsKey(type);

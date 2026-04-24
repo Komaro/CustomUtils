@@ -201,6 +201,8 @@ public abstract class JsonCoroutineAutoConfig : JsonAutoConfig {
             StartAutoSave(savePath);
         }
     }
+    
+    public void SetDirty() => saveFlag = true;
 
     private class FieldObserver {
 

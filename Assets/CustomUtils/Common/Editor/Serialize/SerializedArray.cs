@@ -1,6 +1,32 @@
-﻿using UnityEditor;
+﻿using System;
+using UnityEditor;
 using UnityEditorInternal;
 using UnityEngine;
+
+public class SerializedStringArray : SerializedArray<string>
+{
+    public void Init(string[] array)
+    {
+        Array.Resize(ref Value, array.Length);
+        for (var index = 0; index < array.Length; index++) {
+            Value[index] = array[index];
+        }
+            
+        serializedObj.Update();
+    }
+    
+    protected override void OnElementDraw(Rect rect, int index, bool isActive, bool isFocused)
+    {
+        using (var scope = new EditorGUI.ChangeCheckScope()) {
+            EditorGUI.DelayedTextField(rect, serializedProperty.GetArrayElementAtIndex(index));
+            if (scope.changed)
+                OnChanged(list);
+        }
+    }
+
+    protected override void OnChanged(string value, int index) { }
+}
+
 
 [TestRequired]
 public abstract class SerializedArray<T> : SerializedObject<T[]> {
@@ -42,7 +68,7 @@ public abstract class SerializedArray<T> : SerializedObject<T[]> {
     protected virtual void OnElementDraw(Rect rect, int index, bool isActive, bool isFocused) {
         EditorGUI.BeginChangeCheck();
 
-        EditorGUI.ObjectField(rect, serializedProperty.GetArrayElementAtIndex(index));
+        EditorGUI.PropertyField(rect, serializedProperty.GetArrayElementAtIndex(index), true);
         if (EditorGUI.EndChangeCheck()) {
             OnChanged(list);
         }

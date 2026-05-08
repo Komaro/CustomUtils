@@ -5,7 +5,7 @@ using NUnit.Framework;
 
 [Category(TestConstants.Category.FUNCTIONAL)]
 public class ExtensionTestRunner {
-
+    
     [TestCase("C:/Users/KAKA/Downloads/TestText", '/')]
     [TestCase("Param.Field.Value", '.')]
     public void GetAfterCharTest(string content, char matchChar) {

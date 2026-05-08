@@ -63,14 +63,16 @@ public static partial class CollectionExtension {
     }
 
     public static Dictionary<T, int> ToIndexDictionary<T>(this T[] array) {
-        var dictionary = new Dictionary<T, int>();
-        if (array != null) {
+        if (array.IsNotEmpty()) {
+            var dictionary = new Dictionary<T, int>();
             for (var index = 0; index < array.Length; index++) {
-                dictionary.AutoAdd(array[index], index);
+                dictionary[array[index]] = index;
             }
+
+            return dictionary;
         }
 
-        return dictionary;
+        return null;
     }
 
     public static bool Contains<T>(this T[] array, T value) {

@@ -128,6 +128,22 @@ public class PerformanceTestRunner {
         var intKey = RandomUtil.GetRandom(1, 1000000);
         Measure.Method(() => _ = intDictionary.ContainsKey(intKey)).WarmupCount(1).MeasurementCount(measurementCount).IterationsPerMeasurement(count).GC().SampleGroup(intGroup).Run();
     }
+    
+    [Performance]
+    [TestCase(20, 1000)]
+    public void GetAttributePerformanceTest(int measurementCount, int count) {
+        var createGroup = new SampleGroup("Create");
+        var dataGroup = new SampleGroup("Data");
+
+        var type = typeof(PriorityTest);
+        Measure.Method(() => _ = type.GetOrderByPriority()).WarmupCount(1).MeasurementCount(measurementCount).IterationsPerMeasurement(count).GC().SampleGroup(createGroup).Run();
+        Measure.Method(() => _ = type.GetOrderByPriorityFast()).WarmupCount(1).MeasurementCount(measurementCount).IterationsPerMeasurement(count).GC().SampleGroup(dataGroup).Run();
+    }
+
+    [Priority(99)]
+    public class PriorityTest {
+        
+    }
 
     [Performance]
     [TestCase(10, 1000)]

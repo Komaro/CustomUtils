@@ -171,5 +171,25 @@ public static class ReflectionExtension {
     
     public static uint GetOrderByPriority(this Type type) => type.TryGetCustomAttribute<PriorityAttribute>(out var attribute, true) ? attribute.priority : 99999;
 
+    public static uint GetOrderByPriorityFast(this Type type) {
+        foreach (var data in CustomAttributeData.GetCustomAttributes(type)) {
+            if (data.AttributeType != typeof(PriorityAttribute)) {
+                continue;
+            }
+
+            if (data.NamedArguments == null) {
+                return 99999;
+            }
+
+            foreach (var argument in data.NamedArguments) {
+                if (argument.MemberName == nameof(PriorityAttribute.priority) && argument.TypedValue.ArgumentType == typeof(uint)) {
+                    return (uint) argument.TypedValue.Value;
+                }
+            }
+        }
+
+        return 99999;
+    }
+
     #endregion
 }

@@ -4,12 +4,14 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.Serialization;
 
+// TODO. Boxing 과다로 인한 Optimize 필요
+[RefactoringRequired]
 [CustomPropertyDrawer(typeof(BoolCheckFoldAttribute))]
 public class BoolCheckFoldDrawerBase : PropertyDrawer {
     
     private string _fieldName;
     private object _targetObject;
-    private Dictionary<string, FieldInfo> _fieldInfoDic = new();
+    private readonly Dictionary<string, FieldInfo> _fieldInfoDic = new();
     
     public override void OnGUI(Rect position, SerializedProperty property, GUIContent label) {
         if (attribute is BoolCheckFoldAttribute foldAttribute) {

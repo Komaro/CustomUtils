@@ -295,6 +295,26 @@ public static class SystemUtil {
         }
     }
 
+    public static void CopyFile(string sourcePath, string targetPath, bool overwrite = true) {
+        try {
+            if (File.Exists(sourcePath) == false) {
+                Logger.TraceError($"{nameof(sourcePath)} is not valie path || {sourcePath}");
+                return;
+            }
+
+            if (overwrite == false && File.Exists(targetPath)) {
+                Logger.TraceLog($"Already file path || {targetPath}", Color.yellow);
+                return;
+            }
+
+            EnsureDirectoryExists(targetPath);
+            File.Copy(sourcePath, targetPath, overwrite);
+            Logger.TraceLog($"Copy file || {sourcePath} => {targetPath}", Color.green);
+        } catch (Exception ex) {
+            Logger.TraceError(ex);
+        }
+    }
+
     public static void EnsureDirectoryExists(string path, bool isHidden = false) {
         try {
             var folder = path.GetAfter(Path.AltDirectorySeparatorChar);
@@ -331,16 +351,14 @@ public static class SystemUtil {
         return null;
     }
     
-    public static void DeleteDirectory(string path) {
-        if (Directory.Exists(path)) {
-            Logger.TraceLog($"Remove Directory || {path}", Color.green);
-            Directory.Delete(path, true);
+    public static void DeleteDirectory(string path, bool recursive = true) {
+        var info = new DirectoryInfo(path);
+        if (info.Exists) {
+            Logger.TraceLog($"Delete directory || {path}", Color.green);
+            info.Delete(recursive);
             if (path.Contains(Application.dataPath)) {
-                var metaPath = path + ".meta";
-                if (File.Exists(metaPath)) {
-                    File.Delete(metaPath);
-                    Logger.TraceLog($"Project Inner Directory. Remove meta file || {path}", Color.yellow);
-                }
+                File.Delete($"{path}.meta");
+                Logger.TraceLog($"Project inner directory. Remove meta file || {path}", Color.yellow);
             }
         }
     }
@@ -358,6 +376,26 @@ public static class SystemUtil {
         }
     }
 
+    public static void CopyDirectory(string sourceDirectory, string destinationDirectory) {
+        try {
+            var sourceDirectoryInfo = new DirectoryInfo(sourceDirectory);
+            if (sourceDirectoryInfo.Exists == false) {
+                throw new DirectoryNotFoundException($"{nameof(sourceDirectoryInfo)} is not exists || {sourceDirectoryInfo.FullName}");
+            }
+            
+            EnsureDirectoryExists(destinationDirectory);
+            
+            foreach (var info in sourceDirectoryInfo.GetDirectories("*", SearchOption.AllDirectories)) {
+                CreateDirectory(Path.Combine(destinationDirectory, Path.GetRelativePath(sourceDirectory, info.FullName)));
+            }
+            
+            foreach (var info in sourceDirectoryInfo.GetFiles("*.*", SearchOption.AllDirectories)) {
+                CopyFile(info.FullName, Path.Combine(destinationDirectory, Path.GetRelativePath(sourceDirectory, info.FullName)));
+            }
+        } catch (Exception ex) {
+            Logger.TraceError(ex);
+        }
+    }
 
     #region [Create Instance]
 

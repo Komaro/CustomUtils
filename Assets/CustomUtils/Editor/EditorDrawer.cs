@@ -92,7 +92,7 @@ public abstract class EditorAutoConfigDrawer<TConfig, TNullConfig> : EditorDrawe
             GUILayout.Space(10f);
         }
     }
-
+    
     private SystemWatcherServiceOrder CreateWatcherOrder() => new(Path.GetDirectoryName(CONFIG_PATH), CONFIG_NAME, OnSystemWatcherEventHandler);
     
     protected virtual void OnSystemWatcherEventHandler(object ob, FileSystemEventArgs args) {

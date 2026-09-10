@@ -29,7 +29,7 @@ public static class XmlUtil {
     public static string Serialize(Type type, object obj) {
         try {
             var serializer = new XmlSerializer(type);
-            using (_ = StringUtil.StringBuilderPool.Get(out var stringBuilder)) 
+            using (_ = ObjectPools.StringBuilderPool.Get(out var stringBuilder)) 
             using (var writer = new StringWriter(stringBuilder)) {
                 serializer.Serialize(writer, obj);
                 return writer.ToString();

@@ -9,13 +9,13 @@ public class UIViewModelLocatorService : IService {
     void IService.Stop() { }
 
     public void Register<TViewModel>(Func<TViewModel> accessor) where TViewModel : UIViewModel => _resolverDic.AddOrUpdate(typeof(TViewModel), () => new UIViewModelResolver(accessor), (_, handler) => handler.Update(accessor));
-    public void Release<TViewModel>() where TViewModel : UIViewModel => _resolverDic.AutoRemove(typeof(TViewModel));
+    public void Release<TViewModel>() where TViewModel : UIViewModel => _resolverDic.Remove(typeof(TViewModel));
 
     public bool TryGetViewModel<TViewModel>(out TViewModel viewModel) where TViewModel : UIViewModel => (viewModel = GetViewModel<TViewModel>()) != null; 
     public TViewModel GetViewModel<TViewModel>() where TViewModel : UIViewModel => GetViewModelResolver<TViewModel>()?.Resolve<TViewModel>();
     
     public bool TryGetViewModelResolver<TViewModel>(out UIViewModelResolver handler) where TViewModel : UIViewModel => (handler = GetViewModelResolver<TViewModel>()) != null;
-    public UIViewModelResolver GetViewModelResolver<TViewModel>() where TViewModel : UIViewModel => _resolverDic.TryGetValue(typeof(TViewModel), out var resolver) ? resolver : null;
+    public UIViewModelResolver GetViewModelResolver<TViewModel>() where TViewModel : UIViewModel => _resolverDic.GetValueOrDefault(typeof(TViewModel));
 
     public UIViewModelAccessor<TViewModel> GetViewModelAccessor<TViewModel>() where TViewModel : UIViewModel => _resolverDic.TryGetValue(typeof(TViewModel), out var resolver) ? new UIViewModelAccessor<TViewModel>(resolver) : default;
 }

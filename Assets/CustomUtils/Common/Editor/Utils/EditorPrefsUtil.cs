@@ -75,7 +75,7 @@ public static class EditorPrefsUtil {
             Logger.TraceError(ex);
         }
         
-        value = CollectionUtil.HashSet.Empty<T>();
+        value = new HashSet<T>();
         return false;
     }
 

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using UnityEngine.Pool;
 using Random = System.Random;
 using UnityRandom = UnityEngine.Random;
 
@@ -24,7 +23,7 @@ public static class RandomUtil {
     public static string GetRandom(int length, char min = 'A', char max = 'z') {
         CheckRandomCount();
         FixMinMax(ref min, ref max);
-        using (_ = StringUtil.StringBuilderPool.Get(out var stringBuilder)) {
+        using (_ = ObjectPools.StringBuilderPool.Get(out var stringBuilder)) {
             for (var i = 0; i < length; i++) {
                 stringBuilder.Append((char)_random.Next(min, max));
             }

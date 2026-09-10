@@ -8,7 +8,7 @@ using Microsoft.CodeAnalysis.Diagnostics;
 
 [DiagnosticAnalyzer(LanguageNames.CSharp)]
 [Description("BuilderAttribute의 생성자에서 object buildType의 경우 BuildTypeEnumAttribute를 가지는 enum인 값을 전달하여야 한다.")]
-public class BuilderAttributeVerifyAnalyzer : BaseDianosticAnalzyer {
+public class BuilderAttributeVerifyAnalyzer : BaseDiagnosticAnalyzer {
 
     private const string MISSING_ID = "BuilderAttributeVerfiyAnalyzer_Missing";
     private const string CLASS_IMPLEMENT_ID = "BuilderAttributeVerfiyAnalyzer_Class";

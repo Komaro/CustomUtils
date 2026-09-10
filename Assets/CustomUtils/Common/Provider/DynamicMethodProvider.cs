@@ -12,14 +12,7 @@ public static class DynamicMethodProvider {
     public static Func<object, object> GetFieldValueFunc(object obj, string name) => _getFieldValueFuncDic.TryGetValue(obj.GetType(), out var funcDic) && funcDic.TryGetValue(name, out var func) ? func : obj.GetType().TryGetFieldInfo(name, out var info) ? GetFieldValueFunc(obj, info) : null;
     public static Func<object, object> GetFieldValueFunc(Type type, string name) => _getFieldValueFuncDic.TryGetValue(type, out var funcDic) && funcDic.TryGetValue(name, out var func) ? func : type.TryGetFieldInfo(name, out var info) ? GetFieldValueFunc(type, info) : null;
     public static Func<object, object> GetFieldValueFunc(object obj, FieldInfo info) => GetFieldValueFunc(obj.GetType(), info);
-    
-    public static Func<object, object> GetFieldValueFunc(Type type, FieldInfo info) {
-        if (_getFieldValueFuncDic.TryGetValue(type, out var funcDic) && funcDic.TryGetValue(info.Name, out var func)) {
-            return func;
-        }
-
-        return CreateFieldValueFunc(type, info);
-    }
+    public static Func<object, object> GetFieldValueFunc(Type type, FieldInfo info) => _getFieldValueFuncDic.TryGetValue(type, out var funcDic) && funcDic.TryGetValue(info.Name, out var func) ? func : CreateFieldValueFunc(type, info);
 
     private static Func<object, object> CreateFieldValueFunc(Type type, FieldInfo info) {
         var dynamicMethod = new DynamicMethod(info.Name, typeof(object), new[] { typeof(object) }, typeof(object));
@@ -44,15 +37,9 @@ public static class DynamicMethodProvider {
 
     public static Func<object, object> GetPropertyValueFunc(object obj, string name) => _getPropertyValueDic.TryGetValue(obj.GetType(), out var funcDic) && funcDic.TryGetValue(name, out var func) ? func : obj.GetType().TryGetPropertyInfo(name, out var info) ? GetPropertyValueFunc(obj, info) : null;
     public static Func<object, object> GetPropertyValueFunc(Type type, string name) => _getPropertyValueDic.TryGetValue(type, out var funcDic) && funcDic.TryGetValue(name, out var func) ? func : type.TryGetPropertyInfo(name, out var info) ? GetPropertyValueFunc(type, info) : null;
+    
     public static Func<object, object> GetPropertyValueFunc(object obj, PropertyInfo info) => GetPropertyValueFunc(obj.GetType(), info);
-
-    public static Func<object, object> GetPropertyValueFunc(Type type, PropertyInfo info) {
-        if (_getPropertyValueDic.TryGetValue(type, out var funcDic) && funcDic.TryGetValue(info.Name, out var func)) {
-            return func;
-        }
-
-        return CreatePropertyValueFunc(type, info);
-    }
+    public static Func<object, object> GetPropertyValueFunc(Type type, PropertyInfo info) => _getPropertyValueDic.TryGetValue(type, out var funcDic) && funcDic.TryGetValue(info.Name, out var func) ? func : CreatePropertyValueFunc(type, info);
 
     private static Func<object, object> CreatePropertyValueFunc(Type type, PropertyInfo info) {
         if (info.TryGetGetMethod(out var methodInfo) == false) {

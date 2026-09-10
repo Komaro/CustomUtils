@@ -125,7 +125,7 @@ public class EditorGoogleService : EditorWindow {
 		request.Fields = DRIVE_FIELDS;
 		
 		var fileList = request.Execute();
-		using (_ = StringUtil.StringBuilderPool.Get(out var stringBuilder)) {
+		using (_ = ObjectPools.StringBuilderPool.Get(out var stringBuilder)) {
 			if (fileList != null && fileList.Files.Count > 0) {
 				foreach (var file in fileList.Files) {
 					var email = file.Owners.FirstOrDefault()?.EmailAddress;

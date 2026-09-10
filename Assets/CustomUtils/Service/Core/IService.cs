@@ -9,7 +9,7 @@ public interface IService  {
     protected internal void Refresh() { }
     protected internal void Remove() { }
 }
-
+ 
 public interface IAsyncService : IService {
     
     void IService.Init() => _ = InitAsync();

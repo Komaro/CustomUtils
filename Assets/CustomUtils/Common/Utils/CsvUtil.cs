@@ -5,7 +5,6 @@ using System.Collections.Immutable;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using CsvHelper;
@@ -49,7 +48,7 @@ public static class CsvUtil {
     
     public static async Task<string> SerializeAsync(IEnumerable records) {
         try {
-            using (_ = StringUtil.StringBuilderPool.Get(out var stringBuilder))
+            using (_ = ObjectPools.StringBuilderPool.Get(out var stringBuilder))
             using (var stringWriter = new StringWriter(stringBuilder))
             using (var csvWriter = new CsvWriter(stringWriter, CultureInfo.InvariantCulture)) {
                 await csvWriter.WriteRecordsAsync(records);
@@ -64,7 +63,7 @@ public static class CsvUtil {
 
     public static string Serialize(IEnumerable records) {
         try {
-            using (_ = StringUtil.StringBuilderPool.Get(out var stringBuilder))
+            using (_ = ObjectPools.StringBuilderPool.Get(out var stringBuilder))
             using (var stringWriter = new StringWriter(stringBuilder))
             using (var csvWriter = new CsvWriter(stringWriter, CultureInfo.InvariantCulture)) {
                 csvWriter.WriteRecords(records);
@@ -78,7 +77,7 @@ public static class CsvUtil {
     }
 
     public static string Serialize<TClassMap>(IEnumerable records) where TClassMap : ClassMap {
-        using (_ = StringUtil.StringBuilderPool.Get(out var stringBuilder))
+        using (_ = ObjectPools.StringBuilderPool.Get(out var stringBuilder))
         using (var stringWriter = new StringWriter(stringBuilder))
         using (var csvWriter = new CsvWriter(stringWriter, CultureInfo.InvariantCulture)) {
             csvWriter.Context.RegisterClassMap(typeof(TClassMap));

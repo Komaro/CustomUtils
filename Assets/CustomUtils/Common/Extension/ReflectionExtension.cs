@@ -134,7 +134,7 @@ public static class ReflectionExtension {
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static string GetCleanFullName(this Type type) => _typeCleanFullNameDic.GetOrAdd(type, _ => {
-        using (StringUtil.StringBuilderPool.Get(out var builder)) {
+        using (ObjectPools.StringBuilderPool.Get(out var builder)) {
             builder.Append(type.Name);
             if (type.IsGenericType) {
                 builder.Append($"<{type.GetGenericArguments().ToStringCollection(argumentType => argumentType.GetCleanFullName(), ", ")}>");
@@ -145,7 +145,7 @@ public static class ReflectionExtension {
     });
 
     public static string GetCleanFullName(this MethodBase methodBase) => _typeCleanFullNameDic.GetOrAdd(methodBase, _ => {
-        using (StringUtil.StringBuilderPool.Get(out var builder)) {
+        using (ObjectPools.StringBuilderPool.Get(out var builder)) {
             builder.Append(methodBase.Name);
             if (methodBase.IsGenericMethod) {
                 builder.Append($"<{methodBase.GetGenericArguments().ToStringCollection(info => info.GetCleanFullName())}>");
@@ -173,10 +173,10 @@ public static class ReflectionExtension {
 
     public static uint GetOrderByPriorityFast(this Type type) {
         foreach (var data in CustomAttributeData.GetCustomAttributes(type)) {
-            if (data.AttributeType != typeof(PriorityAttribute)) {
+            if (data.AttributeType.IsSubclassOf(typeof(PriorityAttribute)) == false) {
                 continue;
             }
-
+            
             if (data.NamedArguments == null) {
                 return 99999;
             }

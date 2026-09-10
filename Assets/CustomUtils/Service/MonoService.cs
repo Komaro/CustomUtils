@@ -3,12 +3,13 @@ using UnityEngine;
 using UnityEngine.Pool;
 using Object = UnityEngine.Object;
 
+// TODO. 구조적으로 하자가 있음. 전체적으로 재 분석 후 구조 개선 필요
 [TestRequired]
 public class MonoService : IService {
 
     private Transform _root;
     private ObjectPool<MonoObject> _pool;
-
+    
     void IService.Init() {
         var go = new GameObject(nameof(MonoService)) {
             hideFlags = HideFlags.HideAndDontSave,
@@ -39,7 +40,7 @@ public class MonoService : IService {
     }
 
     public MonoObject Get() => _pool.Get();
-    public PooledObject<MonoObject> Get(out MonoObject monoObject) => _pool.Get(out monoObject);
+    public UnityEngine.Pool.PooledObject<MonoObject> Get(out MonoObject monoObject) => _pool.Get(out monoObject);
     
     public void Release(MonoObject monoObject) => _pool.Release(monoObject);
     

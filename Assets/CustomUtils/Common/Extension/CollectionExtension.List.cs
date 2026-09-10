@@ -403,7 +403,7 @@ public static partial class CollectionExtension {
             return list as List<T>;
         } catch (Exception ex) {
             Logger.TraceError(ex);
-            return CollectionUtil.List.Empty<T>();
+            return new List<T>();
         }
     }
     

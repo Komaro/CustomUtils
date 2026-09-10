@@ -1,9 +1,9 @@
-using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Text;
 
-public static partial class StringUtil {
+public static class StringUtil {
 
-    private static readonly List<char> _listSpecialCharacters = new() { '~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+', '|', '<', '>', '?', '/', '{', '}', ' ', '.', ',', ';', ':', '。', '、' };
+    private static readonly ImmutableHashSet<char> _specialCharacterSet = ImmutableHashSet.Create('~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+', '|', '<', '>', '?', '/', '{', '}', ' ', '.', ',', ';', ':', '。', '、');
 
     public static (int length, bool isOverSize) GetOverSizeANSICount(string text, int maxSize) {
         var length = GetTextLength(text);
@@ -121,6 +121,6 @@ public static partial class StringUtil {
     public static bool IsStartSpaceChar(string text) => text.StartsWith(' ');
     public static bool IsIncludedSpaceChar(string text) => text.Contains(" ");
     public static bool IsIncludedLineFeed(string text) => text.Contains("\n");
-    public static bool IsAvailableSpecialCharacters(char ch) => _listSpecialCharacters.Contains(ch);
+    public static bool IsAvailableSpecialCharacters(char ch) => _specialCharacterSet.Contains(ch);
 
 }

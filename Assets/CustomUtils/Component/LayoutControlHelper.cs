@@ -502,6 +502,7 @@ public class LayoutControlHelper : MonoBehaviour, ILayoutRecursive {
     /// index 아이템의 정규화된 위치 (0 ~ 1)
     /// </summary>
     /// <param name="index">info index</param>
+    /// <param name="collectionOffset">보정값</param>
     /// <returns></returns>
     public float GetNormalizePosition(int index, int collectionOffset = 0) {
         if (_itemPrefab != null) {
@@ -540,8 +541,8 @@ public class LayoutControlHelper : MonoBehaviour, ILayoutRecursive {
     public List<TItem> GetItemList<TItem>() where TItem : LayoutItem => _itemList as List<TItem> ?? _itemList.Cast<TItem>().ToList();
     public List<LayoutItem> GetItemList() => _itemList;
     
-    public bool TryGetCastInfoList<TInfo>(out List<TInfo> castList) => (castList = GetCastInfoList<TInfo>()).Equals(CollectionUtil.List.Empty<TInfo>()) == false;
-    public List<TInfo> GetCastInfoList<TInfo>() => _infoList == null ? CollectionUtil.List.Empty<TInfo>() : _infoList as List<TInfo> ?? _infoList.ToList<TInfo>();
+    public bool TryGetCastInfoList<TInfo>(out List<TInfo> castList) => (castList = GetCastInfoList<TInfo>()).Equals(new List<TInfo>()) == false;
+    public List<TInfo> GetCastInfoList<TInfo>() => _infoList == null ? new List<TInfo>() : _infoList as List<TInfo> ?? _infoList.ToList<TInfo>();
 
     public bool TryGetCastInfos<TInfo>(out IEnumerable<TInfo> castInfos) => (castInfos = GetCastInfos<TInfo>()).Equals(Enumerable.Empty<TInfo>()) == false;
     public IEnumerable<TInfo> GetCastInfos<TInfo>() => _infoList == null ? Enumerable.Empty<TInfo>() : _infoList as IEnumerable<TInfo> ?? _infoList.Cast<TInfo>();

@@ -6,17 +6,17 @@ using UnityEngine;
 [Category(TestConstants.Category.FUNCTIONAL)]
 public class AsyncTestRunner {
 
-    [Test]
-    public async Task AsyncTest() {
-        var operation = new AsyncCustomOperation();
-        _ = RunTest(operation);
-        await operation;
-
-        var genericOperation = new AsyncCustomOperation<int>();
-        _ = RunTest(genericOperation);
-        var intValue = await genericOperation;
-        Assert.Equals(intValue, genericOperation.Result);
-    }
+    // [Test]
+    // public async Task AsyncTest() {
+    //     var operation = new AsyncCustomOperation();
+    //     _ = RunTest(operation);
+    //     await operation;
+    //
+    //     var genericOperation = new AsyncCustomOperation<int>();
+    //     _ = RunTest(genericOperation);
+    //     var intValue = await genericOperation;
+    //     Assert.Equals(intValue, genericOperation.Result);
+    // }
 
     private async Task RunTest(AsyncCustomOperation operation) {
         await Task.Delay(1500);

@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.Pool;
 using Object = UnityEngine.Object;
 
+// TODO. 구조적으로 하자가 있음. 전체적으로 재 분석 후 구조 개선 필요
 [TestRequired]
 public class GameObjectPoolService : IService {
 
@@ -16,10 +17,7 @@ public class GameObjectPoolService : IService {
     bool IService.IsServing() => _isServing;
 
     void IService.Init() {
-        _poolRoot = new GameObject("ObjectPoolService") {
-            hideFlags = HideFlags.DontSave | HideFlags.NotEditable
-        };
-        
+        _poolRoot = new GameObject("ObjectPoolService") { hideFlags = HideFlags.DontSave | HideFlags.NotEditable };
         Object.DontDestroyOnLoad(_poolRoot);
     }
 

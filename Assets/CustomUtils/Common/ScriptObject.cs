@@ -14,8 +14,9 @@ public class ScriptObject : IGameObject {
     public bool activeInHierarchy => gameObject != null && gameObject.activeInHierarchy;
 
     public ScriptObject(GameObject root) {
-        if (root == null)
+        if (root == null) {
             throw new NullReferenceException("GameObject is null.");
+        }
 
         gameObject = root;
         transform = gameObject.transform;

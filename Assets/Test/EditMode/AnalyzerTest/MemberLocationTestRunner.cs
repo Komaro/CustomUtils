@@ -171,7 +171,7 @@ public class MemberLocationTestRunner {
         switch (info) {
             case Type type:
                 if (type.IsGenericType) {
-                    using (StringUtil.StringBuilderPool.Get(out var builder)) {
+                    using (ObjectPools.StringBuilderPool.Get(out var builder)) {
                         builder.Append(type.Name);
                         builder.Append('[');
                         builder.AppendJoin(',', type.GetGenericArguments().Select(GetFixName));
@@ -183,7 +183,7 @@ public class MemberLocationTestRunner {
                 return string.IsNullOrEmpty(type.FullName) ? type.Name : type.FullName;
             case FieldInfo:
             case PropertyInfo:
-                using (StringUtil.StringBuilderPool.Get(out var builder)) {
+                using (ObjectPools.StringBuilderPool.Get(out var builder)) {
                     if (info.DeclaringType != null) {
                         builder.Append(GetFixName(info.DeclaringType));
                         builder.Append("+");
@@ -193,7 +193,7 @@ public class MemberLocationTestRunner {
                     return builder.ToString();
                 }
             case MethodInfo methodInfo:
-                using (StringUtil.StringBuilderPool.Get(out var builder)) {
+                using (ObjectPools.StringBuilderPool.Get(out var builder)) {
                     if (methodInfo.DeclaringType != null) {
                         builder.Append(GetFixName(methodInfo.DeclaringType));
                         builder.Append("+");
@@ -219,7 +219,7 @@ public class MemberLocationTestRunner {
     }
 
     private string GetFixName(ISymbol symbol) {
-        using (StringUtil.StringBuilderConcurrentPool.Get(out var builder)) {
+        using (ThreadSafeObjectPools.StringBuilderPool.Rent(out var builder)) {
             if (symbol.ContainingNamespace.IsGlobalNamespace == false) {
                 builder.Append($"{symbol.ContainingNamespace.ToDisplayString()}.");
             }
@@ -268,7 +268,7 @@ public class MemberLocationTestRunner {
                     builder.Append("(");
                     if (methodSymbol.Parameters.Any()) {
                         builder.AppendJoin(',', methodSymbol.Parameters.Select(x => {
-                            using (StringUtil.StringBuilderPool.Get(out var parameterBuilder)) {
+                            using (ObjectPools.StringBuilderPool.Get(out var parameterBuilder)) {
                                 if (x.ContainingType.IsGenericType) {
                                     parameterBuilder.Append('`');
                                     parameterBuilder.Append(x.ContainingType.TypeArguments.Length);

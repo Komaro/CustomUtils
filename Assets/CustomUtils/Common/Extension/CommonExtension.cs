@@ -42,7 +42,7 @@ public static class CommonExtension {
             return $"{nameof(ob)} is null";
         }
 
-        StringUtil.StringBuilderPool.Get(out var builder);
+        ObjectPools.StringBuilderPool.Get(out var builder);
         try {
             var type = ob.GetType();
             if (ignoreRootName == false) {
@@ -80,7 +80,7 @@ public static class CommonExtension {
             Logger.TraceError(ex);
             return builder.ToString();
         } finally {
-            StringUtil.StringBuilderPool.Release(builder);
+            ObjectPools.StringBuilderPool.Release(builder);
         }
     }
 

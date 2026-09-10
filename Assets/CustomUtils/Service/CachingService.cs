@@ -114,7 +114,7 @@ public class CachingService : IService {
             return pathList.ConvertAll(Caching.GetCacheByPath);
         } catch (Exception ex) {
             Logger.TraceError(ex);
-            return CollectionUtil.List.Empty<Cache>();
+            return new List<Cache>();
         }
     }
 

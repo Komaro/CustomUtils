@@ -27,7 +27,6 @@ public class SerializedStringArray : SerializedArray<string>
     protected override void OnChanged(string value, int index) { }
 }
 
-
 [TestRequired]
 public abstract class SerializedArray<T> : SerializedObject<T[]> {
     

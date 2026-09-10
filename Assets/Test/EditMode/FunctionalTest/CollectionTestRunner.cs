@@ -99,24 +99,6 @@ public class CollectionTestRunner {
         Measure.Method(() => _ = originList.Where(x => x > 5).ToList()).WarmupCount(1).MeasurementCount(measurementCount).IterationsPerMeasurement(count).SampleGroup(whereToListGroup).GC().Run();
     }
     
-    [Test]
-    public void CollectionUtilTest() {
-        var empty_01 = CollectionUtil.Empty<List<int>, int>();
-        Assert.IsNotNull(empty_01);
-
-        var empty_02 = CollectionUtil.Empty<List<int>, int>();
-        Assert.IsNotNull(empty_02);
-
-        Assert.AreEqual(empty_01, empty_02);
-        Assert.AreEqual(empty_01.GetHashCode(), empty_02.GetHashCode());
-
-        var empty_03 = CollectionUtil.List.Empty<int>();
-        Assert.IsNotNull(empty_03);
-
-        Assert.AreEqual(empty_01, empty_03);
-        Assert.AreEqual(empty_01.GetHashCode(), empty_03.GetHashCode());
-    }
-
     [Performance]
     [TestCase(10, 1000)]
     public void CountPerformanceTest(int measurementCount, int count) {

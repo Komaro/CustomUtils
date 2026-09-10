@@ -6,7 +6,7 @@ using System.Linq;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
 
-public abstract class BaseDianosticAnalzyer : DiagnosticAnalyzer {
+public abstract class BaseDiagnosticAnalyzer : DiagnosticAnalyzer {
     
     private static ConcurrentDictionary<INamedTypeSymbol, ImmutableArray<AttributeData>> _cacheSymbolAttributeDic = new();
 

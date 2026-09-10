@@ -4,7 +4,7 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
 
 [DiagnosticAnalyzer(LanguageNames.CSharp)]
-public class AttributeAbstractAndInterfaceConstraintsAnalyzer : BaseDianosticAnalzyer {
+public class AttributeAbstractAndInterfaceConstraintsAnalyzer : BaseDiagnosticAnalyzer {
 
     private const string IMPLEMENT_ID = "AttributeConstraintsAnalyzer";
     

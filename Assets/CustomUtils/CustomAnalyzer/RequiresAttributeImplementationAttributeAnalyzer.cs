@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Collections.Immutable;
+﻿using System.Collections.Immutable;
 using System.ComponentModel;
 using System.Linq;
 using Microsoft.CodeAnalysis;
@@ -9,7 +6,7 @@ using Microsoft.CodeAnalysis.Diagnostics;
 
 [DiagnosticAnalyzer(LanguageNames.CSharp)]
 [Description("RequiresAttributeImplementationAttribute를 가지는 class를 상속받는 경우 반드시 RequiresAttributeImplementationAttribute.implementTargetAttributeType이 지정하는 Type의 Attribute를 구현하여야 한다.")]
-public class RequiresAttributeImplementationAttributeAnalyzer : BaseDianosticAnalzyer {
+public class RequiresAttributeImplementationAttributeAnalyzer : BaseDiagnosticAnalyzer {
 
     private const string IMPLEMENT_ID = "RequiresAttributeImplementationAttributeAnalyzer_AttributeImplement";
     private const string ID = "RequiresAttributeImplementationAttribute";

@@ -225,8 +225,8 @@ public static class SystemUtil {
     }
 
     public static void ExecuteProcess(ProcessStartInfo startInfo) {
-        StringUtil.StringBuilderPool.Get(out var stdOutBuilder);
-        StringUtil.StringBuilderPool.Get(out var stdErrorBuilder);
+        ObjectPools.StringBuilderPool.Get(out var stdOutBuilder);
+        ObjectPools.StringBuilderPool.Get(out var stdErrorBuilder);
         try {
             using var process = new Process();
             process.StartInfo = startInfo;
@@ -249,8 +249,8 @@ public static class SystemUtil {
         } catch (Exception ex) {
             Logger.TraceError(ex);
         } finally {
-            StringUtil.StringBuilderPool.Release(stdOutBuilder);
-            StringUtil.StringBuilderPool.Release(stdErrorBuilder);
+            ObjectPools.StringBuilderPool.Release(stdOutBuilder);
+            ObjectPools.StringBuilderPool.Release(stdErrorBuilder);
         }
     }
     
